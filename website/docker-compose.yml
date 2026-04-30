@@ -1,0 +1,50 @@
+services:
+  api:
+    build: ./backend
+    container_name: core_website_api
+    network_mode: host
+    volumes:
+      - ./data:/app/data
+      - ./uploads:/app/uploads
+    environment:
+      - PORT=3001
+      - NODE_ENV=${NODE_ENV:-production}
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      - BACKEND_URL=${BACKEND_URL:-http://localhost:3001}
+      - FRONTEND_URL=${FRONTEND_URL:-http://localhost:4173}
+      - STEAM_API_KEY=${STEAM_API_KEY}
+      - SESSION_SECRET=${SESSION_SECRET:-change-this-secret-in-production}
+      - ALLOWED_STEAM_IDS=${ALLOWED_STEAM_IDS}
+      - NEXTCLOUD_URL=${NEXTCLOUD_URL:-}
+      - NEXTCLOUD_USER=${NEXTCLOUD_USER:-}
+      - NEXTCLOUD_TOKEN=${NEXTCLOUD_TOKEN:-}
+      - NEXTCLOUD_ROOT=${NEXTCLOUD_ROOT:-/unreal_asset}
+      - NEXTCLOUD_ASSET_ROOT=${NEXTCLOUD_ASSET_ROOT:-/unreal_asset}
+      - FAB_SCRAPER_URL=${FAB_SCRAPER_URL:-http://localhost:8000}
+      - GAME_API_URL=${GAME_API_URL:-https://api.openframework.fr}
+      - GAME_SERVER_SECRET=${GAME_SERVER_SECRET}
+    restart: unless-stopped
+
+  fab-scraper:
+    build: ./backend/scraper
+    container_name: core_website_scraper
+    network_mode: host
+    environment:
+      - CAMOUFOX_NO_SANDBOX=1
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        - VITE_API_URL=${VITE_API_URL:-}
+        - VITE_MAINTENANCE=${VITE_MAINTENANCE:-false}
+    container_name: core_website_frontend
+    network_mode: host
+    environment:
+      - API_INTERNAL_URL=http://localhost:3001
+      - FRONTEND_URL=${FRONTEND_URL:-https://openframework.fr}
+    depends_on:
+      - api
+    restart: unless-stopped
+

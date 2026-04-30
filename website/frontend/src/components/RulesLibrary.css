@@ -1,0 +1,336 @@
+/* =====================================================================
+   RulesLibrary.css — Bibliothèque de règles OpenFramework
+   ===================================================================== */
+
+.rl {
+  min-height: 100vh;
+  background: #0f0a06;
+  color: #f0ead6;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Georgia', 'Times New Roman', serif;
+}
+
+/* ── Header ── */
+.rl__header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  padding: 16px clamp(16px, 4vw, 48px);
+  background: linear-gradient(to bottom, rgba(15,10,6,0.9) 0%, transparent 100%);
+  backdrop-filter: blur(6px);
+}
+
+.rl__header-left {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.rl__logo img {
+  height: 38px;
+  width: auto;
+}
+
+.rl__breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.rl__breadcrumb-sep {
+  color: rgba(255,255,255,0.2);
+  font-size: 1rem;
+}
+
+.rl__breadcrumb-link {
+  color: rgba(240,234,214,0.5);
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  letter-spacing: 0.02em;
+  transition: color 0.2s;
+}
+.rl__breadcrumb-link:hover { color: #f0ead6; }
+
+.rl__breadcrumb-current {
+  color: #D4A574;
+  font-size: 0.85rem;
+  font-weight: 700;
+  font-family: 'Inter', sans-serif;
+}
+
+/* ── Room ── */
+.rl__room {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 120px 0 0;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(139,69,19,0.15) 0%, transparent 60%),
+    radial-gradient(ellipse at 20% 50%, rgba(74,144,217,0.05) 0%, transparent 40%),
+    #0f0a06;
+  min-height: 100vh;
+}
+
+.rl__shelf-dust {
+  position: fixed;
+  inset: 0;
+  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Title ── */
+.rl__title-area {
+  text-align: center;
+  margin-bottom: 64px;
+  position: relative;
+  z-index: 1;
+  padding: 0 clamp(16px, 4vw, 48px);
+}
+
+.rl__eyebrow {
+  font-size: 1rem;
+  color: #D4A574;
+  font-family: 'Inter', sans-serif;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.rl__title {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  color: #f0ead6;
+  font-weight: 700;
+  margin: 0 0 16px;
+  text-shadow: 0 2px 20px rgba(212,165,116,0.3);
+}
+
+.rl__subtitle {
+  font-size: 1rem;
+  color: rgba(240,234,214,0.6);
+  max-width: 540px;
+  margin: 0 auto;
+  line-height: 1.7;
+  font-family: 'Inter', sans-serif;
+}
+
+/* ── Shelf ── */
+.rl__shelf {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 0;
+}
+
+.rl__shelf-wood {
+  height: 22px;
+  background: linear-gradient(to bottom, #5c3a1e 0%, #3d2510 60%, #2a1a0c 100%);
+  border-radius: 4px;
+  box-shadow:
+    0 4px 12px rgba(0,0,0,0.6),
+    inset 0 1px 0 rgba(255,220,180,0.15),
+    inset 0 -2px 4px rgba(0,0,0,0.4);
+  position: relative;
+}
+.rl__shelf-wood--top {
+  margin-bottom: -4px;
+  z-index: 2;
+}
+.rl__shelf-wood--bottom {
+  margin-top: -4px;
+  z-index: 2;
+}
+
+.rl__books {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 0;
+  padding: 60px 60px 20px;
+  background: linear-gradient(to bottom, rgba(20,12,4,0.95), rgba(10,6,2,0.98));
+  position: relative;
+  min-height: 480px;
+  perspective: 1200px;
+}
+
+/* ── Livres ── */
+.rl__book {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  height: 380px;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  padding: 0;
+  margin: 0 16px;
+  transform-origin: bottom center;
+  transform-style: preserve-3d;
+  animation: bookAppear 0.5s ease backwards;
+  animation-delay: var(--delay);
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.35s ease;
+  filter: drop-shadow(4px 8px 16px rgba(0,0,0,0.7));
+  transform: rotateY(-8deg);
+}
+
+@keyframes bookAppear {
+  from { opacity: 0; transform: translateY(30px) rotateY(-8deg); }
+  to   { opacity: 1; transform: rotateY(-8deg); }
+}
+
+.rl__book:hover {
+  transform: translateY(-22px) rotateY(0deg) scale(1.04);
+  filter: drop-shadow(6px 18px 28px rgba(0,0,0,0.8));
+}
+
+/* Tranche */
+.rl__book-spine {
+  width: 52px;
+  background: linear-gradient(to right, color-mix(in srgb, var(--cover) 40%, #000), var(--cover));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 8px;
+  border-right: 1px solid rgba(0,0,0,0.4);
+  border-radius: 3px 0 0 3px;
+  box-shadow: inset -3px 0 8px rgba(0,0,0,0.5), inset 2px 0 4px rgba(255,255,255,0.06);
+  flex-shrink: 0;
+}
+
+.rl__book-spine-icon {
+  color: var(--accent);
+  opacity: 0.85;
+}
+
+/* Couverture */
+.rl__book-cover {
+  width: 240px;
+  background: linear-gradient(135deg, var(--cover) 0%, color-mix(in srgb, var(--cover) 70%, #000) 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 32px 24px;
+  border-radius: 0 4px 4px 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.rl__book-cover-deco {
+  position: absolute;
+  inset: 8px;
+  border: 1px solid var(--accent);
+  border-radius: 2px;
+  opacity: 0.35;
+  pointer-events: none;
+}
+.rl__book-cover-deco::before {
+  content: '';
+  position: absolute;
+  inset: 4px;
+  border: 1px solid var(--accent);
+  border-radius: 1px;
+  opacity: 0.5;
+}
+
+.rl__book-cover-icon {
+  color: var(--accent);
+  opacity: 0.9;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.5));
+  position: relative;
+  z-index: 1;
+}
+
+.rl__book-cover-title {
+  font-size: 1.05rem;
+  color: var(--accent);
+  font-weight: 800;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  line-height: 1.3;
+  position: relative;
+  z-index: 1;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.6);
+}
+
+.rl__book-cover-sub {
+  font-size: 0.78rem;
+  color: rgba(240,234,214,0.7);
+  text-align: center;
+  line-height: 1.5;
+  position: relative;
+  z-index: 1;
+  font-style: italic;
+}
+
+.rl__book-cover-chapters {
+  font-size: 0.72rem;
+  font-family: 'Inter', sans-serif;
+  color: rgba(240,234,214,0.5);
+  background: rgba(0,0,0,0.3);
+  padding: 4px 12px;
+  border-radius: 20px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Pages latérales */
+.rl__book-pages {
+  position: absolute;
+  right: 0;
+  top: 2px;
+  bottom: 2px;
+  width: 8px;
+  display: flex;
+  flex-direction: column;
+}
+
+.rl__book-page-slice {
+  flex: 1;
+  background: linear-gradient(
+    to right,
+    #f0e8d0 0%,
+    #e8dcc0 40%,
+    #d4c9a8 100%
+  );
+  border-top: 1px solid rgba(0,0,0,0.08);
+  margin-right: calc(var(--pi) * 0.3px);
+}
+
+
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+  .rl__books {
+    padding: 32px 16px 16px;
+    gap: 8px;
+  }
+  .rl__book {
+    height: 260px;
+    margin: 0 8px;
+  }
+  .rl__book-cover {
+    width: 160px;
+  }
+  .rl__book-spine {
+    width: 38px;
+  }
+  .rl__book-cover-icon {
+    font-size: 2.2rem;
+  }
+  .rl__book-cover-title {
+    font-size: 0.82rem;
+  }
+}

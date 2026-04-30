@@ -1,0 +1,16 @@
+# Override local — usage : docker compose -f docker-compose.yml -f docker-compose.dev.yml up --build
+
+services:
+  api:
+    environment:
+      - BACKEND_URL=http://localhost:3001
+      - FRONTEND_URL=http://localhost:4173
+      - NODE_ENV=development
+
+  fab-scraper:
+    ports:
+      - "8001:8000"
+
+  frontend:
+    environment:
+      - API_INTERNAL_URL=http://localhost:3001

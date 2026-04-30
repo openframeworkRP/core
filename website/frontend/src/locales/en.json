@@ -1,0 +1,86 @@
+{
+  "nav": {
+    "about": "About",
+    "games": "Games",
+    "devblog": "DevBlog",
+    "roadmap": "Roadmap",
+    "jobs": "Jobs",
+    "members": "The team",
+    "contact": "Links"
+  },
+  "hero": {
+    "tagline": "We make games with soul"
+  },
+  "about": {
+    "title": "About the studio",
+
+    "values_p1": "Small Box Studio is a collective of developers and creators driven by a shared vision: crafting models, maps and game modes of uncompromising quality. Every project is designed with care, from the smallest detail to the overall experience, to fully immerse players.",
+    "values_p2": "Our goal is simple: deliver unique, high-performance and memorable creations that push the standards and enrich every gaming experience."
+  },
+  "devblog": {
+    "title": "DevBlog",
+    "subtitle": "Follow the development",
+    "intro": "Every month we share our progress, our struggles and our wins. Filter by game to stay up to date.",
+    "empty": "No articles yet. Check back soon!"
+  },
+  "team": {
+    "eyebrow": "S\u0026Box Studio",
+    "title": "Join the team",
+    "subtitle": "We\u2019re looking for passionate people to help build living worlds. No office, no constraints \u2014 just creation.",
+    "intro": "Browse open positions below. Click on a role to learn more and get in touch.",
+    "empty": "No open positions right now. Check back soon!"
+  },
+  "games": {
+    "title": "Our games",
+    "subtitle": "Discover the experiences we create",
+    "core": {
+      "title": "OpenFramework",
+      "genre": "DarkRP",
+      "desc": "OpenFramework is an immersive DarkRP server on S&Box. Play as a citizen, build your business, form alliances or become law enforcement in a living city where every decision matters.",
+      "tag_rp": "Roleplay",
+      "tag_multi": "Multiplayer",
+      "tag_open": "Open World",
+      "cta": "Learn more",
+      "about_title": "About the game",
+      "devblog_cta": "See the DevLogs",
+      "sbox_cta": "View on S&Box"
+    }
+  },
+  "jobs": {
+    "eyebrow": "We're hiring",
+    "title": "Join the team",
+    "subtitle": "Want to contribute to exciting games on S&Box? We're looking for motivated people."
+  },
+  "contact": {
+    "eyebrow": "Find us",
+    "title": "Useful links",
+    "subtitle": "Our platforms, our code, our community — everything you need to follow the journey.",
+    "email_label": "Email",
+    "github_label": "GitHub",
+    "sbox_label": "S&Box",
+    "discord_label": "Discord"
+  },
+  "footer": {
+    "rights": "All rights reserved"
+  },
+  "bugs": {
+    "section_title": "Known Bugs",
+    "section_subtitle": "Reports validated by the team",
+    "report_btn": "Report a bug",
+    "empty": "No known bugs at the moment. Great news!",
+    "modal_title": "Report a bug",
+    "modal_title_label": "Bug title *",
+    "modal_title_placeholder": "E.g. Crash when opening the menu",
+    "modal_desc_label": "Description (optional)",
+    "modal_desc_placeholder": "Describe what happens, how to reproduce the bug...",
+    "modal_submit": "Submit report",
+    "modal_cancel": "Cancel",
+    "modal_success": "Report sent! Thanks, the team will look into it.",
+    "modal_duplicate": "Warning: a similar bug has already been reported.",
+    "status_pending": "Pending",
+    "status_confirmed": "Confirmed",
+    "status_patched": "Patched",
+    "status_wontfix": "Won't Fix",
+    "comments_title": "Team comments"
+  }
+}

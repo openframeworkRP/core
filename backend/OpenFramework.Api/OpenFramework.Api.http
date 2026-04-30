@@ -1,0 +1,6 @@
+@SmallLife.Api_HostAddress = http://localhost:5260
+
+GET {{SmallLife.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

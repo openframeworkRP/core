@@ -1,0 +1,390 @@
+/* =====================================================================
+   RoadmapPage.css — Roadmap publique
+   ===================================================================== */
+
+.rm {
+  min-height: 100vh;
+  background: #141414;
+  color: #f0ead6;
+  display: flex;
+  flex-direction: column;
+}
+
+.rm svg { vertical-align: middle; flex-shrink: 0; }
+
+/* ── Header ── */
+.rm__header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px clamp(16px, 4vw, 48px);
+  background: rgba(20, 20, 20, 0.88);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.rm__header-left {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.rm__logo img {
+  height: 40px;
+  width: auto;
+  display: block;
+}
+
+.rm__nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.rm__nav-sep {
+  color: rgba(255,255,255,0.2);
+  user-select: none;
+}
+
+.rm__nav-link {
+  color: rgba(255,255,255,0.55);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  transition: color 0.2s;
+}
+.rm__nav-link:hover { color: #e07b39; }
+
+.rm__nav-current {
+  color: rgba(255,255,255,0.85);
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.rm__lang-btn {
+  background: none;
+  border: none;
+  font-size: 1.3rem;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 6px;
+  transition: transform 0.15s;
+}
+.rm__lang-btn:hover { transform: scale(1.15); }
+
+/* ── Hero ── */
+.rm__hero {
+  position: relative;
+  padding: 140px clamp(16px, 4vw, 48px) 60px;
+  text-align: center;
+  overflow: hidden;
+}
+
+.rm__hero-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(224,123,57,0.18), transparent 60%),
+    radial-gradient(circle at 80% 60%, rgba(110,168,254,0.10), transparent 60%);
+  pointer-events: none;
+}
+
+.rm__hero-content { position: relative; max-width: 720px; margin: 0 auto; }
+
+.rm__hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #e07b39;
+  margin-bottom: 18px;
+}
+
+.rm__hero-title {
+  font-size: clamp(2.4rem, 6vw, 3.6rem);
+  font-weight: 900;
+  margin: 0 0 14px;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+}
+
+.rm__hero-sub {
+  font-size: 1.05rem;
+  color: rgba(240,234,214,0.65);
+  margin: 0;
+  line-height: 1.55;
+}
+
+/* ── Liste ── */
+.rm__list-section {
+  flex: 1;
+  padding: 20px clamp(16px, 4vw, 48px) 100px;
+}
+
+.rm__list-inner {
+  max-width: 880px;
+  margin: 0 auto;
+}
+
+/* ── Timeline ── */
+.rm__timeline {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.rm__timeline::before {
+  content: '';
+  position: absolute;
+  left: 14px;
+  top: 8px;
+  bottom: 8px;
+  width: 2px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.02));
+  border-radius: 2px;
+}
+
+@media (max-width: 640px) {
+  .rm__timeline::before { display: none; }
+}
+
+/* ── Carte milestone ── */
+.rm__card {
+  position: relative;
+  margin-left: 38px;
+  background: #1a1a1a;
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 14px;
+  overflow: hidden;
+  transition: border-color 0.2s, transform 0.2s;
+}
+.rm__card:hover {
+  border-color: rgba(255,255,255,0.14);
+}
+
+@media (max-width: 640px) {
+  .rm__card { margin-left: 0; }
+}
+
+/* Pastille timeline */
+.rm__card::before {
+  content: '';
+  position: absolute;
+  left: -32px;
+  top: 22px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--ms-color, #e07b39);
+  border: 3px solid #141414;
+  box-shadow: 0 0 0 2px rgba(255,255,255,0.05);
+}
+
+@media (max-width: 640px) {
+  .rm__card::before { display: none; }
+}
+
+.rm__card-strip {
+  height: 3px;
+  background: linear-gradient(90deg, var(--ms-color, #e07b39), color-mix(in srgb, var(--ms-color, #e07b39) 25%, transparent));
+}
+
+.rm__card-head {
+  padding: 18px 20px 6px;
+}
+
+.rm__card-titles { display: flex; flex-direction: column; gap: 8px; }
+
+.rm__card-title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--ms-color, #e07b39);
+  letter-spacing: -0.01em;
+}
+
+.rm__card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.rm__card-date {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: ui-monospace, 'SF Mono', monospace;
+  font-size: 0.78rem;
+  color: rgba(240,234,214,0.55);
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.06);
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+
+.rm__card-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 20px;
+  letter-spacing: 0.03em;
+}
+.rm__card-badge--done {
+  background: rgba(62,144,65,0.12);
+  color: #3e9041;
+  border: 1px solid rgba(62,144,65,0.3);
+}
+
+.rm__card-desc {
+  margin: 4px 20px 14px;
+  font-size: 0.92rem;
+  color: rgba(240,234,214,0.7);
+  line-height: 1.55;
+}
+
+/* ── Progression ── */
+.rm__progress {
+  padding: 0 20px 14px;
+}
+
+.rm__progress-head {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.rm__progress-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(240,234,214,0.45);
+}
+
+.rm__progress-pct {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--ms-color, #e07b39);
+}
+
+.rm__progress-bar {
+  height: 6px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.rm__progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--ms-color, #e07b39), color-mix(in srgb, var(--ms-color, #e07b39) 75%, transparent));
+  border-radius: 6px;
+  transition: width 0.5s ease;
+}
+
+/* ── Tasks ── */
+.rm__tasks {
+  list-style: none;
+  margin: 0;
+  padding: 0 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.rm__task {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  background: rgba(255,255,255,0.025);
+  border: 1px solid rgba(255,255,255,0.04);
+  border-radius: 8px;
+  transition: background 0.15s;
+}
+.rm__task:hover {
+  background: rgba(255,255,255,0.045);
+}
+
+.rm__task-icon {
+  display: inline-flex;
+  flex-shrink: 0;
+}
+
+.rm__task-text {
+  flex: 1;
+  font-size: 0.88rem;
+  color: #e8e0d0;
+  line-height: 1.4;
+}
+
+.rm__task-text--done {
+  color: rgba(232,224,208,0.5);
+  text-decoration: line-through;
+}
+
+.rm__task-status {
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 3px 9px;
+  border-radius: 20px;
+  border: 1px solid;
+  background: rgba(255,255,255,0.02);
+  white-space: nowrap;
+}
+
+@media (max-width: 480px) {
+  .rm__task-status { display: none; }
+}
+
+/* ── Loader & empty ── */
+.rm__loader {
+  display: flex;
+  justify-content: center;
+  padding: 60px 0;
+}
+
+.rm__spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid rgba(255,255,255,0.1);
+  border-top-color: #e07b39;
+  border-radius: 50%;
+  animation: rm-spin 0.8s linear infinite;
+}
+
+@keyframes rm-spin {
+  to { transform: rotate(360deg); }
+}
+
+.rm__empty {
+  text-align: center;
+  padding: 80px 20px;
+  color: rgba(240,234,214,0.5);
+}
+
+.rm__empty svg {
+  margin-bottom: 16px;
+  opacity: 0.4;
+}
+
+.rm__empty p {
+  margin: 0;
+  font-size: 0.95rem;
+}

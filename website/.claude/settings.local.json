@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(where node:*)",
+      "Bash(where npm:*)",
+      "Bash(ls \"c:/Ben/Website/frontend/node_modules/.bin/vite\"*)",
+      "Bash(cmd.exe /c \"where node\")",
+      "Bash(cmd.exe /c \"where npm\")",
+      "Bash(awk '/onClick.*onMilestoneChange/{found=1} found{print NR\": \"$0; if\\(++count>=15\\) exit}' /c/Ben/Website/frontend/src/admin/HubPanel.jsx)",
+      "Bash(\"/c/Program Files/nodejs/node.exe\" --version)",
+      "Bash(\"/c/Program Files \\(x86\\)/nodejs/node.exe\" --version)",
+      "Read(//c/Users/benbo/.claude/skills/openframework-tasks/**)",
+      "Bash(curl -s -X POST https://service.openframework.fr/api/hub/tasks -H 'Authorization: Bearer __TRACKED_VAR__' -H 'Content-Type: application/json; charset=utf-8' --data-binary @d:/GitHub/Website/.claude/skills/openframework-tasks/.tmp-create.json)",
+      "Bash(rm -f \"d:/GitHub/Website/.claude/skills/openframework-tasks/.tmp-create.json\")"
+    ]
+  }
+}

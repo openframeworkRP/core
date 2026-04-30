@@ -1,0 +1,93 @@
+/* =====================================================================
+   DevBlogLayout.css — Header des pages devblog
+   ===================================================================== */
+
+.dblayout {
+  min-height: 100vh;
+  background: #141414;
+}
+
+.dblayout__header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px clamp(16px, 4vw, 48px);
+  background: rgba(20, 20, 20, 0.88);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.dblayout__logo img {
+  height: 40px;
+  width: auto;
+  display: block;
+}
+
+.dblayout__left {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.dblayout__nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dblayout__nav-sep {
+  color: rgba(255,255,255,0.2);
+  font-size: 1rem;
+  font-weight: 400;
+  user-select: none;
+}
+
+.dblayout__nav-link {
+  color: rgba(255,255,255,0.55);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  transition: color 0.2s;
+}
+
+.dblayout__nav-link:hover,
+.dblayout__nav-link--active {
+  color: #e07b39;
+}
+
+.dblayout__nav-current {
+  color: rgba(255,255,255,0.85);
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  max-width: 260px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dblayout__lang-btn {
+  background: none;
+  border: none;
+  font-size: 1.3rem;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 6px;
+  transition: transform 0.15s;
+}
+
+.dblayout__lang-btn:hover {
+  transform: scale(1.15);
+}
+
+@media (max-width: 480px) {
+  .dblayout__nav-link:first-child {
+    display: none;
+  }
+}

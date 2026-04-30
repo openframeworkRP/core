@@ -1,0 +1,311 @@
+/* =====================================================================
+   DevBlogList.css
+   ===================================================================== */
+
+.dbl {
+  min-height: 100vh;
+  background: #141414;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Hero ── */
+.dbl__hero {
+  position: relative;
+  padding: 140px 24px 80px;
+  overflow: hidden;
+  text-align: center;
+}
+
+.dbl__hero-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 50% at 50% 0%, rgba(224, 123, 57, 0.18) 0%, transparent 70%),
+    #141414;
+  z-index: 0;
+}
+
+.dbl__hero-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 680px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.dbl__eyebrow {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #e07b39;
+}
+
+.dbl__hero-title {
+  font-size: clamp(2.4rem, 6vw, 4rem);
+  font-weight: 900;
+  color: #f0ead6;
+  margin: 0;
+  line-height: 1.05;
+}
+
+.dbl__hero-intro {
+  color: #a0998a;
+  font-size: 1rem;
+  line-height: 1.7;
+  margin: 0;
+  max-width: 500px;
+}
+
+/* ── Filtres ── */
+.dbl__filters-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 0 clamp(16px, 5vw, 80px) 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.dbl__filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.dbl__filter-btn {
+  padding: 8px 22px;
+  border-radius: 999px;
+  border: 2px solid #2a2a2a;
+  background: transparent;
+  color: #a0998a;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.2s ease;
+}
+
+.dbl__filter-btn:hover {
+  border-color: #e07b39;
+  color: #f0ead6;
+}
+
+.dbl__filter-btn--active {
+  background: #e07b39;
+  border-color: #e07b39;
+  color: #fff;
+}
+
+.dbl__count {
+  color: #4a4540;
+  font-size: 0.82rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* ── Main grid ── */
+.dbl__main {
+  flex: 1;
+  padding: 0 clamp(16px, 5vw, 80px) 100px;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.dbl__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 28px;
+}
+
+/* ── Carte ── */
+.dbl__card {
+  background: #1e1e1e;
+  border: 1px solid #2a2a2a;
+  border-radius: 18px;
+  overflow: hidden;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.dbl__card:hover {
+  transform: translateY(-7px);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55);
+  border-color: #e07b39;
+}
+
+/* Cover */
+.dbl__card-cover {
+  position: relative;
+  height: 200px;
+  overflow: hidden;
+}
+
+.dbl__card-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.dbl__card:hover .dbl__card-cover img {
+  transform: scale(1.05);
+}
+
+/* Cover globale (pas liée à un jeu) */
+.dbl__card-cover--global {
+  background: linear-gradient(135deg, #1a1510 0%, #2e2416 50%, #3a2d18 100%);
+}
+
+/* Overlay gradient */
+.dbl__card-cover-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 60%);
+}
+
+/* Placeholder si pas de cover */
+.dbl__card-cover-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dbl__card-cover-icon {
+  font-size: 3rem;
+  opacity: 0.2;
+}
+
+/* Mois sur la cover */
+.dbl__card-cover-meta {
+  position: absolute;
+  bottom: 12px;
+  left: 14px;
+  right: 14px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.dbl__month {
+  color: rgba(255,255,255,0.75);
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: capitalize;
+  background: rgba(0,0,0,0.45);
+  padding: 3px 10px;
+  border-radius: 999px;
+}
+
+/* Pills de jeux dans le body de la carte */
+.dbl__card-games {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 2px;
+}
+
+.dbl__game-pill {
+  padding: 3px 11px;
+  border-radius: 999px;
+  font-size: 0.68rem;
+  font-weight: 900;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.dbl__game-pill--core { background: #e07b39; }
+/* Ajoute d'autres jeux ici */
+
+.dbl__card-body {
+  padding: 22px 22px 18px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.dbl__card-title {
+  font-size: 1rem;
+  font-weight: 800;
+  color: #f0ead6;
+  margin: 0;
+  line-height: 1.35;
+}
+
+.dbl__card-excerpt {
+  font-size: 0.875rem;
+  color: #a0998a;
+  margin: 0;
+  line-height: 1.6;
+  flex: 1;
+}
+
+.dbl__card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 4px;
+  padding-top: 12px;
+  border-top: 1px solid #2a2a2a;
+}
+
+.dbl__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.dbl__tag {
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: #2a2a2a;
+  color: #e07b39;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+.dbl__read-time {
+  color: #4a4540;
+  font-size: 0.75rem;
+  white-space: nowrap;
+}
+
+/* ── Empty ── */
+.dbl__empty {
+  color: #a0998a;
+  text-align: center;
+  padding: 80px 0;
+  font-size: 1rem;
+}
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+  .dbl__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .dbl__hero {
+    padding: 120px 20px 60px;
+  }
+}

@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Bloquer l'interface admin
+Disallow: /admin/
+Disallow: /admin/login
+
+Sitemap: https://openframework.com/sitemap.xml

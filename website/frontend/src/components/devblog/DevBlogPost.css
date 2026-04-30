@@ -1,0 +1,462 @@
+/* =====================================================================
+   DevBlogPost.css — Page article pleine page
+   ===================================================================== */
+
+/* ── Barre de filtres par jeu (sticky) ── */
+.dbp__filters-bar {
+  position: sticky;
+  top: 73px; /* hauteur du header layout */
+  z-index: 50;
+  background: rgba(20, 20, 20, 0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid #242424;
+  padding: 12px clamp(20px, 5vw, 80px);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.dbp__filters-label {
+  color: #5a5248;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.dbp__filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.dbp__filter-btn {
+  padding: 6px 18px;
+  border-radius: 999px;
+  border: 2px solid #2a2a2a;
+  background: transparent;
+  color: #7a7268;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.2s ease;
+}
+
+.dbp__filter-btn:hover {
+  border-color: #e07b39;
+  color: #f0ead6;
+}
+
+/* "Tout voir" actif */
+.dbp__filter-btn--all.dbp__filter-btn--active {
+  background: #2a2a2a;
+  border-color: #3a3a3a;
+  color: #f0ead6;
+}
+
+/* Jeu spécifique actif */
+.dbp__filter-btn--core.dbp__filter-btn--active {
+  background: #e07b39;
+  border-color: #e07b39;
+  color: #fff;
+}
+/* Ajoute d'autres jeux ici */
+
+.dbp {
+  min-height: 100vh;
+  background: #141414;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Hero ── */
+.dbp__hero {
+  position: relative;
+  min-height: 420px;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+}
+
+.dbp__hero--core {
+  background: linear-gradient(135deg, #1a0900 0%, #4a1e05 40%, #8a3810 100%);
+}
+
+.dbp__hero-bg-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.35;
+}
+
+.dbp__hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0.2) 0%,
+    rgba(20,20,20,0.6) 60%,
+    rgba(20,20,20,1) 100%
+  );
+}
+
+.dbp__hero-inner {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 120px clamp(20px, 5vw, 48px) 52px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Breadcrumb */
+.dbp__breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.dbp__breadcrumb-link {
+  color: rgba(255,255,255,0.55);
+  text-decoration: none;
+  font-size: 0.8rem;
+  font-weight: 600;
+  transition: color 0.2s;
+}
+
+.dbp__breadcrumb-link:hover {
+  color: #e07b39;
+}
+
+.dbp__breadcrumb-sep {
+  color: rgba(255,255,255,0.25);
+  font-size: 0.8rem;
+}
+
+.dbp__breadcrumb-current {
+  color: rgba(255,255,255,0.4);
+  font-size: 0.8rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 220px;
+}
+
+/* Badges */
+.dbp__hero-badges {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.dbp__game-badge {
+  padding: 5px 14px;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.dbp__game-badge--core {
+  background: #e07b39;
+}
+
+.dbp__month-badge {
+  color: rgba(255,255,255,0.6);
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+/* Titre */
+.dbp__title {
+  font-size: clamp(1.8rem, 5vw, 3rem);
+  font-weight: 900;
+  color: #f0ead6;
+  margin: 0;
+  line-height: 1.15;
+}
+
+/* Meta */
+.dbp__meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.dbp__author,
+.dbp__read-time {
+  color: rgba(255,255,255,0.55);
+  font-size: 0.85rem;
+}
+
+.dbp__views {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: rgba(255,255,255,0.55);
+  font-size: 0.85rem;
+}
+
+.dbp__views-icon {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+  opacity: 0.7;
+}
+
+.dbp__sep {
+  color: rgba(255,255,255,0.25);
+}
+
+/* Tags */
+.dbp__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.dbp__tag {
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.08);
+  color: #e07b39;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  border: 1px solid rgba(224, 123, 57, 0.3);
+}
+
+/* ── Layout du contenu ── */
+.dbp__layout {
+  width: 100%;
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 52px clamp(20px, 5vw, 48px) 80px;
+  box-sizing: border-box;
+}
+
+.dbp__content {
+  width: 100%;
+}
+
+/* ── Articles similaires ── */
+.dbp__related {
+  background: #1a1a1a;
+  border-top: 1px solid #242424;
+  padding: 60px clamp(20px, 5vw, 80px);
+}
+
+.dbp__related-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.dbp__related-title {
+  font-size: 1.3rem;
+  font-weight: 900;
+  color: #f0ead6;
+  margin: 0;
+}
+
+.dbp__related-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+.dbp__related-card {
+  background: #242424;
+  border: 1px solid #2a2a2a;
+  border-radius: 14px;
+  overflow: hidden;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.dbp__related-card:hover {
+  transform: translateY(-4px);
+  border-color: #e07b39;
+}
+
+.dbp__related-cover {
+  height: 130px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.dbp__related-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.dbp__related-card:hover .dbp__related-cover img {
+  transform: scale(1.04);
+}
+
+.dbp__related-icon {
+  font-size: 2.5rem;
+  opacity: 0.3;
+}
+
+.dbp__related-body {
+  padding: 16px 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.dbp__related-month {
+  color: #e07b39;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: capitalize;
+}
+
+.dbp__related-card-title {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #f0ead6;
+  margin: 0;
+  line-height: 1.35;
+}
+
+.dbp__related-excerpt {
+  color: #7a7268;
+  font-size: 0.82rem;
+  line-height: 1.55;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.dbp__related-games {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.dbp__mini-pill {
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 0.68rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #fff;
+  background: #3a3a3a;
+}
+
+.dbp__mini-pill--core {
+  background: #e07b39;
+}
+
+/* ── Pills jeu (hero) ── */
+.dbp__game-pill {
+  padding: 5px 14px;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #fff;
+  background: #3a3a3a;
+}
+
+.dbp__game-pill--core {
+  background: #e07b39;
+}
+
+/* ── Retour ── */
+.dbp__back {
+  padding: 40px clamp(20px, 5vw, 80px) 80px;
+  max-width: 860px;
+  margin: 0 auto;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.dbp__back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 28px;
+  border-radius: 999px;
+  border: 2px solid #2a2a2a;
+  color: #a0998a;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 700;
+  transition: all 0.2s ease;
+}
+
+.dbp__back-btn:hover {
+  border-color: #e07b39;
+  color: #f0ead6;
+  background: rgba(224, 123, 57, 0.08);
+}
+
+/* ── Loading ── */
+.dbp__loading {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  color: #6a6258;
+  background: #141414;
+}
+
+/* ── Not found ── */
+.dbp__not-found {
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  color: #f0ead6;
+}
+
+.dbp__not-found h2 {
+  font-size: 1.8rem;
+  margin: 0;
+}
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+  .dbp__hero {
+    min-height: 320px;
+  }
+
+  .dbp__related-grid {
+    grid-template-columns: 1fr;
+  }
+}

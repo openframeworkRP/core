@@ -1,0 +1,126 @@
+/* ======================================================
+   ParallaxHero — section plein écran avec 4 layers
+   Dimensions calées sur layer_fond.png : 1366 × 768 px
+   ====================================================== */
+
+.parallax-hero {
+  position: relative;
+  width: 100vw;
+  height: 100vh;    /* plein écran au chargement */
+  overflow: hidden;
+}
+
+/* Base commune à tous les layers */
+.parallax-layer {
+  position: absolute;
+  inset: 0;               /* top/right/bottom/left: 0 */
+  width: 100%;
+  height: 100%;
+  will-change: transform; /* optimisation GPU */
+}
+
+.parallax-layer img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  user-select: none;
+  pointer-events: none;
+  -webkit-user-drag: none;
+}
+
+/* ── Z-index : fond → scène → perso → transition ── */
+
+.parallax-layer--fond {
+  z-index: 0;
+  /* Le fond dicte le ratio — il couvre 100% de la section */
+}
+
+.parallax-layer--fond img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+}
+
+.parallax-layer--scene {
+  z-index: 1;
+  /* ancrée en bas — même largeur que le fond */
+}
+
+.parallax-layer--scene img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: bottom center;
+}
+
+@keyframes levitation {
+  0%   { transform: translateY(5vh); }
+  50%  { transform: translateY(3vh); }
+  100% { transform: translateY(5vh); }
+}
+
+.parallax-layer--perso {
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.parallax-layer--perso img {
+  width: 65%;
+  height: auto;
+  object-fit: contain;
+  object-position: center center;
+  animation: levitation 4s ease-in-out infinite;
+}
+
+@media (max-width: 768px) {
+  .parallax-layer--perso img {
+    width: 95%;
+  }
+}
+
+/* ======================================================
+   Section suivante avec la transition en haut
+   ====================================================== */
+
+.next-section {
+  position: relative;
+  width: 100%;
+  margin-top: -18vh;   /* remonte pour chevaucher le bas du hero */
+  background: transparent;
+}
+
+/* Nuages de transition : dans le flux normal */
+.parallax-layer--transition {
+  position: relative;
+  width: 100%;
+  height: auto;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.parallax-layer--transition img {
+  width: 100%;
+  height: auto;         /* respecte les proportions natives */
+  display: block;
+  object-fit: unset;    /* pas de recadrage */
+}
+
+.parallax-layer--transition-batiment {
+  position: relative;
+  width: 100%;
+  height: auto;
+  margin-top: -13vw;  /* chevauche légèrement la transition nuages au-dessus */
+  z-index: 11;        /* passe devant la transition nuages */
+  pointer-events: none;
+}
+
+.parallax-layer--transition-batiment img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: unset;
+}

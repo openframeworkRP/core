@@ -1,0 +1,361 @@
+/* =====================================================================
+   TeamPage.css — Page "Rejoindre l'équipe"
+   ===================================================================== */
+
+.tp {
+  min-height: 100vh;
+  background: #141414;
+  color: #f0ead6;
+  display: flex;
+  flex-direction: column;
+}
+
+.tp svg { vertical-align: middle; flex-shrink: 0; }
+
+/* ── Header ── */
+.tp__header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px clamp(16px, 4vw, 48px);
+  background: rgba(20, 20, 20, 0.88);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.tp__header-left {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.tp__logo img {
+  height: 40px;
+  width: auto;
+  display: block;
+}
+
+.tp__nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tp__nav-sep {
+  color: rgba(255,255,255,0.2);
+  font-size: 1rem;
+  user-select: none;
+}
+
+.tp__nav-link {
+  color: rgba(255,255,255,0.55);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  transition: color 0.2s;
+}
+.tp__nav-link:hover { color: #e07b39; }
+
+.tp__nav-current {
+  color: rgba(255,255,255,0.85);
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.tp__lang-btn {
+  background: none;
+  border: none;
+  font-size: 1.3rem;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 6px;
+  transition: transform 0.15s;
+}
+.tp__lang-btn:hover { transform: scale(1.15); }
+.tp__lang-btn:hover { background: rgba(255,255,255,0.08); }
+
+/* ── Hero ── */
+.tp__hero {
+  position: relative;
+  min-height: 52vh;
+  display: flex;
+  align-items: flex-end;
+  padding-bottom: 64px;
+  overflow: hidden;
+}
+
+/* Fond dégradé animé */
+.tp__hero-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(224, 123, 57, 0.18) 0%, transparent 70%),
+    #141414;
+  z-index: 0;
+}
+
+.tp__hero-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+}
+
+.tp__hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 120px 32px 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.tp__hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #e07b39;
+}
+
+.tp__hero-title {
+  font-size: clamp(2.4rem, 6vw, 4rem);
+  font-weight: 900;
+  color: #f0ead6;
+  margin: 0;
+  line-height: 1.05;
+}
+
+.tp__hero-sub {
+  font-size: clamp(1rem, 2.5vw, 1.2rem);
+  color: #b8b0a0;
+  max-width: 560px;
+  margin: 0;
+  line-height: 1.65;
+}
+
+/* Ligne de séparation orange */
+.tp__hero-content::after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 4px;
+  background: #e07b39;
+  border-radius: 2px;
+  margin-top: 8px;
+}
+
+/* ── Section postes ── */
+.tp__roles {
+  flex: 1;
+  background: #1a1a1a;
+  padding: 60px 24px 100px;
+}
+
+.tp__roles-inner {
+  max-width: 860px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.tp__roles-intro {
+  font-size: 0.95rem;
+  color: #b8b0a0;
+  line-height: 1.7;
+  margin: 0 0 8px;
+}
+
+/* ── Loader ── */
+.tp__loader {
+  display: flex;
+  justify-content: center;
+  padding: 60px 0;
+}
+
+.tp__spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid rgba(224,123,57,0.2);
+  border-top-color: #e07b39;
+  border-radius: 50%;
+  animation: tpSpin 0.7s linear infinite;
+}
+
+@keyframes tpSpin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Vide ── */
+.tp__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 80px 0;
+  color: #6b6560;
+  text-align: center;
+}
+
+.tp__empty svg { opacity: 0.35; }
+
+.tp__empty p {
+  font-size: 1rem;
+  margin: 0;
+}
+
+/* ── Liste ── */
+.tp__list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* ── Carte ── */
+.tp__card {
+  background: #232323;
+  border: 1px solid rgba(240, 234, 214, 0.07);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+
+.tp__card:hover {
+  border-color: rgba(224, 123, 57, 0.35);
+}
+
+.tp__card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  cursor: pointer;
+  gap: 16px;
+}
+
+.tp__card-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  flex: 1;
+  min-width: 0;
+}
+
+.tp__card-type {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #e07b39;
+  background: rgba(224, 123, 57, 0.12);
+  border: 1px solid rgba(224, 123, 57, 0.3);
+  border-radius: 6px;
+  padding: 3px 8px;
+  white-space: nowrap;
+}
+
+.tp__card-game {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #fff;
+  border-radius: 6px;
+  padding: 3px 8px;
+  white-space: nowrap;
+  opacity: 0.85;
+}
+
+.tp__card-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #f0ead6;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.tp__card-toggle {
+  background: none;
+  border: none;
+  color: #b8b0a0;
+  cursor: pointer;
+  padding: 4px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  transition: color 0.2s;
+}
+.tp__card-toggle:hover { color: #e07b39; }
+
+/* ── Corps (accordéon) ── */
+.tp__card-body {
+  padding: 16px 24px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  border-top: 1px solid rgba(240, 234, 214, 0.07);
+  animation: tpBodyIn 0.2s ease;
+}
+
+@keyframes tpBodyIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.tp__card-desc {
+  font-size: 0.95rem;
+  line-height: 1.75;
+  color: #b8b0a0;
+  margin: 0;
+  white-space: pre-line;
+}
+
+.tp__card-desc--empty { opacity: 0.4; }
+
+.tp__card-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 20px;
+  background: #e07b39;
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-decoration: none;
+  border-radius: 8px;
+  align-self: flex-start;
+  transition: background 0.2s, transform 0.15s;
+}
+.tp__card-cta:hover {
+  background: #cf6a2a;
+  transform: translateY(-1px);
+}
+
+/* ── Responsive ── */
+@media (max-width: 600px) {
+  .tp__header { padding: 14px 18px; }
+
+  .tp__hero-content { padding: 100px 18px 0; }
+
+  .tp__roles { padding: 48px 16px 72px; }
+
+  .tp__card-header { padding: 16px 18px; }
+
+  .tp__card-body { padding: 14px 18px 20px; }
+}

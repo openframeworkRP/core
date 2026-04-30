@@ -1,0 +1,86 @@
+{
+  "nav": {
+    "about": "À propos",
+    "games": "Jeux",
+    "devblog": "DevBlog",
+    "roadmap": "Roadmap",
+    "jobs": "Emplois",
+    "members": "L'équipe",
+    "contact": "Liens utiles"
+  },
+  "hero": {
+    "tagline": "On fait des jeux avec de l'âme"
+  },
+  "about": {
+    "title": "À propos du studio",
+
+    "values_p1": "Small Box Studio est un collectif de développeurs et de créateurs animés par une même vision : concevoir des modèles, des cartes et des modes de jeu d'une qualité irréprochable. Chaque projet est pensé avec soin, du moindre détail jusqu'à l'expérience globale, afin d'immerger pleinement les utilisateurs.",
+    "values_p2": "Notre objectif est simple : offrir des créations uniques, performantes et mémorables, qui repoussent les standards et enrichissent chaque expérience de jeu."
+  },
+  "devblog": {
+    "title": "DevBlog",
+    "subtitle": "Suivez le développement",
+    "intro": "Chaque mois on partage nos avancées, nos galères et nos victoires. Filtrez par jeu pour ne rien manquer.",
+    "empty": "Aucun article pour l'instant. Revenez bientôt !"
+  },
+  "team": {
+    "eyebrow": "S\u0026Box Studio",
+    "title": "Rejoindre l'\u00e9quipe",
+    "subtitle": "On cherche des passionn\u00e9s pour construire des mondes vivants. Pas de bureau, pas de contraintes.",
+    "intro": "D\u00e9couvre les postes ouverts en ce moment. Clique sur un poste pour en savoir plus et nous contacter.",
+    "empty": "Pas de poste ouvert pour le moment. Reviens bient\u00f4t !"
+  },
+  "games": {
+    "title": "Nos jeux",
+    "subtitle": "Découvrez les expériences que nous créons",
+    "core": {
+      "title": "OpenFramework",
+      "genre": "DarkRP",
+      "desc": "OpenFramework est le serveur DarkRP & Roleplay français de référence sur S&Box. Incarnez un citoyen, montez votre business, formez des alliances ou devenez une force de l'ordre dans une ville vivante. Le RP immersif en français sur S&Box, où chaque décision compte.",
+      "tag_rp": "Roleplay",
+      "tag_multi": "Multijoueur",
+      "tag_open": "Monde ouvert",
+      "cta": "En savoir plus",
+      "about_title": "À propos du jeu",
+      "devblog_cta": "Voir les DevLogs",
+      "sbox_cta": "Voir sur S&Box"
+    }
+  },
+  "jobs": {
+    "eyebrow": "On recrute",
+    "title": "Rejoins l'\u00e9quipe",
+    "subtitle": "Envie de contribuer \u00e0 des jeux passionnants sur S&Box ? On cherche des gens motiv\u00e9s."
+  },
+  "contact": {
+    "eyebrow": "Retrouve-nous",
+    "title": "Liens utiles",
+    "subtitle": "Nos plateformes, notre code, notre communaut\u00e9 tout ce qu\u2019il faut pour suivre l\u2019aventure.",
+    "email_label": "Email",
+    "github_label": "GitHub",
+    "sbox_label": "S&Box",
+    "discord_label": "Discord"
+  },
+  "footer": {
+    "rights": "Tous droits r\u00e9serv\u00e9s"
+  },
+  "bugs": {
+    "section_title": "Bugs connus",
+    "section_subtitle": "Signalements valid\u00e9s par l'\u00e9quipe",
+    "report_btn": "Signaler un bug",
+    "empty": "Aucun bug connu pour le moment. Bonne nouvelle !",
+    "modal_title": "Signaler un bug",
+    "modal_title_label": "Titre du bug *",
+    "modal_title_placeholder": "Ex: Crash lors de l'ouverture du menu",
+    "modal_desc_label": "Description (optionnel)",
+    "modal_desc_placeholder": "D\u00e9cris ce qui se passe, comment reproduire le bug...",
+    "modal_submit": "Envoyer le signalement",
+    "modal_cancel": "Annuler",
+    "modal_success": "Signalement envoy\u00e9 ! Merci, l'\u00e9quipe va examiner \u00e7a.",
+    "modal_duplicate": "Attention : un bug similaire a d\u00e9j\u00e0 \u00e9t\u00e9 signal\u00e9.",
+    "status_pending": "En attente",
+    "status_confirmed": "Confirm\u00e9",
+    "status_patched": "Corrig\u00e9",
+    "status_wontfix": "Non corrig\u00e9",
+    "comments_title": "Commentaires de l'\u00e9quipe"
+  }
+}

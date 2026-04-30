@@ -1,0 +1,60 @@
+.maintenance-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #0d0d0d;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding: 1rem;
+}
+
+.maintenance-card {
+  background: #1a1a1a;
+  border: 1px solid #2e2e2e;
+  border-radius: 16px;
+  padding: 3rem 2.5rem;
+  max-width: 480px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
+}
+
+.maintenance-icon {
+  font-size: 4rem;
+  margin-bottom: 1.5rem;
+  animation: spin-once 1s ease-in-out;
+}
+
+@keyframes spin-once {
+  0%   { transform: rotate(0deg); }
+  50%  { transform: rotate(-20deg); }
+  100% { transform: rotate(0deg); }
+}
+
+.maintenance-title {
+  color: #ffffff;
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0 0 0.75rem;
+}
+
+.maintenance-subtitle {
+  color: #aaaaaa;
+  font-size: 1.1rem;
+  margin: 0 0 0.5rem;
+}
+
+.maintenance-text {
+  color: #777777;
+  font-size: 0.95rem;
+  margin: 0 0 2rem;
+}
+
+.maintenance-footer {
+  color: #555555;
+  font-size: 0.85rem;
+  border-top: 1px solid #2e2e2e;
+  padding-top: 1.25rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}

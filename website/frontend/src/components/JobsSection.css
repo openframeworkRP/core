@@ -1,0 +1,232 @@
+/* ======================================================
+   JobsSection — section Emplois
+   ====================================================== */
+
+.jobs {
+  position: relative;
+  background: #1e1e1e;
+  padding: 100px 24px 120px;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.jobs--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Grain subtil */
+.jobs::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+}
+
+.jobs__inner {
+  position: relative;
+  z-index: 1;
+  max-width: 860px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+
+/* ── Header ── */
+.jobs__header {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.jobs__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #e07b39;
+}
+
+.jobs__title {
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 900;
+  color: #f0ead6;
+  margin: 0;
+  line-height: 1.1;
+}
+
+.jobs__subtitle {
+  font-size: clamp(0.9rem, 2vw, 1.05rem);
+  color: #b8b0a0;
+  margin: 0;
+  max-width: 600px;
+}
+
+.jobs__divider {
+  width: 60px;
+  height: 4px;
+  background: #e07b39;
+  border-radius: 2px;
+  margin-top: 4px;
+}
+
+/* ── Liste ── */
+.jobs__list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* ── Carte ── */
+.jobs__card {
+  background: #2a2a2a;
+  border: 1px solid rgba(240, 234, 214, 0.07);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+
+.jobs__card:hover {
+  border-color: rgba(224, 123, 57, 0.35);
+}
+
+.jobs__card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  cursor: pointer;
+  gap: 16px;
+}
+
+.jobs__card-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  flex: 1;
+  min-width: 0;
+}
+
+.jobs__card-type {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #e07b39;
+  background: rgba(224, 123, 57, 0.12);
+  border: 1px solid rgba(224, 123, 57, 0.3);
+  border-radius: 6px;
+  padding: 3px 8px;
+  white-space: nowrap;
+}
+
+.jobs__card-game {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #fff;
+  border-radius: 6px;
+  padding: 3px 8px;
+  white-space: nowrap;
+  opacity: 0.85;
+}
+
+.jobs__card-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #f0ead6;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.jobs__card-toggle {
+  background: none;
+  border: none;
+  color: #b8b0a0;
+  cursor: pointer;
+  padding: 4px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  transition: color 0.2s;
+}
+
+.jobs__card-toggle:hover {
+  color: #e07b39;
+}
+
+/* ── Corps (accordéon) ── */
+.jobs__card-body {
+  padding: 0 24px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  border-top: 1px solid rgba(240, 234, 214, 0.07);
+  padding-top: 16px;
+  animation: jobsBodyIn 0.2s ease;
+}
+
+@keyframes jobsBodyIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.jobs__card-desc {
+  font-size: 0.95rem;
+  line-height: 1.75;
+  color: #b8b0a0;
+  margin: 0;
+  white-space: pre-line;
+}
+
+.jobs__card-desc--empty {
+  opacity: 0.4;
+}
+
+.jobs__card-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 20px;
+  background: #e07b39;
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-decoration: none;
+  border-radius: 8px;
+  align-self: flex-start;
+  transition: background 0.2s, transform 0.15s;
+}
+
+.jobs__card-cta:hover {
+  background: #cf6a2a;
+  transform: translateY(-1px);
+}
+
+/* ── Responsive ── */
+@media (max-width: 600px) {
+  .jobs {
+    padding: 70px 16px 80px;
+  }
+
+  .jobs__card-header {
+    padding: 16px 18px;
+  }
+
+  .jobs__card-body {
+    padding: 0 18px 18px;
+    padding-top: 14px;
+  }
+}

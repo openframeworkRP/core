@@ -1,0 +1,133 @@
+/* ======================================================
+   Footer
+   ====================================================== */
+
+.footer {
+  position: relative;
+  background: #111;
+  border-top: 1px solid rgba(240, 234, 214, 0.07);
+  padding: 60px 24px 36px;
+  overflow: hidden;
+}
+
+/* Grain subtil */
+.footer::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+}
+
+.footer__inner {
+  position: relative;
+  z-index: 1;
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+}
+
+/* ── Brand ── */
+.footer__brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.footer__logo {
+  height: 52px;
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 0 12px rgba(224, 123, 57, 0.25));
+}
+
+.footer__tagline {
+  font-size: 0.85rem;
+  color: #7a7060;
+  margin: 0;
+  font-style: italic;
+  letter-spacing: 0.03em;
+}
+
+/* ── Nav ── */
+.footer__nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px 28px;
+}
+
+.footer__nav a {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #b8b0a0;
+  text-decoration: none;
+  letter-spacing: 0.04em;
+  transition: color 0.2s;
+}
+
+.footer__nav a:hover {
+  color: #e07b39;
+}
+
+/* ── Divider ── */
+.footer__divider {
+  width: 100%;
+  height: 1px;
+  background: rgba(240, 234, 214, 0.07);
+}
+
+/* ── Bottom ── */
+.footer__bottom {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.footer__copy {
+  font-size: 0.78rem;
+  color: #4a4540;
+}
+
+/* ── Icônes sociales ── */
+.footer__socials {
+  display: flex;
+  gap: 8px;
+}
+
+.footer__social-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(240, 234, 214, 0.08);
+  color: #7a7060;
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.footer__social-btn:hover {
+  background: rgba(224, 123, 57, 0.12);
+  border-color: rgba(224, 123, 57, 0.35);
+  color: #e07b39;
+}
+
+/* ── Responsive ── */
+@media (max-width: 520px) {
+  .footer__bottom {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+}

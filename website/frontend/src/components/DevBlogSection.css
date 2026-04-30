@@ -1,0 +1,378 @@
+/* ======================================================
+   DevBlogSection — Devlog mensuel
+   ====================================================== */
+
+.devblog {
+  position: relative;
+  background: #141414;
+  padding: 0 24px 120px;
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.7s ease 0.1s, transform 0.7s ease 0.1s;
+}
+
+.devblog--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Vague de séparation ── */
+.devblog__wave {
+  width: 100%;
+  line-height: 0;
+  overflow: hidden;
+  margin-bottom: -1px;
+}
+
+.devblog__wave svg {
+  display: block;
+  width: 100%;
+  height: 80px;
+}
+
+/* ── Container ── */
+.devblog__inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 48px;
+  padding-top: 80px;
+}
+
+/* ── Header ── */
+.devblog__header {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.devblog__eyebrow {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #e07b39;
+}
+
+.devblog__title {
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-weight: 900;
+  color: #f0ead6;
+  margin: 0;
+  line-height: 1.1;
+}
+
+.devblog__divider {
+  width: 60px;
+  height: 4px;
+  background: #e07b39;
+  border-radius: 2px;
+  margin-top: 4px;
+}
+
+.devblog__intro {
+  color: #a0998a;
+  font-size: 1rem;
+  max-width: 520px;
+  text-align: center;
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* ── Filtres par jeu ── */
+.devblog__filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+}
+
+.devblog__filter-btn {
+  padding: 8px 22px;
+  border-radius: 999px;
+  border: 2px solid #333;
+  background: transparent;
+  color: #a0998a;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.devblog__filter-btn:hover {
+  border-color: #e07b39;
+  color: #f0ead6;
+}
+
+.devblog__filter-btn--active {
+  background: #e07b39;
+  border-color: #e07b39;
+  color: #fff;
+}
+
+/* ── Grille de cartes ── */
+.devblog__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 28px;
+  width: 100%;
+}
+
+/* ── Carte ── */
+.devblog__card {
+  background: #1e1e1e;
+  border: 1px solid #2a2a2a;
+  border-radius: 16px;
+  overflow: hidden;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.devblog__card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+  border-color: #e07b39;
+}
+
+/* Bande colorée en tête de carte (selon le jeu) */
+.devblog__card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* Couleur par jeu */
+.devblog__card-header--core {
+  background: linear-gradient(90deg, #b0440a 0%, #e07b39 100%);
+  color: #fff;
+}
+
+/* Fallback pour futurs jeux */
+.devblog__card-header--default {
+  background: linear-gradient(90deg, #2a4a7a 0%, #4a80c8 100%);
+  color: #fff;
+}
+
+.devblog__card-game {
+  font-weight: 900;
+}
+
+.devblog__card-month {
+  font-weight: 400;
+  opacity: 0.85;
+  text-transform: capitalize;
+}
+
+.devblog__card-body {
+  padding: 22px 22px 18px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.devblog__card-title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #f0ead6;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.devblog__card-excerpt {
+  font-size: 0.875rem;
+  color: #a0998a;
+  margin: 0;
+  line-height: 1.6;
+  flex: 1;
+}
+
+.devblog__card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 4px;
+}
+
+.devblog__card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.devblog__tag {
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: #2a2a2a;
+  color: #e07b39;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+.devblog__card-read {
+  color: #e07b39;
+  font-size: 0.8rem;
+  font-weight: 700;
+  white-space: nowrap;
+  transition: color 0.2s;
+}
+
+.devblog__card:hover .devblog__card-read {
+  color: #fff;
+}
+
+/* ── État vide ── */
+.devblog__empty {
+  color: #a0998a;
+  font-size: 1rem;
+  text-align: center;
+  padding: 48px 0;
+}
+
+/* ── Modale ── */
+.devblog__modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.82);
+  backdrop-filter: blur(6px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  animation: fadeInBackdrop 0.25s ease;
+}
+
+@keyframes fadeInBackdrop {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.devblog__modal {
+  background: #1e1e1e;
+  border: 1px solid #2a2a2a;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 700px;
+  max-height: 90vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  animation: slideUpModal 0.3s ease;
+}
+
+@keyframes slideUpModal {
+  from { transform: translateY(30px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+.devblog__modal-close {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  background: rgba(0, 0, 0, 0.45);
+  border: none;
+  color: #fff;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  transition: background 0.2s;
+}
+
+.devblog__modal-close:hover {
+  background: #e07b39;
+}
+
+.devblog__modal-banner {
+  padding: 16px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+
+.devblog__modal-inner {
+  padding: 28px 32px 36px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.devblog__modal-title {
+  font-size: clamp(1.2rem, 3vw, 1.7rem);
+  font-weight: 900;
+  color: #f0ead6;
+  margin: 0;
+  line-height: 1.25;
+}
+
+.devblog__modal-author {
+  color: #a0998a;
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+.devblog__modal-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.devblog__modal-content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-top: 8px;
+}
+
+.devblog__post-h3 {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #e07b39;
+  margin: 8px 0 0;
+  border-left: 3px solid #e07b39;
+  padding-left: 12px;
+}
+
+.devblog__post-p {
+  color: #c8c0b0;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  margin: 0;
+}
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+  .devblog__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .devblog__modal-inner {
+    padding: 20px 20px 28px;
+  }
+}
