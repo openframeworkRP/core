@@ -11,13 +11,32 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
+// ── Tolerance de boot : si la config est vide/incomplete (1er lancement
+// avant le wizard), l'API doit demarrer SANS crasher pour que le wizard web
+// puisse l'atteindre. Les endpoints qui touchent la DB renverront 503 via
+// /health/ready tant que ce n'est pas configure.
+var jwtKey = builder.Configuration["Jwt:Key"] ?? "";
+var connStr = builder.Configuration.GetConnectionString("DefaultConnection") ?? "";
+var isConfigured = jwtKey.Length >= 32 && !string.IsNullOrWhiteSpace(connStr);
+var effectiveJwtKey = isConfigured ? jwtKey : new string('0', 32);
+var effectiveConnStr = string.IsNullOrWhiteSpace(connStr)
+    ? "Server=localhost;Database=tempdb;User Id=sa;Password=placeholder123;TrustServerCertificate=True;Connection Timeout=2;"
+    : connStr;
+
+if (!isConfigured)
+{
+    Console.WriteLine("[OpenFramework.Api] WARNING : configuration incomplete (Jwt:Key et/ou connection string).");
+    Console.WriteLine("[OpenFramework.Api] L'API demarre en mode 'waiting for configuration' — utilise le wizard web (http://localhost:4173/setup) pour configurer.");
+}
+
 builder.Services.AddDbContext<OpenFrameworkDbContext>(options =>
     options.UseSqlServer(
-        builder.Configuration.GetConnectionString("DefaultConnection")));
+        effectiveConnStr,
+        sql => sql.EnableRetryOnFailure(maxRetryCount: 5, maxRetryDelay: TimeSpan.FromSeconds(10), errorNumbersToAdd: null)));
 
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<CharacterService>();
-builder.Services.AddScoped<BankService>();   
+builder.Services.AddScoped<BankService>();
 builder.Services.AddScoped<AtmService>();
 builder.Services.AddScoped<InventoryService>();
 
@@ -32,7 +51,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateIssuerSigningKey = true,
             ValidIssuer = "OpenFrameworkApi",
             ValidAudience = "OpenFrameworkPlayers",
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(effectiveJwtKey))
         };
     });
 builder.Services.AddEndpointsApiExplorer();
@@ -49,19 +68,23 @@ builder.Services.AddSwaggerGen(c =>
 
 var app = builder.Build();
 
-using (var scope = app.Services.CreateScope())
+// ── Init DB : tolerant si la DB n'est pas joignable (boot avant wizard) ──
+if (isConfigured)
 {
-    var db = scope.ServiceProvider.GetRequiredService<OpenFrameworkDbContext>();
-    if (db.Database.GetPendingMigrations().Any())
+    try
     {
-        db.Database.Migrate();
-    }
+        using var scope = app.Services.CreateScope();
+        var db = scope.ServiceProvider.GetRequiredService<OpenFrameworkDbContext>();
+        if (db.Database.GetPendingMigrations().Any())
+        {
+            db.Database.Migrate();
+        }
 
-    // ── Audit log tables (Sessions / ChatLogs / AdminActionLogs) ─────────────
-    // Créées en SQL brut idempotent pour ne pas alourdir le snapshot EF.
-    // À synchroniser dans une vraie migration EF lors du prochain dotnet ef
-    // migrations add (supprimer alors les CREATE TABLE générés en double).
-    db.Database.ExecuteSqlRaw(@"
+        // ── Audit log tables (Sessions / ChatLogs / AdminActionLogs) ─────────────
+        // Créées en SQL brut idempotent pour ne pas alourdir le snapshot EF.
+        // À synchroniser dans une vraie migration EF lors du prochain dotnet ef
+        // migrations add (supprimer alors les CREATE TABLE générés en double).
+        db.Database.ExecuteSqlRaw(@"
         IF OBJECT_ID(N'[Sessions]', N'U') IS NULL
         BEGIN
             CREATE TABLE [Sessions] (
@@ -162,6 +185,11 @@ using (var scope = app.Services.CreateScope())
             CREATE INDEX [IX_InventoryLogs_ItemGameId_At]   ON [InventoryLogs]([ItemGameId], [At]);
         END;
     ");
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"[OpenFramework.Api] WARNING : init DB echouee ({ex.Message}). L'API tourne mais les endpoints DB renverront 503 via /health/ready.");
+    }
 }
 
 if (app.Environment.IsDevelopment())
@@ -176,6 +204,35 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.MapGet("/health", () => Results.Ok(new { status = "healthy" }));
+// ── Health endpoints ─────────────────────────────────────────────────────
+// /health        : 200 si le process tourne (utilise par docker healthcheck)
+// /health/ready  : 200 si l'API est configuree ET joint la DB (utilise par
+//                  le wizard web pour savoir quand rediriger vers /admin)
+app.MapGet("/health", () => Results.Ok(new
+{
+    status = "healthy",
+    configured = isConfigured
+}));
+
+app.MapGet("/health/ready", async (OpenFrameworkDbContext db) =>
+{
+    if (!isConfigured)
+    {
+        return Results.Json(new { ready = false, reason = "not-configured" }, statusCode: 503);
+    }
+    try
+    {
+        var canConnect = await db.Database.CanConnectAsync();
+        if (!canConnect)
+        {
+            return Results.Json(new { ready = false, reason = "db-unreachable" }, statusCode: 503);
+        }
+        return Results.Ok(new { ready = true });
+    }
+    catch (Exception ex)
+    {
+        return Results.Json(new { ready = false, reason = "db-error", error = ex.Message }, statusCode: 503);
+    }
+});
 
 app.Run();
