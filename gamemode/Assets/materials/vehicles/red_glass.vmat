@@ -1,0 +1,12 @@
+// THIS FILE IS AUTO-GENERATED
+
+Layer0
+{
+	shader "shaders/car_taillight.shader"
+
+	BaseTexture "materials/dev/white_color.tga"
+	g_vTailTint "[0.588235 0.000000 0.000000 1.000000]"
+
+	//---- Fog ----
+	g_bFogEnabled "1"
+}

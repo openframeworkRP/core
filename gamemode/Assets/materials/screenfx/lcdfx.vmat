@@ -1,0 +1,33 @@
+// THIS FILE IS AUTO-GENERATED
+
+Layer0
+{
+	shader "shaders/lcd.shader"
+
+	//---- Rendering ----
+	F_DO_NOT_CAST_SHADOWS 1
+
+	//---- Texture Filtering ----
+	F_TEXTURE_FILTERING 4 // Nearest Neighbour
+
+	//---- Fog ----
+	g_bFogEnabled "0"
+
+	//---- LCD Screen ----
+	ColorTexture "[0.862745 0.078431 0.235294 1.000000]"
+	g_bIsBroken "0"
+	g_flBrightnessMultiplier "8.000"
+	g_flFresnelExponent "5.000"
+	g_flFresnelReflectance "0.010"
+	g_flParallaxDistance "0.050"
+	g_flParallaxVignetteExponent "0.200"
+	g_flParallaxVignetteStrength "1.000"
+	g_flPixelBlendDistance "8.000"
+	g_flPixelBlendOffset "0.000"
+	g_flPixelOpacityMax "1.000"
+	g_flPixelOpacityMin "0.100"
+	g_vPixelSize "[1.000 1.000]"
+	g_vScreenResolution "[256.000 256.000]"
+	GlassRoughnessTexture "[1.000000 1.000000 1.000000 0.000000]"
+	PixelTexture "materials/screenfx/lcd_overlay.png"
+}

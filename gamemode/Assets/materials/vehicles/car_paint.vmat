@@ -1,0 +1,14 @@
+// THIS FILE IS AUTO-GENERATED
+
+Layer0
+{
+	shader "shaders/car_paint.shader"
+
+	//---- Texture Filtering ----
+	F_TEXTURE_FILTERING 4 // Nearest Neighbour
+
+	g_flFlakeIntensity "1.000"
+
+	//---- Fog ----
+	g_bFogEnabled "1"
+}
