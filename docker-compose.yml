@@ -1,14 +1,19 @@
 # ============================================================
 # OpenFramework Core — orchestration complete
 # ============================================================
-# Lance tout :
+# Premier lancement (wizard auto) :
 #   docker compose up -d
+#   Puis ouvrir http://localhost:4173/setup
 #
 # Lance seulement l'API du jeu (sans le website) :
 #   docker compose up -d core.api sqlserver adminer
 #
 # Lance seulement le website :
 #   docker compose up -d website.api website.frontend
+#
+# Tous les ${VAR:-default} ont des defaults safe pour le 1er boot —
+# l'API .NET demarre en mode "waiting for configuration" tant que le
+# wizard n'a pas ecrit le .env reel.
 # ============================================================
 
 services:
@@ -22,9 +27,9 @@ services:
     depends_on:
       - sqlserver
     environment:
-      - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=${DB_NAME:-OpenFrameworkDb};User Id=sa;Password=${MSSQL_SA_PASSWORD};TrustServerCertificate=True;
-      - Server__Secret=${SERVER_SECRET}
-      - Jwt__Key=${JWT_KEY}
+      - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=${DB_NAME:-OpenFrameworkDb};User Id=sa;Password=${MSSQL_SA_PASSWORD:-OpenFwBootstrap_Pa55!};TrustServerCertificate=True;
+      - Server__Secret=${SERVER_SECRET:-}
+      - Jwt__Key=${JWT_KEY:-}
     ports:
       - "${API_PORT:-8443}:8443"
     restart: unless-stopped
@@ -34,7 +39,7 @@ services:
     container_name: core-sqlserver
     environment:
       ACCEPT_EULA: "Y"
-      MSSQL_SA_PASSWORD: ${MSSQL_SA_PASSWORD}
+      MSSQL_SA_PASSWORD: ${MSSQL_SA_PASSWORD:-OpenFwBootstrap_Pa55!}
     ports:
       - "1433:1433"
     volumes:
@@ -50,7 +55,7 @@ services:
       - sqlserver
     restart: unless-stopped
 
-  # ── Website (devblog + admin) ─────────────────────────────
+  # ── Website (devblog + admin + wizard de configuration) ────
   website.api:
     build: ./website/backend
     container_name: core-website-api
@@ -58,15 +63,21 @@ services:
     volumes:
       - ./website/data:/app/data
       - ./website/uploads:/app/uploads
+      # Le wizard a besoin d'ecrire .env au repo root (RW) et de piloter
+      # docker compose pour appliquer la config. On mount la racine du
+      # repo en RW : c'est le seul moyen propre pour que le wizard puisse
+      # creer/modifier le .env sans pre-creation du fichier.
+      - ./:/app/host-repo:rw
+      - /var/run/docker.sock:/var/run/docker.sock
     environment:
       - PORT=3001
       - NODE_ENV=${NODE_ENV:-production}
       - OPENAI_API_KEY=${OPENAI_API_KEY:-}
       - BACKEND_URL=${BACKEND_URL:-http://localhost:3001}
       - FRONTEND_URL=${FRONTEND_URL:-http://localhost:4173}
-      - STEAM_API_KEY=${STEAM_API_KEY}
-      - SESSION_SECRET=${SESSION_SECRET}
-      - ALLOWED_STEAM_IDS=${ALLOWED_STEAM_IDS}
+      - STEAM_API_KEY=${STEAM_API_KEY:-}
+      - SESSION_SECRET=${SESSION_SECRET:-bootstrap-session-secret-replace-me}
+      - ALLOWED_STEAM_IDS=${ALLOWED_STEAM_IDS:-}
       - NEXTCLOUD_URL=${NEXTCLOUD_URL:-}
       - NEXTCLOUD_USER=${NEXTCLOUD_USER:-}
       - NEXTCLOUD_TOKEN=${NEXTCLOUD_TOKEN:-}
@@ -74,7 +85,12 @@ services:
       - NEXTCLOUD_ASSET_ROOT=${NEXTCLOUD_ASSET_ROOT:-/unreal_asset}
       - FAB_SCRAPER_URL=${FAB_SCRAPER_URL:-http://localhost:8000}
       - GAME_API_URL=${GAME_API_URL:-http://localhost:8443}
-      - GAME_SERVER_SECRET=${GAME_SERVER_SECRET}
+      - GAME_SERVER_SECRET=${GAME_SERVER_SECRET:-}
+      # Chemins exposes au backend Node pour le wizard
+      - REPO_ROOT=/app/host-repo
+      - REPO_ENV_PATH=/app/host-repo/.env
+      - REPO_ENV_EXAMPLE_PATH=/app/host-repo/.env.example
+      - SETUP_COMPLETE_FLAG=/app/host-repo/data/config/setup-complete.flag
     restart: unless-stopped
 
   website.scraper:
