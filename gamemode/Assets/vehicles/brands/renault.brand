@@ -1,0 +1,9 @@
+{
+  "Name": "Renault",
+  "Slogan": "Renault, Des Voitures \u00E0 Vivre",
+  "Image": "assets/brands/renault.svg",
+  "Country": "assets/country/france.country",
+  "Day": 24,
+  "Month": 12,
+  "Year": 1898
+}

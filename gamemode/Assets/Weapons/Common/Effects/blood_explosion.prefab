@@ -1,0 +1,137 @@
+{
+  "RootObject": {
+    "__guid": "900ba5de-c5d2-4820-b01c-16f46242bb5a",
+    "__version": 1,
+    "Flags": 0,
+    "Name": "blood_explosion",
+    "Position": "0,0,0",
+    "Rotation": "0,0,0,1",
+    "Scale": "1,1,1",
+    "Tags": "",
+    "Enabled": true,
+    "NetworkMode": 2,
+    "NetworkInterpolation": true,
+    "NetworkOrphaned": 0,
+    "OwnerTransfer": 1,
+    "Components": [
+      {
+        "__type": "Sandbox.SoundPointComponent",
+        "__guid": "9416f478-4195-4a5c-a106-dd909e87fa6f",
+        "__enabled": false,
+        "Distance": 512,
+        "DistanceAttenuation": false,
+        "DistanceAttenuationOverride": false,
+        "Falloff": [
+          {
+            "x": 0,
+            "y": 1,
+            "in": 3.1415927,
+            "out": -3.1415927,
+            "mode": "Mirrored"
+          },
+          {
+            "x": 1,
+            "y": 0,
+            "in": 0,
+            "out": 0,
+            "mode": "Mirrored"
+          }
+        ],
+        "Force2d": false,
+        "MaxRepeatTime": 1,
+        "MinRepeatTime": 1,
+        "Occlusion": false,
+        "OcclusionOverride": false,
+        "OcclusionRadius": 32,
+        "OnComponentDestroy": null,
+        "OnComponentDisabled": null,
+        "OnComponentEnabled": null,
+        "OnComponentFixedUpdate": null,
+        "OnComponentStart": null,
+        "OnComponentUpdate": null,
+        "Pitch": 1,
+        "PlayOnStart": true,
+        "ReflectionOverride": false,
+        "Reflections": false,
+        "Repeat": false,
+        "SoundEvent": "sounds/ui/hitsound/ui.hit.sound",
+        "SoundOverride": false,
+        "StopOnNew": false,
+        "TargetMixer": {
+          "Name": "game",
+          "Id": "29d8d82c-0d6a-4715-b9a0-b4c2e28ed158"
+        },
+        "Volume": 1
+      },
+      {
+        "__type": "TemporaryEffect",
+        "__guid": "3bc8f7c0-3f79-4eb8-9b63-540b5170610b",
+        "__enabled": true,
+        "DestroyAfterSeconds": 1,
+        "OnComponentDestroy": null,
+        "OnComponentDisabled": null,
+        "OnComponentEnabled": null,
+        "OnComponentFixedUpdate": null,
+        "OnComponentStart": null,
+        "OnComponentUpdate": null,
+        "WaitForChildEffects": false
+      }
+    ],
+    "Children": [
+      {
+        "__guid": "222656c2-11e7-428f-a72a-c11e9e3aa069",
+        "__version": 1,
+        "__Prefab": "particles/surfaces/impact.flesh.mist.prefab",
+        "__PrefabInstancePatch": {
+          "AddedObjects": [],
+          "RemovedObjects": [],
+          "PropertyOverrides": [],
+          "MovedObjects": []
+        },
+        "__PrefabIdToInstanceId": {
+          "7bd5218f-04c4-4b25-abfc-fca662c4e126": "222656c2-11e7-428f-a72a-c11e9e3aa069",
+          "29ba4e21-e880-447d-89e4-9d5a857653dd": "925616e4-27d1-4402-b41f-1b478ebf4f64",
+          "a77cd56c-7751-4fec-9781-de0bb305c35b": "26ff735e-daa2-406f-8ba3-3a02a1b4cd61",
+          "2554acb5-9974-4d78-9d09-d1bdc94d2144": "7ef7acc5-8548-499a-bbe8-77b6eb987ec4",
+          "e32dc338-36b7-421e-9496-c1de14183d2d": "87e3799b-9486-4cf2-a347-11cb1fd6091d",
+          "89b56657-fd50-4ac4-aba3-4997e5c7827b": "c1ef624e-d508-4e74-ad0a-2686e5f3ca6f",
+          "20a37e63-0020-4dac-b59b-81ec44d14c02": "08ad2488-5882-4b41-aa1a-b53ee732a904",
+          "d208a74d-c1c0-42ea-b94b-81d6beba3463": "d4270ed7-7e8c-4ed8-ada6-c76cebf37528",
+          "558e1d2a-0d07-4a4b-9f36-5839e81a0863": "94867812-6eec-4957-99c8-4e8d5335e048",
+          "318aa812-0bfd-47f5-97a4-d2375f79330a": "cc05d25e-ef69-4576-811d-42046b01fa32",
+          "5aa6197b-9a28-4242-a7f9-a3b5a2c3b753": "fc8dd108-348d-4a69-9c15-15f0bf18308f",
+          "3737f0dd-52f6-44a2-896c-208cc947a48e": "e70f94ef-cbfc-4156-97c7-46ae66bd3f5f",
+          "640399f4-6c2b-4b15-9b40-26eeb946e1eb": "85eeec14-8710-46e4-870f-9b4c2ca448fc"
+        }
+      }
+    ],
+    "__properties": {
+      "NetworkInterpolation": true,
+      "TimeScale": 1,
+      "WantsSystemScene": true,
+      "Metadata": {},
+      "NavMesh": {
+        "Enabled": false,
+        "IncludeStaticBodies": true,
+        "IncludeKeyframedBodies": true,
+        "EditorAutoUpdate": true,
+        "AgentHeight": 64,
+        "AgentRadius": 16,
+        "AgentStepSize": 18,
+        "AgentMaxSlope": 40,
+        "ExcludedBodies": "",
+        "IncludedBodies": ""
+      }
+    },
+    "__variables": []
+  },
+  "ResourceVersion": 2,
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "DontBreakAsTemplate": false,
+  "__references": [
+    "facepunch.impactfleshmist#110498"
+  ],
+  "__version": 2
+}

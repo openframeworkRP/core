@@ -1,0 +1,9 @@
+{
+  "DisplayName": "5-Speed Diesel Utility",
+  "ForwardGearRatios": [4.10, 2.37, 1.54, 1.00, 0.73],
+  "ReverseGearRatio": 4.02,
+  "FinalDriveRatio": 4.56,
+  "UpshiftRpm": 3800,
+  "DownshiftRpm": 1400,
+  "ShiftCooldown": 0.6
+}

@@ -1,0 +1,13 @@
+{
+  "DisplayName": "I4 1.6L",
+  "MaxTorqueNm": 155,
+  "MaxPowerKw": 85,
+  "Steepness": 12,
+  "RpmIdle": 800,
+  "RpmMaxTorque": 4400,
+  "RpmMaxPower": 5800,
+  "RpmRedline": 6500,
+  "RpmMax": 7000,
+  "TopSpeedKmh": 180,
+  "GearboxPreset": "gearboxes/4spd_retro.gearbox"
+}

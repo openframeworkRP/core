@@ -1,0 +1,28 @@
+{
+  "Name": "Punch",
+  "Description": "",
+  "Slot": "Punch",
+  "DropOnDisconnect": false,
+  "Icon": null,
+  "IsPurchasable": false,
+  "Price": 0,
+  "KillReward": 300,
+  "MainPrefab": {
+    "_type": "gameobject",
+    "prefab": "weapons/punch/weapon_punch.prefab"
+  },
+  "WorldModelPrefab": {
+    "_type": "gameobject",
+    "prefab": "weapons/punch/wm_punch.prefab"
+  },
+  "ViewModelPrefab": {
+    "_type": "gameobject",
+    "prefab": "weapons/punch/vm_punch.prefab"
+  },
+  "WorldModel": "models/first_person/first_person_arms.vmdl",
+  "ArmorReduction": null,
+  "HelmetReduction": null,
+  "WorldModelBodyGroups": 1,
+  "__references": [],
+  "__version": 0
+}

@@ -1,0 +1,13 @@
+{
+  "DisplayName": "I6 3.0L",
+  "MaxTorqueNm": 320,
+  "MaxPowerKw": 190,
+  "Steepness": 10,
+  "RpmIdle": 750,
+  "RpmMaxTorque": 3800,
+  "RpmMaxPower": 5400,
+  "RpmRedline": 6500,
+  "RpmMax": 7000,
+  "TopSpeedKmh": 250,
+  "GearboxPreset": "gearboxes/6spd_sport.gearbox"
+}

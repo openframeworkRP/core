@@ -1,0 +1,44 @@
+{
+  "HasHumanSkin": false,
+  "HumanSkinModel": null,
+  "HumanSkinMaterial": null,
+  "HumanEyesMaterial": null,
+  "HumanSkinBodyGroups": 0,
+  "HumanSkinMaterialGroup": null,
+  "HumanSkinTags": null,
+  "Title": "Leotard",
+  "Subtitle": "Hope you warmed up!",
+  "Category": "TShirt",
+  "ConditionalModels": {},
+  "Tags": null,
+  "Parent": null,
+  "Model": "models/citizen_clothes/shirt/leotard/models/leotard.vmdl",
+  "HumanAltModel": "models/citizen_clothes/shirt/leotard/models/leotard_m_human.vmdl",
+  "HumanAltFemaleModel": "models/citizen_clothes/shirt/leotard/models/leotard_f_human.vmdl",
+  "SkinMaterial": null,
+  "EyesMaterial": null,
+  "MaterialGroup": null,
+  "SlotsUnder": "Chest, LeftArm, RightArm, LeftWrist, RightWrist, Groin, LeftThigh, RightThigh, LeftKnee, RightKnee, LeftShin, RightShin",
+  "SlotsOver": 0,
+  "HideBody": "Chest, Legs",
+  "AllowTintSelect": false,
+  "TintSelection": {
+    "blend": "Linear",
+    "color": [
+      {
+        "t": 0.5,
+        "c": "1,1,1,1"
+      }
+    ],
+    "alpha": []
+  },
+  "TintDefault": 0.5,
+  "SteamItemDefinitionId": null,
+  "Icon": {
+    "Path": "models/citizen_clothes/shirt/leotard/leotard.clothing.png",
+    "Mode": "Chest",
+    "PositionOffset": "1.700029,0,-7.099993"
+  },
+  "__references": [],
+  "__version": 0
+}

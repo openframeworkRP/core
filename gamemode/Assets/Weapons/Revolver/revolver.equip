@@ -1,0 +1,31 @@
+{
+  "Name": "Revolver",
+  "Description": "A standard pistol",
+  "Slot": "Secondary",
+  "DropOnDisconnect": false,
+  "Icon": "ui/weapons/guns/usp_01.png",
+  "IsPurchasable": true,
+  "Price": 250,
+  "KillReward": 300,
+  "MainPrefab": {
+    "_type": "gameobject",
+    "prefab": "weapons/revolver/weapon_revolver.prefab"
+  },
+  "WorldModelPrefab": {
+    "_type": "gameobject",
+    "prefab": "weapons/revolver/wm_revolver.prefab"
+  },
+  "ViewModelPrefab": {
+    "_type": "gameobject",
+    "prefab": "weapons/revolver/vm_revolver.prefab"
+  },
+  "WorldModel": "models/weapons/sbox_revolver_magnum/w_magnum.vmdl",
+  "ArmorReduction": 0.775,
+  "HelmetReduction": 0.4,
+  "WorldModelBodyGroups": 9493,
+  "CollisionOffset": 6,
+  "__references": [
+    "facepunch.wmagnum#144903"
+  ],
+  "__version": 0
+}

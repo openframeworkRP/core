@@ -1,0 +1,44 @@
+{
+  "HasHumanSkin": false,
+  "HumanSkinModel": null,
+  "HumanSkinMaterial": null,
+  "HumanEyesMaterial": null,
+  "HumanSkinBodyGroups": 0,
+  "HumanSkinMaterialGroup": null,
+  "HumanSkinTags": null,
+  "Title": "Hairs-02-F",
+  "Subtitle": "",
+  "Category": "Hair",
+  "ConditionalModels": {},
+  "Tags": null,
+  "Model": "models/citizen_clothes/hair/hair_tight_ponytail/models/hair_tight_ponytail_brown.vmdl_c",
+  "HumanAltModel": "models/citizen_clothes/hair/hair_tight_ponytail/models/hair_tight_ponytail_brown_m_human.vmdl_c",
+  "HumanAltFemaleModel": null,
+  "SkinMaterial": null,
+  "EyesMaterial": null,
+  "MaterialGroup": "",
+  "HeelHeight": 0,
+  "SlotsUnder": 0,
+  "SlotsOver": "HeadTop",
+  "HideBody": 0,
+  "AllowTintSelect": false,
+  "TintSelection": {
+    "blend": "Linear",
+    "color": [
+      {
+        "t": 0.5,
+        "c": "1,1,1,1"
+      }
+    ],
+    "alpha": []
+  },
+  "TintDefault": 0.5,
+  "SteamItemDefinitionId": 3457237,
+  "Icon": {
+    "Path": "clothing/hairs/hairs-02-f.clothing.png",
+    "Mode": "Generic",
+    "PositionOffset": "677.5898,-0.1299989,29.58"
+  },
+  "__references": [],
+  "__version": 0
+}

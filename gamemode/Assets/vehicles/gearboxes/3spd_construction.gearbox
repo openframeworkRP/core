@@ -1,0 +1,9 @@
+{
+  "DisplayName": "3-Speed Construction",
+  "ForwardGearRatios": [6.50, 3.20, 1.00],
+  "ReverseGearRatio": 6.00,
+  "FinalDriveRatio": 7.50,
+  "UpshiftRpm": 1800,
+  "DownshiftRpm": 900,
+  "ShiftCooldown": 1.0
+}

@@ -1,0 +1,19 @@
+{
+  "Hair": {
+    "Clothing": "models/citizen_clothes/hair/hair_short_dreadlocks/short_dreadlocks.clothing"
+  },
+  "Beard": {
+    "Clothing": "models/citizen_clothes/hair/patchy_beard/patchy_beard.clothing"
+  },
+  "Top": {
+    "Clothing": "models/citizen_clothes/shirt/tanktop/tanktop.clothing"
+  },
+  "Bottom": {
+    "Clothing": "models/citizen_clothes/trousers/loosetrousers/loose_trousers.clothing"
+  },
+  "Shoes": {
+    "Clothing": "models/citizen_clothes/shoes/trainers/trainers.clothing"
+  },
+  "__references": [],
+  "__version": 0
+}

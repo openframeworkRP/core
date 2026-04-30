@@ -1,0 +1,26 @@
+{
+  "Name": "CardBank",
+  "Description": "",
+  "Slot": "Handheld",
+  "DropOnDisconnect": false,
+  "Icon": null,
+  "MainPrefab": {
+    "_type": "gameobject",
+    "prefab": "weapons/doorkey/doorkey.prefab"
+  },
+  "WorldModelPrefab": {
+    "_type": "gameobject",
+    "prefab": "weapons/doorkey/wm_doorkey.prefab"
+  },
+  "ViewModelPrefab": {
+    "_type": "gameobject",
+    "prefab": "weapons/doorkey/vm_doorkey.prefab"
+  },
+  "WorldModel": null,
+  "ArmorReduction": null,
+  "HelmetReduction": null,
+  "WorldModelBodyGroups": 0,
+  "CollisionOffset": 6,
+  "__references": [],
+  "__version": 0
+}

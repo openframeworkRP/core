@@ -1,0 +1,9 @@
+{
+  "Name": "Mazda",
+  "Slogan": "Zoom-Zoom",
+  "Image": "assets/brands/mazda.svg",
+  "Country": "assets/country/japan.country",
+  "Day": 30,
+  "Month": 1,
+  "Year": 1920
+}

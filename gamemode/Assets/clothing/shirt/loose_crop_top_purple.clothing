@@ -1,0 +1,44 @@
+{
+  "HasHumanSkin": false,
+  "HumanSkinModel": null,
+  "HumanSkinMaterial": null,
+  "HumanEyesMaterial": null,
+  "HumanSkinBodyGroups": 0,
+  "HumanSkinMaterialGroup": null,
+  "HumanSkinTags": null,
+  "Title": "Loose Crop Top ",
+  "Subtitle": null,
+  "Category": "Shirt",
+  "ConditionalModels": {},
+  "Tags": null,
+  "Parent": null,
+  "Model": "models/citizen_clothes/shirt/loose_crop_top/models/loose_crop_top_purple.vmdl",
+  "HumanAltModel": "models/citizen_clothes/shirt/loose_crop_top/models/loose_crop_top_purple_m_human.vmdl",
+  "HumanAltFemaleModel": "models/citizen_clothes/shirt/loose_crop_top/models/loose_crop_top_purple_f_human.vmdl",
+  "SkinMaterial": null,
+  "EyesMaterial": null,
+  "MaterialGroup": null,
+  "SlotsUnder": "Chest, LeftArm, RightArm",
+  "SlotsOver": 0,
+  "HideBody": "Chest",
+  "AllowTintSelect": false,
+  "TintSelection": {
+    "blend": "Linear",
+    "color": [
+      {
+        "t": 0.5,
+        "c": "1,1,1,1"
+      }
+    ],
+    "alpha": []
+  },
+  "TintDefault": 0.5,
+  "SteamItemDefinitionId": null,
+  "Icon": {
+    "Path": "models/citizen_clothes/shirt/loose_crop_top/loose_crop_top_purple.clothing.png",
+    "Mode": "Chest",
+    "PositionOffset": "137.3,0,0"
+  },
+  "__references": [],
+  "__version": 0
+}

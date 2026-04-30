@@ -1,0 +1,15 @@
+{
+  "DisplayName": "City (Eco/Comfort)",
+  "FrictionMu": 0.72,
+  "LoadSensitivity": 0.75,
+  "NominalLoad": 1200,
+  "RollingResistance": 0.022,
+  "LatB": 7.0,
+  "LatC": 1.3,
+  "LatD": 0.8,
+  "LatE": 0.9,
+  "LongB": 8.0,
+  "LongC": 1.8,
+  "LongD": 0.8,
+  "LongE": 0.9
+}

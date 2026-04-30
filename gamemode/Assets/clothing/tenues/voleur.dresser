@@ -1,0 +1,17 @@
+{
+  "Hair": {
+    "Clothing": "models/citizen_clothes/hat/bandana_mask/bandana_mask.clothing"
+  },
+  "Beard": {},
+  "Top": {
+    "Clothing": "models/citizen_clothes/jacket/hoodie/hoodie.clothing"
+  },
+  "Bottom": {
+    "Clothing": "models/citizen_clothes/trousers/trackiebottoms/trackie_bottoms.clothing"
+  },
+  "Shoes": {
+    "Clothing": "models/citizen_clothes/shoes/trainers/trainers.clothing"
+  },
+  "__references": [],
+  "__version": 0
+}

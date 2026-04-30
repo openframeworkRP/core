@@ -1,0 +1,15 @@
+{
+  "DisplayName": "Motorcycle (Sport Bike)",
+  "FrictionMu": 1.05,
+  "LoadSensitivity": 0.85,
+  "NominalLoad": 800,
+  "RollingResistance": 0.01,
+  "LatB": 14.0,
+  "LatC": 1.7,
+  "LatD": 0.95,
+  "LatE": 0.96,
+  "LongB": 15.0,
+  "LongC": 2.3,
+  "LongD": 0.95,
+  "LongE": 0.96
+}

@@ -1,0 +1,44 @@
+{
+  "HasHumanSkin": false,
+  "HumanSkinModel": null,
+  "HumanSkinMaterial": null,
+  "HumanEyesMaterial": null,
+  "HumanSkinBodyGroups": 0,
+  "HumanSkinMaterialGroup": null,
+  "HumanSkinTags": null,
+  "Title": "Puffer Jacket Orange",
+  "Subtitle": "",
+  "Category": "Jacket",
+  "ConditionalModels": {},
+  "Tags": null,
+  "Parent": "models/citizen_clothes/jacket/puffer_jacket/puffer_jacket.clothing",
+  "Model": "models/citizen_clothes/jacket/puffer_jacket/models/puffer_jacket_orange.vmdl",
+  "HumanAltModel": "models/citizen_clothes/jacket/puffer_jacket/models/puffer_jacket_orange_m_human.vmdl",
+  "HumanAltFemaleModel": null,
+  "SkinMaterial": null,
+  "EyesMaterial": null,
+  "MaterialGroup": "",
+  "SlotsUnder": 0,
+  "SlotsOver": "LeftArm, RightArm",
+  "HideBody": 0,
+  "AllowTintSelect": false,
+  "TintSelection": {
+    "blend": "Linear",
+    "color": [
+      {
+        "t": 0.5,
+        "c": "1,1,1,1"
+      }
+    ],
+    "alpha": []
+  },
+  "TintDefault": 0.5,
+  "SteamItemDefinitionId": null,
+  "Icon": {
+    "Path": "models/citizen_clothes/jacket/puffer_jacket/puffer_jacket_orange.clothing.png",
+    "Mode": "Chest",
+    "PositionOffset": "64.8,0,-1.299999"
+  },
+  "__references": [],
+  "__version": 0
+}

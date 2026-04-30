@@ -1,0 +1,9 @@
+{
+  "DisplayName": "6-Speed Sport",
+  "ForwardGearRatios": [3.82, 2.36, 1.69, 1.31, 1.00, 0.82],
+  "ReverseGearRatio": 3.30,
+  "FinalDriveRatio": 3.70,
+  "UpshiftRpm": 6000,
+  "DownshiftRpm": 2500,
+  "ShiftCooldown": 0.3
+}

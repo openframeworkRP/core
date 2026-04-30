@@ -1,0 +1,68 @@
+{
+  "Name": "Balle .357 Magnum",
+  "Description": "Munition .357 Magnum. Puissante et precise, pour revolvers.",
+  "IsEnabled": true,
+  "Price": 5,
+  "ItemCategoryType": "Ammo",
+  "WorldObjectPrefab": "items/ammo/bullet_357.prefab",
+  "TrashObjectPrefab": null,
+  "PreviewObject": "models/weapons/sbox_ammo/9mm_bullet/9mm_bullet.vmdl",
+  "Weight": 0.01,
+  "MaxStack": 24,
+  "Attributes": {
+    "damage_tier": "3",
+    "armor_penetration": "0.5",
+    "weapon_wear": "0.02"
+  },
+  "CanBePickedUp": true,
+  "IsUnique": false,
+  "IsConsumable": false,
+  "UseDuration": -1,
+  "CanBeSpawned": false,
+  "OnUseAction": null,
+  "IsCraftable": true,
+  "Recipe": [
+    {
+      "ItemResource": "items/primary_resources/copper.item",
+      "Quantity": 1
+    },
+    {
+      "ItemResource": "items/primary_resources/lead.item",
+      "Quantity": 2
+    },
+    {
+      "ItemResource": "items/primary_resources/black_powder.item",
+      "Quantity": 2
+    }
+  ],
+  "CraftJobAccess": "None",
+  "IsTools": false,
+  "ToolsResource": null,
+  "IsWeapon": false,
+  "WeaponResource": null,
+  "AmmoType": null,
+  "IsMagazine": false,
+  "MagAmmoType": null,
+  "MagCapacity": 12,
+  "IsAmmo": true,
+  "IsPack": false,
+  "PackCapacity": 50,
+  "PackContentType": null,
+  "DefaultFillQuantity": 0,
+  "IsDocument": false,
+  "DocumentViewModel": null,
+  "IsFurniture": false,
+  "FurnitureCategoryType": "None",
+  "IsFood": false,
+  "RestoreMinValue": 1,
+  "RestoreMaxValue": 10,
+  "ConsumptionSound": null,
+  "IsMinerals": false,
+  "IsClothing": false,
+  "ClothingResource": null,
+  "CanHeal": false,
+  "HealAmount": 1,
+  "__references": [],
+  "__version": 0,
+  "Icon": "ui/item_icons/bullet_357.png"
+}

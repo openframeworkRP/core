@@ -1,0 +1,129 @@
+{
+  "RootObject": {
+    "__guid": "84ef4c23-56ad-4764-9b6b-bce9b0244842",
+    "__version": 2,
+    "Flags": 0,
+    "Name": "weapon_he_grenade",
+    "Position": "0.000202587238,-1.23083591E-05,-5.96628524E-10",
+    "Rotation": "0,0,0,1",
+    "Scale": "1,1,1",
+    "Tags": "player",
+    "Enabled": true,
+    "NetworkMode": 2,
+    "NetworkFlags": 0,
+    "NetworkOrphaned": 0,
+    "NetworkTransmit": true,
+    "OwnerTransfer": 1,
+    "Components": [
+      {
+        "__type": "OpenFramework.Systems.Weapons.Equipment",
+        "__guid": "2afccd64-3f78-49b4-b960-0e935678d255",
+        "__enabled": true,
+        "Flags": 0,
+        "AimFovOffset": -5,
+        "CrosshairType": "Default",
+        "DeploySound": "sounds/weapons/legacy/switch/weapon_switch.sound",
+        "Handedness": "Right",
+        "HoldType": "HoldItem",
+        "LinkedItem": null,
+        "MountedPrefab": {
+          "_type": "gameobject",
+          "prefab": "weapons/throwable/he_grenade/mounted/mounted_he_grenade.prefab"
+        },
+        "OnComponentDestroy": null,
+        "OnComponentDisabled": null,
+        "OnComponentEnabled": null,
+        "OnComponentFixedUpdate": null,
+        "OnComponentStart": null,
+        "OnComponentUpdate": null,
+        "Resource": "weapons/throwable/he_grenade/he_grenade.equip",
+        "SpeedPenalty": 0,
+        "UseCrosshair": true
+      },
+      {
+        "__type": "OpenFramework.Utility.TagBinder",
+        "__guid": "a4ee277d-c2ac-48b2-b682-e2bc2453c875",
+        "__enabled": true,
+        "Flags": 0,
+        "OnComponentDestroy": null,
+        "OnComponentDisabled": null,
+        "OnComponentEnabled": null,
+        "OnComponentFixedUpdate": null,
+        "OnComponentStart": null,
+        "OnComponentUpdate": null
+      }
+    ],
+    "Children": [
+      {
+        "__guid": "d6338e30-099f-46f1-8b77-38adf9d71dac",
+        "__version": 2,
+        "Flags": 0,
+        "Name": "Functions",
+        "Position": "0,0,0",
+        "Rotation": "0,0,0,1",
+        "Scale": "1,1,1",
+        "Tags": "",
+        "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkFlags": 0,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
+        "Components": [
+          {
+            "__type": "OpenFramework.Systems.Weapons.Throwable",
+            "__guid": "be992ceb-4d4f-4493-ab68-8755e49ca266",
+            "__enabled": true,
+            "Flags": 0,
+            "CookTime": 0.25,
+            "InputActions": [
+              "Attack1"
+            ],
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
+            "OnInputAction": null,
+            "Prefab": {
+              "_type": "gameobject",
+              "prefab": "weapons/throwable/he_grenade/he_grenade.prefab"
+            },
+            "RequiresAllInputActions": false,
+            "ThrowPower": 1200
+          }
+        ],
+        "Children": []
+      }
+    ],
+    "__properties": {
+      "NetworkInterpolation": true,
+      "TimeScale": 1,
+      "WantsSystemScene": true,
+      "Metadata": {},
+      "NavMesh": {
+        "Enabled": false,
+        "IncludeStaticBodies": true,
+        "IncludeKeyframedBodies": true,
+        "EditorAutoUpdate": false,
+        "AgentHeight": 64,
+        "AgentRadius": 16,
+        "AgentStepSize": 18,
+        "AgentMaxSlope": 40,
+        "ExcludedBodies": "",
+        "IncludedBodies": "",
+        "DeferGeneration": false,
+        "CustomBounds": false
+      }
+    },
+    "__variables": []
+  },
+  "ResourceVersion": 2,
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "DontBreakAsTemplate": false,
+  "__references": [],
+  "__version": 2
+}

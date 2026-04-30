@@ -1,0 +1,16 @@
+{
+  "Name": "Argent",
+  "Description": "",
+  "IsEnabled": true,
+  "Price": 90,
+  "Weight": 0.2,
+  "MaxStack": 20,
+  "Attributes": {},
+  "CanBePickedUp": true,
+  "IsMinerals": true,
+  "IsConsumable": false,
+  "IsCraftable": false,
+  "IsUnique": false,
+  "Recipe": [],
+  "__version": 0
+}

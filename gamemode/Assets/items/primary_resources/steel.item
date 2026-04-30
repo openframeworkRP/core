@@ -1,0 +1,16 @@
+{
+  "Name": "Acier",
+  "Description": "",
+  "IsEnabled": true,
+  "Price": 35,
+  "Weight": 0.6,
+  "MaxStack": 50,
+  "Attributes": {},
+  "CanBePickedUp": true,
+  "IsMinerals": true,
+  "IsConsumable": false,
+  "IsCraftable": false,
+  "IsUnique": false,
+  "Recipe": [],
+  "__version": 0
+}

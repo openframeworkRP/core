@@ -1,0 +1,113 @@
+{
+  "RootObject": {
+    "__guid": "0d80eec7-9acf-4e93-974d-66e8eefe224e",
+    "__version": 1,
+    "Flags": 0,
+    "Name": "impact_flesh",
+    "Position": "0,0,0",
+    "Rotation": "0,0,0,1",
+    "Scale": "1,1,1",
+    "Tags": "particles",
+    "Enabled": true,
+    "NetworkMode": 2,
+    "NetworkInterpolation": true,
+    "NetworkOrphaned": 0,
+    "OwnerTransfer": 1,
+    "Components": [
+      {
+        "__type": "TemporaryEffect",
+        "__guid": "650dc654-ed1e-429c-b273-ee335ea0f2cf",
+        "__enabled": true,
+        "DestroyAfterSeconds": 3,
+        "OnComponentDestroy": null,
+        "OnComponentDisabled": null,
+        "OnComponentEnabled": null,
+        "OnComponentFixedUpdate": null,
+        "OnComponentStart": null,
+        "OnComponentUpdate": null,
+        "WaitForChildEffects": false
+      }
+    ],
+    "Children": [
+      {
+        "__guid": "25e4f33f-a470-470a-8299-f0333a5893c0",
+        "__version": 1,
+        "__Prefab": "particles/surfaces/impact.flesh.mist.prefab",
+        "__PrefabInstancePatch": {
+          "AddedObjects": [],
+          "RemovedObjects": [],
+          "PropertyOverrides": [
+            {
+              "Target": {
+                "Type": "GameObject",
+                "IdValue": "29ba4e21-e880-447d-89e4-9d5a857653dd"
+              },
+              "Property": "Tags",
+              "Value": ""
+            },
+            {
+              "Target": {
+                "Type": "GameObject",
+                "IdValue": "89b56657-fd50-4ac4-aba3-4997e5c7827b"
+              },
+              "Property": "Tags",
+              "Value": ""
+            },
+            {
+              "Target": {
+                "Type": "GameObject",
+                "IdValue": "318aa812-0bfd-47f5-97a4-d2375f79330a"
+              },
+              "Property": "Tags",
+              "Value": ""
+            }
+          ],
+          "MovedObjects": []
+        },
+        "__PrefabIdToInstanceId": {
+          "7bd5218f-04c4-4b25-abfc-fca662c4e126": "25e4f33f-a470-470a-8299-f0333a5893c0",
+          "29ba4e21-e880-447d-89e4-9d5a857653dd": "e78767df-3b8e-43e3-92ee-acaa00b4154d",
+          "a77cd56c-7751-4fec-9781-de0bb305c35b": "072afefa-a48b-450d-9343-d2a3bc575e4e",
+          "2554acb5-9974-4d78-9d09-d1bdc94d2144": "8550e7fb-8da9-4093-805c-9baf681a5204",
+          "e32dc338-36b7-421e-9496-c1de14183d2d": "687a3c23-3ddd-4440-a4c8-9052907186ab",
+          "89b56657-fd50-4ac4-aba3-4997e5c7827b": "dc9d022a-a768-4920-9427-67482085888e",
+          "20a37e63-0020-4dac-b59b-81ec44d14c02": "a8e31309-fdcd-4635-b9e5-37c1b7ef7e5e",
+          "d208a74d-c1c0-42ea-b94b-81d6beba3463": "187047a9-8a8f-4a7c-aeb1-d47e2c251157",
+          "558e1d2a-0d07-4a4b-9f36-5839e81a0863": "e6ccb981-856a-49f9-bde6-837a281e67d9",
+          "318aa812-0bfd-47f5-97a4-d2375f79330a": "6d152516-8e4f-4c2e-bf2d-e48e3e0f18a4",
+          "5aa6197b-9a28-4242-a7f9-a3b5a2c3b753": "b1405450-718d-45d2-8161-01f36185db96",
+          "3737f0dd-52f6-44a2-896c-208cc947a48e": "bda7b5d3-4a5d-4c4e-9634-7567bc3f26fd",
+          "640399f4-6c2b-4b15-9b40-26eeb946e1eb": "bce36a2f-d73e-4a12-882f-6a01f0c50b41"
+        }
+      }
+    ],
+    "__properties": {
+      "NetworkInterpolation": true,
+      "TimeScale": 1,
+      "WantsSystemScene": true,
+      "Metadata": {},
+      "NavMesh": {
+        "Enabled": false,
+        "IncludeStaticBodies": true,
+        "IncludeKeyframedBodies": true,
+        "EditorAutoUpdate": true,
+        "AgentHeight": 64,
+        "AgentRadius": 16,
+        "AgentStepSize": 18,
+        "AgentMaxSlope": 40,
+        "ExcludedBodies": "",
+        "IncludedBodies": ""
+      }
+    },
+    "__variables": []
+  },
+  "ResourceVersion": 2,
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "DontBreakAsTemplate": false,
+  "__references": [
+    "facepunch.impactfleshmist#110498"
+  ],
+  "__version": 2
+}

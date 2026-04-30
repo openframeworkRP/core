@@ -1,0 +1,15 @@
+{
+  "DisplayName": "SUV (All-Terrain)",
+  "FrictionMu": 0.75,
+  "LoadSensitivity": 0.7,
+  "NominalLoad": 2000,
+  "RollingResistance": 0.025,
+  "LatB": 6.5,
+  "LatC": 1.25,
+  "LatD": 0.82,
+  "LatE": 0.88,
+  "LongB": 7.5,
+  "LongC": 1.7,
+  "LongD": 0.85,
+  "LongE": 0.88
+}

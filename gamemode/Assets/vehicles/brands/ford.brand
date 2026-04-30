@@ -1,0 +1,9 @@
+{
+  "Name": "Ford",
+  "Slogan": "Ford, Have You Driven a Ford Lately",
+  "Image": "assets/brands/ford.svg",
+  "Country": "assets/country/us.country",
+  "Day": 16,
+  "Month": 6,
+  "Year": 1903
+}

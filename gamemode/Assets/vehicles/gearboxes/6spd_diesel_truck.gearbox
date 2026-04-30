@@ -1,0 +1,9 @@
+{
+  "DisplayName": "6-Speed Diesel Truck",
+  "ForwardGearRatios": [6.32, 3.82, 2.29, 1.54, 1.00, 0.76],
+  "ReverseGearRatio": 5.98,
+  "FinalDriveRatio": 5.29,
+  "UpshiftRpm": 2400,
+  "DownshiftRpm": 1200,
+  "ShiftCooldown": 0.7
+}

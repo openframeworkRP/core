@@ -1,0 +1,9 @@
+{
+  "Name": "Ferrari",
+  "Slogan": "Cavallino Rampante",
+  "Image": "assets/brands/ferrari.svg",
+  "Country": "assets/country/italy.country",
+  "Day": 13,
+  "Month": 9,
+  "Year": 1939
+}

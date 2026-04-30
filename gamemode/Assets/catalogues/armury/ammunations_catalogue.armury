@@ -1,0 +1,82 @@
+{
+  "Licenses": [
+    {
+      "Name": "License A",
+      "Categories": [
+        {
+          "Name": "Armes Blanches",
+          "Items": [
+            {
+              "Item": "items/weapons/knife.item"
+            },
+            {
+              "Item": "items/weapons/katana.item"
+            },
+            {
+              "Item": "items/weapons/knife_bayonet.item"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Name": "License B",
+      "Categories": [
+        {
+          "Name": "Armes de Poings",
+          "Items": [
+            {
+              "Item": "items/weapons/revolver.item"
+            },
+            {
+              "Item": "items/weapons/usp.item"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Name": "License C",
+      "Categories": [
+        {
+          "Name": "Armes Epaules",
+          "Items": [
+            {
+              "Item": "items/weapons/mp5.item"
+            },
+            {
+              "Item": "items/weapons/m4a1.item"
+            },
+            {
+              "Item": "items/weapons/mk18.item"
+            },
+            {
+              "Item": "items/weapons/slr107ur.item"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Name": "License D",
+      "Categories": [
+        {
+          "Name": "Projectiles",
+          "Items": [
+            {
+              "Item": "items/weapons/flashbang.item"
+            },
+            {
+              "Item": "items/weapons/grenade.item"
+            },
+            {
+              "Item": "items/weapons/grenade_smoke.item"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "__references": [],
+  "__version": 0
+}

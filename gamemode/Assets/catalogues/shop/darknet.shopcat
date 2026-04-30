@@ -1,0 +1,34 @@
+{
+  "DisplayName": "Darknet",
+  "Categories": [
+    {
+      "Name": "Graine",
+      "Items": [
+        {
+          "Item": "items/drugs/weed_seed_haze.item",
+          "MinOrderQuantity": 1
+        }
+      ]
+    },
+    {
+      "Name": "Pots",
+      "Items": [
+        {
+          "Item": "items/drugs/weed_pot.item",
+          "MinOrderQuantity": 1
+        }
+      ]
+    },
+    {
+      "Name": "Divers",
+      "Items": [
+        {
+          "Item": "items/others/soil.item",
+          "MinOrderQuantity": 1
+        }
+      ]
+    }
+  ],
+  "__references": [],
+  "__version": 0
+}

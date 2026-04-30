@@ -1,0 +1,13 @@
+{
+  "DisplayName": "I6 7.2L Diesel Truck",
+  "MaxTorqueNm": 800,
+  "MaxPowerKw": 200,
+  "Steepness": 15,
+  "RpmIdle": 600,
+  "RpmMaxTorque": 1600,
+  "RpmMaxPower": 2400,
+  "RpmRedline": 2800,
+  "RpmMax": 3200,
+  "TopSpeedKmh": 100,
+  "GearboxPreset": "gearboxes/6spd_diesel_truck.gearbox"
+}

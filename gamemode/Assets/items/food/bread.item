@@ -1,0 +1,404 @@
+{
+  "Name": "Pain",
+  "Description": "Un morceau de pain frais. Basique mais rassasiant.",
+  "IsEnabled": true,
+  "Price": 3,
+  "ItemCategoryType": "Food",
+  "WorldObjectPrefab": "items/food/bread.prefab",
+  "TrashObjectPrefab": null,
+  "PreviewObject": "pr/baguette_01.vmdl",
+  "Weight": 0.3,
+  "MaxStack": 10,
+  "Attributes": {
+    "expire_time": "7200",
+    "nutritional_value": "10"
+  },
+  "CanBePickedUp": true,
+  "IsUnique": false,
+  "IsConsumable": true,
+  "UseDuration": 1.5,
+  "CanBeSpawned": true,
+  "OnUseAction": {
+    "__version": 9,
+    "__guid": "65b69538-4ee4-4df4-a680-a9694251832d",
+    "__changeId": 185,
+    "UserData": {
+      "Title": "On Use Action",
+      "ReferencedComponentTypes": []
+    },
+    "Variables": [],
+    "Nodes": [
+      {
+        "Id": 133,
+        "Type": "input",
+        "UserData": {
+          "Position": "-840,384"
+        }
+      },
+      {
+        "Id": 134,
+        "Type": "property",
+        "ParentId": 133,
+        "Properties": {
+          "_name": "Client",
+          "_type": "OpenFramework.Systems.Pawn.Pawn"
+        }
+      },
+      {
+        "Id": 135,
+        "Type": "if",
+        "UserData": {
+          "Position": "648,504"
+        }
+      },
+      {
+        "Id": 136,
+        "Type": "nop",
+        "UserData": {
+          "Position": "-540,672"
+        }
+      },
+      {
+        "Id": 137,
+        "Type": "output",
+        "UserData": {
+          "Position": "432,408"
+        }
+      },
+      {
+        "Id": 138,
+        "Type": "core.add_hunger",
+        "UserData": {
+          "Position": "192,408"
+        }
+      },
+      {
+        "Id": 139,
+        "Type": "core.notify_success",
+        "UserData": {
+          "Position": "1020,480"
+        }
+      },
+      {
+        "Id": 140,
+        "Type": "core.notify_warning",
+        "UserData": {
+          "Position": "1020,600"
+        }
+      },
+      {
+        "Id": 141,
+        "Type": "property",
+        "Properties": {
+          "_name": "RestoreMinValue"
+        },
+        "UserData": {
+          "Position": "-324,528"
+        }
+      },
+      {
+        "Id": 142,
+        "Type": "property",
+        "Properties": {
+          "_name": "RestoreMaxValue"
+        },
+        "UserData": {
+          "Position": "-324,564"
+        }
+      },
+      {
+        "Id": 143,
+        "Type": "nop",
+        "UserData": {
+          "Position": "768,612"
+        }
+      },
+      {
+        "Id": 144,
+        "Type": "ui.item_action_progress",
+        "UserData": {
+          "Position": "24,288"
+        }
+      },
+      {
+        "Id": 145,
+        "Type": "property",
+        "Properties": {
+          "_name": "UseDuration"
+        },
+        "UserData": {
+          "Position": "-324,492"
+        }
+      },
+      {
+        "Id": 146,
+        "Type": "call",
+        "Properties": {
+          "_isStatic": false,
+          "_name": "PlaySound",
+          "_type": "OpenFramework.Systems.Pawn.Client"
+        },
+        "UserData": {
+          "Position": "840,216"
+        }
+      },
+      {
+        "Id": 147,
+        "Type": "property",
+        "Properties": {
+          "_name": "ConsumptionSound"
+        },
+        "UserData": {
+          "Position": "-324,456"
+        }
+      },
+      {
+        "Id": 148,
+        "Type": "property",
+        "ParentId": 133,
+        "Properties": {
+          "_name": "Metadata",
+          "_type": "OpenFramework.Inventory.InventoryItem"
+        }
+      }
+    ],
+    "Links": [
+      {
+        "SrcId": 133,
+        "SrcName": "arg1",
+        "DstId": 134,
+        "DstName": "_target"
+      },
+      {
+        "SrcId": 137,
+        "SrcName": "_signal",
+        "DstId": 135,
+        "DstName": "_signal"
+      },
+      {
+        "SrcId": 138,
+        "SrcName": "_result",
+        "DstId": 135,
+        "DstName": "condition"
+      },
+      {
+        "SrcId": 134,
+        "SrcName": "_result",
+        "DstId": 136,
+        "DstName": "in"
+      },
+      {
+        "SrcId": 138,
+        "SrcName": "_result",
+        "DstId": 137,
+        "DstName": "_result"
+      },
+      {
+        "SrcId": 138,
+        "SrcName": "_signal",
+        "DstId": 137,
+        "DstName": "_signal"
+      },
+      {
+        "SrcId": 144,
+        "SrcName": "_signal",
+        "DstId": 138,
+        "DstName": "_signal"
+      },
+      {
+        "SrcId": 142,
+        "SrcName": "_result",
+        "DstId": 138,
+        "DstName": "max",
+        "UserData": {
+          "x": 96
+        }
+      },
+      {
+        "SrcId": 141,
+        "SrcName": "_result",
+        "DstId": 138,
+        "DstName": "min",
+        "UserData": {
+          "x": 84
+        }
+      },
+      {
+        "SrcId": 134,
+        "SrcName": "_result",
+        "DstId": 138,
+        "DstName": "target"
+      },
+      {
+        "Id": 152,
+        "Value": "Vous avez manger du pain",
+        "DstId": 139,
+        "DstName": "message"
+      },
+      {
+        "SrcId": 143,
+        "SrcName": "out",
+        "DstId": 139,
+        "DstName": "target"
+      },
+      {
+        "Id": 153,
+        "Value": "Vous n\u0027avez plus faim",
+        "DstId": 140,
+        "DstName": "message"
+      },
+      {
+        "SrcId": 143,
+        "SrcName": "out",
+        "DstId": 140,
+        "DstName": "target"
+      },
+      {
+        "SrcId": 148,
+        "SrcName": "_result",
+        "DstId": 141,
+        "DstName": "_target"
+      },
+      {
+        "SrcId": 148,
+        "SrcName": "_result",
+        "DstId": 142,
+        "DstName": "_target"
+      },
+      {
+        "SrcId": 136,
+        "SrcName": "out",
+        "DstId": 143,
+        "DstName": "in"
+      },
+      {
+        "SrcId": 133,
+        "SrcName": "_signal",
+        "DstId": 144,
+        "DstName": "_signal"
+      },
+      {
+        "SrcId": 145,
+        "SrcName": "_result",
+        "DstId": 144,
+        "DstName": "duration",
+        "UserData": {
+          "x": 60
+        }
+      },
+      {
+        "Id": 154,
+        "Value": "Entrain de manger..",
+        "DstId": 144,
+        "DstName": "label"
+      },
+      {
+        "SrcId": 134,
+        "SrcName": "_result",
+        "DstId": 144,
+        "DstName": "target"
+      },
+      {
+        "SrcId": 148,
+        "SrcName": "_result",
+        "DstId": 145,
+        "DstName": "_target"
+      },
+      {
+        "SrcId": 135,
+        "SrcName": "true",
+        "DstId": 146,
+        "DstName": "_signal"
+      },
+      {
+        "SrcId": 134,
+        "SrcName": "_result",
+        "DstId": 146,
+        "DstName": "_target",
+        "UserData": {
+          "x": 144
+        }
+      },
+      {
+        "SrcId": 147,
+        "SrcName": "_result",
+        "DstId": 146,
+        "DstName": "resource"
+      },
+      {
+        "SrcId": 148,
+        "SrcName": "_result",
+        "DstId": 147,
+        "DstName": "_target"
+      },
+      {
+        "SrcId": 133,
+        "SrcName": "arg2",
+        "DstId": 148,
+        "DstName": "_target"
+      }
+    ]
+  },
+  "IsCraftable": false,
+  "Recipe": [],
+  "CraftJobAccess": "None",
+  "IsTools": false,
+  "ToolsResource": null,
+  "IsWeapon": false,
+  "WeaponResource": null,
+  "AmmoType": null,
+  "IsMagazine": false,
+  "MagAmmoType": null,
+  "MagCapacity": 12,
+  "IsAmmo": false,
+  "BaseDamage": 25,
+  "DamageFalloff": [
+    {
+      "x": 0,
+      "y": 1,
+      "in": 0,
+      "out": 0,
+      "mode": "Mirrored"
+    },
+    {
+      "x": 1,
+      "y": 0,
+      "in": 0,
+      "out": 0,
+      "mode": "Mirrored"
+    }
+  ],
+  "MaxRange": 1024000,
+  "BulletCount": 1,
+  "MuzzleEnergy": 500,
+  "BulletMass": 0.008,
+  "BulletCaliber": 9,
+  "MaxPenetrations": 3,
+  "MaxWallThickness": 128,
+  "RicochetMaxHits": 2,
+  "MaxRicochetAngle": 60,
+  "RicochetEnergyRetention": 0.55,
+  "IsPack": false,
+  "PackCapacity": 50,
+  "PackContentType": null,
+  "DefaultFillQuantity": 0,
+  "IsDocument": false,
+  "DocumentViewModel": null,
+  "IsFurniture": false,
+  "FurnitureCategoryType": "Chair",
+  "IsFood": true,
+  "RestoreMinValue": 15,
+  "RestoreMaxValue": 25,
+  "ConsumptionSound": "sounds/miam.sound",
+  "IsMinerals": false,
+  "IsClothing": false,
+  "ClothingResource": null,
+  "HasSubContainer": false,
+  "CanHeal": false,
+  "HealAmount": 1,
+  "__references": [
+    "openframework.baguette01#114654"
+  ],
+  "__version": 0,
+  "Icon": "ui/item_icons/bread.png"
+}

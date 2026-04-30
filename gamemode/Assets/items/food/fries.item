@@ -1,0 +1,362 @@
+{
+  "Name": "Frites",
+  "Description": "Des frites croustillantes. \u00C0 manger avant qu\u0027elles refroidissent.",
+  "IsEnabled": true,
+  "Price": 4,
+  "ItemCategoryType": "Food",
+  "WorldObjectPrefab": "items/food/fries.prefab",
+  "TrashObjectPrefab": null,
+  "PreviewObject": "pr/french_fries_02.vmdl",
+  "Weight": 0.25,
+  "MaxStack": 5,
+  "Image": "ui/items/fries.png",
+  "ConsumeOnUse": true,
+  "UseDuration": 2.0,
+  "CanBeSpawned": true,
+  "OnUseAction": {
+    "__version": 9,
+    "__guid": "38108a50-236f-494b-8a12-657a5cc03e59",
+    "__changeId": 81,
+    "UserData": {
+      "Title": "On Use Action",
+      "ReferencedComponentTypes": []
+    },
+    "Variables": [],
+    "Nodes": [
+      {
+        "Id": 17,
+        "Type": "input",
+        "UserData": {
+          "Position": "-324,132"
+        }
+      },
+      {
+        "Id": 18,
+        "Type": "property",
+        "ParentId": 17,
+        "Properties": {
+          "_name": "Client",
+          "_type": "OpenFramework.Systems.Pawn.Pawn"
+        }
+      },
+      {
+        "Id": 19,
+        "Type": "if",
+        "UserData": {
+          "Position": "1164,252"
+        }
+      },
+      {
+        "Id": 20,
+        "Type": "nop",
+        "UserData": {
+          "Position": "-24,420"
+        }
+      },
+      {
+        "Id": 21,
+        "Type": "output",
+        "UserData": {
+          "Position": "948,156"
+        }
+      },
+      {
+        "Id": 22,
+        "Type": "core.add_hunger",
+        "UserData": {
+          "Position": "708,156"
+        }
+      },
+      {
+        "Id": 23,
+        "Type": "core.notify_success",
+        "UserData": {
+          "Position": "1536,228"
+        }
+      },
+      {
+        "Id": 24,
+        "Type": "core.notify_warning",
+        "UserData": {
+          "Position": "1536,348"
+        }
+      },
+      {
+        "Id": 27,
+        "Type": "property",
+        "Properties": {
+          "_name": "RestoreMinValue"
+        },
+        "UserData": {
+          "Position": "192,276"
+        }
+      },
+      {
+        "Id": 28,
+        "Type": "property",
+        "Properties": {
+          "_name": "RestoreMaxValue"
+        },
+        "UserData": {
+          "Position": "192,312"
+        }
+      },
+      {
+        "Id": 29,
+        "Type": "nop",
+        "UserData": {
+          "Position": "1284,360"
+        }
+      },
+      {
+        "Id": 30,
+        "Type": "ui.item_action_progress",
+        "UserData": {
+          "Position": "540,36"
+        }
+      },
+      {
+        "Id": 31,
+        "Type": "property",
+        "Properties": {
+          "_name": "UseDuration"
+        },
+        "UserData": {
+          "Position": "192,240"
+        }
+      },
+      {
+        "Id": 32,
+        "Type": "call",
+        "Properties": {
+          "_isStatic": false,
+          "_name": "PlaySound",
+          "_type": "OpenFramework.Systems.Pawn.Client"
+        },
+        "UserData": {
+          "Position": "1356,-36"
+        }
+      },
+      {
+        "Id": 33,
+        "Type": "property",
+        "Properties": {
+          "_name": "ConsumptionSound"
+        },
+        "UserData": {
+          "Position": "192,204"
+        }
+      },
+      {
+        "Id": 45,
+        "Type": "property",
+        "ParentId": 17,
+        "Properties": {
+          "_name": "Metadata",
+          "_type": "OpenFramework.Inventory.InventoryItem"
+        }
+      }
+    ],
+    "Links": [
+      {
+        "SrcId": 17,
+        "SrcName": "arg1",
+        "DstId": 18,
+        "DstName": "_target"
+      },
+      {
+        "SrcId": 21,
+        "SrcName": "_signal",
+        "DstId": 19,
+        "DstName": "_signal"
+      },
+      {
+        "SrcId": 22,
+        "SrcName": "_result",
+        "DstId": 19,
+        "DstName": "condition"
+      },
+      {
+        "SrcId": 18,
+        "SrcName": "_result",
+        "DstId": 20,
+        "DstName": "in"
+      },
+      {
+        "SrcId": 22,
+        "SrcName": "_result",
+        "DstId": 21,
+        "DstName": "_result"
+      },
+      {
+        "SrcId": 22,
+        "SrcName": "_signal",
+        "DstId": 21,
+        "DstName": "_signal"
+      },
+      {
+        "SrcId": 30,
+        "SrcName": "_signal",
+        "DstId": 22,
+        "DstName": "_signal"
+      },
+      {
+        "SrcId": 28,
+        "SrcName": "_result",
+        "DstId": 22,
+        "DstName": "max",
+        "UserData": {
+          "x": 96
+        }
+      },
+      {
+        "SrcId": 27,
+        "SrcName": "_result",
+        "DstId": 22,
+        "DstName": "min",
+        "UserData": {
+          "x": 84
+        }
+      },
+      {
+        "SrcId": 18,
+        "SrcName": "_result",
+        "DstId": 22,
+        "DstName": "target"
+      },
+      {
+        "Id": 46,
+        "Value": "Vous avez manger du pain",
+        "DstId": 23,
+        "DstName": "message"
+      },
+      {
+        "SrcId": 29,
+        "SrcName": "out",
+        "DstId": 23,
+        "DstName": "target"
+      },
+      {
+        "Id": 47,
+        "Value": "Vous n\u0027avez plus faim",
+        "DstId": 24,
+        "DstName": "message"
+      },
+      {
+        "SrcId": 29,
+        "SrcName": "out",
+        "DstId": 24,
+        "DstName": "target"
+      },
+      {
+        "SrcId": 45,
+        "SrcName": "_result",
+        "DstId": 27,
+        "DstName": "_target"
+      },
+      {
+        "SrcId": 45,
+        "SrcName": "_result",
+        "DstId": 28,
+        "DstName": "_target"
+      },
+      {
+        "SrcId": 20,
+        "SrcName": "out",
+        "DstId": 29,
+        "DstName": "in"
+      },
+      {
+        "SrcId": 17,
+        "SrcName": "_signal",
+        "DstId": 30,
+        "DstName": "_signal"
+      },
+      {
+        "SrcId": 31,
+        "SrcName": "_result",
+        "DstId": 30,
+        "DstName": "duration",
+        "UserData": {
+          "x": 60
+        }
+      },
+      {
+        "Id": 48,
+        "Value": "Entrain de manger..",
+        "DstId": 30,
+        "DstName": "label"
+      },
+      {
+        "SrcId": 18,
+        "SrcName": "_result",
+        "DstId": 30,
+        "DstName": "target"
+      },
+      {
+        "SrcId": 45,
+        "SrcName": "_result",
+        "DstId": 31,
+        "DstName": "_target"
+      },
+      {
+        "SrcId": 19,
+        "SrcName": "true",
+        "DstId": 32,
+        "DstName": "_signal"
+      },
+      {
+        "SrcId": 18,
+        "SrcName": "_result",
+        "DstId": 32,
+        "DstName": "_target",
+        "UserData": {
+          "x": 144
+        }
+      },
+      {
+        "SrcId": 33,
+        "SrcName": "_result",
+        "DstId": 32,
+        "DstName": "resource"
+      },
+      {
+        "SrcId": 45,
+        "SrcName": "_result",
+        "DstId": 33,
+        "DstName": "_target"
+      },
+      {
+        "SrcId": 17,
+        "SrcName": "arg2",
+        "DstId": 45,
+        "DstName": "_target"
+      }
+    ]
+  },
+  "IsCraftable": false,
+  "Recipe": [],
+  "IsTools": false,
+  "ToolsResource": null,
+  "IsWeapon": false,
+  "WeaponResource": null,
+  "IsDocument": false,
+  "DocumentViewModel": null,
+  "IsFurniture": false,
+  "FurnitureCategoryType": "Chair",
+  "IsFood": true,
+  "RestoreMinValue": 10,
+  "RestoreMaxValue": 20,
+  "ConsumptionSound": null,
+  "IsMinerals": false,
+  "IsClothing": false,
+  "ClothingResource": null,
+  "__references": [
+    "openframework.frenchfries02#146635"
+  ],
+  "__version": 0,
+  "Attributes": {
+    "expire_time": "3600"
+  },
+  "Icon": "ui/item_icons/fries.png"
+}

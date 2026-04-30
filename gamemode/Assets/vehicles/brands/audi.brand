@@ -1,0 +1,9 @@
+{
+  "Name": "Audi",
+  "Slogan": "Vorsprung durch Technik",
+  "Image": "assets/brands/audi.svg",
+  "Country": "assets/country/germany.country",
+  "Day": 16,
+  "Month": 7,
+  "Year": 1909
+}

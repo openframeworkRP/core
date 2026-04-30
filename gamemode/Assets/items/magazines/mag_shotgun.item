@@ -1,0 +1,92 @@
+{
+  "Name": "Tube Shotgun",
+  "Description": "Tube chargeur interne pour fusil a pompe, contient 6 cartouches 12ga.",
+  "IsEnabled": true,
+  "Price": 25,
+  "ItemCategoryType": "Magazine",
+  "WorldObjectPrefab": null,
+  "TrashObjectPrefab": null,
+  "PreviewObject": "models/weapons/sbox_ammo/12g_shell/12g_shell.vmdl",
+  "Icon": "ui/item_icons/mag_shotgun.png",
+  "Weight": 0.1,
+  "MaxStack": 1,
+  "Attributes": {
+    "current_ammo": "0"
+  },
+  "CanBePickedUp": true,
+  "IsUnique": false,
+  "IsConsumable": false,
+  "UseDuration": -1,
+  "CanBeSpawned": false,
+  "OnUseAction": null,
+  "IsCraftable": true,
+  "Recipe": [
+    {
+      "ItemResource": "items/primary_resources/steel.item",
+      "Quantity": 2
+    },
+    {
+      "ItemResource": "items/primary_resources/iron.item",
+      "Quantity": 1
+    }
+  ],
+  "CraftJobAccess": "Armurier",
+  "IsTools": false,
+  "ToolsResource": null,
+  "IsWeapon": false,
+  "WeaponResource": null,
+  "AmmoType": null,
+  "IsMagazine": true,
+  "MagAmmoType": "items/ammo/bullet_12ga.item",
+  "MagCapacity": 6,
+  "IsAmmo": false,
+  "BaseDamage": 25,
+  "DamageFalloff": [
+    {
+      "x": 0,
+      "y": 1,
+      "in": 0,
+      "out": 0,
+      "mode": "Mirrored"
+    },
+    {
+      "x": 1,
+      "y": 0,
+      "in": 0,
+      "out": 0,
+      "mode": "Mirrored"
+    }
+  ],
+  "MaxRange": 1024000,
+  "BulletCount": 1,
+  "MuzzleEnergy": 500,
+  "BulletMass": 0.008,
+  "BulletCaliber": 9,
+  "MaxPenetrations": 3,
+  "MaxWallThickness": 128,
+  "RicochetMaxHits": 2,
+  "MaxRicochetAngle": 60,
+  "RicochetEnergyRetention": 0.55,
+  "IsPack": false,
+  "PackCapacity": 0,
+  "PackContentType": null,
+  "DefaultFillQuantity": 0,
+  "IsDocument": false,
+  "DocumentViewModel": null,
+  "IsFurniture": false,
+  "FurnitureCategoryType": "None",
+  "IsFood": false,
+  "RestoreMinValue": 1,
+  "RestoreMaxValue": 10,
+  "ConsumptionSound": null,
+  "IsMinerals": false,
+  "IsClothing": false,
+  "ClothingResource": null,
+  "HasSubContainer": false,
+  "CanHeal": false,
+  "HealAmount": 1,
+  "__references": [
+    "facepunch.12g_shell#144859"
+  ],
+  "__version": 0
+}

@@ -1,0 +1,9 @@
+{
+  "Name": "Alfa Romeo",
+  "Slogan": "La meccanica delle emozioni",
+  "Image": "assets/brands/alfa_romeo.svg",
+  "Country": "assets/country/italy.country",
+  "Day": 24,
+  "Month": 6,
+  "Year": 1910
+}

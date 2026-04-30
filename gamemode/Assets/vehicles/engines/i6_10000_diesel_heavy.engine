@@ -1,0 +1,13 @@
+{
+  "DisplayName": "I6 10L Diesel Heavy",
+  "MaxTorqueNm": 1200,
+  "MaxPowerKw": 250,
+  "Steepness": 15,
+  "RpmIdle": 550,
+  "RpmMaxTorque": 1400,
+  "RpmMaxPower": 2100,
+  "RpmRedline": 2500,
+  "RpmMax": 2800,
+  "TopSpeedKmh": 90,
+  "GearboxPreset": "gearboxes/3spd_heavy.gearbox"
+}

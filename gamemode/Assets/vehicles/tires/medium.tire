@@ -1,0 +1,15 @@
+{
+  "DisplayName": "Medium (Performance Road)",
+  "FrictionMu": 0.9,
+  "LoadSensitivity": 0.8,
+  "NominalLoad": 1400,
+  "RollingResistance": 0.015,
+  "LatB": 9.0,
+  "LatC": 1.4,
+  "LatD": 0.9,
+  "LatE": 0.94,
+  "LongB": 10.0,
+  "LongC": 2.0,
+  "LongD": 0.9,
+  "LongE": 0.94
+}

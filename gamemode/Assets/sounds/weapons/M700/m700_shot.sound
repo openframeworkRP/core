@@ -1,0 +1,45 @@
+{
+  "UI": false,
+  "Volume": "0.5",
+  "Pitch": "1",
+  "Decibels": 10000,
+  "SelectionMode": "Random",
+  "Sounds": [
+    "sounds/weapons/svd/svd - 1.vsnd"
+  ],
+  "Occlusion": true,
+  "AirAbsorption": true,
+  "Transmission": true,
+  "OcclusionRadius": 256,
+  "DistanceAttenuation": true,
+  "Distance": 5000,
+  "Falloff": [
+    {
+      "x": 0,
+      "y": 1,
+      "in": 0,
+      "out": 0,
+      "mode": "Mirrored"
+    },
+    {
+      "x": 0.18898809,
+      "y": 0.381086,
+      "in": 2.0164757,
+      "out": -2.0164757,
+      "mode": "Mirrored"
+    },
+    {
+      "x": 1,
+      "y": 0,
+      "in": 0.19230774,
+      "out": -0.19230774,
+      "mode": "Mirrored"
+    }
+  ],
+  "DefaultMixer": {
+    "Name": "game",
+    "Id": "f83e30e8-821b-4bd7-93e4-7bf0fa3e59f7"
+  },
+  "__references": [],
+  "__version": 1
+}

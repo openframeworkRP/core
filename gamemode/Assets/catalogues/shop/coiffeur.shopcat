@@ -1,0 +1,23 @@
+{
+  "DisplayName": "Coiffeur",
+  "Categories": [
+    {
+      "Name": "Coupes",
+      "Items": [
+        { "Item": "items/clothings/Cheveux Court.item", "MinOrderQuantity": 1 },
+        { "Item": "items/clothings/Cheveux Locks Long.item", "MinOrderQuantity": 1 },
+        { "Item": "items/clothings/hairs-01.item", "MinOrderQuantity": 1 },
+        { "Item": "items/clothings/hairs-01-f.item", "MinOrderQuantity": 1 },
+        { "Item": "items/clothings/hairs-02-f.item", "MinOrderQuantity": 1 },
+        { "Item": "items/clothings/hair_skullet.item", "MinOrderQuantity": 1 }
+      ]
+    },
+    {
+      "Name": "Barbes",
+      "Items": [
+        { "Item": "items/clothings/Barbe Clairseme.item", "MinOrderQuantity": 1 },
+        { "Item": "items/clothings/Barbe Viking.item", "MinOrderQuantity": 1 }
+      ]
+    }
+  ]
+}

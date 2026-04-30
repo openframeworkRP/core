@@ -1,0 +1,9 @@
+{
+  "Name": "Volkswagen",
+  "Slogan": "Das Auto",
+  "Image": "assets/brands/volkswagen.svg",
+  "Country": "assets/country/germany.country",
+  "Day": 28,
+  "Month": 5,
+  "Year": 1937
+}

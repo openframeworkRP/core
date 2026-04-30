@@ -1,0 +1,125 @@
+{
+  "RootObject": {
+    "__guid": "0d80eec7-9acf-4e93-974d-66e8eefe224e",
+    "__version": 1,
+    "Flags": 0,
+    "Name": "impact_default",
+    "Position": "0,0,0",
+    "Rotation": "0,0,0,1",
+    "Scale": "1,1,1",
+    "Tags": "particles",
+    "Enabled": true,
+    "NetworkMode": 2,
+    "NetworkInterpolation": true,
+    "NetworkOrphaned": 0,
+    "OwnerTransfer": 1,
+    "Components": [
+      {
+        "__type": "TemporaryEffect",
+        "__guid": "650dc654-ed1e-429c-b273-ee335ea0f2cf",
+        "__enabled": true,
+        "DestroyAfterSeconds": 2,
+        "OnComponentDestroy": null,
+        "OnComponentDisabled": null,
+        "OnComponentEnabled": null,
+        "OnComponentFixedUpdate": null,
+        "OnComponentStart": null,
+        "OnComponentUpdate": null,
+        "WaitForChildEffects": false
+      }
+    ],
+    "Children": [
+      {
+        "__guid": "de04541e-5fef-421f-9d48-3055aa09c096",
+        "__version": 1,
+        "__Prefab": "particles/surfaces/impact.generic.prefab",
+        "__PrefabInstancePatch": {
+          "AddedObjects": [],
+          "RemovedObjects": [],
+          "PropertyOverrides": [
+            {
+              "Target": {
+                "Type": "GameObject",
+                "IdValue": "6febfff3-b221-44a0-93bb-07b46b120dbf"
+              },
+              "Property": "Tags",
+              "Value": ""
+            },
+            {
+              "Target": {
+                "Type": "GameObject",
+                "IdValue": "08d94440-46a3-478a-b11c-33eb94b5f256"
+              },
+              "Property": "Tags",
+              "Value": ""
+            },
+            {
+              "Target": {
+                "Type": "GameObject",
+                "IdValue": "29ba4e21-e880-447d-89e4-9d5a857653dd"
+              },
+              "Property": "Tags",
+              "Value": ""
+            },
+            {
+              "Target": {
+                "Type": "GameObject",
+                "IdValue": "89b56657-fd50-4ac4-aba3-4997e5c7827b"
+              },
+              "Property": "Tags",
+              "Value": ""
+            }
+          ],
+          "MovedObjects": []
+        },
+        "__PrefabIdToInstanceId": {
+          "7bd5218f-04c4-4b25-abfc-fca662c4e126": "de04541e-5fef-421f-9d48-3055aa09c096",
+          "6febfff3-b221-44a0-93bb-07b46b120dbf": "68e94cc1-94ff-4691-a662-b4537f7cfa66",
+          "4305e601-08fe-44dc-a4c2-55347cbf9688": "2b13ef08-e75d-429e-99e4-3c3b7a80721b",
+          "6bd3eeba-af43-4ace-b313-9c48eb0aa242": "8d7facd8-fd37-43d6-947e-a3fed85c7952",
+          "601649cd-9a54-43f0-a182-bf84989d084d": "953db9a0-55b7-4f71-8b3c-6a4a2f62db59",
+          "08d94440-46a3-478a-b11c-33eb94b5f256": "c37dee02-34d2-4535-b529-e982da7ea702",
+          "1baa4d97-ca7a-4eda-89a0-db58f1ccf4c8": "35b78b57-91a5-4fcc-a3a3-a2c9b90e035b",
+          "3a4f28e1-37f4-47d1-a8aa-4dbbdb9f99c8": "42f93a41-bd6b-4e02-8d95-a392b46166eb",
+          "2427e341-5137-4e55-9bb1-dae9694090b3": "5e7a0632-db5d-48f3-a8c4-e5006ff26dd2",
+          "29ba4e21-e880-447d-89e4-9d5a857653dd": "4b723f82-0cde-42ef-bd64-ea73516a1b6b",
+          "a77cd56c-7751-4fec-9781-de0bb305c35b": "775e0f4e-56d7-4924-98c8-97805b9684d1",
+          "2554acb5-9974-4d78-9d09-d1bdc94d2144": "7c69decb-7aff-41bf-96fe-5487ea48b6b4",
+          "e32dc338-36b7-421e-9496-c1de14183d2d": "9159e308-0aee-4aba-8658-789a57ac04b8",
+          "89b56657-fd50-4ac4-aba3-4997e5c7827b": "89978091-a6a2-4eed-b80d-5e3977ce3b88",
+          "20a37e63-0020-4dac-b59b-81ec44d14c02": "a537d8b6-db9e-4fff-8916-afa06e24f567",
+          "d208a74d-c1c0-42ea-b94b-81d6beba3463": "ddce7f12-0849-4c54-8a98-ebebc425579e",
+          "558e1d2a-0d07-4a4b-9f36-5839e81a0863": "b93b7711-e3f7-476f-a62b-db392c677e63"
+        }
+      }
+    ],
+    "__properties": {
+      "NetworkInterpolation": true,
+      "TimeScale": 1,
+      "WantsSystemScene": true,
+      "Metadata": {},
+      "NavMesh": {
+        "Enabled": false,
+        "IncludeStaticBodies": true,
+        "IncludeKeyframedBodies": true,
+        "EditorAutoUpdate": true,
+        "AgentHeight": 64,
+        "AgentRadius": 16,
+        "AgentStepSize": 18,
+        "AgentMaxSlope": 40,
+        "ExcludedBodies": "",
+        "IncludedBodies": ""
+      }
+    },
+    "__variables": []
+  },
+  "ResourceVersion": 2,
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "DontBreakAsTemplate": false,
+  "__references": [
+    "facepunch.impactgeneric#110495"
+  ],
+  "__version": 2
+}

@@ -1,0 +1,9 @@
+{
+  "DisplayName": "Marine Forward/Reverse",
+  "ForwardGearRatios": [2.14, 1.00],
+  "ReverseGearRatio": 2.50,
+  "FinalDriveRatio": 1.85,
+  "UpshiftRpm": 4500,
+  "DownshiftRpm": 2000,
+  "ShiftCooldown": 0.8
+}

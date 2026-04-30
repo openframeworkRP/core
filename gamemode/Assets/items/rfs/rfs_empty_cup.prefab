@@ -1,0 +1,119 @@
+{
+  "RootObject": {
+    "__guid": "00ab3d73-8a49-4f01-9117-c294d88e3186",
+    "__version": 2,
+    "Flags": 0,
+    "Name": "rfs_empty_cup",
+    "Position": "0,0,0",
+    "Rotation": "0,0,0,1",
+    "Scale": "1,1,1",
+    "Tags": "grab,actionmenu,rfs_ingredient",
+    "Enabled": true,
+    "NetworkMode": 1,
+    "NetworkFlags": 0,
+    "NetworkOrphaned": 0,
+    "NetworkTransmit": true,
+    "OwnerTransfer": 0,
+    "Components": [
+      {
+        "__type": "Sandbox.ModelRenderer",
+        "__guid": "fbc51d50-8f49-4fc0-a197-a6fc69b527f3",
+        "__enabled": true,
+        "Flags": 0,
+        "BodyGroups": 18446744073709551615,
+        "CreateAttachments": false,
+        "Model": "models/sbox_props/cola_can/cola_can.vmdl",
+        "RenderType": "On",
+        "Tint": "0.85,0.85,0.85,1"
+      },
+      {
+        "__type": "Sandbox.ModelCollider",
+        "__guid": "1e647b5c-33fb-44ee-9c7c-c70768558a64",
+        "__enabled": true,
+        "Flags": 0,
+        "ColliderFlags": 0,
+        "IsTrigger": false,
+        "Model": "models/sbox_props/cola_can/cola_can.vmdl",
+        "Static": false
+      },
+      {
+        "__type": "Sandbox.Rigidbody",
+        "__guid": "bcb0e7e2-e15b-48b1-8c05-2ad09e0e94db",
+        "__enabled": true,
+        "Flags": 0,
+        "AngularDamping": 0,
+        "Gravity": true,
+        "GravityScale": 1,
+        "LinearDamping": 0,
+        "Locking": {
+          "X": false,
+          "Y": false,
+          "Z": false,
+          "Pitch": false,
+          "Yaw": false,
+          "Roll": false
+        },
+        "MassOverride": 0,
+        "MotionEnabled": true,
+        "OverrideMassCenter": false,
+        "RigidbodyFlags": 0,
+        "StartAsleep": false
+      },
+      {
+        "__type": "OpenFramework.Systems.Cooking.Ingredient",
+        "__guid": "93930fbd-a9a1-49f5-a61a-6a7decacda8f",
+        "__enabled": true,
+        "Flags": 0,
+        "BurnedCalories": 0,
+        "BurnedTint": "0.85,0.85,0.85,1",
+        "CookedCalories": 0,
+        "CookedTint": "0.85,0.85,0.85,1",
+        "IsCookable": false,
+        "RawCalories": 0,
+        "RawTint": "0.85,0.85,0.85,1",
+        "SourceType": "EmptyCup"
+      },
+      {
+        "__type": "OpenFramework.Inventory.InventoryItem",
+        "__guid": "89bf3425-ead2-4a1e-9b64-51a59cb676c1",
+        "__enabled": true,
+        "Flags": 0,
+        "Attributes": {},
+        "Metadata": "items/rfs/rfs_empty_cup.item",
+        "Quantity": 1,
+        "SlotIndex": -1
+      }
+    ],
+    "Children": [],
+    "__properties": {
+      "NetworkInterpolation": true,
+      "TimeScale": 1,
+      "WantsSystemScene": true,
+      "Metadata": {},
+      "NavMesh": {
+        "Enabled": false,
+        "IncludeStaticBodies": true,
+        "IncludeKeyframedBodies": true,
+        "EditorAutoUpdate": false,
+        "AgentHeight": 64,
+        "AgentRadius": 16,
+        "AgentStepSize": 18,
+        "AgentMaxSlope": 40,
+        "ExcludedBodies": "",
+        "IncludedBodies": "",
+        "DeferGeneration": false,
+        "CustomBounds": false
+      }
+    },
+    "__variables": []
+  },
+  "ResourceVersion": 2,
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "DontBreakAsTemplate": false,
+  "__references": [
+    "facepunch.soda_can#33662"
+  ],
+  "__version": 2
+}

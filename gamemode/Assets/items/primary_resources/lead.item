@@ -1,0 +1,16 @@
+{
+  "Name": "Plomb",
+  "Description": "",
+  "IsEnabled": true,
+  "Price": 12,
+  "Weight": 0.8,
+  "MaxStack": 50,
+  "Attributes": {},
+  "CanBePickedUp": true,
+  "IsMinerals": true,
+  "IsConsumable": false,
+  "IsCraftable": false,
+  "IsUnique": false,
+  "Recipe": [],
+  "__version": 0
+}

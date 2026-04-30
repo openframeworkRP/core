@@ -1,0 +1,9 @@
+{
+  "DisplayName": "4-Speed Retro",
+  "ForwardGearRatios": [3.50, 2.17, 1.41, 1.00],
+  "ReverseGearRatio": 3.66,
+  "FinalDriveRatio": 4.11,
+  "UpshiftRpm": 5000,
+  "DownshiftRpm": 1800,
+  "ShiftCooldown": 0.5
+}

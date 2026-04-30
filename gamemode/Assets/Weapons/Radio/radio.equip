@@ -1,0 +1,26 @@
+{
+  "Name": "radio",
+  "Description": "",
+  "Slot": "Handheld",
+  "DropOnDisconnect": false,
+  "Icon": null,
+  "MainPrefab": {
+    "_type": "gameobject",
+    "prefab": "weapons/radio/radio.prefab"
+  },
+  "WorldModelPrefab": {
+    "_type": "gameobject",
+    "prefab": "weapons/radio/wm_radio.prefab"
+  },
+  "ViewModelPrefab": {
+    "_type": "gameobject",
+    "prefab": "weapons/radio/vm_radio.prefab"
+  },
+  "WorldModel": null,
+  "ArmorReduction": null,
+  "HelmetReduction": null,
+  "WorldModelBodyGroups": 0,
+  "CollisionOffset": 6,
+  "__references": [],
+  "__version": 0
+}

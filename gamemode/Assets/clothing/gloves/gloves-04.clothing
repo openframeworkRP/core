@@ -1,0 +1,44 @@
+{
+  "HasHumanSkin": false,
+  "HumanSkinModel": null,
+  "HumanSkinMaterial": null,
+  "HumanEyesMaterial": null,
+  "HumanSkinBodyGroups": 0,
+  "HumanSkinMaterialGroup": null,
+  "HumanSkinTags": null,
+  "Title": "Fingerless Gloves",
+  "Subtitle": null,
+  "Category": "Gloves",
+  "ConditionalModels": {},
+  "Tags": null,
+  "Parent": null,
+  "Model": "models/citizen_clothes/gloves/fingerless_gloves/models/fingerless_gloves.vmdl",
+  "HumanAltModel": "models/citizen_clothes/gloves/fingerless_gloves/models/fingerless_gloves_m_human.vmdl",
+  "HumanAltFemaleModel": null,
+  "SkinMaterial": null,
+  "EyesMaterial": null,
+  "MaterialGroup": null,
+  "SlotsUnder": "LeftHand, RightHand",
+  "SlotsOver": 0,
+  "HideBody": "Hands",
+  "AllowTintSelect": false,
+  "TintSelection": {
+    "blend": "Linear",
+    "color": [
+      {
+        "t": 0.5,
+        "c": "1,1,1,1"
+      }
+    ],
+    "alpha": []
+  },
+  "TintDefault": 0.5,
+  "SteamItemDefinitionId": null,
+  "Icon": {
+    "Path": "models/citizen_clothes/gloves/fingerless_gloves/fingerless_gloves.clothing.png",
+    "Mode": "Hand",
+    "PositionOffset": "0,0,0"
+  },
+  "__references": [],
+  "__version": 0
+}

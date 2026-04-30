@@ -1,0 +1,352 @@
+{
+  "EditorData": {
+    "SampleRate": 30,
+    "Duration": 82920,
+    "ExportConfig": {
+      "FrameRate": 60,
+      "Resolution": "1920,1080",
+      "Mode": "VideoFile",
+      "CustomBitrate": 0,
+      "Codec": "H265",
+      "Exposure": "VeryFast",
+      "MotionQuality": "High"
+    },
+    "Tracks": {
+      "6af30643-3b91-49d3-b5b1-3e4bc704e87a": {
+        "$type": "Reference",
+        "ReferenceId": "200f87a4-2311-4c04-8f33-568012b4b150",
+        "Name": "Camera",
+        "TargetType": "Sandbox.GameObject"
+      },
+      "71003071-90c7-41e7-9b8f-b29d4fb0639f": {
+        "$type": "Property",
+        "Name": "LocalRotation",
+        "TargetType": "Rotation",
+        "ParentId": "6af30643-3b91-49d3-b5b1-3e4bc704e87a",
+        "Blocks": [
+          {
+            "TimeRange": {
+              "Start": 0,
+              "End": 82920
+            },
+            "Signal": {
+              "$id": 1,
+              "$type": "Keyframes",
+              "Keyframes": [
+                {
+                  "Time": 0,
+                  "Value": "-0.00000000004119063,-0.00000000004152602,0.7042341,-0.7099679",
+                  "Interpolation": "Step"
+                },
+                {
+                  "Time": 9960,
+                  "Value": "-0.00000000004119063,-0.00000000004152602,0.7042341,-0.7099679",
+                  "Interpolation": "Quadratic"
+                },
+                {
+                  "Time": 10800,
+                  "Value": "-0.00000000005848998,-0.00000000000000001387779,1,-0.00000002980232",
+                  "Interpolation": "Quadratic"
+                },
+                {
+                  "Time": 14400,
+                  "Value": "-0.00000000004135868,0.00000000004135865,0.7071068,0.7071067",
+                  "Interpolation": "Quadratic"
+                },
+                {
+                  "Time": 17280,
+                  "Value": "-0.00000000005806809,0.000000000007012478,0.9927869,0.1198922",
+                  "Interpolation": "Step"
+                },
+                {
+                  "Time": 17940,
+                  "Value": "-0.00000000005848998,-0.00000000000000001387779,1,0",
+                  "Interpolation": "Quadratic"
+                },
+                {
+                  "Time": 20940,
+                  "Value": "-0.0000000000584895,-0.000000000000237161,0.9999919,-0.004054487",
+                  "Interpolation": "Linear"
+                },
+                {
+                  "Time": 23820,
+                  "Value": "-0.00000000004152603,0.00000000004119062,0.7099681,0.704234",
+                  "Interpolation": "Quadratic"
+                },
+                {
+                  "Time": 27600,
+                  "Value": "-0.0000000000425559,0.00000000004012573,0.7275757,0.6860275",
+                  "Interpolation": "Quadratic"
+                },
+                {
+                  "Time": 31140,
+                  "Value": "-0.0000000000584895,-0.0000000000002371645,0.9999919,-0.004054546",
+                  "Interpolation": "Quadratic"
+                },
+                {
+                  "Time": 33840,
+                  "Value": "-0.06883086,0.0002790802,0.9976202,-0.00404493",
+                  "Interpolation": "Cubic"
+                },
+                {
+                  "Time": 37020,
+                  "Value": "0.04483854,0.0007363553,0.9989862,-0.00398712",
+                  "Interpolation": "Cubic"
+                },
+                {
+                  "Time": 40440,
+                  "Value": "0.04483854,0.0007363553,0.9989862,-0.00398712",
+                  "Interpolation": "Cubic"
+                },
+                {
+                  "Time": 43920,
+                  "Value": "-0.0003953207,0.000392158,0.7099408,0.7042611",
+                  "Interpolation": "Cubic"
+                },
+                {
+                  "Time": 48540,
+                  "Value": "-0.00007489833,0.0005517758,0.9919609,0.1265434",
+                  "Interpolation": "Cubic"
+                },
+                {
+                  "Time": 50580,
+                  "Value": "-0.04893902,0.0003596292,0.9987935,-0.004038509",
+                  "Interpolation": "Cubic"
+                },
+                {
+                  "Time": 54000,
+                  "Value": "-0.0003953273,0.0003921646,0.7099409,0.7042611",
+                  "Interpolation": "Cubic"
+                },
+                {
+                  "Time": 56880,
+                  "Value": "-0.006128117,-0.001344409,-0.02110055,0.9997578",
+                  "Interpolation": "Cubic"
+                },
+                {
+                  "Time": 59940,
+                  "Value": "-0.006128117,-0.001344409,-0.02110055,0.9997578",
+                  "Interpolation": "Cubic"
+                },
+                {
+                  "Time": 62640,
+                  "Value": "-0.005344601,0.0032858,0.6787537,0.7343392",
+                  "Interpolation": "Cubic"
+                },
+                {
+                  "Time": 64860,
+                  "Value": "-0.003576365,-0.005154694,-0.6956753,0.7183288",
+                  "Interpolation": "Cubic"
+                },
+                {
+                  "Time": 68460,
+                  "Value": "-0.003576365,-0.005154694,-0.6956753,0.7183288",
+                  "Interpolation": "Cubic"
+                },
+                {
+                  "Time": 70800,
+                  "Value": "-0.006123632,-0.001364694,-0.0244112,0.9996822",
+                  "Interpolation": "Cubic"
+                },
+                {
+                  "Time": 73860,
+                  "Value": "-0.00003693919,-0.001513297,-0.02440244,0.9997011",
+                  "Interpolation": "Cubic"
+                },
+                {
+                  "Time": 76260,
+                  "Value": "-0.001105994,-0.001033542,0.6964495,0.7176045",
+                  "Interpolation": "Cubic"
+                },
+                {
+                  "Time": 79080,
+                  "Value": "-0.001105994,-0.001033542,0.6964495,0.7176045",
+                  "Interpolation": "Cubic"
+                },
+                {
+                  "Time": 81420,
+                  "Value": "-0.00006246334,-0.001512459,-0.007533938,0.9999707",
+                  "Interpolation": "Cubic"
+                },
+                {
+                  "Time": 82920,
+                  "Value": "-0.00000000004119063,-0.00000000004152602,0.7042341,-0.7099679",
+                  "Interpolation": "Step"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "44d1697e-954c-4d1a-9244-51b46d1af9ff": {
+        "$type": "Property",
+        "Name": "LocalPosition",
+        "TargetType": "Vector3",
+        "ParentId": "6af30643-3b91-49d3-b5b1-3e4bc704e87a",
+        "Blocks": [
+          {
+            "TimeRange": {
+              "Start": 0,
+              "End": 82920
+            },
+            "Signal": {
+              "$id": 1,
+              "$type": "Keyframes",
+              "Keyframes": [
+                {
+                  "Time": 0,
+                  "Value": "3177.593,5333.945,6212.936",
+                  "Interpolation": "Cubic"
+                },
+                {
+                  "Time": 3600,
+                  "Value": "3174.585,751.7429,6212.936",
+                  "Interpolation": "Cubic"
+                },
+                {
+                  "Time": 7260,
+                  "Value": "3171.004,-2829.263,6212.936",
+                  "Interpolation": "Cubic"
+                },
+                {
+                  "Time": 10800,
+                  "Value": "3266.724,-4990.823,6212.936",
+                  "Interpolation": "Quadratic"
+                },
+                {
+                  "Time": 14400,
+                  "Value": "367.9493,-5005.823,6212.936",
+                  "Interpolation": "Cubic"
+                },
+                {
+                  "Time": 17940,
+                  "Value": "367.9493,-4008.922,6212.936",
+                  "Interpolation": "Quadratic"
+                },
+                {
+                  "Time": 20940,
+                  "Value": "-4198.325,-4008.922,6212.936",
+                  "Interpolation": "Quadratic"
+                },
+                {
+                  "Time": 23820,
+                  "Value": "-4582.494,-4008.922,6007.192",
+                  "Interpolation": "Quadratic"
+                },
+                {
+                  "Time": 27600,
+                  "Value": "-4582.494,-916.2268,6007.192",
+                  "Interpolation": "Quadratic"
+                },
+                {
+                  "Time": 27660,
+                  "Value": "-4582.494,-914.7161,6007.192",
+                  "Interpolation": "Quadratic"
+                },
+                {
+                  "Time": 31140,
+                  "Value": "-4991.932,-261.4139,6007.192",
+                  "Interpolation": "Quadratic"
+                },
+                {
+                  "Time": 33840,
+                  "Value": "-5764.706,-267.765,5878.062",
+                  "Interpolation": "Cubic"
+                },
+                {
+                  "Time": 37020,
+                  "Value": "-6378.3,-272.8655,5723.71",
+                  "Interpolation": "Cubic"
+                },
+                {
+                  "Time": 40440,
+                  "Value": "-8238.929,-287.6967,5826.146",
+                  "Interpolation": "Cubic"
+                },
+                {
+                  "Time": 43920,
+                  "Value": "-9234.301,-295.667,5848.523",
+                  "Interpolation": "Cubic"
+                },
+                {
+                  "Time": 48540,
+                  "Value": "-9245.558,1105.624,5846.964",
+                  "Interpolation": "Cubic"
+                },
+                {
+                  "Time": 50580,
+                  "Value": "-9205.418,1323.029,5860.149",
+                  "Interpolation": "Cubic"
+                },
+                {
+                  "Time": 54000,
+                  "Value": "-9215.916,2629.878,5858.694",
+                  "Interpolation": "Cubic"
+                },
+                {
+                  "Time": 56880,
+                  "Value": "-9262.873,3339.525,5876.917",
+                  "Interpolation": "Cubic"
+                },
+                {
+                  "Time": 59940,
+                  "Value": "-5459.431,3304.321,5669.264",
+                  "Interpolation": "Cubic"
+                },
+                {
+                  "Time": 62640,
+                  "Value": "-4648.924,3300.085,5579.833",
+                  "Interpolation": "Cubic"
+                },
+                {
+                  "Time": 64860,
+                  "Value": "-4620.783,2421.688,5590.716",
+                  "Interpolation": "Cubic"
+                },
+                {
+                  "Time": 68460,
+                  "Value": "-4595.83,1642.802,5600.366",
+                  "Interpolation": "Cubic"
+                },
+                {
+                  "Time": 70800,
+                  "Value": "-4588.078,1212.389,5605.682",
+                  "Interpolation": "Cubic"
+                },
+                {
+                  "Time": 73860,
+                  "Value": "-176.372,1162.411,5617.016",
+                  "Interpolation": "Cubic"
+                },
+                {
+                  "Time": 76260,
+                  "Value": "300.8918,1152.316,5618.466",
+                  "Interpolation": "Cubic"
+                },
+                {
+                  "Time": 79080,
+                  "Value": "288.952,4127.321,5674.103",
+                  "Interpolation": "Cubic"
+                },
+                {
+                  "Time": 81420,
+                  "Value": "314.5129,4988.234,5741.448",
+                  "Interpolation": "Cubic"
+                },
+                {
+                  "Time": 82920,
+                  "Value": "3177.593,5333.945,6212.936",
+                  "Interpolation": "Cubic"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "Sources": {},
+    "References": []
+  },
+  "__references": [],
+  "__version": 0
+}

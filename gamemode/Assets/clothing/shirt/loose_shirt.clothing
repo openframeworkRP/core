@@ -1,0 +1,44 @@
+{
+  "HasHumanSkin": false,
+  "HumanSkinModel": null,
+  "HumanSkinMaterial": null,
+  "HumanEyesMaterial": null,
+  "HumanSkinBodyGroups": 0,
+  "HumanSkinMaterialGroup": null,
+  "HumanSkinTags": null,
+  "Title": "Loose Shirt",
+  "Subtitle": "",
+  "Category": "TShirt",
+  "ConditionalModels": {},
+  "Tags": null,
+  "Parent": null,
+  "Model": "models/citizen_clothes/shirt/loose_shirt/models/loose_shirts.vmdl",
+  "HumanAltModel": "models/citizen_clothes/shirt/loose_shirt/models/loose_shirts_m_human.vmdl",
+  "HumanAltFemaleModel": "models/citizen_clothes/shirt/loose_shirt/models/loose_shirts_f_human.vmdl",
+  "SkinMaterial": null,
+  "EyesMaterial": null,
+  "MaterialGroup": "",
+  "SlotsUnder": "Chest, LeftArm, RightArm, LeftWrist, RightWrist",
+  "SlotsOver": 0,
+  "HideBody": "Chest",
+  "AllowTintSelect": false,
+  "TintSelection": {
+    "blend": "Linear",
+    "color": [
+      {
+        "t": 0.5,
+        "c": "1,1,1,1"
+      }
+    ],
+    "alpha": []
+  },
+  "TintDefault": 0.5,
+  "SteamItemDefinitionId": null,
+  "Icon": {
+    "Path": "models/citizen_clothes/shirt/loose_shirt/loose_shirt.clothing.png",
+    "Mode": "Chest",
+    "PositionOffset": "64.8,0,-1.299999"
+  },
+  "__references": [],
+  "__version": 0
+}

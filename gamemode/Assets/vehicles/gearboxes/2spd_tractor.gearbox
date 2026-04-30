@@ -1,0 +1,9 @@
+{
+  "DisplayName": "2-Speed Tractor",
+  "ForwardGearRatios": [4.50, 1.00],
+  "ReverseGearRatio": 4.50,
+  "FinalDriveRatio": 8.00,
+  "UpshiftRpm": 2000,
+  "DownshiftRpm": 1000,
+  "ShiftCooldown": 1.0
+}

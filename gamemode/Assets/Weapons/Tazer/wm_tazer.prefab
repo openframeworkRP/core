@@ -1,0 +1,151 @@
+{
+  "RootObject": {
+    "__guid": "fccf584a-67cf-4b26-ae4b-c0fafa897f5e",
+    "__version": 1,
+    "Flags": 0,
+    "Name": "wm_tazer",
+    "Position": "-18.09969,-9.598287,-26.81913",
+    "Rotation": "-0.1967521,0.6617677,0.5031499,0.5197968",
+    "Scale": "0.5345668,0.5345668,0.5345668",
+    "Tags": "",
+    "Enabled": true,
+    "NetworkMode": 2,
+    "NetworkInterpolation": true,
+    "NetworkOrphaned": 0,
+    "OwnerTransfer": 1,
+    "Components": [
+      {
+        "__type": "Sandbox.SkinnedModelRenderer",
+        "__guid": "5abbb3cb-4005-418f-970c-50342f9b3759",
+        "__enabled": true,
+        "AnimationGraph": null,
+        "BodyGroups": 18446744073709551615,
+        "BoneMergeTarget": null,
+        "CreateAttachments": false,
+        "CreateBoneObjects": false,
+        "MaterialGroup": null,
+        "MaterialOverride": null,
+        "Materials": null,
+        "Model": "pr/pistol_taser.vmdl",
+        "Morphs": {},
+        "OnComponentDestroy": null,
+        "OnComponentDisabled": null,
+        "OnComponentEnabled": null,
+        "OnComponentFixedUpdate": null,
+        "OnComponentStart": null,
+        "OnComponentUpdate": null,
+        "Parameters": {
+          "bools": {},
+          "ints": {},
+          "floats": {},
+          "vectors": {},
+          "rotations": {}
+        },
+        "PlaybackRate": 1,
+        "RenderOptions": {
+          "GameLayer": true,
+          "OverlayLayer": false,
+          "BloomLayer": false,
+          "AfterUILayer": false
+        },
+        "RenderType": "Off",
+        "Sequence": {
+          "Name": null,
+          "Looping": true,
+          "Blending": false
+        },
+        "Tint": "1,1,1,1",
+        "UseAnimGraph": true
+      },
+      {
+        "__type": "OpenFramework.Systems.Weapons.WorldModel",
+        "__guid": "a227c7ab-1a63-405d-b589-88e9fa81979a",
+        "__enabled": true,
+        "EjectionPort": {
+          "_type": "gameobject",
+          "go": "0e090fee-9fb1-4b07-bba6-047370e3c2e4"
+        },
+        "ModelRenderer": {
+          "_type": "component",
+          "component_id": "5abbb3cb-4005-418f-970c-50342f9b3759",
+          "go": "fccf584a-67cf-4b26-ae4b-c0fafa897f5e",
+          "component_type": "SkinnedModelRenderer"
+        },
+        "Muzzle": {
+          "_type": "gameobject",
+          "go": "93b70621-3326-4689-b0dd-82371b9b8594"
+        },
+        "OnComponentDestroy": null,
+        "OnComponentDisabled": null,
+        "OnComponentEnabled": null,
+        "OnComponentFixedUpdate": null,
+        "OnComponentStart": null,
+        "OnComponentUpdate": null
+      }
+    ],
+    "Children": [
+      {
+        "__guid": "93b70621-3326-4689-b0dd-82371b9b8594",
+        "__version": 1,
+        "Flags": 0,
+        "Name": "Muzzle",
+        "Position": "8.067392,0,-0.1363376",
+        "Rotation": "0,0,0,1",
+        "Scale": "1,1,1",
+        "Tags": "",
+        "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkInterpolation": true,
+        "NetworkOrphaned": 0,
+        "OwnerTransfer": 1,
+        "Components": [],
+        "Children": []
+      },
+      {
+        "__guid": "0e090fee-9fb1-4b07-bba6-047370e3c2e4",
+        "__version": 1,
+        "Flags": 0,
+        "Name": "EjectionPort",
+        "Position": "5.106865,0,-0.5759714",
+        "Rotation": "0,0,0,1",
+        "Scale": "1,1,1",
+        "Tags": "particles",
+        "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkInterpolation": true,
+        "NetworkOrphaned": 0,
+        "OwnerTransfer": 1,
+        "Components": [],
+        "Children": []
+      }
+    ],
+    "__properties": {
+      "NetworkInterpolation": true,
+      "TimeScale": 1,
+      "WantsSystemScene": true,
+      "Metadata": {},
+      "NavMesh": {
+        "Enabled": false,
+        "IncludeStaticBodies": true,
+        "IncludeKeyframedBodies": true,
+        "EditorAutoUpdate": true,
+        "AgentHeight": 64,
+        "AgentRadius": 16,
+        "AgentStepSize": 18,
+        "AgentMaxSlope": 40,
+        "ExcludedBodies": "",
+        "IncludedBodies": ""
+      }
+    },
+    "__variables": []
+  },
+  "ResourceVersion": 2,
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "DontBreakAsTemplate": false,
+  "__references": [
+    "openframework.pistoltaser#104319"
+  ],
+  "__version": 2
+}

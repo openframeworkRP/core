@@ -1,0 +1,41 @@
+{
+  "Team": "Terrorist",
+  "Sounds": {
+    "RoundStarted": "sounds/radio/t/t_roundstart.sound",
+    "RoundWon": "sounds/radio/t/t_win.sound",
+    "RoundLost": "sounds/radio/t/t_lose.sound",
+    "BombPlanted": "sounds/radio/t/t_bomb_planted.sound",
+    "BombDefused": "sounds/radio/t/t_bomb_diffused.sound",
+    "ThrownGrenade": "sounds/radio/t/t_grenade.sound",
+    "TwoEnemiesLeft": "sounds/radio/t/t_2_enemy.sound",
+    "OneEnemyLeft": "sounds/radio/t/t_1_enemy.sound",
+    "TeammateDies": "sounds/radio/t/t_death.sound"
+  },
+  "TeamSounds": [
+    {
+      "Category": "Remarks",
+      "Entries": [
+        {
+          "Name": "Good shot",
+          "Sound": "sounds/radio/t/t_good_shot.sound"
+        },
+        {
+          "Name": "Friendly Fire",
+          "Sound": "sounds/radio/t/t_friendly_fire.sound"
+        }
+      ]
+    },
+    {
+      "Category": "Hidden",
+      "IsHidden": true,
+      "Entries": [
+        {
+          "Name": "Planting bomb",
+          "Sound": "sounds/radio/t/t_planting_bomb.sound"
+        }
+      ]
+    }
+  ],
+  "__references": [],
+  "__version": 0
+}

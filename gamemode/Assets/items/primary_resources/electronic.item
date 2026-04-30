@@ -1,0 +1,16 @@
+{
+  "Name": "Composant électronique",
+  "Description": "",
+  "IsEnabled": true,
+  "Price": 60,
+  "Weight": 0.1,
+  "MaxStack": 40,
+  "Attributes": {},
+  "CanBePickedUp": true,
+  "IsMinerals": true,
+  "IsConsumable": false,
+  "IsCraftable": false,
+  "IsUnique": false,
+  "Recipe": [],
+  "__version": 0
+}

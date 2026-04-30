@@ -1,0 +1,98 @@
+{
+  "Name": "Couteau Bayonet",
+  "Description": "Couteau Bayonet",
+  "IsEnabled": true,
+  "Price": 0,
+  "ItemCategoryType": "Weapon",
+  "WorldObjectPrefab": null,
+  "TrashObjectPrefab": null,
+  "PreviewObject": "models/weapons/sbox_melee_m9bayonet/w_m9bayonet.vmdl",
+  "Icon": "ui/item_icons/knife_bayonet.png",
+  "Weight": 0,
+  "MaxStack": 5,
+  "Attributes": {
+    "primary_ammo": "0",
+    "loaded_mag_id": "",
+    "durability": "100"
+  },
+  "CanBePickedUp": true,
+  "IsUnique": false,
+  "IsConsumable": false,
+  "UseDuration": 0,
+  "CanBeSpawned": false,
+  "OnUseAction": null,
+  "IsCraftable": false,
+  "Recipe": [
+    {
+      "ItemResource": "items/primary_resources/steel.item",
+      "Quantity": 4
+    },
+    {
+      "ItemResource": "items/primary_resources/iron.item",
+      "Quantity": 2
+    },
+    {
+      "ItemResource": "items/primary_resources/rubber.item",
+      "Quantity": 1
+    }
+  ],
+  "CraftJobAccess": "Armurier",
+  "IsTools": false,
+  "ToolsResource": null,
+  "IsWeapon": true,
+  "WeaponResource": "weapons/knife_bayonet/knife_bayonet.equip",
+  "AmmoType": null,
+  "IsMagazine": false,
+  "MagAmmoType": null,
+  "MagCapacity": 12,
+  "IsAmmo": false,
+  "BaseDamage": 25,
+  "DamageFalloff": [
+    {
+      "x": 0,
+      "y": 1,
+      "in": 0,
+      "out": 0,
+      "mode": "Mirrored"
+    },
+    {
+      "x": 1,
+      "y": 0,
+      "in": 0,
+      "out": 0,
+      "mode": "Mirrored"
+    }
+  ],
+  "MaxRange": 1024000,
+  "BulletCount": 1,
+  "MuzzleEnergy": 500,
+  "BulletMass": 0.008,
+  "BulletCaliber": 9,
+  "MaxPenetrations": 3,
+  "MaxWallThickness": 128,
+  "RicochetMaxHits": 2,
+  "MaxRicochetAngle": 60,
+  "RicochetEnergyRetention": 0.55,
+  "IsPack": false,
+  "PackCapacity": 50,
+  "PackContentType": null,
+  "DefaultFillQuantity": 0,
+  "IsDocument": false,
+  "DocumentViewModel": null,
+  "IsFurniture": false,
+  "FurnitureCategoryType": "Chair",
+  "IsFood": false,
+  "RestoreMinValue": 1,
+  "RestoreMaxValue": 10,
+  "ConsumptionSound": null,
+  "IsMinerals": false,
+  "IsClothing": false,
+  "ClothingResource": null,
+  "HasSubContainer": false,
+  "CanHeal": false,
+  "HealAmount": 1,
+  "__references": [
+    "facepunch.w_m9bayonet#144900"
+  ],
+  "__version": 0
+}

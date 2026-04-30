@@ -1,0 +1,23 @@
+{
+  "Name": "ID Card",
+  "Description": "Personal identity card",
+  "IsEnabled": true,
+  "ItemCategoryType": "Document",
+  "PrefabSource": null,
+  "Weight": 0,
+  "MaxStack": 5,
+  "Image": null,
+  "IsWeapon": false,
+  "WeaponResource": null,
+  "IsDocument": true,
+  "DocumentViewModel": null,
+  "IsFurniture": false,
+  "FurnitureCategoryType": "Chair",
+  "Price": 0,
+  "IsFood": false,
+  "PriceFood": 0,
+  "IsMinerals": false,
+  "PriceMinerals": 0,
+  "__references": [],
+  "__version": 0
+}

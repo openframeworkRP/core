@@ -1,0 +1,16 @@
+{
+  "Name": "Cuir",
+  "Description": "",
+  "IsEnabled": true,
+  "Price": 25,
+  "Weight": 0.2,
+  "MaxStack": 50,
+  "Attributes": {},
+  "CanBePickedUp": true,
+  "IsMinerals": true,
+  "IsConsumable": false,
+  "IsCraftable": false,
+  "IsUnique": false,
+  "Recipe": [],
+  "__version": 0
+}

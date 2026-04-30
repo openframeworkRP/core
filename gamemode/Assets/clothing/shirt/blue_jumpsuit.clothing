@@ -1,0 +1,44 @@
+{
+  "HasHumanSkin": false,
+  "HumanSkinModel": null,
+  "HumanSkinMaterial": null,
+  "HumanEyesMaterial": null,
+  "HumanSkinBodyGroups": 0,
+  "HumanSkinMaterialGroup": null,
+  "HumanSkinTags": null,
+  "Title": "Blue Jumpsuit",
+  "Subtitle": "Fits like a glove!",
+  "Category": "Suit",
+  "ConditionalModels": {},
+  "Tags": null,
+  "Parent": "models/citizen_clothes/shirt/jumpsuit/prison_jumpsuit.clothing",
+  "Model": "models/citizen_clothes/shirt/jumpsuit/models/blue_jumpsuit.vmdl",
+  "HumanAltModel": "models/citizen_clothes/shirt/jumpsuit/models/blue_jumpsuit_m_human.vmdl",
+  "HumanAltFemaleModel": null,
+  "SkinMaterial": null,
+  "EyesMaterial": null,
+  "MaterialGroup": "",
+  "SlotsUnder": "Chest, LeftArm, RightArm, Groin, LeftThigh, RightThigh, LeftKnee, RightKnee, LeftShin, RightShin",
+  "SlotsOver": 0,
+  "HideBody": "Chest, Legs",
+  "AllowTintSelect": false,
+  "TintSelection": {
+    "blend": "Linear",
+    "color": [
+      {
+        "t": 0.5,
+        "c": "1,1,1,1"
+      }
+    ],
+    "alpha": []
+  },
+  "TintDefault": 0.5,
+  "SteamItemDefinitionId": null,
+  "Icon": {
+    "Path": "models/citizen_clothes/shirt/jumpsuit/blue_jumpsuit.clothing.png",
+    "Mode": "Generic",
+    "PositionOffset": "0,0,0"
+  },
+  "__references": [],
+  "__version": 0
+}

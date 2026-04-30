@@ -1,0 +1,88 @@
+{
+  "Name": "Boite de 9mm",
+  "Description": "Boite de 50 munitions 9x19mm Parabellum. Ouvrez-la pour en extraire les balles.",
+  "IsEnabled": true,
+  "Price": 40,
+  "ItemCategoryType": "Misc",
+  "WorldObjectPrefab": "items/ammo/box_9mm.prefab",
+  "TrashObjectPrefab": null,
+  "PreviewObject": "models/weapons/sbox_ammo/9mm_ammobox/ammobox_9mm.vmdl",
+  "Weight": 0.5,
+  "MaxStack": 1,
+  "Attributes": {
+    "pack_count": "0"
+  },
+  "CanBePickedUp": true,
+  "IsUnique": false,
+  "IsConsumable": false,
+  "UseDuration": -1,
+  "CanBeSpawned": true,
+  "OnUseAction": null,
+  "IsCraftable": true,
+  "Recipe": [
+    {
+      "ItemResource": "items/ammo/bullet_9mm.item",
+      "Quantity": 50
+    }
+  ],
+  "CraftJobAccess": "Armurier",
+  "IsTools": false,
+  "ToolsResource": null,
+  "IsWeapon": false,
+  "WeaponResource": null,
+  "AmmoType": null,
+  "IsMagazine": false,
+  "MagAmmoType": null,
+  "MagCapacity": 12,
+  "IsAmmo": false,
+  "BaseDamage": 25,
+  "DamageFalloff": [
+    {
+      "x": 0,
+      "y": 1,
+      "in": 0,
+      "out": 0,
+      "mode": "Mirrored"
+    },
+    {
+      "x": 1,
+      "y": 0,
+      "in": 0,
+      "out": 0,
+      "mode": "Mirrored"
+    }
+  ],
+  "MaxRange": 1024000,
+  "BulletCount": 1,
+  "MuzzleEnergy": 500,
+  "BulletMass": 0.008,
+  "BulletCaliber": 9,
+  "MaxPenetrations": 3,
+  "MaxWallThickness": 128,
+  "RicochetMaxHits": 2,
+  "MaxRicochetAngle": 60,
+  "RicochetEnergyRetention": 0.55,
+  "IsPack": true,
+  "PackCapacity": 50,
+  "PackContentType": "items/ammo/bullet_9mm.item",
+  "DefaultFillQuantity": 50,
+  "IsDocument": false,
+  "DocumentViewModel": null,
+  "IsFurniture": false,
+  "FurnitureCategoryType": "None",
+  "IsFood": false,
+  "RestoreMinValue": 1,
+  "RestoreMaxValue": 10,
+  "ConsumptionSound": null,
+  "IsMinerals": false,
+  "IsClothing": false,
+  "ClothingResource": null,
+  "HasSubContainer": false,
+  "CanHeal": false,
+  "HealAmount": 1,
+  "__references": [
+    "facepunch.ammobox9mm#142897"
+  ],
+  "__version": 0,
+  "Icon": "ui/item_icons/box_9mm.png"
+}

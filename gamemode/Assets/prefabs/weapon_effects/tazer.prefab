@@ -1,0 +1,124 @@
+{
+  "RootObject": {
+    "__guid": "a4339880-82d8-419e-a4d1-3425ad0bc050",
+    "__version": 1,
+    "Flags": 0,
+    "Name": "tazer",
+    "Position": "0,0,0",
+    "Rotation": "0,0,0,1",
+    "Scale": "1,1,1",
+    "Tags": "magazine",
+    "Enabled": true,
+    "NetworkMode": 2,
+    "NetworkInterpolation": true,
+    "NetworkOrphaned": 0,
+    "OwnerTransfer": 1,
+    "Components": [
+      {
+        "__type": "OpenFramework.Utility.DestroyAfter",
+        "__guid": "97fa9860-c79c-4105-99c7-a6f83752db24",
+        "__enabled": true,
+        "OnComponentDestroy": null,
+        "OnComponentDisabled": null,
+        "OnComponentEnabled": null,
+        "OnComponentFixedUpdate": null,
+        "OnComponentStart": null,
+        "OnComponentUpdate": null,
+        "Time": 15,
+        "TimeUntilDestroy": {
+          "Absolute": 726.2544,
+          "Relative": -14.806946,
+          "Passed": 14.806946,
+          "Fraction": 1
+        },
+        "WaitForChildEffects": false
+      }
+    ],
+    "Children": [
+      {
+        "__guid": "f435e28b-7886-42f9-aa4a-84b8f881aed4",
+        "__version": 1,
+        "Flags": 0,
+        "Name": "12g_casing",
+        "Position": "0,0,0",
+        "Rotation": "-0.000000000000002512148,-0.000000000000002512148,-0.7071068,0.7071067",
+        "Scale": "1,1,1",
+        "Tags": "particles",
+        "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkInterpolation": true,
+        "NetworkOrphaned": 0,
+        "OwnerTransfer": 1,
+        "Components": [],
+        "Children": []
+      },
+      {
+        "__guid": "cde326c9-9930-4a20-8a56-0e86e31e1530",
+        "__version": 1,
+        "__Prefab": "prefabs/weapon_effects/ejectionport_gas.prefab",
+        "__PrefabInstancePatch": {
+          "AddedObjects": [],
+          "RemovedObjects": [],
+          "PropertyOverrides": [
+            {
+              "Target": {
+                "Type": "Component",
+                "IdValue": "7f9ddc2e-2420-46ab-931b-cbf4b67ba54a"
+              },
+              "Property": "TimeUntilDestroy",
+              "Value": {
+                "Absolute": 0,
+                "Relative": -741.06134,
+                "Passed": 741.06134,
+                "Fraction": 1
+              }
+            },
+            {
+              "Target": {
+                "Type": "Component",
+                "IdValue": "0b4d4e00-dc8b-42a5-97cd-5d67a943cb59"
+              },
+              "Property": "FogStrength",
+              "Value": 1
+            }
+          ],
+          "MovedObjects": []
+        },
+        "__PrefabIdToInstanceId": {
+          "ce7f03e5-7ba1-4bc9-abee-16cfd254a1b3": "cde326c9-9930-4a20-8a56-0e86e31e1530",
+          "7f9ddc2e-2420-46ab-931b-cbf4b67ba54a": "15c6e508-9640-4487-9bac-0f649dca8736",
+          "feaf8da1-0480-4536-b695-32edb366917c": "c43b42d4-210c-4163-9571-4047a47f4c3b",
+          "3ca9f7e9-c502-40bb-a817-f82d4d979a7e": "8f39df45-16de-421c-a195-4522f4a46940",
+          "0b4d4e00-dc8b-42a5-97cd-5d67a943cb59": "56bfaf1a-9fca-4755-9304-dd55294b4257",
+          "6f05c4ad-2a26-4dab-b945-34a12be9958e": "1b0cb02a-cb71-46e2-9998-4bafc7fe3a5c"
+        }
+      }
+    ],
+    "__properties": {
+      "NetworkInterpolation": true,
+      "TimeScale": 1,
+      "WantsSystemScene": true,
+      "Metadata": {},
+      "NavMesh": {
+        "Enabled": false,
+        "IncludeStaticBodies": true,
+        "IncludeKeyframedBodies": true,
+        "EditorAutoUpdate": true,
+        "AgentHeight": 64,
+        "AgentRadius": 16,
+        "AgentStepSize": 18,
+        "AgentMaxSlope": 40,
+        "ExcludedBodies": "",
+        "IncludedBodies": ""
+      }
+    },
+    "__variables": []
+  },
+  "ResourceVersion": 2,
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "DontBreakAsTemplate": false,
+  "__references": [],
+  "__version": 2
+}

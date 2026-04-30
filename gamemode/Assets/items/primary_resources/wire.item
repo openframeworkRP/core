@@ -1,0 +1,16 @@
+{
+  "Name": "Fil électrique",
+  "Description": "",
+  "IsEnabled": true,
+  "Price": 12,
+  "Weight": 0.1,
+  "MaxStack": 60,
+  "Attributes": {},
+  "CanBePickedUp": true,
+  "IsMinerals": true,
+  "IsConsumable": false,
+  "IsCraftable": false,
+  "IsUnique": false,
+  "Recipe": [],
+  "__version": 0
+}

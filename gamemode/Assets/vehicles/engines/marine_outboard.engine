@@ -1,0 +1,13 @@
+{
+  "DisplayName": "Marine Outboard 150HP",
+  "MaxTorqueNm": 200,
+  "MaxPowerKw": 110,
+  "Steepness": 10,
+  "RpmIdle": 700,
+  "RpmMaxTorque": 3500,
+  "RpmMaxPower": 5000,
+  "RpmRedline": 5800,
+  "RpmMax": 6200,
+  "TopSpeedKmh": 80,
+  "GearboxPreset": "gearboxes/marine_forward_reverse.gearbox"
+}

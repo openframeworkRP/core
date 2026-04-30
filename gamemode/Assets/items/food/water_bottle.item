@@ -1,0 +1,364 @@
+{
+  "Name": "Bouteille d\u0027Eau",
+  "Description": "Une bouteille d\u0027eau min\u00E9rale. Indispensable pour rester hydrat\u00E9.",
+  "IsEnabled": true,
+  "Price": 2,
+  "ItemCategoryType": "Food",
+  "WorldObjectPrefab": "items/food/water_bottle.prefab",
+  "TrashObjectPrefab": null,
+  "PreviewObject": "pr/water_bottle_01.vmdl",
+  "Weight": 0.5,
+  "MaxStack": 10,
+  "Attributes": {
+    "nutritional_value": "25",
+    "expire_time": "172800"
+  },
+  "CanBePickedUp": true,
+  "IsConsumable": true,
+  "UseDuration": 2,
+  "CanBeSpawned": true,
+  "OnUseAction": {
+    "__version": 9,
+    "__guid": "06d79c24-fa38-475c-93e4-5f4dd584c98d",
+    "__changeId": 121,
+    "UserData": {
+      "Title": "On Use Action",
+      "ReferencedComponentTypes": []
+    },
+    "Variables": [],
+    "Nodes": [
+      {
+        "Id": 17,
+        "Type": "input",
+        "UserData": {
+          "Position": "-60,528"
+        }
+      },
+      {
+        "Id": 18,
+        "Type": "property",
+        "ParentId": 17,
+        "Properties": {
+          "_name": "Client",
+          "_type": "OpenFramework.Systems.Pawn.Pawn"
+        }
+      },
+      {
+        "Id": 19,
+        "Type": "if",
+        "UserData": {
+          "Position": "1428,648"
+        }
+      },
+      {
+        "Id": 20,
+        "Type": "nop",
+        "UserData": {
+          "Position": "240,816"
+        }
+      },
+      {
+        "Id": 21,
+        "Type": "output",
+        "UserData": {
+          "Position": "1212,552"
+        }
+      },
+      {
+        "Id": 22,
+        "Type": "core.notify_success",
+        "UserData": {
+          "Position": "1800,624"
+        }
+      },
+      {
+        "Id": 23,
+        "Type": "core.notify_warning",
+        "UserData": {
+          "Position": "1800,744"
+        }
+      },
+      {
+        "Id": 26,
+        "Type": "property",
+        "Properties": {
+          "_name": "RestoreMinValue"
+        },
+        "UserData": {
+          "Position": "456,672"
+        }
+      },
+      {
+        "Id": 27,
+        "Type": "property",
+        "Properties": {
+          "_name": "RestoreMaxValue"
+        },
+        "UserData": {
+          "Position": "456,708"
+        }
+      },
+      {
+        "Id": 28,
+        "Type": "nop",
+        "UserData": {
+          "Position": "1548,756"
+        }
+      },
+      {
+        "Id": 29,
+        "Type": "ui.item_action_progress",
+        "UserData": {
+          "Position": "804,432"
+        }
+      },
+      {
+        "Id": 30,
+        "Type": "property",
+        "Properties": {
+          "_name": "UseDuration"
+        },
+        "UserData": {
+          "Position": "456,636"
+        }
+      },
+      {
+        "Id": 31,
+        "Type": "call",
+        "Properties": {
+          "_isStatic": false,
+          "_name": "PlaySound",
+          "_type": "OpenFramework.Systems.Pawn.Client"
+        },
+        "UserData": {
+          "Position": "1620,360"
+        }
+      },
+      {
+        "Id": 32,
+        "Type": "property",
+        "Properties": {
+          "_name": "ConsumptionSound"
+        },
+        "UserData": {
+          "Position": "456,600"
+        }
+      },
+      {
+        "Id": 33,
+        "Type": "core.add_thirst",
+        "UserData": {
+          "Position": "960,552"
+        }
+      },
+      {
+        "Id": 58,
+        "Type": "property",
+        "ParentId": 17,
+        "Properties": {
+          "_name": "Metadata",
+          "_type": "OpenFramework.Inventory.InventoryItem"
+        }
+      }
+    ],
+    "Links": [
+      {
+        "SrcId": 17,
+        "SrcName": "arg1",
+        "DstId": 18,
+        "DstName": "_target"
+      },
+      {
+        "SrcId": 21,
+        "SrcName": "_signal",
+        "DstId": 19,
+        "DstName": "_signal"
+      },
+      {
+        "SrcId": 33,
+        "SrcName": "_result",
+        "DstId": 19,
+        "DstName": "condition"
+      },
+      {
+        "SrcId": 18,
+        "SrcName": "_result",
+        "DstId": 20,
+        "DstName": "in"
+      },
+      {
+        "SrcId": 33,
+        "SrcName": "_result",
+        "DstId": 21,
+        "DstName": "_result"
+      },
+      {
+        "SrcId": 33,
+        "SrcName": "_signal",
+        "DstId": 21,
+        "DstName": "_signal"
+      },
+      {
+        "Id": 90,
+        "Value": "Vous avez bu une bouteille d\u0027eau",
+        "DstId": 22,
+        "DstName": "message"
+      },
+      {
+        "SrcId": 28,
+        "SrcName": "out",
+        "DstId": 22,
+        "DstName": "target"
+      },
+      {
+        "Id": 97,
+        "Value": "Vous n\u0027avez plus soif",
+        "DstId": 23,
+        "DstName": "message"
+      },
+      {
+        "SrcId": 28,
+        "SrcName": "out",
+        "DstId": 23,
+        "DstName": "target"
+      },
+      {
+        "SrcId": 58,
+        "SrcName": "_result",
+        "DstId": 26,
+        "DstName": "_target"
+      },
+      {
+        "SrcId": 58,
+        "SrcName": "_result",
+        "DstId": 27,
+        "DstName": "_target"
+      },
+      {
+        "SrcId": 20,
+        "SrcName": "out",
+        "DstId": 28,
+        "DstName": "in"
+      },
+      {
+        "SrcId": 17,
+        "SrcName": "_signal",
+        "DstId": 29,
+        "DstName": "_signal"
+      },
+      {
+        "SrcId": 30,
+        "SrcName": "_result",
+        "DstId": 29,
+        "DstName": "duration",
+        "UserData": {
+          "x": 60
+        }
+      },
+      {
+        "Id": 92,
+        "Value": "Entrain de boire..",
+        "DstId": 29,
+        "DstName": "label"
+      },
+      {
+        "SrcId": 18,
+        "SrcName": "_result",
+        "DstId": 29,
+        "DstName": "target"
+      },
+      {
+        "SrcId": 58,
+        "SrcName": "_result",
+        "DstId": 30,
+        "DstName": "_target"
+      },
+      {
+        "SrcId": 19,
+        "SrcName": "true",
+        "DstId": 31,
+        "DstName": "_signal"
+      },
+      {
+        "SrcId": 18,
+        "SrcName": "_result",
+        "DstId": 31,
+        "DstName": "_target",
+        "UserData": {
+          "x": 144
+        }
+      },
+      {
+        "SrcId": 32,
+        "SrcName": "_result",
+        "DstId": 31,
+        "DstName": "resource"
+      },
+      {
+        "SrcId": 58,
+        "SrcName": "_result",
+        "DstId": 32,
+        "DstName": "_target"
+      },
+      {
+        "SrcId": 27,
+        "SrcName": "_result",
+        "DstId": 33,
+        "DstName": "max"
+      },
+      {
+        "SrcId": 26,
+        "SrcName": "_result",
+        "DstId": 33,
+        "DstName": "min"
+      },
+      {
+        "SrcId": 18,
+        "SrcName": "_result",
+        "DstId": 33,
+        "DstName": "target"
+      },
+      {
+        "SrcId": 17,
+        "SrcName": "arg2",
+        "DstId": 58,
+        "DstName": "_target"
+      },
+      {
+        "SrcId": 29,
+        "SrcName": "_signal",
+        "DstId": 33,
+        "DstName": "_signal"
+      }
+    ]
+  },
+  "IsCraftable": false,
+  "Recipe": [],
+  "IsTools": false,
+  "ToolsResource": null,
+  "IsWeapon": false,
+  "WeaponResource": null,
+  "AmmoType": null,
+  "IsMagazine": false,
+  "MagAmmoType": null,
+  "MagCapacity": 12,
+  "IsAmmo": false,
+  "IsDocument": false,
+  "DocumentViewModel": null,
+  "IsFurniture": false,
+  "FurnitureCategoryType": "Chair",
+  "IsFood": true,
+  "RestoreMinValue": 20,
+  "RestoreMaxValue": 30,
+  "ConsumptionSound": "sounds/boire.sound",
+  "IsMinerals": false,
+  "IsClothing": false,
+  "ClothingResource": null,
+  "CanHeal": false,
+  "HealAmount": 1,
+  "__references": [
+    "openframework.waterbottle01#114624"
+  ],
+  "__version": 0,
+  "Icon": "ui/item_icons/water_bottle.png"
+}

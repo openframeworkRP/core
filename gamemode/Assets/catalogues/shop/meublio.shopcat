@@ -1,0 +1,342 @@
+{
+  "DisplayName": "Meublio",
+  "Categories": [
+    {
+      "Name": "Chaise",
+      "Items": [
+        {
+          "Item": "items/furniture/chairs/chair-01.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/furniture/chairs/chair-02.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/furniture/chairs/chair1.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/furniture/chairs/chair-waiting.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/furniture/chairs/chair-waiting1.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/furniture/chairs/chair-waiting2.item",
+          "MinOrderQuantity": 1
+        }
+      ]
+    },
+    {
+      "Name": "Tables",
+      "Items": [
+        {
+          "Item": "items/furniture/tables/table-resto.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/furniture/tables/table-resto1.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/furniture/tables/table-cuisinier1.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/furniture/tables/table-cuisinier2.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/furniture/tables/table-cuisinier3.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/furniture/tables/table-cuisinier4.item",
+          "MinOrderQuantity": 1
+        }
+      ]
+    },
+    {
+      "Name": "Comptoirs",
+      "Items": [
+        {
+          "Item": "items/furniture/counters/counter_block_01.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/furniture/counters/counter.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/furniture/counters/counter2.item",
+          "MinOrderQuantity": 1
+        }
+      ]
+    },
+    {
+      "Name": "Stockage",
+      "Items": [
+        {
+          "Item": "items/furniture/cabinets/cabinet.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/furniture/storage/locker.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/furniture/cabinets/canbinet2.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/furniture/cabinets/canbinet3.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/furniture/cabinets/canbinet4.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/furniture/cabinets/canbinet5.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/furniture/cabinets/canbinet6.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/furniture/cabinets/canbinet7.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/furniture/cabinets/canbinet8.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/furniture/cabinets/canbinet9.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/furniture/cabinets/canbinet10.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/furniture/cabinets/canbinet11.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/furniture/cabinets/canbinet12.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/furniture/cabinets/canbinet13.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/furniture/cabinets/canbinet14.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/furniture/cabinets/canbinet15.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/furniture/cabinets/canbinet16.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/furniture/cabinets/canbinet17.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/furniture/cabinets/canbinet18.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/furniture/cabinets/canbinet19.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/furniture/cabinets/canbinet20.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/furniture/cabinets/canbinet21.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/furniture/cabinets/canbinet22.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/furniture/cabinets/canbinet23.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/furniture/cabinets/canbinet24.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/furniture/cabinets/canbinet25.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/furniture/cabinets/canbinetest1.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/furniture/utility/box.item",
+          "MinOrderQuantity": 1
+        }
+      ]
+    },
+    {
+      "Name": "Panneau",
+      "Items": [
+        {
+          "Item": "items/furniture/signs/shop_sign.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/furniture/signs/shop_sign2.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/furniture/signs/shop_sign3.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/furniture/signs/shop_sign4.item",
+          "MinOrderQuantity": 1
+        }
+      ]
+    },
+    {
+      "Name": "Outils",
+      "Items": [
+        {
+          "Item": "items/furniture/tables/craft-table.item",
+          "MinOrderQuantity": 1
+        }
+      ]
+    },
+    {
+      "Name": "Luminaire",
+      "Items": [
+        {
+          "Item": "items/furniture/lighting/lampe_chevet.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/furniture/lighting/lampe_chevet1.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/furniture/lighting/lampe1.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/furniture/lighting/lampe2.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/furniture/lighting/lampe3.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/furniture/lighting/lampe4.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/furniture/lighting/lampe5.item",
+          "MinOrderQuantity": 1
+        }
+      ]
+    },
+    {
+      "Name": "Decoration",
+      "Items": [
+        {
+          "Item": "items/furniture/decoration/tapis1.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/furniture/decoration/tapis2.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/furniture/decoration/tapis3.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/furniture/decoration/tapis4.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/furniture/decoration/interior_plant1.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/furniture/decoration/palette.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/furniture/decoration/palette2.item",
+          "MinOrderQuantity": 1
+        }
+      ]
+    },
+    {
+      "Name": "Utilitaire",
+      "Items": [
+        {
+          "Item": "items/furniture/utility/airvent.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/furniture/utility/airvent1.item",
+          "MinOrderQuantity": 1
+        }
+      ]
+    },
+    {
+      "Name": "Cuisinier",
+      "Items": [
+        {
+          "Item": "items/rfs/rfs_grill.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/rfs/rfs_assembly_plank.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/rfs/rfs_cutting_board.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/rfs/rfs_fryer.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/furniture/kitchen/cuisinier-etagere.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/furniture/kitchen/cuisinier-hote.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/rfs/rfs_soda_fountain.item",
+          "Price": 600,
+          "Stock": -1
+        }
+      ]
+    }
+  ],
+  "__references": [],
+  "__version": 0
+}

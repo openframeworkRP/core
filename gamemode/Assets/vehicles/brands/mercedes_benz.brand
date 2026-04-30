@@ -1,0 +1,9 @@
+{
+  "Name": "Mercedes-Benz",
+  "Slogan": "The Best or Nothing",
+  "Image": "assets/brands/mercedes_benz.svg",
+  "Country": "assets/country/germany.country",
+  "Day": 18,
+  "Month": 2,
+  "Year": 1925
+}

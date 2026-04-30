@@ -1,0 +1,19 @@
+{
+  "Hair": {
+    "Clothing": "models/citizen_clothes/hat/police_hat/police_hat.clothing"
+  },
+  "Beard": {
+    "Clothing": "models/citizen_clothes/hair/goatee/goatee.clothing"
+  },
+  "Top": {
+    "Clothing": "models/citizen_clothes/vest/tactical_vest/models/tactical_vest.clothing"
+  },
+  "Bottom": {
+    "Clothing": "models/citizen_clothes/trousers/trackiebottoms/trackie_bottoms_black.clothing"
+  },
+  "Shoes": {
+    "Clothing": "models/citizen_clothes/shoes/slippers/slippers.clothing"
+  },
+  "__references": [],
+  "__version": 0
+}

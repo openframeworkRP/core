@@ -1,0 +1,13 @@
+{
+  "DisplayName": "Single Cylinder Small",
+  "MaxTorqueNm": 20,
+  "MaxPowerKw": 8,
+  "Steepness": 12,
+  "RpmIdle": 1200,
+  "RpmMaxTorque": 3000,
+  "RpmMaxPower": 4500,
+  "RpmRedline": 5500,
+  "RpmMax": 6000,
+  "TopSpeedKmh": 45,
+  "GearboxPreset": "gearboxes/1spd_small.gearbox"
+}

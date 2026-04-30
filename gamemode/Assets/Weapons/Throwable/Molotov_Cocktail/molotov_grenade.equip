@@ -1,0 +1,26 @@
+{
+  "Name": "Incendiary Grenade",
+  "Description": "",
+  "Slot": "Throwable",
+  "DropOnDisconnect": false,
+  "Icon": null,
+  "MainPrefab": {
+    "_type": "gameobject",
+    "prefab": "weapons/throwable/molotov_cocktail/weapon_molotov_grenade.prefab"
+  },
+  "WorldModelPrefab": {
+    "_type": "gameobject",
+    "prefab": "weapons/throwable/molotov_cocktail/wm_molotov_grenade.prefab"
+  },
+  "ViewModelPrefab": {
+    "_type": "gameobject",
+    "prefab": "weapons/throwable/molotov_cocktail/vm_molotov_grenade.prefab"
+  },
+  "WorldModel": null,
+  "ArmorReduction": null,
+  "HelmetReduction": null,
+  "WorldModelBodyGroups": 0,
+  "CollisionOffset": 6,
+  "__references": [],
+  "__version": 0
+}

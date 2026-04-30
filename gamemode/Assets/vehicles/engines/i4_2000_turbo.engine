@@ -1,0 +1,17 @@
+{
+  "DisplayName": "I4 2.0L Turbo",
+  "MaxTorqueNm": 350,
+  "MaxPowerKw": 200,
+  "Steepness": 14,
+  "RpmIdle": 850,
+  "RpmMaxTorque": 4500,
+  "RpmMaxPower": 6200,
+  "RpmRedline": 7000,
+  "RpmMax": 7500,
+  "TopSpeedKmh": 260,
+  "GearboxPreset": "gearboxes/6spd_sport.gearbox",
+  "HasForcedInduction": true,
+  "InductionType": "Turbo",
+  "MaxBoost": 1.0,
+  "BoostMultiplier": 0.4
+}

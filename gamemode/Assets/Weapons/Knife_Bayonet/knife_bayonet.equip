@@ -1,0 +1,31 @@
+{
+  "Name": "M9 Bayonet",
+  "Description": "",
+  "Slot": "Melee",
+  "Team": "Unassigned",
+  "CanOtherTeamPickUp": true,
+  "DropOnDisconnect": false,
+  "Icon": "ui/weapons/melee/bayonet_01.png",
+  "IsPurchasable": false,
+  "Price": 0,
+  "KillReward": 1500,
+  "MainPrefab": {
+    "_type": "gameobject",
+    "prefab": "weapons/knife_bayonet/weapon_bayonet.prefab"
+  },
+  "WorldModelPrefab": {
+    "_type": "gameobject",
+    "prefab": "weapons/knife_bayonet/wm_knife_bayonet.prefab"
+  },
+  "ViewModelPrefab": {
+    "_type": "gameobject",
+    "prefab": "weapons/knife_bayonet/vm_knife_bayonet.prefab"
+  },
+  "WorldModel": "models/weapons/sbox_melee_m9bayonet/w_m9bayonet.vmdl",
+  "ArmorReduction": null,
+  "HelmetReduction": null,
+  "__references": [
+    "facepunch.w_m9bayonet#144900"
+  ],
+  "__version": 0
+}

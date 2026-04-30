@@ -1,0 +1,31 @@
+{
+  "BaseSurface": "surfaces/metal.surface",
+  "AudioSurface": "Metal",
+  "Description": null,
+  "Friction": 0.5,
+  "Elasticity": 0.4,
+  "Density": 1000,
+  "Thickness": 0,
+  "RollingResistance": 0.58,
+  "BounceThreshold": 80,
+  "ImpactEffects": {
+    "Regular": [],
+    "Bullet": [],
+    "BulletDecal": [],
+    "SoftParticles": [],
+    "SoftDecal": [],
+    "HardParticles": [],
+    "HardDecal": []
+  },
+  "ScrapeEffects": {
+    "RoughnessFactor": 0.25,
+    "RoughThreshold": 0.5
+  },
+  "Sounds": {
+    "ImpactSoft": "sounds/impacts/melee/impact-melee-metal.sound"
+  },
+  "Breakables": {},
+  "Tags": null,
+  "__references": [],
+  "__version": 0
+}

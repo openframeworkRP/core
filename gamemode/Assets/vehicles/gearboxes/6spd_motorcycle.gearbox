@@ -1,0 +1,9 @@
+{
+  "DisplayName": "6-Speed Motorcycle",
+  "ForwardGearRatios": [2.85, 2.00, 1.55, 1.24, 1.04, 0.88],
+  "ReverseGearRatio": 0,
+  "FinalDriveRatio": 2.81,
+  "UpshiftRpm": 9000,
+  "DownshiftRpm": 4000,
+  "ShiftCooldown": 0.2
+}

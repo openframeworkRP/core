@@ -1,0 +1,64 @@
+{
+  "HasHumanSkin": false,
+  "HumanSkinModel": null,
+  "HumanSkinMaterial": null,
+  "HumanEyesMaterial": null,
+  "HumanSkinBodyGroups": 0,
+  "HumanSkinMaterialGroup": null,
+  "HumanSkinTags": null,
+  "Title": null,
+  "Subtitle": null,
+  "Category": "Hat",
+  "ConditionalModels": {},
+  "Tags": null,
+  "Model": "models/citizen_clothes/hat/trapper_hat/models/trapper_hat_cloth_m_human.vmdl_c",
+  "HumanAltModel": "models/citizen_clothes/hat/trapper_hat/models/trapper_hat_cloth_m_human.vmdl_c",
+  "HumanAltFemaleModel": null,
+  "SkinMaterial": null,
+  "EyesMaterial": null,
+  "MaterialGroup": null,
+  "HeelHeight": 0,
+  "SlotsUnder": "HeadTop",
+  "SlotsOver": "HeadTop",
+  "HideBody": 0,
+  "AllowTintSelect": true,
+  "TintSelection": {
+    "blend": "Linear",
+    "color": [
+      {
+        "t": 0,
+        "c": "1,1,1,1"
+      },
+      {
+        "t": 0.16239317,
+        "c": "0.98824,0.78431,0.54902,1"
+      },
+      {
+        "t": 0.3525641,
+        "c": "0.64706,0.49412,0.41569,1"
+      },
+      {
+        "t": 0.5747863,
+        "c": "0.63922,0.22353,0,1"
+      },
+      {
+        "t": 0.775641,
+        "c": "0.22745,0.15294,0.11373,1"
+      },
+      {
+        "t": 1,
+        "c": "0,0,0,1"
+      }
+    ],
+    "alpha": []
+  },
+  "TintDefault": 0.5,
+  "SteamItemDefinitionId": null,
+  "Icon": {
+    "Path": "clothing/hat/hat-07.clothing.png",
+    "Mode": "Head",
+    "PositionOffset": "0,0,0"
+  },
+  "__references": [],
+  "__version": 0
+}

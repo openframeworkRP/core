@@ -1,0 +1,9 @@
+{
+  "DisplayName": "10-Speed Semi Truck",
+  "ForwardGearRatios": [12.29, 8.51, 6.32, 4.56, 3.36, 2.29, 1.62, 1.18, 0.87, 0.65],
+  "ReverseGearRatio": 11.66,
+  "FinalDriveRatio": 4.11,
+  "UpshiftRpm": 2000,
+  "DownshiftRpm": 1100,
+  "ShiftCooldown": 0.8
+}

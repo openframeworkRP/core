@@ -1,0 +1,166 @@
+{
+  "RootObject": {
+    "__guid": "ccdabc7c-e265-464a-9bfc-faa767c890b3",
+    "Flags": 0,
+    "Name": "decoy_grenade_thrown",
+    "Tags": "noblockaudio,grenade",
+    "Enabled": true,
+    "Components": [
+      {
+        "__type": "Sandbox.Rigidbody",
+        "__guid": "f7c158b3-9fc6-44c5-bd1a-a2c3dcf47064",
+        "AngularDamping": 1,
+        "Gravity": true,
+        "LinearDamping": 1,
+        "Locking": {
+          "X": false,
+          "Y": false,
+          "Z": false,
+          "Pitch": false,
+          "Yaw": false,
+          "Roll": false
+        },
+        "MassCenterOverride": "0,0,0",
+        "MassOverride": 0,
+        "MotionEnabled": true,
+        "OnComponentDestroy": null,
+        "OnComponentDisabled": null,
+        "OnComponentEnabled": null,
+        "OnComponentFixedUpdate": null,
+        "OnComponentStart": null,
+        "OnComponentUpdate": null,
+        "OverrideMassCenter": false,
+        "RigidbodyFlags": 0,
+        "StartAsleep": false
+      },
+      {
+        "__type": "Sandbox.SphereCollider",
+        "__guid": "0541985d-7dfb-4686-9a28-b6ce9c6957dd",
+        "Center": "0,0,1.5",
+        "Friction": null,
+        "IsTrigger": false,
+        "OnComponentDestroy": null,
+        "OnComponentDisabled": null,
+        "OnComponentEnabled": null,
+        "OnComponentFixedUpdate": null,
+        "OnComponentStart": null,
+        "OnComponentUpdate": null,
+        "OnObjectTriggerEnter": null,
+        "OnObjectTriggerExit": null,
+        "OnTriggerEnter": null,
+        "OnTriggerExit": null,
+        "Radius": 2,
+        "Static": false,
+        "Surface": "weapons/throwable/he_grenade/grenade.surface",
+        "SurfaceVelocity": "0,0,0"
+      },
+      {
+        "__type": "DestroyBetweenRounds",
+        "__guid": "3b7f80da-adaf-4c07-ad89-06ccd3a72e83",
+        "OnComponentDestroy": null,
+        "OnComponentDisabled": null,
+        "OnComponentEnabled": null,
+        "OnComponentFixedUpdate": null,
+        "OnComponentStart": null,
+        "OnComponentUpdate": null
+      },
+      {
+        "__type": "Facepunch.DecoyGrenade",
+        "__guid": "7c3bcc01-8fc7-45a1-8dee-44ebef2f335f",
+        "CanDealDamage": false,
+        "ChatterSpeed": 35,
+        "Effect": {
+          "_type": "gameobject",
+          "prefab": "prefabs/equipment/decoy_grenade_active.prefab"
+        },
+        "Lifetime": 15,
+        "OnComponentDestroy": null,
+        "OnComponentDisabled": null,
+        "OnComponentEnabled": null,
+        "OnComponentFixedUpdate": null,
+        "OnComponentStart": null,
+        "OnComponentUpdate": null,
+        "PrefabOnExplode": {
+          "_type": "gameobject",
+          "prefab": "prefabs/equipment/decoy_grenade_explode.prefab"
+        },
+        "ShotDelay": "0.5 1",
+        "ShotSound": "sounds/weapons/m4a1/m4_shot.sound"
+      }
+    ],
+    "Children": [
+      {
+        "__guid": "6b3f4ee9-4d72-4316-839f-0e2ceae66079",
+        "Flags": 0,
+        "Name": "Model",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Sandbox.ModelRenderer",
+            "__guid": "8956b60f-c00e-458c-a279-e489e0d9ba64",
+            "BodyGroups": 11,
+            "CreateAttachments": false,
+            "MaterialGroup": null,
+            "MaterialOverride": null,
+            "Model": "models/weapons/sbox_grenade_decoy/w_decoy_grenade.vmdl",
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
+            "RenderOptions": {
+              "GameLayer": true,
+              "OverlayLayer": false,
+              "BloomLayer": false,
+              "AfterUILayer": false
+            },
+            "RenderType": "On",
+            "Tint": "1,1,1,1"
+          }
+        ]
+      },
+      {
+        "__guid": "5f468e2e-4110-49d0-a349-54c873be4257",
+        "Flags": 0,
+        "Name": "decoy_smoke",
+        "Enabled": true,
+        "__Prefab": "prefabs/equipment/decoy_smoke.prefab",
+        "__PrefabVariables": {}
+      }
+    ],
+    "__variables": [],
+    "__properties": {
+      "FixedUpdateFrequency": 50,
+      "MaxFixedUpdates": 5,
+      "NetworkFrequency": 30,
+      "NetworkInterpolation": true,
+      "PhysicsSubSteps": 1,
+      "ThreadedAnimation": true,
+      "TimeScale": 1,
+      "UseFixedUpdate": true,
+      "Metadata": {},
+      "NavMesh": {
+        "Enabled": false,
+        "IncludeStaticBodies": true,
+        "IncludeKeyframedBodies": true,
+        "EditorAutoUpdate": true,
+        "AgentHeight": 64,
+        "AgentRadius": 16,
+        "AgentStepSize": 18,
+        "AgentMaxSlope": 40,
+        "ExcludedBodies": "",
+        "IncludedBodies": ""
+      }
+    }
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "DontBreakAsTemplate": false,
+  "ResourceVersion": 1,
+  "__references": [
+    "facepunch.w_decoy_grenade#144893"
+  ],
+  "__version": 1
+}

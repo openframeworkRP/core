@@ -1,0 +1,19 @@
+{
+  "Hair": {
+    "Clothing": "models/citizen_clothes/hair/hair_tight_ponytail/hair_tight_ponytail_brown.clothing"
+  },
+  "Beard": {
+    "Clothing": "models/citizen_clothes/hair/moustache/moustache.clothing"
+  },
+  "Top": {
+    "Clothing": "models/citizen_clothes/shirt/polo_shirt/polo_shirt.clothing"
+  },
+  "Bottom": {
+    "Clothing": "models/citizen_clothes/trousers/jeans/jeans.clothing"
+  },
+  "Shoes": {
+    "Clothing": "models/citizen_clothes/shoes/crocs_and_socks/clogs_and_socks.clothing"
+  },
+  "__references": [],
+  "__version": 0
+}

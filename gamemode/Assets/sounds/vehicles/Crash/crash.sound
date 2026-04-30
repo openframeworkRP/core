@@ -1,0 +1,15 @@
+{
+  "UI": false,
+  "Volume": "0.50,0.50,0",
+  "Pitch": "1.00,1.00,0",
+  "Decibels": 130,
+  "SelectionMode": "Random",
+  "Sounds": [
+    "sounds/crash/crash00.vsnd",
+    "sounds/crash/crash01.vsnd",
+    "sounds/crash/crash02.vsnd",
+    "sounds/crash/crash03.vsnd"
+  ],
+  "MaximumDistance": 3867.0361,
+  "MinimumDistance": 193.3518
+}

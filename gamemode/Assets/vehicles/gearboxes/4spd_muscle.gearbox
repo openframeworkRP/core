@@ -1,0 +1,9 @@
+{
+  "DisplayName": "4-Speed Muscle",
+  "ForwardGearRatios": [2.97, 2.01, 1.43, 1.00],
+  "ReverseGearRatio": 2.97,
+  "FinalDriveRatio": 3.73,
+  "UpshiftRpm": 5200,
+  "DownshiftRpm": 1800,
+  "ShiftCooldown": 0.5
+}

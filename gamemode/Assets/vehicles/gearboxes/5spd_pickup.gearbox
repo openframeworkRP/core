@@ -1,0 +1,9 @@
+{
+  "DisplayName": "5-Speed Pickup/SUV",
+  "ForwardGearRatios": [3.83, 2.33, 1.54, 1.00, 0.79],
+  "ReverseGearRatio": 3.74,
+  "FinalDriveRatio": 4.30,
+  "UpshiftRpm": 5000,
+  "DownshiftRpm": 1800,
+  "ShiftCooldown": 0.5
+}

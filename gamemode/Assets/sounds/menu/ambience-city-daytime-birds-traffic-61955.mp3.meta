@@ -1,0 +1,8 @@
+{
+  "loop": true,
+  "start": 0,
+  "end": 2600,
+  "rate": 44100,
+  "compress": true,
+  "bitrate": 256
+}

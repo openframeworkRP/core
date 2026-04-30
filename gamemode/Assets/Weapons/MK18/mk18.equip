@@ -1,0 +1,31 @@
+{
+  "Name": "MK18",
+  "Description": "",
+  "Slot": "Primary",
+  "DropOnDisconnect": false,
+  "Icon": "ui/weapons/guns/m4_01.png",
+  "IsPurchasable": true,
+  "Price": 0,
+  "KillReward": 300,
+  "MainPrefab": {
+    "_type": "gameobject",
+    "prefab": "weapons/mk18/weapon_mk18.prefab"
+  },
+  "WorldModelPrefab": {
+    "_type": "gameobject",
+    "prefab": "weapons/mk18/wm_mk18.prefab"
+  },
+  "ViewModelPrefab": {
+    "_type": "gameobject",
+    "prefab": "weapons/mk18/vm_mk18.prefab"
+  },
+  "WorldModel": "pr/mk18.vmdl",
+  "ArmorReduction": null,
+  "HelmetReduction": null,
+  "WorldModelBodyGroups": 0,
+  "CollisionOffset": 6,
+  "__references": [
+    "openframework.mk18nochargeur#155415"
+  ],
+  "__version": 0
+}

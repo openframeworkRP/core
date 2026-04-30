@@ -1,0 +1,19 @@
+{
+  "Hair": {
+    "Clothing": "models/citizen_clothes/hair/hair_longcurly/hair_longcurly_brown.clothing"
+  },
+  "Beard": {
+    "Clothing": "models/citizen_clothes/hair/decorated_beard/decorated_beard.clothing"
+  },
+  "Top": {
+    "Clothing": "models/citizen_clothes/vest/chefs_apron/chefs_apron.clothing"
+  },
+  "Bottom": {
+    "Clothing": "models/citizen_clothes/shorts/football_shorts/football_shorts.clothing"
+  },
+  "Shoes": {
+    "Clothing": "models/citizen_clothes/shoes/sneakers/blue_sneakers.clothing"
+  },
+  "__references": [],
+  "__version": 0
+}

@@ -1,0 +1,26 @@
+{
+  "Name": "Belier",
+  "Description": "",
+  "Slot": "Melee",
+  "DropOnDisconnect": false,
+  "Icon": null,
+  "MainPrefab": {
+    "_type": "gameobject",
+    "prefab": "weapons/belier/weapon_belier.prefab"
+  },
+  "WorldModelPrefab": {
+    "_type": "gameobject",
+    "prefab": "weapons/belier/wm_belier.prefab"
+  },
+  "ViewModelPrefab": {
+    "_type": "gameobject",
+    "prefab": "weapons/belier/vm_belier.prefab"
+  },
+  "WorldModel": null,
+  "ArmorReduction": null,
+  "HelmetReduction": null,
+  "WorldModelBodyGroups": 0,
+  "CollisionOffset": 6,
+  "__references": [],
+  "__version": 0
+}

@@ -1,0 +1,30 @@
+{
+  "Name": "Knife",
+  "Description": "",
+  "Slot": "Melee",
+  "DropOnDisconnect": false,
+  "Icon": null,
+  "IsPurchasable": false,
+  "Price": 0,
+  "KillReward": 300,
+  "MainPrefab": {
+    "_type": "gameobject",
+    "prefab": "weapons/knife/weapon_knife.prefab"
+  },
+  "WorldModelPrefab": {
+    "_type": "gameobject",
+    "prefab": "weapons/knife/wm_knife.prefab"
+  },
+  "ViewModelPrefab": {
+    "_type": "gameobject",
+    "prefab": "weapons/knife/vm_knife.prefab"
+  },
+  "WorldModel": "models/weapons/sbox_melee_trenchknife/w_trenchknife.vmdl",
+  "ArmorReduction": null,
+  "HelmetReduction": null,
+  "WorldModelBodyGroups": 0,
+  "__references": [
+    "facepunch.w_trenchknife#144901"
+  ],
+  "__version": 0
+}

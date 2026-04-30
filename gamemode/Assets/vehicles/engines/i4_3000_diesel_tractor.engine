@@ -1,0 +1,13 @@
+{
+  "DisplayName": "I4 3.0L Diesel Tractor",
+  "MaxTorqueNm": 250,
+  "MaxPowerKw": 55,
+  "Steepness": 15,
+  "RpmIdle": 600,
+  "RpmMaxTorque": 1500,
+  "RpmMaxPower": 2200,
+  "RpmRedline": 2600,
+  "RpmMax": 3000,
+  "TopSpeedKmh": 40,
+  "GearboxPreset": "gearboxes/2spd_tractor.gearbox"
+}

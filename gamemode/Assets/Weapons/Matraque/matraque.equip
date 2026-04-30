@@ -1,0 +1,26 @@
+{
+  "Name": "Matraque",
+  "Description": "",
+  "Slot": "Melee",
+  "DropOnDisconnect": false,
+  "Icon": null,
+  "MainPrefab": {
+    "_type": "gameobject",
+    "prefab": "weapons/matraque/weapon_matraque.prefab"
+  },
+  "WorldModelPrefab": {
+    "_type": "gameobject",
+    "prefab": "weapons/matraque/wm_matraque.prefab"
+  },
+  "ViewModelPrefab": {
+    "_type": "gameobject",
+    "prefab": "weapons/matraque/vm_matraque.prefab"
+  },
+  "WorldModel": null,
+  "ArmorReduction": null,
+  "HelmetReduction": null,
+  "WorldModelBodyGroups": 0,
+  "CollisionOffset": 6,
+  "__references": [],
+  "__version": 0
+}

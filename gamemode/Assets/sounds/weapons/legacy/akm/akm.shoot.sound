@@ -1,0 +1,27 @@
+{
+  "UI": false,
+  "Volume": "1",
+  "Pitch": "1",
+  "Decibels": 140,
+  "SelectionMode": "Random",
+  "Sounds": [
+    "sounds/guns/akm/ak_shoot_1.vsnd",
+    "sounds/guns/akm/ak_shoot_2.vsnd"
+  ],
+  "Occlusion": true,
+  "AirAbsorption": true,
+  "Transmission": true,
+  "OcclusionRadius": 64,
+  "DistanceAttenuation": true,
+  "Distance": 42500,
+  "Falloff": [
+    {
+      "y": 1
+    },
+    {
+      "x": 1
+    }
+  ],
+  "__references": [],
+  "__version": 1
+}

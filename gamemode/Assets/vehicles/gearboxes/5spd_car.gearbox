@@ -1,0 +1,9 @@
+{
+  "DisplayName": "5-Speed Car",
+  "ForwardGearRatios": [3.63, 2.37, 1.56, 1.15, 0.86],
+  "ReverseGearRatio": 3.44,
+  "FinalDriveRatio": 3.94,
+  "UpshiftRpm": 5500,
+  "DownshiftRpm": 2000,
+  "ShiftCooldown": 0.4
+}

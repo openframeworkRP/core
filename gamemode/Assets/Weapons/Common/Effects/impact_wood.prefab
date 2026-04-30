@@ -1,0 +1,125 @@
+{
+  "RootObject": {
+    "__guid": "0d80eec7-9acf-4e93-974d-66e8eefe224e",
+    "__version": 1,
+    "Flags": 0,
+    "Name": "impact_wood",
+    "Position": "0,0,0",
+    "Rotation": "0,0,0,1",
+    "Scale": "1,1,1",
+    "Tags": "particles",
+    "Enabled": true,
+    "NetworkMode": 2,
+    "NetworkInterpolation": true,
+    "NetworkOrphaned": 0,
+    "OwnerTransfer": 1,
+    "Components": [
+      {
+        "__type": "TemporaryEffect",
+        "__guid": "650dc654-ed1e-429c-b273-ee335ea0f2cf",
+        "__enabled": true,
+        "DestroyAfterSeconds": 2,
+        "OnComponentDestroy": null,
+        "OnComponentDisabled": null,
+        "OnComponentEnabled": null,
+        "OnComponentFixedUpdate": null,
+        "OnComponentStart": null,
+        "OnComponentUpdate": null,
+        "WaitForChildEffects": false
+      }
+    ],
+    "Children": [
+      {
+        "__guid": "0db375d0-d36c-48d2-aa92-e52eaa6336be",
+        "__version": 1,
+        "__Prefab": "particles/surfaces/impact.wood.prefab",
+        "__PrefabInstancePatch": {
+          "AddedObjects": [],
+          "RemovedObjects": [],
+          "PropertyOverrides": [
+            {
+              "Target": {
+                "Type": "GameObject",
+                "IdValue": "00b6c9ba-6176-4aaa-82a7-3c1c0d8400c5"
+              },
+              "Property": "Tags",
+              "Value": ""
+            },
+            {
+              "Target": {
+                "Type": "GameObject",
+                "IdValue": "ded04e89-a327-4ea7-9722-d9b078aa6022"
+              },
+              "Property": "Tags",
+              "Value": ""
+            },
+            {
+              "Target": {
+                "Type": "GameObject",
+                "IdValue": "4975ee68-b872-498b-874b-de88fe8054c9"
+              },
+              "Property": "Tags",
+              "Value": ""
+            },
+            {
+              "Target": {
+                "Type": "GameObject",
+                "IdValue": "b69491aa-c1d1-4a9d-9333-3d8b21925456"
+              },
+              "Property": "Tags",
+              "Value": ""
+            }
+          ],
+          "MovedObjects": []
+        },
+        "__PrefabIdToInstanceId": {
+          "7bd5218f-04c4-4b25-abfc-fca662c4e126": "0db375d0-d36c-48d2-aa92-e52eaa6336be",
+          "00b6c9ba-6176-4aaa-82a7-3c1c0d8400c5": "e3582768-843e-46d5-b2cd-cdea5847439c",
+          "ec1fc30c-0ecc-42a7-80c9-386571440b95": "a7dd9ea1-a5ec-466c-8e82-784484bf2679",
+          "a794f484-a9c2-4994-881f-4e3b18bb858f": "40691fee-7f71-46f5-9510-9bddfec96b6e",
+          "ee7c6575-b770-4d3d-8138-9860fa3b51b8": "0ad1a51a-5b23-476d-a291-80240e55d416",
+          "ded04e89-a327-4ea7-9722-d9b078aa6022": "23c52ed6-9efa-4d40-be98-82bd0d6d9cd2",
+          "ce2657df-6108-46da-9b9c-0e55e31193e5": "c2b0a717-5dfe-4d35-9f99-b69f76b1d710",
+          "e89ccf23-caa0-4e19-8007-4375ea13e213": "39800992-687b-4f07-ae6f-3a8427e114cc",
+          "f26ae674-ff2d-4bac-82c9-18becfb6930e": "a5397734-92a6-4191-a967-4f12e24a790b",
+          "4975ee68-b872-498b-874b-de88fe8054c9": "48533d88-5ada-4581-89b9-d5f421f681e0",
+          "be8fa48f-ef93-4aee-9d89-1284658a6f95": "333f144b-19db-46ce-a1f5-c85695754c4b",
+          "5fb8a3c2-29f7-46a3-a918-404db067dacb": "6f5cde9c-bfc1-43a1-8f86-8795718b1ddf",
+          "ce3855e6-2b6a-4f55-aae4-b3dfa1300c20": "f2b8add1-2f1b-41fd-bac1-8539fb303b4d",
+          "b69491aa-c1d1-4a9d-9333-3d8b21925456": "c6d2c8a8-02a5-4c5f-b535-74384f2ee47a",
+          "f5fa996e-7786-4d74-b28b-f3a279ca5f8a": "cc120ec1-aebd-4200-bb84-9ef4c2e665db",
+          "762508f9-52fc-48e6-8901-3cfec0d1150d": "83d3bfd2-6e76-4988-bd80-b507ad843013",
+          "a72da520-fdfb-4919-af10-1461356571e5": "2c67c6dc-95bb-420b-96a0-aff28a364d76"
+        }
+      }
+    ],
+    "__properties": {
+      "NetworkInterpolation": true,
+      "TimeScale": 1,
+      "WantsSystemScene": true,
+      "Metadata": {},
+      "NavMesh": {
+        "Enabled": false,
+        "IncludeStaticBodies": true,
+        "IncludeKeyframedBodies": true,
+        "EditorAutoUpdate": true,
+        "AgentHeight": 64,
+        "AgentRadius": 16,
+        "AgentStepSize": 18,
+        "AgentMaxSlope": 40,
+        "ExcludedBodies": "",
+        "IncludedBodies": ""
+      }
+    },
+    "__variables": []
+  },
+  "ResourceVersion": 2,
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "DontBreakAsTemplate": false,
+  "__references": [
+    "facepunch.impactwood#110494"
+  ],
+  "__version": 2
+}

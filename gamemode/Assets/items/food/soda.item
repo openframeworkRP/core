@@ -1,0 +1,356 @@
+{
+  "Name": "Soda",
+  "Description": "Une boisson gazeuse sucr\u00E9e. D\u00E9salt\u00E9rante mais pas tr\u00E8s saine.",
+  "IsEnabled": true,
+  "Price": 3,
+  "ItemCategoryType": "Food",
+  "WorldObjectPrefab": "items/food/soda.prefab",
+  "TrashObjectPrefab": null,
+  "PreviewObject": "models/sbox_props/cola_can/cola_can.vmdl",
+  "Weight": 0.5,
+  "MaxStack": 10,
+  "Image": null,
+  "ConsumeOnUse": true,
+  "UseDuration": 1.5,
+  "CanBeSpawned": true,
+  "OnUseAction": {
+    "__version": 9,
+    "__guid": "678572e5-dc90-4598-93b4-924416b723bb",
+    "__changeId": 111,
+    "UserData": {
+      "Title": "On Use Action",
+      "ReferencedComponentTypes": []
+    },
+    "Variables": [],
+    "Nodes": [
+      {
+        "Id": 68,
+        "Type": "input",
+        "UserData": {
+          "Position": "-1116,336"
+        }
+      },
+      {
+        "Id": 69,
+        "Type": "property",
+        "ParentId": 68,
+        "Properties": {
+          "_name": "Client",
+          "_type": "OpenFramework.Systems.Pawn.Pawn"
+        }
+      },
+      {
+        "Id": 70,
+        "Type": "if",
+        "UserData": {
+          "Position": "372,456"
+        }
+      },
+      {
+        "Id": 71,
+        "Type": "nop",
+        "UserData": {
+          "Position": "-816,624"
+        }
+      },
+      {
+        "Id": 72,
+        "Type": "output",
+        "UserData": {
+          "Position": "156,360"
+        }
+      },
+      {
+        "Id": 74,
+        "Type": "core.notify_success",
+        "UserData": {
+          "Position": "744,432"
+        }
+      },
+      {
+        "Id": 75,
+        "Type": "core.notify_warning",
+        "UserData": {
+          "Position": "744,552"
+        }
+      },
+      {
+        "Id": 78,
+        "Type": "property",
+        "Properties": {
+          "_name": "RestoreMinValue"
+        },
+        "UserData": {
+          "Position": "-600,480"
+        }
+      },
+      {
+        "Id": 79,
+        "Type": "property",
+        "Properties": {
+          "_name": "RestoreMaxValue"
+        },
+        "UserData": {
+          "Position": "-600,516"
+        }
+      },
+      {
+        "Id": 80,
+        "Type": "nop",
+        "UserData": {
+          "Position": "492,564"
+        }
+      },
+      {
+        "Id": 81,
+        "Type": "ui.item_action_progress",
+        "UserData": {
+          "Position": "-252,240"
+        }
+      },
+      {
+        "Id": 82,
+        "Type": "property",
+        "Properties": {
+          "_name": "UseDuration"
+        },
+        "UserData": {
+          "Position": "-600,444"
+        }
+      },
+      {
+        "Id": 83,
+        "Type": "call",
+        "Properties": {
+          "_isStatic": false,
+          "_name": "PlaySound",
+          "_type": "OpenFramework.Systems.Pawn.Client"
+        },
+        "UserData": {
+          "Position": "564,168"
+        }
+      },
+      {
+        "Id": 84,
+        "Type": "property",
+        "Properties": {
+          "_name": "ConsumptionSound"
+        },
+        "UserData": {
+          "Position": "-600,408"
+        }
+      },
+      {
+        "Id": 91,
+        "Type": "core.add_thirst",
+        "UserData": {
+          "Position": "-96,360"
+        }
+      },
+      {
+        "Id": 114,
+        "Type": "property",
+        "ParentId": 68,
+        "Properties": {
+          "_name": "Metadata",
+          "_type": "OpenFramework.Inventory.InventoryItem"
+        }
+      }
+    ],
+    "Links": [
+      {
+        "SrcId": 68,
+        "SrcName": "arg1",
+        "DstId": 69,
+        "DstName": "_target"
+      },
+      {
+        "SrcId": 72,
+        "SrcName": "_signal",
+        "DstId": 70,
+        "DstName": "_signal"
+      },
+      {
+        "SrcId": 91,
+        "SrcName": "_result",
+        "DstId": 70,
+        "DstName": "condition"
+      },
+      {
+        "SrcId": 69,
+        "SrcName": "_result",
+        "DstId": 71,
+        "DstName": "in"
+      },
+      {
+        "SrcId": 91,
+        "SrcName": "_result",
+        "DstId": 72,
+        "DstName": "_result"
+      },
+      {
+        "SrcId": 91,
+        "SrcName": "_signal",
+        "DstId": 72,
+        "DstName": "_signal"
+      },
+      {
+        "Id": 115,
+        "Value": "Vous avez manger du pain",
+        "DstId": 74,
+        "DstName": "message"
+      },
+      {
+        "SrcId": 80,
+        "SrcName": "out",
+        "DstId": 74,
+        "DstName": "target"
+      },
+      {
+        "Id": 116,
+        "Value": "Vous n\u0027avez plus faim",
+        "DstId": 75,
+        "DstName": "message"
+      },
+      {
+        "SrcId": 80,
+        "SrcName": "out",
+        "DstId": 75,
+        "DstName": "target"
+      },
+      {
+        "SrcId": 114,
+        "SrcName": "_result",
+        "DstId": 78,
+        "DstName": "_target"
+      },
+      {
+        "SrcId": 114,
+        "SrcName": "_result",
+        "DstId": 79,
+        "DstName": "_target"
+      },
+      {
+        "SrcId": 71,
+        "SrcName": "out",
+        "DstId": 80,
+        "DstName": "in"
+      },
+      {
+        "SrcId": 68,
+        "SrcName": "_signal",
+        "DstId": 81,
+        "DstName": "_signal"
+      },
+      {
+        "SrcId": 82,
+        "SrcName": "_result",
+        "DstId": 81,
+        "DstName": "duration",
+        "UserData": {
+          "x": 60
+        }
+      },
+      {
+        "Id": 117,
+        "Value": "Entrain de boire..",
+        "DstId": 81,
+        "DstName": "label"
+      },
+      {
+        "SrcId": 69,
+        "SrcName": "_result",
+        "DstId": 81,
+        "DstName": "target"
+      },
+      {
+        "SrcId": 114,
+        "SrcName": "_result",
+        "DstId": 82,
+        "DstName": "_target"
+      },
+      {
+        "SrcId": 70,
+        "SrcName": "true",
+        "DstId": 83,
+        "DstName": "_signal"
+      },
+      {
+        "SrcId": 69,
+        "SrcName": "_result",
+        "DstId": 83,
+        "DstName": "_target",
+        "UserData": {
+          "x": 144
+        }
+      },
+      {
+        "SrcId": 84,
+        "SrcName": "_result",
+        "DstId": 83,
+        "DstName": "resource"
+      },
+      {
+        "SrcId": 114,
+        "SrcName": "_result",
+        "DstId": 84,
+        "DstName": "_target"
+      },
+      {
+        "SrcId": 79,
+        "SrcName": "_result",
+        "DstId": 91,
+        "DstName": "max"
+      },
+      {
+        "SrcId": 78,
+        "SrcName": "_result",
+        "DstId": 91,
+        "DstName": "min"
+      },
+      {
+        "SrcId": 69,
+        "SrcName": "_result",
+        "DstId": 91,
+        "DstName": "target"
+      },
+      {
+        "SrcId": 68,
+        "SrcName": "arg2",
+        "DstId": 114,
+        "DstName": "_target"
+      },
+      {
+        "SrcId": 81,
+        "SrcName": "_signal",
+        "DstId": 91,
+        "DstName": "_signal"
+      }
+    ]
+  },
+  "IsCraftable": false,
+  "Recipe": [],
+  "IsTools": false,
+  "ToolsResource": null,
+  "IsWeapon": false,
+  "WeaponResource": null,
+  "IsDocument": false,
+  "DocumentViewModel": null,
+  "IsFurniture": false,
+  "FurnitureCategoryType": "Chair",
+  "IsFood": true,
+  "RestoreMinValue": 10,
+  "RestoreMaxValue": 20,
+  "ConsumptionSound": null,
+  "IsMinerals": false,
+  "IsClothing": false,
+  "ClothingResource": null,
+  "__references": [
+    "facepunch.soda_can#33662"
+  ],
+  "__version": 0,
+  "Attributes": {
+    "expire_time": "86400"
+  },
+  "Icon": "ui/item_icons/soda.png"
+}

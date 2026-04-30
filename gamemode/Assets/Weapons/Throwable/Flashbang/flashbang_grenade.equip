@@ -1,0 +1,26 @@
+{
+  "Name": "Flashbang",
+  "Description": "",
+  "Slot": "Throwable",
+  "DropOnDisconnect": false,
+  "Icon": null,
+  "MainPrefab": {
+    "_type": "gameobject",
+    "prefab": "weapons/throwable/flashbang/weapon_flashbang_grenade.prefab"
+  },
+  "WorldModelPrefab": {
+    "_type": "gameobject",
+    "prefab": "weapons/throwable/flashbang/wm_flashbang_grenade.prefab"
+  },
+  "ViewModelPrefab": {
+    "_type": "gameobject",
+    "prefab": "weapons/throwable/flashbang/vm_flashbang_grenade.prefab"
+  },
+  "WorldModel": null,
+  "ArmorReduction": null,
+  "HelmetReduction": null,
+  "WorldModelBodyGroups": 0,
+  "CollisionOffset": 6,
+  "__references": [],
+  "__version": 0
+}

@@ -1,0 +1,15 @@
+{
+  "DisplayName": "Truck (Commercial)",
+  "FrictionMu": 0.65,
+  "LoadSensitivity": 0.65,
+  "NominalLoad": 4000,
+  "RollingResistance": 0.03,
+  "LatB": 5.5,
+  "LatC": 1.2,
+  "LatD": 0.75,
+  "LatE": 0.85,
+  "LongB": 6.5,
+  "LongC": 1.6,
+  "LongD": 0.78,
+  "LongE": 0.85
+}

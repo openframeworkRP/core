@@ -1,0 +1,17 @@
+{
+  "Name": "Cocaine",
+  "Description": null,
+  "IsEnabled": true,
+  "Type": "Consumable",
+  "PrefabSource": null,
+  "Weight": 0,
+  "MaxStack": 15,
+  "Image": "ui/items/cocaine.png",
+  "IsWeapon": false,
+  "WeaponResource": null,
+  "IsFurniture": false,
+  "FurnitureType": "Chair",
+  "Price": 0,
+  "__references": [],
+  "__version": 0
+}

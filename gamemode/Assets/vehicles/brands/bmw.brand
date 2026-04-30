@@ -1,0 +1,9 @@
+{
+  "Name": "BMW",
+  "Slogan": "Sheer driving pleasure",
+  "Image": "assets/brands/bmw.svg",
+  "Country": "assets/country/germany.country",
+  "Day": 7,
+  "Month": 3,
+  "Year": 1916
+}

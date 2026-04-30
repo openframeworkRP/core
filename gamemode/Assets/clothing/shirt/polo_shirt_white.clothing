@@ -1,0 +1,44 @@
+{
+  "HasHumanSkin": false,
+  "HumanSkinModel": null,
+  "HumanSkinMaterial": null,
+  "HumanEyesMaterial": null,
+  "HumanSkinBodyGroups": 0,
+  "HumanSkinMaterialGroup": null,
+  "HumanSkinTags": null,
+  "Title": "Polo Shirt White",
+  "Subtitle": "",
+  "Category": "TShirt",
+  "ConditionalModels": {},
+  "Tags": null,
+  "Parent": "models/citizen_clothes/shirt/polo_shirt/polo_shirt.clothing",
+  "Model": "models/citizen_clothes/shirt/polo_shirt/models/polo_shirt_white.vmdl",
+  "HumanAltModel": "models/citizen_clothes/shirt/polo_shirt/models/polo_shirt_white_m_human.vmdl",
+  "HumanAltFemaleModel": "models/citizen_clothes/shirt/polo_shirt/models/polo_shirt_white_f_human.vmdl",
+  "SkinMaterial": null,
+  "EyesMaterial": null,
+  "MaterialGroup": "",
+  "SlotsUnder": "Chest, LeftArm, RightArm",
+  "SlotsOver": 0,
+  "HideBody": "Chest",
+  "AllowTintSelect": false,
+  "TintSelection": {
+    "blend": "Linear",
+    "color": [
+      {
+        "t": 0.5,
+        "c": "1,1,1,1"
+      }
+    ],
+    "alpha": []
+  },
+  "TintDefault": 0.5,
+  "SteamItemDefinitionId": null,
+  "Icon": {
+    "Path": "models/citizen_clothes/shirt/polo_shirt/polo_shirt_white.clothing.png",
+    "Mode": "Chest",
+    "PositionOffset": "0,0,0"
+  },
+  "__references": [],
+  "__version": 0
+}

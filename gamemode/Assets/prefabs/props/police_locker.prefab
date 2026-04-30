@@ -1,0 +1,204 @@
+{
+  "RootObject": {
+    "__guid": "90b5c0ba-2073-4922-af19-ec1918cdac20",
+    "__version": 2,
+    "Flags": 0,
+    "Name": "police_locker",
+    "Position": "0,0,0",
+    "Rotation": "0,0,-0.999880373,-0.0154623017",
+    "Scale": "1,1,1",
+    "Tags": "actionmenu",
+    "Enabled": true,
+    "NetworkMode": 1,
+    "NetworkFlags": 0,
+    "NetworkOrphaned": 0,
+    "NetworkTransmit": false,
+    "OwnerTransfer": 1,
+    "Components": [
+      {
+        "__type": "OpenFramework.World.PoliceLocker",
+        "__guid": "2db20b43-86c0-4375-9431-1bebf6e43b5c",
+        "__enabled": true,
+        "Flags": 0,
+        "AvailableItems": [
+          {
+            "_type": "component",
+            "component_id": "465fcacd-3715-42b9-bd8f-d5d31999f8e0",
+            "go": "f0f9f93a-5d51-4ba6-9d1d-a2fd5952ff6b",
+            "component_type": "AvailableItem"
+          },
+          {
+            "_type": "component",
+            "component_id": "ea767ad3-9d2b-4edc-bed6-298a296f4292",
+            "go": "f0f9f93a-5d51-4ba6-9d1d-a2fd5952ff6b",
+            "component_type": "AvailableItem"
+          },
+          {
+            "_type": "component",
+            "component_id": "ba8897de-3396-480f-bb74-2e7e1c463e33",
+            "go": "f0f9f93a-5d51-4ba6-9d1d-a2fd5952ff6b",
+            "component_type": "AvailableItem"
+          }
+        ],
+        "OnComponentDestroy": null,
+        "OnComponentDisabled": null,
+        "OnComponentEnabled": null,
+        "OnComponentFixedUpdate": null,
+        "OnComponentStart": null,
+        "OnComponentUpdate": null
+      },
+      {
+        "__type": "Sandbox.ModelRenderer",
+        "__guid": "22a59cb7-70f1-425d-a197-4cccadb67864",
+        "__enabled": true,
+        "Flags": 0,
+        "BodyGroups": 18446744073709551615,
+        "CreateAttachments": false,
+        "LodOverride": null,
+        "MaterialGroup": null,
+        "MaterialOverride": null,
+        "Materials": null,
+        "Model": "pr/locker_01.vmdl",
+        "OnComponentDestroy": null,
+        "OnComponentDisabled": null,
+        "OnComponentEnabled": null,
+        "OnComponentFixedUpdate": null,
+        "OnComponentStart": null,
+        "OnComponentUpdate": null,
+        "RenderOptions": {
+          "GameLayer": true,
+          "OverlayLayer": false,
+          "BloomLayer": false,
+          "AfterUILayer": false
+        },
+        "RenderType": "On",
+        "Tint": "1,1,1,1"
+      },
+      {
+        "__type": "Sandbox.ModelCollider",
+        "__guid": "c960afd1-6486-4204-82f8-5d45a168b19d",
+        "__enabled": true,
+        "Flags": 0,
+        "ColliderFlags": 0,
+        "Elasticity": null,
+        "Friction": null,
+        "IsTrigger": false,
+        "Model": "pr/locker_01.vmdl",
+        "OnComponentDestroy": null,
+        "OnComponentDisabled": null,
+        "OnComponentEnabled": null,
+        "OnComponentFixedUpdate": null,
+        "OnComponentStart": null,
+        "OnComponentUpdate": null,
+        "OnObjectTriggerEnter": null,
+        "OnObjectTriggerExit": null,
+        "OnTriggerEnter": null,
+        "OnTriggerExit": null,
+        "RollingResistance": null,
+        "Static": true,
+        "Surface": null,
+        "SurfaceVelocity": "0,0,0"
+      }
+    ],
+    "Children": [
+      {
+        "__guid": "f0f9f93a-5d51-4ba6-9d1d-a2fd5952ff6b",
+        "__version": 2,
+        "Flags": 0,
+        "Name": "police_locker",
+        "Position": "0,0,0",
+        "Rotation": "0,0,0,1",
+        "Scale": "1,1,1",
+        "Tags": "",
+        "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkFlags": 0,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
+        "Components": [
+          {
+            "__type": "OpenFramework.World.AvailableItem",
+            "__guid": "465fcacd-3715-42b9-bd8f-d5d31999f8e0",
+            "__enabled": true,
+            "Flags": 0,
+            "Item1": "items/weapons/usp.item",
+            "Item2": [
+              "police",
+              "scu"
+            ],
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null
+          },
+          {
+            "__type": "OpenFramework.World.AvailableItem",
+            "__guid": "ea767ad3-9d2b-4edc-bed6-298a296f4292",
+            "__enabled": true,
+            "Flags": 0,
+            "Item1": "items/weapons/mp5.item",
+            "Item2": [
+              "police"
+            ],
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null
+          },
+          {
+            "__type": "OpenFramework.World.AvailableItem",
+            "__guid": "ba8897de-3396-480f-bb74-2e7e1c463e33",
+            "__enabled": true,
+            "Flags": 0,
+            "Item1": "items/weapons/shotgun.item",
+            "Item2": [
+              "police"
+            ],
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null
+          }
+        ],
+        "Children": []
+      }
+    ],
+    "__properties": {
+      "NetworkInterpolation": true,
+      "TimeScale": 1,
+      "WantsSystemScene": true,
+      "Metadata": {},
+      "NavMesh": {
+        "Enabled": false,
+        "IncludeStaticBodies": true,
+        "IncludeKeyframedBodies": true,
+        "EditorAutoUpdate": false,
+        "AgentHeight": 64,
+        "AgentRadius": 16,
+        "AgentStepSize": 18,
+        "AgentMaxSlope": 40,
+        "ExcludedBodies": "",
+        "IncludedBodies": "",
+        "DeferGeneration": false,
+        "CustomBounds": false
+      }
+    },
+    "__variables": []
+  },
+  "ResourceVersion": 2,
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "DontBreakAsTemplate": false,
+  "__references": [
+    "openframework.locker01#113681"
+  ],
+  "__version": 2
+}

@@ -1,0 +1,31 @@
+{
+  "Name": "Slr107Ur",
+  "Description": "",
+  "Slot": "Primary",
+  "DropOnDisconnect": false,
+  "Icon": null,
+  "IsPurchasable": false,
+  "Price": 0,
+  "KillReward": 300,
+  "MainPrefab": {
+    "_type": "gameobject",
+    "prefab": "weapons/slr107ur/weapon_slr107ur.prefab"
+  },
+  "WorldModelPrefab": {
+    "_type": "gameobject",
+    "prefab": "weapons/slr107ur/wm_slr107ur.prefab"
+  },
+  "ViewModelPrefab": {
+    "_type": "gameobject",
+    "prefab": "weapons/slr107ur/vm_slr107ur.prefab"
+  },
+  "WorldModel": "pr/slr-107ur.vmdl",
+  "ArmorReduction": null,
+  "HelmetReduction": null,
+  "WorldModelBodyGroups": 0,
+  "CollisionOffset": 6,
+  "__references": [
+    "openframework.slr107urnochargeur#155414"
+  ],
+  "__version": 0
+}

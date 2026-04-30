@@ -1,0 +1,47 @@
+{
+  "UI": false,
+  "Volume": "1",
+  "Pitch": "0.95 1.05",
+  "Decibels": 10000,
+  "SelectionMode": "Random",
+  "Sounds": [
+    "sounds/guns/tazer/weap_taser_fire_01.vsnd",
+    "sounds/guns/tazer/weap_taser_fire_04.vsnd",
+    "sounds/guns/tazer/tazershotv2.vsnd"
+  ],
+  "Occlusion": false,
+  "AirAbsorption": false,
+  "Transmission": false,
+  "OcclusionRadius": 64.49,
+  "DistanceAttenuation": true,
+  "Distance": 13000,
+  "Falloff": [
+    {
+      "x": 0,
+      "y": 1,
+      "in": 0,
+      "out": 0,
+      "mode": "Mirrored"
+    },
+    {
+      "x": 0.22916667,
+      "y": 0.3598094,
+      "in": 1.7307616,
+      "out": -1.7307616,
+      "mode": "Mirrored"
+    },
+    {
+      "x": 1,
+      "y": 0,
+      "in": 0.23529427,
+      "out": -0.23529427,
+      "mode": "Mirrored"
+    }
+  ],
+  "DefaultMixer": {
+    "Name": "unknown",
+    "Id": "00000000-0000-0000-0000-000000000000"
+  },
+  "__references": [],
+  "__version": 1
+}

@@ -1,0 +1,16 @@
+{
+  "Name": "Solvant",
+  "Description": "",
+  "IsEnabled": true,
+  "Price": 25,
+  "Weight": 0.4,
+  "MaxStack": 20,
+  "Attributes": {},
+  "CanBePickedUp": true,
+  "IsMinerals": true,
+  "IsConsumable": false,
+  "IsCraftable": false,
+  "IsUnique": false,
+  "Recipe": [],
+  "__version": 0
+}

@@ -1,0 +1,13 @@
+{
+  "DisplayName": "Diesel Construction",
+  "MaxTorqueNm": 1500,
+  "MaxPowerKw": 180,
+  "Steepness": 15,
+  "RpmIdle": 500,
+  "RpmMaxTorque": 1200,
+  "RpmMaxPower": 1800,
+  "RpmRedline": 2200,
+  "RpmMax": 2500,
+  "TopSpeedKmh": 40,
+  "GearboxPreset": "gearboxes/3spd_construction.gearbox"
+}

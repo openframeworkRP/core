@@ -1,0 +1,6 @@
+{
+  "Model": "Stock",
+  "Brand": "assets/brands/mercedes_benz.brand",
+  "Identifier": "01",
+  "ModelPath": "models/wheels/benz_280sl_stock/benz_280sl_wheel01.vmdl"
+}

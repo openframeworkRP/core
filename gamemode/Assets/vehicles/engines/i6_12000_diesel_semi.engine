@@ -1,0 +1,13 @@
+{
+  "DisplayName": "I6 12L Diesel Semi",
+  "MaxTorqueNm": 1800,
+  "MaxPowerKw": 330,
+  "Steepness": 15,
+  "RpmIdle": 500,
+  "RpmMaxTorque": 1200,
+  "RpmMaxPower": 1800,
+  "RpmRedline": 2200,
+  "RpmMax": 2500,
+  "TopSpeedKmh": 110,
+  "GearboxPreset": "gearboxes/10spd_semi.gearbox"
+}

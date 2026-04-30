@@ -1,0 +1,16 @@
+{
+  "Name": "Tissu",
+  "Description": "",
+  "IsEnabled": true,
+  "Price": 10,
+  "Weight": 0.1,
+  "MaxStack": 60,
+  "Attributes": {},
+  "CanBePickedUp": true,
+  "IsMinerals": true,
+  "IsConsumable": false,
+  "IsCraftable": false,
+  "IsUnique": false,
+  "Recipe": [],
+  "__version": 0
+}

@@ -1,0 +1,24 @@
+{
+  "publish": {
+    "Enabled": false,
+    "ProjectConfig": {
+      "Title": "C 4 Bomb",
+      "Type": "material",
+      "Org": "local",
+      "Ident": "c4bomb",
+      "Schema": 0,
+      "IncludeSourceFiles": false,
+      "Resources": null,
+      "PackageReferences": null,
+      "EditorReferences": [
+        "facepunch.concretetrim02paintblend#111185",
+        "facepunch.v_usp#110847"
+      ],
+      "Mounts": null,
+      "IsStandaloneOnly": false,
+      "Metadata": {
+        "SingleAssetSource": "weapons/throwable/c4_bomb/c4_bomb.vmat"
+      }
+    }
+  }
+}

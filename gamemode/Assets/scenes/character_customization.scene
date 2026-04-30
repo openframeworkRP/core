@@ -1,0 +1,464 @@
+{
+  "__guid": "d142f844-0a26-4774-92d2-1e38f200445f",
+  "GameObjects": [
+    {
+      "__guid": "e8bb6cde-5464-421e-9665-2aec5dafd55a",
+      "__version": 2,
+      "__Prefab": "prefabs/character_creation_scene/character_creation.prefab",
+      "__PrefabInstancePatch": {
+        "AddedObjects": [
+          {
+            "Id": {
+              "Type": "Component",
+              "IdValue": "e94df30e-9aa7-4205-9ab0-fda69910aa68"
+            },
+            "Parent": {
+              "Type": "GameObject",
+              "IdValue": "64ee4eca-a33d-412c-a037-f63c22fd5027"
+            },
+            "PreviousElement": null,
+            "ContainerProperty": "Components",
+            "IsContainerArray": true,
+            "Data": {
+              "__type": "OpenFramework.Api.ApiComponent",
+              "__guid": "e94df30e-9aa7-4205-9ab0-fda69910aa68",
+              "__enabled": true,
+              "Flags": 0,
+              "BaseUrl": "https://api.openframework.fr/api",
+              "OnComponentDestroy": null,
+              "OnComponentDisabled": null,
+              "OnComponentEnabled": null,
+              "OnComponentFixedUpdate": null,
+              "OnComponentStart": null,
+              "OnComponentUpdate": null
+            }
+          }
+        ],
+        "RemovedObjects": [],
+        "PropertyOverrides": [
+          {
+            "Target": {
+              "Type": "GameObject",
+              "IdValue": "64ee4eca-a33d-412c-a037-f63c22fd5027"
+            },
+            "Property": "Position",
+            "Value": "-48.51358,-68.39703,23.3247"
+          },
+          {
+            "Target": {
+              "Type": "Component",
+              "IdValue": "8dc60ef0-f5b7-418b-b475-b1ebb0e84e51"
+            },
+            "Property": "Mesh",
+            "Value": {
+              "Topology": "H4sIAAAAAAAACk2MCQoAIQzE4qqr//9wJdiCA6WQOQawgcbVBwzgT+bJXi0gIkLeM68q69fXm7n1bsv1a6skN2tH394B6DpJeKAAAAA=",
+              "Position": "73.30532,-56.95963,-8.02527",
+              "Rotation": "0,0,0,1",
+              "Positions": [
+                "-199.631,-319.1216,0",
+                "199.631,-319.1216,0",
+                "199.631,319.1216,0",
+                "-199.631,319.1216,0"
+              ],
+              "Blends": [
+                "0,0,0,0",
+                "0,0,0,0",
+                "0,0,0,0",
+                "0,0,0,0",
+                "0,0,0,0",
+                "0,0,0,0",
+                "0,0,0,0",
+                "0,0,0,0"
+              ],
+              "Colors": [
+                "0,0,0,0",
+                "0,0,0,0",
+                "0,0,0,0",
+                "0,0,0,0",
+                "0,0,0,0",
+                "0,0,0,0",
+                "0,0,0,0",
+                "0,0,0,0"
+              ],
+              "TextureCoord": [
+                "2.132315,2.938134",
+                "0,0",
+                "2.132315,-2.04814",
+                "0,0",
+                "-0.9869199,-2.04814",
+                "0,0",
+                "-0.9869199,2.938134",
+                "0,0"
+              ],
+              "TextureUAxis": [
+                "1,0,0"
+              ],
+              "TextureVAxis": [
+                "0,-1,0"
+              ],
+              "TextureScale": [
+                "113.8245,113.8246"
+              ],
+              "TextureOffset": [
+                "1.64677,1.279573"
+              ],
+              "MaterialIndex": [
+                0
+              ],
+              "EdgeFlags": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "Materials": [
+                "materials/dev/red.vmat"
+              ]
+            }
+          }
+        ],
+        "MovedObjects": []
+      },
+      "__PrefabIdToInstanceId": {
+        "64ee4eca-a33d-412c-a037-f63c22fd5027": "e8bb6cde-5464-421e-9665-2aec5dafd55a",
+        "02ddb6a6-b669-4f5d-81a4-153ff4c6c7d9": "65a565e4-b54f-460d-b11e-17d4d32fdb27",
+        "1ed2046d-33c6-428a-8929-75cad99592f3": "a3bfd055-9407-44f5-a8b6-b643f67184df",
+        "5aa0dcad-8119-4da4-8acf-084c6690346c": "ec3d445e-d358-4b31-ba42-a6e852be600b",
+        "193344a2-8dcb-4642-bfb0-e44a6d46f361": "c8b7827f-7400-499e-9fdf-0c4bf63b2125",
+        "33ce5525-09ac-4e01-9420-bdf792c169c3": "19034f6a-7bc0-43d3-aaa6-c7c37d6515aa",
+        "281b4fa4-8465-4cb3-95e0-c6a93de564ae": "61077683-50bb-433e-b6af-b842dfe68b07",
+        "75fc5955-f2fc-482e-bdf8-7d6dc6e3b99a": "cd2b13b9-0e13-48f5-a086-2d0ae329d9f1",
+        "8dc60ef0-f5b7-418b-b475-b1ebb0e84e51": "9044f530-c79e-4eef-aa2e-34b7b06e0e4c",
+        "f8093203-2c6b-4b25-80f2-b8d63f8f1d57": "94894fc5-98f3-4e83-b59e-d451821b03cb",
+        "18a91dab-f799-4649-a895-ab21c31debca": "2d2794fa-96f4-4a11-819b-65dc642cda2b",
+        "81580d0f-5058-4b22-8e18-071bf77de9fb": "4d7efe33-f8b0-44fd-9e53-41bea45ef04a",
+        "21fa6b6f-da04-4466-a409-5da486a9db27": "4c7fe2dc-7d8b-4efa-b9b3-5e56a4304f0e",
+        "1f5d72d2-62aa-4070-a935-b43791af3fda": "5f138445-c029-4af2-bf64-5fb8b4fa78e5",
+        "a52bf049-7960-481b-a658-07f656ce8d8e": "e548780c-b501-4238-803b-7195cc05253c",
+        "c7eeb0e3-a128-4730-877b-4d5acb52373b": "dc9c2ce1-03cb-4c1c-b7af-61e3171ff2ee",
+        "7f3f4fec-02c8-4a18-b028-3fb554140b4f": "2876c833-b152-4ea8-af6f-e77f9754f9ab",
+        "990c27ff-ca15-43fe-b6fe-c43536b2b0d5": "1ab2a23b-dc2c-467b-8907-66ec83d1c25b",
+        "6f7fc3b1-e10b-471a-8a24-4e50ec5d06d3": "cfb00f25-384c-483f-a2f7-d36ecbf3676b",
+        "e02fc397-e6d3-4d76-8359-1fb03259dd0c": "c590c27d-7b2d-4552-9d6e-2bb4430d1797",
+        "88552d24-e489-4700-af7e-b4893dfc998e": "ced23e9e-603d-4a22-a100-5ad26885a2cb",
+        "052ae33c-371d-4781-aa82-479326f8592f": "ca7ad3f3-fd58-47b0-ae66-d7f0f85b7a5d",
+        "cd1eff33-b213-465b-86be-6cd390ac72f8": "6190d1f2-611d-4d18-bf74-5dabfd9d46db",
+        "25ed0858-cd8e-4b74-b9d5-7e5e6c7ff727": "ab0de3ab-6019-40c6-8395-d5ac9b6cb397",
+        "db83c5ab-4803-431a-a462-9885da185c7d": "becd0bf9-bcce-4f62-8a19-659e84ceacc1"
+      }
+    }
+  ],
+  "SceneProperties": {
+    "NetworkInterpolation": true,
+    "TimeScale": 1,
+    "WantsSystemScene": true,
+    "Metadata": {},
+    "NavMesh": {
+      "Enabled": false,
+      "IncludeStaticBodies": true,
+      "IncludeKeyframedBodies": true,
+      "EditorAutoUpdate": true,
+      "AgentHeight": 64,
+      "AgentRadius": 16,
+      "AgentStepSize": 18,
+      "AgentMaxSlope": 40,
+      "ExcludedBodies": "",
+      "IncludedBodies": ""
+    },
+    "GameObjectSystems": {
+      "Sandbox.Clutter.ClutterGridSystem": {
+        "Storage": {
+          "$blob": "029bbb03-bb4f-47e9-800d-00fd1d610612"
+        }
+      },
+      "OpenFramework.GameLoop.Constants": {
+        "JailReasons": [
+          {
+            "Name": "Garde à vue",
+            "Duration": 900,
+            "Fine": 0
+          },
+          {
+            "Name": "Meurtre",
+            "Duration": -1,
+            "Fine": 0
+          },
+          {
+            "Name": "Tentative de meurtre",
+            "Duration": -1,
+            "Fine": 0
+          },
+          {
+            "Name": "Mutinerie / Évasion",
+            "Duration": -1,
+            "Fine": 0
+          },
+          {
+            "Name": "Vol",
+            "Duration": 3600,
+            "Fine": 500
+          },
+          {
+            "Name": "Nuisance sonore",
+            "Duration": 900,
+            "Fine": 100
+          },
+          {
+            "Name": "Insultes envers les forces de l'ordre",
+            "Duration": 1800,
+            "Fine": 150
+          },
+          {
+            "Name": "Obstruction envers la police",
+            "Duration": 2700,
+            "Fine": 200
+          },
+          {
+            "Name": "Fuite / Refus d'obtempérer",
+            "Duration": 1800,
+            "Fine": 250
+          },
+          {
+            "Name": "Abus de force",
+            "Duration": 3600,
+            "Fine": 300
+          },
+          {
+            "Name": "Possession d'armes illégales",
+            "Duration": 5400,
+            "Fine": 500
+          },
+          {
+            "Name": "Intrusion propriété privée",
+            "Duration": 2700,
+            "Fine": 200
+          },
+          {
+            "Name": "Intrusion poste de police",
+            "Duration": 3600,
+            "Fine": 300
+          },
+          {
+            "Name": "Trafic illégal",
+            "Duration": 5400,
+            "Fine": 1000
+          },
+          {
+            "Name": "Tir dans la rue",
+            "Duration": 3600,
+            "Fine": 400
+          },
+          {
+            "Name": "Imprimantes illégales",
+            "Duration": 3600,
+            "Fine": 300
+          },
+          {
+            "Name": "Crochetage",
+            "Duration": 1800,
+            "Fine": 150
+          },
+          {
+            "Name": "Vente de produits illicites",
+            "Duration": 5400,
+            "Fine": 800
+          }
+        ],
+        "FineReasons": [
+          {
+            "Name": "Excès de vitesse (1–20 km/h)",
+            "Amount": 150
+          },
+          {
+            "Name": "Excès de vitesse (20–40 km/h)",
+            "Amount": 300
+          },
+          {
+            "Name": "Excès de vitesse (+40 km/h)",
+            "Amount": 600
+          },
+          {
+            "Name": "Conduite dangereuse",
+            "Amount": 350
+          },
+          {
+            "Name": "Conduite sous influence (alcool)",
+            "Amount": 500
+          },
+          {
+            "Name": "Conduite sous influence (drogues)",
+            "Amount": 850
+          },
+          {
+            "Name": "Feux rouges brûlés",
+            "Amount": 200
+          },
+          {
+            "Name": "Non-respect du stop",
+            "Amount": 150
+          },
+          {
+            "Name": "Refus de priorité",
+            "Amount": 180
+          },
+          {
+            "Name": "Usage du téléphone au volant",
+            "Amount": 120
+          },
+          {
+            "Name": "Conduite sans permis",
+            "Amount": 1200
+          },
+          {
+            "Name": "Absence d’assurance",
+            "Amount": 900
+          },
+          {
+            "Name": "Absence de contrôle technique",
+            "Amount": 200
+          },
+          {
+            "Name": "Plaques illisibles / absentes",
+            "Amount": 120
+          },
+          {
+            "Name": "Véhicule non conforme",
+            "Amount": 160
+          },
+          {
+            "Name": "Nuisances sonores (véhicule)",
+            "Amount": 100
+          },
+          {
+            "Name": "Stationnement interdit",
+            "Amount": 60
+          },
+          {
+            "Name": "Stationnement gênant",
+            "Amount": 90
+          },
+          {
+            "Name": "Stationnement handicapé sans autorisation",
+            "Amount": 300
+          },
+          {
+            "Name": "Fuite lors d’un contrôle",
+            "Amount": 700
+          },
+          {
+            "Name": "Refus d'obtempérer",
+            "Amount": 600
+          },
+          {
+            "Name": "Entrave à la circulation",
+            "Amount": 200
+          },
+          {
+            "Name": "Trouble à l'ordre public",
+            "Amount": 150
+          },
+          {
+            "Name": "Bruit excessif sur la voie publique",
+            "Amount": 80
+          },
+          {
+            "Name": "Regroupement illégal",
+            "Amount": 100
+          },
+          {
+            "Name": "Manifestation non autorisée",
+            "Amount": 150
+          },
+          {
+            "Name": "Possession de stupéfiants (faible quantité)",
+            "Amount": 250
+          },
+          {
+            "Name": "Possession d'arme blanche",
+            "Amount": 300
+          },
+          {
+            "Name": "Possession d’arme illégale",
+            "Amount": 900
+          },
+          {
+            "Name": "Insultes envers un agent",
+            "Amount": 400
+          },
+          {
+            "Name": "Outrage à agent",
+            "Amount": 650
+          },
+          {
+            "Name": "Tentative de vol",
+            "Amount": 350
+          },
+          {
+            "Name": "Vol simple (faible valeur)",
+            "Amount": 500
+          },
+          {
+            "Name": "Transport d'objets volés",
+            "Amount": 450
+          },
+          {
+            "Name": "Falsification de documents",
+            "Amount": 700
+          },
+          {
+            "Name": "Dégradations légères",
+            "Amount": 200
+          },
+          {
+            "Name": "Intrusion sur propriété privée",
+            "Amount": 150
+          },
+          {
+            "Name": "Jet d’objets sur la voie publique",
+            "Amount": 80
+          },
+          {
+            "Name": "Agression légère",
+            "Amount": 450
+          }
+        ],
+        "Hitboxes": [
+          {
+            "Tags": "Head",
+            "DamageScale": 5,
+            "ArmorProtects": false,
+            "HelmetProtects": true
+          },
+          {
+            "Tags": "UpperBody, Arm",
+            "DamageScale": 1,
+            "ArmorProtects": true,
+            "HelmetProtects": false
+          },
+          {
+            "Tags": "Stomach",
+            "DamageScale": 1.25,
+            "ArmorProtects": false,
+            "HelmetProtects": false
+          },
+          {
+            "Tags": "Leg",
+            "DamageScale": 0.75,
+            "ArmorProtects": false,
+            "HelmetProtects": false
+          }
+        ],
+        "Gravity": "0,0,800"
+      }
+    }
+  },
+  "ResourceVersion": 3,
+  "Title": null,
+  "Description": null,
+  "__references": [],
+  "__version": 3
+}

@@ -1,0 +1,3002 @@
+{
+  "RootObject": {
+    "__guid": "4b54541e-f534-4f8b-a60c-96d30ce2ec5f",
+    "__version": 2,
+    "Flags": 0,
+    "Name": "server",
+    "Position": "0,0,0",
+    "Rotation": "0,0,0,1",
+    "Scale": "1,1,1",
+    "Tags": "",
+    "Enabled": true,
+    "NetworkMode": 2,
+    "NetworkFlags": 0,
+    "NetworkOrphaned": 0,
+    "NetworkTransmit": true,
+    "OwnerTransfer": 1,
+    "Components": [
+      {
+        "__type": "OpenFramework.Api.ApiComponent",
+        "__guid": "a3d556cc-4182-48e8-9f51-67edcb0cc0c2",
+        "__enabled": true,
+        "Flags": 0,
+        "BaseUrl": "https://api.openframework.fr/api",
+        "OnComponentDestroy": null,
+        "OnComponentDisabled": null,
+        "OnComponentEnabled": null,
+        "OnComponentFixedUpdate": null,
+        "OnComponentStart": null,
+        "OnComponentUpdate": null
+      },
+      {
+        "__type": "OpenFramework.Systems.InventoryApiSystem",
+        "__guid": "dd544ece-c769-43eb-923f-2aebd908a06e",
+        "__enabled": true,
+        "Flags": 0,
+        "OnComponentDestroy": null,
+        "OnComponentDisabled": null,
+        "OnComponentEnabled": null,
+        "OnComponentFixedUpdate": null,
+        "OnComponentStart": null,
+        "OnComponentUpdate": null,
+        "SaveIntervalSeconds": 10
+      },
+      {
+        "__type": "OpenFramework.GameLoop.Constants",
+        "__guid": "49b4ccb0-3deb-44d6-9c46-f36179d3018c",
+        "__enabled": true,
+        "Flags": 0,
+        "AfkDelay": 300,
+        "AfkKickDelay": 60,
+        "AimSpread": 0,
+        "AimVelocitySpreadScale": 0.5,
+        "AirAcceleration": 16,
+        "AirMaxAcceleration": 80,
+        "AirSpreadScale": 2,
+        "BagPrefab": {
+          "_type": "gameobject",
+          "prefab": "prefabs/inventory/dropped_bag.prefab"
+        },
+        "BaseAcceleration": 9,
+        "BaseArmorReduction": 0.775,
+        "BaseHelmetReduction": 0.775,
+        "BaseSpreadAmount": 0.05,
+        "BleedOutTime": 60,
+        "BoxPrefab": {
+          "_type": "gameobject",
+          "prefab": "prefabs/inventory/dropped_box.prefab"
+        },
+        "BunnyHopping": false,
+        "ChatAdverts": [],
+        "ChatAdvertsDelay": 120,
+        "CrouchingAcceleration": 10,
+        "CrouchingFriction": 4,
+        "CrouchingSpeed": 100,
+        "CrouchLerpSpeed": 10,
+        "CrouchSpreadScale": 0.5,
+        "DealerSpawnPoints": [
+          {
+            "_type": "gameobject",
+            "go": "c74d25db-290a-4a0e-8ea7-f29ab29834b2"
+          },
+          {
+            "_type": "gameobject",
+            "go": "bfce7bf9-de67-4a06-87f4-905345b32f6d"
+          },
+          {
+            "_type": "gameobject",
+            "go": "bee4630d-0808-47fd-a433-603067003c03"
+          },
+          {
+            "_type": "gameobject",
+            "go": "772ac7fb-a8b9-4067-858a-4723033462d6"
+          },
+          {
+            "_type": "gameobject",
+            "go": "64a90f3d-1253-45c2-8aac-7e468d212071"
+          },
+          {
+            "_type": "gameobject",
+            "go": "feb688fb-e0ca-49c5-b0af-f15be4883905"
+          },
+          {
+            "_type": "gameobject",
+            "go": "a2479c86-872f-4786-8b1f-acb59949e883"
+          },
+          {
+            "_type": "gameobject",
+            "go": "827d840b-ced5-4fbd-ae92-74c102c7d64d"
+          },
+          {
+            "_type": "gameobject",
+            "go": "c1c4c16b-37ee-485f-9991-07bc4a34cd1f"
+          },
+          {
+            "_type": "gameobject",
+            "go": "8ed4b272-0bfb-4420-b403-aab37f6944f5"
+          },
+          {
+            "_type": "gameobject",
+            "go": "6faf6b44-98de-4916-ac52-337a8f1516e6"
+          },
+          {
+            "_type": "gameobject",
+            "go": "c2190786-28b0-4efe-95e4-6212a0a68dab"
+          },
+          {
+            "_type": "gameobject",
+            "go": "50b9f3e8-5bec-41fd-9076-ab1bd9940b72"
+          },
+          {
+            "_type": "gameobject",
+            "go": "16e51a8b-0280-48f8-8c8c-9f3511b47140"
+          },
+          {
+            "_type": "gameobject",
+            "go": "25dde747-7f57-497e-af43-d4a490564e4c"
+          },
+          {
+            "_type": "gameobject",
+            "go": "73aeb003-ffe3-4f27-a98c-83be92c4e171"
+          },
+          {
+            "_type": "gameobject",
+            "go": "4d49fd74-4b94-483a-8810-ff2d83b094f6"
+          },
+          {
+            "_type": "gameobject",
+            "go": "0e034450-aae2-4e86-ae92-11a74c2b7b34"
+          },
+          {
+            "_type": "gameobject",
+            "go": "7147b791-01f6-4735-83f0-a5414c52b592"
+          },
+          {
+            "_type": "gameobject",
+            "go": "73855b28-aa50-4986-be2b-ef1f6f5a8967"
+          }
+        ],
+        "Debug": false,
+        "DefaultBank": 500,
+        "DefaultCash": 0,
+        "DefaultFuelCapacity": 60,
+        "DiscordPollInterval": 5,
+        "DropLifetime": 300,
+        "EmoteChatDistance": 6,
+        "EMSWaitDelay": 150,
+        "EnableChatAdverts": true,
+        "EnableDiscordBridge": true,
+        "EnableFallDamage": true,
+        "ExhaustionRecoveryThreshold": 30,
+        "FineReasons": [
+          {
+            "Name": "Excès de vitesse (1–20 km/h)",
+            "Amount": 150
+          },
+          {
+            "Name": "Excès de vitesse (20–40 km/h)",
+            "Amount": 300
+          },
+          {
+            "Name": "Excès de vitesse (+40 km/h)",
+            "Amount": 600
+          },
+          {
+            "Name": "Conduite dangereuse",
+            "Amount": 350
+          },
+          {
+            "Name": "Conduite sous influence (alcool)",
+            "Amount": 500
+          },
+          {
+            "Name": "Conduite sous influence (drogues)",
+            "Amount": 850
+          },
+          {
+            "Name": "Feux rouges brûlés",
+            "Amount": 200
+          },
+          {
+            "Name": "Non-respect du stop",
+            "Amount": 150
+          },
+          {
+            "Name": "Refus de priorité",
+            "Amount": 180
+          },
+          {
+            "Name": "Usage du téléphone au volant",
+            "Amount": 120
+          },
+          {
+            "Name": "Conduite sans permis",
+            "Amount": 1200
+          },
+          {
+            "Name": "Absence d’assurance",
+            "Amount": 900
+          },
+          {
+            "Name": "Absence de contrôle technique",
+            "Amount": 200
+          },
+          {
+            "Name": "Plaques illisibles / absentes",
+            "Amount": 120
+          },
+          {
+            "Name": "Véhicule non conforme",
+            "Amount": 160
+          },
+          {
+            "Name": "Nuisances sonores (véhicule)",
+            "Amount": 100
+          },
+          {
+            "Name": "Stationnement interdit",
+            "Amount": 60
+          },
+          {
+            "Name": "Stationnement gênant",
+            "Amount": 90
+          },
+          {
+            "Name": "Stationnement handicapé sans autorisation",
+            "Amount": 300
+          },
+          {
+            "Name": "Fuite lors d’un contrôle",
+            "Amount": 700
+          },
+          {
+            "Name": "Refus d'obtempérer",
+            "Amount": 600
+          },
+          {
+            "Name": "Entrave à la circulation",
+            "Amount": 200
+          },
+          {
+            "Name": "Trouble à l'ordre public",
+            "Amount": 150
+          },
+          {
+            "Name": "Bruit excessif sur la voie publique",
+            "Amount": 80
+          },
+          {
+            "Name": "Regroupement illégal",
+            "Amount": 100
+          },
+          {
+            "Name": "Manifestation non autorisée",
+            "Amount": 150
+          },
+          {
+            "Name": "Possession de stupéfiants (faible quantité)",
+            "Amount": 250
+          },
+          {
+            "Name": "Possession d'arme blanche",
+            "Amount": 300
+          },
+          {
+            "Name": "Possession d’arme illégale",
+            "Amount": 900
+          },
+          {
+            "Name": "Insultes envers un agent",
+            "Amount": 400
+          },
+          {
+            "Name": "Outrage à agent",
+            "Amount": 650
+          },
+          {
+            "Name": "Tentative de vol",
+            "Amount": 350
+          },
+          {
+            "Name": "Vol simple (faible valeur)",
+            "Amount": 500
+          },
+          {
+            "Name": "Transport d'objets volés",
+            "Amount": 450
+          },
+          {
+            "Name": "Falsification de documents",
+            "Amount": 700
+          },
+          {
+            "Name": "Dégradations légères",
+            "Amount": 200
+          },
+          {
+            "Name": "Intrusion sur propriété privée",
+            "Amount": 150
+          },
+          {
+            "Name": "Jet d’objets sur la voie publique",
+            "Amount": 80
+          },
+          {
+            "Name": "Agression légère",
+            "Amount": 450
+          }
+        ],
+        "FriskTime": 2.5,
+        "FuelConsumptionRate": 0.1,
+        "Gravity": "0,0,800",
+        "Hitboxes": [
+          {
+            "Tags": "Head",
+            "DamageScale": 5,
+            "ArmorProtects": false,
+            "HelmetProtects": true
+          },
+          {
+            "Tags": "UpperBody, Arm",
+            "DamageScale": 1,
+            "ArmorProtects": true,
+            "HelmetProtects": false
+          },
+          {
+            "Tags": "Stomach",
+            "DamageScale": 1.25,
+            "ArmorProtects": false,
+            "HelmetProtects": false
+          },
+          {
+            "Tags": "Leg",
+            "DamageScale": 0.75,
+            "ArmorProtects": false,
+            "HelmetProtects": false
+          }
+        ],
+        "HospitalRespawnPositions": [
+          {
+            "_type": "gameobject",
+            "go": "965c675b-3e84-4bcf-b065-f89ea236a947"
+          },
+          {
+            "_type": "gameobject",
+            "go": "e1348b0f-1927-4aed-9ddf-087121a27cab"
+          },
+          {
+            "_type": "gameobject",
+            "go": "8ecbe63e-c63a-412b-ba6f-e25025633f67"
+          },
+          {
+            "_type": "gameobject",
+            "go": "70bededd-fb7b-460c-819e-7c772e82c56c"
+          }
+        ],
+        "HungerDecayRate": 0.033,
+        "InteractionDistance": 100,
+        "InventoryMaxWeight": 30,
+        "ItemSellMultiplier": 0.5,
+        "JailReasons": [
+          {
+            "Name": "Garde à vue",
+            "Duration": 900,
+            "Fine": 0
+          },
+          {
+            "Name": "Meurtre",
+            "Duration": -1,
+            "Fine": 0
+          },
+          {
+            "Name": "Tentative de meurtre",
+            "Duration": -1,
+            "Fine": 0
+          },
+          {
+            "Name": "Mutinerie / Évasion",
+            "Duration": -1,
+            "Fine": 0
+          },
+          {
+            "Name": "Vol",
+            "Duration": 3600,
+            "Fine": 500
+          },
+          {
+            "Name": "Nuisance sonore",
+            "Duration": 900,
+            "Fine": 100
+          },
+          {
+            "Name": "Insultes envers les forces de l'ordre",
+            "Duration": 1800,
+            "Fine": 150
+          },
+          {
+            "Name": "Obstruction envers la police",
+            "Duration": 2700,
+            "Fine": 200
+          },
+          {
+            "Name": "Fuite / Refus d'obtempérer",
+            "Duration": 1800,
+            "Fine": 250
+          },
+          {
+            "Name": "Abus de force",
+            "Duration": 3600,
+            "Fine": 300
+          },
+          {
+            "Name": "Possession d'armes illégales",
+            "Duration": 5400,
+            "Fine": 500
+          },
+          {
+            "Name": "Intrusion propriété privée",
+            "Duration": 2700,
+            "Fine": 200
+          },
+          {
+            "Name": "Intrusion poste de police",
+            "Duration": 3600,
+            "Fine": 300
+          },
+          {
+            "Name": "Trafic illégal",
+            "Duration": 5400,
+            "Fine": 1000
+          },
+          {
+            "Name": "Tir dans la rue",
+            "Duration": 3600,
+            "Fine": 400
+          },
+          {
+            "Name": "Imprimantes illégales",
+            "Duration": 3600,
+            "Fine": 300
+          },
+          {
+            "Name": "Crochetage",
+            "Duration": 1800,
+            "Fine": 150
+          },
+          {
+            "Name": "Vente de produits illicites",
+            "Duration": 5400,
+            "Fine": 800
+          }
+        ],
+        "JobMaxGarbageSpawn": 10,
+        "JobStartCapital": 100000,
+        "JumpPower": 290,
+        "LimitBankNegative": -10000,
+        "LocalChatDistance": 15,
+        "LockpickTime": 8,
+        "MaxAcceleration": 10,
+        "MaxArmor": 100,
+        "MaxHealth": 100,
+        "MaxProps": 20,
+        "MaxStamina": 100,
+        "MaxWeightSpeedPenalty": 60,
+        "MedicSpawnPoint": {
+          "_type": "gameobject",
+          "go": "0c5f0708-78a9-4234-a2cd-c0f2180ea54c"
+        },
+        "MinProps": 0,
+        "NotificationDuration": 4,
+        "NpcBanSeconds": 300,
+        "NpcChangeInterval": 300,
+        "OnComponentDestroy": null,
+        "OnComponentDisabled": null,
+        "OnComponentEnabled": null,
+        "OnComponentFixedUpdate": null,
+        "OnComponentStart": null,
+        "OnComponentUpdate": null,
+        "PickpocketRevealChanceOnFail": 0.9,
+        "PocketMaxSlots": 6,
+        "PrisonSpawnPositions": [
+          {
+            "_type": "gameobject",
+            "go": "bf1756e1-df5f-469f-ace2-93322042de9b"
+          },
+          {
+            "_type": "gameobject",
+            "go": "c38d0d05-6a05-4c81-97bd-cce0ffff30b1"
+          },
+          {
+            "_type": "gameobject",
+            "go": "2dc4957b-d578-4f62-aeff-466589a667e5"
+          },
+          {
+            "_type": "gameobject",
+            "go": "e8d76108-409a-49d0-9870-eaa7e9623e4a"
+          }
+        ],
+        "RemoveHelmetOnHeadshot": true,
+        "RequestTimeoutDefault": 8,
+        "ResellerSpawnPoints": [
+          {
+            "_type": "gameobject",
+            "go": "59fa70f4-89ca-4925-b605-23d7b00e8739"
+          },
+          {
+            "_type": "gameobject",
+            "go": "fd1bb424-f6ae-4240-95cc-5afa06672be5"
+          },
+          {
+            "_type": "gameobject",
+            "go": "cee4345c-753b-4322-8982-f55df58310c0"
+          },
+          {
+            "_type": "gameobject",
+            "go": "cbf3e68b-234a-4d95-abb1-b30c2730c3d2"
+          },
+          {
+            "_type": "gameobject",
+            "go": "554eb0a8-ed54-4334-8f32-9407d50afc6f"
+          },
+          {
+            "_type": "gameobject",
+            "go": "50fb5383-cbe0-48e2-a380-ca73b304f0f4"
+          },
+          {
+            "_type": "gameobject",
+            "go": "ef025cd5-4dcc-4199-a6af-b923aa19419e"
+          },
+          {
+            "_type": "gameobject",
+            "go": "0af16e74-81c7-480d-b4b0-d302ce3f1f66"
+          },
+          {
+            "_type": "gameobject",
+            "go": "36073a43-64e6-4764-a60a-391b9f594794"
+          },
+          {
+            "_type": "gameobject",
+            "go": "055913fd-01d0-494f-a92f-76eed2788324"
+          }
+        ],
+        "RespawnDelay": 138,
+        "ReviveTime": 5,
+        "SlowCrouchLerpSpeed": 0.5,
+        "SlowWalkAcceleration": 10,
+        "SlowWalkFriction": 4,
+        "SlowWalkSpeed": 100,
+        "SpawnPlayers": [
+          {
+            "_type": "component",
+            "component_id": "c007ef92-1780-4deb-b02e-a6a0d830ccf8",
+            "go": "ae7bc847-ca20-44dc-bf9c-85e579652666",
+            "component_type": "SpawnPoint"
+          },
+          {
+            "_type": "component",
+            "component_id": "87817304-9296-4f78-82bc-a31b55f9a5aa",
+            "go": "45d6db37-d897-47b0-8a72-1b10b618c9d3",
+            "component_type": "SpawnPoint"
+          },
+          {
+            "_type": "component",
+            "component_id": "42c6fd48-088d-4f5d-9c7f-68d100230406",
+            "go": "948ec8c8-354f-473f-b2c8-c27015d43052",
+            "component_type": "SpawnPoint"
+          },
+          {
+            "_type": "component",
+            "component_id": "28a3b2ad-9cfe-40a7-ae25-2a43ce135ddb",
+            "go": "3640fd75-064b-414d-b39d-899ca20ee083",
+            "component_type": "SpawnPoint"
+          },
+          {
+            "_type": "component",
+            "component_id": "323dfeef-7cc5-4d88-ba4f-697fe31c1410",
+            "go": "2b7febff-13aa-4912-afe6-2a0606a4a290",
+            "component_type": "SpawnPoint"
+          },
+          {
+            "_type": "component",
+            "component_id": "a08ca6b0-781b-44c8-ac5d-7a26c6490504",
+            "go": "a96fd5a3-3655-420a-a9ca-9b52b296d0cb",
+            "component_type": "SpawnPoint"
+          },
+          {
+            "_type": "component",
+            "component_id": "f907ee93-2f0a-4b00-a82e-1b56a478320e",
+            "go": "758f3bfd-9668-45de-9a23-36dab0265104",
+            "component_type": "SpawnPoint"
+          },
+          {
+            "_type": "component",
+            "component_id": "c793b06a-5ac0-4da6-8dd8-b61e92f707d1",
+            "go": "c235f405-e7a8-463f-a595-9cee662afc08",
+            "component_type": "SpawnPoint"
+          },
+          {
+            "_type": "component",
+            "component_id": "f334f1a8-ca9f-4a17-abab-5c6ceb2da6f0",
+            "go": "0befc4a5-73d7-4ad1-8cf6-0750ab3d165e",
+            "component_type": "SpawnPoint"
+          },
+          {
+            "_type": "component",
+            "component_id": "1827b8df-32b5-4fd9-b524-9cc200e96cd6",
+            "go": "cf6194ea-97d9-450a-b52b-8c165eb9fc60",
+            "component_type": "SpawnPoint"
+          },
+          {
+            "_type": "component",
+            "component_id": "7c77975b-e934-4b00-9bb0-9a97517797f4",
+            "go": "8d285f9f-4cc5-4572-9f66-8ea7aa4bbbce",
+            "component_type": "SpawnPoint"
+          },
+          {
+            "_type": "component",
+            "component_id": "7c77975b-e934-4b00-9bb0-9a97517797f4",
+            "go": "8d285f9f-4cc5-4572-9f66-8ea7aa4bbbce",
+            "component_type": "SpawnPoint"
+          }
+        ],
+        "SpreadVelocityLimit": 350,
+        "SprintingAcceleration": 8,
+        "SprintingFriction": 4,
+        "SprintingSpeed": 260,
+        "StaminaDrainRate": 10,
+        "StaminaJumpCost": 20,
+        "StaminaRegenDelay": 0.5,
+        "StaminaRegenRate": 5,
+        "StarvationDamage": 1,
+        "StealCooldown": 10,
+        "StealDistance": 1.5,
+        "StealMaxCash": 60,
+        "StealMinCash": 15,
+        "StealSuccessChance": 0.45,
+        "TakeDamageAccelerationDampenTime": 1,
+        "TakeDamageAccelerationOffset": 0.5,
+        "TaxRate": 0.05,
+        "ThirstDecayRate": 0.047,
+        "VehicleInteractionDistance": 300,
+        "VelocitySpreadScale": 0.1,
+        "VoiceDistanceDefault": 500,
+        "VoiceShoutDistance": 1200,
+        "VoiceWhisperDistance": 150,
+        "WalkFriction": 7,
+        "WalkSpeed": 220,
+        "WarrantDuration": 900,
+        "WitnessRadius": 12
+      }
+    ],
+    "Children": [
+      {
+        "__guid": "8461a004-198e-421c-9f06-d886cc5c5567",
+        "__version": 2,
+        "__Prefab": "prefabs/hud.prefab",
+        "__PrefabInstancePatch": {
+          "AddedObjects": [
+            {
+              "Id": {
+                "Type": "Component",
+                "IdValue": "9322e1c2-90fe-4bd9-9719-a0a30d869ea1"
+              },
+              "Parent": {
+                "Type": "GameObject",
+                "IdValue": "355bddc2-06b0-48e9-b266-46e3a3e028b4"
+              },
+              "PreviousElement": {
+                "Type": "Component",
+                "IdValue": "844e43ab-c293-4805-b65d-c9b53ec99b78"
+              },
+              "ContainerProperty": "Components",
+              "IsContainerArray": true,
+              "Data": {
+                "__type": "OpenFramework.UI.QuickMenuSystem.QuickMenu",
+                "__guid": "9322e1c2-90fe-4bd9-9719-a0a30d869ea1",
+                "__enabled": true,
+                "Flags": 0,
+                "OnComponentDestroy": null,
+                "OnComponentDisabled": null,
+                "OnComponentEnabled": null,
+                "OnComponentFixedUpdate": null,
+                "OnComponentStart": null,
+                "OnComponentUpdate": null
+              }
+            },
+            {
+              "Id": {
+                "Type": "Component",
+                "IdValue": "4bc26227-3fd1-47f2-b650-d9a8ee3335ef"
+              },
+              "Parent": {
+                "Type": "GameObject",
+                "IdValue": "355bddc2-06b0-48e9-b266-46e3a3e028b4"
+              },
+              "PreviousElement": {
+                "Type": "Component",
+                "IdValue": "9322e1c2-90fe-4bd9-9719-a0a30d869ea1"
+              },
+              "ContainerProperty": "Components",
+              "IsContainerArray": true,
+              "Data": {
+                "__type": "OpenFramework.Systems.Pawn.Crosshair",
+                "__guid": "4bc26227-3fd1-47f2-b650-d9a8ee3335ef",
+                "__enabled": true,
+                "Flags": 0,
+                "OnComponentDestroy": null,
+                "OnComponentDisabled": null,
+                "OnComponentEnabled": null,
+                "OnComponentFixedUpdate": null,
+                "OnComponentStart": null,
+                "OnComponentUpdate": null
+              }
+            },
+            {
+              "Id": {
+                "Type": "Component",
+                "IdValue": "65a21596-362d-48cc-96a3-0eb8fa965dd1"
+              },
+              "Parent": {
+                "Type": "GameObject",
+                "IdValue": "355bddc2-06b0-48e9-b266-46e3a3e028b4"
+              },
+              "PreviousElement": {
+                "Type": "Component",
+                "IdValue": "4bc26227-3fd1-47f2-b650-d9a8ee3335ef"
+              },
+              "ContainerProperty": "Components",
+              "IsContainerArray": true,
+              "Data": {
+                "__type": "OpenFramework.ChatSystem.ChatUI",
+                "__guid": "65a21596-362d-48cc-96a3-0eb8fa965dd1",
+                "__enabled": true,
+                "Flags": 0,
+                "OnComponentDestroy": null,
+                "OnComponentDisabled": null,
+                "OnComponentEnabled": null,
+                "OnComponentFixedUpdate": null,
+                "OnComponentStart": null,
+                "OnComponentUpdate": null
+              }
+            },
+            {
+              "Id": {
+                "Type": "Component",
+                "IdValue": "4746b1f5-639a-49c7-b910-59b5b321a4df"
+              },
+              "Parent": {
+                "Type": "GameObject",
+                "IdValue": "355bddc2-06b0-48e9-b266-46e3a3e028b4"
+              },
+              "PreviousElement": {
+                "Type": "Component",
+                "IdValue": "65a21596-362d-48cc-96a3-0eb8fa965dd1"
+              },
+              "ContainerProperty": "Components",
+              "IsContainerArray": true,
+              "Data": {
+                "__type": "OpenFramework.MainMenuCreatorCharacter",
+                "__guid": "4746b1f5-639a-49c7-b910-59b5b321a4df",
+                "__enabled": true,
+                "Flags": 0,
+                "OnComponentDestroy": null,
+                "OnComponentDisabled": null,
+                "OnComponentEnabled": null,
+                "OnComponentFixedUpdate": null,
+                "OnComponentStart": null,
+                "OnComponentUpdate": null
+              }
+            },
+            {
+              "Id": {
+                "Type": "Component",
+                "IdValue": "65e28c67-2795-4629-9264-3213ff93772a"
+              },
+              "Parent": {
+                "Type": "GameObject",
+                "IdValue": "355bddc2-06b0-48e9-b266-46e3a3e028b4"
+              },
+              "PreviousElement": {
+                "Type": "Component",
+                "IdValue": "4746b1f5-639a-49c7-b910-59b5b321a4df"
+              },
+              "ContainerProperty": "Components",
+              "IsContainerArray": true,
+              "Data": {
+                "__type": "OpenFramework.MainMenuComponent",
+                "__guid": "65e28c67-2795-4629-9264-3213ff93772a",
+                "__enabled": true,
+                "Flags": 0,
+                "OnComponentDestroy": null,
+                "OnComponentDisabled": null,
+                "OnComponentEnabled": null,
+                "OnComponentFixedUpdate": null,
+                "OnComponentStart": null,
+                "OnComponentUpdate": null
+              }
+            },
+            {
+              "Id": {
+                "Type": "Component",
+                "IdValue": "0c960d10-ddf6-4469-b2c9-98842609ff11"
+              },
+              "Parent": {
+                "Type": "GameObject",
+                "IdValue": "355bddc2-06b0-48e9-b266-46e3a3e028b4"
+              },
+              "PreviousElement": {
+                "Type": "Component",
+                "IdValue": "65e28c67-2795-4629-9264-3213ff93772a"
+              },
+              "ContainerProperty": "Components",
+              "IsContainerArray": true,
+              "Data": {
+                "__type": "OpenFramework.NpcInteractionManager",
+                "__guid": "0c960d10-ddf6-4469-b2c9-98842609ff11",
+                "__enabled": true,
+                "Flags": 0,
+                "OnComponentDestroy": null,
+                "OnComponentDisabled": null,
+                "OnComponentEnabled": null,
+                "OnComponentFixedUpdate": null,
+                "OnComponentStart": null,
+                "OnComponentUpdate": null
+              }
+            },
+            {
+              "Id": {
+                "Type": "Component",
+                "IdValue": "a0dec54b-282a-4cb7-8066-90b5505efe70"
+              },
+              "Parent": {
+                "Type": "GameObject",
+                "IdValue": "355bddc2-06b0-48e9-b266-46e3a3e028b4"
+              },
+              "PreviousElement": {
+                "Type": "Component",
+                "IdValue": "0c960d10-ddf6-4469-b2c9-98842609ff11"
+              },
+              "ContainerProperty": "Components",
+              "IsContainerArray": true,
+              "Data": {
+                "__type": "OpenFramework.NpcTtsService",
+                "__guid": "a0dec54b-282a-4cb7-8066-90b5505efe70",
+                "__enabled": true,
+                "Flags": 0,
+                "OnComponentDestroy": null,
+                "OnComponentDisabled": null,
+                "OnComponentEnabled": null,
+                "OnComponentFixedUpdate": null,
+                "OnComponentStart": null,
+                "OnComponentUpdate": null
+              }
+            },
+            {
+              "Id": {
+                "Type": "GameObject",
+                "IdValue": "0574a172-883a-414b-9429-7e3f316e175f"
+              },
+              "Parent": {
+                "Type": "GameObject",
+                "IdValue": "355bddc2-06b0-48e9-b266-46e3a3e028b4"
+              },
+              "PreviousElement": null,
+              "ContainerProperty": "Children",
+              "IsContainerArray": true,
+              "Data": {
+                "__guid": "0574a172-883a-414b-9429-7e3f316e175f",
+                "__version": 2,
+                "Flags": 0,
+                "Name": "PauseMenu",
+                "Position": "0,0,0",
+                "Rotation": "0,0,0,1",
+                "Scale": "1,1,1",
+                "Tags": "",
+                "Enabled": true,
+                "NetworkMode": 2,
+                "NetworkFlags": 0,
+                "NetworkOrphaned": 0,
+                "NetworkTransmit": true,
+                "OwnerTransfer": 1,
+                "Components": [],
+                "Children": []
+              }
+            },
+            {
+              "Id": {
+                "Type": "Component",
+                "IdValue": "ca601810-c870-4325-8abc-562d2814ff97"
+              },
+              "Parent": {
+                "Type": "GameObject",
+                "IdValue": "0574a172-883a-414b-9429-7e3f316e175f"
+              },
+              "PreviousElement": null,
+              "ContainerProperty": "Components",
+              "IsContainerArray": true,
+              "Data": {
+                "__type": "Sandbox.ScreenPanel",
+                "__guid": "ca601810-c870-4325-8abc-562d2814ff97",
+                "__enabled": true,
+                "Flags": 0,
+                "AutoScreenScale": true,
+                "OnComponentDestroy": null,
+                "OnComponentDisabled": null,
+                "OnComponentEnabled": null,
+                "OnComponentFixedUpdate": null,
+                "OnComponentStart": null,
+                "OnComponentUpdate": null,
+                "Opacity": 1,
+                "Scale": 1,
+                "ScaleStrategy": "ConsistentHeight",
+                "TargetCamera": null,
+                "ZIndex": 200
+              }
+            },
+            {
+              "Id": {
+                "Type": "Component",
+                "IdValue": "0c7922fe-5467-454f-8c80-e8f11ed25e5f"
+              },
+              "Parent": {
+                "Type": "GameObject",
+                "IdValue": "0574a172-883a-414b-9429-7e3f316e175f"
+              },
+              "PreviousElement": {
+                "Type": "Component",
+                "IdValue": "ca601810-c870-4325-8abc-562d2814ff97"
+              },
+              "ContainerProperty": "Components",
+              "IsContainerArray": true,
+              "Data": {
+                "__type": "OpenFramework.UI.PauseMenu",
+                "__guid": "0c7922fe-5467-454f-8c80-e8f11ed25e5f",
+                "__enabled": true,
+                "Flags": 0,
+                "OnComponentDestroy": null,
+                "OnComponentDisabled": null,
+                "OnComponentEnabled": null,
+                "OnComponentFixedUpdate": null,
+                "OnComponentStart": null,
+                "OnComponentUpdate": null
+              }
+            },
+            {
+              "Id": {
+                "Type": "Component",
+                "IdValue": "02f51138-e159-46ac-af6a-6d2b4ba81876"
+              },
+              "Parent": {
+                "Type": "GameObject",
+                "IdValue": "0574a172-883a-414b-9429-7e3f316e175f"
+              },
+              "PreviousElement": {
+                "Type": "Component",
+                "IdValue": "0c7922fe-5467-454f-8c80-e8f11ed25e5f"
+              },
+              "ContainerProperty": "Components",
+              "IsContainerArray": true,
+              "Data": {
+                "__type": "OpenFramework.PlayerManagerHudComponent",
+                "__guid": "02f51138-e159-46ac-af6a-6d2b4ba81876",
+                "__enabled": true,
+                "Flags": 0,
+                "mainHud": {
+                  "_type": "component",
+                  "component_id": "0ad20bdf-76cf-455b-9662-e7e404954f78",
+                  "go": "355bddc2-06b0-48e9-b266-46e3a3e028b4",
+                  "component_type": "MainHUD"
+                },
+                "mainMenuHud": {
+                  "_type": "component",
+                  "component_id": "65e28c67-2795-4629-9264-3213ff93772a",
+                  "go": "355bddc2-06b0-48e9-b266-46e3a3e028b4",
+                  "component_type": "MainMenuComponent"
+                },
+                "menuCreatorHud": {
+                  "_type": "component",
+                  "component_id": "4746b1f5-639a-49c7-b910-59b5b321a4df",
+                  "go": "355bddc2-06b0-48e9-b266-46e3a3e028b4",
+                  "component_type": "MainMenuCreatorCharacter"
+                },
+                "OnComponentDestroy": null,
+                "OnComponentDisabled": null,
+                "OnComponentEnabled": null,
+                "OnComponentFixedUpdate": null,
+                "OnComponentStart": null,
+                "OnComponentUpdate": null
+              }
+            }
+          ],
+          "RemovedObjects": [
+            {
+              "Id": {
+                "Type": "Component",
+                "IdValue": "a1b2c3d4-e5f6-7890-abcd-ef1234567890"
+              }
+            },
+            {
+              "Id": {
+                "Type": "Component",
+                "IdValue": "b2c3d4e5-f6a7-8901-bcde-f23456789012"
+              }
+            },
+            {
+              "Id": {
+                "Type": "Component",
+                "IdValue": "f637faf1-cdb5-4477-86fb-53179d59216f"
+              }
+            },
+            {
+              "Id": {
+                "Type": "Component",
+                "IdValue": "b7c84c7d-d54f-4443-bd20-563644788e7f"
+              }
+            }
+          ],
+          "PropertyOverrides": [
+            {
+              "Target": {
+                "Type": "GameObject",
+                "IdValue": "355bddc2-06b0-48e9-b266-46e3a3e028b4"
+              },
+              "Property": "NetworkMode",
+              "Value": 2
+            }
+          ],
+          "MovedObjects": []
+        },
+        "__PrefabIdToInstanceId": {
+          "355bddc2-06b0-48e9-b266-46e3a3e028b4": "8461a004-198e-421c-9f06-d886cc5c5567",
+          "844e43ab-c293-4805-b65d-c9b53ec99b78": "bd4ad847-8e13-4379-a25d-e42df2c9b4e7",
+          "b7c84c7d-d54f-4443-bd20-563644788e7f": "7219d307-d44f-42bd-a4d0-aa3116b79e7b",
+          "0ad20bdf-76cf-455b-9662-e7e404954f78": "46b3375e-8363-408a-9bb7-9603139ddb37",
+          "a1b2c3d4-e5f6-7890-abcd-ef1234567890": "163f27eb-3276-4132-9380-c8efc406b6f8",
+          "b2c3d4e5-f6a7-8901-bcde-f23456789012": "56c98ea8-26b8-4b83-a7e7-a55e1fa889d0",
+          "de2ff909-21a6-437e-81bb-e13d2bf621a6": "8a72dbbd-d8b0-49c0-a720-39e8288d92de"
+        }
+      },
+      {
+        "__guid": "4f39e82a-8db9-4a27-ab04-317f24cf4fda",
+        "__version": 2,
+        "Flags": 0,
+        "Name": "-- Manager --",
+        "Position": "26.5650902,148.811996,16.6336098",
+        "Rotation": "0,0,0,1",
+        "Scale": "1,1,1",
+        "Tags": "",
+        "Enabled": true,
+        "NetworkMode": 0,
+        "NetworkFlags": 1,
+        "NetworkOrphaned": 1,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
+        "Components": [],
+        "Children": [
+          {
+            "__guid": "2c20717f-47d8-4a38-b667-119489648269",
+            "__version": 2,
+            "Flags": 0,
+            "Name": "Server Systems",
+            "Position": "0,0,0",
+            "Rotation": "0,0,0,1",
+            "Scale": "1,1,1",
+            "Tags": "",
+            "Enabled": true,
+            "NetworkMode": 0,
+            "NetworkFlags": 1,
+            "NetworkOrphaned": 0,
+            "NetworkTransmit": true,
+            "OwnerTransfer": 1,
+            "Components": [
+              {
+                "__type": "Facepunch.ServerManager",
+                "__guid": "11a77e75-f03e-407a-bf75-8221ee0b5a1e",
+                "__enabled": true,
+                "Flags": 0,
+                "ClientPrefab": {
+                  "_type": "gameobject",
+                  "prefab": "prefabs/player/client.prefab"
+                },
+                "IsMultiplayer": true,
+                "OnComponentDestroy": null,
+                "OnComponentDisabled": null,
+                "OnComponentEnabled": null,
+                "OnComponentFixedUpdate": null,
+                "OnComponentStart": null,
+                "OnComponentUpdate": null
+              },
+              {
+                "__type": "OpenFramework.Database.DatabaseManager",
+                "__guid": "4ff6d2a1-fa44-4c6e-a578-1e2bd4640eb3",
+                "__enabled": false,
+                "Flags": 0,
+                "AvailableCommands": [
+                  {
+                    "Id": "893681f5-2d94-40e3-be46-89df2ae72fa1",
+                    "Name": "Admin Menu",
+                    "Description": "",
+                    "Enabled": true
+                  },
+                  {
+                    "Id": "813fb8bf-9fcb-4841-8568-5cc96a74726f",
+                    "Name": "Give Money",
+                    "Description": "",
+                    "Enabled": true
+                  },
+                  {
+                    "Id": "0215f1ad-7817-4a54-bfe0-da754a822596",
+                    "Name": "Give Bank Money",
+                    "Description": "",
+                    "Enabled": true
+                  },
+                  {
+                    "Id": "9a252830-ac50-4c20-99da-5567d48c09b2",
+                    "Name": "Kick Player",
+                    "Description": "Kick a player by name or ID",
+                    "Enabled": true
+                  },
+                  {
+                    "Id": "cb8a2042-0a6c-4bd0-a433-3c1511756be8",
+                    "Name": "Ban Player",
+                    "Description": "Ban a player by name or ID",
+                    "Enabled": true
+                  },
+                  {
+                    "Id": "613d71f3-55fc-4d78-affb-c6028fe3f6e1",
+                    "Name": "Unban Player",
+                    "Description": "Unban a player by SteamID",
+                    "Enabled": true
+                  },
+                  {
+                    "Id": "3012253c-b4ac-4fae-a0c3-f05eb0401096",
+                    "Name": "Teleport To Player",
+                    "Description": "Teleport to another player",
+                    "Enabled": true
+                  },
+                  {
+                    "Id": "d038fbe4-a902-4617-952e-7e38fe523928",
+                    "Name": "Bring Player",
+                    "Description": "Teleport a player to you",
+                    "Enabled": true
+                  },
+                  {
+                    "Id": "5087bccb-c936-4be8-ae31-1efd9f86c6b2",
+                    "Name": "Noclip",
+                    "Description": "Noclip self or a player",
+                    "Enabled": true
+                  },
+                  {
+                    "Id": "99d165b9-2184-4d2f-ac59-8002868146ad",
+                    "Name": "Give Item",
+                    "Description": "Give item to a player",
+                    "Enabled": true
+                  },
+                  {
+                    "Id": "7c68bcee-da63-4155-aa14-61774d7f0150",
+                    "Name": "Give Weapon",
+                    "Description": "Give weapon to a player",
+                    "Enabled": true
+                  },
+                  {
+                    "Id": "63a76ca0-efd3-46d2-9181-a7932aa8483b",
+                    "Name": "Add npc",
+                    "Description": "Add a npc to the server",
+                    "Enabled": true
+                  },
+                  {
+                    "Id": "c6934fc4-5152-461e-8b8f-db1ae3ce5469",
+                    "Name": "Drop Money",
+                    "Description": "Allow to drop money from our pocket",
+                    "Enabled": true
+                  },
+                  {
+                    "Id": "e62ed8d9-93f8-45af-a05f-332014d0de9c",
+                    "Name": "Mute player",
+                    "Description": "Allow to mute a player voice globally.",
+                    "Enabled": true
+                  },
+                  {
+                    "Id": "ddfb848b-c870-44b5-9d58-b73e8f9eec98",
+                    "Name": "Unmute player",
+                    "Description": "Allow to unmute a  muted player voice globally.",
+                    "Enabled": true
+                  },
+                  {
+                    "Id": "ae3a4670-5f9a-4696-a91d-16944da14976",
+                    "Name": "Godmode",
+                    "Description": "Enable/disable god mod on a player.",
+                    "Enabled": true
+                  },
+                  {
+                    "Id": "9bb83c36-8b85-4df2-a858-e638cd2607d1",
+                    "Name": "Slap",
+                    "Description": "Slap a player.",
+                    "Enabled": true
+                  },
+                  {
+                    "Id": "e2e56812-6f07-4953-816a-3bc37dfd18b8",
+                    "Name": "Freeze",
+                    "Description": "Freeze/unfreeze a player.",
+                    "Enabled": true
+                  },
+                  {
+                    "Id": "f9a424a2-c7d0-41e2-9d30-71c309d7ecd1",
+                    "Name": "Respawn",
+                    "Description": "Respawn a player.",
+                    "Enabled": true
+                  },
+                  {
+                    "Id": "630ae80b-023c-433f-b1c3-d06474644b47",
+                    "Name": "Thirdperson",
+                    "Description": "Change camera to thirdperson view or back to 1th view",
+                    "Enabled": true
+                  },
+                  {
+                    "Id": "338c8160-3ecc-4ab8-8603-154ed78b6da2",
+                    "Name": "Whisper",
+                    "Description": "Envoyer un chuchotement aux joueurs à proximité.",
+                    "Enabled": true
+                  },
+                  {
+                    "Id": "238af19e-4a0c-4773-861a-2220cdc2e86b",
+                    "Name": "DM",
+                    "Description": "Envoyer un message privé à un joueur.",
+                    "Enabled": true
+                  },
+                  {
+                    "Id": "646a774d-9cae-4cf3-afae-b81225791b45",
+                    "Name": "TryTimer",
+                    "Description": "",
+                    "Enabled": true
+                  },
+                  {
+                    "Id": "62171c7d-9261-4363-8926-93f177ec1c2f",
+                    "Name": "Get Item",
+                    "Description": "",
+                    "Enabled": true
+                  },
+                  {
+                    "Id": "7aae7bf7-4579-428b-9795-334cf6613cb3",
+                    "Name": "SetJob",
+                    "Description": "Assigne un job à un joueur",
+                    "Enabled": true
+                  },
+                  {
+                    "Id": "39874e57-f5e7-43ea-b846-743319ab2302",
+                    "Name": "Jail",
+                    "Description": "Met un joueur en détention",
+                    "Enabled": true
+                  },
+                  {
+                    "Id": "3e402858-7bb3-4a09-a500-e2b5a205848f",
+                    "Name": "SpawnVehicleAndSeat",
+                    "Description": "Spawn un véhicule et met le joueur dedans",
+                    "Enabled": true
+                  },
+                  {
+                    "Id": "e23da89d-3d9c-4d65-b9bc-823c1e04245a",
+                    "Name": "Give Tools",
+                    "Description": "Give tool to a player",
+                    "Enabled": true
+                  },
+                  {
+                    "Id": "9ef638b8-811b-4795-b9c2-7fa3ea909df9",
+                    "Name": "Remove Tools",
+                    "Description": "Give tool to a player",
+                    "Enabled": true
+                  },
+                  {
+                    "Id": "8658599c-e587-438b-b215-3a210d860fb7",
+                    "Name": "SetHunger",
+                    "Description": "Modifie la faim d'un joueur",
+                    "Enabled": true
+                  },
+                  {
+                    "Id": "571aa745-b382-4fd3-8b84-0551e5cc4a6e",
+                    "Name": "SetThirst",
+                    "Description": "Modifie la soif d'un joueur",
+                    "Enabled": true
+                  }
+                ],
+                "LoadedTables": [],
+                "OnComponentDestroy": null,
+                "OnComponentDisabled": null,
+                "OnComponentEnabled": null,
+                "OnComponentFixedUpdate": null,
+                "OnComponentStart": null,
+                "OnComponentUpdate": null
+              },
+              {
+                "__type": "Facepunch.EquipmentDropper",
+                "__guid": "14860dd1-747b-4a95-9d11-8b90aab87432",
+                "__enabled": true,
+                "Flags": 0,
+                "Categories": [
+                  "Primary",
+                  "Secondary",
+                  "Throwable"
+                ],
+                "LimitedDropOnDeath": false,
+                "OnComponentDestroy": null,
+                "OnComponentDisabled": null,
+                "OnComponentEnabled": null,
+                "OnComponentFixedUpdate": null,
+                "OnComponentStart": null,
+                "OnComponentUpdate": null
+              }
+            ],
+            "Children": [
+              {
+                "__guid": "10693afa-e7ee-4c92-a936-6a185064be6e",
+                "__version": 2,
+                "Flags": 0,
+                "Name": "NPC System",
+                "Position": "0,0,0",
+                "Rotation": "0,0,0,1",
+                "Scale": "1,1,1",
+                "Tags": "",
+                "Enabled": false,
+                "NetworkMode": 0,
+                "NetworkFlags": 1,
+                "NetworkOrphaned": 0,
+                "NetworkTransmit": true,
+                "OwnerTransfer": 1,
+                "Components": [
+                  {
+                    "__type": "OpenFramework.Systems.Npc.Traffic.PedestrianTrafficManager",
+                    "__guid": "5e20771f-b29a-40c7-9382-72eaa64fa6af",
+                    "__enabled": true,
+                    "Flags": 0,
+                    "OnComponentDestroy": null,
+                    "OnComponentDisabled": null,
+                    "OnComponentEnabled": null,
+                    "OnComponentFixedUpdate": null,
+                    "OnComponentStart": null,
+                    "OnComponentUpdate": null,
+                    "SpawnPoints": [
+                      {
+                        "_type": "gameobject",
+                        "go": "10693afa-e7ee-4c92-a936-6a185064be6e"
+                      }
+                    ],
+                    "TargetPopulation": 1
+                  }
+                ],
+                "Children": []
+              },
+              {
+                "__guid": "53ae60d5-2599-4414-84dd-3d935ae56029",
+                "__version": 2,
+                "Flags": 0,
+                "Name": "BankEconomy",
+                "Position": "0,0,0",
+                "Rotation": "0,0,0,1",
+                "Scale": "1,1,1",
+                "Tags": "",
+                "Enabled": true,
+                "NetworkMode": 2,
+                "NetworkFlags": 0,
+                "NetworkOrphaned": 0,
+                "NetworkTransmit": true,
+                "OwnerTransfer": 1,
+                "Components": [
+                  {
+                    "__type": "OpenFramework.BankEconomyComponent",
+                    "__guid": "2d1aec14-9d5f-475b-a453-3dda7ef407ce",
+                    "__enabled": true,
+                    "Flags": 0,
+                    "LoanInterestRate": 0.05,
+                    "OnComponentDestroy": null,
+                    "OnComponentDisabled": null,
+                    "OnComponentEnabled": null,
+                    "OnComponentFixedUpdate": null,
+                    "OnComponentStart": null,
+                    "OnComponentUpdate": null,
+                    "OperatingFunds": 50000,
+                    "ReserveFunds": 1000000
+                  }
+                ],
+                "Children": []
+              },
+              {
+                "__guid": "77974651-4eb1-4fe4-86d6-278dc1c9a8ee",
+                "__version": 2,
+                "Flags": 0,
+                "Name": "ArmuryCatalogueManager",
+                "Position": "0,0,0",
+                "Rotation": "0,0,0,1",
+                "Scale": "1,1,1",
+                "Tags": "",
+                "Enabled": true,
+                "NetworkMode": 2,
+                "NetworkFlags": 0,
+                "NetworkOrphaned": 0,
+                "NetworkTransmit": true,
+                "OwnerTransfer": 1,
+                "Components": [
+                  {
+                    "__type": "OpenFramework.Systems.Armury_Systems.ArmuryCatalogueManager",
+                    "__guid": "c0577e71-4180-4e68-ae48-370aa970b47e",
+                    "__enabled": true,
+                    "Flags": 0,
+                    "ArmuryCatalogueResources": [
+                      "armury_catalogue/ammunations_catalogue.armury"
+                    ],
+                    "OnComponentDestroy": null,
+                    "OnComponentDisabled": null,
+                    "OnComponentEnabled": null,
+                    "OnComponentFixedUpdate": null,
+                    "OnComponentStart": null,
+                    "OnComponentUpdate": null
+                  }
+                ],
+                "Children": []
+              },
+              {
+                "__guid": "559c7841-201e-419d-aa56-1130fbb037f9",
+                "__version": 2,
+                "Flags": 0,
+                "Name": "ShopCatalogueManager",
+                "Position": "0,0,0",
+                "Rotation": "0,0,0,1",
+                "Scale": "1,1,1",
+                "Tags": "",
+                "Enabled": true,
+                "NetworkMode": 2,
+                "NetworkFlags": 0,
+                "NetworkOrphaned": 0,
+                "NetworkTransmit": true,
+                "OwnerTransfer": 1,
+                "Components": [
+                  {
+                    "__type": "OpenFramework.Systems.Shop_System.ShopCatalogueManager",
+                    "__guid": "98ebab3e-f8dc-4064-a1ac-c4584bceaf27",
+                    "__enabled": true,
+                    "Flags": 0,
+                    "OnComponentDestroy": null,
+                    "OnComponentDisabled": null,
+                    "OnComponentEnabled": null,
+                    "OnComponentFixedUpdate": null,
+                    "OnComponentStart": null,
+                    "OnComponentUpdate": null,
+                    "ShopCatalogueResources": [
+                      "shop_catalogue/darknet.shopcat",
+                      "shop_catalogue/meublio.shopcat",
+                      "shop_catalogue/epicier.shopcat"
+                    ]
+                  }
+                ],
+                "Children": []
+              },
+              {
+                "__guid": "91f2385d-f25a-4307-9f66-4e3e9881ded3",
+                "__version": 2,
+                "Flags": 0,
+                "Name": "CharacterManager",
+                "Position": "0,0,0",
+                "Rotation": "0,0,0,1",
+                "Scale": "1,1,1",
+                "Tags": "",
+                "Enabled": true,
+                "NetworkMode": 2,
+                "NetworkFlags": 0,
+                "NetworkOrphaned": 0,
+                "NetworkTransmit": true,
+                "OwnerTransfer": 1,
+                "Components": [
+                  {
+                    "__type": "OpenFramework.CharacterManager",
+                    "__guid": "16315c25-5862-46dd-912d-4951a41fc201",
+                    "__enabled": false,
+                    "Flags": 0,
+                    "CameraHeight": 50,
+                    "CharacterRotation": 180,
+                    "FemaleBody": null,
+                    "FemaleCatalog": null,
+                    "FemaleDresser": null,
+                    "IsFemale": false,
+                    "MaleBody": null,
+                    "MaleCatalog": null,
+                    "MaleDresser": null,
+                    "OnComponentDestroy": null,
+                    "OnComponentDisabled": null,
+                    "OnComponentEnabled": null,
+                    "OnComponentFixedUpdate": null,
+                    "OnComponentStart": null,
+                    "OnComponentUpdate": null,
+                    "PreviewCamera": null,
+                    "RotationSpeed": 100,
+                    "ZoomDistance": 150
+                  }
+                ],
+                "Children": []
+              },
+              {
+                "__guid": "e7a0aaf7-16ca-4ffc-8518-3dbc0f0096cc",
+                "__version": 2,
+                "Flags": 0,
+                "Name": "NpcDrugResellManager",
+                "Position": "0,0,0",
+                "Rotation": "0,0,0,1",
+                "Scale": "1,1,1",
+                "Tags": "",
+                "Enabled": true,
+                "NetworkMode": 2,
+                "NetworkFlags": 0,
+                "NetworkOrphaned": 0,
+                "NetworkTransmit": true,
+                "OwnerTransfer": 1,
+                "Components": [
+                  {
+                    "__type": "NpcSpawnPointComponent",
+                    "__guid": "a374933a-3ec4-4deb-8fea-d5d63e5f08d6",
+                    "__enabled": true,
+                    "Flags": 0,
+                    "Dealer": {
+                      "_type": "gameobject",
+                      "prefab": "prefabs/npc/npc-dealer.prefab"
+                    },
+                    "Medic": {
+                      "_type": "gameobject",
+                      "prefab": "prefabs/npc/npc-medic.prefab"
+                    },
+                    "OnComponentDestroy": null,
+                    "OnComponentDisabled": null,
+                    "OnComponentEnabled": null,
+                    "OnComponentFixedUpdate": null,
+                    "OnComponentStart": null,
+                    "OnComponentUpdate": null,
+                    "Reseller": {
+                      "_type": "gameobject",
+                      "prefab": "prefabs/npc/npc-sell-drug.prefab"
+                    },
+                    "SafeRadius": 15
+                  }
+                ],
+                "Children": [
+                  {
+                    "__guid": "7acf8a4a-ef48-4a7f-87ec-9e7916086ba2",
+                    "__version": 2,
+                    "Flags": 0,
+                    "Name": "DealerSpawnGroup",
+                    "Position": "0,0,0",
+                    "Rotation": "0,0,0,1",
+                    "Scale": "1,1,1",
+                    "Tags": "",
+                    "Enabled": true,
+                    "NetworkMode": 2,
+                    "NetworkFlags": 0,
+                    "NetworkOrphaned": 0,
+                    "NetworkTransmit": true,
+                    "OwnerTransfer": 1,
+                    "Components": [],
+                    "Children": [
+                      {
+                        "__guid": "c74d25db-290a-4a0e-8ea7-f29ab29834b2",
+                        "__version": 2,
+                        "Flags": 0,
+                        "Name": "dealer-spawn-1",
+                        "Position": "9493.62109,5112.88379,-95.1283875",
+                        "Rotation": "0,0,0,1",
+                        "Scale": "1,1,1",
+                        "Tags": "",
+                        "Enabled": true,
+                        "NetworkMode": 2,
+                        "NetworkFlags": 0,
+                        "NetworkOrphaned": 0,
+                        "NetworkTransmit": true,
+                        "OwnerTransfer": 1,
+                        "Components": [],
+                        "Children": []
+                      },
+                      {
+                        "__guid": "bfce7bf9-de67-4a06-87f4-905345b32f6d",
+                        "__version": 2,
+                        "Flags": 0,
+                        "Name": "dealer-spawn-2",
+                        "Position": "-7029.48779,-2094.66602,11.6776896",
+                        "Rotation": "0,0,0,1",
+                        "Scale": "1,1,1",
+                        "Tags": "",
+                        "Enabled": true,
+                        "NetworkMode": 2,
+                        "NetworkFlags": 0,
+                        "NetworkOrphaned": 0,
+                        "NetworkTransmit": true,
+                        "OwnerTransfer": 1,
+                        "Components": [],
+                        "Children": []
+                      },
+                      {
+                        "__guid": "bee4630d-0808-47fd-a433-603067003c03",
+                        "__version": 2,
+                        "Flags": 0,
+                        "Name": "dealer-spawn-3",
+                        "Position": "-3400.29004,-5037.60693,-109.614799",
+                        "Rotation": "0,0,1,-4.37113883E-08",
+                        "Scale": "1,1,1",
+                        "Tags": "",
+                        "Enabled": true,
+                        "NetworkMode": 2,
+                        "NetworkFlags": 0,
+                        "NetworkOrphaned": 0,
+                        "NetworkTransmit": true,
+                        "OwnerTransfer": 1,
+                        "Components": [],
+                        "Children": []
+                      },
+                      {
+                        "__guid": "772ac7fb-a8b9-4067-858a-4723033462d6",
+                        "__version": 2,
+                        "Flags": 0,
+                        "Name": "dealer-spawn-4",
+                        "Position": "-4676.37988,-2642.22998,-70.9977188",
+                        "Rotation": "0,0,1,-4.37113883E-08",
+                        "Scale": "1,1,1",
+                        "Tags": "",
+                        "Enabled": true,
+                        "NetworkMode": 2,
+                        "NetworkFlags": 0,
+                        "NetworkOrphaned": 0,
+                        "NetworkTransmit": true,
+                        "OwnerTransfer": 1,
+                        "Components": [],
+                        "Children": []
+                      },
+                      {
+                        "__guid": "64a90f3d-1253-45c2-8aac-7e468d212071",
+                        "__version": 2,
+                        "Flags": 0,
+                        "Name": "dealer-spawn-5",
+                        "Position": "-6966.05908,-605.991699,158.358902",
+                        "Rotation": "0,0,0.707106829,0.707106829",
+                        "Scale": "1,1,1",
+                        "Tags": "",
+                        "Enabled": true,
+                        "NetworkMode": 2,
+                        "NetworkFlags": 0,
+                        "NetworkOrphaned": 0,
+                        "NetworkTransmit": true,
+                        "OwnerTransfer": 1,
+                        "Components": [],
+                        "Children": []
+                      },
+                      {
+                        "__guid": "feb688fb-e0ca-49c5-b0af-f15be4883905",
+                        "__version": 2,
+                        "Flags": 0,
+                        "Name": "dealer-spawn-6",
+                        "Position": "-6374.51123,3556.34692,21.2306194",
+                        "Rotation": "0,0,1,-4.37113883E-08",
+                        "Scale": "1,1,1",
+                        "Tags": "",
+                        "Enabled": true,
+                        "NetworkMode": 2,
+                        "NetworkFlags": 0,
+                        "NetworkOrphaned": 0,
+                        "NetworkTransmit": true,
+                        "OwnerTransfer": 1,
+                        "Components": [],
+                        "Children": []
+                      },
+                      {
+                        "__guid": "a2479c86-872f-4786-8b1f-acb59949e883",
+                        "__version": 2,
+                        "Flags": 0,
+                        "Name": "dealer-spawn-7",
+                        "Position": "-1772.69604,4429.79688,-106.059196",
+                        "Rotation": "0,0,0,1",
+                        "Scale": "1,1,1",
+                        "Tags": "",
+                        "Enabled": true,
+                        "NetworkMode": 2,
+                        "NetworkFlags": 0,
+                        "NetworkOrphaned": 0,
+                        "NetworkTransmit": true,
+                        "OwnerTransfer": 1,
+                        "Components": [],
+                        "Children": []
+                      },
+                      {
+                        "__guid": "827d840b-ced5-4fbd-ae92-74c102c7d64d",
+                        "__version": 2,
+                        "Flags": 0,
+                        "Name": "dealer-spawn-8",
+                        "Position": "782.097229,3446.69312,-171.662903",
+                        "Rotation": "0,0,0,1",
+                        "Scale": "1,1,1",
+                        "Tags": "",
+                        "Enabled": true,
+                        "NetworkMode": 2,
+                        "NetworkFlags": 0,
+                        "NetworkOrphaned": 0,
+                        "NetworkTransmit": true,
+                        "OwnerTransfer": 1,
+                        "Components": [],
+                        "Children": []
+                      },
+                      {
+                        "__guid": "c1c4c16b-37ee-485f-9991-07bc4a34cd1f",
+                        "__version": 2,
+                        "Flags": 0,
+                        "Name": "dealer-spawn-9",
+                        "Position": "2724.13892,2212.46191,27.0632305",
+                        "Rotation": "0,0,0,1",
+                        "Scale": "1,1,1",
+                        "Tags": "",
+                        "Enabled": true,
+                        "NetworkMode": 2,
+                        "NetworkFlags": 0,
+                        "NetworkOrphaned": 0,
+                        "NetworkTransmit": true,
+                        "OwnerTransfer": 1,
+                        "Components": [],
+                        "Children": []
+                      },
+                      {
+                        "__guid": "8ed4b272-0bfb-4420-b403-aab37f6944f5",
+                        "__version": 2,
+                        "Flags": 0,
+                        "Name": "dealer-spawn-10",
+                        "Position": "3156.30591,4000.17993,-68.7881927",
+                        "Rotation": "0,0,0,1",
+                        "Scale": "1,1,1",
+                        "Tags": "",
+                        "Enabled": true,
+                        "NetworkMode": 2,
+                        "NetworkFlags": 0,
+                        "NetworkOrphaned": 0,
+                        "NetworkTransmit": true,
+                        "OwnerTransfer": 1,
+                        "Components": [],
+                        "Children": []
+                      },
+                      {
+                        "__guid": "6faf6b44-98de-4916-ac52-337a8f1516e6",
+                        "__version": 2,
+                        "Flags": 0,
+                        "Name": "dealer-spawn-11",
+                        "Position": "2617.72998,-2478.87012,-165.809799",
+                        "Rotation": "0,0,0,1",
+                        "Scale": "1,1,1",
+                        "Tags": "",
+                        "Enabled": true,
+                        "NetworkMode": 2,
+                        "NetworkFlags": 0,
+                        "NetworkOrphaned": 0,
+                        "NetworkTransmit": true,
+                        "OwnerTransfer": 1,
+                        "Components": [],
+                        "Children": []
+                      },
+                      {
+                        "__guid": "c2190786-28b0-4efe-95e4-6212a0a68dab",
+                        "__version": 2,
+                        "Flags": 0,
+                        "Name": "dealer-spawn-12",
+                        "Position": "-1484.86096,-1742.66797,800.36853",
+                        "Rotation": "0,0,-0.707106829,0.707106829",
+                        "Scale": "1,1,1",
+                        "Tags": "",
+                        "Enabled": true,
+                        "NetworkMode": 2,
+                        "NetworkFlags": 0,
+                        "NetworkOrphaned": 0,
+                        "NetworkTransmit": true,
+                        "OwnerTransfer": 1,
+                        "Components": [],
+                        "Children": []
+                      },
+                      {
+                        "__guid": "50b9f3e8-5bec-41fd-9076-ab1bd9940b72",
+                        "__version": 2,
+                        "Flags": 0,
+                        "Name": "dealer-spawn-13",
+                        "Position": "-32.2863998,478.007599,-183.189102",
+                        "Rotation": "0,0,-0.707106829,0.707106829",
+                        "Scale": "1,1,1",
+                        "Tags": "",
+                        "Enabled": true,
+                        "NetworkMode": 2,
+                        "NetworkFlags": 0,
+                        "NetworkOrphaned": 0,
+                        "NetworkTransmit": true,
+                        "OwnerTransfer": 1,
+                        "Components": [],
+                        "Children": []
+                      },
+                      {
+                        "__guid": "16e51a8b-0280-48f8-8c8c-9f3511b47140",
+                        "__version": 2,
+                        "Flags": 0,
+                        "Name": "dealer-spawn-14",
+                        "Position": "9002.33301,3177.7439,-183.189102",
+                        "Rotation": "-0,0,1,-4.37113883E-08",
+                        "Scale": "1,1,1",
+                        "Tags": "",
+                        "Enabled": true,
+                        "NetworkMode": 2,
+                        "NetworkFlags": 0,
+                        "NetworkOrphaned": 0,
+                        "NetworkTransmit": true,
+                        "OwnerTransfer": 1,
+                        "Components": [],
+                        "Children": []
+                      },
+                      {
+                        "__guid": "25dde747-7f57-497e-af43-d4a490564e4c",
+                        "__version": 2,
+                        "Flags": 0,
+                        "Name": "dealer-spawn-15",
+                        "Position": "8762.91406,1493.58899,-183.189102",
+                        "Rotation": "0,0,0,1",
+                        "Scale": "1,1,1",
+                        "Tags": "",
+                        "Enabled": true,
+                        "NetworkMode": 2,
+                        "NetworkFlags": 0,
+                        "NetworkOrphaned": 0,
+                        "NetworkTransmit": true,
+                        "OwnerTransfer": 1,
+                        "Components": [],
+                        "Children": []
+                      },
+                      {
+                        "__guid": "73aeb003-ffe3-4f27-a98c-83be92c4e171",
+                        "__version": 2,
+                        "Flags": 0,
+                        "Name": "dealer-spawn-16",
+                        "Position": "10034.9697,356.177612,492.911591",
+                        "Rotation": "0,0,1,-4.37113883E-08",
+                        "Scale": "1,1,1",
+                        "Tags": "",
+                        "Enabled": true,
+                        "NetworkMode": 2,
+                        "NetworkFlags": 0,
+                        "NetworkOrphaned": 0,
+                        "NetworkTransmit": true,
+                        "OwnerTransfer": 1,
+                        "Components": [],
+                        "Children": []
+                      },
+                      {
+                        "__guid": "4d49fd74-4b94-483a-8810-ff2d83b094f6",
+                        "__version": 2,
+                        "Flags": 0,
+                        "Name": "dealer-spawn-17",
+                        "Position": "10211.8496,-1892.88904,-180.603699",
+                        "Rotation": "0,0,1,-4.37113883E-08",
+                        "Scale": "1,1,1",
+                        "Tags": "",
+                        "Enabled": true,
+                        "NetworkMode": 2,
+                        "NetworkFlags": 0,
+                        "NetworkOrphaned": 0,
+                        "NetworkTransmit": true,
+                        "OwnerTransfer": 1,
+                        "Components": [],
+                        "Children": []
+                      },
+                      {
+                        "__guid": "0e034450-aae2-4e86-ae92-11a74c2b7b34",
+                        "__version": 2,
+                        "Flags": 0,
+                        "Name": "dealer-spawn-18",
+                        "Position": "10217.5195,-1892.88904,-180.603699",
+                        "Rotation": "0,0,1,-4.37113883E-08",
+                        "Scale": "1,1,1",
+                        "Tags": "",
+                        "Enabled": true,
+                        "NetworkMode": 2,
+                        "NetworkFlags": 0,
+                        "NetworkOrphaned": 0,
+                        "NetworkTransmit": true,
+                        "OwnerTransfer": 1,
+                        "Components": [],
+                        "Children": []
+                      },
+                      {
+                        "__guid": "7147b791-01f6-4735-83f0-a5414c52b592",
+                        "__version": 2,
+                        "Flags": 0,
+                        "Name": "dealer-spawn-19",
+                        "Position": "9101.49121,-5505.48291,-180.603699",
+                        "Rotation": "0,0,0.707106829,0.707106829",
+                        "Scale": "1,1,1",
+                        "Tags": "",
+                        "Enabled": true,
+                        "NetworkMode": 2,
+                        "NetworkFlags": 0,
+                        "NetworkOrphaned": 0,
+                        "NetworkTransmit": true,
+                        "OwnerTransfer": 1,
+                        "Components": [],
+                        "Children": []
+                      },
+                      {
+                        "__guid": "73855b28-aa50-4986-be2b-ef1f6f5a8967",
+                        "__version": 2,
+                        "Flags": 0,
+                        "Name": "dealer-spawn-20",
+                        "Position": "8411.94238,-6201.32324,-180.603699",
+                        "Rotation": "0,0,0.707106829,0.707106829",
+                        "Scale": "1,1,1",
+                        "Tags": "",
+                        "Enabled": true,
+                        "NetworkMode": 2,
+                        "NetworkFlags": 0,
+                        "NetworkOrphaned": 0,
+                        "NetworkTransmit": true,
+                        "OwnerTransfer": 1,
+                        "Components": [],
+                        "Children": []
+                      }
+                    ]
+                  },
+                  {
+                    "__guid": "a6a2c13d-70fa-4d5c-8ff0-4707f13850f7",
+                    "__version": 2,
+                    "Flags": 0,
+                    "Name": "ResellSpawnGroup",
+                    "Position": "0,0,0",
+                    "Rotation": "0,0,0,1",
+                    "Scale": "1,1,1",
+                    "Tags": "",
+                    "Enabled": true,
+                    "NetworkMode": 2,
+                    "NetworkFlags": 0,
+                    "NetworkOrphaned": 0,
+                    "NetworkTransmit": true,
+                    "OwnerTransfer": 1,
+                    "Components": [],
+                    "Children": [
+                      {
+                        "__guid": "59fa70f4-89ca-4925-b605-23d7b00e8739",
+                        "__version": 2,
+                        "Flags": 0,
+                        "Name": "reseller-dealer-spawn-1",
+                        "Position": "2503.98608,-4045.87305,-180.603699",
+                        "Rotation": "0,0,0.707106829,0.707106829",
+                        "Scale": "1,1,1",
+                        "Tags": "",
+                        "Enabled": true,
+                        "NetworkMode": 2,
+                        "NetworkFlags": 0,
+                        "NetworkOrphaned": 0,
+                        "NetworkTransmit": true,
+                        "OwnerTransfer": 1,
+                        "Components": [],
+                        "Children": []
+                      },
+                      {
+                        "__guid": "fd1bb424-f6ae-4240-95cc-5afa06672be5",
+                        "__version": 2,
+                        "Flags": 0,
+                        "Name": "reseller-dealer-spawn-2",
+                        "Position": "-7402.15186,-780.112793,7.95459414",
+                        "Rotation": "0,0,1,-4.37113883E-08",
+                        "Scale": "1,1,1",
+                        "Tags": "",
+                        "Enabled": true,
+                        "NetworkMode": 2,
+                        "NetworkFlags": 0,
+                        "NetworkOrphaned": 0,
+                        "NetworkTransmit": true,
+                        "OwnerTransfer": 1,
+                        "Components": [],
+                        "Children": []
+                      },
+                      {
+                        "__guid": "cee4345c-753b-4322-8982-f55df58310c0",
+                        "__version": 2,
+                        "Flags": 0,
+                        "Name": "reseller-dealer-spawn-3",
+                        "Position": "5065.96582,-1204.59497,487.510498",
+                        "Rotation": "0,0,1,-4.37113883E-08",
+                        "Scale": "1,1,1",
+                        "Tags": "",
+                        "Enabled": true,
+                        "NetworkMode": 2,
+                        "NetworkFlags": 0,
+                        "NetworkOrphaned": 0,
+                        "NetworkTransmit": true,
+                        "OwnerTransfer": 1,
+                        "Components": [],
+                        "Children": []
+                      },
+                      {
+                        "__guid": "cbf3e68b-234a-4d95-abb1-b30c2730c3d2",
+                        "__version": 2,
+                        "Flags": 0,
+                        "Name": "reseller-dealer-spawn-4",
+                        "Position": "-1717.44495,-3557.93994,-110.806702",
+                        "Rotation": "0,0,0,1",
+                        "Scale": "1,1,1",
+                        "Tags": "",
+                        "Enabled": true,
+                        "NetworkMode": 2,
+                        "NetworkFlags": 0,
+                        "NetworkOrphaned": 0,
+                        "NetworkTransmit": true,
+                        "OwnerTransfer": 1,
+                        "Components": [],
+                        "Children": []
+                      },
+                      {
+                        "__guid": "554eb0a8-ed54-4334-8f32-9407d50afc6f",
+                        "__version": 2,
+                        "Flags": 0,
+                        "Name": "reseller-dealer-spawn-5",
+                        "Position": "-3933.2229,-3564.10498,-94.0698395",
+                        "Rotation": "0,0,1,-4.37113883E-08",
+                        "Scale": "1,1,1",
+                        "Tags": "",
+                        "Enabled": true,
+                        "NetworkMode": 2,
+                        "NetworkFlags": 0,
+                        "NetworkOrphaned": 0,
+                        "NetworkTransmit": true,
+                        "OwnerTransfer": 1,
+                        "Components": [],
+                        "Children": []
+                      },
+                      {
+                        "__guid": "50fb5383-cbe0-48e2-a380-ca73b304f0f4",
+                        "__version": 2,
+                        "Flags": 0,
+                        "Name": "reseller-dealer-spawn-6",
+                        "Position": "-3268.61597,1543.20898,573.594177",
+                        "Rotation": "0,0,0,1",
+                        "Scale": "1,1,1",
+                        "Tags": "",
+                        "Enabled": true,
+                        "NetworkMode": 2,
+                        "NetworkFlags": 0,
+                        "NetworkOrphaned": 0,
+                        "NetworkTransmit": true,
+                        "OwnerTransfer": 1,
+                        "Components": [],
+                        "Children": []
+                      },
+                      {
+                        "__guid": "ef025cd5-4dcc-4199-a6af-b923aa19419e",
+                        "__version": 2,
+                        "Flags": 0,
+                        "Name": "reseller-dealer-spawn-7",
+                        "Position": "-34.5766907,3912.71802,-156.439606",
+                        "Rotation": "0,0,0.707106829,0.707106829",
+                        "Scale": "1,1,1",
+                        "Tags": "",
+                        "Enabled": true,
+                        "NetworkMode": 2,
+                        "NetworkFlags": 0,
+                        "NetworkOrphaned": 0,
+                        "NetworkTransmit": true,
+                        "OwnerTransfer": 1,
+                        "Components": [],
+                        "Children": []
+                      },
+                      {
+                        "__guid": "0af16e74-81c7-480d-b4b0-d302ce3f1f66",
+                        "__version": 2,
+                        "Flags": 0,
+                        "Name": "reseller-dealer-spawn-8",
+                        "Position": "7109.03906,5532.63623,-99.1787262",
+                        "Rotation": "-0,0,1,-4.37113883E-08",
+                        "Scale": "1,1,1",
+                        "Tags": "",
+                        "Enabled": true,
+                        "NetworkMode": 2,
+                        "NetworkFlags": 0,
+                        "NetworkOrphaned": 0,
+                        "NetworkTransmit": true,
+                        "OwnerTransfer": 1,
+                        "Components": [],
+                        "Children": []
+                      },
+                      {
+                        "__guid": "36073a43-64e6-4764-a60a-391b9f594794",
+                        "__version": 2,
+                        "Flags": 0,
+                        "Name": "reseller-dealer-spawn-9",
+                        "Position": "8392.78711,2552.7019,525.893677",
+                        "Rotation": "-0,0,1,-4.37113883E-08",
+                        "Scale": "1,1,1",
+                        "Tags": "",
+                        "Enabled": true,
+                        "NetworkMode": 2,
+                        "NetworkFlags": 0,
+                        "NetworkOrphaned": 0,
+                        "NetworkTransmit": true,
+                        "OwnerTransfer": 1,
+                        "Components": [],
+                        "Children": []
+                      },
+                      {
+                        "__guid": "055913fd-01d0-494f-a92f-76eed2788324",
+                        "__version": 2,
+                        "Flags": 0,
+                        "Name": "reseller-dealer-spawn-10",
+                        "Position": "3811.56299,-6182.28613,-175.2146",
+                        "Rotation": "-0,0,1,-4.37113883E-08",
+                        "Scale": "1,1,1",
+                        "Tags": "",
+                        "Enabled": true,
+                        "NetworkMode": 2,
+                        "NetworkFlags": 0,
+                        "NetworkOrphaned": 0,
+                        "NetworkTransmit": true,
+                        "OwnerTransfer": 1,
+                        "Components": [],
+                        "Children": []
+                      }
+                    ]
+                  },
+                  {
+                    "__guid": "b7d3a103-329e-470f-8f25-deb5cc478c9f",
+                    "__version": 2,
+                    "Flags": 0,
+                    "Name": "MedicSpawn",
+                    "Position": "4973.05518,-1371.06897,-682.900818",
+                    "Rotation": "0,0,0,1",
+                    "Scale": "1,1,1",
+                    "Tags": "",
+                    "Enabled": true,
+                    "NetworkMode": 2,
+                    "NetworkFlags": 0,
+                    "NetworkOrphaned": 0,
+                    "NetworkTransmit": true,
+                    "OwnerTransfer": 1,
+                    "Components": [],
+                    "Children": []
+                  }
+                ]
+              },
+              {
+                "__guid": "80bb8829-86a3-44fc-9003-3fb8574031eb",
+                "__version": 2,
+                "Flags": 0,
+                "Name": "Other System",
+                "Position": "0,0,0",
+                "Rotation": "0,0,0,1",
+                "Scale": "1,1,1",
+                "Tags": "",
+                "Enabled": true,
+                "NetworkMode": 2,
+                "NetworkFlags": 0,
+                "NetworkOrphaned": 0,
+                "NetworkTransmit": true,
+                "OwnerTransfer": 1,
+                "Components": [
+                  {
+                    "__type": "OpenFramework.Systems.DispatchSystem",
+                    "__guid": "306f999a-e091-43c3-a78e-7ae3bcbc4a01",
+                    "__enabled": true,
+                    "Flags": 0,
+                    "OnComponentDestroy": null,
+                    "OnComponentDisabled": null,
+                    "OnComponentEnabled": null,
+                    "OnComponentFixedUpdate": null,
+                    "OnComponentStart": null,
+                    "OnComponentUpdate": null
+                  },
+                  {
+                    "__type": "OpenFramework.Systems.Crafting.CraftingSystem",
+                    "__guid": "a5308b5f-2564-4463-abfa-8e4bd8e12f9f",
+                    "__enabled": true,
+                    "Flags": 0,
+                    "OnComponentDestroy": null,
+                    "OnComponentDisabled": null,
+                    "OnComponentEnabled": null,
+                    "OnComponentFixedUpdate": null,
+                    "OnComponentStart": null,
+                    "OnComponentUpdate": null
+                  },
+                  {
+                    "__type": "OpenFramework.World.Devices.DevicesManager",
+                    "__guid": "33cdd5a8-d385-42e5-97b0-9c0f37a1c52d",
+                    "__enabled": true,
+                    "Flags": 0,
+                    "OnComponentDestroy": null,
+                    "OnComponentDisabled": null,
+                    "OnComponentEnabled": null,
+                    "OnComponentFixedUpdate": null,
+                    "OnComponentStart": null,
+                    "OnComponentUpdate": null
+                  }
+                ],
+                "Children": []
+              },
+              {
+                "__guid": "f6029e23-bd11-4b70-9fea-a4430f13fd17",
+                "__version": 2,
+                "Flags": 0,
+                "Name": "DiscordBridge",
+                "Position": "0,0,0",
+                "Rotation": "0,0,0,1",
+                "Scale": "1,1,1",
+                "Tags": "",
+                "Enabled": true,
+                "NetworkMode": 2,
+                "NetworkFlags": 0,
+                "NetworkOrphaned": 0,
+                "NetworkTransmit": true,
+                "OwnerTransfer": 1,
+                "Components": [
+                  {
+                    "__type": "OpenFramework.Discord.DiscordBridge",
+                    "__guid": "68e0b2c0-d108-4d12-b260-eb9c23fc4b05",
+                    "__enabled": true,
+                    "Flags": 0,
+                    "OnComponentDestroy": null,
+                    "OnComponentDisabled": null,
+                    "OnComponentEnabled": null,
+                    "OnComponentFixedUpdate": null,
+                    "OnComponentStart": null,
+                    "OnComponentUpdate": null
+                  }
+                ],
+                "Children": []
+              }
+            ]
+          },
+          {
+            "__guid": "259cfc40-e58a-477b-89f2-9370ba46b8c5",
+            "__version": 2,
+            "Flags": 0,
+            "Name": "Networked Systems",
+            "Position": "0,0,0",
+            "Rotation": "0,0,0,1",
+            "Scale": "1,1,1",
+            "Tags": "",
+            "Enabled": true,
+            "NetworkMode": 1,
+            "NetworkFlags": 1,
+            "NetworkOrphaned": 1,
+            "NetworkTransmit": true,
+            "OwnerTransfer": 1,
+            "Components": [
+              {
+                "__type": "Sandbox.WeatherSystem.WeatherSystem",
+                "__guid": "b06cf037-512e-43ef-b84d-a53c5620e7d5",
+                "__enabled": true,
+                "Flags": 0,
+                "ApocalypsePrefab": {
+                  "_type": "gameobject",
+                  "prefab": "prefabs/weather/apocalypse.prefab"
+                },
+                "ClearFogPrefab": {
+                  "_type": "gameobject",
+                  "prefab": "prefabs/weather/clearfog.prefab"
+                },
+                "CloudyPrefab": {
+                  "_type": "gameobject",
+                  "prefab": "prefabs/weather/cloudy.prefab"
+                },
+                "CurrentWeather": "Sunny",
+                "CurrentWeatherFog": "Fog",
+                "Day": 1,
+                "EachSecond": {
+                  "Absolute": 0,
+                  "Relative": -136471712,
+                  "Passed": 136471706.48668498,
+                  "Fraction": 1
+                },
+                "FogPrefab": {
+                  "_type": "gameobject",
+                  "prefab": "prefabs/weather/fog.prefab"
+                },
+                "Hour1": 1,
+                "Hour2": 0,
+                "Minute1": 1,
+                "Minute2": 6,
+                "OnComponentDestroy": null,
+                "OnComponentDisabled": null,
+                "OnComponentEnabled": null,
+                "OnComponentFixedUpdate": null,
+                "OnComponentStart": null,
+                "OnComponentUpdate": null,
+                "SunnyPrefab": {
+                  "_type": "gameobject",
+                  "prefab": "prefabs/weather/sunny.prefab"
+                }
+              },
+              {
+                "__type": "OpenFramework.GameLoop.TimerService",
+                "__guid": "cc295da8-1e59-4a9f-841d-2e2d6224d8f3",
+                "__enabled": true,
+                "Flags": 0,
+                "_realTimers": [],
+                "_timers": [
+                  {
+                    "uniqueName": "chat_adverts",
+                    "delay": 120,
+                    "action": null,
+                    "repeat": true,
+                    "driftless": true
+                  },
+                  {
+                    "uniqueName": "job_citizen_salary",
+                    "delay": 180,
+                    "action": null,
+                    "repeat": true,
+                    "driftless": true
+                  },
+                  {
+                    "uniqueName": "job_police_salary",
+                    "delay": 180,
+                    "action": null,
+                    "repeat": true,
+                    "driftless": true
+                  },
+                  {
+                    "uniqueName": "job_mayor_salary",
+                    "delay": 180,
+                    "action": null,
+                    "repeat": true,
+                    "driftless": true
+                  },
+                  {
+                    "uniqueName": "job_armurier_salary",
+                    "delay": 180,
+                    "action": null,
+                    "repeat": true,
+                    "driftless": true
+                  },
+                  {
+                    "uniqueName": "job_medic_salary",
+                    "delay": 180,
+                    "action": null,
+                    "repeat": true,
+                    "driftless": true
+                  }
+                ],
+                "OnComponentDestroy": null,
+                "OnComponentDisabled": null,
+                "OnComponentEnabled": null,
+                "OnComponentFixedUpdate": null,
+                "OnComponentStart": null,
+                "OnComponentUpdate": null
+              },
+              {
+                "__type": "DayNightCycle",
+                "__guid": "4e1d3379-fb0e-47e7-a43b-5761ebdb9df7",
+                "__enabled": true,
+                "Flags": 0,
+                "ControlFog": false,
+                "CurrentHour": 0,
+                "FogDay": 0.05,
+                "FogNight": 0.35,
+                "FogTransition": 0.2,
+                "LightAfternoon": "0.5,0.45,0.36,1",
+                "LightDawn": "0.5,0.26,0.19,1",
+                "LightDusk": "0.275,0.125,0.25,1",
+                "LightMoon": "0,0,0.01176,1",
+                "LightMorning": "0.5,0.44,0.34,1",
+                "LightNoon": "0.5,0.485,0.46,1",
+                "LightSunrise": "0.5,0.31,0.14,1",
+                "LightSunset": "0.5,0.25,0.09,1",
+                "MinSkyBrightness": 0.1,
+                "OnComponentDestroy": null,
+                "OnComponentDisabled": null,
+                "OnComponentEnabled": null,
+                "OnComponentFixedUpdate": null,
+                "OnComponentStart": null,
+                "OnComponentUpdate": null,
+                "SkyAfternoon": "0.15,0.26,0.46,1",
+                "SkyDawn": "0.09,0.04,0.09,1",
+                "SkyDusk": "0.08,0.05,0.11,1",
+                "SkyMoon": "0,0,0.00784,1",
+                "SkyMorning": "0.2,0.29,0.44,1",
+                "SkyNoon": "0.11,0.24,0.475,1",
+                "SkySunrise": "0.35,0.14,0.04,1",
+                "SkySunset": "0.4,0.16,0.03,1",
+                "SunLight": null,
+                "SunriseHour": 6,
+                "SunsetHour": 20,
+                "SunTilt": 20,
+                "TransitionDuration": 1.5,
+                "Weather": {
+                  "_type": "component",
+                  "component_id": "b06cf037-512e-43ef-b84d-a53c5620e7d5",
+                  "go": "259cfc40-e58a-477b-89f2-9370ba46b8c5",
+                  "component_type": "WeatherSystem"
+                }
+              }
+            ],
+            "Children": [
+              {
+                "__guid": "49009db5-d01e-457d-a155-238320a88a04",
+                "__version": 2,
+                "Flags": 0,
+                "Name": "JobSystem",
+                "Position": "0,0,0",
+                "Rotation": "0,0,0,1",
+                "Scale": "1,1,1",
+                "Tags": "",
+                "Enabled": true,
+                "NetworkMode": 1,
+                "NetworkFlags": 1,
+                "NetworkOrphaned": 1,
+                "NetworkTransmit": true,
+                "OwnerTransfer": 1,
+                "Components": [
+                  {
+                    "__type": "OpenFramework.Systems.Jobs.JobVoteSystem",
+                    "__guid": "0ad928a1-08a8-42c0-a636-539a387e7259",
+                    "__enabled": true,
+                    "Flags": 0,
+                    "OnComponentDestroy": null,
+                    "OnComponentDisabled": null,
+                    "OnComponentEnabled": null,
+                    "OnComponentFixedUpdate": null,
+                    "OnComponentStart": null,
+                    "OnComponentUpdate": null,
+                    "VoteDelay": 120
+                  },
+                  {
+                    "__type": "OpenFramework.Systems.Jobs.CitizenJob",
+                    "__guid": "31f6cfc3-9117-4400-981c-5696df0757ec",
+                    "__enabled": true,
+                    "Flags": 0,
+                    "Capital": 0,
+                    "Color": "1,1,1,1",
+                    "CommandsAccess": [],
+                    "DefaultClothings": [],
+                    "DefaultItems": [],
+                    "DefaultWeapons": [],
+                    "Description": "A definir",
+                    "DisplayName": "Citizen",
+                    "Grades": null,
+                    "HasGrades": false,
+                    "Image": "ui/background/jobs/citizen.png",
+                    "IsDefault": true,
+                    "MaxPlayers": 0,
+                    "OnComponentDestroy": null,
+                    "OnComponentDisabled": null,
+                    "OnComponentEnabled": null,
+                    "OnComponentFixedUpdate": null,
+                    "OnComponentStart": null,
+                    "OnComponentUpdate": null,
+                    "PayInterval": 600,
+                    "Permissions": "None",
+                    "PlayerModel": null,
+                    "Salary": 5,
+                    "SwitchCooldown": 600,
+                    "WhitelistOnly": false
+                  },
+                  {
+                    "__type": "OpenFramework.Systems.Jobs.MayorJob",
+                    "__guid": "788ee3cf-efc4-4226-957e-94b65ce93e12",
+                    "__enabled": true,
+                    "Flags": 0,
+                    "AlertSound": "sounds/soundscapes/alert-siren.sound",
+                    "Capital": 0,
+                    "Color": "1,1,1,1",
+                    "CommandsAccess": null,
+                    "DefaultClothings": null,
+                    "DefaultItems": null,
+                    "DefaultWeapons": null,
+                    "Description": "A definir",
+                    "DisplayName": "Mayor",
+                    "Grades": null,
+                    "HasGrades": false,
+                    "Image": "ui/background/jobs/mayor.png",
+                    "IsDefault": false,
+                    "MaxPlayers": 1,
+                    "OnComponentDestroy": null,
+                    "OnComponentDisabled": null,
+                    "OnComponentEnabled": null,
+                    "OnComponentFixedUpdate": null,
+                    "OnComponentStart": null,
+                    "OnComponentUpdate": null,
+                    "PayInterval": 600,
+                    "Permissions": "None",
+                    "PlayerModel": null,
+                    "Salary": 41,
+                    "SwitchCooldown": 600,
+                    "WhitelistOnly": true
+                  },
+                  {
+                    "__type": "OpenFramework.Systems.Jobs.ArmurierJob",
+                    "__guid": "2d1210c9-ac31-42c5-a81a-56f3c1161287",
+                    "__enabled": true,
+                    "Flags": 0,
+                    "Capital": 0,
+                    "Color": "1,1,1,1",
+                    "CommandsAccess": null,
+                    "DefaultClothings": null,
+                    "DefaultItems": null,
+                    "DefaultWeapons": null,
+                    "Description": "A definir",
+                    "DisplayName": "Armurier",
+                    "Grades": null,
+                    "HasGrades": false,
+                    "Image": "ui/background/jobs/gunsmith.png",
+                    "IsDefault": false,
+                    "MaxPlayers": 5,
+                    "OnComponentDestroy": null,
+                    "OnComponentDisabled": null,
+                    "OnComponentEnabled": null,
+                    "OnComponentFixedUpdate": null,
+                    "OnComponentStart": null,
+                    "OnComponentUpdate": null,
+                    "PayInterval": 600,
+                    "Permissions": "None",
+                    "PlayerModel": null,
+                    "Salary": 5,
+                    "SwitchCooldown": 600,
+                    "WhitelistOnly": false
+                  },
+                  {
+                    "__type": "OpenFramework.Systems.Jobs.MedicJob",
+                    "__guid": "35777e91-1a03-46e4-85af-514ba75889a6",
+                    "__enabled": true,
+                    "Flags": 0,
+                    "Capital": 0,
+                    "Color": "1,1,1,1",
+                    "CommandsAccess": null,
+                    "DefaultClothings": [
+                      "items/clothings/jacket-medic.item",
+                      "items/clothings/t-shirt-02.item",
+                      "items/clothings/pant-medic.item",
+                      "items/clothings/shoes-02.item"
+                    ],
+                    "DefaultItems": [],
+                    "DefaultWeapons": [],
+                    "Description": "A definir",
+                    "DisplayName": "Medic",
+                    "Grades": null,
+                    "HasGrades": false,
+                    "Image": "ui/background/jobs/doctor.png",
+                    "IsDefault": false,
+                    "MaxPlayers": 8,
+                    "OnComponentDestroy": null,
+                    "OnComponentDisabled": null,
+                    "OnComponentEnabled": null,
+                    "OnComponentFixedUpdate": null,
+                    "OnComponentStart": null,
+                    "OnComponentUpdate": null,
+                    "PayInterval": 600,
+                    "Permissions": "CanHeal, CanRevive",
+                    "PlayerModel": null,
+                    "Salary": 30,
+                    "SwitchCooldown": 600,
+                    "WhitelistOnly": false
+                  },
+                  {
+                    "__type": "OpenFramework.Systems.Jobs.PoliceJob",
+                    "__guid": "6fee231c-7073-4d0b-a67d-9d1f96d62563",
+                    "__enabled": true,
+                    "Flags": 0,
+                    "Capital": 0,
+                    "Color": "1,1,1,1",
+                    "CommandsAccess": [],
+                    "DefaultClothings": [
+                      "items/clothings/hat-police.item",
+                      "items/clothings/army_shirt.item",
+                      "items/clothings/tactic-police.item",
+                      "items/clothings/jeans-police.item",
+                      "items/clothings/shoes-police.item"
+                    ],
+                    "DefaultItems": [],
+                    "DefaultWeapons": [],
+                    "Description": "A definir",
+                    "DisplayName": "Police",
+                    "Grades": null,
+                    "HasGrades": false,
+                    "Image": "ui/background/jobs/police.png",
+                    "IsDefault": false,
+                    "MaxPlayers": 0,
+                    "OnComponentDestroy": null,
+                    "OnComponentDisabled": null,
+                    "OnComponentEnabled": null,
+                    "OnComponentFixedUpdate": null,
+                    "OnComponentStart": null,
+                    "OnComponentUpdate": null,
+                    "PayInterval": 600,
+                    "Permissions": "None",
+                    "PlayerModel": null,
+                    "Salary": 25,
+                    "SwitchCooldown": 600,
+                    "WhitelistOnly": true
+                  },
+                  {
+                    "__type": "OpenFramework.Systems.Jobs.MaintenanceJob",
+                    "__guid": "3c3aa851-421a-42af-bcf8-35ad1160ffa1",
+                    "__enabled": true,
+                    "Flags": 0,
+                    "Capital": 0,
+                    "Color": "1,1,1,1",
+                    "CommandsAccess": [],
+                    "DefaultClothings": [],
+                    "DefaultItems": [],
+                    "DefaultWeapons": [],
+                    "Description": "Vous êtes responsable de la propreté de la ville. Votre mission : vider les poubelles, collecter les déchets et les revendre au recycleur pour en tirer profit.",
+                    "DisplayName": "Agent de propreté",
+                    "Grades": null,
+                    "HasGrades": false,
+                    "Image": null,
+                    "IsDefault": false,
+                    "MaxPlayers": 0,
+                    "OnComponentDestroy": null,
+                    "OnComponentDisabled": null,
+                    "OnComponentEnabled": null,
+                    "OnComponentFixedUpdate": null,
+                    "OnComponentStart": null,
+                    "OnComponentUpdate": null,
+                    "PayInterval": 600,
+                    "Permissions": "None",
+                    "PlayerModel": null,
+                    "Salary": 10,
+                    "SwitchCooldown": 600,
+                    "WhitelistOnly": false
+                  },
+                  {
+                    "__type": "OpenFramework.Systems.Jobs.CuisinierJob",
+                    "__guid": "053f0e18-4ae2-4f15-a4e6-7b61fda9496a",
+                    "__enabled": true,
+                    "Flags": 0,
+                    "Capital": 0,
+                    "Color": "1,0.608,0.239,1",
+                    "CommandsAccess": null,
+                    "DefaultClothings": [],
+                    "DefaultItems": [],
+                    "DefaultWeapons": [],
+                    "Description": "Préparez et vendez de la nourriture aux habitants. Maîtrisez la planche à découper, la cuisinière et le four pour servir des plats savoureux.",
+                    "DisplayName": "Cuisinier",
+                    "Grades": null,
+                    "HasGrades": false,
+                    "Image": null,
+                    "IsDefault": false,
+                    "MaxPlayers": 0,
+                    "OnComponentDestroy": null,
+                    "OnComponentDisabled": null,
+                    "OnComponentEnabled": null,
+                    "OnComponentFixedUpdate": null,
+                    "OnComponentStart": null,
+                    "OnComponentUpdate": null,
+                    "PayInterval": 180,
+                    "Permissions": "None",
+                    "PlayerModel": null,
+                    "Salary": 100,
+                    "SwitchCooldown": 180,
+                    "WhitelistOnly": false
+                  },
+                  {
+                    "__type": "OpenFramework.Systems.Jobs.SCUJob",
+                    "__guid": "f5bce5ec-9866-4e78-88b5-ebff22e576ad",
+                    "__enabled": true,
+                    "Flags": 0,
+                    "Capital": 0,
+                    "Color": "0.20465,0.55814,0,1",
+                    "CommandsAccess": null,
+                    "DefaultClothings": [],
+                    "DefaultItems": [],
+                    "DefaultWeapons": [],
+                    "Description": "Vous êtes un agent de la Street Crime Unit. ",
+                    "DisplayName": "Street Crime Unit",
+                    "Grades": null,
+                    "HasGrades": false,
+                    "Image": null,
+                    "IsDefault": false,
+                    "MaxPlayers": 0,
+                    "OnComponentDestroy": null,
+                    "OnComponentDisabled": null,
+                    "OnComponentEnabled": null,
+                    "OnComponentFixedUpdate": null,
+                    "OnComponentStart": null,
+                    "OnComponentUpdate": null,
+                    "PayInterval": 180,
+                    "Permissions": "None",
+                    "PlayerModel": null,
+                    "Salary": 10,
+                    "SwitchCooldown": 180,
+                    "WhitelistOnly": false
+                  },
+                  {
+                    "__type": "OpenFramework.Systems.Jobs.JobSystem",
+                    "__guid": "371fc23d-5852-4733-9149-19dffac08610",
+                    "__enabled": true,
+                    "Flags": 0,
+                    "OnComponentDestroy": null,
+                    "OnComponentDisabled": null,
+                    "OnComponentEnabled": null,
+                    "OnComponentFixedUpdate": null,
+                    "OnComponentStart": null,
+                    "OnComponentUpdate": null
+                  }
+                ],
+                "Children": []
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "__guid": "ac1cc14a-b540-4b31-8d5c-0ed8474287ef",
+        "__version": 2,
+        "__Prefab": "scenes/maps/unioncity/spawnplayers.prefab",
+        "__PrefabInstancePatch": {
+          "AddedObjects": [],
+          "RemovedObjects": [],
+          "PropertyOverrides": [
+            {
+              "Target": {
+                "Type": "GameObject",
+                "IdValue": "c27f2895-c09e-4dc9-878d-c0b9a52c8a98"
+              },
+              "Property": "Name",
+              "Value": "SpawnPlayers"
+            },
+            {
+              "Target": {
+                "Type": "GameObject",
+                "IdValue": "c27f2895-c09e-4dc9-878d-c0b9a52c8a98"
+              },
+              "Property": "Position",
+              "Value": "5156.49414,-1092.58899,-682.571777"
+            }
+          ],
+          "MovedObjects": []
+        },
+        "__PrefabIdToInstanceId": {
+          "c27f2895-c09e-4dc9-878d-c0b9a52c8a98": "ac1cc14a-b540-4b31-8d5c-0ed8474287ef",
+          "9b75247f-22b2-4202-a667-eb23fde51b65": "ae7bc847-ca20-44dc-bf9c-85e579652666",
+          "61f24760-166f-47c0-9ea7-7ecd6dedc314": "c007ef92-1780-4deb-b02e-a6a0d830ccf8",
+          "9387d802-9511-4448-a253-d55dfd00015f": "45d6db37-d897-47b0-8a72-1b10b618c9d3",
+          "9dd527be-7fcb-4e1c-a5b0-b1988f76d6dc": "87817304-9296-4f78-82bc-a31b55f9a5aa",
+          "56914b8c-9a7f-4e2a-88b1-28bef6363bb3": "948ec8c8-354f-473f-b2c8-c27015d43052",
+          "8f61d449-66b0-426a-aad5-85fa4c9739b7": "42c6fd48-088d-4f5d-9c7f-68d100230406",
+          "56b48e72-67d4-4902-87bb-4d03efea6563": "3640fd75-064b-414d-b39d-899ca20ee083",
+          "929eff9a-3cf8-4aae-9acf-e50123635f21": "28a3b2ad-9cfe-40a7-ae25-2a43ce135ddb",
+          "20f042e1-2804-4e01-b423-fd87c9b16899": "2b7febff-13aa-4912-afe6-2a0606a4a290",
+          "fe985b73-f6f3-4a23-ace8-46bd3b1ede4d": "323dfeef-7cc5-4d88-ba4f-697fe31c1410",
+          "f8baf0dc-1a61-496b-9272-4cb5942a34b0": "a96fd5a3-3655-420a-a9ca-9b52b296d0cb",
+          "d9de4269-26f4-4a05-ad21-92ea85cf38a0": "a08ca6b0-781b-44c8-ac5d-7a26c6490504",
+          "b7b44b10-414b-4282-9de5-bbaede17861b": "758f3bfd-9668-45de-9a23-36dab0265104",
+          "5cc0e810-453c-4711-a7fd-3a43b4be8358": "f907ee93-2f0a-4b00-a82e-1b56a478320e",
+          "cfcbbb70-b17d-477d-8590-dba44a28e213": "c235f405-e7a8-463f-a595-9cee662afc08",
+          "20cf0abd-3c2c-46f8-b6d7-f5085852e03c": "c793b06a-5ac0-4da6-8dd8-b61e92f707d1",
+          "a05f5579-d425-4e69-a07d-6b28b42426dc": "0befc4a5-73d7-4ad1-8cf6-0750ab3d165e",
+          "7b2586b1-273e-4234-a6ed-9dba5e467dd3": "f334f1a8-ca9f-4a17-abab-5c6ceb2da6f0",
+          "54c6a60a-d796-45cf-979c-c3034f354f71": "8d285f9f-4cc5-4572-9f66-8ea7aa4bbbce",
+          "18580815-4a9d-47e1-a702-79e797f670f5": "7c77975b-e934-4b00-9bb0-9a97517797f4",
+          "60e019ab-e15c-4ff6-a90c-f0402df45e46": "910b1c9e-86d1-4c8b-a10e-8cf78cdb8062",
+          "b3012e54-7123-4376-b6d0-867d80fc93b1": "647206a0-6b19-409c-b3fa-906345a13b74",
+          "e03d5623-f47a-4a39-a460-3f058ec4c3b3": "cf6194ea-97d9-450a-b52b-8c165eb9fc60",
+          "bc384f1c-9db1-43aa-9840-a68669887dbd": "1827b8df-32b5-4fd9-b524-9cc200e96cd6"
+        }
+      },
+      {
+        "__guid": "f8169c81-d12f-41e6-ba7f-e742d73ca2c6",
+        "__version": 2,
+        "Flags": 0,
+        "Name": "PrisonSpawn",
+        "Position": "4379.6958,2213.7439,-88.4357758",
+        "Rotation": "0,0,0,1",
+        "Scale": "1,1,1",
+        "Tags": "",
+        "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkFlags": 0,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
+        "Components": [],
+        "Children": [
+          {
+            "__guid": "bf1756e1-df5f-469f-ace2-93322042de9b",
+            "__version": 2,
+            "Flags": 0,
+            "Name": "spawn-1",
+            "Position": "227.268066,209.370117,-55.1105347",
+            "Rotation": "0,0,0,1",
+            "Scale": "1,1,1",
+            "Tags": "",
+            "Enabled": true,
+            "NetworkMode": 2,
+            "NetworkFlags": 0,
+            "NetworkOrphaned": 0,
+            "NetworkTransmit": true,
+            "OwnerTransfer": 1,
+            "Components": [],
+            "Children": []
+          },
+          {
+            "__guid": "c38d0d05-6a05-4c81-97bd-cce0ffff30b1",
+            "__version": 2,
+            "Flags": 0,
+            "Name": "spawn-2",
+            "Position": "227.268066,35.0390625,-55.1105347",
+            "Rotation": "0,0,0,1",
+            "Scale": "1,1,1",
+            "Tags": "",
+            "Enabled": true,
+            "NetworkMode": 2,
+            "NetworkFlags": 0,
+            "NetworkOrphaned": 0,
+            "NetworkTransmit": true,
+            "OwnerTransfer": 1,
+            "Components": [],
+            "Children": []
+          },
+          {
+            "__guid": "2dc4957b-d578-4f62-aeff-466589a667e5",
+            "__version": 2,
+            "Flags": 0,
+            "Name": "spawn-3",
+            "Position": "227.268066,-171.119385,-55.1105347",
+            "Rotation": "0,0,0,1",
+            "Scale": "1,1,1",
+            "Tags": "",
+            "Enabled": true,
+            "NetworkMode": 2,
+            "NetworkFlags": 0,
+            "NetworkOrphaned": 0,
+            "NetworkTransmit": true,
+            "OwnerTransfer": 1,
+            "Components": [],
+            "Children": []
+          },
+          {
+            "__guid": "e8d76108-409a-49d0-9870-eaa7e9623e4a",
+            "__version": 2,
+            "Flags": 0,
+            "Name": "spawn-4",
+            "Position": "227.268066,-359.192383,-55.1105347",
+            "Rotation": "0,0,0,1",
+            "Scale": "1,1,1",
+            "Tags": "",
+            "Enabled": true,
+            "NetworkMode": 2,
+            "NetworkFlags": 0,
+            "NetworkOrphaned": 0,
+            "NetworkTransmit": true,
+            "OwnerTransfer": 1,
+            "Components": [],
+            "Children": []
+          }
+        ]
+      },
+      {
+        "__guid": "65425a8c-6823-4d06-b792-51d1b69a35cd",
+        "__version": 2,
+        "Flags": 0,
+        "Name": "HopitalRespawn",
+        "Position": "5471.37695,-5660.979,-124.220695",
+        "Rotation": "0,0,0,1",
+        "Scale": "1,1,1",
+        "Tags": "",
+        "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkFlags": 0,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
+        "Components": [],
+        "Children": [
+          {
+            "__guid": "965c675b-3e84-4bcf-b065-f89ea236a947",
+            "__version": 2,
+            "Flags": 0,
+            "Name": "spawn-hopital-1",
+            "Position": "166.441406,-18.6533203,-22.4742813",
+            "Rotation": "0,0,0,1",
+            "Scale": "1,1,1",
+            "Tags": "",
+            "Enabled": true,
+            "NetworkMode": 2,
+            "NetworkFlags": 0,
+            "NetworkOrphaned": 0,
+            "NetworkTransmit": true,
+            "OwnerTransfer": 1,
+            "Components": [],
+            "Children": []
+          },
+          {
+            "__guid": "e1348b0f-1927-4aed-9ddf-087121a27cab",
+            "__version": 2,
+            "Flags": 0,
+            "Name": "spawn-hopital-2",
+            "Position": "47.8100586,-18.6533203,-22.4742813",
+            "Rotation": "0,0,0,1",
+            "Scale": "1,1,1",
+            "Tags": "",
+            "Enabled": true,
+            "NetworkMode": 2,
+            "NetworkFlags": 0,
+            "NetworkOrphaned": 0,
+            "NetworkTransmit": true,
+            "OwnerTransfer": 1,
+            "Components": [],
+            "Children": []
+          },
+          {
+            "__guid": "8ecbe63e-c63a-412b-ba6f-e25025633f67",
+            "__version": 2,
+            "Flags": 0,
+            "Name": "spawn-hopital-3",
+            "Position": "-57.4780273,-18.6533203,-22.4742813",
+            "Rotation": "0,0,0,1",
+            "Scale": "1,1,1",
+            "Tags": "",
+            "Enabled": true,
+            "NetworkMode": 2,
+            "NetworkFlags": 0,
+            "NetworkOrphaned": 0,
+            "NetworkTransmit": true,
+            "OwnerTransfer": 1,
+            "Components": [],
+            "Children": []
+          },
+          {
+            "__guid": "70bededd-fb7b-460c-819e-7c772e82c56c",
+            "__version": 2,
+            "Flags": 0,
+            "Name": "spawn-hopital-4",
+            "Position": "-192.782715,-18.6533203,-22.4742813",
+            "Rotation": "0,0,0,1",
+            "Scale": "1,1,1",
+            "Tags": "",
+            "Enabled": true,
+            "NetworkMode": 2,
+            "NetworkFlags": 0,
+            "NetworkOrphaned": 0,
+            "NetworkTransmit": true,
+            "OwnerTransfer": 1,
+            "Components": [],
+            "Children": []
+          }
+        ]
+      },
+      {
+        "__guid": "0c5f0708-78a9-4234-a2cd-c0f2180ea54c",
+        "__version": 2,
+        "Flags": 0,
+        "Name": "spawn-medic",
+        "Position": "5472.25244,-6218.19092,-118.053307",
+        "Rotation": "0,0,0,1",
+        "Scale": "1,1,1",
+        "Tags": "",
+        "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkFlags": 0,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
+        "Components": [],
+        "Children": []
+      }
+    ],
+    "__properties": {
+      "NetworkInterpolation": true,
+      "TimeScale": 1,
+      "WantsSystemScene": true,
+      "Metadata": {},
+      "NavMesh": {
+        "Enabled": false,
+        "IncludeStaticBodies": true,
+        "IncludeKeyframedBodies": true,
+        "EditorAutoUpdate": false,
+        "AgentHeight": 64,
+        "AgentRadius": 16,
+        "AgentStepSize": 18,
+        "AgentMaxSlope": 40,
+        "ExcludedBodies": "",
+        "IncludedBodies": "",
+        "DeferGeneration": false,
+        "CustomBounds": false
+      }
+    },
+    "__variables": []
+  },
+  "ResourceVersion": 2,
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "DontBreakAsTemplate": false,
+  "__references": [],
+  "__version": 2
+}

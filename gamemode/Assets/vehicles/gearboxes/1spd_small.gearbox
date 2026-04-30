@@ -1,0 +1,9 @@
+{
+  "DisplayName": "1-Speed Small (CVT)",
+  "ForwardGearRatios": [2.50],
+  "ReverseGearRatio": 2.50,
+  "FinalDriveRatio": 4.00,
+  "UpshiftRpm": 5000,
+  "DownshiftRpm": 2000,
+  "ShiftCooldown": 0.5
+}

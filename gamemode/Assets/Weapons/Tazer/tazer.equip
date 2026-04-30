@@ -1,0 +1,30 @@
+{
+  "Name": "Tazer",
+  "Description": "",
+  "Slot": "Secondary",
+  "DropOnDisconnect": false,
+  "Icon": null,
+  "IsPurchasable": false,
+  "Price": 0,
+  "KillReward": 300,
+  "MainPrefab": {
+    "_type": "gameobject",
+    "prefab": "weapons/tazer/weapon_tazer.prefab"
+  },
+  "WorldModelPrefab": {
+    "_type": "gameobject",
+    "prefab": "weapons/tazer/wm_tazer.prefab"
+  },
+  "ViewModelPrefab": {
+    "_type": "gameobject",
+    "prefab": "weapons/tazer/vm_tazer.prefab"
+  },
+  "WorldModel": "pr/pistol_taser.vmdl",
+  "ArmorReduction": null,
+  "HelmetReduction": null,
+  "WorldModelBodyGroups": 0,
+  "__references": [
+    "openframework.pistoltaser#104319"
+  ],
+  "__version": 0
+}

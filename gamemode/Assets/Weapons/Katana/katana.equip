@@ -1,0 +1,31 @@
+{
+  "Name": "Katana",
+  "Description": "",
+  "Slot": "Melee",
+  "DropOnDisconnect": false,
+  "Icon": "ui/weapons/melee/bayonet_01.png",
+  "IsPurchasable": false,
+  "Price": 0,
+  "KillReward": 300,
+  "MainPrefab": {
+    "_type": "gameobject",
+    "prefab": "weapons/katana/weapon_katana.prefab"
+  },
+  "WorldModelPrefab": {
+    "_type": "gameobject",
+    "prefab": "weapons/katana/wm_katana.prefab"
+  },
+  "ViewModelPrefab": {
+    "_type": "gameobject",
+    "prefab": "weapons/katana/vm_katana.prefab"
+  },
+  "WorldModel": "pr/katana_01.vmdl",
+  "ArmorReduction": null,
+  "HelmetReduction": null,
+  "WorldModelBodyGroups": 0,
+  "CollisionOffset": 6,
+  "__references": [
+    "openframework.katana01#114645"
+  ],
+  "__version": 0
+}

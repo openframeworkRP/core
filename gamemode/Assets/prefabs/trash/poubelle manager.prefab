@@ -1,0 +1,1396 @@
+{
+  "RootObject": {
+    "__guid": "9b22f9d6-f0aa-407d-a2f9-7e590dafcdd7",
+    "__version": 2,
+    "Flags": 0,
+    "Name": "poubelle manager",
+    "Position": "0,0,0",
+    "Rotation": "0.000368142006,0.0150078395,0.689464688,0.724163711",
+    "Scale": "1,1,1",
+    "Tags": "",
+    "Enabled": true,
+    "NetworkMode": 2,
+    "NetworkFlags": 0,
+    "NetworkOrphaned": 0,
+    "NetworkTransmit": true,
+    "OwnerTransfer": 1,
+    "Components": [
+      {
+        "__type": "OpenFramework.Systems.Jobs.GarbageManager",
+        "__guid": "3d0eab43-b754-46eb-ba1c-ac4c6c97957a",
+        "__enabled": true,
+        "Flags": 0,
+        "MaxCansPerWave": 5,
+        "MaxTrashPerCan": 3,
+        "MinCansPerWave": 2,
+        "MinTrashPerCan": 1,
+        "OnComponentDestroy": null,
+        "OnComponentDisabled": null,
+        "OnComponentEnabled": null,
+        "OnComponentFixedUpdate": null,
+        "OnComponentStart": null,
+        "OnComponentUpdate": null,
+        "PossibleTrashItems": [
+          "prefabs/trash/trash_dentifrice.item",
+          "prefabs/trash/trash_saccarton.item",
+          "prefabs/trash/trash_sacpapier.item",
+          "prefabs/trash/trash_boitenouilles.item",
+          "prefabs/trash/trash_morceaupapier.item"
+        ],
+        "WaveInterval": 120
+      }
+    ],
+    "Children": [
+      {
+        "__guid": "9c9aec04-90ee-44a7-b466-5e2c1b577d4c",
+        "__version": 2,
+        "__Prefab": "prefabs/trash/star_bin.prefab",
+        "__PrefabInstancePatch": {
+          "AddedObjects": [],
+          "RemovedObjects": [],
+          "PropertyOverrides": [
+            {
+              "Target": {
+                "Type": "GameObject",
+                "IdValue": "a1b2c3d4-0002-4000-8000-000000000002"
+              },
+              "Property": "Position",
+              "Value": "1116.86499,2817.04102,-35.3729706"
+            }
+          ],
+          "MovedObjects": []
+        },
+        "__PrefabIdToInstanceId": {
+          "a1b2c3d4-0002-4000-8000-000000000002": "9c9aec04-90ee-44a7-b466-5e2c1b577d4c",
+          "a1b2c3d4-0002-4001-8000-000000000002": "5ba5658c-cd6e-4f93-a6eb-ee9ea53b5bd8",
+          "a1b2c3d4-0002-4002-8000-000000000002": "7accec8d-e160-4b5e-be59-4384998d4402",
+          "b78ba65f-50aa-4554-96df-2156cbcc3898": "50df2997-358e-455e-9023-630fc4d01ad6",
+          "cb7175e3-9544-4f08-bdb3-8eba7c8bae08": "1eb9078d-5b16-47cd-b2d6-924194a64212"
+        }
+      },
+      {
+        "__guid": "53819873-1b7a-4226-9f2d-0790ee378eb0",
+        "__version": 2,
+        "__Prefab": "prefabs/trash/star_bin.prefab",
+        "__PrefabInstancePatch": {
+          "AddedObjects": [],
+          "RemovedObjects": [],
+          "PropertyOverrides": [
+            {
+              "Target": {
+                "Type": "GameObject",
+                "IdValue": "a1b2c3d4-0002-4000-8000-000000000002"
+              },
+              "Property": "Position",
+              "Value": "4589.14404,3025.729,34.7014809"
+            }
+          ],
+          "MovedObjects": []
+        },
+        "__PrefabIdToInstanceId": {
+          "a1b2c3d4-0002-4000-8000-000000000002": "53819873-1b7a-4226-9f2d-0790ee378eb0",
+          "a1b2c3d4-0002-4001-8000-000000000002": "dffa09d7-db22-4dcb-afc8-efe2fbae0e6f",
+          "a1b2c3d4-0002-4002-8000-000000000002": "1d4a01bc-aee8-4b24-8f0c-ef62769a738f",
+          "b78ba65f-50aa-4554-96df-2156cbcc3898": "5a52d83b-ba9e-4c45-ad93-253be8d7e750",
+          "cb7175e3-9544-4f08-bdb3-8eba7c8bae08": "c1a7b4c1-f3ae-4e74-bef4-2dd287c7bc72"
+        }
+      },
+      {
+        "__guid": "9e400c97-4b59-4b16-b908-664b7e8dd6d1",
+        "__version": 2,
+        "__Prefab": "prefabs/trash/park_bin.prefab",
+        "__PrefabInstancePatch": {
+          "AddedObjects": [],
+          "RemovedObjects": [],
+          "PropertyOverrides": [
+            {
+              "Target": {
+                "Type": "GameObject",
+                "IdValue": "a1b2c3d4-0003-4000-8000-000000000003"
+              },
+              "Property": "Position",
+              "Value": "3280.76709,3726.33911,-7.66807604"
+            },
+            {
+              "Target": {
+                "Type": "GameObject",
+                "IdValue": "a1b2c3d4-0003-4000-8000-000000000003"
+              },
+              "Property": "Rotation",
+              "Value": "0.003247577,-0.0215512402,-0.998565197,0.0489081107"
+            }
+          ],
+          "MovedObjects": []
+        },
+        "__PrefabIdToInstanceId": {
+          "a1b2c3d4-0003-4000-8000-000000000003": "9e400c97-4b59-4b16-b908-664b7e8dd6d1",
+          "a1b2c3d4-0003-4001-8000-000000000003": "39e36093-6d48-49a0-9ac9-d173eb7e93d7",
+          "a1b2c3d4-0003-4002-8000-000000000003": "ac90eff2-5e4c-47da-b21f-b6b2733bec31",
+          "3ec6659b-fdd9-4946-ae55-d265b071f886": "517171a7-94b7-458d-89c9-86f6ab0f08ff",
+          "42c3fef2-530c-4520-97eb-8d30e84e591a": "df8d6b2d-5c1e-4a04-8e89-026c96a9f274"
+        }
+      },
+      {
+        "__guid": "c35065af-9351-4fb9-83b4-472125ca771c",
+        "__version": 2,
+        "__Prefab": "prefabs/trash/park_bin.prefab",
+        "__PrefabInstancePatch": {
+          "AddedObjects": [],
+          "RemovedObjects": [],
+          "PropertyOverrides": [
+            {
+              "Target": {
+                "Type": "GameObject",
+                "IdValue": "a1b2c3d4-0003-4000-8000-000000000003"
+              },
+              "Property": "Position",
+              "Value": "1956.14197,4293.58496,-46.3695488"
+            },
+            {
+              "Target": {
+                "Type": "GameObject",
+                "IdValue": "a1b2c3d4-0003-4000-8000-000000000003"
+              },
+              "Property": "Rotation",
+              "Value": "-0.00069420709,-0.0169139393,0.0492749512,0.998641372"
+            }
+          ],
+          "MovedObjects": []
+        },
+        "__PrefabIdToInstanceId": {
+          "a1b2c3d4-0003-4000-8000-000000000003": "c35065af-9351-4fb9-83b4-472125ca771c",
+          "a1b2c3d4-0003-4001-8000-000000000003": "12a17091-c120-494a-af8b-806fb4e3ba4f",
+          "a1b2c3d4-0003-4002-8000-000000000003": "acc52ec8-4154-495c-b6d6-b02b7fcd67d6",
+          "3ec6659b-fdd9-4946-ae55-d265b071f886": "6772d81f-2649-4ea7-8aa5-ec3da86be7c0",
+          "42c3fef2-530c-4520-97eb-8d30e84e591a": "90f2bf3a-6174-4ec4-af46-6b88f05478d2"
+        }
+      },
+      {
+        "__guid": "f4b64675-c47f-49e8-beb0-fbc65a40d106",
+        "__version": 2,
+        "__Prefab": "prefabs/trash/park_bin.prefab",
+        "__PrefabInstancePatch": {
+          "AddedObjects": [],
+          "RemovedObjects": [],
+          "PropertyOverrides": [
+            {
+              "Target": {
+                "Type": "GameObject",
+                "IdValue": "a1b2c3d4-0003-4000-8000-000000000003"
+              },
+              "Property": "Position",
+              "Value": "411.228485,6482.14404,-126.3358"
+            },
+            {
+              "Target": {
+                "Type": "GameObject",
+                "IdValue": "a1b2c3d4-0003-4000-8000-000000000003"
+              },
+              "Property": "Rotation",
+              "Value": "0.003247577,-0.0215512402,-0.998565197,0.0489081107"
+            }
+          ],
+          "MovedObjects": []
+        },
+        "__PrefabIdToInstanceId": {
+          "a1b2c3d4-0003-4000-8000-000000000003": "f4b64675-c47f-49e8-beb0-fbc65a40d106",
+          "a1b2c3d4-0003-4001-8000-000000000003": "e74bca6b-541a-4a9e-b533-32a9f59fd835",
+          "a1b2c3d4-0003-4002-8000-000000000003": "a15a3482-aaa7-4d93-8a31-bef7f3868515",
+          "3ec6659b-fdd9-4946-ae55-d265b071f886": "81c9c6a3-9d15-4d41-8e1b-529d9fd198c8",
+          "42c3fef2-530c-4520-97eb-8d30e84e591a": "b6f09776-24b8-4e57-ae00-d08f23fc2cdb"
+        }
+      },
+      {
+        "__guid": "d418d069-5c4b-4ae3-b10e-0a8cf67a9efc",
+        "__version": 2,
+        "__Prefab": "prefabs/trash/park_bin.prefab",
+        "__PrefabInstancePatch": {
+          "AddedObjects": [],
+          "RemovedObjects": [],
+          "PropertyOverrides": [
+            {
+              "Target": {
+                "Type": "GameObject",
+                "IdValue": "a1b2c3d4-0003-4000-8000-000000000003"
+              },
+              "Property": "Position",
+              "Value": "-876.062683,5020.63721,-123.424103"
+            },
+            {
+              "Target": {
+                "Type": "GameObject",
+                "IdValue": "a1b2c3d4-0003-4000-8000-000000000003"
+              },
+              "Property": "Rotation",
+              "Value": "0.003247577,-0.0215512402,-0.998565197,0.0489081107"
+            }
+          ],
+          "MovedObjects": []
+        },
+        "__PrefabIdToInstanceId": {
+          "a1b2c3d4-0003-4000-8000-000000000003": "d418d069-5c4b-4ae3-b10e-0a8cf67a9efc",
+          "a1b2c3d4-0003-4001-8000-000000000003": "37e2b740-769a-4c4c-8284-bccc3f5e2815",
+          "a1b2c3d4-0003-4002-8000-000000000003": "0545f772-c8b0-4509-860f-6149cbcf9e9d",
+          "3ec6659b-fdd9-4946-ae55-d265b071f886": "d59fdf94-baa7-40fc-9f95-181d49b66f89",
+          "42c3fef2-530c-4520-97eb-8d30e84e591a": "7e59bb5f-4ea6-4e08-a52c-0f303f79bbc2"
+        }
+      },
+      {
+        "__guid": "ca94a815-c5e6-45a4-9cba-65270d7b35f9",
+        "__version": 2,
+        "__Prefab": "prefabs/trash/park_bin.prefab",
+        "__PrefabInstancePatch": {
+          "AddedObjects": [],
+          "RemovedObjects": [],
+          "PropertyOverrides": [
+            {
+              "Target": {
+                "Type": "GameObject",
+                "IdValue": "a1b2c3d4-0003-4000-8000-000000000003"
+              },
+              "Property": "Position",
+              "Value": "-1518.79102,3721.37305,-109.722397"
+            },
+            {
+              "Target": {
+                "Type": "GameObject",
+                "IdValue": "a1b2c3d4-0003-4000-8000-000000000003"
+              },
+              "Property": "Rotation",
+              "Value": "-0.00448036008,-0.0169136599,0.0492628813,0.998632193"
+            }
+          ],
+          "MovedObjects": []
+        },
+        "__PrefabIdToInstanceId": {
+          "a1b2c3d4-0003-4000-8000-000000000003": "ca94a815-c5e6-45a4-9cba-65270d7b35f9",
+          "a1b2c3d4-0003-4001-8000-000000000003": "8118ea4a-98cd-4408-832f-776caddb1aea",
+          "a1b2c3d4-0003-4002-8000-000000000003": "96f87002-fce2-4477-b6e1-2a4eb8ba5fbf",
+          "3ec6659b-fdd9-4946-ae55-d265b071f886": "2e4c4bc4-946c-4df3-aabd-0b7d5fbe5000",
+          "42c3fef2-530c-4520-97eb-8d30e84e591a": "ac8797d3-cf5d-43ff-a717-5caa369325ea"
+        }
+      },
+      {
+        "__guid": "ceb34daf-e2a8-453c-936a-db39d33d4b81",
+        "__version": 2,
+        "__Prefab": "prefabs/trash/park_bin.prefab",
+        "__PrefabInstancePatch": {
+          "AddedObjects": [],
+          "RemovedObjects": [],
+          "PropertyOverrides": [
+            {
+              "Target": {
+                "Type": "GameObject",
+                "IdValue": "a1b2c3d4-0003-4000-8000-000000000003"
+              },
+              "Property": "Position",
+              "Value": "-498.012299,2741.47998,-67.471283"
+            },
+            {
+              "Target": {
+                "Type": "GameObject",
+                "IdValue": "a1b2c3d4-0003-4000-8000-000000000003"
+              },
+              "Property": "Rotation",
+              "Value": "0.00324780704,-0.0177663304,-0.998636186,0.0489757694"
+            }
+          ],
+          "MovedObjects": []
+        },
+        "__PrefabIdToInstanceId": {
+          "a1b2c3d4-0003-4000-8000-000000000003": "ceb34daf-e2a8-453c-936a-db39d33d4b81",
+          "a1b2c3d4-0003-4001-8000-000000000003": "6677db8b-b760-4288-bc0e-b8a3b0c72776",
+          "a1b2c3d4-0003-4002-8000-000000000003": "832db888-1329-4b75-85c1-9fa33174eeb0",
+          "3ec6659b-fdd9-4946-ae55-d265b071f886": "83868672-2176-466b-92f6-4af317dc35fb",
+          "42c3fef2-530c-4520-97eb-8d30e84e591a": "d266c9f2-8f4f-4f71-bad1-e3072b3cd2e0"
+        }
+      },
+      {
+        "__guid": "ac0ad01f-57bb-4b1f-b52d-aef2ae726d51",
+        "__version": 2,
+        "__Prefab": "prefabs/trash/star_bin.prefab",
+        "__PrefabInstancePatch": {
+          "AddedObjects": [],
+          "RemovedObjects": [],
+          "PropertyOverrides": [
+            {
+              "Target": {
+                "Type": "GameObject",
+                "IdValue": "a1b2c3d4-0002-4000-8000-000000000002"
+              },
+              "Property": "Position",
+              "Value": "-10.2105103,246.307205,-3.36677408"
+            }
+          ],
+          "MovedObjects": []
+        },
+        "__PrefabIdToInstanceId": {
+          "a1b2c3d4-0002-4000-8000-000000000002": "ac0ad01f-57bb-4b1f-b52d-aef2ae726d51",
+          "a1b2c3d4-0002-4001-8000-000000000002": "b3269e8e-f0af-4c04-b629-f5a7cadde96e",
+          "a1b2c3d4-0002-4002-8000-000000000002": "d06e6ef7-dd08-4bc3-9783-03f098efc21b",
+          "b78ba65f-50aa-4554-96df-2156cbcc3898": "8a423ade-a198-46c3-815f-1a7497c2ee0d",
+          "cb7175e3-9544-4f08-bdb3-8eba7c8bae08": "33184a8c-0b3e-43a3-84b2-421dcd760114"
+        }
+      },
+      {
+        "__guid": "fa44e1db-3d63-44bc-a2a4-fae69289e95a",
+        "__version": 2,
+        "__Prefab": "prefabs/trash/star_bin.prefab",
+        "__PrefabInstancePatch": {
+          "AddedObjects": [],
+          "RemovedObjects": [],
+          "PropertyOverrides": [
+            {
+              "Target": {
+                "Type": "GameObject",
+                "IdValue": "a1b2c3d4-0002-4000-8000-000000000002"
+              },
+              "Property": "Position",
+              "Value": "2884.14404,-1943.224,104.6045"
+            }
+          ],
+          "MovedObjects": []
+        },
+        "__PrefabIdToInstanceId": {
+          "a1b2c3d4-0002-4000-8000-000000000002": "fa44e1db-3d63-44bc-a2a4-fae69289e95a",
+          "a1b2c3d4-0002-4001-8000-000000000002": "56d9c0ff-ca62-4718-b682-bca8857742f8",
+          "a1b2c3d4-0002-4002-8000-000000000002": "b7060c82-ed0d-44f3-b76d-fb65702e5780",
+          "b78ba65f-50aa-4554-96df-2156cbcc3898": "9d1d1c81-4a35-4c05-ab30-729960d2ed89",
+          "cb7175e3-9544-4f08-bdb3-8eba7c8bae08": "18222e5d-5de8-42b3-8e62-e27cb22a919b"
+        }
+      },
+      {
+        "__guid": "ef56356e-c7b6-46ae-a774-a9d5754f8a36",
+        "__version": 2,
+        "__Prefab": "prefabs/trash/star_bin.prefab",
+        "__PrefabInstancePatch": {
+          "AddedObjects": [],
+          "RemovedObjects": [],
+          "PropertyOverrides": [
+            {
+              "Target": {
+                "Type": "GameObject",
+                "IdValue": "a1b2c3d4-0002-4000-8000-000000000002"
+              },
+              "Property": "Position",
+              "Value": "5871.6582,3051.75903,61.9726181"
+            },
+            {
+              "Target": {
+                "Type": "GameObject",
+                "IdValue": "a1b2c3d4-0002-4000-8000-000000000002"
+              },
+              "Property": "Rotation",
+              "Value": "-0.000368141889,-0.0150078395,-0.689464629,0.724163711"
+            }
+          ],
+          "MovedObjects": []
+        },
+        "__PrefabIdToInstanceId": {
+          "a1b2c3d4-0002-4000-8000-000000000002": "ef56356e-c7b6-46ae-a774-a9d5754f8a36",
+          "a1b2c3d4-0002-4001-8000-000000000002": "736cb83b-f6aa-44e0-8ca8-73ea5a3009a4",
+          "a1b2c3d4-0002-4002-8000-000000000002": "dc4f030e-6310-4b95-be61-f9504d85aa4e",
+          "b78ba65f-50aa-4554-96df-2156cbcc3898": "95a9cc8e-27f0-4254-af4f-fa73e5eda2d3",
+          "cb7175e3-9544-4f08-bdb3-8eba7c8bae08": "23abf0c5-9902-40ce-af1f-62c168c683d1"
+        }
+      },
+      {
+        "__guid": "ac2b20df-0edc-465b-9042-4cb7cf3bbcf3",
+        "__version": 2,
+        "__Prefab": "prefabs/trash/star_bin.prefab",
+        "__PrefabInstancePatch": {
+          "AddedObjects": [],
+          "RemovedObjects": [],
+          "PropertyOverrides": [
+            {
+              "Target": {
+                "Type": "GameObject",
+                "IdValue": "a1b2c3d4-0002-4000-8000-000000000002"
+              },
+              "Property": "Position",
+              "Value": "4711.9248,4396.07617,8.79206085"
+            },
+            {
+              "Target": {
+                "Type": "GameObject",
+                "IdValue": "a1b2c3d4-0002-4000-8000-000000000002"
+              },
+              "Property": "Rotation",
+              "Value": "-0.0150078796,0.000368183013,0.724163592,0.689464629"
+            }
+          ],
+          "MovedObjects": []
+        },
+        "__PrefabIdToInstanceId": {
+          "a1b2c3d4-0002-4000-8000-000000000002": "ac2b20df-0edc-465b-9042-4cb7cf3bbcf3",
+          "a1b2c3d4-0002-4001-8000-000000000002": "0f564246-ed96-4683-afc7-9dc6c79e44f5",
+          "a1b2c3d4-0002-4002-8000-000000000002": "375b6d5e-7bd7-441d-90ab-3e544af528d8",
+          "b78ba65f-50aa-4554-96df-2156cbcc3898": "061cb6ab-936e-40c8-aad1-87ca94bf7b4b",
+          "cb7175e3-9544-4f08-bdb3-8eba7c8bae08": "b1357efc-54a9-4eb5-abf1-759cd511626e"
+        }
+      },
+      {
+        "__guid": "df681bb0-7326-4105-884b-b7b0028a8c5d",
+        "__version": 2,
+        "__Prefab": "prefabs/trash/star_bin.prefab",
+        "__PrefabInstancePatch": {
+          "AddedObjects": [],
+          "RemovedObjects": [],
+          "PropertyOverrides": [
+            {
+              "Target": {
+                "Type": "GameObject",
+                "IdValue": "a1b2c3d4-0002-4000-8000-000000000002"
+              },
+              "Property": "Position",
+              "Value": "3501.08105,9602.44336,-47.4583397"
+            },
+            {
+              "Target": {
+                "Type": "GameObject",
+                "IdValue": "a1b2c3d4-0002-4000-8000-000000000002"
+              },
+              "Property": "Rotation",
+              "Value": "-0.0150078796,0.000368183013,0.724163592,0.689464629"
+            }
+          ],
+          "MovedObjects": []
+        },
+        "__PrefabIdToInstanceId": {
+          "a1b2c3d4-0002-4000-8000-000000000002": "df681bb0-7326-4105-884b-b7b0028a8c5d",
+          "a1b2c3d4-0002-4001-8000-000000000002": "2742e38a-f043-4f96-a6d8-e730c7305d08",
+          "a1b2c3d4-0002-4002-8000-000000000002": "9befe959-d39a-432d-bfe6-1e0acc587665",
+          "b78ba65f-50aa-4554-96df-2156cbcc3898": "5ba02465-05a3-4f8c-93e7-352d475f713e",
+          "cb7175e3-9544-4f08-bdb3-8eba7c8bae08": "c0804635-ef64-48a9-aee3-e8bea7822c06"
+        }
+      },
+      {
+        "__guid": "7d002968-ce88-46b4-ac8b-96363ad3c68d",
+        "__version": 2,
+        "__Prefab": "prefabs/trash/star_bin.prefab",
+        "__PrefabInstancePatch": {
+          "AddedObjects": [],
+          "RemovedObjects": [],
+          "PropertyOverrides": [
+            {
+              "Target": {
+                "Type": "GameObject",
+                "IdValue": "a1b2c3d4-0002-4000-8000-000000000002"
+              },
+              "Property": "Position",
+              "Value": "-1669.83704,9227.55078,-149.317505"
+            },
+            {
+              "Target": {
+                "Type": "GameObject",
+                "IdValue": "a1b2c3d4-0002-4000-8000-000000000002"
+              },
+              "Property": "Rotation",
+              "Value": "-0.0150078395,0.000368140609,0.724163592,0.689464629"
+            }
+          ],
+          "MovedObjects": []
+        },
+        "__PrefabIdToInstanceId": {
+          "a1b2c3d4-0002-4000-8000-000000000002": "7d002968-ce88-46b4-ac8b-96363ad3c68d",
+          "a1b2c3d4-0002-4001-8000-000000000002": "9ad39272-b1f9-4389-861e-b6ea8934a11e",
+          "a1b2c3d4-0002-4002-8000-000000000002": "59a3684f-45e3-4e06-a210-2e33fcf15b68",
+          "b78ba65f-50aa-4554-96df-2156cbcc3898": "e1b4a466-7eff-4bcb-9107-0873392d3e65",
+          "cb7175e3-9544-4f08-bdb3-8eba7c8bae08": "aa4cabae-5daa-472f-8695-0c121867df07"
+        }
+      },
+      {
+        "__guid": "6bbbf3aa-0487-4174-b3f4-92413eb01791",
+        "__version": 2,
+        "Flags": 0,
+        "Name": "trashspawnpoint",
+        "Position": "-231.291595,-11.0194597,9.57250595E-05",
+        "Rotation": "0,0,0,1",
+        "Scale": "1,1,1",
+        "Tags": "",
+        "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkFlags": 0,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
+        "Components": [
+          {
+            "__type": "OpenFramework.Systems.Jobs.TrashSpawnPoint",
+            "__guid": "3e37a9ea-90d4-465f-98ba-98127280f343",
+            "__enabled": true,
+            "Flags": 0,
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
+            "Radius": 200
+          }
+        ],
+        "Children": []
+      },
+      {
+        "__guid": "f2f1d1da-b723-4103-9db7-33da9e7f5ac8",
+        "__version": 2,
+        "Flags": 0,
+        "Name": "trashspawnpoint",
+        "Position": "282.936188,-982.163208,36.3330383",
+        "Rotation": "0,0,0,1",
+        "Scale": "1,1,1",
+        "Tags": "",
+        "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkFlags": 0,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
+        "Components": [
+          {
+            "__type": "OpenFramework.Systems.Jobs.TrashSpawnPoint",
+            "__guid": "38e41798-6208-4571-85d3-80b8dc222531",
+            "__enabled": true,
+            "Flags": 0,
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
+            "Radius": 300
+          }
+        ],
+        "Children": []
+      },
+      {
+        "__guid": "4359ebda-f555-4685-be9c-e8d8ece34588",
+        "__version": 2,
+        "Flags": 0,
+        "Name": "trashspawnpoint",
+        "Position": "2322.46411,-1243.79395,83.6235428",
+        "Rotation": "0,0,0,1",
+        "Scale": "1,1,1",
+        "Tags": "",
+        "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkFlags": 0,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
+        "Components": [
+          {
+            "__type": "OpenFramework.Systems.Jobs.TrashSpawnPoint",
+            "__guid": "549ee70f-220a-44ed-9bf6-0f864b354169",
+            "__enabled": true,
+            "Flags": 0,
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
+            "Radius": 300
+          }
+        ],
+        "Children": []
+      },
+      {
+        "__guid": "bf894601-aee9-492f-b50d-ecb53d47ff7b",
+        "__version": 2,
+        "Flags": 0,
+        "Name": "trashspawnpoint",
+        "Position": "4811.60889,3007.96899,40.3036613",
+        "Rotation": "0,0,0,1",
+        "Scale": "1,1,1",
+        "Tags": "",
+        "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkFlags": 0,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
+        "Components": [
+          {
+            "__type": "OpenFramework.Systems.Jobs.TrashSpawnPoint",
+            "__guid": "cd4b0aaa-4b52-4be2-85f7-d28814151660",
+            "__enabled": true,
+            "Flags": 0,
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
+            "Radius": 150
+          }
+        ],
+        "Children": []
+      },
+      {
+        "__guid": "d7b0d0f3-eef8-49ef-924f-71b75d313261",
+        "__version": 2,
+        "Flags": 0,
+        "Name": "trashspawnpoint",
+        "Position": "578.134399,1484.76501,-21.3078499",
+        "Rotation": "0,0,0,1",
+        "Scale": "1,1,1",
+        "Tags": "",
+        "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkFlags": 0,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
+        "Components": [
+          {
+            "__type": "OpenFramework.Systems.Jobs.TrashSpawnPoint",
+            "__guid": "38cd1f84-a16b-4ea4-a19f-e76f979a0db4",
+            "__enabled": true,
+            "Flags": 0,
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
+            "Radius": 150
+          }
+        ],
+        "Children": []
+      },
+      {
+        "__guid": "27c35370-b6d2-4454-816b-31b38f1d2d8b",
+        "__version": 2,
+        "Flags": 0,
+        "Name": "trashspawnpoint",
+        "Position": "4582.4458,6137.66992,-25.9126701",
+        "Rotation": "0,0,0,1",
+        "Scale": "1,1,1",
+        "Tags": "",
+        "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkFlags": 0,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
+        "Components": [
+          {
+            "__type": "OpenFramework.Systems.Jobs.TrashSpawnPoint",
+            "__guid": "950508e3-03f9-4e00-9a09-cb031540eb5b",
+            "__enabled": true,
+            "Flags": 0,
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
+            "Radius": 150
+          }
+        ],
+        "Children": []
+      },
+      {
+        "__guid": "07f37f4a-3ffc-41e0-82f9-bedc092154cb",
+        "__version": 2,
+        "Flags": 0,
+        "Name": "trashspawnpoint",
+        "Position": "3776.04907,7790.61621,-59.9425392",
+        "Rotation": "0,0,0,1",
+        "Scale": "1,1,1",
+        "Tags": "",
+        "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkFlags": 0,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
+        "Components": [
+          {
+            "__type": "OpenFramework.Systems.Jobs.TrashSpawnPoint",
+            "__guid": "fc7a35ee-4981-4761-a2aa-c8d0a75d1fff",
+            "__enabled": true,
+            "Flags": 0,
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
+            "Radius": 150
+          }
+        ],
+        "Children": []
+      },
+      {
+        "__guid": "eface84a-ec5b-4b62-986a-691bfa5aecc3",
+        "__version": 2,
+        "Flags": 0,
+        "Name": "trashspawnpoint",
+        "Position": "693.692383,6875.36719,-131.367599",
+        "Rotation": "0,0,0,1",
+        "Scale": "1,1,1",
+        "Tags": "",
+        "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkFlags": 0,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
+        "Components": [
+          {
+            "__type": "OpenFramework.Systems.Jobs.TrashSpawnPoint",
+            "__guid": "13b0bd90-e134-4a5f-99eb-ff328a132bfa",
+            "__enabled": true,
+            "Flags": 0,
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
+            "Radius": 150
+          }
+        ],
+        "Children": []
+      },
+      {
+        "__guid": "c31e471f-4cd1-41f2-a79a-8d2bbbde1daa",
+        "__version": 2,
+        "Flags": 0,
+        "Name": "trashspawnpoint",
+        "Position": "-621.263916,6812.43799,-155.721695",
+        "Rotation": "0,0,0,1",
+        "Scale": "1,1,1",
+        "Tags": "",
+        "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkFlags": 0,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
+        "Components": [
+          {
+            "__type": "OpenFramework.Systems.Jobs.TrashSpawnPoint",
+            "__guid": "97ec9d3b-281a-4eb4-a59f-ee491d475f57",
+            "__enabled": true,
+            "Flags": 0,
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
+            "Radius": 150
+          }
+        ],
+        "Children": []
+      },
+      {
+        "__guid": "c5523aff-27c4-4e7c-81f7-08fe2209eace",
+        "__version": 2,
+        "Flags": 0,
+        "Name": "trashspawnpoint",
+        "Position": "-1050.97803,8627.81641,-123.520302",
+        "Rotation": "0,0,0,1",
+        "Scale": "1,1,1",
+        "Tags": "",
+        "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkFlags": 0,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
+        "Components": [
+          {
+            "__type": "OpenFramework.Systems.Jobs.TrashSpawnPoint",
+            "__guid": "ff08fe17-d0f7-4a24-9c1a-3dcb4db4e16b",
+            "__enabled": true,
+            "Flags": 0,
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
+            "Radius": 70
+          }
+        ],
+        "Children": []
+      },
+      {
+        "__guid": "c56d5b02-cd91-4702-9243-4ebd721e8fca",
+        "__version": 2,
+        "Flags": 0,
+        "Name": "trashspawnpoint",
+        "Position": "2185.56104,9549.3418,-74.3530121",
+        "Rotation": "9.31322575E-10,8.44011083E-10,2.98023224E-08,0.99999994",
+        "Scale": "1,1,1",
+        "Tags": "",
+        "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkFlags": 0,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
+        "Components": [
+          {
+            "__type": "OpenFramework.Systems.Jobs.TrashSpawnPoint",
+            "__guid": "1f904197-31b3-4596-a250-0ac41b9cce2f",
+            "__enabled": true,
+            "Flags": 0,
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
+            "Radius": 70
+          }
+        ],
+        "Children": []
+      },
+      {
+        "__guid": "7e348188-0020-4f84-b39f-50e31bc45e3c",
+        "__version": 2,
+        "Flags": 0,
+        "Name": "trashspawnpoint",
+        "Position": "2223.2937,8777.65527,-57.1629333",
+        "Rotation": "1.86264515E-09,1.42608769E-09,0,0.999999821",
+        "Scale": "1,1,1",
+        "Tags": "",
+        "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkFlags": 0,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
+        "Components": [
+          {
+            "__type": "OpenFramework.Systems.Jobs.TrashSpawnPoint",
+            "__guid": "0a282cc8-8af4-4bd4-ac91-6482fba62e5b",
+            "__enabled": true,
+            "Flags": 0,
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
+            "Radius": 70
+          }
+        ],
+        "Children": []
+      },
+      {
+        "__guid": "7799af2f-c9e9-483e-a250-b27f3362774a",
+        "__version": 2,
+        "Flags": 0,
+        "Name": "trashspawnpoint",
+        "Position": "5914.14111,7877.479,40.3415184",
+        "Rotation": "1.86264515E-09,1.57160684E-09,0,0.999999762",
+        "Scale": "1,1,1",
+        "Tags": "",
+        "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkFlags": 0,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
+        "Components": [
+          {
+            "__type": "OpenFramework.Systems.Jobs.TrashSpawnPoint",
+            "__guid": "825b353b-a5fd-484d-b5f6-a25d801f3cb8",
+            "__enabled": true,
+            "Flags": 0,
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
+            "Radius": 70
+          }
+        ],
+        "Children": []
+      },
+      {
+        "__guid": "3451280b-bd94-42be-80f9-0605125a91ea",
+        "__version": 2,
+        "Flags": 0,
+        "Name": "trashspawnpoint",
+        "Position": "6614.75293,7912.05029,54.4869957",
+        "Rotation": "1.86264515E-09,1.62981451E-09,0,0.999999702",
+        "Scale": "1,1,1",
+        "Tags": "",
+        "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkFlags": 0,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
+        "Components": [
+          {
+            "__type": "OpenFramework.Systems.Jobs.TrashSpawnPoint",
+            "__guid": "5076c75f-4285-4c14-88a6-dd01ee15edee",
+            "__enabled": true,
+            "Flags": 0,
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
+            "Radius": 70
+          }
+        ],
+        "Children": []
+      },
+      {
+        "__guid": "f4bdcea0-7e5c-47ef-878d-1a18a4f5e095",
+        "__version": 2,
+        "Flags": 0,
+        "Name": "trashspawnpoint",
+        "Position": "6531.43018,9616.02734,16.5291138",
+        "Rotation": "1.86264515E-09,2.64844857E-09,2.98023224E-08,0.999999642",
+        "Scale": "1,1,1",
+        "Tags": "",
+        "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkFlags": 0,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
+        "Components": [
+          {
+            "__type": "OpenFramework.Systems.Jobs.TrashSpawnPoint",
+            "__guid": "ddedca1a-0a7e-4e40-b3fa-51e5ad3685a9",
+            "__enabled": true,
+            "Flags": 0,
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
+            "Radius": 70
+          }
+        ],
+        "Children": []
+      },
+      {
+        "__guid": "54834c66-905b-422d-95cb-3c7ac1aeacf1",
+        "__version": 2,
+        "Flags": 0,
+        "Name": "trashspawnpoint",
+        "Position": "7783.43848,3801.30078,176.63736",
+        "Rotation": "1.86264515E-09,2.82307155E-09,0,0.999999583",
+        "Scale": "1,1,1",
+        "Tags": "",
+        "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkFlags": 0,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
+        "Components": [
+          {
+            "__type": "OpenFramework.Systems.Jobs.TrashSpawnPoint",
+            "__guid": "94fce939-6c24-457a-90fd-5b4d9180b906",
+            "__enabled": true,
+            "Flags": 0,
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
+            "Radius": 70
+          }
+        ],
+        "Children": []
+      },
+      {
+        "__guid": "cd99a32a-90ef-4a3d-8c0c-eb6275a14a3f",
+        "__version": 2,
+        "Flags": 0,
+        "Name": "trashspawnpoint",
+        "Position": "9978.08789,4079.47949,217.339844",
+        "Rotation": "1.86264515E-09,3.23052518E-09,-2.98023224E-08,0.999999523",
+        "Scale": "1,1,1",
+        "Tags": "",
+        "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkFlags": 0,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
+        "Components": [
+          {
+            "__type": "OpenFramework.Systems.Jobs.TrashSpawnPoint",
+            "__guid": "0feffbaf-e269-4b01-b23d-a889624631f8",
+            "__enabled": true,
+            "Flags": 0,
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
+            "Radius": 70
+          }
+        ],
+        "Children": []
+      },
+      {
+        "__guid": "7df1c9d4-e75b-40d7-8bc5-437674032a20",
+        "__version": 2,
+        "Flags": 0,
+        "Name": "trashspawnpoint",
+        "Position": "10018.4541,3253.87695,235.730835",
+        "Rotation": "1.86264515E-09,4.65661287E-09,0,0.999999404",
+        "Scale": "1,1,1",
+        "Tags": "",
+        "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkFlags": 0,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
+        "Components": [
+          {
+            "__type": "OpenFramework.Systems.Jobs.TrashSpawnPoint",
+            "__guid": "5b09f69e-cf5d-4829-8825-5016152c78d8",
+            "__enabled": true,
+            "Flags": 0,
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
+            "Radius": 70
+          }
+        ],
+        "Children": []
+      },
+      {
+        "__guid": "c462f453-677e-45d7-aa4c-588fd126a0ef",
+        "__version": 2,
+        "Flags": 0,
+        "Name": "trashspawnpoint",
+        "Position": "8520.36328,3119.19214,206.774384",
+        "Rotation": "1.86264515E-09,4.13274392E-09,-2.98023224E-08,0.999999344",
+        "Scale": "1,1,1",
+        "Tags": "",
+        "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkFlags": 0,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
+        "Components": [
+          {
+            "__type": "OpenFramework.Systems.Jobs.TrashSpawnPoint",
+            "__guid": "0b8cd6bc-7fae-4a0f-b4b5-eb2eadac9171",
+            "__enabled": true,
+            "Flags": 0,
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
+            "Radius": 70
+          }
+        ],
+        "Children": []
+      },
+      {
+        "__guid": "9404b756-d8cb-499c-8184-7912d3caa2cf",
+        "__version": 2,
+        "Flags": 0,
+        "Name": "trashspawnpoint",
+        "Position": "8644.28418,-334.986816,282.764282",
+        "Rotation": "1.86264515E-09,4.19095159E-09,0,0.999999285",
+        "Scale": "1,1,1",
+        "Tags": "",
+        "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkFlags": 0,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
+        "Components": [
+          {
+            "__type": "OpenFramework.Systems.Jobs.TrashSpawnPoint",
+            "__guid": "12cc560d-01aa-4071-9ead-332c2c4dabb8",
+            "__enabled": true,
+            "Flags": 0,
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
+            "Radius": 70
+          }
+        ],
+        "Children": []
+      },
+      {
+        "__guid": "449caa91-fc66-45cd-8920-ef984b6c51c3",
+        "__version": 2,
+        "Flags": 0,
+        "Name": "trashspawnpoint",
+        "Position": "7935.06543,310.271729,253.997971",
+        "Rotation": "9.31322575E-10,3.92901711E-09,2.98023224E-08,0.999999166",
+        "Scale": "1,1,1",
+        "Tags": "",
+        "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkFlags": 0,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
+        "Components": [
+          {
+            "__type": "OpenFramework.Systems.Jobs.TrashSpawnPoint",
+            "__guid": "7c2f7d9e-e1ff-41b8-87ad-1221596e8306",
+            "__enabled": true,
+            "Flags": 0,
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
+            "Radius": 70
+          }
+        ],
+        "Children": []
+      },
+      {
+        "__guid": "508a774c-4faa-41ad-be7c-57bca0574c13",
+        "__version": 2,
+        "Flags": 0,
+        "Name": "trashspawnpoint",
+        "Position": "6595.04199,215.394775,139.145615",
+        "Rotation": "2.79396772E-09,4.0163286E-09,-2.98023224E-08,0.999999106",
+        "Scale": "1,1,1",
+        "Tags": "",
+        "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkFlags": 0,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
+        "Components": [
+          {
+            "__type": "OpenFramework.Systems.Jobs.TrashSpawnPoint",
+            "__guid": "3e1f0dc3-de78-4a47-b0e7-e9e51df873e9",
+            "__enabled": true,
+            "Flags": 0,
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
+            "Radius": 70
+          }
+        ],
+        "Children": []
+      },
+      {
+        "__guid": "987c1fed-c760-4d42-bdff-10e0fe684ce2",
+        "__version": 2,
+        "Flags": 0,
+        "Name": "trashspawnpoint",
+        "Position": "6629.23145,-483.883057,154.722656",
+        "Rotation": "2.79396772E-09,4.65661287E-09,2.98023224E-08,0.999999046",
+        "Scale": "1,1,1",
+        "Tags": "",
+        "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkFlags": 0,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
+        "Components": [
+          {
+            "__type": "OpenFramework.Systems.Jobs.TrashSpawnPoint",
+            "__guid": "3e3e9980-d667-494d-b79c-484e1b2abf07",
+            "__enabled": true,
+            "Flags": 0,
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
+            "Radius": 70
+          }
+        ],
+        "Children": []
+      },
+      {
+        "__guid": "6ec52fa7-86cf-4af3-8d84-e6d7b35c9ed0",
+        "__version": 2,
+        "Flags": 0,
+        "Name": "trashspawnpoint",
+        "Position": "3722.77246,-627.307129,96.0406342",
+        "Rotation": "3.7252903E-09,5.29689714E-09,2.98023224E-08,0.999998927",
+        "Scale": "1,1,1",
+        "Tags": "",
+        "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkFlags": 0,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
+        "Components": [
+          {
+            "__type": "OpenFramework.Systems.Jobs.TrashSpawnPoint",
+            "__guid": "b482a307-bd3a-48b3-a2d5-8d4e3873f166",
+            "__enabled": true,
+            "Flags": 0,
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
+            "Radius": 70
+          }
+        ],
+        "Children": []
+      },
+      {
+        "__guid": "3b446ae2-ae54-47d6-bf29-68028067fd96",
+        "__version": 2,
+        "Flags": 0,
+        "Name": "trashspawnpoint",
+        "Position": "2819.81909,-1949.70569,104.947983",
+        "Rotation": "4.65661287E-09,6.1118044E-09,0,0.999998808",
+        "Scale": "1,1,1",
+        "Tags": "",
+        "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkFlags": 0,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
+        "Components": [
+          {
+            "__type": "OpenFramework.Systems.Jobs.TrashSpawnPoint",
+            "__guid": "1975e0c4-4b1e-404a-97a5-a6f21f651854",
+            "__enabled": true,
+            "Flags": 0,
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
+            "Radius": 70
+          }
+        ],
+        "Children": []
+      },
+      {
+        "__guid": "fc3a69c4-c41d-4ac5-946e-5f487459cb32",
+        "__version": 2,
+        "Flags": 0,
+        "Name": "trashspawnpoint",
+        "Position": "2870.05322,-2977.08472,127.833855",
+        "Rotation": "4.65661287E-09,6.37373887E-09,-2.98023224E-08,0.999998748",
+        "Scale": "1,1,1",
+        "Tags": "",
+        "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkFlags": 0,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
+        "Components": [
+          {
+            "__type": "OpenFramework.Systems.Jobs.TrashSpawnPoint",
+            "__guid": "f1fffe92-15d3-4d6a-b5e4-650c72763daf",
+            "__enabled": true,
+            "Flags": 0,
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
+            "Radius": 70
+          }
+        ],
+        "Children": []
+      },
+      {
+        "__guid": "dd5bc20e-5c9e-4185-b349-2b23ecafbce1",
+        "__version": 2,
+        "Flags": 0,
+        "Name": "trashspawnpoint",
+        "Position": "3016.59204,9603.76172,-58.4838982",
+        "Rotation": "0,0,0,1",
+        "Scale": "1,1,1",
+        "Tags": "",
+        "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkFlags": 0,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
+        "Components": [
+          {
+            "__type": "OpenFramework.Systems.Jobs.TrashSpawnPoint",
+            "__guid": "bc513f20-90ff-4dc6-a57b-96694f45d74e",
+            "__enabled": true,
+            "Flags": 0,
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
+            "Radius": 150
+          }
+        ],
+        "Children": []
+      }
+    ],
+    "__properties": {
+      "NetworkInterpolation": true,
+      "TimeScale": 1,
+      "WantsSystemScene": true,
+      "Metadata": {},
+      "NavMesh": {
+        "Enabled": false,
+        "IncludeStaticBodies": true,
+        "IncludeKeyframedBodies": true,
+        "EditorAutoUpdate": false,
+        "AgentHeight": 64,
+        "AgentRadius": 16,
+        "AgentStepSize": 18,
+        "AgentMaxSlope": 40,
+        "ExcludedBodies": "",
+        "IncludedBodies": "",
+        "DeferGeneration": false,
+        "CustomBounds": false
+      }
+    },
+    "__variables": []
+  },
+  "ResourceVersion": 2,
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "DontBreakAsTemplate": false,
+  "__references": [],
+  "__version": 2
+}

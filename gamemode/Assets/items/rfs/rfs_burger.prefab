@@ -1,0 +1,161 @@
+{
+  "RootObject": {
+    "__guid": "6330d4ff-553c-4dfb-9fe2-4dd058ca7516",
+    "__version": 2,
+    "Flags": 0,
+    "Name": "rfs_burger",
+    "Position": "0,0,0",
+    "Rotation": "0,0,0,1",
+    "Scale": "1,1,1",
+    "Tags": "grab,actionmenu,rfs_burger",
+    "Enabled": true,
+    "NetworkMode": 1,
+    "NetworkFlags": 0,
+    "NetworkOrphaned": 0,
+    "NetworkTransmit": true,
+    "OwnerTransfer": 0,
+    "Components": [
+      {
+        "__type": "Sandbox.BoxCollider",
+        "__guid": "5acefa75-1057-4813-801c-6507286d0b1b",
+        "__enabled": true,
+        "Flags": 0,
+        "Center": "0,0,5",
+        "ColliderFlags": 0,
+        "Elasticity": null,
+        "Friction": null,
+        "IsTrigger": false,
+        "OnComponentDestroy": null,
+        "OnComponentDisabled": null,
+        "OnComponentEnabled": null,
+        "OnComponentFixedUpdate": null,
+        "OnComponentStart": null,
+        "OnComponentUpdate": null,
+        "OnObjectTriggerEnter": null,
+        "OnObjectTriggerExit": null,
+        "OnTriggerEnter": null,
+        "OnTriggerExit": null,
+        "RollingResistance": null,
+        "Scale": "10,10,8",
+        "Static": false,
+        "Surface": null,
+        "SurfaceVelocity": "0,0,0"
+      },
+      {
+        "__type": "Sandbox.Rigidbody",
+        "__guid": "327195b9-56d0-4d6c-9acd-97a0cc204748",
+        "__enabled": true,
+        "Flags": 0,
+        "AngularDamping": 0,
+        "EnableImpactDamage": true,
+        "EnhancedCcd": false,
+        "Gravity": true,
+        "GravityScale": 1,
+        "ImpactDamage": 0,
+        "LinearDamping": 0,
+        "Locking": {
+          "X": false,
+          "Y": false,
+          "Z": false,
+          "Pitch": false,
+          "Yaw": false,
+          "Roll": false
+        },
+        "MassCenterOverride": "0,0,0",
+        "MassOverride": 0,
+        "MinImpactDamageSpeed": 500,
+        "MotionEnabled": true,
+        "OnComponentDestroy": null,
+        "OnComponentDisabled": null,
+        "OnComponentEnabled": null,
+        "OnComponentFixedUpdate": null,
+        "OnComponentStart": null,
+        "OnComponentUpdate": null,
+        "OverrideMassCenter": false,
+        "RigidbodyFlags": 0,
+        "StartAsleep": false
+      },
+      {
+        "__type": "OpenFramework.Systems.Cooking.Burger",
+        "__guid": "799a45f8-f78f-4e75-9b7a-6308b587ef88",
+        "__enabled": true,
+        "Flags": 0,
+        "DefaultStackHeight": 1,
+        "OnComponentDestroy": null,
+        "OnComponentDisabled": null,
+        "OnComponentEnabled": null,
+        "OnComponentFixedUpdate": null,
+        "OnComponentStart": null,
+        "OnComponentUpdate": null,
+        "VisualLibrary": [
+          {
+            "Type": "BunBottom",
+            "Model": "models/ingredients/bun/bun_bot.vmdl",
+            "StackHeight": 0
+          },
+          {
+            "Type": "RawBeef",
+            "Model": "models/ingredients/patty/patty.vmdl",
+            "StackHeight": 0
+          },
+          {
+            "Type": "Cheese",
+            "Model": "models/ingredients/cheddar/cheddar_slice.vmdl",
+            "StackHeight": 0
+          },
+          {
+            "Type": "Lettuce",
+            "Model": "models/ingredients/lettuce/lettuce_slice.vmdl",
+            "StackHeight": 0
+          },
+          {
+            "Type": "Tomato",
+            "Model": "models/ingredients/tomato/tomato_slice.vmdl",
+            "StackHeight": 0
+          },
+          {
+            "Type": "BunTop",
+            "Model": "models/ingredients/bun/bun_top.vmdl",
+            "StackHeight": 0
+          }
+        ]
+      }
+    ],
+    "Children": [],
+    "__properties": {
+      "NetworkInterpolation": true,
+      "TimeScale": 1,
+      "WantsSystemScene": true,
+      "Metadata": {},
+      "NavMesh": {
+        "Enabled": false,
+        "IncludeStaticBodies": true,
+        "IncludeKeyframedBodies": true,
+        "EditorAutoUpdate": false,
+        "AgentHeight": 64,
+        "AgentRadius": 16,
+        "AgentStepSize": 18,
+        "AgentMaxSlope": 40,
+        "ExcludedBodies": "",
+        "IncludedBodies": "",
+        "DeferGeneration": false,
+        "CustomBounds": false
+      }
+    },
+    "__variables": []
+  },
+  "ResourceVersion": 2,
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "DontBreakAsTemplate": false,
+  "__references": [
+    "fish.hs_bun_bot#89714",
+    "fish.hs_bun_top#89717",
+    "fish.hs_cheddar_slice#89724",
+    "fish.hs_lettuce_slice#89728",
+    "fish.hs_patty#89729",
+    "fish.hs_tomato_slice#89730"
+  ],
+  "__version": 2
+}

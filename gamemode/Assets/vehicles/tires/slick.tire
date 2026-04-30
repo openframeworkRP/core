@@ -1,0 +1,15 @@
+{
+  "DisplayName": "Slick (Course)",
+  "FrictionMu": 1.1,
+  "LoadSensitivity": 0.8,
+  "NominalLoad": 1400,
+  "RollingResistance": 0.008,
+  "LatB": 12.0,
+  "LatC": 1.6,
+  "LatD": 1.0,
+  "LatE": 0.97,
+  "LongB": 14.0,
+  "LongC": 2.2,
+  "LongD": 1.0,
+  "LongE": 0.97
+}

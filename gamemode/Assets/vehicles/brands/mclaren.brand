@@ -1,0 +1,9 @@
+{
+  "Name": "McLaren",
+  "Slogan": "For the Drivers",
+  "Image": "assets/brands/mclaren.svg",
+  "Country": "assets/country/uk.country",
+  "Day": 24,
+  "Month": 2,
+  "Year": 1963
+}

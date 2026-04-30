@@ -1,0 +1,9 @@
+{
+  "DisplayName": "3-Speed Heavy Duty",
+  "ForwardGearRatios": [5.07, 2.78, 1.00],
+  "ReverseGearRatio": 4.74,
+  "FinalDriveRatio": 6.14,
+  "UpshiftRpm": 2200,
+  "DownshiftRpm": 1000,
+  "ShiftCooldown": 0.8
+}

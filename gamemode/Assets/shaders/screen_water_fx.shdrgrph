@@ -1,0 +1,294 @@
+{
+  "IsSubgraph": false,
+  "Path": null,
+  "Model": null,
+  "Title": null,
+  "Description": "Rain droplets on the screen",
+  "Category": null,
+  "Icon": null,
+  "AddToNodeLibrary": false,
+  "BlendMode": "Opaque",
+  "ShadingModel": "Lit",
+  "Domain": "PostProcess",
+  "PreviewSettings": {
+    "EnableShadows": true,
+    "ShowSkybox": true,
+    "BackgroundColor": "1,1,1,1",
+    "Tint": "1,1,1,1"
+  },
+  "nodes": [
+    {
+      "_class": "Result",
+      "DefaultOpacity": 1,
+      "DefaultRoughness": 1,
+      "DefaultMetalness": 0,
+      "DefaultAmbientOcclusion": 1,
+      "Identifier": "0",
+      "Position": "1296,-96",
+      "HandleOffsets": {}
+    },
+    {
+      "_class": "Float",
+      "Min": 0,
+      "Max": 1,
+      "Value": 0.8,
+      "Name": "Intensity",
+      "IsAttribute": true,
+      "UI": {
+        "Type": "Slider"
+      },
+      "Identifier": "1",
+      "Position": "-744,-204",
+      "HandleOffsets": {}
+    },
+    {
+      "_class": "Float",
+      "Min": 0,
+      "Max": 1,
+      "Value": 2.2,
+      "Name": "Refraction",
+      "IsAttribute": true,
+      "UI": {
+        "Type": "Slider"
+      },
+      "Identifier": "2",
+      "Position": "-744,-132",
+      "HandleOffsets": {}
+    },
+    {
+      "_class": "Float",
+      "Min": 0,
+      "Max": 1,
+      "Value": 0.08,
+      "Name": "Chromatic",
+      "IsAttribute": true,
+      "UI": {
+        "Type": "Slider"
+      },
+      "Identifier": "3",
+      "Position": "-744,-60",
+      "HandleOffsets": {}
+    },
+    {
+      "_class": "Float",
+      "Min": 0,
+      "Max": 1,
+      "Value": 0.08,
+      "Name": "StreakSpeed",
+      "IsAttribute": true,
+      "UI": {
+        "Type": "Slider"
+      },
+      "Identifier": "4",
+      "Position": "-744,12",
+      "HandleOffsets": {}
+    },
+    {
+      "_class": "Float",
+      "Min": 0,
+      "Max": 1,
+      "Value": 0.07,
+      "Name": "DropSpeed",
+      "IsAttribute": true,
+      "UI": {
+        "Type": "Slider"
+      },
+      "Identifier": "5",
+      "Position": "-744,-276",
+      "HandleOffsets": {}
+    },
+    {
+      "_class": "Float2",
+      "Min": "0,0",
+      "Max": "1,1",
+      "Value": "2,3",
+      "Name": "DropsTiling",
+      "IsAttribute": true,
+      "UI": {},
+      "Identifier": "6",
+      "Position": "-744,156",
+      "HandleOffsets": {}
+    },
+    {
+      "_class": "Float2",
+      "Min": "0,0",
+      "Max": "1,1",
+      "Value": "1,5",
+      "Name": "StreaksTiling",
+      "IsAttribute": true,
+      "UI": {},
+      "Identifier": "7",
+      "Position": "-744,276",
+      "HandleOffsets": {}
+    },
+    {
+      "_class": "TextureSampler",
+      "Image": "materials/dev/white_color.tga",
+      "Sampler": {},
+      "UI": {
+        "Name": "DropsNormal",
+        "IsAttribute": true,
+        "Default": "1,1,1,1",
+        "ShowExtension": true,
+        "SrgbRead": true
+      },
+      "Identifier": "8",
+      "Position": "828,-300",
+      "HandleOffsets": {},
+      "Coords": {
+        "Identifier": "19",
+        "Output": "Result"
+      }
+    },
+    {
+      "_class": "TextureSampler",
+      "Image": "materials/dev/white_color.tga",
+      "Sampler": {},
+      "UI": {
+        "Name": "StreaksNormal",
+        "IsAttribute": true,
+        "Default": "1,1,1,1",
+        "ShowExtension": true,
+        "SrgbRead": true
+      },
+      "Identifier": "9",
+      "Position": "-744,600",
+      "HandleOffsets": {}
+    },
+    {
+      "_class": "TextureSampler",
+      "Image": "materials/dev/white_color.tga",
+      "Sampler": {},
+      "UI": {
+        "Name": "NoiseTex",
+        "IsAttribute": true,
+        "Default": "1,1,1,1",
+        "ShowExtension": true,
+        "SrgbRead": true
+      },
+      "Identifier": "10",
+      "Position": "-744,804",
+      "HandleOffsets": {}
+    },
+    {
+      "_class": "ScreenPosition",
+      "Identifier": "11",
+      "Position": "-396,-120",
+      "HandleOffsets": {}
+    },
+    {
+      "_class": "SceneColor",
+      "AddressU": "Wrap",
+      "AddressV": "Wrap",
+      "Identifier": "12",
+      "Position": "240,-84",
+      "HandleOffsets": {},
+      "Coords": {
+        "Identifier": "14",
+        "Output": "Result"
+      }
+    },
+    {
+      "_class": "Time",
+      "Identifier": "13",
+      "Position": "-744,-348",
+      "HandleOffsets": {}
+    },
+    {
+      "_class": "Divide",
+      "DefaultA": 0,
+      "DefaultB": 1,
+      "Identifier": "14",
+      "Position": "-120,-84",
+      "HandleOffsets": {},
+      "A": {
+        "Identifier": "11",
+        "Output": "XY"
+      },
+      "B": {
+        "Identifier": "11",
+        "Output": "W"
+      }
+    },
+    {
+      "_class": "Multiply",
+      "DefaultA": 0,
+      "DefaultB": 1,
+      "Identifier": "15",
+      "Position": "-372,-300",
+      "HandleOffsets": {},
+      "A": {
+        "Identifier": "13",
+        "Output": "Result"
+      },
+      "B": {
+        "Identifier": "5",
+        "Output": "Result"
+      }
+    },
+    {
+      "_class": "CombineVector",
+      "DefaultX": 0,
+      "DefaultY": 0,
+      "DefaultZ": 0,
+      "DefaultW": 0,
+      "Identifier": "16",
+      "Position": "-72,-324",
+      "HandleOffsets": {},
+      "X": {
+        "Identifier": "17",
+        "Output": "Result"
+      },
+      "Y": {
+        "Identifier": "15",
+        "Output": "Result"
+      }
+    },
+    {
+      "_class": "Float",
+      "Min": 0,
+      "Max": 1,
+      "Value": 0,
+      "Name": "",
+      "IsAttribute": false,
+      "UI": {},
+      "Identifier": "17",
+      "Position": "-372,-384",
+      "HandleOffsets": {}
+    },
+    {
+      "_class": "CombineVector",
+      "DefaultX": 0,
+      "DefaultY": 0,
+      "DefaultZ": 0,
+      "DefaultW": 0,
+      "Identifier": "18",
+      "Position": "288,-300",
+      "HandleOffsets": {},
+      "X": {
+        "Identifier": "14",
+        "Output": "Result"
+      },
+      "Y": {
+        "Identifier": "16",
+        "Output": "XY"
+      }
+    },
+    {
+      "_class": "Multiply",
+      "DefaultA": 0,
+      "DefaultB": 1,
+      "Identifier": "19",
+      "Position": "600,-276",
+      "HandleOffsets": {},
+      "A": {
+        "Identifier": "18",
+        "Output": "XY"
+      },
+      "B": {
+        "Identifier": "6",
+        "Output": "Result"
+      }
+    }
+  ]
+}

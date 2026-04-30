@@ -1,0 +1,15 @@
+{
+  "DisplayName": "Hard (Touring)",
+  "FrictionMu": 0.82,
+  "LoadSensitivity": 0.8,
+  "NominalLoad": 1400,
+  "RollingResistance": 0.018,
+  "LatB": 8.0,
+  "LatC": 1.35,
+  "LatD": 0.85,
+  "LatE": 0.92,
+  "LongB": 9.0,
+  "LongC": 1.9,
+  "LongD": 0.85,
+  "LongE": 0.92
+}

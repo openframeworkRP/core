@@ -1,0 +1,73 @@
+{
+  "RootObject": {
+    "__guid": "0cadc228-9de4-48b5-a90e-e375caf877ae",
+    "__version": 2,
+    "Flags": 0,
+    "Name": "zone_de_spawn_trash",
+    "Position": "0,0,0",
+    "Rotation": "0,0,0,1",
+    "Scale": "1,1,1",
+    "Tags": "",
+    "Enabled": true,
+    "NetworkMode": 2,
+    "NetworkFlags": 0,
+    "NetworkOrphaned": 0,
+    "NetworkTransmit": true,
+    "OwnerTransfer": 1,
+    "Components": [
+      {
+        "__type": "OpenFramework.Systems.Jobs.MaintenanceTrashManager",
+        "__guid": "47c87d29-e2b9-4fd3-8353-93c4b2937eaf",
+        "__enabled": true,
+        "Flags": 0,
+        "MaxPerWave": 8,
+        "MaxTrashOnMap": 20,
+        "MinPerWave": 10,
+        "OnComponentDestroy": null,
+        "OnComponentDisabled": null,
+        "OnComponentEnabled": null,
+        "OnComponentFixedUpdate": null,
+        "OnComponentStart": null,
+        "OnComponentUpdate": null,
+        "RareTrashChance": 0.05,
+        "RareTrashPrefabs": [
+          {
+            "_type": "gameobject",
+            "prefab": "prefabs/trash/trash_grossacpoubelle.prefab"
+          }
+        ],
+        "RespawnDelay": 30,
+        "TrashPrefabs": [
+          {
+            "_type": "gameobject",
+            "prefab": "prefabs/trash/trash_dentifrice.prefab"
+          },
+          {
+            "_type": "gameobject",
+            "prefab": "prefabs/trash/trash_saccarton.prefab"
+          },
+          {
+            "_type": "gameobject",
+            "prefab": "prefabs/trash/trash_sacpapier.prefab"
+          },
+          {
+            "_type": "gameobject",
+            "prefab": "prefabs/trash/trash_boitenouilles.prefab"
+          },
+          {
+            "_type": "gameobject",
+            "prefab": "prefabs/trash/trash_morceaupapier.prefab"
+          }
+        ]
+      }
+    ],
+    "Children": []
+  },
+  "ResourceVersion": 2,
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "DontBreakAsTemplate": false,
+  "__references": [],
+  "__version": 2
+}

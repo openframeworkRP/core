@@ -1,0 +1,52 @@
+{
+  "UI": false,
+  "Volume": "0.5",
+  "Pitch": "0.95 1.1",
+  "Decibels": 500,
+  "SelectionMode": "Random",
+  "Sounds": [
+    "sounds/weapons/usp/usp_suppressed_1.vsnd"
+  ],
+  "Occlusion": false,
+  "AirAbsorption": false,
+  "Transmission": false,
+  "OcclusionRadius": 64,
+  "DistanceAttenuation": true,
+  "Distance": 5000,
+  "Falloff": [
+    {
+      "x": 0,
+      "y": 1,
+      "in": 0,
+      "out": 0,
+      "mode": "Mirrored"
+    },
+    {
+      "x": 0.072916664,
+      "y": 0.43270713,
+      "in": 3.1644375,
+      "out": -3.1644375,
+      "mode": "Mirrored"
+    },
+    {
+      "x": 0.32589287,
+      "y": 0.0026595744,
+      "in": 0,
+      "out": 0,
+      "mode": "Mirrored"
+    },
+    {
+      "x": 1,
+      "y": 0,
+      "in": 0,
+      "out": 0,
+      "mode": "Mirrored"
+    }
+  ],
+  "DefaultMixer": {
+    "Name": "unknown",
+    "Id": "00000000-0000-0000-0000-000000000000"
+  },
+  "__references": [],
+  "__version": 1
+}

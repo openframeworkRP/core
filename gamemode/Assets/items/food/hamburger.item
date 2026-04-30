@@ -1,0 +1,362 @@
+{
+  "Name": "Hamburger",
+  "Description": "Un burger g\u00E9n\u00E9reux avec steak, salade et sauce. Classique.",
+  "IsEnabled": true,
+  "Price": 8,
+  "ItemCategoryType": "Food",
+  "WorldObjectPrefab": "items/food/hamburger.prefab",
+  "TrashObjectPrefab": null,
+  "PreviewObject": "pr/hamburger_01.vmdl",
+  "Weight": 0.35,
+  "MaxStack": 5,
+  "Image": "ui/items/hamburger.png",
+  "ConsumeOnUse": true,
+  "UseDuration": 3.0,
+  "CanBeSpawned": true,
+  "OnUseAction": {
+    "__version": 9,
+    "__guid": "64b77109-4b79-4703-8b73-edcf19bf9c57",
+    "__changeId": 79,
+    "UserData": {
+      "Title": "On Use Action",
+      "ReferencedComponentTypes": []
+    },
+    "Variables": [],
+    "Nodes": [
+      {
+        "Id": 40,
+        "Type": "input",
+        "UserData": {
+          "Position": "-912,504"
+        }
+      },
+      {
+        "Id": 41,
+        "Type": "property",
+        "ParentId": 40,
+        "Properties": {
+          "_name": "Client",
+          "_type": "OpenFramework.Systems.Pawn.Pawn"
+        }
+      },
+      {
+        "Id": 42,
+        "Type": "if",
+        "UserData": {
+          "Position": "576,624"
+        }
+      },
+      {
+        "Id": 43,
+        "Type": "nop",
+        "UserData": {
+          "Position": "-612,792"
+        }
+      },
+      {
+        "Id": 44,
+        "Type": "output",
+        "UserData": {
+          "Position": "360,528"
+        }
+      },
+      {
+        "Id": 45,
+        "Type": "core.add_hunger",
+        "UserData": {
+          "Position": "120,528"
+        }
+      },
+      {
+        "Id": 46,
+        "Type": "core.notify_success",
+        "UserData": {
+          "Position": "948,600"
+        }
+      },
+      {
+        "Id": 47,
+        "Type": "core.notify_warning",
+        "UserData": {
+          "Position": "948,720"
+        }
+      },
+      {
+        "Id": 50,
+        "Type": "property",
+        "Properties": {
+          "_name": "RestoreMinValue"
+        },
+        "UserData": {
+          "Position": "-396,648"
+        }
+      },
+      {
+        "Id": 51,
+        "Type": "property",
+        "Properties": {
+          "_name": "RestoreMaxValue"
+        },
+        "UserData": {
+          "Position": "-396,684"
+        }
+      },
+      {
+        "Id": 52,
+        "Type": "nop",
+        "UserData": {
+          "Position": "696,732"
+        }
+      },
+      {
+        "Id": 53,
+        "Type": "ui.item_action_progress",
+        "UserData": {
+          "Position": "-48,408"
+        }
+      },
+      {
+        "Id": 54,
+        "Type": "property",
+        "Properties": {
+          "_name": "UseDuration"
+        },
+        "UserData": {
+          "Position": "-396,612"
+        }
+      },
+      {
+        "Id": 55,
+        "Type": "call",
+        "Properties": {
+          "_isStatic": false,
+          "_name": "PlaySound",
+          "_type": "OpenFramework.Systems.Pawn.Client"
+        },
+        "UserData": {
+          "Position": "768,336"
+        }
+      },
+      {
+        "Id": 56,
+        "Type": "property",
+        "Properties": {
+          "_name": "ConsumptionSound"
+        },
+        "UserData": {
+          "Position": "-396,576"
+        }
+      },
+      {
+        "Id": 70,
+        "Type": "property",
+        "ParentId": 40,
+        "Properties": {
+          "_name": "Metadata",
+          "_type": "OpenFramework.Inventory.InventoryItem"
+        }
+      }
+    ],
+    "Links": [
+      {
+        "SrcId": 40,
+        "SrcName": "arg1",
+        "DstId": 41,
+        "DstName": "_target"
+      },
+      {
+        "SrcId": 44,
+        "SrcName": "_signal",
+        "DstId": 42,
+        "DstName": "_signal"
+      },
+      {
+        "SrcId": 45,
+        "SrcName": "_result",
+        "DstId": 42,
+        "DstName": "condition"
+      },
+      {
+        "SrcId": 41,
+        "SrcName": "_result",
+        "DstId": 43,
+        "DstName": "in"
+      },
+      {
+        "SrcId": 45,
+        "SrcName": "_result",
+        "DstId": 44,
+        "DstName": "_result"
+      },
+      {
+        "SrcId": 45,
+        "SrcName": "_signal",
+        "DstId": 44,
+        "DstName": "_signal"
+      },
+      {
+        "SrcId": 53,
+        "SrcName": "_signal",
+        "DstId": 45,
+        "DstName": "_signal"
+      },
+      {
+        "SrcId": 51,
+        "SrcName": "_result",
+        "DstId": 45,
+        "DstName": "max",
+        "UserData": {
+          "x": 96
+        }
+      },
+      {
+        "SrcId": 50,
+        "SrcName": "_result",
+        "DstId": 45,
+        "DstName": "min",
+        "UserData": {
+          "x": 84
+        }
+      },
+      {
+        "SrcId": 41,
+        "SrcName": "_result",
+        "DstId": 45,
+        "DstName": "target"
+      },
+      {
+        "Id": 74,
+        "Value": "Vous avez manger du pain",
+        "DstId": 46,
+        "DstName": "message"
+      },
+      {
+        "SrcId": 52,
+        "SrcName": "out",
+        "DstId": 46,
+        "DstName": "target"
+      },
+      {
+        "Id": 75,
+        "Value": "Vous n\u0027avez plus faim",
+        "DstId": 47,
+        "DstName": "message"
+      },
+      {
+        "SrcId": 52,
+        "SrcName": "out",
+        "DstId": 47,
+        "DstName": "target"
+      },
+      {
+        "SrcId": 70,
+        "SrcName": "_result",
+        "DstId": 50,
+        "DstName": "_target"
+      },
+      {
+        "SrcId": 70,
+        "SrcName": "_result",
+        "DstId": 51,
+        "DstName": "_target"
+      },
+      {
+        "SrcId": 43,
+        "SrcName": "out",
+        "DstId": 52,
+        "DstName": "in"
+      },
+      {
+        "SrcId": 40,
+        "SrcName": "_signal",
+        "DstId": 53,
+        "DstName": "_signal"
+      },
+      {
+        "SrcId": 54,
+        "SrcName": "_result",
+        "DstId": 53,
+        "DstName": "duration",
+        "UserData": {
+          "x": 60
+        }
+      },
+      {
+        "Id": 76,
+        "Value": "Entrain de manger..",
+        "DstId": 53,
+        "DstName": "label"
+      },
+      {
+        "SrcId": 41,
+        "SrcName": "_result",
+        "DstId": 53,
+        "DstName": "target"
+      },
+      {
+        "SrcId": 70,
+        "SrcName": "_result",
+        "DstId": 54,
+        "DstName": "_target"
+      },
+      {
+        "SrcId": 42,
+        "SrcName": "true",
+        "DstId": 55,
+        "DstName": "_signal"
+      },
+      {
+        "SrcId": 41,
+        "SrcName": "_result",
+        "DstId": 55,
+        "DstName": "_target",
+        "UserData": {
+          "x": 144
+        }
+      },
+      {
+        "SrcId": 56,
+        "SrcName": "_result",
+        "DstId": 55,
+        "DstName": "resource"
+      },
+      {
+        "SrcId": 70,
+        "SrcName": "_result",
+        "DstId": 56,
+        "DstName": "_target"
+      },
+      {
+        "SrcId": 40,
+        "SrcName": "arg2",
+        "DstId": 70,
+        "DstName": "_target"
+      }
+    ]
+  },
+  "IsCraftable": false,
+  "Recipe": [],
+  "IsTools": false,
+  "ToolsResource": null,
+  "IsWeapon": false,
+  "WeaponResource": null,
+  "IsDocument": false,
+  "DocumentViewModel": null,
+  "IsFurniture": false,
+  "FurnitureCategoryType": "Chair",
+  "IsFood": true,
+  "RestoreMinValue": 45,
+  "RestoreMaxValue": 60,
+  "ConsumptionSound": null,
+  "IsMinerals": false,
+  "IsClothing": false,
+  "ClothingResource": null,
+  "__references": [
+    "openframework.hamburger01#114726"
+  ],
+  "__version": 0,
+  "Attributes": {
+    "expire_time": "5400"
+  },
+  "Icon": "ui/item_icons/hamburger.png"
+}

@@ -1,0 +1,44 @@
+{
+  "HasHumanSkin": false,
+  "HumanSkinModel": null,
+  "HumanSkinMaterial": null,
+  "HumanEyesMaterial": null,
+  "HumanSkinBodyGroups": 0,
+  "HumanSkinMaterialGroup": null,
+  "HumanSkinTags": null,
+  "Title": "Tank Top ",
+  "Subtitle": "Trendy Tank Top",
+  "Category": "TShirt",
+  "ConditionalModels": {},
+  "Tags": null,
+  "Parent": null,
+  "Model": "models/citizen_clothes/shirt/tanktop/models/tanktop.vmdl",
+  "HumanAltModel": "models/citizen_clothes/shirt/tanktop/models/tanktop_m_human.vmdl",
+  "HumanAltFemaleModel": "models/citizen_clothes/shirt/tanktop/models/tanktop_f_human.vmdl",
+  "SkinMaterial": null,
+  "EyesMaterial": null,
+  "MaterialGroup": "",
+  "SlotsUnder": "Chest",
+  "SlotsOver": 0,
+  "HideBody": "Chest",
+  "AllowTintSelect": false,
+  "TintSelection": {
+    "blend": "Linear",
+    "color": [
+      {
+        "t": 0.5,
+        "c": "1,1,1,1"
+      }
+    ],
+    "alpha": []
+  },
+  "TintDefault": 0.5,
+  "SteamItemDefinitionId": null,
+  "Icon": {
+    "Path": "models/citizen_clothes/shirt/tanktop/tanktop.clothing.png",
+    "Mode": "Chest",
+    "PositionOffset": "0,0,0"
+  },
+  "__references": [],
+  "__version": 0
+}

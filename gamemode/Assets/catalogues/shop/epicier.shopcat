@@ -1,0 +1,69 @@
+{
+  "DisplayName": "Epicier",
+  "Categories": [
+    {
+      "Name": "Boisssons",
+      "Items": [
+        {
+          "Item": "items/food/soda.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/food/water_bottle.item",
+          "MinOrderQuantity": 1
+        }
+      ]
+    },
+    {
+      "Name": "Alimentaires",
+      "Items": [
+        {
+          "Item": "items/food/bread.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/food/chicken.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/food/fries.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/food/hamburger.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/food/hotdog.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/food/kebab.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/food/pizza_slice.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/food/sandwich.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/food/spaghetti.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/food/tenders.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/food/wings.item",
+          "MinOrderQuantity": 1
+        }
+      ]
+    }
+  ],
+  "__references": [],
+  "__version": 0
+}

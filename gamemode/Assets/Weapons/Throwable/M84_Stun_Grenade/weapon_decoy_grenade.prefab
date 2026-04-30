@@ -1,0 +1,106 @@
+﻿{
+  "RootObject": {
+    "__guid": "600b9253-c648-42de-9c8b-82ca182c1108",
+    "Flags": 0,
+    "Name": "weapon_decoy_grenade",
+    "Tags": "player",
+    "Enabled": true,
+    "Components": [
+      {
+        "__type": "OpenFramework.Systems.Weapons.Equipment",
+        "__guid": "2616c5a1-c941-46a6-9042-865a309e5e62",
+        "CrosshairType": "Default",
+        "DeploySound": "sounds/weapons/legacy/switch/weapon_switch.sound",
+        "Handedness": "Right",
+        "HoldType": "HoldItem",
+        "MountedPrefab": {
+          "_type": "gameobject",
+          "prefab": "weapons/throwable/he_grenade/mounted/mounted_decoy_grenade.prefab"
+        },
+        "OnComponentDestroy": null,
+        "OnComponentDisabled": null,
+        "OnComponentEnabled": null,
+        "OnComponentFixedUpdate": null,
+        "OnComponentStart": null,
+        "OnComponentUpdate": null,
+        "Resource": "weapons/throwable/m84_stun_grenade/decoy_grenade.equip",
+        "SpeedPenalty": 0,
+        "UseCrosshair": true
+      },
+      {
+        "__type": "OpenFramework.Utility.TagBinder",
+        "__guid": "ea1ad26a-9167-4bd9-9b0a-8c7fdc911125",
+        "OnComponentDestroy": null,
+        "OnComponentDisabled": null,
+        "OnComponentEnabled": null,
+        "OnComponentFixedUpdate": null,
+        "OnComponentStart": null,
+        "OnComponentUpdate": null
+      }
+    ],
+    "Children": [
+      {
+        "__guid": "1c1436ec-02df-4483-842d-b976c13170d0",
+        "Flags": 0,
+        "Name": "Functions",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "OpenFramework.Systems.Weapons.Throwable",
+            "__guid": "b32e9dfc-8d1e-401c-9dad-50adf301fec8",
+            "CookTime": 0.2,
+            "InputActions": [
+              "Attack1"
+            ],
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
+            "OnInputAction": null,
+            "Prefab": {
+              "_type": "gameobject",
+              "prefab": "weapons/throwable/m84_stun_grenade/decoy_grenade_thrown.prefab"
+            },
+            "RequiresAllInputActions": false,
+            "ThrowPower": 1200
+          }
+        ],
+        "Children": [],
+        "__version": 2
+      }
+    ],
+    "__variables": [],
+    "__properties": {
+      "FixedUpdateFrequency": 50,
+      "MaxFixedUpdates": 5,
+      "NetworkFrequency": 30,
+      "NetworkInterpolation": true,
+      "PhysicsSubSteps": 1,
+      "ThreadedAnimation": true,
+      "TimeScale": 1,
+      "UseFixedUpdate": true,
+      "Metadata": {},
+      "NavMesh": {
+        "Enabled": false,
+        "IncludeStaticBodies": true,
+        "IncludeKeyframedBodies": true,
+        "EditorAutoUpdate": true,
+        "AgentHeight": 64,
+        "AgentRadius": 16,
+        "AgentStepSize": 18,
+        "AgentMaxSlope": 40,
+        "ExcludedBodies": "",
+        "IncludedBodies": ""
+      }
+    }
+  },
+  "ResourceVersion": 2,
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "DontBreakAsTemplate": false,
+  "__references": [],
+  "__version": 2
+}

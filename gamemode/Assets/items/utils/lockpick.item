@@ -1,0 +1,90 @@
+{
+  "Name": "Outil de Crochetage",
+  "Description": "Permet de crochete voitures et apartements",
+  "IsEnabled": true,
+  "Price": 0,
+  "ItemCategoryType": "Misc",
+  "WorldObjectPrefab": null,
+  "TrashObjectPrefab": null,
+  "PreviewObject": "pr/lock_picking_tools_01.vmdl",
+  "Icon": "ui/item_icons/lockpick.png",
+  "Weight": 10,
+  "MaxStack": 2,
+  "Attributes": {},
+  "CanBePickedUp": true,
+  "IsUnique": false,
+  "IsConsumable": false,
+  "UseDuration": 1,
+  "CanBeSpawned": false,
+  "OnUseAction": null,
+  "IsCraftable": false,
+  "Recipe": [
+    {
+      "ItemResource": "items/primary_resources/iron.item",
+      "Quantity": 2
+    },
+    {
+      "ItemResource": "items/primary_resources/wire.item",
+      "Quantity": 1
+    }
+  ],
+  "CraftJobAccess": "None",
+  "IsTools": false,
+  "ToolsResource": null,
+  "IsWeapon": false,
+  "WeaponResource": null,
+  "AmmoType": null,
+  "IsMagazine": false,
+  "MagAmmoType": null,
+  "MagCapacity": 12,
+  "IsAmmo": false,
+  "BaseDamage": 25,
+  "DamageFalloff": [
+    {
+      "x": 0,
+      "y": 1,
+      "in": 0,
+      "out": 0,
+      "mode": "Mirrored"
+    },
+    {
+      "x": 1,
+      "y": 0,
+      "in": 0,
+      "out": 0,
+      "mode": "Mirrored"
+    }
+  ],
+  "MaxRange": 1024000,
+  "BulletCount": 1,
+  "MuzzleEnergy": 500,
+  "BulletMass": 0.008,
+  "BulletCaliber": 9,
+  "MaxPenetrations": 3,
+  "MaxWallThickness": 128,
+  "RicochetMaxHits": 2,
+  "MaxRicochetAngle": 60,
+  "RicochetEnergyRetention": 0.55,
+  "IsPack": false,
+  "PackCapacity": 50,
+  "PackContentType": null,
+  "DefaultFillQuantity": 0,
+  "IsDocument": false,
+  "DocumentViewModel": null,
+  "IsFurniture": false,
+  "FurnitureCategoryType": "None",
+  "IsFood": false,
+  "RestoreMinValue": 1,
+  "RestoreMaxValue": 10,
+  "ConsumptionSound": null,
+  "IsMinerals": false,
+  "IsClothing": false,
+  "ClothingResource": null,
+  "HasSubContainer": false,
+  "CanHeal": false,
+  "HealAmount": 1,
+  "__references": [
+    "openframework.lockpickingtools01#117726"
+  ],
+  "__version": 0
+}

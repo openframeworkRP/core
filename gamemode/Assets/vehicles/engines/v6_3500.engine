@@ -1,0 +1,13 @@
+{
+  "DisplayName": "V6 3.5L",
+  "MaxTorqueNm": 280,
+  "MaxPowerKw": 160,
+  "Steepness": 10,
+  "RpmIdle": 750,
+  "RpmMaxTorque": 4000,
+  "RpmMaxPower": 5500,
+  "RpmRedline": 6500,
+  "RpmMax": 7000,
+  "TopSpeedKmh": 230,
+  "GearboxPreset": "gearboxes/5spd_pickup.gearbox"
+}

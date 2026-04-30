@@ -1,0 +1,88 @@
+{
+  "Name": "Boite de 12ga",
+  "Description": "Boite de 15 cartouches calibre 12 Buckshot. Ouvrez-la pour en extraire les cartouches.",
+  "IsEnabled": true,
+  "Price": 60,
+  "ItemCategoryType": "Misc",
+  "WorldObjectPrefab": "items/ammo/box_12ga.prefab",
+  "TrashObjectPrefab": null,
+  "PreviewObject": "models/weapons/sbox_ammo/12g_ammobox/ammobox_12g.vmdl",
+  "Weight": 0.7,
+  "MaxStack": 1,
+  "Attributes": {
+    "pack_count": "0"
+  },
+  "CanBePickedUp": true,
+  "IsUnique": false,
+  "IsConsumable": false,
+  "UseDuration": -1,
+  "CanBeSpawned": true,
+  "OnUseAction": null,
+  "IsCraftable": true,
+  "Recipe": [
+    {
+      "ItemResource": "items/ammo/bullet_12ga.item",
+      "Quantity": 15
+    }
+  ],
+  "CraftJobAccess": "Armurier",
+  "IsTools": false,
+  "ToolsResource": null,
+  "IsWeapon": false,
+  "WeaponResource": null,
+  "AmmoType": null,
+  "IsMagazine": false,
+  "MagAmmoType": null,
+  "MagCapacity": 12,
+  "IsAmmo": false,
+  "BaseDamage": 25,
+  "DamageFalloff": [
+    {
+      "x": 0,
+      "y": 1,
+      "in": 0,
+      "out": 0,
+      "mode": "Mirrored"
+    },
+    {
+      "x": 1,
+      "y": 0,
+      "in": 0,
+      "out": 0,
+      "mode": "Mirrored"
+    }
+  ],
+  "MaxRange": 1024000,
+  "BulletCount": 1,
+  "MuzzleEnergy": 500,
+  "BulletMass": 0.008,
+  "BulletCaliber": 9,
+  "MaxPenetrations": 3,
+  "MaxWallThickness": 128,
+  "RicochetMaxHits": 2,
+  "MaxRicochetAngle": 60,
+  "RicochetEnergyRetention": 0.55,
+  "IsPack": true,
+  "PackCapacity": 15,
+  "PackContentType": "items/ammo/bullet_12ga.item",
+  "DefaultFillQuantity": 15,
+  "IsDocument": false,
+  "DocumentViewModel": null,
+  "IsFurniture": false,
+  "FurnitureCategoryType": "None",
+  "IsFood": false,
+  "RestoreMinValue": 1,
+  "RestoreMaxValue": 10,
+  "ConsumptionSound": null,
+  "IsMinerals": false,
+  "IsClothing": false,
+  "ClothingResource": null,
+  "HasSubContainer": false,
+  "CanHeal": false,
+  "HealAmount": 1,
+  "__references": [
+    "facepunch.ammobox12g#142841"
+  ],
+  "__version": 0,
+  "Icon": "ui/item_icons/box_12ga.png"
+}

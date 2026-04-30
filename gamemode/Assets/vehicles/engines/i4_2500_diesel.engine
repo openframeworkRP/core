@@ -1,0 +1,13 @@
+{
+  "DisplayName": "I4 2.5L Diesel",
+  "MaxTorqueNm": 350,
+  "MaxPowerKw": 100,
+  "Steepness": 15,
+  "RpmIdle": 700,
+  "RpmMaxTorque": 2000,
+  "RpmMaxPower": 3500,
+  "RpmRedline": 4500,
+  "RpmMax": 5000,
+  "TopSpeedKmh": 140,
+  "GearboxPreset": "gearboxes/5spd_diesel_utility.gearbox"
+}

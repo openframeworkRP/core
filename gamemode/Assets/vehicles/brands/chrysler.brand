@@ -1,0 +1,9 @@
+{
+  "Name": "Chrysler",
+  "Slogan": "All you have to do is drive one",
+  "Image": "assets/brands/chrysler.svg",
+  "Country": "assets/country/us.country",
+  "Day": 6,
+  "Month": 6,
+  "Year": 1925
+}

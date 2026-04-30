@@ -1,0 +1,65 @@
+{
+  "DisplayName": "Marchand d'Ingrédients",
+  "Categories": [
+    {
+      "Name": "Pains",
+      "Items": [
+        {
+          "Item": "items/rfs/rfs_bun_bottom.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/rfs/rfs_bun_top.item",
+          "MinOrderQuantity": 1
+        }
+      ]
+    },
+    {
+      "Name": "Viandes",
+      "Items": [
+        {
+          "Item": "items/rfs/rfs_raw_beef.item",
+          "MinOrderQuantity": 1
+        }
+      ]
+    },
+    {
+      "Name": "Produits Frais",
+      "Items": [
+        {
+          "Item": "items/rfs/rfs_whole_tomato.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/rfs/rfs_whole_lettuce.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/rfs/rfs_whole_cheese.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/rfs/rfs_whole_potato.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/rfs/rfs_fries_pouch.item",
+          "Price": 3,
+          "Stock": -1
+        }
+      ]
+    },
+    {
+      "Name": "Pochettes & Gobelets",
+      "Items": [
+        {
+          "Item": "items/rfs/rfs_empty_cup.item",
+          "Price": 2,
+          "Stock": -1
+        }
+      ]
+    }
+  ],
+  "__references": [],
+  "__version": 0
+}

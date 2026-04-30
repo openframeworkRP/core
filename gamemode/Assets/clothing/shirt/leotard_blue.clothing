@@ -1,0 +1,44 @@
+{
+  "HasHumanSkin": false,
+  "HumanSkinModel": null,
+  "HumanSkinMaterial": null,
+  "HumanEyesMaterial": null,
+  "HumanSkinBodyGroups": 0,
+  "HumanSkinMaterialGroup": null,
+  "HumanSkinTags": null,
+  "Title": "Leotard Blue",
+  "Subtitle": null,
+  "Category": "Shirt",
+  "ConditionalModels": {},
+  "Tags": null,
+  "Parent": "models/citizen_clothes/shirt/leotard/leotard.clothing",
+  "Model": "models/citizen_clothes/shirt/leotard/models/leotard_blue.vmdl",
+  "HumanAltModel": "models/citizen_clothes/shirt/leotard/models/leotard_blue_m_human.vmdl",
+  "HumanAltFemaleModel": "models/citizen_clothes/shirt/leotard/models/leotard_blue_f_human.vmdl",
+  "SkinMaterial": null,
+  "EyesMaterial": null,
+  "MaterialGroup": null,
+  "SlotsUnder": "Chest, LeftArm, RightArm, LeftWrist, RightWrist, Groin, LeftThigh, RightThigh, LeftKnee, RightKnee, LeftShin, RightShin",
+  "SlotsOver": 0,
+  "HideBody": "Chest, Legs",
+  "AllowTintSelect": false,
+  "TintSelection": {
+    "blend": "Linear",
+    "color": [
+      {
+        "t": 0.5,
+        "c": "1,1,1,1"
+      }
+    ],
+    "alpha": []
+  },
+  "TintDefault": 0.5,
+  "SteamItemDefinitionId": null,
+  "Icon": {
+    "Path": "models/citizen_clothes/shirt/leotard/leotard_blue.clothing.png",
+    "Mode": "Generic",
+    "PositionOffset": "0,0,0"
+  },
+  "__references": [],
+  "__version": 0
+}

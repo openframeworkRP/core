@@ -1,0 +1,16 @@
+{
+  "Name": "Circuit imprimé",
+  "Description": "",
+  "IsEnabled": true,
+  "Price": 120,
+  "Weight": 0.1,
+  "MaxStack": 20,
+  "Attributes": {},
+  "CanBePickedUp": true,
+  "IsMinerals": true,
+  "IsConsumable": false,
+  "IsCraftable": false,
+  "IsUnique": false,
+  "Recipe": [],
+  "__version": 0
+}

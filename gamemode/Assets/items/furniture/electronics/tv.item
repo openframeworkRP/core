@@ -1,0 +1,100 @@
+{
+  "Name": "tv",
+  "Description": null,
+  "IsEnabled": true,
+  "Price": 100,
+  "ItemCategoryType": "Furniture",
+  "WorldObjectPrefab": "items/furniture/electronics/tv.prefab",
+  "TrashObjectPrefab": null,
+  "PreviewObject": "pr/largetv.vmdl",
+  "Icon": "ui/item_icons/tv.png",
+  "Weight": 0,
+  "MaxStack": 1,
+  "Attributes": {
+    "owner_sid": "0"
+  },
+  "CanBePickedUp": true,
+  "IsUnique": false,
+  "IsConsumable": false,
+  "UseDuration": 1,
+  "CanBeSpawned": true,
+  "OnUseAction": null,
+  "IsCraftable": false,
+  "Recipe": [
+    {
+      "ItemResource": "items/primary_resources/plastic.item",
+      "Quantity": 4
+    },
+    {
+      "ItemResource": "items/primary_resources/glass.item",
+      "Quantity": 2
+    },
+    {
+      "ItemResource": "items/primary_resources/electronic.item",
+      "Quantity": 3
+    },
+    {
+      "ItemResource": "items/primary_resources/circuit_board.item",
+      "Quantity": 1
+    }
+  ],
+  "CraftJobAccess": "None",
+  "IsTools": false,
+  "ToolsResource": null,
+  "IsWeapon": false,
+  "WeaponResource": null,
+  "AmmoType": null,
+  "IsMagazine": false,
+  "MagAmmoType": null,
+  "MagCapacity": 12,
+  "IsAmmo": false,
+  "BaseDamage": 25,
+  "DamageFalloff": [
+    {
+      "x": 0,
+      "y": 1,
+      "in": 0,
+      "out": 0,
+      "mode": "Mirrored"
+    },
+    {
+      "x": 1,
+      "y": 0,
+      "in": 0,
+      "out": 0,
+      "mode": "Mirrored"
+    }
+  ],
+  "MaxRange": 1024000,
+  "BulletCount": 1,
+  "MuzzleEnergy": 500,
+  "BulletMass": 0.008,
+  "BulletCaliber": 9,
+  "MaxPenetrations": 3,
+  "MaxWallThickness": 128,
+  "RicochetMaxHits": 2,
+  "MaxRicochetAngle": 60,
+  "RicochetEnergyRetention": 0.55,
+  "IsPack": false,
+  "PackCapacity": 50,
+  "PackContentType": null,
+  "DefaultFillQuantity": 0,
+  "IsDocument": false,
+  "DocumentViewModel": null,
+  "IsFurniture": true,
+  "FurnitureCategoryType": "Electronics",
+  "IsFood": false,
+  "RestoreMinValue": 1,
+  "RestoreMaxValue": 10,
+  "ConsumptionSound": null,
+  "IsMinerals": false,
+  "IsClothing": false,
+  "ClothingResource": null,
+  "HasSubContainer": false,
+  "CanHeal": false,
+  "HealAmount": 1,
+  "__references": [
+    "openframework.largetv#113176"
+  ],
+  "__version": 0
+}

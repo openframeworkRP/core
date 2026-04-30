@@ -1,0 +1,13 @@
+{
+  "DisplayName": "V8 5.0L",
+  "MaxTorqueNm": 450,
+  "MaxPowerKw": 300,
+  "Steepness": 8,
+  "RpmIdle": 700,
+  "RpmMaxTorque": 3500,
+  "RpmMaxPower": 5200,
+  "RpmRedline": 6000,
+  "RpmMax": 6500,
+  "TopSpeedKmh": 280,
+  "GearboxPreset": "gearboxes/6spd_sport.gearbox"
+}

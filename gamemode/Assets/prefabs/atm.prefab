@@ -1,0 +1,358 @@
+{
+  "RootObject": {
+    "__guid": "b0221814-3cb9-41cd-a0d3-86f47ec3f651",
+    "__version": 2,
+    "Flags": 0,
+    "Name": "atm",
+    "Position": "0,0,0",
+    "Rotation": "0,0,0,1",
+    "Scale": "1,1,1",
+    "Tags": "",
+    "Enabled": true,
+    "NetworkMode": 1,
+    "NetworkFlags": 0,
+    "NetworkOrphaned": 1,
+    "NetworkTransmit": false,
+    "OwnerTransfer": 1,
+    "Components": [
+      {
+        "__type": "Sandbox.ModelRenderer",
+        "__guid": "0f5d8658-015f-4dc7-95a0-0705e5b6cb8d",
+        "__enabled": true,
+        "Flags": 0,
+        "BodyGroups": 18446744073709551615,
+        "CreateAttachments": false,
+        "LodOverride": null,
+        "MaterialGroup": null,
+        "MaterialOverride": null,
+        "Materials": null,
+        "Model": "pr/atm_portable_02.vmdl",
+        "OnComponentDestroy": null,
+        "OnComponentDisabled": null,
+        "OnComponentEnabled": null,
+        "OnComponentFixedUpdate": null,
+        "OnComponentStart": null,
+        "OnComponentUpdate": null,
+        "RenderOptions": {
+          "GameLayer": true,
+          "OverlayLayer": false,
+          "BloomLayer": false,
+          "AfterUILayer": false
+        },
+        "RenderType": "On",
+        "Tint": "1,1,1,1"
+      },
+      {
+        "__type": "Sandbox.ModelCollider",
+        "__guid": "337f7b12-f1ec-49c4-9baa-33152f6359d8",
+        "__enabled": true,
+        "Flags": 0,
+        "ColliderFlags": 0,
+        "Elasticity": null,
+        "Friction": null,
+        "IsTrigger": false,
+        "Model": "pr/atm_portable_02.vmdl",
+        "OnComponentDestroy": null,
+        "OnComponentDisabled": null,
+        "OnComponentEnabled": null,
+        "OnComponentFixedUpdate": null,
+        "OnComponentStart": null,
+        "OnComponentUpdate": null,
+        "OnObjectTriggerEnter": null,
+        "OnObjectTriggerExit": null,
+        "OnTriggerEnter": null,
+        "OnTriggerExit": null,
+        "RollingResistance": null,
+        "Static": false,
+        "Surface": null,
+        "SurfaceVelocity": "0,0,0"
+      },
+      {
+        "__type": "OpenFramework.Systems.AtmSystem.AtmComponent",
+        "__guid": "d6d69601-0e83-41ec-a143-bd4a8c31a8d0",
+        "__enabled": true,
+        "Flags": 0,
+        "AtmId": "",
+        "CashEffectDuration": 3,
+        "CashSlotLocalOffset": "18,0,35.94999",
+        "Label": "ATM",
+        "MaxUseDistance": 120,
+        "MoneyPrefab": {
+          "_type": "gameobject",
+          "prefab": "prefabs/props/money.prefab"
+        },
+        "OnComponentDestroy": null,
+        "OnComponentDisabled": null,
+        "OnComponentEnabled": null,
+        "OnComponentFixedUpdate": null,
+        "OnComponentStart": null,
+        "OnComponentUpdate": null
+      },
+      {
+        "__type": "OpenFramework.World.AtmButtonInteract",
+        "__guid": "a1f2b3c4-d5e6-47a8-b9c0-123456789abc",
+        "__enabled": true,
+        "Flags": 0,
+        "OnComponentDestroy": null,
+        "OnComponentDisabled": null,
+        "OnComponentEnabled": null,
+        "OnComponentFixedUpdate": null,
+        "OnComponentStart": null,
+        "OnComponentUpdate": null
+      }
+    ],
+    "Children": [
+      {
+        "__guid": "5e0f77af-79f0-48d8-832b-983f7db456c3",
+        "__version": 2,
+        "Flags": 0,
+        "Name": "panel",
+        "Position": "10.1106,-0.05597989,51.07296",
+        "Rotation": "-0.00000004139835,0.115758,-0.0000003552238,-0.9932774",
+        "Scale": "0.7724518,0.7724518,0.7724518",
+        "Tags": "",
+        "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkFlags": 0,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
+        "Components": [
+          {
+            "__type": "Sandbox.WorldPanel",
+            "__guid": "eee11329-b484-49f9-a01c-1284f31aea7c",
+            "__enabled": true,
+            "Flags": 0,
+            "HorizontalAlign": "Center",
+            "InteractionRange": 1000,
+            "LookAtCamera": false,
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
+            "PanelSize": "350,220",
+            "RenderOptions": {
+              "GameLayer": true,
+              "OverlayLayer": false,
+              "BloomLayer": false,
+              "AfterUILayer": false
+            },
+            "RenderScale": 1,
+            "VerticalAlign": "Center"
+          },
+          {
+            "__type": "OpenFramework.AtmUI",
+            "__guid": "91f4c609-b84e-468e-a54e-b3c0c5a114f4",
+            "__enabled": true,
+            "Flags": 0,
+            "Atm": {
+              "_type": "component",
+              "component_id": "d6d69601-0e83-41ec-a143-bd4a8c31a8d0",
+              "go": "b0221814-3cb9-41cd-a0d3-86f47ec3f651",
+              "component_type": "AtmComponent"
+            },
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
+            "ScreenOnDistance": 125
+          }
+        ],
+        "Children": []
+      },
+      {
+        "__guid": "7fd77404-4ea0-456a-8b56-d63c1da58d86",
+        "__version": 2,
+        "Flags": 0,
+        "Name": "btn_1",
+        "Position": "10.47508,-8.025764,51.97474",
+        "Rotation": "-0.4571139,0.4563822,-0.5471438,0.5323495",
+        "Scale": "1,1,1",
+        "Tags": "",
+        "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkFlags": 0,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
+        "Components": [
+          {
+            "__type": "Sandbox.ManualHitbox",
+            "__guid": "fe137395-0cf1-4968-a1c4-8c76076e1c51",
+            "__enabled": true,
+            "Flags": 0,
+            "CenterA": "0,0,0",
+            "CenterB": "1.219999,0.9099957,0.4299964",
+            "HitboxTags": "",
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
+            "Radius": 10,
+            "Shape": "Box",
+            "Target": {
+              "_type": "gameobject",
+              "go": "b0221814-3cb9-41cd-a0d3-86f47ec3f651"
+            }
+          }
+        ],
+        "Children": []
+      },
+      {
+        "__guid": "d3534023-77ab-46dc-bb39-e40319c73480",
+        "__version": 2,
+        "Flags": 0,
+        "Name": "btn_2",
+        "Position": "10.81307,-8.033864,50.64426",
+        "Rotation": "-0.4571139,0.4563822,-0.5471438,0.5323495",
+        "Scale": "1,1,1",
+        "Tags": "",
+        "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkFlags": 0,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
+        "Components": [
+          {
+            "__type": "Sandbox.ManualHitbox",
+            "__guid": "8ca166a5-9d76-42ff-85d9-450b91ec75e7",
+            "__enabled": true,
+            "Flags": 0,
+            "CenterA": "0,0,0",
+            "CenterB": "1.219999,0.9099957,0.4299964",
+            "HitboxTags": "",
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
+            "Radius": 10,
+            "Shape": "Box",
+            "Target": {
+              "_type": "gameobject",
+              "go": "b0221814-3cb9-41cd-a0d3-86f47ec3f651"
+            }
+          }
+        ],
+        "Children": []
+      },
+      {
+        "__guid": "fe319479-e0ef-4a0e-96cd-085f2400afbf",
+        "__version": 2,
+        "Flags": 0,
+        "Name": "btn_3",
+        "Position": "11.11444,-8.033864,49.29248",
+        "Rotation": "-0.4779077,0.4345595,-0.5217124,0.5572957",
+        "Scale": "1,1,1",
+        "Tags": "",
+        "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkFlags": 0,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
+        "Components": [
+          {
+            "__type": "Sandbox.ManualHitbox",
+            "__guid": "368bfd7a-857e-4589-9d31-cf7c37eaf1a0",
+            "__enabled": true,
+            "Flags": 0,
+            "CenterA": "0,0,0",
+            "CenterB": "1.219999,0.9099957,0.4299964",
+            "HitboxTags": "",
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
+            "Radius": 10,
+            "Shape": "Box",
+            "Target": {
+              "_type": "gameobject",
+              "go": "b0221814-3cb9-41cd-a0d3-86f47ec3f651"
+            }
+          }
+        ],
+        "Children": []
+      },
+      {
+        "__guid": "02ce7408-799d-4989-ba17-e38476e36a01",
+        "__version": 2,
+        "Flags": 0,
+        "Name": "btn_4",
+        "Position": "11.46156,-8.074555,47.9053",
+        "Rotation": "-0.4691891,0.4439588,-0.53267,0.5468318",
+        "Scale": "1,1,1",
+        "Tags": "",
+        "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkFlags": 0,
+        "NetworkOrphaned": 0,
+        "NetworkTransmit": true,
+        "OwnerTransfer": 1,
+        "Components": [
+          {
+            "__type": "Sandbox.ManualHitbox",
+            "__guid": "1ea4ac98-feed-4fca-8729-e87af37610e7",
+            "__enabled": true,
+            "Flags": 0,
+            "CenterA": "0,0,0",
+            "CenterB": "1.219999,0.9099957,0.4299964",
+            "HitboxTags": "",
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
+            "Radius": 10,
+            "Shape": "Box",
+            "Target": {
+              "_type": "gameobject",
+              "go": "b0221814-3cb9-41cd-a0d3-86f47ec3f651"
+            }
+          }
+        ],
+        "Children": []
+      }
+    ],
+    "__properties": {
+      "NetworkInterpolation": true,
+      "TimeScale": 1,
+      "WantsSystemScene": true,
+      "Metadata": {},
+      "NavMesh": {
+        "Enabled": false,
+        "IncludeStaticBodies": true,
+        "IncludeKeyframedBodies": true,
+        "EditorAutoUpdate": false,
+        "AgentHeight": 64,
+        "AgentRadius": 16,
+        "AgentStepSize": 18,
+        "AgentMaxSlope": 40,
+        "ExcludedBodies": "",
+        "IncludedBodies": "",
+        "CustomBounds": false
+      }
+    },
+    "__variables": []
+  },
+  "ResourceVersion": 2,
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "DontBreakAsTemplate": false,
+  "__references": [
+    "openframework.atmportable02#128854"
+  ],
+  "__version": 2
+}

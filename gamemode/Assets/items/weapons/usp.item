@@ -1,0 +1,98 @@
+{
+  "Name": "USP .45",
+  "Description": "Pistolet semi-automatique fiable et pr\u00E9cis, favoris\u00E9 par les forces de l\u0027ordre.",
+  "IsEnabled": true,
+  "Price": 850,
+  "ItemCategoryType": "Weapon",
+  "WorldObjectPrefab": null,
+  "TrashObjectPrefab": null,
+  "PreviewObject": "models/weapons/sbox_pistol_usp/w_usp.vmdl",
+  "Weight": 0.95,
+  "MaxStack": 1,
+  "Attributes": {
+    "durability": "100",
+    "loaded_mag_id": "",
+    "primary_ammo": "0"
+  },
+  "CanBePickedUp": true,
+  "IsUnique": false,
+  "IsConsumable": false,
+  "UseDuration": 0,
+  "CanBeSpawned": false,
+  "OnUseAction": null,
+  "IsCraftable": true,
+  "Recipe": [
+    {
+      "ItemResource": "items/primary_resources/steel.item",
+      "Quantity": 5
+    },
+    {
+      "ItemResource": "items/primary_resources/iron.item",
+      "Quantity": 3
+    },
+    {
+      "ItemResource": "items/primary_resources/plastic.item",
+      "Quantity": 2
+    }
+  ],
+  "CraftJobAccess": "Armurier",
+  "IsTools": false,
+  "ToolsResource": null,
+  "IsWeapon": true,
+  "WeaponResource": "weapons/usp/usp.equip",
+  "AmmoType": "items/ammo/bullet_45acp.item",
+  "IsMagazine": false,
+  "MagAmmoType": null,
+  "MagCapacity": 12,
+  "IsAmmo": false,
+  "BaseDamage": 25,
+  "DamageFalloff": [
+    {
+      "x": 0,
+      "y": 1,
+      "in": 0,
+      "out": 0,
+      "mode": "Mirrored"
+    },
+    {
+      "x": 1,
+      "y": 0,
+      "in": 0,
+      "out": 0,
+      "mode": "Mirrored"
+    }
+  ],
+  "MaxRange": 1024000,
+  "BulletCount": 1,
+  "MuzzleEnergy": 500,
+  "BulletMass": 0.008,
+  "BulletCaliber": 9,
+  "MaxPenetrations": 3,
+  "MaxWallThickness": 128,
+  "RicochetMaxHits": 2,
+  "MaxRicochetAngle": 60,
+  "RicochetEnergyRetention": 0.55,
+  "IsPack": false,
+  "PackCapacity": 50,
+  "PackContentType": null,
+  "DefaultFillQuantity": 0,
+  "IsDocument": false,
+  "DocumentViewModel": null,
+  "IsFurniture": false,
+  "FurnitureCategoryType": "Chair",
+  "IsFood": false,
+  "RestoreMinValue": 1,
+  "RestoreMaxValue": 10,
+  "ConsumptionSound": null,
+  "IsMinerals": false,
+  "IsClothing": false,
+  "ClothingResource": null,
+  "HasSubContainer": false,
+  "CanHeal": false,
+  "HealAmount": 1,
+  "__references": [
+    "facepunch.w_usp#152497"
+  ],
+  "__version": 0,
+  "Icon": "ui/item_icons/usp.png"
+}

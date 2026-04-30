@@ -1,0 +1,15 @@
+{
+  "Hair": {},
+  "Beard": {},
+  "Top": {
+    "Clothing": "models/citizen_clothes/vest/chefs_apron/chefs_apron.clothing"
+  },
+  "Bottom": {
+    "Clothing": "models/citizen_clothes/trousers/smarttrousers/trousers.smart.clothing"
+  },
+  "Shoes": {
+    "Clothing": "models/citizen_clothes/shoes/sneakers/blue_sneakers.clothing"
+  },
+  "__references": [],
+  "__version": 0
+}

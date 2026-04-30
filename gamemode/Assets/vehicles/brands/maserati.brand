@@ -1,0 +1,9 @@
+{
+  "Name": "Maserati",
+  "Slogan": "Luxury, sports and style cast in exclusive cars",
+  "Image": "assets/brands/maserati.svg",
+  "Country": "assets/country/italy.country",
+  "Day": 1,
+  "Month": 12,
+  "Year": 1914
+}

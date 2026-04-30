@@ -1,0 +1,13 @@
+{
+  "DisplayName": "V8 6.2L Muscle",
+  "MaxTorqueNm": 500,
+  "MaxPowerKw": 340,
+  "Steepness": 7,
+  "RpmIdle": 650,
+  "RpmMaxTorque": 3200,
+  "RpmMaxPower": 5000,
+  "RpmRedline": 5800,
+  "RpmMax": 6200,
+  "TopSpeedKmh": 250,
+  "GearboxPreset": "gearboxes/4spd_muscle.gearbox"
+}

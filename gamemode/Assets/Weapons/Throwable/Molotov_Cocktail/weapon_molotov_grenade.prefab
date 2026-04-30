@@ -1,0 +1,106 @@
+﻿{
+  "RootObject": {
+    "__guid": "c3320be8-52b0-401d-808e-137a9aa8673a",
+    "Flags": 0,
+    "Name": "weapon_molotov_grenade",
+    "Tags": "player",
+    "Enabled": true,
+    "Components": [
+      {
+        "__type": "OpenFramework.Systems.Weapons.Equipment",
+        "__guid": "b1203128-bcc3-4e5b-9ed6-5b4f7816762e",
+        "CrosshairType": "Default",
+        "DeploySound": "sounds/weapons/legacy/switch/weapon_switch.sound",
+        "Handedness": "Right",
+        "HoldType": "HoldItem",
+        "MountedPrefab": {
+          "_type": "gameobject",
+          "prefab": "weapons/throwable/he_grenade/mounted/mounted_molotov.prefab"
+        },
+        "OnComponentDestroy": null,
+        "OnComponentDisabled": null,
+        "OnComponentEnabled": null,
+        "OnComponentFixedUpdate": null,
+        "OnComponentStart": null,
+        "OnComponentUpdate": null,
+        "Resource": "weapons/throwable/molotov_cocktail/molotov_grenade.equip",
+        "SpeedPenalty": 0,
+        "UseCrosshair": true
+      },
+      {
+        "__type": "OpenFramework.Utility.TagBinder",
+        "__guid": "1246d2a1-e57b-4937-add1-7f14f8030ef9",
+        "OnComponentDestroy": null,
+        "OnComponentDisabled": null,
+        "OnComponentEnabled": null,
+        "OnComponentFixedUpdate": null,
+        "OnComponentStart": null,
+        "OnComponentUpdate": null
+      }
+    ],
+    "Children": [
+      {
+        "__guid": "3f15a193-f04a-4fce-b36d-8d71ae9e7e04",
+        "Flags": 0,
+        "Name": "Functions",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "OpenFramework.Systems.Weapons.Throwable",
+            "__guid": "aba84ae2-6820-4422-ad9a-e9735da8943e",
+            "CookTime": 0.25,
+            "InputActions": [
+              "Attack1"
+            ],
+            "OnComponentDestroy": null,
+            "OnComponentDisabled": null,
+            "OnComponentEnabled": null,
+            "OnComponentFixedUpdate": null,
+            "OnComponentStart": null,
+            "OnComponentUpdate": null,
+            "OnInputAction": null,
+            "Prefab": {
+              "_type": "gameobject",
+              "prefab": "weapons/throwable/molotov_cocktail/molotov_grenade.prefab"
+            },
+            "RequiresAllInputActions": false,
+            "ThrowPower": 1200
+          }
+        ],
+        "Children": [],
+        "__version": 2
+      }
+    ],
+    "__variables": [],
+    "__properties": {
+      "FixedUpdateFrequency": 50,
+      "MaxFixedUpdates": 5,
+      "NetworkFrequency": 30,
+      "NetworkInterpolation": true,
+      "PhysicsSubSteps": 1,
+      "ThreadedAnimation": true,
+      "TimeScale": 1,
+      "UseFixedUpdate": true,
+      "Metadata": {},
+      "NavMesh": {
+        "Enabled": false,
+        "IncludeStaticBodies": true,
+        "IncludeKeyframedBodies": true,
+        "EditorAutoUpdate": true,
+        "AgentHeight": 64,
+        "AgentRadius": 16,
+        "AgentStepSize": 18,
+        "AgentMaxSlope": 40,
+        "ExcludedBodies": "",
+        "IncludedBodies": ""
+      }
+    }
+  },
+  "ResourceVersion": 2,
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "DontBreakAsTemplate": false,
+  "__references": [],
+  "__version": 2
+}

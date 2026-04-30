@@ -1,0 +1,9 @@
+{
+  "Name": "Jeep",
+  "Slogan": "The Toughest 4 Letter Word on Wheels",
+  "Image": "assets/brands/jeep.svg",
+  "Country": "assets/country/us.country",
+  "Day": 24,
+  "Month": 8,
+  "Year": 1941
+}

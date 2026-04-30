@@ -1,0 +1,28 @@
+{
+  "Name": "Defibrillator",
+  "Description": "",
+  "Slot": "Handheld",
+  "DropOnDisconnect": false,
+  "Icon": null,
+  "IsPurchasable": false,
+  "Price": 0,
+  "KillReward": 300,
+  "MainPrefab": {
+    "_type": "gameobject",
+    "prefab": "weapons/defibrillator/defibrillator.prefab"
+  },
+  "WorldModelPrefab": {
+    "_type": "gameobject",
+    "prefab": "weapons/defibrillator/wm_defibrillator.prefab"
+  },
+  "ViewModelPrefab": {
+    "_type": "gameobject",
+    "prefab": "weapons/defibrillator/vm_defibrillator.prefab"
+  },
+  "WorldModel": null,
+  "ArmorReduction": null,
+  "HelmetReduction": null,
+  "WorldModelBodyGroups": 0,
+  "__references": [],
+  "__version": 0
+}

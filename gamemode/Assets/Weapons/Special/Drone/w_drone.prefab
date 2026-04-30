@@ -1,0 +1,82 @@
+﻿{
+  "RootObject": {
+    "__guid": "537a3752-47c2-491f-b7a8-84d06247b15b",
+    "Flags": 0,
+    "Name": "w_drone",
+    "Tags": "player",
+    "Enabled": true,
+    "NetworkMode": 2,
+    "NetworkInterpolation": true,
+    "Components": [
+      {
+        "__type": "Facepunch.Equipment",
+        "__guid": "fe1fe626-a1a6-40ab-b2f5-1ce554531845",
+        "DeploySound": "sounds/weapons/legacy/switch/weapon_switch.sound",
+        "Handedness": "Both",
+        "HoldType": "HoldItem",
+        "ModelRenderer": {
+          "_type": "component",
+          "component_id": "1eb80683-612c-46c7-9d0c-e6713e0f027e",
+          "go": "fccf584a-67cf-4b26-ae4b-c0fafa897f5e",
+          "component_type": "SkinnedModelRenderer"
+        },
+        "MountedPrefab": {
+          "_type": "gameobject",
+          "prefab": "weapons/special/drone/mount_drone.prefab"
+        },
+        "Resource": "weapons/special/drone/drone.equip",
+        "SpeedPenalty": 20
+      },
+      {
+        "__type": "Facepunch.TagBinder",
+        "__guid": "8acf7f5b-f598-4b06-bee2-07501c3e874f"
+      },
+      {
+        "__type": "Facepunch.Deployable",
+        "__guid": "e48f80cb-31cb-44b1-a78d-fbaf9398b879",
+        "InputActions": [
+          "Attack1"
+        ],
+        "InputType": "Pressed",
+        "PrefabToSpawn": {
+          "_type": "gameobject",
+          "prefab": "prefabs/player/drone.prefab"
+        },
+        "RequiresAllInputActions": false
+      }
+    ],
+    "Children": [
+      {
+        "__guid": "fccf584a-67cf-4b26-ae4b-c0fafa897f5e",
+        "Flags": 0,
+        "Name": "Model",
+        "Rotation": "0,0,1,0.0000001947072",
+        "Scale": "0.5,0.5,0.5",
+        "Enabled": true,
+        "NetworkMode": 2,
+        "NetworkInterpolation": true,
+        "Components": [
+          {
+            "__type": "Sandbox.SkinnedModelRenderer",
+            "__guid": "1eb80683-612c-46c7-9d0c-e6713e0f027e",
+            "BodyGroups": 18446744073709551615,
+            "CreateBoneObjects": false,
+            "Model": "entities/drone/drone.vmdl",
+            "RenderType": "On",
+            "Tint": "1,1,1,1",
+            "UseAnimGraph": true
+          }
+        ]
+      }
+    ],
+    "__variables": []
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "ResourceVersion": 1,
+  "__references": [
+    "rust.drone#26713"
+  ],
+  "__version": 1
+}

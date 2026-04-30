@@ -1,0 +1,9 @@
+{
+  "Name": "Chevrolet",
+  "Slogan": "Find New Roads",
+  "Image": "assets/brands/chevrolet.svg",
+  "Country": "assets/country/us.country",
+  "Day": 3,
+  "Month": 11,
+  "Year": 1911
+}

@@ -1,0 +1,101 @@
+{
+  "Title": "Men Catalogue",
+  "MainCategories": [
+    {
+      "Name": "Hairs",
+      "Icon": "ui/hair.png",
+      "SubCategories": [
+        {
+          "Name": "Calvitie",
+          "Items": [
+            "items/clothings/hair_skullet.item"
+          ]
+        },
+        {
+          "Name": "Court",
+          "Items": [
+            "items/clothings/cheveux court.item"
+          ]
+        },
+        {
+          "Name": "Locks",
+          "Items": [
+            "items/clothings/cheveux locks long.item"
+          ]
+        }
+      ]
+    },
+    {
+      "Name": "jewelry",
+      "Icon": "ui/jewelery.png",
+      "SubCategories": [
+        {
+          "Name": "Montre",
+          "Items": [
+            "items/clothings/watch-01.item"
+          ]
+        }
+      ]
+    },
+    {
+      "Name": "top",
+      "Icon": "ui/top.png",
+      "SubCategories": [
+        {
+          "Name": "T-Shirts",
+          "Items": [
+            "items/clothings/t-shirt degeulasse.item",
+            "items/clothings/t-shirt super dead.item"
+          ]
+        },
+        {
+          "Name": "Vest",
+          "Items": [
+            "items/clothings/sweet verts.item",
+            "items/clothings/sweet noir.item"
+          ]
+        }
+      ]
+    },
+    {
+      "Name": "bottom",
+      "Icon": "ui/pant.png",
+      "SubCategories": [
+        {
+          "Name": "Pantalon",
+          "Items": [
+            "items/clothings/pantalon noir.item",
+            "items/clothings/pantalon delave.item"
+          ]
+        },
+        {
+          "Name": "Bermuda",
+          "Items": [
+            "items/clothings/bermuda marron.item",
+            "items/clothings/bermuda plage.item"
+          ]
+        }
+      ]
+    },
+    {
+      "Name": "Shoes",
+      "Icon": "ui/shoes.png",
+      "SubCategories": [
+        {
+          "Name": "Ville",
+          "Items": [
+            "items/clothings/shoes-01.item"
+          ]
+        },
+        {
+          "Name": "Trainers",
+          "Items": [
+            "items/clothings/shoes-02.item"
+          ]
+        }
+      ]
+    }
+  ],
+  "__references": [],
+  "__version": 0
+}

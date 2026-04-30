@@ -1,0 +1,42 @@
+{
+  "Team": "CounterTerrorist",
+  "Sounds": {
+    "RoundStarted": "sounds/radio/ct/ct_roundstart.sound",
+    "RoundLost": "sounds/radio/ct/ct_lose.sound",
+    "RoundWon": "sounds/radio/ct/ct_win.sound",
+    "BombPlanted": "sounds/radio/ct/ct_enemy_bomb_planted.sound",
+    "BombDefused": "sounds/radio/ct/ct_bomb_diffused.sound",
+    "ThrownGrenade": "sounds/radio/ct/ct_grenade.sound",
+    "TwoEnemiesLeft": "sounds/radio/ct/ct_2_enemy.sound",
+    "OneEnemyLeft": "sounds/radio/ct/ct_1_enemy.sound",
+    "TeammateDies": "sounds/radio/ct/ct_death.sound"
+  },
+  "TeamSounds": [
+    {
+      "Category": "Remarks",
+      "Entries": [
+        {
+          "Name": "Good shot",
+          "Sound": "sounds/radio/ct/ct_good_shot.sound"
+        },
+        {
+          "Name": "Friendly Fire",
+          "Sound": "sounds/radio/ct/ct_friendly_fire.sound"
+        }
+      ]
+    },
+    {
+      "Category": "Hidden",
+      "IsHidden": true,
+      "Entries": [
+        {
+          "Name": "Defusing the bomb",
+          "Sound": "sounds/radio/ct/ct_diffusing_bomb.sound",
+          "IsHidden": true
+        }
+      ]
+    }
+  ],
+  "__references": [],
+  "__version": 0
+}

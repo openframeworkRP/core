@@ -1,0 +1,77 @@
+[
+    {
+        "Emoji": "😀",
+        "Category": "Smileys & Emotion",
+        "Tags": ["happy", "smile", "joy"]
+    },
+    {
+        "Emoji": "😂",
+        "Category": "Smileys & Emotion",
+        "Tags": ["laugh", "tears", "funny"]
+    },
+    {
+        "Emoji": "❤️",
+        "Category": "Smileys & Emotion",
+        "Tags": ["love", "heart"]
+    },
+    {
+        "Emoji": "👍",
+        "Category": "People & Body",
+        "Tags": ["thumbs up", "approval", "ok"]
+    },
+    {
+        "Emoji": "🙏",
+        "Category": "People & Body",
+        "Tags": ["prayer", "please", "thank you"]
+    },
+    {
+        "Emoji": "🎉",
+        "Category": "Activities",
+        "Tags": ["party", "celebration", "event"]
+    },
+    {
+        "Emoji": "🎂",
+        "Category": "Food & Drink",
+        "Tags": ["birthday", "cake", "celebration"]
+    },
+    {
+        "Emoji": "🌟",
+        "Category": "Travel & Places",
+        "Tags": ["star", "shine", "bright"]
+    },
+    {
+        "Emoji": "🔥",
+        "Category": "Travel & Places",
+        "Tags": ["fire", "hot", "lit"]
+    },
+    {
+        "Emoji": "⚽",
+        "Category": "Activities",
+        "Tags": ["football", "soccer", "sport"]
+    },
+    {
+        "Emoji": "🎵",
+        "Category": "Activities",
+        "Tags": ["music", "note", "song"]
+    },
+    {
+        "Emoji": "📅",
+        "Category": "Objects",
+        "Tags": ["calendar", "date", "event"]
+    },
+    {
+        "Emoji": "🌍",
+        "Category": "Travel & Places",
+        "Tags": ["world", "earth", "globe"]
+    },
+    {
+        "Emoji": "🌈",
+        "Category": "Travel & Places",
+        "Tags": ["rainbow", "color", "hope"]
+    },
+    {
+        "Emoji": "💡",
+        "Category": "Objects",
+        "Tags": ["idea", "light", "bulb"]
+    }
+]

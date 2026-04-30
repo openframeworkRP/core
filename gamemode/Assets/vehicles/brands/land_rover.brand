@@ -1,0 +1,9 @@
+{
+  "Name": "Land Rover",
+  "Slogan": "Above and Beyond",
+  "Image": "assets/brands/land_rover.svg",
+  "Country": "assets/country/uk.country",
+  "Day": 30,
+  "Month": 4,
+  "Year": 1948
+}

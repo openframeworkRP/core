@@ -1,0 +1,15 @@
+{
+  "JsonName": "rfs_fries_pouch",
+  "Description": "Pochette en carton vide. A remplir avec des frites cuites sur la planche d'assemblage.",
+  "Icon": "items/rfs/rfs_fries_pouch.png",
+  "Stackable": true,
+  "MaxStack": 50,
+  "Price": 3,
+  "RarityType": 0,
+  "WorldModel": "pr/french_fries_02.vmdl",
+  "PrefabPath": "items/rfs/rfs_fries_pouch.prefab",
+  "Volume": 1,
+  "ResourceVersion": 1,
+  "__references": [],
+  "__version": 0
+}

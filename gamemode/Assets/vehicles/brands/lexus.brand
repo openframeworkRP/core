@@ -1,0 +1,9 @@
+{
+  "Name": "Lexus",
+  "Slogan": "The Pursuit of Perfection",
+  "Image": "assets/brands/lexus.svg",
+  "Country": "assets/country/japan.country",
+  "Day": 1,
+  "Month": 9,
+  "Year": 1989
+}

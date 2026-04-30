@@ -1,0 +1,21 @@
+{
+  "Hair": {
+    "Clothing": "models/citizen_clothes/hair/hair_tied_braids/hair_tied_braids.clothing"
+  },
+  "Beard": {
+    "Clothing": "models/citizen_clothes/hair/braided_long_beard/braided_long_beard.clothing"
+  },
+  "Top": {
+    "Clothing": "models/citizen_clothes/shirt/tshirt/tshirt.clothing"
+  },
+  "Bottom": {
+    "Clothing": "clothes/full_set/pyjamas/leggings/pyjama_bottoms.clothing"
+  },
+  "Shoes": {
+    "Clothing": "models/citizen_clothes/shoes/sneakers/sneakers.clothing"
+  },
+  "__references": [
+    "pukes.pyjamabottoms#90745"
+  ],
+  "__version": 0
+}

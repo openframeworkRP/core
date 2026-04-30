@@ -1,0 +1,9 @@
+{
+  "Name": "Tesla",
+  "Slogan": "Accelerating the world\u0027s transition to sustainable energy",
+  "Image": "assets/brands/tesla.svg",
+  "Country": "assets/country/us.country",
+  "Day": 1,
+  "Month": 7,
+  "Year": 2003
+}

@@ -1,0 +1,15 @@
+{
+  "DisplayName": "Bus (Urban Transit)",
+  "FrictionMu": 0.6,
+  "LoadSensitivity": 0.6,
+  "NominalLoad": 5000,
+  "RollingResistance": 0.035,
+  "LatB": 5.0,
+  "LatC": 1.15,
+  "LatD": 0.7,
+  "LatE": 0.82,
+  "LongB": 6.0,
+  "LongC": 1.5,
+  "LongD": 0.72,
+  "LongE": 0.82
+}

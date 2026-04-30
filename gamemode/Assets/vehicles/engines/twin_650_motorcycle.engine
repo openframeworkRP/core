@@ -1,0 +1,13 @@
+{
+  "DisplayName": "Twin 650cc Motorcycle",
+  "MaxTorqueNm": 65,
+  "MaxPowerKw": 50,
+  "Steepness": 10,
+  "RpmIdle": 1000,
+  "RpmMaxTorque": 6500,
+  "RpmMaxPower": 8500,
+  "RpmRedline": 10000,
+  "RpmMax": 11000,
+  "TopSpeedKmh": 180,
+  "GearboxPreset": "gearboxes/6spd_motorcycle.gearbox"
+}

@@ -1,0 +1,403 @@
+{
+  "Name": "Chicken Wings",
+  "Description": "Des ailes de poulet épicées et caramélisées. Difficile de s'arrêter.",
+  "IsEnabled": true,
+  "Price": 8,
+  "ItemCategoryType": "Food",
+  "WorldObjectPrefab": "items/food/wings.prefab",
+  "TrashObjectPrefab": null,
+  "PreviewObject": "pr/chicken_wings_01.vmdl",
+  "Icon": "ui/item_icons/wings.png",
+  "Weight": 0.35,
+  "MaxStack": 5,
+  "Attributes": {
+    "expire_time": "3600"
+  },
+  "CanBePickedUp": true,
+  "IsUnique": false,
+  "IsConsumable": true,
+  "UseDuration": 3,
+  "CanBeSpawned": true,
+  "OnUseAction": {
+    "__version": 9,
+    "__guid": "7ec5330f-998d-4b0f-bf01-65659e67e0fd",
+    "__changeId": 77,
+    "UserData": {
+      "Title": "On Use Action",
+      "ReferencedComponentTypes": []
+    },
+    "Variables": [],
+    "Nodes": [
+      {
+        "Id": 17,
+        "Type": "input",
+        "UserData": {
+          "Position": "192,348"
+        }
+      },
+      {
+        "Id": 18,
+        "Type": "property",
+        "ParentId": 17,
+        "Properties": {
+          "_name": "Client",
+          "_type": "OpenFramework.Systems.Pawn.Pawn"
+        }
+      },
+      {
+        "Id": 19,
+        "Type": "if",
+        "UserData": {
+          "Position": "1680,468"
+        }
+      },
+      {
+        "Id": 20,
+        "Type": "nop",
+        "UserData": {
+          "Position": "492,636"
+        }
+      },
+      {
+        "Id": 21,
+        "Type": "output",
+        "UserData": {
+          "Position": "1464,372"
+        }
+      },
+      {
+        "Id": 22,
+        "Type": "core.add_hunger",
+        "UserData": {
+          "Position": "1224,372"
+        }
+      },
+      {
+        "Id": 23,
+        "Type": "core.notify_success",
+        "UserData": {
+          "Position": "2052,444"
+        }
+      },
+      {
+        "Id": 24,
+        "Type": "core.notify_warning",
+        "UserData": {
+          "Position": "2052,564"
+        }
+      },
+      {
+        "Id": 27,
+        "Type": "property",
+        "Properties": {
+          "_name": "RestoreMinValue"
+        },
+        "UserData": {
+          "Position": "708,492"
+        }
+      },
+      {
+        "Id": 28,
+        "Type": "property",
+        "Properties": {
+          "_name": "RestoreMaxValue"
+        },
+        "UserData": {
+          "Position": "708,528"
+        }
+      },
+      {
+        "Id": 29,
+        "Type": "nop",
+        "UserData": {
+          "Position": "1800,576"
+        }
+      },
+      {
+        "Id": 30,
+        "Type": "ui.item_action_progress",
+        "UserData": {
+          "Position": "1056,252"
+        }
+      },
+      {
+        "Id": 31,
+        "Type": "property",
+        "Properties": {
+          "_name": "UseDuration"
+        },
+        "UserData": {
+          "Position": "708,456"
+        }
+      },
+      {
+        "Id": 32,
+        "Type": "call",
+        "Properties": {
+          "_isStatic": false,
+          "_name": "PlaySound",
+          "_type": "OpenFramework.Systems.Pawn.Client"
+        },
+        "UserData": {
+          "Position": "1872,180"
+        }
+      },
+      {
+        "Id": 33,
+        "Type": "property",
+        "Properties": {
+          "_name": "ConsumptionSound"
+        },
+        "UserData": {
+          "Position": "708,420"
+        }
+      },
+      {
+        "Id": 43,
+        "Type": "property",
+        "ParentId": 17,
+        "Properties": {
+          "_name": "Metadata",
+          "_type": "OpenFramework.Inventory.InventoryItem"
+        }
+      }
+    ],
+    "Links": [
+      {
+        "SrcId": 17,
+        "SrcName": "arg1",
+        "DstId": 18,
+        "DstName": "_target"
+      },
+      {
+        "SrcId": 21,
+        "SrcName": "_signal",
+        "DstId": 19,
+        "DstName": "_signal"
+      },
+      {
+        "SrcId": 22,
+        "SrcName": "_result",
+        "DstId": 19,
+        "DstName": "condition"
+      },
+      {
+        "SrcId": 18,
+        "SrcName": "_result",
+        "DstId": 20,
+        "DstName": "in"
+      },
+      {
+        "SrcId": 22,
+        "SrcName": "_result",
+        "DstId": 21,
+        "DstName": "_result"
+      },
+      {
+        "SrcId": 22,
+        "SrcName": "_signal",
+        "DstId": 21,
+        "DstName": "_signal"
+      },
+      {
+        "SrcId": 30,
+        "SrcName": "_signal",
+        "DstId": 22,
+        "DstName": "_signal"
+      },
+      {
+        "SrcId": 28,
+        "SrcName": "_result",
+        "DstId": 22,
+        "DstName": "max",
+        "UserData": {
+          "x": 96
+        }
+      },
+      {
+        "SrcId": 27,
+        "SrcName": "_result",
+        "DstId": 22,
+        "DstName": "min",
+        "UserData": {
+          "x": 84
+        }
+      },
+      {
+        "SrcId": 18,
+        "SrcName": "_result",
+        "DstId": 22,
+        "DstName": "target"
+      },
+      {
+        "Id": 44,
+        "Value": "Vous avez manger du pain",
+        "DstId": 23,
+        "DstName": "message"
+      },
+      {
+        "SrcId": 29,
+        "SrcName": "out",
+        "DstId": 23,
+        "DstName": "target"
+      },
+      {
+        "Id": 45,
+        "Value": "Vous n'avez plus faim",
+        "DstId": 24,
+        "DstName": "message"
+      },
+      {
+        "SrcId": 29,
+        "SrcName": "out",
+        "DstId": 24,
+        "DstName": "target"
+      },
+      {
+        "SrcId": 43,
+        "SrcName": "_result",
+        "DstId": 27,
+        "DstName": "_target"
+      },
+      {
+        "SrcId": 43,
+        "SrcName": "_result",
+        "DstId": 28,
+        "DstName": "_target"
+      },
+      {
+        "SrcId": 20,
+        "SrcName": "out",
+        "DstId": 29,
+        "DstName": "in"
+      },
+      {
+        "SrcId": 17,
+        "SrcName": "_signal",
+        "DstId": 30,
+        "DstName": "_signal"
+      },
+      {
+        "SrcId": 31,
+        "SrcName": "_result",
+        "DstId": 30,
+        "DstName": "duration",
+        "UserData": {
+          "x": 60
+        }
+      },
+      {
+        "Id": 46,
+        "Value": "Entrain de manger..",
+        "DstId": 30,
+        "DstName": "label"
+      },
+      {
+        "SrcId": 18,
+        "SrcName": "_result",
+        "DstId": 30,
+        "DstName": "target"
+      },
+      {
+        "SrcId": 43,
+        "SrcName": "_result",
+        "DstId": 31,
+        "DstName": "_target"
+      },
+      {
+        "SrcId": 19,
+        "SrcName": "true",
+        "DstId": 32,
+        "DstName": "_signal"
+      },
+      {
+        "SrcId": 18,
+        "SrcName": "_result",
+        "DstId": 32,
+        "DstName": "_target",
+        "UserData": {
+          "x": 144
+        }
+      },
+      {
+        "SrcId": 33,
+        "SrcName": "_result",
+        "DstId": 32,
+        "DstName": "resource"
+      },
+      {
+        "SrcId": 43,
+        "SrcName": "_result",
+        "DstId": 33,
+        "DstName": "_target"
+      },
+      {
+        "SrcId": 17,
+        "SrcName": "arg2",
+        "DstId": 43,
+        "DstName": "_target"
+      }
+    ]
+  },
+  "IsCraftable": false,
+  "Recipe": [],
+  "CraftJobAccess": "None",
+  "IsTools": false,
+  "ToolsResource": null,
+  "IsWeapon": false,
+  "WeaponResource": null,
+  "AmmoType": null,
+  "IsMagazine": false,
+  "MagAmmoType": null,
+  "MagCapacity": 12,
+  "IsAmmo": false,
+  "BaseDamage": 25,
+  "DamageFalloff": [
+    {
+      "x": 0,
+      "y": 1,
+      "in": 0,
+      "out": 0,
+      "mode": "Mirrored"
+    },
+    {
+      "x": 1,
+      "y": 0,
+      "in": 0,
+      "out": 0,
+      "mode": "Mirrored"
+    }
+  ],
+  "MaxRange": 1024000,
+  "BulletCount": 1,
+  "MuzzleEnergy": 500,
+  "BulletMass": 0.008,
+  "BulletCaliber": 9,
+  "MaxPenetrations": 3,
+  "MaxWallThickness": 128,
+  "RicochetMaxHits": 2,
+  "MaxRicochetAngle": 60,
+  "RicochetEnergyRetention": 0.55,
+  "IsPack": false,
+  "PackCapacity": 50,
+  "PackContentType": null,
+  "DefaultFillQuantity": 0,
+  "IsDocument": false,
+  "DocumentViewModel": null,
+  "IsFurniture": false,
+  "FurnitureCategoryType": "Chair",
+  "IsFood": true,
+  "RestoreMinValue": 30,
+  "RestoreMaxValue": 45,
+  "ConsumptionSound": null,
+  "IsMinerals": false,
+  "IsClothing": false,
+  "ClothingResource": null,
+  "HasSubContainer": false,
+  "CanHeal": false,
+  "HealAmount": 1,
+  "__references": [
+    "openframework.chickenwings01#157421"
+  ],
+  "__version": 0
+}

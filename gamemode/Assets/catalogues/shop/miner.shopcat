@@ -1,0 +1,112 @@
+{
+  "DisplayName": "Miner",
+  "Categories": [
+    {
+      "Name": "Minerais",
+      "Items": [
+        {
+          "Item": "items/primary_resources/aluminum.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/primary_resources/copper.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/primary_resources/gold.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/primary_resources/iron.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/primary_resources/silver.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/primary_resources/acid.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/primary_resources/black_powder.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/primary_resources/carbon_fiber.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/primary_resources/circuit_board.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/primary_resources/copper.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/primary_resources/electronic.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/primary_resources/fabric.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/primary_resources/glass.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/primary_resources/lead.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/primary_resources/leather.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/primary_resources/plastic.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/primary_resources/raw_explosive.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/primary_resources/resin.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/primary_resources/rubber.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/primary_resources/solvent.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/primary_resources/stone.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/primary_resources/titanium.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/primary_resources/wire.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/primary_resources/wood.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/primary_resources/zinc.item",
+          "MinOrderQuantity": 1
+        }
+      ]
+    }
+  ],
+  "__references": [],
+  "__version": 0
+}

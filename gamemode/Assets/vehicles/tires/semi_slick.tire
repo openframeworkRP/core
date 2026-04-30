@@ -1,0 +1,15 @@
+{
+  "DisplayName": "Semi-Slick (Sport)",
+  "FrictionMu": 1.0,
+  "LoadSensitivity": 0.8,
+  "NominalLoad": 1400,
+  "RollingResistance": 0.012,
+  "LatB": 10.0,
+  "LatC": 1.5,
+  "LatD": 0.95,
+  "LatE": 0.95,
+  "LongB": 12.0,
+  "LongC": 2.1,
+  "LongD": 0.95,
+  "LongE": 0.95
+}
