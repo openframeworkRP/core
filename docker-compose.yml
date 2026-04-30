@@ -1,0 +1,104 @@
+# ============================================================
+# OpenFramework Core — orchestration complete
+# ============================================================
+# Lance tout :
+#   docker compose up -d
+#
+# Lance seulement l'API du jeu (sans le website) :
+#   docker compose up -d core.api sqlserver adminer
+#
+# Lance seulement le website :
+#   docker compose up -d website.api website.frontend
+# ============================================================
+
+services:
+  # ── API .NET du jeu ──────────────────────────────────────
+  core.api:
+    image: core.api
+    build:
+      context: ./backend
+      dockerfile: OpenFramework.Api/Dockerfile
+    container_name: core-api
+    depends_on:
+      - sqlserver
+    environment:
+      - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=${DB_NAME:-OpenFrameworkDb};User Id=sa;Password=${MSSQL_SA_PASSWORD};TrustServerCertificate=True;
+      - Server__Secret=${SERVER_SECRET}
+      - Jwt__Key=${JWT_KEY}
+    ports:
+      - "${API_PORT:-8443}:8443"
+    restart: unless-stopped
+
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: core-sqlserver
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: ${MSSQL_SA_PASSWORD}
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+    restart: unless-stopped
+
+  adminer:
+    image: adminer
+    container_name: core-adminer
+    ports:
+      - "${ADMINER_PORT:-8080}:8080"
+    depends_on:
+      - sqlserver
+    restart: unless-stopped
+
+  # ── Website (devblog + admin) ─────────────────────────────
+  website.api:
+    build: ./website/backend
+    container_name: core-website-api
+    network_mode: host
+    volumes:
+      - ./website/data:/app/data
+      - ./website/uploads:/app/uploads
+    environment:
+      - PORT=3001
+      - NODE_ENV=${NODE_ENV:-production}
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      - BACKEND_URL=${BACKEND_URL:-http://localhost:3001}
+      - FRONTEND_URL=${FRONTEND_URL:-http://localhost:4173}
+      - STEAM_API_KEY=${STEAM_API_KEY}
+      - SESSION_SECRET=${SESSION_SECRET}
+      - ALLOWED_STEAM_IDS=${ALLOWED_STEAM_IDS}
+      - NEXTCLOUD_URL=${NEXTCLOUD_URL:-}
+      - NEXTCLOUD_USER=${NEXTCLOUD_USER:-}
+      - NEXTCLOUD_TOKEN=${NEXTCLOUD_TOKEN:-}
+      - NEXTCLOUD_ROOT=${NEXTCLOUD_ROOT:-/unreal_asset}
+      - NEXTCLOUD_ASSET_ROOT=${NEXTCLOUD_ASSET_ROOT:-/unreal_asset}
+      - FAB_SCRAPER_URL=${FAB_SCRAPER_URL:-http://localhost:8000}
+      - GAME_API_URL=${GAME_API_URL:-http://localhost:8443}
+      - GAME_SERVER_SECRET=${GAME_SERVER_SECRET}
+    restart: unless-stopped
+
+  website.scraper:
+    build: ./website/backend/scraper
+    container_name: core-website-scraper
+    network_mode: host
+    environment:
+      - CAMOUFOX_NO_SANDBOX=1
+    restart: unless-stopped
+
+  website.frontend:
+    build:
+      context: ./website/frontend
+      args:
+        - VITE_API_URL=${VITE_API_URL:-}
+        - VITE_MAINTENANCE=${VITE_MAINTENANCE:-false}
+    container_name: core-website-frontend
+    network_mode: host
+    environment:
+      - API_INTERNAL_URL=http://localhost:3001
+      - FRONTEND_URL=${FRONTEND_URL:-http://localhost:4173}
+    depends_on:
+      - website.api
+    restart: unless-stopped
+
+volumes:
+  sqlserver_data:

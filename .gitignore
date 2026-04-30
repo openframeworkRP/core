@@ -1,0 +1,80 @@
+# ============================================================
+# OpenFramework Core — gitignore monorepo (gamemode + backend + website)
+# ============================================================
+
+# ── Secrets / env (TOUS les sous-dossiers) ─────────────────
+.env
+.env.local
+.env.*.local
+*.env
+!.env.example
+!.env.*.example
+secrets.json
+appsettings.Production.json
+appsettings.Local.json
+
+# ── IDE / OS ────────────────────────────────────────────────
+.vs/
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+
+# ── Claude Code (specifique session) ────────────────────────
+.claude/settings.local.json
+
+# ============================================================
+# gamemode/ (s&box)
+# ============================================================
+gamemode/.sbox/
+gamemode/Exports/
+
+# Fichiers compiles s&box (regeneres au build)
+*_c
+*.generated.*
+*.scene_d
+
+# Auto-genere par s&box (fichier projet local)
+gamemode/*.csproj
+gamemode/*.sln
+gamemode/*.slnx
+gamemode/Code/*.csproj
+gamemode/Code/*.sln
+gamemode/Properties/
+
+# Blender backups
+*.blend1
+*.blend2
+*.blend3
+*.blend4
+*.blend5
+*.blend@
+*.blend.lock
+*.blend.tmp
+
+# ============================================================
+# backend/ (.NET 9 ASP.NET Core)
+# ============================================================
+backend/**/bin/
+backend/**/obj/
+backend/**/*.user
+backend/**/launchSettings.json
+backend/.dotnet/
+
+# ============================================================
+# website/ (Node + Vite)
+# ============================================================
+website/**/node_modules/
+website/**/dist/
+website/**/build/
+website/**/.cache/
+website/**/.next/
+website/**/.turbo/
+website/**/.parcel-cache/
+website/**/coverage/
+website/**/data/
+website/**/uploads/
+website/**/*.log
+website/**/.npm/
+website/**/.yarn/
