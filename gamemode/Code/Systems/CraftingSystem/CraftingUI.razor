@@ -1,0 +1,235 @@
+@using Sandbox
+@using Sandbox.UI
+@using OpenFramework.Inventory
+@using OpenFramework.Systems.Crafting
+@using OpenFramework.Utility
+
+@namespace OpenFramework.Systems.Crafting
+@inherits Panel
+
+<root class="@(IsOpen ? "open" : "")">
+
+    <div class="header">
+        <div class="title">
+            <span class="icon">⚒️</span>
+            <span>@(_table?.DisplayName ?? "Craft")</span>
+        </div>
+        <button class="close-btn" onclick=@Close>✕</button>
+    </div>
+
+    <div class="content">
+
+        <div class="recipes-list">
+            @foreach (var recipe in _recipes)
+            {
+                bool canCraft = CraftingSystem.HasIngredients(_inventory, recipe);
+                bool selected = _selectedRecipe == recipe;
+
+                <div class="recipe-item @(selected ? "selected" : "") @(canCraft ? "" : "locked")"
+                     onclick=@(() => _selectedRecipe = recipe)>
+                    <div class="recipe-icon">
+                        <span>📦</span>
+                    </div>
+                    <div class="recipe-info">
+                        <span class="recipe-name">@recipe.Name</span>
+                        <span class="recipe-ingredients">
+                            @string.Join(", ", recipe.Recipe.Select(x => $"{x.Quantity}x {x.ItemResource?.Name}"))
+                        </span>
+                    </div>
+                    @if (canCraft)
+                    {
+                        <span class="craft-badge">✓</span>
+                    }
+                </div>
+            }
+        </div>
+
+        @if (_selectedRecipe != null)
+        {
+            <div class="recipe-detail">
+                <div class="detail-header">
+                    <span class="detail-name">@_selectedRecipe.Name</span>
+                    <span class="detail-duration">⏱ @_selectedRecipe.UseDuration s</span>
+                </div>
+
+                <div class="ingredients">
+                    @foreach (var ingredient in _selectedRecipe.Recipe)
+                    {
+                        bool hasEnough = InventoryContainer.Has(_inventory, ingredient.ItemResource?.ResourceName, ingredient.Quantity);
+                        <div class="ingredient @(hasEnough ? "ok" : "missing")">
+                            <span class="ing-name">@ingredient.ItemResource?.Name</span>
+                            <span class="ing-qty">@GetOwnedQuantity(ingredient.ItemResource) / @ingredient.Quantity</span>
+                        </div>
+                    }
+                </div>
+
+                @if (!_isCrafting)
+                {
+                    <button class="btn-craft @(CanCraftSelected ? "" : "disabled")"
+                            onclick=@StartCraft>
+                        FABRIQUER
+                    </button>
+                }
+                else
+                {
+                    <div class="progress-area">
+                        <div class="progress-label">@_progressLabel</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: @(_progress * 100)%;"></div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+
+    </div>
+
+</root>
+
+@code {
+    public static CraftingUI Instance { get; set; }
+    public CraftingUI() => Instance = this;
+
+    private bool          IsOpen          = false;
+    private CraftingTable _table          = null;
+    private ItemMetadata  _selectedRecipe = null;
+    private List<ItemMetadata> _recipes   = new();
+    private bool          _isCrafting     = false;
+    private float         _progress       = 0f;
+    private string        _progressLabel  = "";
+    private float         _craftDuration  = 0f;
+    private RealTimeSince _craftStart;
+
+    private InventoryContainer _inventory =>
+        Client.Local?.PlayerPawn?.Components.Get<InventoryContainer>( FindMode.EnabledInSelfAndChildren );
+
+    private bool CanCraftSelected =>
+        _selectedRecipe != null && _inventory != null &&
+        CraftingSystem.HasIngredients( _inventory, _selectedRecipe );
+
+    // ── Actions ───────────────────────────────────
+    void StartCraft()
+    {
+        if ( _selectedRecipe == null || !CanCraftSelected || _isCrafting ) return;
+        CraftingSystem.RequestCraft( _table, _selectedRecipe.ResourceName );
+    }
+
+    void Close()
+    {
+        Delete();
+        if (Instance == this) Instance = null;
+    }
+
+    // ── Tick : progress bar ───────────────────────
+    public override void Tick()
+    {
+        if ( _isCrafting && _craftDuration > 0 )
+        {
+            _progress = Math.Clamp( _craftStart / _craftDuration, 0f, 1f );
+        }
+    }
+
+    // ── Helpers ───────────────────────────────────
+    private int GetOwnedQuantity( ItemMetadata meta )
+    {
+        if ( meta == null || _inventory == null ) return 0;
+        return _inventory.Items
+            .Where( x => x.Metadata == meta )
+            .Sum( x => x.Quantity );
+    }
+
+    /// <summary>
+    /// Ouvre le panel localement (cote client). A appeler depuis le radial menu
+    /// du joueur local — PAS un RPC, donc seul le client appelant cree son panel.
+    /// </summary>
+    public static void OpenLocal(CraftingTable table)
+    {
+        // Ferme l'instance existante si elle traîne
+        Instance?.Delete();
+
+        // Crée le panel à la demande — comme le téléphone
+        var ui = Utils.CreatePanelInstance<CraftingUI>();
+        if (ui == null) return;
+
+        ui._table = table;
+        ui._recipes = table.GetAvailableRecipes().ToList();
+        ui._selectedRecipe = null;
+        ui._isCrafting = false;
+        ui._progress = 0f;
+    }
+
+    /// <summary>
+    /// Variante RPC : a utiliser cote host enveloppe par Rpc.FilterInclude(client.Connection)
+    /// pour ouvrir l'UI uniquement chez le client cible (ex: depuis IUse.OnUse cote host).
+    /// Ne JAMAIS appeler en direct cote client — sans filter, cela broadcast a tous.
+    /// </summary>
+    [Rpc.Broadcast]
+    public static void Open(CraftingTable table) => OpenLocal(table);
+
+    [Rpc.Broadcast]
+    public static void StartProgress(float duration, string label)
+    {
+        if (Instance == null) return;
+        Instance._isCrafting = true;
+        Instance._craftDuration = duration;
+        Instance._craftStart = 0;
+        Instance._progressLabel = label;
+        Instance._progress = 0f;
+    }
+
+    [Rpc.Broadcast]
+    public static void NotifySuccess(string itemName)
+    {
+        if (Instance == null) return;
+        Instance._isCrafting = false;
+        Instance._progress = 0f;
+
+        Facepunch.NotificationSystem.Notify(
+            Facepunch.NotificationSystem.NotificationType.Success,
+            $"✅ {itemName} fabriqué avec succès !"
+        );
+    }
+
+    [Rpc.Broadcast]
+    public static void NotifyMissingIngredients()
+    {
+        if (Instance == null) return;
+        Instance._isCrafting = false;
+        Instance._progress = 0f;
+
+        Facepunch.NotificationSystem.Notify(
+            Facepunch.NotificationSystem.NotificationType.Error,
+            "❌ Ingrédients manquants !"
+        );
+    }
+
+    [Rpc.Broadcast]
+    public static void NotifyCancelled()
+    {
+        if (Instance == null) return;
+        Instance._isCrafting = false;
+        Instance._progress = 0f;
+
+        Facepunch.NotificationSystem.Notify(
+            Facepunch.NotificationSystem.NotificationType.Warning,
+            "⚠️ Craft annulé — vous vous êtes éloigné."
+        );
+    }
+
+    [Rpc.Broadcast]
+    public static void NotifyOccupied()
+    {
+        Facepunch.NotificationSystem.Notify(
+            Facepunch.NotificationSystem.NotificationType.Error,
+            "🔒 Cette table est déjà utilisée par quelqu'un."
+        );
+    }
+
+    protected override int BuildHash() => HashCode.Combine(
+        IsOpen,
+        _selectedRecipe,
+        _isCrafting,
+        _progress,
+        Time.Now
+    );
+}

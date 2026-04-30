@@ -1,0 +1,144 @@
+@import "ui/Styles/Theme.scss";
+
+HomePage {
+    width: 100%;
+    padding: 10px;
+    transition: all 0.2s ease;
+    gap: 10px;
+    //background: linear-gradient(132deg, rgb(241, 242, 11) 0.00%, rgb(248, 161, 27) 100.00%);
+
+    * {
+        color: black;
+        font-size: 24px;
+    }
+
+    .tab {
+        font-size: 54px;
+        height: 10%;
+        width: 100%;
+        align-items: center;
+    }
+
+    .container {
+        height: 100%;
+        gap: 50px;
+
+
+        .finance {
+            border-radius: 6px;
+            backdrop-filter: blur(20px);
+            height: 100%;
+            width: 30%;
+            padding: 10px;
+            margin: 5px;
+            color: white;
+            flex-direction: column;
+
+            .finance-total {
+                opacity: 0;
+            }
+
+            span {
+                &:first-child {
+                    color: white;
+                }
+            }
+
+            &:hover {
+                transition: all 0.2s ease;
+                border: 2px solid rgba(black,0.8);
+                width: 100%;
+                align-content: center;
+                align-items: center;
+
+                .finance-total {
+                    transition: all 0.5s ease;
+                    opacity: 1;
+                    flex-direction: column;
+                    text-align: center;
+                }
+            }
+        }
+
+        .rules {
+            border-radius: 6px;
+            backdrop-filter: blur(20px);
+            height: 100%;
+            width: 30%;
+            padding: 10px;
+            margin: 5px;
+            color: white;
+            flex-direction: column;
+
+            .reglement-total {
+                opacity: 0;
+            }
+
+            span {
+                &:first-child {
+                    color: white;
+                }
+            }
+
+            &:hover {
+                transition: all 0.2s ease;
+                border: 2px solid rgba(black,0.8);
+                width: 100%;
+                align-content: center;
+                align-items: center;
+
+                .reglement-total {
+                    transition: all 0.5s ease;
+                    opacity: 1;
+                    flex-direction: column;
+                    text-align: center;
+                }
+            }
+        }
+
+        .employees {
+            border-radius: 6px;
+            backdrop-filter: blur(20px);
+            height: 100%;
+            width: 30%;
+            padding: 10px;
+            margin: 5px;
+            color: white;
+            color: white;
+            flex-direction: column;
+
+            .employe-total {
+                opacity: 0;
+            }
+
+            span {
+                &:first-child {
+                    color: white;
+                }
+            }
+
+            &:hover {
+                transition: all 0.2s ease;
+                border: 2px solid rgba(black,0.8);
+                width: 100%;
+                align-content: center;
+                align-items: center;
+
+                .employe-total {
+                    transition: all 0.5s ease;
+                    opacity: 1;
+                    flex-direction: column;
+                    text-align: center;
+
+                    ul {
+                        //background-color:red;
+                        justify-content: center;
+                        padding:15px;
+                        flex-direction: column;
+                        //list-style-position: inside;
+                    }
+                }
+            }
+        }
+    }
+}

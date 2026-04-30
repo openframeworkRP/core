@@ -1,0 +1,21 @@
+@using OpenFramework.Systems.Npc
+@using OpenFramework.Systems.Jobs
+
+@inherits BaseApp
+@namespace OpenFramework.World.Devices
+
+<root>
+    <WebNavigator Url="@(AppContext.Device.Kind == DeviceKind.Phone ? "https://m.youtube.com/" : "https://youtube.com/")" />
+</root>
+
+@code {
+    public override string AppId => "youtube";
+    public override string DisplayName => "Youtube";
+    public override string Icon => "ui/icons/apps/youtube_icon.svg";
+    public override string IconColor => "#FF0000";
+    public override string BackgroundColor => "#FFFFFF";
+    public override bool IsSystemApp => false;
+    public override JobList JobAccess => JobList.None;
+    public override Type SplashScreen => typeof(YoutubeApp_splash);
+    public override DeviceKind Compatibility => DeviceKind.TV | DeviceKind.Phone | DeviceKind.Computer | DeviceKind.Tablet;
+}

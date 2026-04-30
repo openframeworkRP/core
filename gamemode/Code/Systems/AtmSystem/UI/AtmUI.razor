@@ -1,0 +1,538 @@
+@using Sandbox;
+@using Sandbox.UI;
+@using OpenFramework.Api;
+@using OpenFramework.Systems.AtmSystem;
+@using OpenFramework.Systems.Pawn;
+@using System.Collections.Generic;
+@inherits PanelComponent
+@namespace OpenFramework
+
+<root>
+
+    @if ( !_isOpen && !_isBooting )
+    {
+        <div class="atm-idle">
+            <span class="atm-idle-brand">SL BANK</span>
+            <span class="atm-idle-hint">Maintenez E pour accéder</span>
+        </div>
+    }
+    else if ( _isBooting || _account == null )
+    {
+        <div class="atm-loading">
+            <span>Connexion...</span>
+        </div>
+    }
+    else
+    {
+        <div class="atm-screen">
+
+            @if ( _view == "home" )
+            {
+                <div class="atm-home">
+                    <span class="atm-welcome">Bonjour,</span>
+                    <span class="atm-welcome-sub">que souhaitez-vous faire&nbsp;?</span>
+
+                    <div class="atm-menu">
+                        <div class="atm-menu-row">
+                            <button class="atm-menu-btn" onclick=@(() => SetView("deposit"))>
+                                <span class="atm-menu-icon">+</span>
+                                <span class="atm-menu-label">DÉPÔT</span>
+                            </button>
+                            <button class="atm-menu-btn" onclick=@(() => SetView("withdrawal"))>
+                                <span class="atm-menu-icon">−</span>
+                                <span class="atm-menu-label">RETRAIT</span>
+                            </button>
+                        </div>
+                        <div class="atm-menu-row">
+                            <button class="atm-menu-btn" onclick=@(() => SetView("transfer"))>
+                                <span class="atm-menu-icon">↔</span>
+                                <span class="atm-menu-label">VIREMENT</span>
+                            </button>
+                            <button class="atm-menu-btn" onclick=@(() => SetView("account"))>
+                                <span class="atm-menu-icon">☰</span>
+                                <span class="atm-menu-label">COMPTE</span>
+                            </button>
+                        </div>
+                        <div class="atm-menu-row">
+                            <button class="atm-menu-btn" onclick=@(() => SetView("history"))>
+                                <span class="atm-menu-icon">↻</span>
+                                <span class="atm-menu-label">HISTORIQUE</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="atm-view">
+                <div class="atm-header-bar">
+                    <button class="atm-back" onclick=@(() => SetView("home"))>◂ Retour</button>
+                    <span class="atm-title">@ViewTitle()</span>
+                </div>
+
+                @if ( _view == "deposit" || _view == "withdrawal" )
+                {
+                    <div class="atm-form">
+
+                        <div class="atm-form-left">
+                            <div class="atm-display">
+                                <span class="atm-display-label">MONTANT</span>
+                                <span class="atm-display-value">@($"{(string.IsNullOrEmpty(_amountInput) ? "0" : _amountInput)}$")</span>
+                            </div>
+
+                            <div class="atm-quick-amounts">
+                                <button class="atm-quick-btn" onclick=@(() => SetAmount("20"))>20</button>
+                                <button class="atm-quick-btn" onclick=@(() => SetAmount("50"))>50</button>
+                                <button class="atm-quick-btn" onclick=@(() => SetAmount("100"))>100</button>
+                                <button class="atm-quick-btn" onclick=@(() => SetAmount("200"))>200</button>
+                            </div>
+
+                            <button class="atm-confirm-btn" onclick=@Confirm>
+                                @( _view == "deposit" ? "DÉPOSER" : "RETIRER" )
+                            </button>
+
+                            @if ( !string.IsNullOrEmpty( _errorMsg ) )   { <span class="atm-error">⚠ @_errorMsg</span> }
+                            @if ( !string.IsNullOrEmpty( _successMsg ) ) { <span class="atm-success">✓ @_successMsg</span> }
+                        </div>
+
+                        <div class="atm-keypad">
+                            <div class="atm-keypad-row">
+                                <button class="atm-key" onclick=@(() => PressKey("1"))>1</button>
+                                <button class="atm-key" onclick=@(() => PressKey("2"))>2</button>
+                                <button class="atm-key" onclick=@(() => PressKey("3"))>3</button>
+                            </div>
+                            <div class="atm-keypad-row">
+                                <button class="atm-key" onclick=@(() => PressKey("4"))>4</button>
+                                <button class="atm-key" onclick=@(() => PressKey("5"))>5</button>
+                                <button class="atm-key" onclick=@(() => PressKey("6"))>6</button>
+                            </div>
+                            <div class="atm-keypad-row">
+                                <button class="atm-key" onclick=@(() => PressKey("7"))>7</button>
+                                <button class="atm-key" onclick=@(() => PressKey("8"))>8</button>
+                                <button class="atm-key" onclick=@(() => PressKey("9"))>9</button>
+                            </div>
+                            <div class="atm-keypad-row">
+                                <button class="atm-key atm-key-alt" onclick=@ClearAmount>C</button>
+                                <button class="atm-key" onclick=@(() => PressKey("0"))>0</button>
+                                <button class="atm-key atm-key-alt" onclick=@Backspace>⌫</button>
+                            </div>
+                        </div>
+
+                    </div>
+                }
+                else if ( _view == "transfer" )
+                {
+                    <div class="atm-transfer-wide">
+
+                        <div class="atm-transfer-row">
+                            <div class="atm-transfer-col">
+                                <label class="atm-field-label">Destinataire</label>
+                                <TextEntry class="atm-transfer-input" Value:bind=@_transferTo Placeholder="SL-" />
+                            </div>
+                            <div class="atm-transfer-col">
+                                <label class="atm-field-label">Motif (optionnel)</label>
+                                <TextEntry class="atm-transfer-input" Value:bind=@_transferComment Placeholder="Loyer..." />
+                            </div>
+                        </div>
+
+                        <div class="atm-transfer-row">
+                            <div class="atm-display atm-transfer-display">
+                                <span class="atm-display-label">MONTANT</span>
+                                <span class="atm-display-value">@($"{(string.IsNullOrEmpty(_amountInput) ? "0" : _amountInput)}$")</span>
+                            </div>
+                            <div class="atm-quick-amounts atm-transfer-quick">
+                                <button class="atm-quick-btn" onclick=@(() => SetAmount("20"))>20</button>
+                                <button class="atm-quick-btn" onclick=@(() => SetAmount("50"))>50</button>
+                                <button class="atm-quick-btn" onclick=@(() => SetAmount("100"))>100</button>
+                                <button class="atm-quick-btn" onclick=@(() => SetAmount("200"))>200</button>
+                                <button class="atm-quick-btn atm-quick-alt" onclick=@ClearAmount>C</button>
+                                <button class="atm-quick-btn atm-quick-alt" onclick=@Backspace>⌫</button>
+                            </div>
+                        </div>
+
+                        <button class="atm-transfer-summary atm-transfer-action" onclick=@Confirm>
+                            <span>Virer <span class="atm-hl">@($"{(string.IsNullOrEmpty(_amountInput) ? "0" : _amountInput)}$")</span> vers <span class="atm-hl">@(string.IsNullOrEmpty(_transferTo) ? "..." : _transferTo)</span></span>
+                        </button>
+
+                        @if ( !string.IsNullOrEmpty( _errorMsg ) )   { <span class="atm-error">⚠ @_errorMsg</span> }
+                        @if ( !string.IsNullOrEmpty( _successMsg ) ) { <span class="atm-success">✓ @_successMsg</span> }
+                    </div>
+                }
+                else if ( _view == "account" )
+                {
+                    <div class="atm-account-list">
+                        @foreach ( var acc in _accounts )
+                        {
+                            var isActive = acc.Id == _account.Id;
+                            <div class=@( "atm-account-card" + (isActive ? " active" : "") )>
+                                <div class="atm-account-info">
+                                    <span class="atm-account-num">@acc.AccountNumber</span>
+                                    <span class="atm-account-bal">@($"{acc.Balance.ToString("F2")}$")</span>
+                                </div>
+                                @if ( isActive )
+                                {
+                                    <span class="atm-account-badge">ACTIF</span>
+                                }
+                            </div>
+                        }
+                    </div>
+                }
+                else if ( _view == "history" )
+                {
+                    <div class="atm-history">
+                        @if ( _transactions.Count == 0 )
+                        {
+                            <span class="atm-empty">Aucune transaction.</span>
+                        }
+                        else
+                        {
+                            @foreach ( var tx in _transactions )
+                            {
+                                var label      = TxLabel( tx.Type );
+                                // isCredit determine par l'accountId : fiable meme pour les virements (sortant/entrant).
+                                var isCredit   = !string.IsNullOrEmpty( tx.ToAccountId ) && tx.ToAccountId == _account.Id;
+                                var isExpanded = _expandedTxId == tx.Id;
+                                var desc       = BuildTxDescription( tx, isCredit );
+                                <div class=@( "atm-tx " + (isCredit ? "tx-credit" : "tx-debit") + (isExpanded ? " expanded" : "") ) onclick=@(() => ToggleTx(tx.Id))>
+                                    <div class="tx-row">
+                                        <span class="tx-type">@label</span>
+                                        <span class="tx-comment">@desc</span>
+                                        <span class="tx-amount">@($"{(isCredit ? "+" : "-")}{tx.Amount.ToString("F2")}$")</span>
+                                    </div>
+                                    @if ( isExpanded )
+                                    {
+                                        <div class="tx-detail">
+                                            <span class="tx-detail-date">@tx.CreatedAt.ToString("dd/MM/yyyy HH:mm")</span>
+                                            @if ( !string.IsNullOrEmpty( tx.Comment ) )
+                                            {
+                                                <span class="tx-detail-comment">@tx.Comment</span>
+                                            }
+                                        </div>
+                                    }
+                                </div>
+                            }
+                        }
+                    </div>
+                }
+                </div>
+            }
+
+        </div>
+    }
+
+</root>
+
+@code
+{
+    [Property] public AtmComponent Atm { get; set; }
+    [Property] public float        ScreenOnDistance { get; set; } = 125f;
+
+    private bool                 _isOpen       = false;
+    private bool                 _isBooting    = false;
+    private Sandbox.WorldPanel   _worldPanel;
+    private BankAccountDto       _account      = null;
+    private List<BankAccountDto> _accounts     = new();
+    private List<TransactionDto> _transactions = new();
+    private string               _view         = "home";
+    private string               _amountInput  = "";
+    private bool                 _showBalance  = false;
+    private string               _errorMsg     = "";
+    private string               _successMsg   = "";
+    private string               _expandedTxId = "";
+    private string               _transferTo      = "";
+    private string               _transferComment = "";
+    private RealTimeSince        _timeSinceDataReceived = 100f;
+
+    protected override void OnStart()
+    {
+        base.OnStart();
+        if ( Atm == null ) { Log.Error( "[AtmUI] Atm non assigné !" ); return; }
+
+        _worldPanel = GameObject.Components.Get<Sandbox.WorldPanel>( FindMode.EverythingInSelfAndDescendants );
+        if ( _worldPanel == null ) { Log.Error( "[AtmUI] WorldPanel introuvable !" ); return; }
+
+        Atm.OnOpenRequested   = HandleOpenRequested;
+        Atm.OnAtmDataReceived = HandleAtmDataReceived;
+        Atm.OnOperationResult = HandleOperationResult;
+    }
+
+    private string LogTag() => "[ATM][AtmUI][" + (Atm?.AtmId ?? "?") + "]";
+
+    private void HandleOpenRequested()
+    {
+        Log.Info( LogTag() + " Open demandé (booting...)" );
+        _isBooting = true;
+        StateHasChanged();
+    }
+
+    private void HandleAtmDataReceived( BankAccountDto account, List<TransactionDto> transactions )
+    {
+        var bal = account?.Balance.ToString( "F2" ) ?? "?";
+        var nb  = transactions?.Count ?? 0;
+        Log.Info( LogTag() + " Data reçue : compte " + (account?.AccountNumber ?? "?") + " (" + bal + "$), " + nb + " transactions" );
+        _account               = account;
+        _accounts              = new List<BankAccountDto> { account };
+        _transactions          = transactions;
+        _isOpen                = true;
+        _isBooting             = false;
+        _view                  = "home";
+        _errorMsg              = "";
+        _successMsg            = "";
+        _amountInput           = "";
+        _timeSinceDataReceived = 0f;
+
+        // Le serveur calcule deja le balance reel a partir des transactions, on l'affiche tel quel.
+        StateHasChanged();
+    }
+
+    private void HandleOperationResult( bool ok, string error )
+    {
+        Log.Info( LogTag() + " Résultat opération : ok=" + ok + (ok ? "" : " error=" + error) );
+        _errorMsg   = ok ? "" : error;
+        _successMsg = ok ? "Opération réussie !" : "";
+
+        if ( ok )
+        {
+            _amountInput     = "";
+            _transferTo      = _view == "transfer" ? "SL-" : "";
+            _transferComment = "";
+        }
+
+        if ( !ok && _isBooting )
+        {
+            _isBooting = false;
+            _isOpen = false;
+        }
+        StateHasChanged();
+    }
+
+    /// <summary>Vrai si cette UI ATM est ouverte pour le client local (pas de lock serveur, purement visuel).</summary>
+    public bool IsOpenForLocalClient => _isOpen || _isBooting;
+
+    protected override void OnUpdate()
+    {
+        if ( (_isOpen || _isBooting) && Input.EscapePressed )
+        {
+            Log.Info( LogTag() + " Fermeture par ESC" );
+            Input.EscapePressed = false;
+            CloseUI();
+        }
+
+        // Saisie clavier quand on est sur dépôt/retrait/virement
+        if ( _isOpen && (_view == "deposit" || _view == "withdrawal" || _view == "transfer") )
+        {
+            HandleKeyboardInput();
+        }
+
+        if ( _worldPanel != null && Scene?.Camera != null )
+        {
+            var dist   = WorldPosition.Distance( Scene.Camera.WorldPosition );
+            var wantOn = dist <= ScreenOnDistance;
+            if ( _worldPanel.Enabled != wantOn ) _worldPanel.Enabled = wantOn;
+
+            // Auto-close si le joueur s'eloigne : debloque la molette + Slot1-9 pour changer d'arme.
+            if ( (_isOpen || _isBooting) && !wantOn )
+            {
+                Log.Info( LogTag() + " Fermeture auto : joueur hors de portee ("
+                    + dist.ToString( "F0" ) + "u > " + ScreenOnDistance + "u)" );
+                CloseUI();
+            }
+        }
+    }
+
+    public void CloseFromExternal() => CloseUI();
+
+    private void CloseUI()
+    {
+        _isOpen          = false;
+        _isBooting       = false;
+        _account         = null;
+        _transactions    = new();
+        _view            = "home";
+        _errorMsg        = "";
+        _successMsg      = "";
+        _amountInput     = "";
+        _transferTo      = "";
+        _transferComment = "";
+        _showBalance     = false;
+        StateHasChanged();
+    }
+
+    private void HandleKeyboardInput()
+    {
+        // Chiffres 0-9 : ligne du haut + pavé numérique
+        for ( int d = 0; d <= 9; d++ )
+        {
+            var ds = d.ToString();
+            if ( Input.Keyboard.Pressed( ds ) || Input.Keyboard.Pressed( $"numpad{d}" ) )
+            {
+                PressKey( ds );
+                return;
+            }
+        }
+
+        if ( Input.Keyboard.Pressed( "backspace" ) )
+        {
+            Backspace();
+            return;
+        }
+
+        if ( Input.Keyboard.Pressed( "enter" ) || Input.Keyboard.Pressed( "return" ) || Input.Keyboard.Pressed( "numpadenter" ) )
+        {
+            Confirm();
+        }
+    }
+
+    private void PressKey( string digit )
+    {
+        if ( _amountInput.Length >= 9 ) return;
+        if ( _amountInput == "0" ) _amountInput = "";
+        _amountInput += digit;
+        _errorMsg = "";
+        _successMsg = "";
+        StateHasChanged();
+    }
+
+    private void Backspace()
+    {
+        if ( _amountInput.Length > 0 )
+            _amountInput = _amountInput.Substring( 0, _amountInput.Length - 1 );
+        StateHasChanged();
+    }
+
+    private void ClearAmount()
+    {
+        _amountInput = "";
+        _errorMsg = "";
+        _successMsg = "";
+        StateHasChanged();
+    }
+
+    private void SetAmount( string value )
+    {
+        var current = 0;
+        int.TryParse( _amountInput, out current );
+        int.TryParse( value, out var add );
+        var total = current + add;
+        if ( total > 999_999_999 ) total = 999_999_999;
+        _amountInput = total.ToString();
+        _errorMsg = "";
+        _successMsg = "";
+        StateHasChanged();
+    }
+
+    private void Confirm()
+    {
+        _errorMsg   = "";
+        _successMsg = "";
+
+        if ( !decimal.TryParse( _amountInput,
+             System.Globalization.NumberStyles.Any,
+             System.Globalization.CultureInfo.InvariantCulture,
+             out var amount ) || amount <= 0 )
+        {
+            _errorMsg = "Montant invalide.";
+            StateHasChanged();
+            return;
+        }
+
+        if ( _view == "deposit" )
+        {
+            Atm.Deposit( _account.Id, _account.CharacterId, amount );
+        }
+        else if ( _view == "withdrawal" )
+        {
+            Atm.Withdraw( _account.Id, _account.CharacterId, amount );
+        }
+        else if ( _view == "transfer" )
+        {
+            var dest = (_transferTo ?? "").Trim();
+            if ( string.IsNullOrEmpty( dest ) )
+            {
+                _errorMsg = "Numéro de compte destinataire requis.";
+                StateHasChanged();
+                return;
+            }
+            Atm.Transfer( _account.Id, dest, _account.CharacterId, amount, _transferComment ?? "" );
+        }
+    }
+
+    private void SetView( string view )
+    {
+        _view = view;
+        _errorMsg = "";
+        _successMsg = "";
+        _amountInput = "";
+        _transferTo = view == "transfer" ? "SL-" : "";
+        _transferComment = "";
+        StateHasChanged();
+    }
+
+    private string ViewTitle() => _view switch
+    {
+        "deposit"    => "Dépôt",
+        "withdrawal" => "Retrait",
+        "transfer"   => "Virement",
+        "account"    => "Compte",
+        "history"    => "Historique",
+        _            => ""
+    };
+
+    private void ToggleReveal()
+    {
+        _showBalance = !_showBalance;
+        StateHasChanged();
+    }
+
+    private void ToggleTx( string id )
+    {
+        _expandedTxId = _expandedTxId == id ? "" : id;
+        StateHasChanged();
+    }
+
+    private string MaskedAccountNumber()
+    {
+        var n = _account?.AccountNumber ?? "";
+        if ( n.Length <= 4 ) return n;
+        var visible = n.Substring( n.Length - 2 );
+        var prefix  = n.Length > 3 ? n.Substring( 0, 3 ) : "";
+        return $"{prefix}••••{visible}";
+    }
+
+    private string TxLabel( int type ) => type switch
+    {
+        0 => "Dépôt",
+        1 => "Retrait",
+        2 => "Virement",
+        3 => "Salaire",
+        4 => "Admin",
+        _ => "Inconnu"
+    };
+
+    /// <summary>Construit le texte de description d'une tx : origine/destination + motif si dispo.</summary>
+    private string BuildTxDescription( TransactionDto tx, bool isCredit )
+    {
+        // Pour un virement, on veut savoir avec qui
+        var counterparty = isCredit ? tx.FromAccountNumber : tx.ToAccountNumber;
+        var hasCounter   = !string.IsNullOrEmpty( counterparty );
+
+        string prefix = tx.Type switch
+        {
+            2 when hasCounter && isCredit  => "de " + counterparty,
+            2 when hasCounter && !isCredit => "vers " + counterparty,
+            2                              => isCredit ? "reçu" : "envoyé",
+            _                              => ""
+        };
+
+        var comment = tx.Comment ?? "";
+        if ( !string.IsNullOrEmpty( prefix ) && !string.IsNullOrEmpty( comment ) )
+            return prefix + " — " + comment;
+        if ( !string.IsNullOrEmpty( prefix ) ) return prefix;
+        return comment;
+    }
+
+    protected override int BuildHash() =>
+        System.HashCode.Combine(
+            System.HashCode.Combine( _isOpen, _isBooting, _account?.Balance, _view, _amountInput, _showBalance ),
+            System.HashCode.Combine( _transactions.Count, _errorMsg, _successMsg, _expandedTxId, _transferTo, _transferComment ) );
+}

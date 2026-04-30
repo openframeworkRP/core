@@ -1,0 +1,69 @@
+﻿@using Facepunch
+@using Sandbox;
+@using Sandbox.UI;
+@using Editor;
+@using OpenFramework.Command
+@using Sandbox.UI.Navigation;
+@using OpenFramework.Inventory
+@using static Facepunch.NotificationSystem
+
+@implements Sandbox.UI.Navigation.INavigatorPage
+@namespace OpenFramework.World.Devices.Apps.Armury
+@inherits Panel
+
+<root>
+    <div class="container">
+
+        @foreach (var meta in GetFilteredItems())
+        {
+            <div class="furniture">
+
+                <!-- Infos -->
+                <div class="furniture-info">
+                    <div class="furniture-name">@meta.Name</div>
+                    <div class="furniture-price">@(meta.Price)$</div>
+                    <!-- Bouton Acheter -->
+                    <div class="buy">
+                        <button @onclick=@(() => Buy(meta))>Acheter</button>
+                    </div>
+                </div>
+
+            </div>
+        }
+    </div>
+</root>
+
+@code
+{
+    public PlayerPawn Player => Client.Local.PlayerPawn;
+    InventoryContainer Container => Client.Local?.PlayerPawn?.GameObject.Components.Get<InventoryContainer>(FindMode.EnabledInSelfAndChildren);
+    private ItemMetadata.ItemType? activeFilter = null;
+
+
+    void SetFilter(ItemMetadata.ItemType? filter)
+    {
+        activeFilter = filter;
+    }
+
+    IEnumerable<ItemMetadata> GetFilteredItems()
+    {
+        if (activeFilter == null)
+            return ItemMetadata.All.Where(meta => meta.IsWeapon);
+
+        return ItemMetadata.All.Where(meta => meta.IsWeapon && meta.ItemCategoryType == activeFilter);
+    }
+
+
+    void Buy(ItemMetadata meta)
+    {
+        Log.Info($"Acheter : {meta.Name}");
+
+        Player.Client.Data.Bank -= meta.Price;
+
+        Player.Client.Notify(NotificationType.Success, $"Vous venez d'acheter {meta.Name} pour {meta.Price} $ .");
+
+        Commands.RPC_GiveItem(Client.Local, meta.ResourceName, 1);
+    }
+
+
+}

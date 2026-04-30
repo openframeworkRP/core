@@ -1,0 +1,217 @@
+@using Sandbox
+@using Sandbox.UI
+@using OpenFramework.Systems.Jobs
+@using OpenFramework.Systems
+@using OpenFramework.Systems.Dispatch
+@using OpenFramework.World.Devices.Apps.Phone
+@inherits BaseApp
+@namespace OpenFramework.World.Devices.Apps.Phone
+
+<root>
+    <div class="navigation-content">
+
+        @if (CurrentTab == "recents")
+        {
+            <div class="page-header"><span>Récents</span></div>
+            @if (!_recentCalls.Any())
+            {
+                <div class="empty-state">
+                    <svg src="ui/icons/clock.svg" />
+                    <span>Aucun appel récent</span>
+                </div>
+            }
+            else
+            {
+                <div class="list">
+                    @foreach (var recent in _recentCalls)
+                    {
+                        <div class="list-item" @onclick=@(() => CallContact(recent.Contact))>
+                            <div class="avatar" style="background-color: @recent.Contact.AvatarColor">
+                                <span>@recent.Contact.Emoji</span>
+                            </div>
+                            <div class="item-info">
+                                <span class="name">@recent.Contact.Name</span>
+                                <span class="sub @(recent.Missed ? "missed" : "")">
+                                    @(recent.Missed ? "Manqué" : "Sortant") · @recent.TimeLabel
+                                </span>
+                            </div>
+                            <button class="action-btn call" @onclick=@(() => CallContact(recent.Contact))>
+                                <svg src="ui/icons/apps/phone_icon.svg" color="white"/>
+                            </button>
+                        </div>
+                    }
+                </div>
+            }
+        }
+
+        @if (CurrentTab == "contacts")
+        {
+            <div class="page-header"><span>Contacts</span></div>
+            <div class="list">
+                <div class="list-section-header">Services</div>
+                @foreach (var contact in PhoneContact.Services)
+                {
+                    var c = contact;
+                    <div class="list-item">
+                        <div class="avatar service" style="background-color: @c.AvatarColor">
+                            <span>@c.Emoji</span>
+                        </div>
+                        <div class="item-info">
+                            <span class="name">@c.Name</span>
+                            <span class="sub">@c.Number</span>
+                        </div>
+                        <div class="item-actions">
+                            <button class="action-btn call" @onclick=@(() => CallContact(c))>
+                                <svg src="ui/icons/apps/phone_icon.svg" color="white"/>
+                            </button>
+                        </div>
+                    </div>
+                }
+
+                @{ var players = PhoneContact.GetPlayerContacts(); }
+                @if (players.Any())
+                {
+                    <div class="list-section-header">Joueurs</div>
+                    @foreach (var contact in players)
+                    {
+                        var c = contact;
+                        <div class="list-item">
+                            <div class="avatar" style="background-color: @c.AvatarColor">
+                                <span>@c.Emoji</span>
+                            </div>
+                            <div class="item-info">
+                                <span class="name">@c.Name</span>
+                                <span class="sub">En ligne</span>
+                            </div>
+                            <div class="item-actions">
+                                <button class="action-btn call" @onclick=@(() => CallContact(c))>
+                                    <svg src="ui/icons/apps/phone_icon.svg" color="white"/>
+                                </button>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+        }
+
+        @if (CurrentTab == "keypad")
+        {
+            <div class="dialer">
+                <div class="display">
+                    <span>@CurrentNumber</span>
+                </div>
+                <div class="grid">
+                    @foreach (var digit in Digits)
+                    {
+                        var d = digit;
+                        <div class="key" @onclick=@(() => AddDigit(d))>
+                            <label>@d</label>
+                        </div>
+                    }
+                </div>
+                <div class="call-action">
+                    <button class="call-btn" @onclick=@StartCallFromKeypad>
+                        <svg src="ui/icons/apps/phone_icon.svg" color="white" />
+                    </button>
+                    @if (CurrentNumber.Length > 0)
+                    {
+                        <button class="backspace" @onclick=@Backspace>
+                            <svg src="ui/icons/backspace.svg" color="white" />
+                        </button>
+                    }
+                </div>
+            </div>
+        }
+
+    </div>
+
+    <div class="tab-bar">
+        <div class="tab @(CurrentTab == "recents" ? "active" : "")"  @onclick=@(() => SetTab("recents"))>
+            <svg src="ui/icons/clock.svg" color="white"/>
+            <label>Récents</label>
+        </div>
+        <div class="tab @(CurrentTab == "contacts" ? "active" : "")" @onclick=@(() => SetTab("contacts"))>
+            <svg src="ui/icons/contacts.svg" color="white" />
+            <label>Contacts</label>
+        </div>
+        <div class="tab @(CurrentTab == "keypad" ? "active" : "")"   @onclick=@(() => SetTab("keypad"))>
+            <svg src="ui/icons/keypad.svg" color="white" />
+            <label>Clavier</label>
+        </div>
+    </div>
+</root>
+
+@code {
+    public override string AppId           => "phone";
+    public override string DisplayName     => "Téléphone";
+    public override string Icon            => "ui/icons/apps/phone_icon.svg";
+    public override string IconColor       => "white";
+    public override string BackgroundColor => "#34C759";
+    public override bool   IsSystemApp     => true;
+    public override Type   SplashScreen    => typeof(PhoneApp_splash);
+    public override JobList JobAccess      => JobList.None;
+    public override DeviceKind Compatibility => DeviceKind.Phone;
+    public PhoneApp() { IsPinned = true; }
+
+    // ── Navigation ────────────────────────────────
+    private string CurrentTab = "keypad";
+
+    private void SetTab( string tab ) => CurrentTab = tab;
+
+    // ── Clavier ───────────────────────────────────
+    private string CurrentNumber = "";
+    private string[] Digits = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "*", "0", "#" };
+
+    private void AddDigit( string digit )
+    {
+        if ( CurrentNumber.Length >= 12 ) return;
+        CurrentNumber += digit;
+    }
+
+    private void Backspace()
+    {
+        if ( CurrentNumber.Length > 0 )
+            CurrentNumber = CurrentNumber.Remove( CurrentNumber.Length - 1 );
+    }
+
+    private void StartCallFromKeypad()
+    {
+        if ( string.IsNullOrEmpty( CurrentNumber ) ) return;
+        var service = PhoneContact.Services.FirstOrDefault( x => x.Number == CurrentNumber );
+        var contact = service ?? new PhoneContact { Name = CurrentNumber, Number = CurrentNumber, Emoji = "📞" };
+        CallContact( contact );
+    }
+
+    // ── Appels ────────────────────────────────────
+    private List<RecentCall> _recentCalls = new();
+
+    private void CallContact( PhoneContact contact )
+    {
+        _recentCalls.Insert( 0, new RecentCall { Contact = contact, Missed = false, At = Time.Now } );
+        if ( _recentCalls.Count > 20 ) _recentCalls.RemoveAt( 20 );
+
+        var modal = AddChild<OpenFramework.World.Devices.Phone.CurrentCall>();
+        modal.CallerName = contact.Name;
+        modal.Kind       = AppContext.Device.Kind;
+    }
+
+    public class RecentCall
+    {
+        public PhoneContact Contact { get; set; }
+        public bool Missed { get; set; }
+        public float At { get; set; }
+
+        public string TimeLabel
+        {
+            get
+            {
+                int secs = (int)(Time.Now - At);
+                if (secs < 60) return "À l'instant";
+                if (secs < 3600) return $"Il y a {secs / 60}min";
+                return $"Il y a {secs / 3600}h";
+            }
+        }
+    }
+
+    protected override int BuildHash() => HashCode.Combine( CurrentTab, CurrentNumber, _recentCalls.Count );
+}

@@ -1,0 +1,261 @@
+@import "/UI/Styles/Theme.scss";
+
+NpcInteractionHud {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+// ── OVERLAY ──
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.15);
+    justify-content: center;
+    align-items: center;
+    padding-top: 750px;
+    pointer-events: all;
+}
+
+// ── GREETING ──
+.greeting-box {
+    background-color: $surface-dark;
+    border: $border-light;
+    backdrop-filter: blur(20px);
+    padding: 20px 30px;
+    min-width: 500px;
+    max-width: 600px;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.greeting-header {
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+
+    .accent-bar {
+        width: 3px;
+        height: 20px;
+        background-color: $accent;
+    }
+
+    .greeting-name {
+        font-size: 20px;
+        color: $accent;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-weight: 800;
+        font-family: $font-ui;
+    }
+}
+
+.greeting-text {
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.75);
+    font-family: $font-ui;
+    font-weight: 500;
+    padding: 5px 0;
+}
+
+.greeting-actions {
+    flex-direction: row;
+    gap: 10px;
+    margin-top: 5px;
+
+    .btn {
+        background-color: $surface-input;
+        border: $border-light;
+        padding: 12px 30px;
+        min-width: 140px;
+        transition: $transition-fast;
+        cursor: pointer;
+        justify-content: center;
+
+        label {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 15px;
+            font-family: $font-ui;
+            pointer-events: none;
+            letter-spacing: 1px;
+        }
+
+        &:hover {
+            background-color: $accent-bg;
+            border: 1px solid $accent;
+
+            label {
+                color: white;
+            }
+        }
+
+        &.quit {
+            border-bottom: 2px solid rgba(255, 60, 0, 0.5);
+
+            &:hover {
+                background-color: rgba(255, 60, 0, 0.9);
+                border: 1px solid #ff3c00;
+                border-bottom: 2px solid white;
+            }
+        }
+    }
+}
+
+// ── INTERACTION MENU ──
+.menu-wrapper {
+    flex-direction: column;
+    gap: 0;
+    align-items: center;
+    background-color: $surface-dark;
+    border: $border-light;
+    backdrop-filter: blur(20px);
+    padding: 20px 30px;
+    min-width: 600px;
+}
+
+.npc-name {
+    font-size: 22px;
+    font-weight: 800;
+    color: $accent;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-family: $font-ui;
+    margin-bottom: 15px;
+}
+
+.button-container {
+    flex-direction: row;
+    gap: 10px;
+
+    .btn {
+        background-color: $surface-input;
+        border: $border-light;
+        padding: 14px 30px;
+        min-width: 160px;
+        transition: $transition-fast;
+        cursor: pointer;
+        justify-content: center;
+
+        label {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 16px;
+            font-family: $font-ui;
+            pointer-events: none;
+            letter-spacing: 1px;
+        }
+
+        &:hover {
+            background-color: $accent-bg;
+            border: 1px solid $accent;
+
+            label {
+                color: white;
+            }
+        }
+
+        &.quit {
+            border-bottom: 2px solid rgba(255, 60, 0, 0.5);
+
+            &:hover {
+                background-color: rgba(255, 60, 0, 0.9);
+                border: 1px solid #ff3c00;
+                border-bottom: 2px solid white;
+            }
+        }
+    }
+}
+
+// ── DIALOGUE ──
+.dialogue-mode {
+    justify-content: center;
+    align-items: center;
+    padding-top: 750px;
+}
+
+.dialogue-box {
+    background-color: $surface-dark;
+    border: $border-light;
+    backdrop-filter: blur(20px);
+    padding: 20px 30px;
+    min-width: 600px;
+    max-width: 700px;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.dialogue-header {
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+
+    .accent-bar {
+        width: 3px;
+        height: 18px;
+        background-color: $accent;
+    }
+
+    .dialogue-name {
+        font-size: 18px;
+        color: $accent;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-weight: 800;
+        font-family: $font-ui;
+    }
+}
+
+.dialogue-text {
+    font-size: 18px;
+    color: rgba(255, 255, 255, 0.85);
+    font-family: $font-ui;
+    font-weight: 500;
+    padding: 5px 0;
+}
+
+.dialogue-choices {
+    flex-direction: row;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 5px;
+}
+
+.choice-button {
+    background-color: $surface-input;
+    border: $border-light;
+    padding: 10px 24px;
+    min-width: 140px;
+    transition: $transition-fast;
+    cursor: pointer;
+    justify-content: center;
+
+    label {
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 15px;
+        font-family: $font-ui;
+        pointer-events: none;
+    }
+
+    &:hover {
+        background-color: $accent-bg;
+        border: 1px solid $accent;
+
+        label {
+            color: white;
+            font-weight: bold;
+        }
+    }
+
+    &.close {
+        border-bottom: 2px solid rgba(255, 60, 0, 0.5);
+
+        &:hover {
+            background-color: rgba(255, 60, 0, 0.9);
+            border: 1px solid #ff3c00;
+            border-bottom: 2px solid white;
+        }
+    }
+}

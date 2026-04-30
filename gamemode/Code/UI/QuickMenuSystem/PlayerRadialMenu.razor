@@ -1,0 +1,1277 @@
+@namespace OpenFramework.UI.QuickMenuSystem
+@attribute [StyleSheet]
+@inherits Panel
+@using Facepunch
+@using OpenFramework
+@using OpenFramework.Command
+@using OpenFramework.Extension
+@using OpenFramework.Inventory
+@using OpenFramework.Systems.Jobs
+@using OpenFramework.Systems.Pawn
+@using OpenFramework.Systems.Tools
+@using OpenFramework.UI.World.ShopSigns
+@using OpenFramework.UI.World.Storage
+@using OpenFramework.UI.World
+@using OpenFramework.Systems.Crafting
+@using OpenFramework.Inventory.UI
+@using OpenFramework.Systems.Grab_System
+@using OpenFramework.World
+@using static Facepunch.NotificationSystem
+
+<root class="@(IsOpen ? "open" : "")">
+    @if (_subItems != null && UseListMode(_subItems))
+    {
+        <!-- Mode liste pour les sous-menus avec beaucoup d'items / texte long -->
+        <div class="list-bg">
+            <div class="list-title">@_subTitle</div>
+
+            <div class="list-scroll">
+                @foreach (var (item, index) in _subItems.Select((v, i) => (v, i)))
+                {
+                    var capturedItem = item;
+                    <div class="list-item @(!item.Enabled ? "disabled" : "")"
+                         onclick="@(() => OnSubItemClick(capturedItem))">
+                        <img class="list-icon" src="@item.Icon" />
+                        <span class="list-label">@item.Label</span>
+                    </div>
+                }
+            </div>
+
+            <div class="list-back" onclick="@(() => { _subItems = null; _subTitle = null; })">
+                <span>Retour</span>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="radial-bg">
+            <div class="center-dot"></div>
+
+            @if (_subItems != null)
+            {
+                <div class="radial-subtitle">@_subTitle</div>
+
+                @foreach (var (item, index) in _subItems.Select((v, i) => (v, i)))
+                {
+                    float angle = GetAngle(index, _subItems.Count);
+                    float distPct = 32f;
+                    float xPct = 50f + MathF.Cos(angle) * distPct;
+                    float yPct = 50f + MathF.Sin(angle) * distPct;
+
+                    var capturedItem = item;
+                    <div class="radial-item @(HoveredIndex == index ? "hovered" : "")"
+                         style="left: @($"{xPct:F1}%"); top: @($"{yPct:F1}%");"
+                         onclick="@(() => OnSubItemClick(capturedItem))">
+                        <img class="radial-icon" src="@item.Icon" />
+                        <span class="radial-label">@item.Label</span>
+                    </div>
+                }
+
+                <div class="radial-back" onclick="@(() => { _subItems = null; _subTitle = null; })">
+                    <span>Retour</span>
+                </div>
+            }
+            else
+            {
+                @foreach (var (item, index) in Items.Select((v, i) => (v, i)))
+                {
+                    float angle = GetAngle(index, Items.Count);
+                    float distPct = 32f;
+                    float xPct = 50f + MathF.Cos(angle) * distPct;
+                    float yPct = 50f + MathF.Sin(angle) * distPct;
+
+                    <div class="radial-item @(HoveredIndex == index ? "hovered" : "") @(!item.Enabled ? "disabled" : "")"
+                         style="left: @($"{xPct:F1}%"); top: @($"{yPct:F1}%");"
+                         onclick="@(() => SelectItem(index))">
+                        <img class="radial-icon" src="@item.Icon" />
+                        <span class="radial-label">@item.Label</span>
+                    </div>
+                }
+            }
+
+            @if (HoveredIndex >= 0)
+            {
+                int count = _subItems?.Count ?? Items.Count;
+                if (HoveredIndex < count)
+                {
+                    float hAngle = GetAngle(HoveredIndex, count);
+                    <div class="selection-line" style="transform: rotate(@($"{hAngle * 180f / MathF.PI + 90f:F1}deg"))"></div>
+                }
+            }
+
+            <div class="radial-player-name">@_playerName</div>
+        </div>
+    }
+</root>
+
+@code {
+    public static PlayerRadialMenu Instance { get; private set; }
+
+    public bool IsOpen { get; private set; }
+    public int HoveredIndex { get; private set; } = -1;
+
+    private List<RadialItem> Items { get; set; } = new();
+    private PlayerPawn _target;
+    private string _playerName;
+
+    // Sub-menu state
+    private List<RadialItem> _subItems;
+    private string _subTitle;
+    private bool _debugMode;
+    private GameObject _furnitureTarget;
+
+    public record RadialItem(string Label, string Icon, Action OnSelect, List<RadialItem> Children = null, bool Enabled = true);
+
+    /// <summary>
+    /// Seuil au-delà duquel un sous-menu bascule en mode liste (trop d'items ou labels trop longs).
+    /// </summary>
+    private const int ListModeThreshold = 6;
+    private const int ListModeLabelLength = 25;
+
+    private static bool UseListMode(List<RadialItem> items)
+    {
+        if (items == null) return false;
+        if (items.Count >= ListModeThreshold) return true;
+        if (items.Any(i => i.Label.Length > ListModeLabelLength)) return true;
+        return false;
+    }
+
+    protected override void OnAfterTreeRender(bool firstTime)
+    {
+        if (firstTime)
+            Instance = this;
+    }
+
+    private static RealTimeSince _lastOpenTime;
+
+    public static void Open(PlayerPawn target)
+    {
+        Log.Info( $"[Radial.Open] called target={target?.DisplayName ?? "<null>"} target.IsValid={target.IsValid()} target.IsProxy={target?.IsProxy} _lastOpenTime={(float)_lastOpenTime:F2}s" );
+        if (_lastOpenTime < 0.5f) { Log.Info( "[Radial.Open] abort : cooldown < 0.5s" ); return; }
+        _lastOpenTime = 0f;
+
+        if (Instance != null && Instance.IsOpen)
+        {
+            Log.Info( "[Radial.Open] menu deja ouvert → on ferme (toggle)" );
+            Instance.IsOpen = false;
+            return;
+        }
+
+        bool needCreate = false;
+        try { needCreate = Instance == null || Instance.Parent == null; }
+        catch { needCreate = true; }
+
+        if (needCreate)
+        {
+            Instance = null;
+            var hud = Game.ActiveScene?.GetComponentInChildren<Facepunch.UI.MainHUD>(true);
+            if (hud == null) { Log.Warning( "[Radial.Open] abort : MainHUD introuvable" ); return; }
+
+            Instance = new PlayerRadialMenu();
+            Instance.Items = new();
+            hud.Panel.AddChild(Instance);
+        }
+
+        if (Instance == null) { Log.Warning( "[Radial.Open] abort : Instance null apres create" ); return; }
+
+        Instance._debugMode = false;
+        Instance._target = target;
+        Instance._playerName = target.DisplayName;
+        Instance._subItems = null;
+        Instance._subTitle = null;
+        Instance.Items ??= new();
+        Instance.Items.Clear();
+
+        BuildItems(target, Instance.Items);
+
+        Log.Info( $"[Radial.Open] {Instance.Items.Count} items construits pour {target.DisplayName}" );
+        if (Instance.Items.Count == 0) { Log.Warning( "[Radial.Open] abort : aucun item construit" ); return; }
+
+        Instance.IsOpen = true;
+        Instance.HoveredIndex = -1;
+        Log.Info( $"[Radial.Open] menu ouvert pour {target.DisplayName}" );
+    }
+
+    /// <summary>
+    /// Ouvre un radial avec une option "Ramasser" sur un item au sol.
+    /// Le pickup passe par RequestPickupHost cote PlayerPawn (verifie deja IsValid
+    /// host-side, donc atomique : pas de duplication possible meme sur double-click).
+    /// </summary>
+    public static void OpenForWorldItem( WorldItem worldItem )
+    {
+        if ( worldItem == null || !worldItem.IsValid() ) return;
+        if ( _lastOpenTime < 0.5f ) return;
+        _lastOpenTime = 0f;
+
+        if ( Instance != null && Instance.IsOpen ) { Instance.IsOpen = false; return; }
+
+        bool needCreate = false;
+        try { needCreate = Instance == null || Instance.Parent == null; }
+        catch { needCreate = true; }
+
+        if ( needCreate )
+        {
+            Instance = null;
+            var hud = Game.ActiveScene?.GetComponentInChildren<Facepunch.UI.MainHUD>( true );
+            if ( hud == null ) return;
+            Instance = new PlayerRadialMenu();
+            Instance.Items = new();
+            hud.Panel.AddChild( Instance );
+        }
+
+        if ( Instance == null ) return;
+
+        var meta = worldItem.Item?.Metadata;
+        var qty = worldItem.Item?.Quantity ?? 0;
+        var label = meta != null
+            ? (qty > 1 ? $"Ramasser {qty}x {meta.Name}" : $"Ramasser {meta.Name}")
+            : "Ramasser";
+
+        Instance._debugMode = false;
+        Instance._target = null;
+        // Reutilise _furnitureTarget pour la verif de proximite dans Tick().
+        // Sans ca, Tick() referme le menu immediatement (target+furniture null).
+        Instance._furnitureTarget = worldItem.GameObject;
+        Instance._playerName = meta?.Name ?? "Item";
+        Instance._subItems = null;
+        Instance._subTitle = null;
+        Instance.Items ??= new();
+        Instance.Items.Clear();
+
+        Instance.Items.Add( new RadialItem( label, "ui/icons/backpack.svg", () =>
+        {
+            var pawn = Client.Local?.PlayerPawn as PlayerPawn;
+            if ( pawn != null && worldItem.IsValid() )
+                pawn.RequestPickupItem( worldItem );
+            Close();
+        } ) );
+
+        Instance.IsOpen = true;
+        Instance.HoveredIndex = -1;
+    }
+
+    /// <summary>
+    /// Ouvre un radial avec une option "Ramasser" sur une arme jetee au sol (DroppedEquipment).
+    /// </summary>
+    public static void OpenForDroppedWeapon( DroppedEquipment weapon )
+    {
+        if ( weapon == null || !weapon.IsValid() ) return;
+        if ( _lastOpenTime < 0.5f ) return;
+        _lastOpenTime = 0f;
+
+        if ( Instance != null && Instance.IsOpen ) { Instance.IsOpen = false; return; }
+
+        bool needCreate = false;
+        try { needCreate = Instance == null || Instance.Parent == null; }
+        catch { needCreate = true; }
+
+        if ( needCreate )
+        {
+            Instance = null;
+            var hud = Game.ActiveScene?.GetComponentInChildren<Facepunch.UI.MainHUD>( true );
+            if ( hud == null ) return;
+            Instance = new PlayerRadialMenu();
+            Instance.Items = new();
+            hud.Panel.AddChild( Instance );
+        }
+
+        if ( Instance == null ) return;
+
+        Instance._debugMode = false;
+        Instance._target = null;
+        // Reutilise _furnitureTarget pour la verif de proximite dans Tick().
+        Instance._furnitureTarget = weapon.GameObject;
+        Instance._playerName = weapon.GameObject?.Name ?? "Arme";
+        Instance._subItems = null;
+        Instance._subTitle = null;
+        Instance.Items ??= new();
+        Instance.Items.Clear();
+
+        Instance.Items.Add( new RadialItem( "Ramasser l'arme", "ui/icons/backpack.svg", () =>
+        {
+            var pawn = Client.Local?.PlayerPawn as PlayerPawn;
+            if ( pawn != null && weapon.IsValid() )
+                pawn.RequestPickupTarget( weapon.GameObject );
+            Close();
+        } ) );
+
+        Instance.IsOpen = true;
+        Instance.HoveredIndex = -1;
+    }
+
+    /// <summary>
+    /// Ouvre un radial avec une option "Ouvrir le carton" sur un colis/container droppe
+    /// (DroppedInventory). Le pickup vise force le passage par radial pour eviter qu'un
+    /// hold E n'ouvre l'inventaire automatiquement (anciennement via fallback IUse).
+    /// </summary>
+    public static void OpenForDroppedInventory( DroppedInventory dropped )
+    {
+        if ( dropped == null || !dropped.IsValid() ) return;
+        if ( _lastOpenTime < 0.5f ) return;
+        _lastOpenTime = 0f;
+
+        if ( Instance != null && Instance.IsOpen ) { Instance.IsOpen = false; return; }
+
+        bool needCreate = false;
+        try { needCreate = Instance == null || Instance.Parent == null; }
+        catch { needCreate = true; }
+
+        if ( needCreate )
+        {
+            Instance = null;
+            var hud = Game.ActiveScene?.GetComponentInChildren<Facepunch.UI.MainHUD>( true );
+            if ( hud == null ) return;
+            Instance = new PlayerRadialMenu();
+            Instance.Items = new();
+            hud.Panel.AddChild( Instance );
+        }
+
+        if ( Instance == null ) return;
+
+        Instance._debugMode = false;
+        Instance._target = null;
+        // Reutilise _furnitureTarget pour la verif de proximite dans Tick().
+        Instance._furnitureTarget = dropped.GameObject;
+        Instance._playerName = dropped.DisplayName;
+        Instance._subItems = null;
+        Instance._subTitle = null;
+        Instance.Items ??= new();
+        Instance.Items.Clear();
+
+        var openLabel = $"Ouvrir le {dropped.DisplayName.ToLower()}";
+        Instance.Items.Add( new RadialItem( openLabel, "ui/icons/backpack.svg", () =>
+        {
+            var pawn = Client.Local?.PlayerPawn as PlayerPawn;
+            if ( pawn != null && dropped.IsValid() )
+                pawn.RequestPickupTarget( dropped.GameObject );
+            Close();
+        } ) );
+
+        Instance.IsOpen = true;
+        Instance.HoveredIndex = -1;
+    }
+
+    /// <summary>
+    /// Ouvre un radial avec une option "Ouvrir la poubelle" sur une TrashBin.
+    /// Comme DroppedInventory, le hold E n'ouvre plus directement l'inventaire,
+    /// tout passe par le radial pour eviter une ouverture parasite.
+    /// </summary>
+    public static void OpenForTrashBin( OpenFramework.Systems.Jobs.TrashBin trash )
+    {
+        if ( trash == null || !trash.IsValid() ) return;
+        if ( _lastOpenTime < 0.5f ) return;
+        _lastOpenTime = 0f;
+
+        if ( Instance != null && Instance.IsOpen ) { Instance.IsOpen = false; return; }
+
+        bool needCreate = false;
+        try { needCreate = Instance == null || Instance.Parent == null; }
+        catch { needCreate = true; }
+
+        if ( needCreate )
+        {
+            Instance = null;
+            var hud = Game.ActiveScene?.GetComponentInChildren<Facepunch.UI.MainHUD>( true );
+            if ( hud == null ) return;
+            Instance = new PlayerRadialMenu();
+            Instance.Items = new();
+            hud.Panel.AddChild( Instance );
+        }
+
+        if ( Instance == null ) return;
+
+        Instance._debugMode = false;
+        Instance._target = null;
+        // Reutilise _furnitureTarget pour la verif de proximite dans Tick().
+        Instance._furnitureTarget = trash.GameObject;
+        Instance._playerName = trash.DisplayName ?? "Poubelle";
+        Instance._subItems = null;
+        Instance._subTitle = null;
+        Instance.Items ??= new();
+        Instance.Items.Clear();
+
+        bool isBusyByOther = trash.IsBusy && trash.CurrentUser != Client.Local;
+        var label = isBusyByOther ? "Occupée" : "Ouvrir la poubelle";
+
+        Instance.Items.Add( new RadialItem( label, "ui/icons/backpack.svg", () =>
+        {
+            var pawn = Client.Local?.PlayerPawn as PlayerPawn;
+            if ( pawn != null && trash.IsValid() )
+                pawn.RequestPickupTarget( trash.GameObject );
+            Close();
+        }, Enabled: !isBusyByOther ) );
+
+        Instance.IsOpen = true;
+        Instance.HoveredIndex = -1;
+    }
+
+    /// <summary>
+    /// Ouvre un radial avec "Récolter" et "Ramasser le pot" pour un WeedPot.
+    /// Intercepté avant le handler WorldItem car WeedPot possède un composant WorldItem.
+    /// </summary>
+    public static void OpenForWeedPot( WeedPot pot )
+    {
+        if ( pot == null || !pot.IsValid() ) return;
+        if ( _lastOpenTime < 0.5f ) return;
+        _lastOpenTime = 0f;
+
+        if ( Instance != null && Instance.IsOpen ) { Instance.IsOpen = false; return; }
+
+        bool needCreate = false;
+        try { needCreate = Instance == null || Instance.Parent == null; }
+        catch { needCreate = true; }
+
+        if ( needCreate )
+        {
+            Instance = null;
+            var hud = Game.ActiveScene?.GetComponentInChildren<Facepunch.UI.MainHUD>( true );
+            if ( hud == null ) return;
+            Instance = new PlayerRadialMenu();
+            Instance.Items = new();
+            hud.Panel.AddChild( Instance );
+        }
+
+        if ( Instance == null ) return;
+
+        bool canHarvest = pot.GrowStage >= pot.MaxStage;
+
+        Instance._debugMode = false;
+        Instance._target = null;
+        Instance._furnitureTarget = pot.GameObject;
+        Instance._playerName = pot.DisplayName ?? "Weed Pot";
+        Instance._subItems = null;
+        Instance._subTitle = null;
+        Instance.Items ??= new();
+        Instance.Items.Clear();
+
+        Instance.Items.Add( new RadialItem(
+            canHarvest ? "Récolter" : "Pas encore prête",
+            "ui/icons/success.svg",
+            () =>
+            {
+                if ( canHarvest )
+                    Commands.RPC_HarvestWeedPot( pot.GameObject );
+                Close();
+            },
+            Enabled: canHarvest
+        ) );
+
+        var wi = pot.Components.Get<WorldItem>( FindMode.EnabledInSelf );
+        if ( wi != null )
+        {
+            Instance.Items.Add( new RadialItem( "Ramasser le pot", "ui/icons/backpack.svg", () =>
+            {
+                var pawn = Client.Local?.PlayerPawn as PlayerPawn;
+                if ( pawn != null && pot.IsValid() )
+                    pawn.RequestPickupItem( wi );
+                Close();
+            } ) );
+        }
+
+        Instance.IsOpen = true;
+        Instance.HoveredIndex = -1;
+    }
+
+    /// <summary>
+    /// Ouvre un radial avec uniquement "Grab" pour un objet decoratif marque "grab"
+    /// (Rigidbody motion-enabled). Sert quand l'objet n'est ni furniture ni
+    /// WorldItem : juste un prop physique qu'on veut pouvoir attraper.
+    /// </summary>
+    public static void OpenForGrabbable( GameObject target )
+    {
+        if ( target == null || !target.IsValid() ) return;
+        if ( _lastOpenTime < 0.5f ) return;
+        _lastOpenTime = 0f;
+
+        if ( Instance != null && Instance.IsOpen ) { Instance.IsOpen = false; return; }
+
+        bool needCreate = false;
+        try { needCreate = Instance == null || Instance.Parent == null; }
+        catch { needCreate = true; }
+
+        if ( needCreate )
+        {
+            Instance = null;
+            var hud = Game.ActiveScene?.GetComponentInChildren<Facepunch.UI.MainHUD>( true );
+            if ( hud == null ) return;
+            Instance = new PlayerRadialMenu();
+            Instance.Items = new();
+            hud.Panel.AddChild( Instance );
+        }
+
+        if ( Instance == null ) return;
+
+        Instance._debugMode = false;
+        Instance._target = null;
+        // Reutilise _furnitureTarget pour la verif de proximite dans Tick().
+        Instance._furnitureTarget = target;
+        Instance._playerName = target.Name ?? "Objet";
+        Instance._subItems = null;
+        Instance._subTitle = null;
+        Instance.Items ??= new();
+        Instance.Items.Clear();
+
+        Instance.Items.Add( new RadialItem( "Attraper", "ui/icons/transfer.svg", () =>
+        {
+            var pawn = Client.Local?.PlayerPawn as PlayerPawn;
+            var grab = pawn?.Components.Get<GrabSystem>( FindMode.EverythingInSelfAndDescendants );
+            if ( grab != null && target.IsValid() )
+                grab.StartGrab( target );
+            Close();
+        } ) );
+
+        Instance.IsOpen = true;
+        Instance.HoveredIndex = -1;
+    }
+
+    public static void OpenForPoliceLocker( PoliceLocker locker )
+    {
+        if ( locker == null || !locker.IsValid() ) return;
+        if ( _lastOpenTime < 0.5f ) return;
+        _lastOpenTime = 0f;
+
+        if ( Instance != null && Instance.IsOpen ) { Instance.IsOpen = false; return; }
+
+        bool needCreate = false;
+        try { needCreate = Instance == null || Instance.Parent == null; }
+        catch { needCreate = true; }
+
+        if ( needCreate )
+        {
+            Instance = null;
+            var hud = Game.ActiveScene?.GetComponentInChildren<Facepunch.UI.MainHUD>( true );
+            if ( hud == null ) return;
+            Instance = new PlayerRadialMenu();
+            Instance.Items = new();
+            hud.Panel.AddChild( Instance );
+        }
+
+        if ( Instance == null ) return;
+
+        var localJob = Client.Local?.Data?.Job?.ToLower();
+        bool isPolice = localJob == JobList.Police.ToString().ToLower() || localJob == "scu";
+
+        Instance._debugMode = false;
+        Instance._target = null;
+        Instance._furnitureTarget = locker.GameObject;
+        Instance._playerName = "Casier Police";
+        Instance._subItems = null;
+        Instance._subTitle = null;
+        Instance.Items ??= new();
+        Instance.Items.Clear();
+
+        Instance.Items.Add( new RadialItem(
+            isPolice ? "Ouvrir le casier" : "Réservé à la police",
+            "ui/icons/work.svg",
+            () =>
+            {
+                PoliceLockerUI.OpenLocal( locker );
+                Close();
+            },
+            Enabled: isPolice
+        ) );
+
+        Instance.IsOpen = true;
+        Instance.HoveredIndex = -1;
+    }
+
+    public static void OpenForFurniture( GameObject furniture )
+    {
+        if ( ShopSign.DebugLogs ) Log.Info( $"[PlayerRadialMenu] OpenForFurniture appele pour '{furniture?.Name}' (lastOpenTime={_lastOpenTime:0.00})" );
+        if ( _lastOpenTime < 0.5f ) { if ( ShopSign.DebugLogs ) Log.Info( "[PlayerRadialMenu] OpenForFurniture : ignore (cooldown)" ); return; }
+        _lastOpenTime = 0f;
+
+        if ( Instance != null && Instance.IsOpen ) { if ( ShopSign.DebugLogs ) Log.Info( "[PlayerRadialMenu] OpenForFurniture : panel deja ouvert, on ferme" ); Instance.IsOpen = false; return; }
+
+        bool needCreate = false;
+        try { needCreate = Instance == null || Instance.Parent == null; }
+        catch { needCreate = true; }
+
+        if ( needCreate )
+        {
+            Instance = null;
+            var hud = Game.ActiveScene?.GetComponentInChildren<Facepunch.UI.MainHUD>( true );
+            if ( hud == null ) return;
+            Instance = new PlayerRadialMenu();
+            Instance.Items = new();
+            hud.Panel.AddChild( Instance );
+        }
+
+        if ( Instance == null ) return;
+
+        var fv = furniture.Components.Get<FurnitureVisual>( FindMode.EverythingInSelfAndDescendants );
+        var inv = furniture.Components.Get<InventoryItem>( FindMode.EverythingInSelfAndDescendants );
+
+        Instance._debugMode = false;
+        Instance._furnitureTarget = furniture;
+        Instance._target = null;
+        Instance._playerName = inv?.Metadata?.Name ?? "Meuble";
+        Instance._subItems = null;
+        Instance._subTitle = null;
+        Instance.Items ??= new();
+        Instance.Items.Clear();
+
+        if ( fv != null )
+        {
+            bool isFurnOwner = fv.IsOwnedBy( Client.Local );
+            bool canManipulateFurn = fv.CanBeManipulatedBy( Client.Local );
+
+            // Bouton verrouillage proprietaire (visible uniquement par le proprietaire)
+            if ( isFurnOwner )
+            {
+                if ( fv.OwnerLocked )
+                {
+                    Instance.Items.Add( new RadialItem( "Autoriser autres", "ui/icons/freeze.svg", () =>
+                    {
+                        Commands.RPC_SetFurnitureOwnerLock( furniture, false );
+                        Close();
+                    } ) );
+                }
+                else
+                {
+                    Instance.Items.Add( new RadialItem( "Verrouiller (proprio)", "ui/icons/freeze.svg", () =>
+                    {
+                        Commands.RPC_SetFurnitureOwnerLock( furniture, true );
+                        Close();
+                    } ) );
+                }
+            }
+
+            // Non-proprietaire face a un meuble OwnerLocked : on n'arrete plus le
+            // flow ici. Les actions "passives" (allumer/eteindre lampe ou grill,
+            // s'asseoir) restent autorisees ; seules les actions destructives
+            // (fixer/defixer/deplacer/ramasser/storage/etabli/enseigne) sont
+            // gardees par canManipulateFurn ci-dessous. Si rien n'est dispo a la
+            // fin, le `Instance.Items.Count == 0 → return` plus bas referme.
+            if ( !canManipulateFurn )
+            {
+                Instance._subTitle = "Verrouille par le proprietaire";
+            }
+
+            // Coffre a code verrouille : seules les options de code sont
+            // proposees. Defixer / deplacer / ramasser sont refuses cote
+            // host tant qu'il est verrouille. Les storages classiques sans
+            // code restent traites comme du furniture normal.
+            var storageLocked = furniture.Components.Get<StorageComponent>( FindMode.EverythingInSelfAndDescendants );
+            if ( storageLocked != null && storageLocked.RequiresCode && storageLocked.IsLocked )
+            {
+                bool isOwnerLocked = storageLocked.Owner == Client.Local;
+
+                if ( isOwnerLocked && !storageLocked.HasCode )
+                {
+                    Instance.Items.Add( new RadialItem( "Définir le code", "ui/icons/freeze.svg", () =>
+                    {
+                        StorageCodePanel.Open( storageLocked, StorageCodePanel.Mode.Define );
+                        Close();
+                    } ) );
+                }
+                else if ( storageLocked.HasCode )
+                {
+                    // Pas de "Changer le code" ici : il faut d'abord deverrouiller.
+                    Instance.Items.Add( new RadialItem( "Entrer le code", "ui/icons/freeze.svg", () =>
+                    {
+                        StorageCodePanel.Open( storageLocked, StorageCodePanel.Mode.Unlock );
+                        Close();
+                    } ) );
+                }
+            }
+            else if ( fv.IsLocked )
+            {
+                if ( canManipulateFurn )
+                {
+                    Instance.Items.Add( new RadialItem( "Défixer", "ui/icons/freeze.svg", () => { Commands.RPC_SetFurnitureLock( furniture, false ); Close(); } ) );
+
+                    var shopSignLocked = furniture.Components.Get<ShopSign>( FindMode.EverythingInSelfAndDescendants );
+                    if ( ShopSign.DebugLogs ) Log.Info( $"[PlayerRadialMenu] Branche meuble verrouille '{furniture.Name}' : shopSignLocked={shopSignLocked != null}" );
+                    if ( shopSignLocked != null )
+                    {
+                        Instance.Items.Add( new RadialItem( "Modifier l'enseigne", "ui/icons/fill_color.svg", () =>
+                        {
+                            if ( ShopSign.DebugLogs ) Log.Info( $"[PlayerRadialMenu] Click 'Modifier l'enseigne' (locked) sur '{furniture.Name}'" );
+                            ShopSignEditPanel.Open( shopSignLocked );
+                            Close();
+                        } ) );
+                    }
+
+                    // Etabli fixe : option "Utiliser" (desactivee si mauvais job)
+                    var craftingTableLocked = furniture.Components.Get<CraftingTable>( FindMode.EverythingInSelfAndDescendants );
+                    if ( craftingTableLocked != null )
+                    {
+                        bool canUseLocked = craftingTableLocked.CanBeUsedBy( Client.Local );
+                        Instance.Items.Add( new RadialItem( "Utiliser", "ui/icons/work.svg", () =>
+                        {
+                            if ( !canUseLocked )
+                            {
+                                Client.Local.Notify( NotificationType.Error, $"Réservé aux {craftingTableLocked.JobAccess}." );
+                                Close();
+                                return;
+                            }
+                            CraftingUI.OpenLocal( craftingTableLocked );
+                            Close();
+                        }, Enabled: canUseLocked ) );
+                    }
+                }
+
+                // Une lampe fixee reste allumable/eteignable
+                var lampLocked = furniture.Components.Get<LampComponent>( FindMode.EverythingInSelfAndDescendants );
+                if ( lampLocked != null )
+                {
+                    if ( lampLocked.IsOn )
+                    {
+                        Instance.Items.Add( new RadialItem( "Éteindre", "ui/icons/fill_color.svg", () =>
+                        {
+                            Commands.RPC_ToggleLamp( furniture, false );
+                            Close();
+                        } ) );
+                    }
+                    else
+                    {
+                        Instance.Items.Add( new RadialItem( "Allumer", "ui/icons/fill_color.svg", () =>
+                        {
+                            Commands.RPC_ToggleLamp( furniture, true );
+                            Close();
+                        } ) );
+                    }
+                }
+
+                // Grill fixe : allumer / éteindre
+                var grillLocked = furniture.Components.Get<OpenFramework.Systems.Cooking.GrillStation>( FindMode.EverythingInSelfAndDescendants );
+                if ( grillLocked != null )
+                {
+                    bool isLit = grillLocked.IsLit;
+                    Instance.Items.Add( new RadialItem( isLit ? "Éteindre le grill" : "Allumer le grill", "ui/icons/fill_color.svg", () =>
+                    {
+                        Commands.RPC_ToggleGrill( furniture, !isLit );
+                        Close();
+                    } ) );
+                }
+
+                // Friteuse fixe : allumer / éteindre
+                var fryerLocked = furniture.Components.Get<OpenFramework.Systems.Cooking.FryerStation>( FindMode.EverythingInSelfAndDescendants );
+                if ( fryerLocked != null )
+                {
+                    bool isLit = fryerLocked.IsLit;
+                    Instance.Items.Add( new RadialItem( isLit ? "Éteindre la friteuse" : "Allumer la friteuse", "ui/icons/fill_color.svg", () =>
+                    {
+                        Commands.RPC_ToggleFryer( furniture, !isLit );
+                        Close();
+                    } ) );
+                }
+
+                // Storage : cabinet classique (RequiresCode=false) accessible
+                // toujours ; coffre a code (RequiresCode=true) seulement quand
+                // deverrouille (le bloc verrouille plus haut intercepte sinon).
+                // Pour un coffre a code, le code lui-meme est l'unique gate
+                // d'acces au stockage : un non-proprio qui a tape le bon code
+                // doit pouvoir ouvrir, meme si le prop est OwnerLocked. Pour
+                // un cabinet classique sans code, on retombe sur canManipulateFurn.
+                var storageFixed = furniture.Components.Get<StorageComponent>( FindMode.EverythingInSelfAndDescendants );
+                if ( storageFixed != null )
+                {
+                    if ( storageFixed.RequiresCode )
+                    {
+                        if ( !storageFixed.IsLocked )
+                            AddStorageOptions( storageFixed, furniture );
+                    }
+                    else if ( canManipulateFurn )
+                    {
+                        AddStorageOptions( storageFixed, furniture );
+                    }
+                }
+            }
+            else
+            {
+                if ( canManipulateFurn )
+                {
+                    Instance.Items.Add( new RadialItem( "Fixer", "ui/icons/freeze.svg", () => { Commands.RPC_SetFurnitureLock( furniture, true ); Close(); } ) );
+                    Instance.Items.Add( new RadialItem( "Déplacer", "ui/icons/transfer.svg", () =>
+                    {
+                        var pawn = Client.Local?.PlayerPawn as PlayerPawn;
+                        var placer = pawn?.Components.Get<PropPlacer>( FindMode.EnabledInSelfAndDescendants );
+                        Log.Info( $"[Radial:Déplacer] pawn={pawn != null} placer={placer != null} furniture={furniture?.Name}" );
+                        placer?.StartMoving( furniture );
+                        Close();
+                    } ) );
+                    Instance.Items.Add( new RadialItem( "Ramasser", "ui/icons/backpack.svg", () =>
+                    {
+                        Log.Info( $"[Radial:Ramasser] furniture={furniture?.Name}" );
+                        Commands.RPC_PickupFurniture( furniture );
+                        Close();
+                    } ) );
+
+                    // Attraper (GrabSystem) : disponible si le meuble a un Rigidbody
+                    // motion-enabled. Different de "Déplacer" (PropPlacer = snap aux
+                    // surfaces) : ici on porte l'objet en main, physique libre.
+                    var furnBody = furniture.Components.GetInParentOrSelf<Rigidbody>()
+                        ?? furniture.Components.Get<Rigidbody>( FindMode.EverythingInSelfAndDescendants );
+                    if ( furnBody != null && furnBody.MotionEnabled )
+                    {
+                        Instance.Items.Add( new RadialItem( "Attraper", "ui/icons/transfer.svg", () =>
+                        {
+                            var pawn = Client.Local?.PlayerPawn as PlayerPawn;
+                            var grab = pawn?.Components.Get<GrabSystem>( FindMode.EverythingInSelfAndDescendants );
+                            if ( grab != null )
+                                grab.StartGrab( furnBody.GameObject );
+                            Close();
+                        } ) );
+                    }
+
+                    // Option exclusive aux enseignes de shop
+                    var shopSign = furniture.Components.Get<ShopSign>( FindMode.EverythingInSelfAndDescendants );
+                    if ( ShopSign.DebugLogs ) Log.Info( $"[PlayerRadialMenu] Branche meuble libre '{furniture.Name}' : shopSign={shopSign != null}" );
+                    if ( shopSign != null )
+                    {
+                        Instance.Items.Add( new RadialItem( "Modifier l'enseigne", "ui/icons/fill_color.svg", () =>
+                        {
+                            if ( ShopSign.DebugLogs ) Log.Info( $"[PlayerRadialMenu] Click 'Modifier l'enseigne' (libre) sur '{furniture.Name}'" );
+                            ShopSignEditPanel.Open( shopSign );
+                            Close();
+                        } ) );
+                    }
+
+                    // Etabli non-fixe : option "Utiliser" (desactivee si mauvais job)
+                    var craftingTable = furniture.Components.Get<CraftingTable>( FindMode.EverythingInSelfAndDescendants );
+                    if ( craftingTable != null )
+                    {
+                        bool canUse = craftingTable.CanBeUsedBy( Client.Local );
+                        Instance.Items.Add( new RadialItem( "Utiliser", "ui/icons/work.svg", () =>
+                        {
+                            if ( !canUse )
+                            {
+                                Client.Local.Notify( NotificationType.Error, $"Réservé aux {craftingTable.JobAccess}." );
+                                Close();
+                                return;
+                            }
+                            CraftingUI.OpenLocal( craftingTable );
+                            Close();
+                        }, Enabled: canUse ) );
+                    }
+                }
+
+                // Option exclusive aux lampes : allumer / eteindre
+                var lamp = furniture.Components.Get<LampComponent>( FindMode.EverythingInSelfAndDescendants );
+                if ( lamp != null )
+                {
+                    if ( lamp.IsOn )
+                    {
+                        Instance.Items.Add( new RadialItem( "Éteindre", "ui/icons/fill_color.svg", () =>
+                        {
+                            Commands.RPC_ToggleLamp( furniture, false );
+                            Close();
+                        } ) );
+                    }
+                    else
+                    {
+                        Instance.Items.Add( new RadialItem( "Allumer", "ui/icons/fill_color.svg", () =>
+                        {
+                            Commands.RPC_ToggleLamp( furniture, true );
+                            Close();
+                        } ) );
+                    }
+                }
+
+                // Grill non-fixe : allumer / éteindre
+                var grill = furniture.Components.Get<OpenFramework.Systems.Cooking.GrillStation>( FindMode.EverythingInSelfAndDescendants );
+                if ( grill != null )
+                {
+                    bool isLit = grill.IsLit;
+                    Instance.Items.Add( new RadialItem( isLit ? "Éteindre le grill" : "Allumer le grill", "ui/icons/fill_color.svg", () =>
+                    {
+                        Commands.RPC_ToggleGrill( furniture, !isLit );
+                        Close();
+                    } ) );
+                }
+
+                // Friteuse non-fixe : allumer / éteindre
+                var fryer = furniture.Components.Get<OpenFramework.Systems.Cooking.FryerStation>( FindMode.EverythingInSelfAndDescendants );
+                if ( fryer != null )
+                {
+                    bool isLit = fryer.IsLit;
+                    Instance.Items.Add( new RadialItem( isLit ? "Éteindre la friteuse" : "Allumer la friteuse", "ui/icons/fill_color.svg", () =>
+                    {
+                        Commands.RPC_ToggleFryer( furniture, !isLit );
+                        Close();
+                    } ) );
+                }
+
+                // Coffre deverrouille + non fixe : ouvrir, verrouiller, changer code.
+                // Meme regle que dans le bloc fixe : pour un coffre a code, c'est
+                // le code qui controle l'ouverture (un non-proprio l'ayant tape
+                // peut ouvrir). Pour un cabinet sans code, on garde canManipulateFurn.
+                var storageUnfixed = furniture.Components.Get<StorageComponent>( FindMode.EverythingInSelfAndDescendants );
+                if ( storageUnfixed != null )
+                {
+                    if ( storageUnfixed.RequiresCode )
+                    {
+                        if ( !storageUnfixed.IsLocked )
+                            AddStorageOptions( storageUnfixed, furniture );
+                    }
+                    else if ( canManipulateFurn )
+                    {
+                        AddStorageOptions( storageUnfixed, furniture );
+                    }
+                }
+            }
+
+            // Chaises / canapes : un meuble peut avoir un ou plusieurs ChairComponent,
+            // chaque ChairComponent peut a son tour gerer 1 ou N slots (cf. Seats list).
+            // On compte donc les SLOTS (et non les chaises) pour le label et les
+            // disponibilites. L'autorite reste host-only via RequestSit (Rpc.Host) :
+            // le host trouve la place libre la plus proche du joueur cote serveur,
+            // donc anti-duplication strict meme avec sync en retard cote client.
+            var chairs = furniture.Components.GetAll<ChairComponent>( FindMode.EverythingInSelfAndDescendants ).ToList();
+            if ( chairs.Count > 0 )
+            {
+                bool frozen = fv.IsLocked;
+                int totalSlots = chairs.Sum( c => c.SlotCount );
+                int freeSlots = chairs.Sum( c => c.FreeSlotCount );
+                bool anyFree = freeSlots > 0;
+
+                Log.Info( $"[Radial:Chair] meuble='{furniture.Name}' chairs={chairs.Count} totalSlots={totalSlots} freeSlots={freeSlots} frozen={frozen}" );
+                for ( int ci = 0; ci < chairs.Count; ci++ )
+                {
+                    var c = chairs[ci];
+                    var seatsList = c.EffectiveSeats;
+                    var occList = string.Join( ",", System.Linq.Enumerable.Range( 0, seatsList.Count )
+                        .Select( i => c.IsSlotOccupied( i ) ? $"slot{i}=PRIS" : $"slot{i}=libre" ) );
+                    Log.Info( $"[Radial:Chair] #{ci} go='{c.GameObject.Name}' enabled={c.Enabled} slotCount={c.SlotCount} seatsListSize={(c.Seats?.Count ?? 0)} hasSeatPosition={c.SeatPosition.IsValid()} → {occList}" );
+                }
+
+                string label;
+                if ( !frozen ) label = "Fixer le meuble pour s'asseoir";
+                else if ( !anyFree ) label = totalSlots > 1 ? "Toutes les places sont prises" : "Occupée";
+                else if ( totalSlots > 1 ) label = $"S'asseoir ({freeSlots}/{totalSlots})";
+                else label = "S'asseoir";
+
+                Instance.Items.Add( new RadialItem( label, "/ui/icons/human.svg", () =>
+                {
+                    var pawn = Client.Local?.PlayerPawn as PlayerPawn;
+                    if ( pawn == null ) { Close(); return; }
+                    if ( !frozen )
+                    {
+                        Client.Local?.Notify( NotificationType.Error, "Le meuble doit être fixé pour s'asseoir." );
+                        Close();
+                        return;
+                    }
+                    if ( pawn.IsSitting )
+                    {
+                        Client.Local?.Notify( NotificationType.Error, "Vous êtes déjà assis." );
+                        Close();
+                        return;
+                    }
+
+                    // On choisit le ChairComponent qui contient un slot libre. Quand
+                    // il y en a plusieurs, on prefere celui dont le slot libre le plus
+                    // proche du joueur a la plus petite distance — comportement naturel
+                    // qui evite que cliquer sur un cote du canape mette le joueur a
+                    // l'autre bout. Le host re-trouvera lui-meme un slot libre au
+                    // moment du RequestSit, ce code n'est qu'un confort UI.
+                    var pawnPos = pawn.WorldPosition;
+                    var target = chairs
+                        .Where( c => c.HasFreeSlot )
+                        .OrderBy( c =>
+                        {
+                            float best = float.MaxValue;
+                            var seats = c.EffectiveSeats;
+                            for ( int i = 0; i < seats.Count; i++ )
+                            {
+                                if ( c.IsSlotOccupied( i ) ) continue;
+                                var sp = seats[i].IsValid() ? seats[i].WorldPosition : c.WorldPosition;
+                                var d = sp.DistanceSquared( pawnPos );
+                                if ( d < best ) best = d;
+                            }
+                            return best;
+                        } )
+                        .FirstOrDefault();
+
+                    if ( target == null )
+                    {
+                        Client.Local?.Notify( NotificationType.Error, totalSlots > 1
+                            ? "Toutes les places sont prises."
+                            : "Cette chaise est déjà occupée." );
+                        Close();
+                        return;
+                    }
+
+                    target.RequestSit();
+                    Close();
+                }, Enabled: frozen && anyFree ) );
+            }
+        }
+        else
+        {
+            Instance.Items.Add( new RadialItem( "Ramasser", "ui/icons/backpack.svg", () => { Commands.RPC_PickupFurniture( furniture ); Close(); } ) );
+        }
+
+        if ( Instance.Items.Count == 0 ) return;
+
+        Instance.IsOpen = true;
+        Instance.HoveredIndex = -1;
+    }
+
+    private static void AddStorageOptions( StorageComponent storage, GameObject furniture )
+    {
+        Instance.Items.Add( new RadialItem( "Ouvrir", "ui/icons/backpack.svg", () =>
+        {
+            if ( FullInventory.Instance != null )
+            {
+                FullInventory.Instance.NearbyContainer = storage.InventoryContainer;
+                FullInventory.Instance.IsOpen = true;
+            }
+            Close();
+        } ) );
+
+        // Verrouiller / changer le code : reserve aux coffres a code,
+        // et seulement pour leur owner.
+        if ( storage.RequiresCode && storage.Owner == Client.Local )
+        {
+            Instance.Items.Add( new RadialItem( "Verrouiller le coffre", "ui/icons/freeze.svg", () =>
+            {
+                StorageComponent.Lock( storage );
+                Close();
+            } ) );
+
+            Instance.Items.Add( new RadialItem( "Changer le code", "ui/icons/fill_color.svg", () =>
+            {
+                StorageCodePanel.Open( storage, StorageCodePanel.Mode.Define );
+                Close();
+            } ) );
+        }
+    }
+
+    /// <summary>
+    /// DEBUG : ouvre directement le menu en mode liste avec les FineReasons de Constants.
+    /// Permet d'inspecter et d'ajuster le CSS du sous-menu "liste" sans passer par le flow police.
+    /// </summary>
+    public static void OpenDebugFines(List<(string Label, string Icon)> items, string title = "Amendes (DEBUG)")
+    {
+        _lastOpenTime = 0f;
+
+        bool needCreate = false;
+        try { needCreate = Instance == null || Instance.Parent == null; }
+        catch { needCreate = true; }
+
+        if (needCreate)
+        {
+            Instance = null;
+            var hud = Game.ActiveScene?.GetComponentInChildren<Facepunch.UI.MainHUD>(true);
+            if (hud == null) return;
+
+            Instance = new PlayerRadialMenu();
+            Instance.Items = new();
+            hud.Panel.AddChild(Instance);
+        }
+
+        if (Instance == null) return;
+
+        Instance._debugMode = true;
+        Instance._target = null;
+        Instance._playerName = "DEBUG";
+        Instance.Items = new();
+        Instance._subTitle = title;
+        Instance._subItems = items
+            .Select(t => new RadialItem(t.Label, t.Icon, () => Close()))
+            .ToList();
+
+        Instance.IsOpen = true;
+        Instance.HoveredIndex = -1;
+    }
+
+    private static void BuildItems(PlayerPawn target, List<RadialItem> items)
+    {
+        var self = Client.Local;
+        var selfPawn = self.PlayerPawn as PlayerPawn;
+
+        // --- Saluer ---
+        items.Add(new RadialItem("Saluer", "/ui/icons/human.svg", () =>
+        {
+            if (!RequireProximity(target, 100f))
+            {
+                self.Notify(NotificationType.Error, $"Vous êtes trop loin de {target.DisplayName}");
+                Close();
+                return;
+            }
+            target.Client.Notify(NotificationType.Generic, $"{self.DisplayName} vous salue.");
+            Close();
+        }));
+
+        // --- Poignée de main ---
+        items.Add(new RadialItem("Poignée de main", "/ui/icons/contacts.svg", () =>
+        {
+            if (!RequireProximity(target, 100f))
+            {
+                self.Notify(NotificationType.Error, $"Vous êtes trop loin de {target.DisplayName}");
+                Close();
+                return;
+            }
+            target.Client.Notify(NotificationType.Generic, $"{self.DisplayName} vous tend la main.");
+            Close();
+        }));
+
+        // --- Fouiller (seulement si mains levées) ---
+        items.Add(new RadialItem("Fouiller", "/ui/icons/loupe.svg", () =>
+        {
+            if (!RequireProximity(target, 100f))
+            {
+                self.Notify(NotificationType.Error, $"Vous êtes trop loin de {target.DisplayName}");
+                Close();
+                return;
+            }
+            if (!target.IsHandsUp)
+            {
+                self.Notify(NotificationType.Error, $"{target.DisplayName} n'a pas les mains en l'air.");
+                Close();
+                return;
+            }
+            target.RequestFrisk(selfPawn);
+            Close();
+        }, Enabled: target.IsHandsUp));
+
+        // --- Échanger / Trade ---
+        var container = self.PlayerPawn.GameObject.Components.Get<InventoryContainer>(FindMode.EnabledInSelfAndChildren);
+        if (container != null && container.Items.Any())
+        {
+            var tradeChildren = container.Items
+                .Select(item => new RadialItem(
+                    $"{item.Name}",
+                    "/ui/icons/transfer.svg",
+                    () =>
+                    {
+                        // TODO: Implémenter le trade
+                        Close();
+                    }
+                ))
+                .ToList();
+
+            if (tradeChildren.Count > 0)
+                items.Add(new RadialItem("Échanger", "/ui/icons/transfer.svg", null, tradeChildren));
+        }
+
+        // --- Actions de job ---
+        var job = JobSystem.GetJob(self.Data.Job);
+        var jobActions = job?.InteractionActions(target);
+
+        if (jobActions != null && jobActions.Count > 0)
+        {
+            foreach (var mi in jobActions)
+            {
+                items.Add(MenuItemToRadial(mi));
+            }
+        }
+    }
+
+    /// <summary>
+    /// Convertit un MenuItem (QuickMenu) en RadialItem pour le radial menu.
+    /// </summary>
+    private static RadialItem MenuItemToRadial(MenuItem mi, string icon = "/ui/icons/work.svg")
+    {
+        List<RadialItem> children = null;
+        if (mi.Children != null && mi.Children.Count > 0)
+        {
+            children = mi.Children.Select(c => MenuItemToRadial(c, icon)).ToList();
+        }
+
+        Action action = null;
+        if (mi.OnSelect is Action syncAction)
+        {
+            action = () => { syncAction(); Close(); };
+        }
+        else if (mi.OnSelect != null)
+        {
+            action = () => { _ = mi.Invoke(); Close(); };
+        }
+
+        return new RadialItem(mi.Label, icon, action, children, mi.Enabled);
+    }
+
+    private static bool RequireProximity(PlayerPawn target, float maxDist)
+        => Vector3.DistanceBetween(Client.Local.PlayerPawn.WorldPosition, target.WorldPosition) <= maxDist;
+
+    void SelectItem(int index)
+    {
+        if (index < 0 || index >= Items.Count) return;
+        var item = Items[index];
+
+        if (!item.Enabled) return;
+
+        if (item.Children != null && item.Children.Count > 0)
+        {
+            _subItems = item.Children;
+            _subTitle = item.Label;
+            HoveredIndex = -1;
+        }
+        else
+        {
+            item.OnSelect?.Invoke();
+        }
+    }
+
+    void OnSubItemClick(RadialItem item)
+    {
+        if (!item.Enabled) return;
+
+        if (item.Children != null && item.Children.Count > 0)
+        {
+            _subItems = item.Children;
+            _subTitle = item.Label;
+            HoveredIndex = -1;
+        }
+        else
+        {
+            item.OnSelect?.Invoke();
+        }
+    }
+
+    public static void Close()
+    {
+        if (Instance != null)
+            Instance.IsOpen = false;
+    }
+
+    float GetAngle(int index, int count)
+    {
+        if (count == 0) return 0f;
+        float step = MathF.PI * 2f / count;
+        return -MathF.PI / 2f + step * index;
+    }
+
+    private const float MaxPlayerDistance = 100f;
+
+    public override void Tick()
+    {
+        base.Tick();
+        if (!IsOpen) return;
+
+        // Fermer avec Echap
+        if (Input.EscapePressed)
+        {
+            IsOpen = false;
+            Input.EscapePressed = false;
+            return;
+        }
+
+        if (_debugMode) return;
+
+        if (_target.IsValid())
+        {
+            var pawn = Game.ActiveScene?.GetAllComponents<PlayerPawn>()
+                .FirstOrDefault(x => !x.IsProxy);
+            if (pawn != null && Vector3.DistanceBetween(pawn.WorldPosition, _target.WorldPosition) > MaxPlayerDistance)
+            {
+                IsOpen = false;
+            }
+        }
+        else if (_furnitureTarget.IsValid())
+        {
+            var pawn = Game.ActiveScene?.GetAllComponents<PlayerPawn>().FirstOrDefault(x => !x.IsProxy);
+            if (pawn != null && Vector3.DistanceBetween(pawn.WorldPosition, _furnitureTarget.WorldPosition) > MaxPlayerDistance)
+                IsOpen = false;
+        }
+        else
+        {
+            IsOpen = false;
+        }
+    }
+
+    protected override int BuildHash() => HashCode.Combine(IsOpen, HoveredIndex, _subItems?.Count, _playerName);
+}

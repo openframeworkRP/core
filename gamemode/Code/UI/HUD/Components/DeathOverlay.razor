@@ -1,0 +1,118 @@
+﻿@namespace Facepunch.UI
+@using Sandbox
+@using Sandbox.UI
+@using Sandbox.Events
+@using OpenFramework.Command
+@using OpenFramework.Utility
+@using OpenFramework.GameLoop
+@using OpenFramework.Systems.Jobs
+@using OpenFramework.Systems.Pawn
+@inherits Panel
+
+@if (!IsDead)
+    return;
+
+<root class="@(IsDead ? "show" : "")">
+
+    <h1>Vous êtes inconscient</h1>
+
+    @if (DoctorsOnline <= 0)
+    {
+        <p>Aucun médecin n'est disponible.</p>
+
+        @if (!CanRespawn)
+        {
+            <p>Respawn automatique dans <strong>@TimeUtils.DelayToReadable(RemainingRespawn, TimeUtils.Style.Horloge)</strong></p>
+            <ProgressBar Value=@ProgressPct Width=@(520) />
+        }
+        else
+        {
+            <p>Vous allez être respawn automatiquement à l'hôpital...</p>
+        }
+    }
+    else
+    {
+        <p>Des médecins sont en service (<strong>@DoctorsOnline</strong>).</p>
+
+        @if (!CanRespawn)
+        {
+            <p>Attendez qu'un médecin vous soigne, ou patientez encore <strong>@TimeUtils.DelayToReadable(RemainingRespawn, TimeUtils.Style.Horloge)</strong>.</p>
+            <ProgressBar Value=@ProgressPct Width=@(520) />
+        }
+        else
+        {
+            <p>Le timer est écoulé. Vous pouvez attendre les EMS ou respawn à l'hôpital.</p>
+            <p class="warning">⚠️ Respawn à l'hôpital = vous perdez tous vos items.</p>
+
+            <button class="btn-respawn" onclick=@OnManualRespawn>
+                Respawn à l'hôpital [F]
+            </button>
+        }
+    }
+
+</root>
+
+@code {
+    public Client Client => Client.Local;
+    public PlayerPawn Player => Client?.PlayerPawn as PlayerPawn;
+    private bool IsDead => Player.IsValid() && Player.HealthComponent.State == LifeState.Dead;
+    private bool CanRespawn => Player.IsValid() && Player.CanRespawnManually;
+
+    private int DoctorsOnline
+    {
+        get
+        {
+            var job = JobSystem.GetJob("medic");
+            if (job?.Employees == null) return 0;
+
+            int count = 0;
+            foreach (var emp in job.Employees)
+            {
+                try
+                {
+                    if (emp?.IsValid == true &&
+                         emp.PlayerPawn?.IsValid == true &&
+                         emp.PlayerPawn.HealthComponent.State != LifeState.Dead)
+                        count++;
+                }
+                catch { }
+            }
+            return count;
+        }
+    }
+
+    private float RemainingRespawn => Client?.GetRemaining(Client.RespawnEndTime) ?? 0f;
+
+    // Duree totale fixee au moment de la mort cote host (RespawnDelay sans EMS, EMSWaitDelay avec).
+    // On retombe sur Constants.RespawnDelay tant que le sync n'est pas arrive.
+    private float TotalDuration => (Client?.RespawnTotalDelay > 0f)
+        ? Client.RespawnTotalDelay
+        : (Constants.Instance?.RespawnDelay ?? 15f);
+
+    private float ProgressPct
+    {
+        get
+        {
+            if (Client.RespawnEndTime <= 0) return 0f;
+            float total = TotalDuration > 0 ? TotalDuration : 15f;
+            float remaining = Client.GetRemaining(Client.RespawnEndTime);
+            float elapsed = total - remaining;
+            return Math.Clamp((elapsed / total) * 100f, 0f, 100f);
+        }
+    }
+
+    public override void Tick()
+    {
+        // Touche F pour respawn quand disponible
+        if (CanRespawn && Input.Pressed("respawn"))
+            OnManualRespawn();
+    }
+
+    private void OnManualRespawn()
+    {
+        if (!CanRespawn) return;
+        PlayerPawn.RequestManualRespawn(Player);
+    }
+
+    protected override int BuildHash() => HashCode.Combine( (int)(Time.Now * 2f) );
+}

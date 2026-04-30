@@ -1,0 +1,173 @@
+@namespace OpenFramework.UI
+@inherits Panel
+
+<root class="@(IsOpen ? "open" : "")">
+    <div class="topbar">
+        <div class="server">
+            <img src="ui/core_opacity.png" />
+            <div>
+                <span>OpenFramework</span>
+                <span>Réglages HUD</span>
+            </div>
+        </div>
+        <div class="end">
+            <button @onclick=@(() => Close())>Fermer</button>
+        </div>
+    </div>
+    <div class="content">
+        <div class="section">
+            <div class="section-header">
+                <svg src="ui/icons/settings.svg" color="white" />
+                <span>Interface</span>
+            </div>
+            <div class="toggle-list">
+                <div class="toggle-row" @onclick=@(() => ShowMinimap = !ShowMinimap)>
+                    <span>Minimap</span>
+                    <div class="toggle @(ShowMinimap ? "on" : "")"><div class="knob" /></div>
+                </div>
+                <div class="toggle-row" @onclick=@(() => ShowVoteNotification = !ShowVoteNotification)>
+                    <span>Notification de vote</span>
+                    <div class="toggle @(ShowVoteNotification ? "on" : "")"><div class="knob" /></div>
+                </div>
+                <div class="toggle-row" @onclick=@(() => ShowHungerThirst = !ShowHungerThirst)>
+                    <span>Barres Faim / Soif</span>
+                    <div class="toggle @(ShowHungerThirst ? "on" : "")"><div class="knob" /></div>
+                </div>
+                <div class="toggle-row" @onclick=@(() => ShowStamina = !ShowStamina)>
+                    <span>Barre de Sprint</span>
+                    <div class="toggle @(ShowStamina ? "on" : "")"><div class="knob" /></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header">
+                <svg src="ui/icons/settings.svg" color="white" />
+                <span>Véhicule</span>
+            </div>
+            <div class="toggle-list">
+                <div class="toggle-row" @onclick=@(() => ShowVehicleRpm = !ShowVehicleRpm)>
+                    <span>RPM</span>
+                    <div class="toggle @(ShowVehicleRpm ? "on" : "")"><div class="knob" /></div>
+                </div>
+                <div class="toggle-row" @onclick=@(() => ShowVehicleFuel = !ShowVehicleFuel)>
+                    <span>Essence</span>
+                    <div class="toggle @(ShowVehicleFuel ? "on" : "")"><div class="knob" /></div>
+                </div>
+                <div class="toggle-row" @onclick=@(() => ShowVehicleSpeed = !ShowVehicleSpeed)>
+                    <span>Vitesse</span>
+                    <div class="toggle @(ShowVehicleSpeed ? "on" : "")"><div class="knob" /></div>
+                </div>
+                <div class="toggle-row" @onclick=@(() => ShowVehicleOdometer = !ShowVehicleOdometer)>
+                    <span>Kilométrage</span>
+                    <div class="toggle @(ShowVehicleOdometer ? "on" : "")"><div class="knob" /></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header">
+                <svg src="ui/icons/settings.svg" color="white" />
+                <span>Caméra</span>
+            </div>
+            <div class="toggle-list">
+                <div class="toggle-row" @onclick=@(() => CinematicMode = !CinematicMode)>
+                    <span>Mode Cinématique</span>
+                    <div class="toggle @(CinematicMode ? "on" : "")"><div class="knob" /></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header">
+                <svg src="ui/icons/settings.svg" color="white" />
+                <span>Performance</span>
+            </div>
+            <div class="toggle-list">
+                <div class="toggle-row" @onclick=@(() => EnableCulling = !EnableCulling)>
+                    <span>Culling de distance (cache les objets lointains)</span>
+                    <div class="toggle @(EnableCulling ? "on" : "")"><div class="knob" /></div>
+                </div>
+                <div class="distance-row">
+                    <div class="distance-header">
+                        <span class="distance-label">Distance d'affichage</span>
+                        <span class="distance-value">@($"~{CullingDistance / 39}m")</span>
+                    </div>
+                    <SliderControl Min=@(1000f) Max=@(30000f) Step=@(500f)
+                                   Value=@((float)CullingDistance)
+                                   OnValueChanged=@((float v) => { CullingDistance = (int)v; }) />
+                </div>
+            </div>
+        </div>
+    </div>
+</root>
+
+
+@code
+{
+    public static HudSettingsUI Instance { get; private set; }
+
+    public static bool ShowMinimap { get; set; } = true;
+    public static bool ShowHungerThirst { get; set; } = true;
+    public static bool ShowStamina { get; set; } = true;
+    public static bool ShowVehicleRpm { get; set; } = true;
+    public static bool ShowVehicleFuel { get; set; } = true;
+    public static bool ShowVehicleSpeed { get; set; } = true;
+    public static bool ShowVehicleOdometer { get; set; } = true;
+    public static bool ShowVoteNotification { get; set; } = true;
+    public static bool CinematicMode { get; set; } = false;
+
+    // Performance — lus par LocalCullingZone a chaque tick
+    public static bool EnableCulling { get; set; } = true;
+    public static int CullingDistance { get; set; } = 6000;
+
+    public bool IsOpen { get; set; } = false;
+
+    public HudSettingsUI()
+    {
+        Instance = this;
+    }
+
+    public static void Toggle()
+    {
+        if (Instance != null && Instance.Parent != null)
+        {
+            Instance.IsOpen = !Instance.IsOpen;
+            return;
+        }
+
+        Instance = null;
+
+        var hud = Game.ActiveScene?.GetComponentInChildren<Facepunch.UI.MainHUD>(true);
+        if (hud == null || hud.Panel == null) return;
+
+        var panel = new HudSettingsUI();
+        hud.Panel.AddChild(panel);
+        panel.IsOpen = true;
+    }
+
+    public override void Tick()
+    {
+        base.Tick();
+
+        if (IsOpen && Input.EscapePressed)
+        {
+            Input.EscapePressed = false;
+            Close();
+        }
+    }
+
+    public void Close()
+    {
+        IsOpen = false;
+    }
+
+    protected override int BuildHash()
+    {
+        return HashCode.Combine(
+            HashCode.Combine(IsOpen, ShowMinimap, ShowHungerThirst, ShowStamina),
+            HashCode.Combine(ShowVehicleRpm, ShowVehicleFuel, ShowVehicleSpeed, ShowVehicleOdometer),
+            HashCode.Combine(ShowVoteNotification, CinematicMode, EnableCulling, CullingDistance)
+        );
+    }
+}

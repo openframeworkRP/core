@@ -1,0 +1,275 @@
+@namespace OpenFramework.Systems.Vehicles.UI
+@attribute [StyleSheet]
+@inherits Panel
+
+<root class="@(IsOpen ? "open" : "")">
+    <div class="radial-bg">
+        <div class="center-dot"></div>
+
+        @foreach ( var (item, index) in Items.Select( (v, i) => (v, i) ) )
+        {
+            float angle = GetAngle( index );
+            float distPct = 32f;
+            float xPct = 50f + MathF.Cos( angle ) * distPct;
+            float yPct = 50f + MathF.Sin( angle ) * distPct;
+
+            <div class="radial-item @(HoveredIndex == index ? "hovered" : "")"
+                 style="left: @($"{xPct:F1}%"); top: @($"{yPct:F1}%");"
+                 onclick="@(() => SelectItem( index ))">
+                <img class="radial-icon" src="@item.Icon" />
+                <span class="radial-label">@item.Label</span>
+            </div>
+        }
+
+        @if ( HoveredIndex >= 0 && HoveredIndex < Items.Count )
+        {
+            float hAngle = GetAngle( HoveredIndex );
+            <div class="selection-line" style="transform: rotate(@($"{hAngle * 180f / MathF.PI + 90f:F1}deg"))"></div>
+        }
+    </div>
+</root>
+
+@code {
+    public static VehicleRadialMenu Instance { get; private set; }
+
+    public bool IsOpen { get; private set; }
+    public int HoveredIndex { get; private set; } = -1;
+
+    private List<RadialItem> Items { get; set; } = new();
+    private Vehicle _vehicle;
+
+    public record RadialItem( string Label, string Icon, Action OnSelect );
+
+    protected override void OnAfterTreeRender( bool firstTime )
+    {
+        if ( firstTime )
+            Instance = this;
+    }
+
+    /// <summary>Rayon de détection pour afficher une option dans le radial.</summary>
+    private const float SeatRadius = 70f;
+    private const float InspectRadius = 50f;
+
+    public static void Open( Vehicle vehicle )
+    {
+        try
+        {
+            OpenInternal( vehicle );
+        }
+        catch ( Exception ex )
+        {
+            Log.Warning( $"[RadialMenu] Open crashed: {ex.Message}" );
+        }
+    }
+
+    private static RealTimeSince _lastOpenTime;
+
+    private static void OpenInternal( Vehicle vehicle )
+    {
+        // Cooldown — ignorer les appels trop rapprochés (< 0.5s)
+        if ( _lastOpenTime < 0.5f )
+            return;
+
+        _lastOpenTime = 0f;
+
+        // Toggle : si déjà ouvert, fermer
+        if ( Instance != null && Instance.IsOpen )
+        {
+            Instance.IsOpen = false;
+            return;
+        }
+
+        // Créer l'instance si nécessaire
+        bool needCreate = false;
+        try { needCreate = Instance == null || Instance.Parent == null; }
+        catch { needCreate = true; }
+
+        if ( needCreate )
+        {
+            Instance = null;
+            var hud = Game.ActiveScene?.GetComponentInChildren<Facepunch.UI.MainHUD>( true );
+            if ( hud == null )
+            {
+                Log.Warning( "[RadialMenu] MainHUD not found!" );
+                return;
+            }
+
+            Instance = new VehicleRadialMenu();
+            Instance.Items = new();
+            hud.Panel.AddChild( Instance );
+        }
+
+        if ( Instance == null ) return;
+
+        Instance._vehicle = vehicle;
+        Instance.Items ??= new();
+        Instance.Items.Clear();
+
+        var pawn = Game.ActiveScene?.GetAllComponents<OpenFramework.Systems.Pawn.PlayerPawn>()
+            .FirstOrDefault( x => x.IsValid() && !x.IsProxy );
+        var playerPos = pawn?.WorldPosition ?? Vector3.Zero;
+
+        Log.Info( $"[RadialMenu] playerPos={playerPos} pawn={pawn?.GameObject?.Name}" );
+
+        // Monter — si un siège libre est proche
+        var closestSeat = vehicle.Seats?
+            .Where( s => s.CanEnter( pawn ) )
+            .OrderBy( s => DistXY( s.WorldPosition, playerPos ) )
+            .FirstOrDefault();
+
+        if ( closestSeat != null && DistXY( closestSeat.WorldPosition, playerPos ) < SeatRadius )
+        {
+            Instance.Items.Add( new RadialItem( "Monter", "/ui/icons/getin.svg", () =>
+            {
+                vehicle.RequestEnterSeat();
+                Close();
+            }));
+        }
+
+        // Inspecter — si un point d'inspection est proche
+        var closestInspect = vehicle.Components.GetAll<VehicleInspectionPoint>( FindMode.EverythingInDescendants )
+            .OrderBy( p => DistXY( p.WorldPosition, playerPos ) )
+            .FirstOrDefault();
+
+        if ( closestInspect != null && DistXY( closestInspect.WorldPosition, playerPos ) < InspectRadius )
+        {
+            Instance.Items.Add( new RadialItem( "Inspecter", "/ui/icons/loupe.svg", () =>
+            {
+                Log.Info( "[RadialMenu] Inspecter clicked!" );
+                vehicle.RequestInspectNearest();
+                Close();
+            }));
+        }
+
+        // Coffre / Boîte à gants — si un storage est proche
+        var storages = vehicle.GetComponentsInChildren<VehicleStorage>();
+        Log.Info( $"[RadialMenu] storages found: {storages.Count()}" );
+        foreach ( var storage in storages.OrderBy( s => DistXY( s.WorldPosition, playerPos ) ) )
+        {
+            var dist = DistXY( storage.WorldPosition, playerPos );
+            Log.Info( $"[RadialMenu] storage={storage.DisplayName} pos={storage.WorldPosition} dist2D={dist:F0} radius={storage.DetectionRadius}" );
+            if ( dist > storage.DetectionRadius ) continue;
+            if ( storage.IsBusy ) continue;
+
+            var icon = storage.StorageType == VehicleStorageType.GloveBox
+                ? "/ui/icons/box.svg"
+                : "/ui/icons/box.svg";
+
+            var label = storage.DisplayName;
+            var capturedStorage = storage;
+
+            Instance.Items.Add( new RadialItem( label, icon, () =>
+            {
+                capturedStorage.Open( pawn );
+                Close();
+            }));
+        }
+
+        // Rien à afficher — ne pas ouvrir le menu
+        Log.Info( $"[RadialMenu] total items: {Instance.Items.Count}" );
+        if ( Instance.Items.Count == 0 ) return;
+
+        Instance.IsOpen = true;
+        Instance.HoveredIndex = -1;
+        Log.Info( $"[RadialMenu] OPENED with {Instance.Items.Count} items" );
+    }
+
+    /// <summary>Opens the radial menu from inside the vehicle (exit option).</summary>
+    public static void OpenInVehicle( Vehicle vehicle, PlayerSeat seat )
+    {
+        if ( _lastOpenTime < 0.5f ) return;
+        _lastOpenTime = 0f;
+
+        // Toggle : si déjà ouvert, fermer
+        if ( Instance != null && Instance.IsOpen )
+        {
+            Instance.IsOpen = false;
+            return;
+        }
+
+        bool needCreate = false;
+        try { needCreate = Instance == null || Instance.Parent == null; }
+        catch { needCreate = true; }
+
+        if ( needCreate )
+        {
+            Instance = null;
+            var hud = Game.ActiveScene?.GetComponentInChildren<Facepunch.UI.MainHUD>( true );
+            if ( hud == null ) return;
+
+            Instance = new VehicleRadialMenu();
+            Instance.Items = new();
+            hud.Panel.AddChild( Instance );
+        }
+
+        if ( Instance == null ) return;
+
+        Instance._vehicle = vehicle;
+        Instance.Items ??= new();
+        Instance.Items.Clear();
+
+        // Option Sortir
+        Instance.Items.Add( new RadialItem( "Sortir", "/ui/icons/leave.svg", () =>
+        {
+            vehicle.RequestExitSeat();
+            Close();
+        }));
+
+        Instance.IsOpen = true;
+        Instance.HoveredIndex = -1;
+    }
+
+    public static void Close()
+    {
+        if ( Instance != null )
+            Instance.IsOpen = false;
+    }
+
+    void SelectItem( int index )
+    {
+        if ( index < 0 || index >= Items.Count ) return;
+        Items[index].OnSelect?.Invoke();
+    }
+
+    /// <summary>Distance 2D (ignore la hauteur Z).</summary>
+    static float DistXY( Vector3 a, Vector3 b )
+    {
+        float dx = a.x - b.x;
+        float dy = a.y - b.y;
+        return MathF.Sqrt( dx * dx + dy * dy );
+    }
+
+    float GetAngle( int index )
+    {
+        if ( Items.Count == 0 ) return 0f;
+        float step = MathF.PI * 2f / Items.Count;
+        return -MathF.PI / 2f + step * index;
+    }
+
+    /// <summary>Distance max au véhicule avant fermeture automatique.</summary>
+    private const float MaxVehicleDistance = 100f;
+
+    public override void Tick()
+    {
+        base.Tick();
+        if ( !IsOpen ) return;
+
+        // Fermer si le joueur s'éloigne du véhicule
+        if ( _vehicle.IsValid() )
+        {
+            var pawn = Game.ActiveScene?.GetAllComponents<OpenFramework.Systems.Pawn.PlayerPawn>()
+                .FirstOrDefault( x => !x.IsProxy );
+            if ( pawn != null && DistXY( pawn.WorldPosition, _vehicle.WorldPosition ) > MaxVehicleDistance )
+            {
+                IsOpen = false;
+            }
+        }
+        else
+        {
+            // Véhicule détruit / invalide
+            IsOpen = false;
+        }
+    }
+
+    protected override int BuildHash() => HashCode.Combine( IsOpen, HoveredIndex );
+}

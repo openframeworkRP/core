@@ -1,0 +1,38 @@
+@using Sandbox;
+@using Sandbox.UI;
+@inherits PanelComponent
+@namespace OpenFramework.UI.World.StreetAdvert
+
+@code
+{
+    [Property] public float SwitchDelay { get; set; } = 60f;
+    private TimeUntil untilSwitch;
+
+    public List<Type> RenderList = new()
+    {
+        typeof(MayorAdvert),
+        typeof(PoliceAdvert),
+        typeof(MedicAdvert),
+        typeof(AmmunationAdvert),
+    };
+
+    protected override void OnStart()
+    {
+        Switch();
+    }
+
+    void Switch()
+    {
+        var type = Game.Random.FromList(RenderList);
+        Panel.DeleteChildren();
+        Panel.AddChild(TypeLibrary.Create<Panel>(type));
+        untilSwitch = SwitchDelay;
+    }
+
+    protected override void OnUpdate()
+    {
+        if (untilSwitch)
+            Switch();
+
+    }
+}

@@ -1,0 +1,31 @@
+﻿@using Sandbox;
+@using Sandbox.UI;
+@using Editor;
+@using Sandbox.UI.Navigation;
+@using OpenFramework.Systems;
+
+@implements Sandbox.UI.Navigation.INavigatorPage
+@namespace Facepunch.UI
+@inherits Panel
+
+<root>
+    <div class="current">
+        <div class="bank">
+            <span>Montant en Banque :</span>
+            <span class="value @(_self.Data.Bank < 0 ? "negative" : "")">
+                @_self.Data.Bank $
+            </span>
+        </div>
+    </div>
+</root>
+
+@code
+{
+    Client _self => Client.Local;
+
+    protected override int BuildHash()
+    {
+        // On s'assure que l'UI se rafraîchit dès que les valeurs changent
+        return HashCode.Combine(MoneySystem.Get(), _self.Data.Bank);
+    }
+}

@@ -1,0 +1,57 @@
+@using Sandbox;
+@using Sandbox.UI;
+
+@namespace OpenFramework.Inventory.UI
+@inherits Panel
+
+<root>
+    @if (_icon != null)
+    {
+        <image @ref="IconImage" class="preview-panel" />
+    }
+    @if (_quantity > 1)
+    {
+        <div class="quantity">x@(_quantity)</div>
+    }
+</root>
+
+@code {
+    private int _quantity;
+    private float _width;
+    private float _height;
+    private Texture _icon;
+
+    private Sandbox.UI.Image IconImage;
+
+    public void SetItem(InventoryItem item, float width, float height)
+    {
+        _quantity = item?.Quantity ?? 0;
+        _width = width;
+        _height = height;
+        _icon = item?.Metadata?.Icon;
+
+        Style.Width    = Length.Pixels(width);
+        Style.Height   = Length.Pixels(height);
+        Style.Position = PositionMode.Absolute;
+        Style.ZIndex   = 9999;
+        Style.PointerEvents = PointerEvents.None;
+    }
+
+    public override void Tick()
+    {
+        if (IconImage.IsValid() && _icon != null && IconImage.Texture != _icon)
+            IconImage.Texture = _icon;
+    }
+
+    public void MoveTo(Vector2 screenPos)
+    {
+        var scale = ScaleFromScreen;
+        var uiX = screenPos.x * scale;
+        var uiY = screenPos.y * scale;
+
+        Style.Left = Length.Pixels(uiX - (_width / 2f));
+        Style.Top  = Length.Pixels(uiY - (_height / 2f));
+    }
+
+    protected override int BuildHash() => HashCode.Combine(_quantity, _icon);
+}

@@ -1,0 +1,10 @@
+$radius: 34px;
+
+MobilioApp {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    top: 0;
+    border-radius: $radius;
+}

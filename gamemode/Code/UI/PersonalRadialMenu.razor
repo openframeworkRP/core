@@ -1,0 +1,289 @@
+@namespace OpenFramework.UI
+@inherits Panel
+@using Facepunch
+@using OpenFramework.Command
+@using OpenFramework.Inventory
+@using OpenFramework.Systems
+@using OpenFramework.Systems.Jobs
+@using OpenFramework.Systems.Pawn
+@using OpenFramework.UI.QuickMenuSystem
+@using static Facepunch.NotificationSystem
+
+<root class="@(IsOpen ? "open" : "")">
+    <div class="radial-bg">
+        <div class="center-dot"></div>
+
+        @if (_subItems != null)
+        {
+            <div class="radial-subtitle">@_subTitle</div>
+
+            @foreach (var (item, index) in _subItems.Select((v, i) => (v, i)))
+            {
+                float angle = GetAngle(index, _subItems.Count);
+                float distPct = 32f;
+                float xPct = 50f + MathF.Cos(angle) * distPct;
+                float yPct = 50f + MathF.Sin(angle) * distPct;
+
+                var capturedItem = item;
+                <div class="radial-item @(HoveredIndex == index ? "hovered" : "")"
+                     style="left: @($"{xPct:F1}%"); top: @($"{yPct:F1}%");"
+                     onclick="@(() => OnSubItemClick(capturedItem))">
+                    <img class="radial-icon" src="@item.Icon" />
+                    <span class="radial-label">@item.Label</span>
+                </div>
+            }
+
+            <div class="radial-back" onclick="@(() => { _subItems = null; _subTitle = null; })">
+                <span>Retour</span>
+            </div>
+        }
+        else
+        {
+            @foreach (var (item, index) in Items.Select((v, i) => (v, i)))
+            {
+                float angle = GetAngle(index, Items.Count);
+                float distPct = 32f;
+                float xPct = 50f + MathF.Cos(angle) * distPct;
+                float yPct = 50f + MathF.Sin(angle) * distPct;
+
+                <div class="radial-item @(!item.Enabled ? "disabled" : "") @(HoveredIndex == index ? "hovered" : "")"
+                     style="left: @($"{xPct:F1}%"); top: @($"{yPct:F1}%");"
+                     onclick="@(() => { if (item.Enabled) SelectItem(index); })">
+                    <img class="radial-icon" src="@item.Icon" />
+                    <span class="radial-label">@item.Label</span>
+                </div>
+            }
+        }
+
+        @if (HoveredIndex >= 0)
+        {
+            int count = _subItems?.Count ?? Items.Count;
+            if (HoveredIndex < count)
+            {
+                float hAngle = GetAngle(HoveredIndex, count);
+                <div class="selection-line" style="transform: rotate(@($"{hAngle * 180f / MathF.PI + 90f:F1}deg"))"></div>
+            }
+        }
+    </div>
+</root>
+
+@code {
+    public static PersonalRadialMenu Instance { get; private set; }
+
+    public bool IsOpen { get; private set; }
+    public int HoveredIndex { get; private set; } = -1;
+
+    private List<RadialItem> Items { get; set; } = new();
+
+    private List<RadialItem> _subItems;
+    private string _subTitle;
+
+    public record RadialItem(string Label, string Icon, Action OnSelect, bool Enabled = true, List<RadialItem> Children = null);
+
+    protected override void OnAfterTreeRender(bool firstTime)
+    {
+        if (firstTime)
+            Instance = this;
+    }
+
+    private static RealTimeSince _lastOpenTime;
+
+    public static void Open()
+    {
+        if (_lastOpenTime < 0.5f) return;
+        _lastOpenTime = 0f;
+
+        if (Instance != null && Instance.IsOpen)
+        {
+            Instance.IsOpen = false;
+            return;
+        }
+
+        bool needCreate = false;
+        try { needCreate = Instance == null || Instance.Parent == null; }
+        catch { needCreate = true; }
+
+        if (needCreate)
+        {
+            Instance = null;
+            var hud = Game.ActiveScene?.GetComponentInChildren<Facepunch.UI.MainHUD>(true);
+            if (hud == null) return;
+
+            Instance = new PersonalRadialMenu();
+            Instance.Items = new();
+            hud.Panel.AddChild(Instance);
+        }
+
+        if (Instance == null) return;
+
+        Instance._subItems = null;
+        Instance._subTitle = null;
+        Instance.Items ??= new();
+        Instance.Items.Clear();
+
+        BuildItems(Instance.Items);
+
+        if (Instance.Items.Count == 0) return;
+
+        Instance.IsOpen = true;
+        Instance.HoveredIndex = -1;
+    }
+
+    private static void BuildItems(List<RadialItem> items)
+    {
+        var self = Client.Local;
+        if (self?.PlayerPawn == null) return;
+        var pawn = self.PlayerPawn;
+
+        // Ranger l'arme
+        var equipment = pawn.CurrentEquipment;
+        if (equipment != null)
+        {
+            var meta = ItemMetadata.All.FirstOrDefault(x => x.IsWeapon && x.WeaponResource == equipment.Resource);
+            if (meta != null)
+            {
+                items.Add(new RadialItem("Ranger", "/ui/icons/backpack.svg", () =>
+                {
+                    Commands.RPC_GiveItem(Client.Local, meta.ResourceName, 1);
+                    Spawnable.Destroy(equipment.GameObject);
+                    self.Notify(NotificationType.Success, $"Vous avez rangé {equipment.GameObject.Name}");
+                    Close();
+                }));
+            }
+        }
+
+        // Caméra 1ère / 3ème personne — réservée aux admins
+        if (self.IsAdmin)
+        {
+            var deployed = pawn.Inventory.Equipment.FirstOrDefault(e => e.IsDeployed);
+            bool canThirdPerson = deployed == null || deployed.Resource.Name == "hand" || deployed.Resource.Name == "Punch";
+
+            if (pawn.CameraController.Mode == CameraMode.ThirdPerson)
+            {
+                items.Add(new RadialItem("1ère personne", "/ui/icons/loupe.svg", () =>
+                {
+                    Commands.Thirdperson();
+                    Close();
+                }));
+            }
+            else
+            {
+                items.Add(new RadialItem("3ème personne", "/ui/icons/loupe.svg", () =>
+                {
+                    Commands.Thirdperson();
+                    Close();
+                }, Enabled: canThirdPerson));
+            }
+        }
+
+        // Radio
+        var radio = pawn.Components.Get<RadioComponent>();
+        if (radio != null)
+        {
+            var radioChildren = new List<RadialItem>
+            {
+                new RadialItem(radio.IsActivate ? "Éteindre" : "Allumer", "/ui/icons/power.svg", () =>
+                {
+                    radio.ToggleRadio();
+                    Close();
+                }),
+                new RadialItem("Fréquence", "/ui/icons/headset.svg", () =>
+                {
+                    RadioMenu.Open();
+                    Close();
+                })
+            };
+
+            items.Add(new RadialItem("Radio", "/ui/icons/speaker.svg", null, Children: radioChildren));
+        }
+
+        // Lever les mains
+        items.Add(new RadialItem(
+            pawn.IsHandsUp ? "Baisser les mains" : "Lever les mains",
+            "/ui/icons/handsup.svg",
+            () =>
+            {
+                pawn.ToggleHandsUp();
+                Close();
+            }
+        ));
+
+        // Options HUD
+        items.Add(new RadialItem("Réglages HUD", "/ui/icons/settings.svg", () =>
+        {
+            HudSettingsUI.Toggle();
+            Close();
+        }));
+
+        // Job
+        var job = JobSystem.GetJob(self.Data.Job);
+        var jobActions = job?.PersonalActions();
+        bool hasJob = !string.IsNullOrEmpty(self.Data.Job) && self.Data.Job != "citizen";
+
+        if ((jobActions != null && jobActions.Count > 0) || hasJob)
+        {
+            var jobChildren = new List<RadialItem>();
+
+            if (jobActions != null)
+            {
+                foreach (var action in jobActions)
+                {
+                    var captured = action;
+                    jobChildren.Add(new RadialItem(captured.Label, "/ui/icons/work.svg", async () =>
+                    {
+                        await captured.Invoke();
+                        Close();
+                    }));
+                }
+            }
+
+            if (hasJob)
+            {
+                jobChildren.Add(new RadialItem("Quitter le job", "/ui/icons/leave.svg", () =>
+                {
+                    JobSystem.LeaveJob();
+                    Close();
+                }));
+            }
+
+            items.Add(new RadialItem("Job", "/ui/icons/work.svg", null, Children: jobChildren));
+        }
+    }
+
+    void SelectItem(int index)
+    {
+        if (index < 0 || index >= Items.Count) return;
+        var item = Items[index];
+
+        if (item.Children != null && item.Children.Count > 0)
+        {
+            _subItems = item.Children;
+            _subTitle = item.Label;
+            HoveredIndex = -1;
+        }
+        else
+        {
+            item.OnSelect?.Invoke();
+        }
+    }
+
+    void OnSubItemClick(RadialItem item)
+    {
+        item.OnSelect?.Invoke();
+    }
+
+    public static void Close()
+    {
+        if (Instance != null)
+            Instance.IsOpen = false;
+    }
+
+    float GetAngle(int index, int count)
+    {
+        if (count == 0) return 0f;
+        float step = MathF.PI * 2f / count;
+        return -MathF.PI / 2f + step * index;
+    }
+
+    protected override int BuildHash() => HashCode.Combine(IsOpen, HoveredIndex, _subItems?.Count);
+}

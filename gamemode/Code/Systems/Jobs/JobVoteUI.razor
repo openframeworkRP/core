@@ -1,0 +1,96 @@
+@inherits Panel
+@namespace OpenFramework.Systems.Jobs
+@using Facepunch
+@using OpenFramework.UI.Components
+@using OpenFramework.Utility
+
+<root class="@(ShowCursor ? "showcursor" : "") @(HideUI ? "hide" : "")">
+    <div class="container">
+        <div class="header">
+            <span class="title">Vote en cours</span>
+            <div class="timer">
+                <i class="icon">timer</i>
+                @TimeUtils.DelayToReadable(_voteSystem.PendingDelay, TimeUtils.Style.Horloge)
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="icon-area">
+                <i class="icon">how_to_reg</i>
+            </div>
+            <div class="text-area">
+                <div class="candidate"><b>@_voteSystem.CurrentVote.IssuerName</b> postule</div>
+                <div class="position">
+                    Pour : @(_voteSystem.CurrentVote.TargetGrade) @(_voteSystem.CurrentVote.TargetJob)
+                </div>
+            </div>
+        </div>
+
+        <div class="actions @((HasVoted || IsIssuer) ? "disabled" : "")">
+            <button class="btn-yes @(UpVoted ? "voted" : "")" @onclick=@AddUp>
+                <i class="icon">thumb_up</i> Accepter <span>(@_voteSystem.UpVotesCount)</span>
+            </button>
+            <button class="btn-no @(DownVoted ? "voted" : "")" @onclick=@AddDown>
+                <i class="icon">thumb_down</i> Refuser <span>(@_voteSystem.DownVotesCount)</span>
+            </button>
+        </div>
+
+        @if (!IsIssuer)
+        {
+            <div style="margin-top: 10px; display: flex; gap: 10px; opacity: 0.6; font-size: 10px;">
+                <div style="display:flex; gap:5px; align-items:center;">
+                    <InputHint Action="cursor" Size="@InputGlyphSize.Small" /> <span>Afficher/Cacher la souris</span>
+                </div>
+            </div>
+        }
+        
+    </div>
+</root>
+
+@code {
+    // ... (Le code C# reste identique � ce que tu avais, pas besoin de changer la logique)
+    public static JobVoteUI Instance { get; private set; }
+    // Cache : 5 properties accedaient _voteSystem ce qui faisait 5 GetComponentInChildren
+    // (scan complet de la scene) par rebuild. Memoize avec IsValid check pour gerer despawn.
+    private JobVoteSystem _cachedVoteSystem;
+    private JobVoteSystem _voteSystem
+    {
+        get
+        {
+            if ( !_cachedVoteSystem.IsValid() )
+                _cachedVoteSystem = Game.ActiveScene?.GetComponentInChildren<JobVoteSystem>();
+            return _cachedVoteSystem;
+        }
+    }
+    private bool IsIssuer => _voteSystem.CurrentVote.IssuerSteamId != 0 &&
+        _voteSystem.CurrentVote.IssuerSteamId == (Client.Local?.SteamId ?? 0UL);
+    private bool HasVoted => _voteSystem.UpVotes.Contains(Client.Local.SteamId) || _voteSystem.DownVotes.Contains(Client.Local.SteamId);
+    private bool UpVoted => _voteSystem.UpVotes.Contains(Client.Local.SteamId);
+    private bool DownVoted => _voteSystem.DownVotes.Contains(Client.Local.SteamId);
+    public bool ShowCursor = false;
+    public bool HideUI = false;
+
+    public JobVoteUI() { Instance = this; }
+    private void AddUp() { JobVoteSystem.AddUpVote(); ShowCursor = false; }
+    private void AddDown() { JobVoteSystem.AddDownVote(); ShowCursor = false; }
+
+    [Rpc.Broadcast]
+    public static void DeleteUI()
+    {
+        Instance?.Delete();
+    }
+
+    public override void Tick()
+    {
+        if (_voteSystem == null || _voteSystem.PendingDelay) Delete();
+
+        if (Input.Pressed("cursor") && !IsIssuer)
+            ShowCursor = !ShowCursor;
+        
+        if (Input.Pressed("jobvotemenu"))
+            HideUI = !HideUI;
+    }
+    public override void OnDeleted() { Instance = null; }
+    // Throttle 10Hz : DateTime.Now forcait un rebuild quasi chaque frame avec 5+ scans de scene
+    protected override int BuildHash() => (int)(Time.Now * 10f);
+}

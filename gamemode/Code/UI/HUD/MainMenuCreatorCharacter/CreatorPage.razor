@@ -1,0 +1,280 @@
+﻿@using Sandbox;
+@using Sandbox.UI;
+@using System.Linq;
+@using Sandbox.UI.Navigation;
+@using OpenFramework.Api
+@namespace OpenFramework
+
+@implements INavigatorPage
+@inherits Panel
+
+<root>
+    <div class="bg-right"></div>
+    <div class="container">
+        <div class="sexe">
+            <span>Choisissez votre sexe :</span>
+
+            <div class="button-row">
+                <button class="@(!Manager.IsFemale ? "active" : "")" onclick=@(() => Manager.SetGender(false))>
+                    <svg src="ui/icons/human.svg" /> @* Assure-toi d'avoir une icône male.svg *@
+                    Homme
+                </button>
+
+                <button class="@(Manager.IsFemale ? "active" : "")" onclick=@(() => Manager.SetGender(true))>
+                    <svg src="ui/icons/human.svg" />
+                    Femme
+                </button>
+            </div>
+        </div>
+
+        <div class="head">
+            <span>Choisissez votre tete :</span>
+            <div class="button-row">
+                @if (Manager?.ActiveBody?.Model?.Parts?.All != null)
+                {
+                    var headPart = Manager.ActiveBody.Model.Parts.All.FirstOrDefault(p => p.Name.ToLower() == "head");
+                    if (headPart != null)
+                    {
+                        // On limite la boucle aux 2 premiers choix (.Take(2))
+                        @foreach (var (choice, index) in headPart.Choices.Take(2).Select((c, i) => (c, i)))
+                        {
+                            // Head 0 (index 0) = skin_light | Head 1 (index 1) = skin_dark
+                            var targetSkin = (index == 0) ? "skin_dark" : "skin_light";
+
+                            <button class="@(Manager.ActiveBody.GetBodyGroup("head") == index ? "active" : "")"
+                                    onclick=@(() => Manager.UpdateHeadAndSkin(index, targetSkin))>
+                                <svg src="ui/icons/human.svg" />
+                                Tete @(index + 1)
+                            </button>
+                        }
+                    }
+                }
+            </div>
+        </div>
+
+        <div class="morphs">
+
+            <div class="category @(OpenCategory == "eyes" ? "active" : "")">
+                <div class="section-subtitle" onclick="@(() => ToggleCategory("eyes"))">
+                    <span>Yeux & Sourcils</span>
+                    <span class="arrow">@(OpenCategory == "eyes" ? "▼" : "▶")</span>
+                </div>
+                <div class="morph-list">
+                    @foreach (var m in new[] { "BrowDown_L", "BrowDown_R", "BrowInnerUp", "BrowOuterUp_L", "BrowOuterUp_R", "EyeLookDown_L", "EyeLookDown_R", "EyeLookIn_L", "EyeLookIn_R", "EyeLookOut_L", "EyeLookOut_R", "EyeLookUp_L", "EyeLookUp_R", "EyeSquint_L", "EyeSquint_R", "EyeWide_L", "EyeWide_R" })
+                    {
+                        @RenderMorphSlider(m)
+                    }
+                </div>
+            </div>
+
+            <div class="category @(OpenCategory == "face" ? "active" : "")">
+                <div class="section-subtitle" onclick="@(() => ToggleCategory("face"))">
+                    <span>Details du visage</span>
+                    <span class="arrow">@(OpenCategory == "face" ? "▼" : "▶")</span>
+                </div>
+                <div class="morph-list">
+                    @foreach (var m in new[] { "CheekPuff", "CheekSquint_L", "CheekSquint_R", "NoseSneer_L", "NoseSneer_R" })
+                    {
+                        @RenderMorphSlider(m)
+                    }
+                </div>
+            </div>
+
+            <div class="category @(OpenCategory == "mouth" ? "active" : "")">
+                <div class="section-subtitle" onclick="@(() => ToggleCategory("mouth"))">
+                    <span>Bouche & Machoire</span>
+                    <span class="arrow">@(OpenCategory == "mouth" ? "▼" : "▶")</span>
+                </div>
+                <div class="morph-list">
+                    @foreach (var m in new[] { "JawForward", "JawLeft", "JawRight", "MouthDimple_L", "MouthDimple_R", "MouthRollUpper", "MouthStretch_L", "MouthStretch_R" })
+                    {
+                        @RenderMorphSlider(m)
+                    }
+                </div>
+            </div>
+        </div>
+     
+
+    </div>
+
+    <div class="navigation-buttons">
+        <button class="back-button" onclick=@(() => GoBack())>
+            RETOUR
+        </button>
+        <button class="validate-button" onclick=@(() => ValidateAndApparence())>
+            VALIDER MORPHOLOGIE
+        </button>
+    </div>
+
+
+   
+
+
+    <!--Control Camera-->
+    <div class="camera-controls">
+        <div class="control-group" >
+
+            <label>Rotation</label>
+            <div class="button-row">
+                <button 
+                    onmousedown="@(() => { Manager.RotationDirection = -1; HandleUI(true); })" 
+                    onmouseup="@(() => { Manager.RotationDirection = 0; HandleUI(false); })" 
+                    onmouseleave="@(() => { Manager.RotationDirection = 0; HandleUI(false); })">
+                    ↺
+                </button>
+                <button          
+                    onmousedown="@(() => { Manager.RotationDirection = 1; HandleUI(true); })"
+                    onmouseup="@(() => { Manager.RotationDirection = 0; HandleUI(false); })"
+                    onmouseleave="@(() => { Manager.RotationDirection = 0; HandleUI(false); })">
+                    ↻
+                </button>
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label>Zoom</label>
+            <div class="button-row">
+                <button onmousedown="@(() => { Manager.ZoomDir = -1; HandleUI(true); })"
+                        onmouseup="@(() => { Manager.ZoomDir = 0; HandleUI(false); })"
+                        onmouseleave="@(() => { Manager.ZoomDir = 0; HandleUI(false); })">
+                    +
+                </button>
+
+                <button onmousedown="@(() => { Manager.ZoomDir = 1; HandleUI(true); })"
+                        onmouseup="@(() => { Manager.ZoomDir = 0; HandleUI(false); })"
+                        onmouseleave="@(() => { Manager.ZoomDir = 0; HandleUI(false); })">
+                    -
+                </button>
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label>Hauteur</label>
+            <div class="button-row">
+                <button onmousedown="@(() => { Manager.HeightDir = 1; HandleUI(true); })"
+                        onmouseup="@(() => { Manager.HeightDir = 0; HandleUI(false); })"
+                        onmouseleave="@(() => { Manager.HeightDir = 0; HandleUI(false); })">
+                    ▲
+                </button>
+
+                <button onmousedown="@(() => { Manager.HeightDir = -1; HandleUI(true); })"
+                        onmouseup="@(() => { Manager.HeightDir = 0; HandleUI(false); })"
+                        onmouseleave="@(() => { Manager.HeightDir = 0; HandleUI(false); })">
+                    ▼
+                </button>
+            </div>
+        </div>
+    </div>
+</root>
+
+@code
+{
+    private CharacterManager Manager => Scene.GetComponentInChildren<CharacterManager>();
+
+    string OpenCategory = "";
+
+    void ToggleCategory(string name)
+    {
+        // Si on clique sur la déjà ouverte, on ferme, sinon on ouvre la nouvelle
+        OpenCategory = OpenCategory == name ? "" : name;
+    }
+
+    // Dans AppearancePage.razor.cs
+    private async void HandleUI(bool hide)
+    {
+        if (MenuCreatorCharacter.Instance == null) return;
+
+        if (hide)
+        {
+            MenuCreatorCharacter.Instance.SetUIVisibility(true);
+        }
+        else
+        {
+            // On attend 100ms pour être sûr que l'action est finie
+            // et éviter les clignotements de l'UI
+            await Task.Delay(100);
+            MenuCreatorCharacter.Instance.SetUIVisibility(false);
+        }
+    }
+
+
+    void GoBack()
+    {
+        var host = Ancestors.OfType<MenuCreatorCharacter>().FirstOrDefault();
+        host?.GoToStep("/");
+    }
+
+    void ValidateAndApparence()
+    {
+        if (Manager == null) return;
+
+        // ── Sauvegarde genre & tête ──
+        CharacterCreationState.IsFemale   = Manager.IsFemale;
+        CharacterCreationState.HeadIndex  = Manager.ActiveBody?.GetBodyGroup("head") ?? 0;
+        CharacterCreationState.ColorBody = (CharacterCreationState.HeadIndex == 0) ? ColorBody.Dark : ColorBody.Light;
+
+        // ── Sauvegarde de tous les morphs ──
+        CharacterCreationState.BrowDown_L      = Manager.GetMorph("BrowDown_L");
+        CharacterCreationState.BrowDown_R      = Manager.GetMorph("BrowDown_R");
+        CharacterCreationState.BrowInnerUp     = Manager.GetMorph("BrowInnerUp");
+        CharacterCreationState.BrowOuterUp_L   = Manager.GetMorph("BrowOuterUp_L");
+        CharacterCreationState.BrowOuterUp_R   = Manager.GetMorph("BrowOuterUp_R");
+        CharacterCreationState.EyeLookDown_L   = Manager.GetMorph("EyeLookDown_L");
+        CharacterCreationState.EyeLookDown_R   = Manager.GetMorph("EyeLookDown_R");
+        CharacterCreationState.EyeLookIn_L     = Manager.GetMorph("EyeLookIn_L");
+        CharacterCreationState.EyeLookIn_R     = Manager.GetMorph("EyeLookIn_R");
+        CharacterCreationState.EyeLookOut_L    = Manager.GetMorph("EyeLookOut_L");
+        CharacterCreationState.EyeLookOut_R    = Manager.GetMorph("EyeLookOut_R");
+        CharacterCreationState.EyeLookUp_L     = Manager.GetMorph("EyeLookUp_L");
+        CharacterCreationState.EyeLookUp_R     = Manager.GetMorph("EyeLookUp_R");
+        CharacterCreationState.EyeSquint_L     = Manager.GetMorph("EyeSquint_L");
+        CharacterCreationState.EyeSquint_R     = Manager.GetMorph("EyeSquint_R");
+        CharacterCreationState.EyeWide_L       = Manager.GetMorph("EyeWide_L");
+        CharacterCreationState.EyeWide_R       = Manager.GetMorph("EyeWide_R");
+        CharacterCreationState.CheekPuff       = Manager.GetMorph("CheekPuff");
+        CharacterCreationState.CheekSquint_L   = Manager.GetMorph("CheekSquint_L");
+        CharacterCreationState.CheekSquint_R   = Manager.GetMorph("CheekSquint_R");
+        CharacterCreationState.NoseSneer_L     = Manager.GetMorph("NoseSneer_L");
+        CharacterCreationState.NoseSneer_R     = Manager.GetMorph("NoseSneer_R");
+        CharacterCreationState.JawForward      = Manager.GetMorph("JawForward");
+        CharacterCreationState.JawLeft         = Manager.GetMorph("JawLeft");
+        CharacterCreationState.JawRight        = Manager.GetMorph("JawRight");
+        CharacterCreationState.MouthDimple_L   = Manager.GetMorph("MouthDimple_L");
+        CharacterCreationState.MouthDimple_R   = Manager.GetMorph("MouthDimple_R");
+        CharacterCreationState.MouthRollUpper  = Manager.GetMorph("MouthRollUpper");
+        CharacterCreationState.MouthStretch_L  = Manager.GetMorph("MouthStretch_L");
+        CharacterCreationState.MouthStretch_R  = Manager.GetMorph("MouthStretch_R");
+        // ────────────────────────────────────
+
+        var host = Ancestors.OfType<MenuCreatorCharacter>().FirstOrDefault();
+        host?.GoToStep("/apparence");
+        //host?.GoToStep("/validation");
+    }
+
+    protected override void OnAfterTreeRender(bool firstTime)
+    {
+        Manager.ShowBody();
+    }
+
+    // Vérifie si l'index actuel est celui appliqué sur le SkinnedModelRenderer
+    bool IsSelected(string name, int index)
+    {
+        return Manager.ActiveBody.GetBodyGroup(name) == index;
+    }
+
+    RenderFragment RenderMorphSlider(string name) => __builder =>
+    {
+        var val = Manager?.GetMorph(name) ?? 0f;
+        <div class="morph-row">
+            <label>@name</label>
+            <div class="slider-with-value">
+                <SliderControl Min=@(0f) Max=@(1f) Step=@(0.01f)
+                               Value=@val
+                               OnValueChanged=@((float v) => Manager?.SetMorph(name, v)) />
+                <span class="morph-value">@val.ToString("0.00")</span>
+            </div>
+        </div>
+    };
+    // Dans CreatorPage.razor
+    protected override int BuildHash() => HashCode.Combine(Manager?.IsFemale, Manager?.ActiveBody, OpenCategory);
+}

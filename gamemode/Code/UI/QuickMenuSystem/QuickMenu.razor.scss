@@ -1,0 +1,220 @@
+@import "/UI/Styles/Theme.scss";
+
+// Le root doit être en position absolute pour ne pas bloquer tout l'écran
+QuickMenu {
+    position: absolute;
+    top: 30px;
+    left: 30px;
+    width: 320px;
+    min-height: 500px;
+    display: none;
+    flex-direction: column;
+    z-index: 100;
+    // Animation S&box
+    opacity: 0;
+    transform: translateX(-30px);
+    transition: opacity 0.2s ease-in, transform 0.2s ease-out;
+
+    &.open {
+        opacity: 1;
+        display:flex;
+        transform: translateX(0px);
+    }
+
+    .container {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        background-color: rgba(0, 0, 0, 0.85);
+        backdrop-filter: blur(20px);
+        border-left: 5px solid #eb5e28;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+        border-radius: 0px; // Cubique strict
+        overflow: hidden;
+
+        .core_logo {
+            width: 100px;
+            opacity: 0.8;
+        }
+
+        // La bannière de fond derrière le titre (plus petite comme demandé)
+        .background {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            height: 120px; // Taille réduite pour le style "Bannière"
+            opacity: 0.4;
+            z-index: -1;
+            background-size: cover;
+            background-position: center;
+            // mask-image est supporté en S2 pour des effets de fondu
+        }
+
+        .page-indicator {
+            position: absolute;
+            top: 5px;
+            right: 10px;
+
+            * {
+                font-size: 10px;
+            }
+
+            color: rgba(255, 255, 255, 0.4);
+            text-transform: uppercase;
+        }
+
+        .title {
+            width:100%;
+            padding: 20px 15px;
+            font-family: 'Poppins';
+            font-weight: 900;
+            font-size: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            justify-content:center;
+            align-items:center;
+
+            .subtitle {
+                font-size: 11px;
+                font-weight: 500;
+                opacity: 0.7;
+                letter-spacing: 1px;
+                margin-top: 2px;
+                color: #eb5e28; // Accentuation sur le sous-titre
+            }
+        }
+
+        .items {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            padding: 5px 0;
+            overflow-y: scroll; // Requis pour s&box au lieu de auto
+            gap: 2px;
+
+            .item {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                padding: 12px 15px;
+                background-color: rgba(255, 255, 255, 0.03);
+                transition: all 0.1s ease;
+                border-left: 0px solid #eb5e28;
+
+                .label {
+                    font-size: 14px;
+                    font-weight: 600;
+                    text-transform: uppercase;
+                    pointer-events: none;
+                    color: white;
+                }
+
+                .arrow {
+                    opacity: 0.5;
+
+                    svg {
+                        width: 16px;
+                        height: 16px;
+                    }
+                }
+
+                &.hovered {
+                    background-color: rgba(255, 255, 255, 0.1);
+                    border-left: 6px solid #eb5e28;
+                    padding-left: 20px;
+
+                    .label {
+                        color: white;
+                    }
+
+                    .arrow {
+                        opacity: 1;
+                    }
+                }
+
+                &.disabled {
+                    background-color: rgba(50, 10, 10, 0.4);
+
+                    .label {
+                        opacity: 0.4;
+                        color: #ff5555;
+                    }
+
+                    .disabled_pattern {
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        right: 0;
+                        bottom: 0;
+                        background-image: url("ui/background/blocked.svg");
+                        background-size: 32px;
+                        opacity: 0.1;
+                        pointer-events: none;
+                    }
+                }
+            }
+        }
+
+        .footer {
+            margin-top: auto;
+            //background-color: rgba(0, 0, 0, 0.85);
+            //background-color: rgba(red);
+            display: flex;
+            flex-direction: column;
+            padding: 15px;
+            gap: 10px;
+            height: 100px;
+            //border-top: 2px solid rgba(255, 255, 255, 0.05);
+
+            .row {
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-start; // On aligne à gauche pour un look liste
+                gap: 15px;
+                width: 100%;
+            }
+
+            .action {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                min-width: 85px; // Assure un alignement constant
+                // Le carré de la touche
+                span:first-child {
+                    background-color: #ffffff;
+                    color: #000000;
+                    // Dimensions fixes pour éviter l'effet "dégu...lasse"
+                    width: 24px;
+                    height: 24px;
+                    // Centrage parfait du contenu (flèches/icones)
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+
+                    * {
+                        font-size: 14px;
+                    }
+
+                    border-radius: 4px;
+                    box-shadow: 0 2px 0px #999; // Effet relief touche
+                }
+                // Le texte descriptif
+                span:last-child {
+                    * {
+                        font-size: 11px;
+                    }
+
+                    font-weight: 800;
+                    color: rgba(255, 255, 255, 0.7);
+                    text-transform: uppercase;
+                    letter-spacing: 0.5px;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,78 @@
+@import "ui/Styles/Theme.scss";
+
+FinancePagePolice {
+    width: 100%;
+    padding: 30px 0;
+    gap: 30px;
+    transition: all 0.2s ease-in-out;
+    position:relative;
+
+    ul {
+        gap: 20px;
+        flex-wrap: wrap;
+        overflow-x: hidden;
+        overflow-y: scroll;
+
+        li {
+            flex-direction: column;
+            height: 200px;
+            width: 48%;
+            border-left-width: 5px;
+            padding: 15px;
+            position: relative;
+            flex-shrink:0;
+            background-image: linear-gradient(to right, rgba(40, 40, 40, 0.8), rgba(40, 40, 40, 0.0));
+
+            .job-name {
+                font-size: 24px;
+                font-weight: bold;
+                color: white;
+            }
+
+            .job-description {
+                font-size: 16px;
+                opacity: 0.8;
+                margin-top: 10px;
+            }
+
+            .job-slots {
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                gap: 5px;
+
+                span {
+                    color: $green;
+                }
+            }
+
+            button {
+                position: absolute;
+                bottom: 10px;
+                right: 10px;
+                padding: 5px 10px;
+                background-color: rgba( $green, 0.2);
+                border-radius: 5px;
+                transition: all 0.2s ease;
+
+                &:not(.disabled) {
+                    cursor: pointer;
+
+                    &:hover {
+                        background-color: rgba( $green, 0.4);
+                    }
+                }
+
+                &.disabled {
+                    background-color: rgba( $red, 0.2);
+                    cursor: not-allowed;
+                    pointer-events: none;
+
+                    &:hover {
+                        background-color: rgba( $red, 0.2);
+                    }
+                }
+            }
+        }
+    }
+}

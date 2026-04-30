@@ -1,0 +1,82 @@
+@using Sandbox;
+@using Sandbox.UI;
+@using OpenFramework.Inventory
+@using OpenFramework.Systems
+@using OpenFramework.Systems.Jobs
+@using static Facepunch.NotificationSystem
+@inherits PanelComponent
+@namespace OpenFramework
+
+<root>
+<div class="wrapper">
+
+    <div class="header">
+        <button class="close-btn" @onclick="@(() => Enabled = false)">X</button>
+        <span class="title">Centre de Recyclage</span>
+    </div>
+
+    <div class="body">
+
+        @if (Recycler?.AcceptedItems != null)
+        {
+            @foreach (var item in Recycler.AcceptedItems)
+            {
+                var stock = Recycler.GetPlayerStock(item);
+                <div class="item-row @(stock > 0 ? "" : "empty")">
+                    <div class="item-info">
+                        @if (item.PreviewObject != null)
+                        {
+                            <div class="item-preview">
+                                <OpenFramework.Model3DIcon ModelPath="@item.PreviewObject.ResourcePath" />
+                            </div>
+                        }
+                        <div class="item-details">
+                            <span class="item-name">@item.Name</span>
+                            <span class="item-stock">x@stock</span>
+                        </div>
+                    </div>
+                    <div class="item-price">$@item.Price</div>
+                    <button class="btn-sell-one @(stock > 0 ? "" : "disabled")" @onclick="@(() => SellOne(item))">Vendre 1</button>
+                </div>
+            }
+        }
+
+    </div>
+
+    <div class="footer">
+        <div class="total-info">
+            <span class="total-label">Total recyclable</span>
+            <span class="total-value">$@GetTotalValue()</span>
+        </div>
+        <button class="btn-sell-all @(HasAny ? "" : "disabled")" @onclick="@SellAll">Tout Vendre</button>
+        <button class="btn-cancel" @onclick="@(() => Enabled = false)">Fermer</button>
+    </div>
+
+</div>
+</root>
+
+@code
+{
+    [Property] public RecycleComponent Recycler { get; set; }
+
+    bool HasAny => Recycler?.GetTotalStock() > 0;
+
+    int GetTotalValue()
+    {
+        if (Recycler?.AcceptedItems == null) return 0;
+        return Recycler.AcceptedItems.Sum(item => Recycler.GetPlayerStock(item) * item.Price);
+    }
+
+    void SellOne(ItemMetadata item)
+    {
+        Recycler?.SellItem(item, 1);
+    }
+
+    void SellAll()
+    {
+        Recycler?.SellAll();
+    }
+
+    protected override int BuildHash() =>
+        HashCode.Combine(Recycler?.GetTotalStock(), GetTotalValue());
+}

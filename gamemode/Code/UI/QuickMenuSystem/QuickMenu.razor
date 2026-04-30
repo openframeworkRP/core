@@ -1,0 +1,457 @@
+﻿@inherits PanelComponent
+@attribute [Category("RealityON")]
+@implements IGameEventHandler<KillEvent>
+@namespace OpenFramework.UI.QuickMenuSystem
+@using Facepunch
+@using Sandbox.Events
+@using OpenFramework.Inventory
+@using OpenFramework.UI.QuickMenuSystem
+@using OpenFramework.Utility
+
+@if (Items == null || Items?.Count == 0 || MenuOrigin == null)
+    return;
+
+<root class="quick-menu @Theme @(IsOpen ? "open" : "")">
+
+    <div class="container" style="@(!string.IsNullOrEmpty(MenuOrigin.Style.Style) ? MenuOrigin.Style.Style : "")">
+        
+
+        <span class="page-indicator">Page (@(CurrentPage + 1)/@TotalPages)</span>
+        <img class="core_logo" src="ui/core_opacity.png" />
+        <div class="title">
+            @Title
+            @if (SubTitle != "")
+            {
+                <span class="subtitle">@SubTitle</span>
+            }
+        </div>
+
+        <div class="items">
+            @foreach (var item in VisibleItems)
+            {
+                if (item == null || string.IsNullOrEmpty(item.Label))
+                    continue;
+
+                <div class="item @(item == HoveredItem ? "hovered" : "") @(!item.Enabled ? "disabled" : "")" style="@(!string.IsNullOrEmpty(MenuOrigin.Style.HoverItemStyle) && item == HoveredItem ? MenuOrigin.Style.HoverItemStyle : "")">
+                    
+                    @if(!item.Enabled)
+                    {
+                        <div class="disabled_pattern" src="ui/background/blocked.svg"></div>
+                    }
+                    <span class="label">@item.Label</span>
+                    @if (item.IsSubMenu)
+                    {
+                        <span class="arrow"><svg src="ui/icons/number_list.svg" color="white"/></span>
+                    }
+                </div>
+            }
+        </div>
+
+        <div class="footer @(!string.IsNullOrEmpty(MenuOrigin.Style.BackgroundImage) ? "full_opacity" : "")">
+           <div class="row">
+                <div class="action">
+                    <span>↑</span>
+                    <span>UP</span>
+                </div>
+                <div class="action">
+                    <span>↲</span>
+                    <span>SELECT</span>
+                </div>
+                <div class="action">
+                    <span>←</span>
+                    <span>PREVIOUS</span>
+                </div>
+           </div>
+            <div class="row">
+                <div class="action">
+                    <span>↓</span>
+                    <span>DOWN</span>
+                </div>
+                <div class="action">
+                    <span>⌫</span>
+                    <span>RETURN</span>
+                </div>
+                <div class="action">
+                    <span>➜</span>
+                    <span>NEXT</span>
+                </div>
+           </div>
+        </div>
+
+    </div>
+</root>
+
+@code {
+    public string Title { get; set; } = "Quick Menu";
+    public string SubTitle { get; set; } = "";
+    public bool _isOpen { get; set; } = false;
+    public bool IsOpen
+    {
+        get => _isOpen;
+        set
+        {
+            _isOpen = value;
+            if(!value)
+            {
+                History.Clear();
+                Items.Clear();
+            }
+        }
+    }
+    public static QuickMenu Instance => Utils.GetComponent<QuickMenu>();
+
+    public List<MenuItem> Items { get; set; } = new();
+    public MenuItem HoveredItem { get; set; }
+    public IQuickMenuInterface MenuOrigin { get; set; }
+    public string Theme { get; set; } = "purple";
+
+    // -------- Pagination ----------
+    public int PageSize { get; set; } = 4;     // tweak as you like
+    public int CurrentPage { get; set; } = 0;
+
+    int TotalPages => Math.Max(1, (Items.Count + PageSize - 1) / PageSize);
+    int PageStartIndex => CurrentPage * PageSize;
+    int PageEndIndexExclusive => Math.Min(Items.Count, PageStartIndex + PageSize);
+
+    IEnumerable<MenuItem> VisibleItems => Items.Skip(PageStartIndex).Take(PageSize);
+
+    // store stack of (items at that level, selected index) – index is absolute inside that list
+    private Stack<(List<MenuItem> Items, int SelectedIndex)> History { get; set; } = new();
+
+    [Rpc.Broadcast]
+    public static void Open<T>() where T : IQuickMenuInterface, new()
+    {
+        T menu = new T();
+        OpenLocal(menu);
+    }
+
+    public static void OpenLocal<T>() where T : IQuickMenuInterface, new()
+    {
+        T menu = new T();
+        OpenLocal(menu);
+    }
+
+    public static void OpenLocal(IQuickMenuInterface menu)
+    {
+        // 1. Vérification de l'instance
+        if (Instance == null)
+        {
+            Log.Error("[QuickMenu] L'instance du QuickMenu est introuvable dans la scène ! " +
+                       "Vérifie que le composant QuickMenu est bien attaché à un GameObject actif.");
+            return;
+        }
+
+        // 2. Nettoyage sécurisé
+        Instance.Items?.Clear();
+        Instance.History?.Clear();
+        Instance.HoveredItem = null;
+
+        // 3. Initialisation des données du menu
+        Instance.MenuOrigin = menu;
+        Instance.Title = menu.Title ?? "Menu";
+        Instance.SubTitle = menu.SubTitle ?? "";
+
+        var newItems = menu.BuildMenu();
+
+        // 4. Vérification du contenu du menu
+        if (newItems == null || newItems.Count == 0)
+            return;
+
+        Instance.Items = newItems;
+        Instance.HoveredItem = Instance.GetFirstEnabledItem(Instance.Items) ?? Instance.Items.FirstOrDefault();
+
+        Instance.CurrentPage = 0;
+        Instance.IsOpen = true;
+
+        Instance.EnsureHoveredVisible();
+        Instance.StateHasChanged();
+    }
+
+    [Rpc.Broadcast]
+    public static void OpenItemInteraction(WorldItem item)
+    {
+        Instance.Items.Clear();
+        Instance.History.Clear();
+        Instance.HoveredItem = null;
+
+        var menu = new ItemInteractMenu(item);
+
+        Instance.MenuOrigin = menu;
+        Instance.Title = item.Item.Name;
+        Instance.SubTitle = menu.SubTitle;
+        Instance.Items = menu.BuildMenu();
+        Instance.HoveredItem = Instance.Items.FirstOrDefault();
+        Instance.CurrentPage = 0;
+        Instance.IsOpen = true;
+        Instance.EnsureHoveredVisible();
+    }
+
+    public static void Close()
+    {
+        Instance.IsOpen = false;
+    }
+
+    // Small helpers (put these as private methods in your menu class)
+
+    private MenuItem GetFirstEnabledItem( List<MenuItem> items )
+    {
+        return items.FirstOrDefault( x => x.Enabled );
+    }
+
+    private MenuItem GetNextEnabledItem( List<MenuItem> items, int startIndex, int direction )
+    {
+        // direction: +1 for down, -1 for up
+        var i = startIndex + direction;
+
+        while ( i >= 0 && i < items.Count )
+        {
+            if ( items[i].Enabled )
+                return items[i];
+
+            i += direction;
+        }
+
+        return null;
+    }
+
+
+    protected override void OnAwake()
+    {
+        if (Items.Count > 0)
+        {
+            HoveredItem = Items[0];
+            CurrentPage = 0;
+        }
+    }
+
+    protected override async void OnUpdate()
+    {
+        if (!IsOpen || Items.Count == 0) return;
+
+        if ( Input.Pressed( "Up" ) )
+        {
+            if ( Items.Count > 0 )
+            {
+                var currentIndex = HoveredItem is not null ? Items.IndexOf( HoveredItem ) : -1;
+
+                // If nothing is hovered yet, go to last enabled
+                if ( currentIndex == -1 )
+                {
+                    HoveredItem = Items.LastOrDefault( x => x.Enabled );
+                }
+                else
+                {
+                    var prevEnabled = GetNextEnabledItem( Items, currentIndex, -1 );
+                    if ( prevEnabled is not null )
+                        HoveredItem = prevEnabled;
+                }
+
+                EnsureHoveredVisible();
+            }
+        }
+        else if ( Input.Pressed( "Down" ) )
+        {
+            if ( Items.Count > 0 )
+            {
+                var currentIndex = HoveredItem is not null ? Items.IndexOf( HoveredItem ) : -1;
+
+                // If nothing is hovered yet, go to first enabled
+                if ( currentIndex == -1 )
+                {
+                    HoveredItem = GetFirstEnabledItem( Items );
+                }
+                else
+                {
+                    var nextEnabled = GetNextEnabledItem( Items, currentIndex, +1 );
+                    if ( nextEnabled is not null )
+                        HoveredItem = nextEnabled;
+                }
+
+                EnsureHoveredVisible();
+            }
+        }
+        else if ( Input.Pressed( "ArrowLeft" ) )
+        {
+            // Page back
+            if ( CurrentPage > 0 )
+            {
+                CurrentPage--;
+                ClampHoverIntoPage(); // you may want this to also ensure HoveredItem.Enabled
+            }
+        }
+        else if ( Input.Pressed( "ArrowRight" ) )
+        {
+            // Page forward
+            if ( CurrentPage < TotalPages - 1 )
+            {
+                CurrentPage++;
+                ClampHoverIntoPage();
+            }
+        }
+        else if (Input.Pressed("Select"))
+        {
+            if (HoveredItem is null || !HoveredItem.Enabled)
+                return;
+
+            if (HoveredItem.IsSubMenu)
+            {
+                var currentIndex = Math.Max(0, Items.IndexOf(HoveredItem));
+                History.Push((Items, currentIndex));
+
+                Items = HoveredItem.Children!;
+                HoveredItem = GetFirstEnabledItem(Items);
+                CurrentPage = 0;
+                EnsureHoveredVisible();
+            }
+            else
+            {
+                // 1. On exécute l'action (Utiliser / Jeter / etc.)
+                await HoveredItem.Invoke();
+
+                // 2. Gestion du retour en arrière (GoBackOnSelect)
+                if (HoveredItem.GoBackOnSelect)
+                {
+                    GoBack();
+                    // On sort ici pour ne pas exécuter la fermeture totale si on voulait juste reculer
+                    if (!HoveredItem.CloseMenuOnSelect) return;
+                }
+
+                // 3. Gestion de la fermeture (CloseMenuOnSelect)
+                if (HoveredItem.CloseMenuOnSelect)
+                {
+                    // Petit délai pour laisser le RPC partir proprement avant de détruire le panel
+                    await Task.Delay(10);
+                    IsOpen = false;
+                }
+                else
+                {
+                    // Si on ne ferme pas, on rafraîchit la vue (pour mettre à jour les quantités ×10 -> ×9)
+                    RefreshCurrentView();
+                }
+            }
+        }
+        else if ( Input.Pressed( "Return" ) )
+        {
+            GoBack();
+            //Client.Local.PlaySound( "sounds/ui/buttons/ui_press.sound" );
+        }
+
+        // Escape est géré par PauseMenu.TryCloseOpenMenus()
+
+    }
+
+    void GoBack()
+    {
+        if (History.Any())
+        {
+            var prev = History.Pop();
+            Items = prev.Items;
+            HoveredItem = Items.ElementAtOrDefault(prev.SelectedIndex) ?? Items.FirstOrDefault();
+            CurrentPage = HoveredIndexToPage();
+            EnsureHoveredVisible();
+        }
+        else
+        {
+            IsOpen = false; // Close the menu if no history
+        }
+    }
+
+    // ---- Pagination helpers ----
+    void EnsureHoveredVisible()
+    {
+        var i = Items.IndexOf(HoveredItem);
+        if (i < 0)
+        { // fallback
+            HoveredItem = Items.FirstOrDefault();
+            i = Items.IndexOf(HoveredItem);
+        }
+        if (i < 0) { CurrentPage = 0; return; }
+
+        // If hovered is before current page, page up
+        if (i < PageStartIndex)
+            CurrentPage = i / PageSize;
+
+        // If hovered is after current page, page down
+        if (i >= PageEndIndexExclusive)
+            CurrentPage = i / PageSize;
+
+        // Clamp page
+        CurrentPage = Math.Clamp(CurrentPage, 0, Math.Max(0, TotalPages - 1));
+    }
+
+    void ClampHoverIntoPage()
+    {
+        // If hovered is outside the visible range, move it to first visible item
+        var i = Items.IndexOf(HoveredItem);
+        if (i < PageStartIndex || i >= PageEndIndexExclusive)
+        {
+            var newIndex = PageStartIndex;
+            if (newIndex >= Items.Count) newIndex = Math.Max(0, Items.Count - 1);
+            HoveredItem = Items.ElementAtOrDefault(newIndex) ?? Items.LastOrDefault();
+        }
+    }
+
+    int HoveredIndexToPage()
+    {
+        var i = Items.IndexOf(HoveredItem);
+        return i >= 0 ? i / PageSize : 0;
+    }
+
+    private void RefreshCurrentView()
+    {
+        if (MenuOrigin == null) return;
+
+        // capture full path: history + current hovered index
+        var path = History.Reverse().ToList(); // bottom->top
+        var currentIndex = Math.Max(0, Items.IndexOf(HoveredItem));
+        path.Add((Items, currentIndex));
+
+        // rebuild root
+        Items = MenuOrigin.BuildMenu();
+        HoveredItem = Items.FirstOrDefault();
+        CurrentPage = 0;
+        History.Clear();
+
+        // walk the path again by indices
+        foreach (var (_, selectedIndex) in path)
+        {
+            // Guard in case of shorter lists after rebuild
+            if (selectedIndex < 0 || selectedIndex >= Items.Count)
+            {
+                HoveredItem = Items.FirstOrDefault();
+                CurrentPage = 0;
+                break;
+            }
+
+            HoveredItem = Items[selectedIndex];
+            CurrentPage = HoveredIndexToPage();
+
+            if (HoveredItem?.IsSubMenu == true && HoveredItem.Children != null && HoveredItem.Children.Count > 0)
+            {
+                History.Push((Items, selectedIndex));
+                Items = HoveredItem.Children;
+                // Default to first element inside the submenu before next step
+                HoveredItem = Items.FirstOrDefault();
+                CurrentPage = 0;
+            }
+        }
+
+        EnsureHoveredVisible();
+    }
+
+    void IGameEventHandler<KillEvent>.OnGameEvent(KillEvent eventArgs)
+    {
+        var victim = eventArgs.DamageInfo.Victim.GetComponentInParent<PlayerPawn>();
+
+        if (victim != null && victim.Client == Client.Local)
+        {
+            IsOpen = false;
+        }
+    }
+
+    protected override int BuildHash()
+    {
+        if ( !IsOpen ) return 0;
+        return HashCode.Combine( HoveredItem, IsOpen, CurrentPage, Items?.Count ?? 0, MenuOrigin?.GetRebuildHash() ?? 0 );
+    }
+}

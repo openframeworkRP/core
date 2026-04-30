@@ -1,0 +1,125 @@
+.code-overlay {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.6);
+    pointer-events: all;
+}
+
+.code-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    background-color: rgba(15, 15, 20, 0.97);
+    border: 2px solid rgba(255, 169, 40, 0.35);
+    border-radius: 12px;
+    padding: 28px 40px;
+    width: 400px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.7);
+    pointer-events: all;
+}
+
+.code-title {
+    font-size: 20px;
+    font-weight: 800;
+    color: #ffa928;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.code-hint {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.5);
+    text-align: center;
+
+    &.code-hint-small {
+        font-size: 10px;
+        color: rgba(255, 255, 255, 0.35);
+        letter-spacing: 1px;
+    }
+}
+
+.code-input {
+    width: 220px;
+    height: 44px;
+    padding: 0 14px;
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: 4px;
+    text-align: center;
+    color: #ffa928;
+    background-color: rgba(255, 255, 255, 0.06);
+    border: 2px solid rgba(255, 169, 40, 0.4);
+    border-radius: 8px;
+    pointer-events: all;
+}
+
+.code-display {
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+    margin-top: 4px;
+}
+
+.code-digit {
+    width: 44px;
+    height: 44px;
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.04);
+    border: 2px solid rgba(255, 255, 255, 0.12);
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    color: #ffa928;
+    font-weight: 800;
+    transition: all 0.12s ease;
+
+    &.filled {
+        border-color: rgba(255, 169, 40, 0.7);
+        background-color: rgba(255, 169, 40, 0.08);
+    }
+}
+
+.code-actions {
+    flex-direction: row;
+    gap: 12px;
+    margin-top: 10px;
+}
+
+.code-cancel, .code-confirm {
+    padding: 10px 28px;
+    font-size: 13px;
+    font-weight: 800;
+    border-radius: 6px;
+    cursor: pointer;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    pointer-events: all;
+}
+
+.code-cancel {
+    background-color: rgba(255, 255, 255, 0.06);
+    color: rgba(255, 255, 255, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+
+    &:hover {
+        background-color: rgba(255, 255, 255, 0.12);
+    }
+}
+
+.code-confirm {
+    background-color: rgba(255, 169, 40, 0.9);
+    color: #1a1008;
+
+    &:hover {
+        background-color: #ffa928;
+    }
+
+    &.disabled {
+        opacity: 0.35;
+        pointer-events: none;
+    }
+}

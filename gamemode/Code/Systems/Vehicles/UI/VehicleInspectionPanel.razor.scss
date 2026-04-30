@@ -1,0 +1,130 @@
+VehicleInspectionPanel {
+    position: absolute;
+    right: 40px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+
+    &.visible {
+        opacity: 1;
+    }
+
+    .inspection-card {
+        width: 280px;
+        background-color: rgba(0, 0, 0, 0.75);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 8px;
+        padding: 16px;
+        flex-direction: column;
+        gap: 10px;
+        backdrop-filter: blur(10px);
+
+        .header {
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+
+            .title {
+                font-size: 16px;
+                font-weight: 800;
+                color: white;
+                letter-spacing: 0.5px;
+            }
+
+            .close {
+                font-size: 12px;
+                font-weight: 700;
+                color: rgba(255, 255, 255, 0.4);
+                cursor: pointer;
+                pointer-events: all;
+
+                &:hover {
+                    color: white;
+                }
+            }
+        }
+
+        .health-row {
+            flex-direction: row;
+            justify-content: space-between;
+
+            .health-label {
+                font-size: 11px;
+                font-weight: 600;
+                color: rgba(255, 255, 255, 0.5);
+            }
+
+            .health-value {
+                font-size: 18px;
+                font-weight: 800;
+            }
+        }
+
+        .bar-container {
+            width: 100%;
+            height: 6px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            overflow: hidden;
+
+            .bar-fill {
+                height: 100%;
+                border-radius: 3px;
+                transition: width 0.4s ease;
+            }
+        }
+
+        .info-row {
+            flex-direction: row;
+            justify-content: space-between;
+
+            .info-label {
+                font-size: 11px;
+                font-weight: 600;
+                color: rgba(255, 255, 255, 0.4);
+            }
+
+            .info-value {
+                font-size: 12px;
+                font-weight: 700;
+                color: rgba(255, 255, 255, 0.8);
+            }
+        }
+
+        .status-row {
+            margin-top: 4px;
+
+            .status {
+                font-size: 12px;
+                font-weight: 800;
+                letter-spacing: 1px;
+                text-align: center;
+                padding: 4px 8px;
+                border-radius: 4px;
+
+                &.good {
+                    color: #66cc66;
+                    background-color: rgba(102, 204, 102, 0.1);
+                }
+                &.fair {
+                    color: #ddcc33;
+                    background-color: rgba(221, 204, 51, 0.1);
+                }
+                &.worn {
+                    color: #e68c1e;
+                    background-color: rgba(230, 140, 30, 0.1);
+                }
+                &.critical {
+                    color: #dd3333;
+                    background-color: rgba(221, 51, 51, 0.1);
+                }
+                &.hs {
+                    color: #ff4444;
+                    background-color: rgba(255, 68, 68, 0.15);
+                }
+            }
+        }
+    }
+}

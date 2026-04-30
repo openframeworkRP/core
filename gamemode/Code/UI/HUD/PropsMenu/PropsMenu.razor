@@ -1,0 +1,65 @@
+﻿@using System;
+@using Sandbox.UI;
+@using Sandbox.UI.Navigation;
+
+@namespace Facepunch.UI
+@inherits NavigationHost
+
+<root class="@(IsOpen ? "open" : "")">
+
+    <div class="container">
+        <div class="bglife" src="ui/core.png"></div>
+        <button class="close" @onclick=@(() => { IsOpen = false; })>
+            <svg src="ui/icons/close.svg" color="white"/>
+        </button>
+        
+        <div class="navbar">
+            <div class="logo-nav">
+                <div class="bglife-nav" src="ui/core.png"></div>
+            </div>
+            <a href="/">
+                <svg class="icon" src="ui/icons/home.svg" color="white" />
+                <span>Props Menu</span>
+            </a>
+            @if (Client.Local.Data.Job == "armurier")
+            {
+                <a href="/armury">
+                    <svg class="icon" src="ui/icons/home.svg" color="white" />
+                    <span>Armury Menu</span>
+                </a>
+            }
+            
+        </div>
+
+        <div class="navigator-canvas" slot="navigator-canvas" />
+    </div>
+</root>
+
+@code
+{
+    public static PropsMenu Instance { get; private set; }
+    public bool IsOpen = false;
+
+    public PropsMenu()
+    {
+        Instance = this;
+        DefaultUrl = "/";
+        AddDestination("/", typeof(MainPageProps));
+        AddDestination("/armury", typeof(PageArmury));
+    }
+
+    public override void Tick()
+    {
+        if(Input.Pressed("PropsMenu"))
+        {
+            IsOpen = !IsOpen;
+        }
+    }
+
+    public static void Close() => Instance.IsOpen = false;
+
+    protected override int BuildHash()
+    {
+        return HashCode.Combine(IsOpen);
+    }
+}

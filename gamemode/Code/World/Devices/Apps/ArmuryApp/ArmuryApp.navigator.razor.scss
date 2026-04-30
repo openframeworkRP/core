@@ -1,0 +1,116 @@
+@import "ui/Styles/Theme.scss";
+@import "ui/Styles/MenuSystem.scss";
+
+ArmuryApp_navigator {
+    height: 100%;
+    width: 100%;
+    background-color: white;
+    flex-direction: column;
+
+    .navbar {
+        height: 10%;
+        width: 100%;
+        background-color: rgba(80, 80, 80, 1);
+        align-items: center;
+        overflow: hidden;
+        padding: 35px 15px;
+        gap: 25px;
+
+        .branding {
+            height: 80px;
+            width: 80px;
+
+            svg {
+                height: 54px;
+                width: 54px;
+            }
+
+            &:hover {
+                border-radius: 6px;
+                background-color: rgba(grey,0.5);
+            }
+        }
+
+        ul {
+            margin-left: 50px;
+            gap: 10px;
+        }
+
+        a {
+            height: 64px;
+            width: 18%;
+            align-items: center;
+            justify-content: center;
+            align-items: center;
+            padding: 0 10px;
+            gap: 15px;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            opacity: 0.5;
+            border-radius: 8px;
+
+            * {
+                font-size: 16px;
+            }
+
+            svg {
+                height: 54px;
+                width: 32px;
+            }
+
+            &:active {
+                sound-in: ui_press;
+            }
+
+            &:hover {
+                //background-color: rgba($main-color, 0.7);
+                sound-in: ui.button.over;
+                background-color: rgba(#FF5714, 0.35);
+            }
+
+            &.active {
+                opacity: 1;
+                background-color: rgba(#FF5714, 0.8);
+
+                .icon {
+                    //filter: brightness(0) saturate(100%) invert(22%) sepia(92%) saturate(2916%) hue-rotate(274deg) brightness(76%) contrast(136%);
+                }
+            }
+        }
+    }
+
+    .close {
+        top: 25px;
+        right: 25px;
+        z-index: 50;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        position: absolute;
+
+        svg {
+            height: 48px;
+            width: 48px;
+        }
+
+        &:hover {
+            background-color: rgba(crimson, 0.2);
+        }
+    }
+
+    .navigator-canvas, .navigator-body {
+        height: 100%;
+        width: 100%;
+        flex: 1;
+
+        .page-title {
+            * {
+                font-size: 32px;
+                font-weight: 600;
+                color: white;
+                margin-bottom: 20px;
+                letter-spacing: 2px;
+            }
+        }
+    }
+}

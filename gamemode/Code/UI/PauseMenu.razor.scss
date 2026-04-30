@@ -1,0 +1,1080 @@
+@import "/UI/Styles/Theme.scss";
+
+PauseMenu {
+    height: 100%;
+    width: 100%;
+    background-color: $surface-dark;
+    backdrop-filter: blur(5px);
+    padding: 10px;
+    padding-right: 10px;
+    flex-direction: column;
+    color: white;
+    font-family: $font-ui;
+    pointer-events: none;
+    display: none;
+    opacity: 0;
+    transition: $transition-normal;
+
+    &.open {
+        display: flex;
+        opacity: 1;
+        pointer-events: all;
+    }
+
+    .topbar {
+        height: 9%;
+
+        .server {
+            width: 15%;
+            border-right: $border-light;
+            justify-content: space-evenly;
+            align-items: center;
+
+            div {
+                flex-direction: column;
+            }
+
+            span {
+                &:first-child {
+                    font-size: 35px;
+                    font-weight: bold;
+                    letter-spacing: 1px;
+                    text-transform: uppercase;
+                }
+
+                &:last-child {
+                    font-size: 20px;
+                    font-weight: normal;
+                    letter-spacing: 1px;
+                    opacity: $text-muted;
+                }
+            }
+        }
+
+        .data {
+            margin-left: 50px;
+            align-items: center;
+            gap: 20px;
+
+            .case {
+                height: 50%;
+                width: 156px;
+                padding: 5px;
+                border: $border-light;
+                align-items: center;
+                gap: 10px;
+
+                .icon {
+                    height: 32px;
+                    width: 32px;
+                    align-items: center;
+                    justify-content: center;
+                    text-align: center;
+                    background-color: $surface-input;
+                    border: $border-light;
+
+                    svg {
+                        height: 24px;
+                        width: 24px;
+                    }
+                }
+
+                .column {
+                    flex-direction: column;
+                    flex: 1;
+
+                    .name {
+                        opacity: $text-muted;
+                    }
+
+                    .value {
+                    }
+                }
+            }
+        }
+
+        .end {
+            width: 15%;
+            border-left: $border-light;
+            justify-content: space-evenly;
+            align-items: center;
+            margin-left: auto;
+            padding: 20px;
+
+            button {
+                height: 100%;
+                width: 100%;
+                border: $border-light;
+                background-color: $surface-card-light;
+                align-items: center;
+                justify-content: center;
+                transition: $transition-normal;
+                cursor: pointer;
+                font-weight: 600;
+                letter-spacing: 2px;
+
+                &:hover {
+                    background-color: $accent-bg;
+                }
+            }
+        }
+    }
+
+    .content {
+        height: 91%;
+        width: 100%;
+        border-top: $border-light;
+
+        .actions {
+            width: 20%;
+            padding: 20px;
+            gap: 10px;
+            border-right: $border-light;
+            flex-direction: column;
+
+            .action {
+                height: 100%/4;
+                width: 100%;
+                padding: 2px;
+                border: $border-light;
+                position: relative;
+                flex-direction: column;
+                align-items: center;
+                transition: $transition-normal;
+                cursor: pointer;
+
+                .background {
+                    height: 100%;
+                    width: 100%;
+                    background-size: cover;
+                    background-repeat: no-repeat;
+                    background-position: center;
+                }
+
+                button {
+                    position: absolute;
+                    bottom: 10px;
+                    height: 48px;
+                    width: 95%;
+                    align-items: center;
+                    padding: 10px;
+                    background-color: $surface-card;
+                    transition: $transition-normal;
+                    font-weight: 600;
+                }
+
+                &:hover, &.active {
+                    background-color: $accent-bg-hover;
+
+                    button {
+                        background-color: $accent-bg-hover;
+                    }
+                }
+            }
+        }
+
+        .right-panel {
+            width: 80%;
+            height: 100%;
+            flex-grow: 1;
+        }
+
+        .players-panel {
+            width: 100%;
+            height: 100%;
+            flex-direction: column;
+            overflow: hidden;
+
+            .players-header {
+                height: 60px;
+                min-height: 60px;
+                padding: 10px 20px;
+                align-items: center;
+                gap: 10px;
+                border-bottom: $border-light;
+
+                svg {
+                    height: 24px;
+                    width: 24px;
+                }
+
+                span {
+                    font-size: 22px;
+                    font-weight: bold;
+                    letter-spacing: 1px;
+                    text-transform: uppercase;
+                }
+            }
+
+            .players-list {
+                flex-direction: column;
+                padding: 10px;
+                gap: 4px;
+                overflow-x: hidden;
+                overflow-y: scroll;
+                flex-grow: 1;
+
+                li {
+                    width: 100%;
+                    flex-shrink: 0;
+
+                    &.job-header {
+                        padding: 10px 16px 6px;
+                        font-size: 14px;
+                        font-weight: bold;
+                        text-transform: uppercase;
+                        letter-spacing: 2px;
+                        opacity: $text-muted;
+                    }
+
+                    &:not(.job-header) {
+                        flex-direction: row;
+                        height: 56px;
+                        padding: 0 16px;
+                        align-items: center;
+                        background-color: $surface-card-subtle;
+                        border-left: 3px solid white;
+                        transition: $transition-fast;
+
+                        &:hover {
+                            background-color: $accent-bg-subtle;
+                        }
+
+                        span {
+                            height: 100%;
+                            align-items: center;
+                        }
+
+                        .name {
+                            margin-left: 12px;
+                            width: 15%;
+                            font-weight: 500;
+                        }
+
+                        .jobname {
+                            width: 25%;
+                            text-transform: capitalize;
+                            justify-content: center;
+                            opacity: $text-muted;
+                        }
+
+                        .ping {
+                            font-size: 13px;
+                            opacity: $text-muted;
+                            min-width: 80px;
+                            padding-right: 20px;
+                        }
+
+                        .actions {
+                            flex-direction: row;
+                            height: 100%;
+                            gap: 4px;
+                            align-items: center;
+                            margin-left: auto;
+
+                            &.no-display {
+                                display: none;
+                            }
+
+                            .action-btn {
+                                position: relative;
+                                flex-direction: row;
+                                height: 100%;
+                                align-items: center;
+                                justify-content: center;
+                                padding: 0 4px;
+                                cursor: pointer;
+
+                                svg {
+                                    height: 28px;
+                                    width: 28px;
+                                    opacity: 0.2;
+                                    transition: $transition-fast;
+                                    flex-shrink: 0;
+                                }
+
+                                .tooltip {
+                                    position: absolute;
+                                    top: -36px;
+                                    left: 50%;
+                                    transform: translateX(-50%);
+                                    background-color: rgba(0, 0, 0, 0.9);
+                                    color: white;
+                                    font-size: 11px;
+                                    padding: 4px 8px;
+                                    white-space: nowrap;
+                                    pointer-events: none;
+                                    opacity: 0;
+                                    transition: $transition-fast;
+                                    z-index: 50;
+                                    height: auto;
+                                }
+
+                                &:hover {
+                                    svg {
+                                        opacity: 1;
+                                    }
+
+                                    .tooltip {
+                                        opacity: 1;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        .context-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.45);
+            z-index: 99;
+        }
+
+        .context-menu {
+            position: absolute;
+            z-index: 100;
+            top: 50%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-50%);
+            width: 520px;
+            max-height: 80%;
+            flex-direction: row;
+            flex-wrap: wrap;
+            background-color: rgba(20, 20, 22, 0.97);
+            border: $border-light;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+            padding: 4px;
+            overflow-y: scroll;
+
+            .context-header {
+                width: 100%;
+                padding: 10px 12px;
+                border-bottom: $border-subtle;
+
+                span {
+                    font-size: 13px;
+                    font-weight: bold;
+                    text-transform: uppercase;
+                    letter-spacing: 1px;
+                    opacity: $text-muted;
+                }
+            }
+
+            .context-separator {
+                width: 100%;
+                height: 1px;
+                background-color: rgba(255, 255, 255, 0.06);
+                margin: 4px 8px;
+            }
+
+            .context-item {
+                width: 50%;
+                flex-direction: row;
+                padding: 8px 12px;
+                gap: 10px;
+                align-items: center;
+                cursor: pointer;
+                transition: $transition-fast;
+
+                svg {
+                    height: 18px;
+                    width: 18px;
+                    flex-shrink: 0;
+                }
+
+                span {
+                    font-size: 14px;
+                    font-weight: 500;
+                }
+
+                &:hover {
+                    background-color: $accent-bg-subtle;
+                }
+
+                &.danger {
+                    &:hover {
+                        background-color: rgba(255, 60, 60, 0.15);
+
+                        span {
+                            color: #ff4444;
+                        }
+
+                        svg {
+                            color: #ff4444;
+                        }
+                    }
+                }
+            }
+
+            .context-sub {
+                width: 100%;
+                flex-direction: column;
+                padding: 6px 10px;
+                gap: 6px;
+
+                .context-sub-row {
+                    flex-direction: row;
+                    height: 32px;
+                    gap: 6px;
+
+                    TextEntry {
+                        flex-grow: 1;
+                        height: 32px;
+                        background-color: $surface-input;
+                        border: $border-light;
+                        color: white;
+                        padding: 0 10px;
+                        font-size: 13px;
+
+                        &:focus {
+                            border-color: $accent-focus;
+                            background-color: $surface-input-focus;
+                        }
+                    }
+
+                    TextEntry:last-child {
+                        width: 60px;
+                        flex-grow: 0;
+                    }
+                }
+
+                TextEntry {
+                    height: 32px;
+                    background-color: $surface-input;
+                    border: $border-light;
+                    color: white;
+                    padding: 0 10px;
+                    font-size: 13px;
+
+                    &:focus {
+                        border-color: $accent-focus;
+                        background-color: $surface-input-focus;
+                    }
+                }
+
+                .context-confirm {
+                    height: 30px;
+                    background-color: $accent-bg;
+                    border: 1px solid $accent;
+                    color: white;
+                    font-size: 12px;
+                    font-weight: 600;
+                    letter-spacing: 1px;
+                    cursor: pointer;
+                    align-items: center;
+                    justify-content: center;
+                    transition: $transition-fast;
+
+                    &:hover {
+                        background-color: $accent-hover;
+                    }
+                }
+
+                .context-item-list {
+                    flex-direction: column;
+                    max-height: 200px;
+                    overflow-y: scroll;
+                    gap: 2px;
+
+                    .context-item-entry {
+                        flex-direction: row;
+                        padding: 6px 10px;
+                        align-items: center;
+                        cursor: pointer;
+                        transition: $transition-fast;
+                        background-color: $surface-card-subtle;
+
+                        &:hover {
+                            background-color: $accent-bg-subtle;
+                        }
+
+                        &.selected {
+                            background-color: $accent-bg;
+                        }
+
+                        span {
+                            font-size: 13px;
+                        }
+
+                        .context-item-type {
+                            margin-left: auto;
+                            font-size: 11px;
+                            opacity: $text-muted;
+                            text-transform: uppercase;
+                        }
+                    }
+                }
+            }
+        }
+
+        .feedback {
+            width: 100%;
+            height: 100%;
+            flex-direction: column;
+
+            .feedback-header {
+                height: 60px;
+                min-height: 60px;
+                padding: 10px 20px;
+                align-items: center;
+                border-bottom: $border-light;
+
+                span {
+                    font-size: 22px;
+                    font-weight: bold;
+                    letter-spacing: 1px;
+                    text-transform: uppercase;
+                }
+            }
+
+            .feedback-form {
+                flex-direction: column;
+                padding: 30px;
+                gap: 20px;
+                flex-grow: 1;
+
+                .feedback-field {
+                    flex-direction: column;
+                    gap: 8px;
+
+                    .feedback-label {
+                        font-size: 14px;
+                        font-weight: bold;
+                        text-transform: uppercase;
+                        letter-spacing: 2px;
+                        opacity: $text-muted;
+                    }
+
+                    TextEntry {
+                        background-color: $surface-input;
+                        border: $border-light;
+                        color: white;
+                        padding: 12px;
+                        font-size: 15px;
+
+                        &:focus {
+                            border-color: $accent-focus;
+                            background-color: $surface-input-focus;
+                        }
+                    }
+                }
+
+                .feedback-title-field {
+                    TextEntry {
+                        height: 42px;
+                    }
+                }
+
+                .feedback-content-field {
+                    flex-grow: 1;
+
+                    TextEntry {
+                        flex-grow: 1;
+                    }
+                }
+
+                .feedback-actions {
+                    align-items: center;
+                    gap: 15px;
+                    justify-content: flex-end;
+
+                    .feedback-status {
+                        font-size: 14px;
+                        opacity: 0.6;
+
+                        &.success {
+                            color: $success-color;
+                            opacity: 1;
+                        }
+                    }
+
+                    .feedback-send {
+                        height: 48px;
+                        padding: 0 30px;
+                        background-color: $accent-bg;
+                        border: 1px solid $accent;
+                        color: white;
+                        font-weight: 600;
+                        font-size: 16px;
+                        letter-spacing: 1px;
+                        cursor: pointer;
+                        transition: $transition-fast;
+                        align-items: center;
+                        justify-content: center;
+
+                        &:hover {
+                            background-color: $accent-hover;
+                        }
+                    }
+                }
+            }
+        }
+
+        .pause-map {
+            width: 100%;
+            height: 100%;
+            background-color: $surface-map;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+
+            .map-wrapper {
+                position: relative;
+                width: 95%;
+                height: 95%;
+                flex-shrink: 0;
+            }
+
+            .map-image {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                background-size: contain;
+                background-position: center center;
+                background-repeat: no-repeat;
+                opacity: 0.85;
+                filter: saturate(0.4) brightness(0.7);
+            }
+
+            .zone-label {
+                position: absolute;
+                transform: translateX(-50%) translateY(-50%);
+                color: rgba(255, 255, 255, 0.25);
+                font-size: 11px;
+                font-weight: bold;
+                letter-spacing: 3px;
+                text-transform: uppercase;
+                text-shadow: 1px 1px 4px black;
+                pointer-events: none;
+            }
+
+            .blip-label {
+                position: absolute;
+                transform: translateX(-10%) translateY(-50%);
+                font-size: 14px;
+                text-shadow: 2px 2px 4px black;
+                pointer-events: none;
+                z-index: 50;
+            }
+
+            .player-marker {
+                position: absolute;
+                width: 10px;
+                height: 10px;
+                background-color: rgba(255, 80, 80, 1);
+                border-radius: 50%;
+                border: 2px solid white;
+                transform: translateX(-50%) translateY(-50%);
+                z-index: 10;
+                box-shadow: 0 0 6px rgba(255, 80, 80, 0.8);
+            }
+
+            .viewer-marker {
+                position: absolute;
+                width: 14px;
+                height: 14px;
+                background-color: white;
+                border-radius: 50%;
+                border: 2px solid rgba(0, 200, 255, 1);
+                transform: translateX(-50%) translateY(-50%);
+                z-index: 30;
+                box-shadow: 0 0 8px rgba(0, 200, 255, 0.9);
+            }
+        }
+
+        .admin-panel {
+            width: 100%;
+            height: 100%;
+            flex-direction: column;
+            overflow: hidden;
+
+            .admin-header {
+                height: 60px;
+                min-height: 60px;
+                padding: 10px 20px;
+                align-items: center;
+                gap: 10px;
+                border-bottom: $border-light;
+
+                svg {
+                    height: 24px;
+                    width: 24px;
+                }
+
+                span {
+                    font-size: 22px;
+                    font-weight: bold;
+                    letter-spacing: 1px;
+                    text-transform: uppercase;
+                }
+            }
+
+            .admin-breadcrumb {
+                height: 40px;
+                min-height: 40px;
+                padding: 0 20px;
+                align-items: center;
+                gap: 12px;
+                border-bottom: $border-subtle;
+
+                .admin-back {
+                    cursor: pointer;
+                    opacity: $text-muted;
+                    transition: $transition-fast;
+
+                    span {
+                        font-size: 14px;
+                        text-transform: uppercase;
+                        letter-spacing: 1px;
+                    }
+
+                    &:hover {
+                        opacity: 1;
+                        color: $accent;
+                    }
+                }
+
+                .admin-path {
+                    font-size: 13px;
+                    opacity: $text-muted;
+                    letter-spacing: 1px;
+                }
+            }
+
+            .admin-input {
+                flex-direction: column;
+                padding: 30px;
+                gap: 16px;
+                align-items: center;
+                justify-content: center;
+                flex-grow: 1;
+
+                .admin-input-label {
+                    font-size: 16px;
+                    font-weight: bold;
+                    text-transform: uppercase;
+                    letter-spacing: 2px;
+                    opacity: $text-muted;
+                }
+
+                TextEntry {
+                    width: 300px;
+                    height: 42px;
+                    background-color: $surface-input;
+                    border: $border-light;
+                    color: white;
+                    padding: 0 12px;
+                    font-size: 16px;
+                    text-align: center;
+
+                    &:focus {
+                        border-color: $accent-focus;
+                        background-color: $surface-input-focus;
+                    }
+                }
+
+                .admin-input-actions {
+                    gap: 10px;
+
+                    button {
+                        height: 40px;
+                        padding: 0 24px;
+                        border: $border-light;
+                        color: white;
+                        font-weight: 600;
+                        font-size: 14px;
+                        letter-spacing: 1px;
+                        cursor: pointer;
+                        transition: $transition-fast;
+                        align-items: center;
+                        justify-content: center;
+                    }
+
+                    .admin-input-cancel {
+                        background-color: $surface-card-light;
+
+                        &:hover {
+                            background-color: $surface-input;
+                        }
+                    }
+
+                    .admin-input-confirm {
+                        background-color: $accent-bg;
+
+                        &:hover {
+                            background-color: $accent-hover;
+                        }
+                    }
+                }
+            }
+
+            .admin-list {
+                flex-direction: column;
+                padding: 10px;
+                gap: 4px;
+                overflow: scroll;
+                flex-grow: 1;
+
+                .admin-item {
+                    padding: 12px 16px;
+                    background-color: $surface-card-subtle;
+                    border: $border-subtle;
+                    cursor: pointer;
+                    transition: $transition-fast;
+                    align-items: center;
+
+                    &:hover {
+                        background-color: $accent-bg-subtle;
+                        border-color: $accent-border;
+                    }
+
+                    .admin-item-label {
+                        font-size: 15px;
+                        font-weight: 500;
+                        flex-grow: 1;
+                    }
+
+                    .admin-item-arrow {
+                        font-size: 16px;
+                        opacity: $text-muted;
+                    }
+
+                    &.has-children {
+                        .admin-item-label {
+                            font-weight: 600;
+                        }
+                    }
+                }
+            }
+        }
+
+        .wiki {
+            width: 100%;
+            height: 100%;
+            flex-direction: column;
+            flex-grow: 1;
+            overflow: scroll;
+
+            .wiki-header {
+                height: 60px;
+                min-height: 60px;
+                padding: 10px 20px;
+                align-items: center;
+                gap: 10px;
+                border-bottom: $border-light;
+
+                svg {
+                    height: 24px;
+                    width: 24px;
+                }
+
+                span {
+                    font-size: 22px;
+                    font-weight: bold;
+                    letter-spacing: 1px;
+                    text-transform: uppercase;
+                }
+
+                .wiki-search {
+                    flex-grow: 1;
+                    justify-content: flex-end;
+
+                    TextEntry {
+                        width: 300px;
+                        height: 36px;
+                        background-color: $surface-input;
+                        border: $border-light;
+                        color: white;
+                        padding: 0 12px;
+                        font-size: 14px;
+
+                        &:focus {
+                            border-color: $accent-focus;
+                            background-color: $surface-input-focus;
+                        }
+                    }
+                }
+            }
+
+            .wiki-empty {
+                flex-grow: 1;
+                align-items: center;
+                justify-content: center;
+
+                span {
+                    font-size: 18px;
+                    opacity: $text-faded;
+                    letter-spacing: 1px;
+                }
+            }
+
+            .wiki-categories {
+                flex-direction: column;
+                padding: 20px;
+                gap: 20px;
+                overflow: scroll;
+
+                .wiki-category {
+                    flex-direction: column;
+                    gap: 8px;
+
+                    .wiki-category-name {
+                        font-size: 14px;
+                        font-weight: bold;
+                        text-transform: uppercase;
+                        letter-spacing: 2px;
+                        opacity: $text-muted;
+                        padding-bottom: 6px;
+                        border-bottom: $border-subtle;
+                        align-items: center;
+                        gap: 8px;
+
+                        .wiki-category-bar {
+                            width: 3px;
+                            height: 16px;
+                            flex-shrink: 0;
+                        }
+                    }
+
+                    .wiki-category-articles {
+                        flex-direction: column;
+                        gap: 4px;
+                    }
+                }
+            }
+
+            .wiki-entry {
+                padding: 12px 16px;
+                gap: 12px;
+                align-items: center;
+                background-color: $surface-card-subtle;
+                border: $border-subtle;
+                cursor: pointer;
+                transition: $transition-fast;
+
+                &:hover {
+                    background-color: $accent-bg-subtle;
+                    border-color: $accent-border;
+                }
+
+                .wiki-entry-color {
+                    width: 4px;
+                    height: 100%;
+                    min-height: 30px;
+                    flex-shrink: 0;
+                }
+
+                .wiki-entry-text {
+                    flex-direction: column;
+                    gap: 2px;
+                    overflow: hidden;
+
+                    .wiki-entry-title {
+                        font-size: 16px;
+                        font-weight: 600;
+                    }
+
+                    .wiki-entry-summary {
+                        font-size: 13px;
+                        opacity: $text-muted;
+                        text-overflow: ellipsis;
+                        overflow: hidden;
+                    }
+                }
+            }
+
+            .wiki-article {
+                flex-direction: column;
+                padding: 20px;
+                overflow: scroll;
+
+                .wiki-back {
+                    padding: 8px 16px;
+                    cursor: pointer;
+                    opacity: $text-muted;
+                    transition: $transition-fast;
+                    width: 100px;
+
+                    span {
+                        font-size: 14px;
+                        text-transform: uppercase;
+                        letter-spacing: 1px;
+                    }
+
+                    &:hover {
+                        opacity: 1;
+                        color: $accent;
+                    }
+                }
+
+                .wiki-article-header {
+                    padding: 16px 0;
+                    gap: 16px;
+                    align-items: center;
+                    border-bottom: $border-light;
+
+                    .wiki-category-bar {
+                        width: 4px;
+                        height: 40px;
+                        flex-shrink: 0;
+                    }
+
+                    .wiki-article-title {
+                        flex-direction: column;
+                        gap: 4px;
+
+                        h1 {
+                            font-size: 28px;
+                            font-weight: bold;
+                        }
+
+                        .wiki-category-tag {
+                            font-size: 12px;
+                            text-transform: uppercase;
+                            letter-spacing: 1px;
+                            opacity: 0.4;
+                        }
+                    }
+                }
+
+                .wiki-article-body {
+                    padding: 20px 0;
+                    flex-direction: column;
+                    gap: 4px;
+
+                    .wiki-heading {
+                        font-size: 18px;
+                        font-weight: 800;
+                        color: $accent;
+                        text-transform: uppercase;
+                        letter-spacing: 1px;
+                        margin-top: 12px;
+                        margin-bottom: 4px;
+                    }
+
+                    .wiki-paragraph {
+                        font-size: 15px;
+                        opacity: 0.85;
+                        overflow: hidden;
+                    }
+
+                    .wiki-list-item {
+                        font-size: 14px;
+                        opacity: 0.8;
+                        padding-left: 16px;
+                    }
+
+                    .wiki-spacer {
+                        height: 8px;
+                    }
+                }
+            }
+        }
+    }
+}

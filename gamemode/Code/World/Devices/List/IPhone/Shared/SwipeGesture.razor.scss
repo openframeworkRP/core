@@ -1,0 +1,31 @@
+SwipeGesture {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    // Transparent : ne bloque pas visuellement
+    pointer-events: none; // le root laisse passer, seules les zones trigger captent
+    z-index: 100;
+    //background-color:red;
+    display:none;
+    // Zone haute (Dynamic Island → 40px)
+    .trigger-top {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 40px;
+        pointer-events: all;
+        // debug : background-color: rgba(red, 0.2);
+    }
+
+    // Zone basse (home bar → 50px)
+    .trigger-bottom {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 50px;
+        pointer-events: all;
+        // debug : background-color: rgba(blue, 0.2);
+    }
+}

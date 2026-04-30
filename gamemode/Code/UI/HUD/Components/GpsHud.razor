@@ -1,0 +1,82 @@
+@using Sandbox;
+@using Sandbox.UI;
+@using OpenFramework.Systems.Gps;
+@using OpenFramework.Systems.Pawn;
+@using System;
+
+@inherits Panel
+@namespace OpenFramework.UI.HUD.Components
+
+@if ( !GpsSystem.HasWaypoint || Player == null )
+{
+    return;
+}
+
+<root>
+    <div class="gps-frame" style="border-color: @BorderColor;">
+        <div class="arrow" style="transform: rotate(@(Bearing.ToString("0.0"))deg); color: @ColorRgba;">▲</div>
+        <div class="info">
+            <span class="label" style="color: @ColorRgba;">@GpsSystem.Text</span>
+            <span class="distance">@DistanceLabel</span>
+        </div>
+    </div>
+</root>
+
+@code
+{
+    private PlayerPawn Player => Client.Local?.PlayerPawn;
+
+    // Angle (degrés) de la flèche GPS — 0° = devant, +X° = à droite, négatif = à gauche.
+    private float Bearing
+    {
+        get
+        {
+            if ( Player == null ) return 0f;
+
+            var to = (GpsSystem.Position - Player.WorldPosition).WithZ( 0 );
+            if ( to.LengthSquared < 1f ) return 0f;
+
+            float yawToTarget = MathF.Atan2( to.y, to.x ).RadianToDegree();
+            float delta       = yawToTarget - Player.EyeAngles.yaw;
+
+            while ( delta > 180f )  delta -= 360f;
+            while ( delta < -180f ) delta += 360f;
+
+            // Flèche pointe vers le haut par défaut → on inverse pour que +delta tourne dans le sens horaire.
+            return -delta;
+        }
+    }
+
+    private string DistanceLabel
+    {
+        get
+        {
+            if ( Player == null ) return "";
+
+            // s&box utilise le pouce comme unité monde (39.3701 inches = 1m).
+            float meters = Player.WorldPosition.Distance( GpsSystem.Position ) / 39.3701f;
+
+            if ( meters >= 1000f ) return $"{(meters / 1000f):0.0} km";
+            return $"{meters:0} m";
+        }
+    }
+
+    private string ColorRgba => GpsSystem.WaypointTint.Rgba;
+    private string BorderColor
+    {
+        get
+        {
+            var c = GpsSystem.WaypointTint;
+            return new Color( c.r, c.g, c.b, 0.6f ).Rgba;
+        }
+    }
+
+    protected override int BuildHash() =>
+        HashCode.Combine(
+            GpsSystem.HasWaypoint,
+            GpsSystem.Position,
+            GpsSystem.Text,
+            (int)(Bearing * 10),
+            DistanceLabel
+        );
+}

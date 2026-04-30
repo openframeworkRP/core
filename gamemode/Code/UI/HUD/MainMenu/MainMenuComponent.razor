@@ -1,0 +1,26 @@
+@using Sandbox;
+@using Sandbox.UI;
+@using OpenFramework.Api
+@inherits PanelComponent
+@namespace OpenFramework
+
+<root>
+	<MainMenuPanel/>
+</root>
+
+@code
+{
+    public static bool IsMainMenuOpen { get; private set; }
+
+    protected override void OnEnabled()
+    {
+        IsMainMenuOpen = true;
+    }
+
+    protected override void OnDisabled()
+    {
+        IsMainMenuOpen = false;
+    }
+
+    protected override int BuildHash() => System.HashCode.Combine("");
+}

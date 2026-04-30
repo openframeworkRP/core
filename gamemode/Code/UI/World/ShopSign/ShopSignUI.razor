@@ -1,0 +1,25 @@
+@using OpenFramework.Systems.Tools
+@inherits PanelComponent
+@namespace OpenFramework.UI.World.ShopSigns
+
+<root class="shop-sign" style="background-color: @BackgroundCss">
+    <div class="sign-name" style="font-size: @(FontSize.ToString("0", System.Globalization.CultureInfo.InvariantCulture))px">@SignText</div>
+</root>
+
+@code {
+    [Property] public ShopSign Sign { get; set; }
+
+    string SignText => Sign?.SignText ?? "Mon Shop";
+    float FontSize => Sign?.FontSize ?? ShopSign.DefaultFontSize;
+    Color BackgroundColor => Sign?.BackgroundColor ?? ShopSign.DefaultBackground;
+
+    string BackgroundCss => ToRgbaCss( BackgroundColor );
+
+    static string ToRgbaCss( Color c )
+    {
+        var ci = System.Globalization.CultureInfo.InvariantCulture;
+        return $"rgba({(int)(c.r * 255)}, {(int)(c.g * 255)}, {(int)(c.b * 255)}, {c.a.ToString("0.000", ci)})";
+    }
+
+    protected override int BuildHash() => HashCode.Combine( SignText, FontSize, BackgroundColor );
+}

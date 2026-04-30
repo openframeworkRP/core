@@ -1,0 +1,128 @@
+@using Sandbox;
+@using Sandbox.UI;
+@using System.Linq;
+@using OpenFramework.Systems.Jobs
+@inherits PanelComponent
+@namespace OpenFramework
+
+<root>
+<div class="wrapper">
+
+    <div class="header">
+        <button class="close-btn" @onclick="@(() => Enabled = false)">✕</button>
+        <span class="title">Métiers Disponibles</span>
+    </div>
+
+    <div class="body">
+
+        <div class="job-list">
+            @foreach (var job in Jobs)
+            {
+                if (job == null) continue;
+                var localJob = job;
+                <div class="job-card @(localJob == ActualJob ? "active" : "")"
+                     onclick="@(() => SwitchJob(localJob))">
+                    <div class="job-card-header">
+                        <span class="job-name">@localJob.DisplayName</span>
+                        @if (localJob.WhitelistOnly)
+                        {
+                            <span class="badge whitelist">Vote</span>
+                        }
+                    </div>
+                    <span class="job-salary">$@localJob.Salary / cycle</span>
+                </div>
+            }
+        </div>
+
+        <div class="job-details">
+            @if (ActualJob != null)
+            {
+                <div class="detail-header">
+                    <span class="detail-name">@ActualJob.DisplayName</span>
+                    @if (ActualJob.MaxPlayers > 0)
+                    {
+                        <span class="detail-slots">@ActualJob.Employees.Count / @ActualJob.MaxPlayers</span>
+                    }
+                </div>
+
+                <div class="detail-info">
+                    <div class="info-row">
+                        <span class="info-label">Salaire</span>
+                        <span class="info-value">$@ActualJob.Salary</span>
+                    </div>
+                    @if (ActualJob.MaxPlayers > 0)
+                    {
+                        <div class="info-row">
+                            <span class="info-label">Places</span>
+                            <span class="info-value">@ActualJob.Employees.Count / @ActualJob.MaxPlayers</span>
+                        </div>
+                    }
+                    @if (ActualJob.WhitelistOnly)
+                    {
+                        <div class="info-row">
+                            <span class="info-label">Accès</span>
+                            <span class="info-value vote">Vote requis</span>
+                        </div>
+                    }
+                </div>
+
+                <div class="detail-desc">
+                    <span>@ActualJob.Description</span>
+                </div>
+
+                <button class="btn-join" onclick=@JoinActualJob>Rejoindre</button>
+            }
+            else
+            {
+                <div class="no-selection">Sélectionnez un métier</div>
+            }
+        </div>
+
+    </div>
+
+</div>
+</root>
+
+@code
+{
+    [Property] public List<JobComponent> Jobs { get; set; } = new();
+
+    // JobSystem est un SingletonComponent — Instance evite un GetComponentInChildren chaque acces
+    private JobSystem _system => JobSystem.Instance;
+
+    private JobComponent ActualJob { get; set; }
+
+    protected override void OnStart()
+    {
+        if (Jobs != null && Jobs.Any(j => j != null))
+        {
+            ActualJob = Jobs.First(j => j != null);
+        }
+    }
+
+    private void SwitchJob(JobComponent job)
+    {
+        ActualJob = job;
+    }
+
+    private void JoinActualJob()
+    {
+        if (ActualJob == null) return;
+        Log.Info("Tentative de rejoindre : " + ActualJob.DisplayName);
+
+        if (ActualJob.MaxPlayers > 0 && ActualJob.Employees.Count >= ActualJob.MaxPlayers) return;
+        if (ActualJob.Employees.Any(x => x.SteamId == Client.Local.SteamId)) return;
+
+        if (ActualJob.WhitelistOnly)
+        {
+            JobVoteSystem.Throw(ActualJob.JobIdentifier);
+            this.Enabled = false;
+            return;
+        }
+
+        JobSystem.SetJob(ActualJob.JobIdentifier);
+        this.Enabled = false;
+    }
+
+    protected override int BuildHash() => System.HashCode.Combine(ActualJob, Jobs?.Count);
+}

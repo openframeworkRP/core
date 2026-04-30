@@ -1,0 +1,19 @@
+MobilioApp_splash {
+    justify-content: center;
+    align-items: center;
+    background-color: #0F1F1E;
+
+    svg {
+        height: 120px;
+        width: 120px;
+        opacity: 0;
+        transform: scale(0.7);
+        animation: popup 0.6s ease forwards;
+    }
+}
+
+@keyframes popup {
+    0%   { opacity: 0; transform: scale(0.7); }
+    60%  { opacity: 1; transform: scale(1.08); }
+    100% { opacity: 1; transform: scale(1); }
+}

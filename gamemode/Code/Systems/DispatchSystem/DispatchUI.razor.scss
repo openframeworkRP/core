@@ -1,0 +1,243 @@
+$police: #4a90e2;
+$ems: #e24a4a;
+$accent: #fdea60;
+
+DispatchUI {
+    position: absolute;
+    top: 80px;
+    right: 20px;
+    width: 380px;
+    max-height: 70vh;
+    flex-direction: column;
+    background-color: rgba(12, 12, 18, 0.97);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+    display: none;
+    opacity: 0;
+    transition: all 0.2s ease;
+    pointer-events: none;
+
+    &.open {
+        display: flex;
+        opacity: 1;
+        // Par défaut, le panel est visible mais ne capture pas la souris.
+        // Le joueur appuie sur O (action "cursor") pour interagir, comme le JobVoteUI.
+        pointer-events: none;
+    }
+
+    &.showcursor {
+        pointer-events: all;
+    }
+
+    .cursor-hint {
+        flex-direction: row;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 12px;
+        font-size: 10px;
+        font-weight: 600;
+        color: rgba(255, 255, 255, 0.45);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+
+        .key {
+            background-color: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 3px;
+            padding: 1px 6px;
+            font-weight: 800;
+            color: white;
+            font-size: 10px;
+        }
+    }
+
+    .header {
+        flex-direction: row;
+        align-items: center;
+        padding: 12px 15px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+        gap: 10px;
+
+        .title {
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+
+            * {
+                font-size: 12px;
+                font-weight: 900;
+                letter-spacing: 2px;
+            }
+
+            color: white;
+            text-transform: uppercase;
+        }
+
+        .stats {
+            flex-direction: row;
+            gap: 8px;
+            margin-left: auto;
+
+            span {
+                font-size: 10px;
+                font-weight: 700;
+                padding: 2px 8px;
+                border-radius: 10px;
+            }
+
+            .pending {
+                background-color: rgba($accent, 0.15);
+                color: $accent;
+            }
+
+            .accepted {
+                background-color: rgba(90, 200, 100, 0.15);
+                color: #5ac864;
+            }
+        }
+
+        .close-btn {
+            width: 24px;
+            height: 24px;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+
+            &:hover {
+                background-color: rgba(255, 50, 50, 0.2);
+                color: white;
+            }
+        }
+    }
+
+    .call-list {
+        flex-direction: column;
+        gap: 8px;
+        padding: 10px;
+        overflow-y: scroll;
+        max-height: 60vh;
+
+        .empty {
+            align-items: center;
+            justify-content: center;
+            padding: 30px;
+            opacity: 0.3;
+            font-size: 13px;
+            color: white;
+        }
+    }
+
+    .call {
+        flex-direction: column;
+        background-color: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        border-left: 3px solid rgba(255, 255, 255, 0.15);
+        border-radius: 6px;
+        padding: 10px 12px;
+        gap: 6px;
+        transition: border-color 0.2s ease;
+        // Couleur de la bordure selon le statut
+        &.pending {
+            border-left-color: $accent;
+        }
+
+        &.accepted {
+            border-left-color: #5ac864;
+        }
+
+        .call-header {
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+
+            .call-type {
+                font-size: 13px;
+                font-weight: 800;
+                color: white;
+            }
+
+            .call-time {
+                font-size: 10px;
+                color: rgba(255, 255, 255, 0.4);
+                font-weight: 600;
+            }
+        }
+
+        .call-body {
+            flex-direction: column;
+            gap: 3px;
+
+            .caller {
+                font-size: 11px;
+                color: rgba(255, 255, 255, 0.6);
+            }
+
+            .description {
+                font-size: 11px;
+                color: rgba(255, 255, 255, 0.45);
+                font-style: italic;
+            }
+        }
+
+        .call-accepted-by {
+            font-size: 10px;
+            color: #5ac864;
+            font-weight: 700;
+            padding: 3px 0;
+        }
+
+        .call-actions {
+            flex-direction: row;
+            gap: 6px;
+            margin-top: 4px;
+
+            button {
+                flex: 1;
+                padding: 5px 8px;
+                border-radius: 4px;
+                font-size: 10px;
+                font-weight: 800;
+                letter-spacing: 0.5px;
+                cursor: pointer;
+                transition: all 0.1s ease;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .btn-accept {
+                background-color: rgba($accent, 0.15);
+                color: $accent;
+                border: 1px solid rgba($accent, 0.3);
+
+                &:hover {
+                    background-color: rgba($accent, 0.3);
+                }
+            }
+
+            .btn-locate {
+                background-color: rgba($police, 0.15);
+                color: $police;
+                border: 1px solid rgba($police, 0.3);
+
+                &:hover {
+                    background-color: rgba($police, 0.3);
+                }
+            }
+
+            .btn-close {
+                background-color: rgba(255, 50, 50, 0.1);
+                color: rgba(255, 100, 100, 0.8);
+                border: 1px solid rgba(255, 50, 50, 0.2);
+
+                &:hover {
+                    background-color: rgba(255, 50, 50, 0.25);
+                    color: white;
+                }
+            }
+        }
+    }
+}

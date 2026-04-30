@@ -1,0 +1,119 @@
+DressingRoomMenu {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: transparent;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    pointer-events: all;
+    font-family: 'Poppins', sans-serif;
+
+    .container {
+        pointer-events: all;
+        flex-direction: column;
+        position: relative;
+        right: 28%;
+        height: 80%;
+        width: 40%;
+        background-color: #1a1a1a; /* Noir très sombre */
+        border: 2px solid #ff8c00; /* Bordure Orange */
+        padding: 10px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+
+        h1 {
+            color: #ff8c00; /* Titre Orange */
+            text-align: center;
+            text-transform: uppercase;
+            border-bottom: 1px solid rgba(255, 140, 0, 0.3);
+            margin-bottom: 10px;
+            padding-bottom: 5px;
+        }
+
+        .list-temp {
+            background-color: #111111; /* Noir encore plus profond pour la liste */
+            border: 1px solid #333333;
+            height: 30%;
+            width: 100%;
+            flex-direction: column;
+            padding: 5px;
+            overflow-y: scroll;
+        }
+
+        .item-row {
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 35px;
+            width: 100%;
+            margin-bottom: 2px;
+            background-color: #222222; /* Fond de ligne gris foncé */
+            padding: 5px;
+            border-left: 3px solid #ff8c00; /* Petit rappel Orange sur le côté */
+
+            span {
+                white-space: nowrap;
+                color: #e0e0e0; /* Texte blanc cassé pour ne pas agresser */
+                flex: 1;
+            }
+
+            .actions {
+                flex-direction: row;
+
+                button {
+                    margin-left: 5px;
+                    padding: 4px 12px;
+                    background-color: #333333;
+                    color: #ff8c00;
+                    border: 1px solid #ff8c00;
+                    transition: all 0.2s ease;
+
+                    &:hover {
+                        background-color: #ff8c00;
+                        color: black; /* Inversion des couleurs au survol */
+                    }
+                }
+            }
+        }
+
+        .apply-btn {
+            width: 10%;
+            margin-top: 15px;
+            padding: 15px;
+            background-color: #ff8c00; // Orange
+            color: #000; // Noir
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 4px;
+            text-transform: uppercase;
+            transition: all 0.1s ease;
+
+            &:hover {
+                background-color: #e67e00;
+                transform: scale(1.02);
+            }
+
+            &:active {
+                transform: scale(0.98);
+            }
+        }
+    }
+
+    .exit-btn {
+        position: absolute;
+        bottom: 40px;
+        padding: 12px 60px;
+        background-color: #ff8c00; /* Bouton Quitter Orange */
+        color: black;
+        border-radius: 4px;
+        font-weight: bold;
+        transition: transform 0.1s ease;
+
+        &:hover {
+            background-color: #e67e00;
+            transform: scale(1.05);
+        }
+    }
+}

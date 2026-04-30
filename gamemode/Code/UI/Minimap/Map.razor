@@ -1,0 +1,163 @@
+@namespace OpenFramework.UI
+@attribute [StyleSheet]
+@inherits Panel
+@using Facepunch
+@using OpenFramework.Systems.Pawn
+@using OpenFramework.Systems.MinimapSystem
+
+<root>
+    <div class="map-viewport">
+        <div class="map-wrapper" style="@MapTransform()">
+            <div class="map-image" style="background-image: url( @MinimapPath )" />
+
+            @foreach (var zone in _cachedZones)
+            {
+                if (!zone.IsValid() || string.IsNullOrEmpty(zone.Label)) continue;
+                <div class="zone-label" style="@WorldToMap(zone.WorldPosition)">@zone.Label</div>
+            }
+
+            @foreach (var blip in _cachedBlips)
+            {
+                if (!blip.IsValid()) continue;
+                if (Client.Viewer.Pawn is PlayerPawn player && !blip.IsVisibleOnBigMap(player)) continue;
+                <div class="blip-label" style="@WorldToMap(blip.WorldPosition)">@blip.FullLabel</div>
+            }
+
+            @if (Client.Viewer?.PlayerPawn?.Client?.IsAdmin ?? false)
+            {
+                @foreach (var pawn in _cachedPawns)
+                {
+                    if (!pawn.IsValid()) continue;
+                    <div class="player-marker" style="@WorldToMap(pawn.WorldPosition)" />
+                }
+            }
+
+            @if (Client.Viewer.Pawn.IsValid())
+            {
+                <div class="viewer-marker" style="@WorldToMap(Client.Viewer.Pawn.WorldPosition)" />
+            }
+        </div>
+    </div>
+
+    <div class="map-legend">
+        <label class="legend-title">Légende</label>
+        <div class="legend-entries">
+            <div class="legend-entry">
+                <div class="legend-dot viewer-dot" />
+                <label>Votre position</label>
+            </div>
+            <div class="legend-entry">
+                <div class="legend-dot player-dot" />
+                <label>Joueurs</label>
+            </div>
+            <div class="legend-entry">
+                <div class="legend-dot blip-dot" />
+                <label>Points d'intérêt</label>
+            </div>
+            <div class="legend-entry">
+                <div class="legend-dot zone-dot" />
+                <label>Zones</label>
+            </div>
+        </div>
+        <div class="legend-divider" />
+        <label class="legend-hint">Scroll · Zoom</label>
+        <label class="legend-hint">Glisser · Déplacer</label>
+    </div>
+</root>
+
+@code
+{
+    private float _zoom = 1f;
+    private const float ZoomMin = 0.5f;
+    private const float ZoomMax = 3f;
+
+    private Vector2 _pan = Vector2.Zero;
+    private Vector2 _dragStart;
+    private Vector2 _panStart;
+    private bool _isDragging = false;
+
+    // Caches : avant, le tree faisait 4x GetAllComponents (zones + blips + pawns + renderer)
+    // a chaque rebuild, et le renderer etait re-resolu encore via WorldToMap par marker.
+    // Refresh a 1Hz dans Tick() — les zones/blips/pawns ne bougent pas en topologie
+    // assez vite pour justifier un scan plus frequent.
+    private MinimapRenderer _cachedRenderer;
+    private readonly List<Zone> _cachedZones = new();
+    private readonly List<MinimapBlipComponent> _cachedBlips = new();
+    private readonly List<PlayerPawn> _cachedPawns = new();
+    private TimeSince _cacheRefreshTimer = 999f;
+
+    public MinimapRenderer Renderer
+    {
+        get
+        {
+            if ( !_cachedRenderer.IsValid() )
+                _cachedRenderer = Game.ActiveScene?.GetAllComponents<MinimapRenderer>().FirstOrDefault();
+            return _cachedRenderer;
+        }
+    }
+    private string MinimapPath => Renderer?.CurrentMinimapPath ?? "";
+
+    public override void Tick()
+    {
+        var wheel = Input.MouseWheel;
+        if (wheel.y != 0)
+            _zoom = Math.Clamp(_zoom + wheel.y * 0.2f, ZoomMin, ZoomMax);
+
+        if (_cacheRefreshTimer > 1f)
+        {
+            _cachedZones.Clear();
+            foreach (var z in Game.ActiveScene.GetAllComponents<Zone>())
+                _cachedZones.Add(z);
+
+            _cachedBlips.Clear();
+            foreach (var b in Game.ActiveScene.GetAllComponents<MinimapBlipComponent>())
+                _cachedBlips.Add(b);
+
+            _cachedPawns.Clear();
+            // Pawns refreshed only if admin — viewer-marker reads Client.Viewer.Pawn directly
+            if (Client.Viewer?.PlayerPawn?.Client?.IsAdmin ?? false)
+            {
+                foreach (var p in Game.ActiveScene.GetAllComponents<PlayerPawn>())
+                    _cachedPawns.Add(p);
+            }
+
+            _cacheRefreshTimer = 0;
+        }
+    }
+
+    protected override void OnMouseDown(MousePanelEvent e)
+    {
+        if (e.Button == "mouseleft")
+        {
+            _isDragging = true;
+            _dragStart = Mouse.Position;
+            _panStart = _pan;
+        }
+    }
+
+    protected override void OnMouseUp(MousePanelEvent e)
+    {
+        if (e.Button == "mouseleft") _isDragging = false;
+    }
+
+    protected override void OnMouseMove(MousePanelEvent e)
+    {
+        if (!_isDragging) return;
+        _pan = _panStart + (Mouse.Position - _dragStart);
+    }
+
+    string WorldToMap(Vector3 worldPos)
+    {
+        if (Renderer == null) return "";
+        var pos = Renderer.FromWorld(worldPos);
+        return $"left: {Length.Fraction(pos.x)}; top: {Length.Fraction(pos.y)};";
+    }
+
+    string MapTransform() =>
+        $"transform-origin: center center; transform: scale({_zoom.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture)}) translate({_pan.x}px, {_pan.y}px);";
+
+    // Throttle 10Hz : le viewer-marker doit suivre le joueur si la carte est ouverte pendant
+    // qu'il marche, mais 10Hz est largement suffisant. _zoom et _pan changent au scroll/drag
+    // donc on les inclut pour rester reactif.
+    protected override int BuildHash() => HashCode.Combine((int)(Time.Now * 10f), _zoom, _pan);
+}

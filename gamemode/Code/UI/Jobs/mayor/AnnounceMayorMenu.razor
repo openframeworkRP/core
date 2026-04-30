@@ -1,0 +1,59 @@
+@using Facepunch
+@using OpenFramework.ChatSystem
+@using OpenFramework.Utility
+@namespace OpenFramework.UI
+@inherits Panel
+
+<root>
+    <div class="container">
+        <div class="topbar">
+            <span>Annonce Pour le Peuple</span>
+            <button class="close" @onclick=@(() => Close())>
+                <svg src="ui/icons/close.svg" color="white" />
+            </button>
+        </div>
+        <div class="text-input">
+            <TextEntry @ref="InputEntry"></TextEntry>
+        </div>
+        <div class="bottombar">
+            <button class="send" onclick="@InputSubmitted">Envoyer</button>
+        </div>
+    </div>
+</root>
+
+@code
+{
+    public TextEntry InputEntry { get; set; }
+
+
+    private void InputSubmitted()
+    {
+        if (InputEntry == null) return;
+
+        string text = InputEntry?.Text;
+
+        if (string.IsNullOrWhiteSpace(text))
+            return;
+
+        string textFormat = $"<font style='mayor';>[Annonce Maire] {text}</font>";
+
+
+        ChatUI.Receive(new ChatUI.ChatMessage()
+        {
+            Background = "ui/background/jobs/mayor.png",
+            Message = textFormat,
+            AuthorId = Connection.Host.Id,
+        });
+    }
+
+    public static void Open()
+    {
+        Utils.CreatePanelInstance<AnnounceMayorMenu>();
+
+    }
+
+    public void Close()
+    {
+        Delete();
+    }
+}

@@ -1,0 +1,109 @@
+$accent: #D66D2D;
+$accent-hover: #f17b34;
+$glass-bg: rgba(15, 15, 15, 0.85);
+$glass-border: rgba(255, 255, 255, 0.08);
+
+.dialogue-overlay {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.2);
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+	align-items: center;
+	padding-bottom: 60px;
+	pointer-events: all;
+}
+
+.dialogue-container {
+	width: 60%;
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+}
+
+.message-box {
+	background-color: $glass-bg;
+	border-left: 4px solid $accent;
+	border-radius: 0 8px 8px 0;
+	padding: 20px 25px;
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	backdrop-filter: blur(20px);
+
+	.header {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		margin-bottom: 4px;
+
+		.accent-bar {
+			width: 3px;
+			height: 18px;
+			background-color: $accent;
+		}
+
+		.title {
+			font-size: 16px;
+			color: $accent;
+			text-transform: uppercase;
+			letter-spacing: 1px;
+			font-weight: bold;
+		}
+	}
+}
+
+.message-text {
+	font-size: 22px;
+	color: white;
+	font-family: Poppins;
+	font-weight: 600;
+}
+
+.choices-list {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+	align-items: flex-end;
+}
+
+.choice-button {
+	background-color: $glass-bg;
+	border: 1px solid $glass-border;
+	border-radius: 6px;
+	padding: 10px 28px;
+	min-width: 200px;
+	transition: all 0.15s ease;
+	cursor: pointer;
+	backdrop-filter: blur(20px);
+
+	label {
+		color: rgba(255, 255, 255, 0.7);
+		font-size: 16px;
+		font-family: Poppins;
+		pointer-events: none;
+	}
+
+	&:hover {
+		background-color: $accent;
+		border: 1px solid $accent-hover;
+		transform: translateX(-8px);
+
+		label {
+			color: white;
+			font-weight: bold;
+		}
+	}
+
+	&.close {
+		border-right: 3px solid rgba(255, 60, 0, 0.5);
+
+		&:hover {
+			background-color: rgba(255, 60, 0, 0.9);
+			border: 1px solid #ff3c00;
+			border-right: 3px solid white;
+		}
+	}
+}

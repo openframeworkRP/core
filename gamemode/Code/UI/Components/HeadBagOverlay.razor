@@ -1,0 +1,19 @@
+@namespace Facepunch.UI
+@attribute [StyleSheet]
+@inherits PanelComponent
+
+<root>
+    <div class="overlay" />
+    <div class="grain" />
+</root>
+
+@code
+{
+    protected override void OnEnabled()
+    {
+        var screen = GetOrAddComponent<ScreenPanel>();
+        // ZIndex < 200 (chat) pour que le chat reste lisible par-dessus le sac
+        screen.ZIndex = 50;
+        base.OnEnabled();
+    }
+}

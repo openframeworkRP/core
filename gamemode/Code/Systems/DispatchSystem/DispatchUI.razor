@@ -1,0 +1,243 @@
+@using Facepunch
+@using Sandbox;
+@using Sandbox.UI;
+@using OpenFramework.Systems.Dispatch;
+@using OpenFramework.Systems.Gps;
+@using System.Linq;
+
+@namespace OpenFramework.Systems
+@inherits Panel
+
+<root class="@(IsOpen && CanSeeDispatch ? "open" : "") @(ShowCursor ? "showcursor" : "")">
+
+    <div class="header">
+        <div class="title">
+            <span class="icon">📡</span>
+            <span>DISPATCH</span>
+        </div>
+        <div class="stats">
+            <span class="pending">@_calls.Count(x => x.Status == DispatchStatus.Pending) en attente</span>
+            <span class="accepted">@_calls.Count(x => x.Status == DispatchStatus.Accepted) en cours</span>
+        </div>
+        <button class="close-btn" onclick=@Toggle>✕</button>
+    </div>
+
+    <div class="cursor-hint">
+        <span class="key">O</span>
+        <span>@(ShowCursor ? "Cacher" : "Afficher") le curseur</span>
+    </div>
+
+    <div class="call-list">
+        @if (!_calls.Any())
+        {
+            <div class="empty">
+                <span>Aucun appel en cours</span>
+            </div>
+        }
+        else
+        {
+            @foreach (var call in _calls.OrderBy(x => x.CreatedAt))
+            {
+                <div class="call @call.Status.ToString().ToLower()">
+                    <div class="call-header">
+                        <span class="call-type">@call.Type.ToLabel()</span>
+                        <span class="call-time">@call.ElapsedLabel</span>
+                    </div>
+
+                    <div class="call-body">
+                        <span class="caller">📞 @call.CallerName</span>
+                        @if (!string.IsNullOrEmpty(call.Description))
+                        {
+                            <span class="description">@call.Description</span>
+                        }
+                    </div>
+
+                    @if (call.Status == DispatchStatus.Accepted)
+                    {
+                        <div class="call-accepted-by">
+                            <span>✅ Pris en charge par @call.AcceptedBy</span>
+                        </div>
+                    }
+
+                    <div class="call-actions">
+                        @if (call.Status == DispatchStatus.Pending)
+                        {
+                            <button class="btn-accept" onclick=@(() => OnAccept(call.Id))>
+                                ACCEPTER
+                            </button>
+                        }
+                        @if (call.Status == DispatchStatus.Accepted && call.Position != Vector3.Zero)
+                        {
+                            <button class="btn-locate" onclick=@(() => OnLocate(call))>
+                                📍 LOCALISER
+                            </button>
+                        }
+                        <button class="btn-close" onclick=@(() => OnClose(call.Id))>
+                            CLÔTURER
+                        </button>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+
+</root>
+
+@code {
+    public static DispatchUI Instance { get; private set; }
+
+    private readonly List<DispatchCall> _calls = new();
+    private bool IsOpen = false;
+    // Le panel reste visible mais ne capture la souris qu'avec O (action "cursor"),
+    // calqué sur JobVoteUI — on ne veut pas voler le curseur quand le panel s'ouvre tout seul.
+    private bool ShowCursor = false;
+
+    private bool CanSeeDispatch
+    {
+        get
+        {
+            var job = Client.Local?.Data?.Job?.ToLower();
+            return job == "police" || job == "medic";
+        }
+    }
+
+    public DispatchUI() => Instance = this;
+
+    public static void Toggle()
+    {
+        if ( Instance == null ) return;
+        Instance.IsOpen = !Instance.IsOpen;
+        // En refermant le panel, on relâche le curseur — sinon il reste capturé alors que rien n'est visible.
+        if ( !Instance.IsOpen ) Instance.ShowCursor = false;
+    }
+
+    // ─────────────────────────────────────────────
+    //  RÉCEPTION DES APPELS  (broadcast depuis host)
+    // ─────────────────────────────────────────────
+
+    [Rpc.Broadcast]
+    public static void ReceiveNewCall( int id, int typeInt, string callerName, Vector3 position, string description, float createdAt )
+    {
+        if ( Instance == null ) return;
+
+        // Filtrage côté client : seul le destinataire concerné traite l'appel
+        var type   = (DispatchType)typeInt;
+        var target = type.GetTarget();
+        var job    = Client.Local?.Data?.Job?.ToLower() ?? "";
+        bool shouldProcess = target switch
+        {
+            DispatchTarget.Police => job == "police",
+            DispatchTarget.EMS    => job == "medic",
+            DispatchTarget.Both   => job == "police" || job == "medic",
+            _                     => false
+        };
+        if ( !shouldProcess ) return;
+
+        var call = new DispatchCall
+        {
+            Id          = id,
+            Type        = (DispatchType)typeInt,
+            CallerName  = callerName,
+            Position    = position,
+            Description = description,
+            CreatedAt   = createdAt,
+            Status      = DispatchStatus.Pending,
+        };
+
+        Instance._calls.Add( call );
+
+        // Notification seule — on n'ouvre PAS le panel automatiquement.
+        // Le médecin/policier doit volontairement ouvrir le dispatch (menu Job → Dispatch)
+        // pour voir l'appel et choisir de prendre ou non l'intervention.
+        // NotifyLocal car ReceiveNewCall est déjà [Rpc.Broadcast] : Notify re-broadcasterait.
+        NotificationSystem.NotifyLocal(NotificationSystem.NotificationType.Warning, $"{call.Type.ToLabel()} — {call.CallerName}");
+
+        Instance.StateHasChanged();
+    }
+
+    [Rpc.Broadcast]
+    public static void ReceiveCallAccepted( int callId, string acceptedBy, Vector3 position )
+    {
+        if ( Instance == null ) return;
+
+        var call = Instance._calls.FirstOrDefault( x => x.Id == callId );
+        if ( call == null ) return;
+
+        call.Status     = DispatchStatus.Accepted;
+        call.AcceptedBy = acceptedBy;
+        call.Position   = position; // Position révélée à l'acceptation
+
+        Instance.StateHasChanged();
+    }
+
+    [Rpc.Broadcast]
+    public static void ReceiveCallClosed( int callId )
+    {
+        if ( Instance == null ) return;
+
+        var call = Instance._calls.FirstOrDefault( x => x.Id == callId );
+        if ( call != null )
+            Instance._calls.Remove( call );
+
+        // Si le waypoint GPS pointe vers cet appel, on le retire automatiquement.
+        GpsSystem.ClearIfCall( callId );
+
+        Instance.StateHasChanged();
+    }
+
+    // ─────────────────────────────────────────────
+    //  ACTIONS
+    // ─────────────────────────────────────────────
+
+    void OnAccept( int callId )
+    {
+        // On pose le GPS immédiatement côté client : prendre l'intervention = afficher
+        // le waypoint sur la minimap + flèche HUD. Le call.Position est déjà connu côté
+        // client (broadcast à la création), inutile d'attendre l'aller-retour Accept RPC.
+        var call = _calls.FirstOrDefault( x => x.Id == callId );
+        if ( call != null && call.Position != Vector3.Zero )
+            SetGpsForCall( call );
+
+        DispatchSystem.AcceptCall( callId );
+    }
+
+    void OnLocate( DispatchCall call ) => SetGpsForCall( call );
+
+    static void SetGpsForCall( DispatchCall call )
+    {
+        // Pose un waypoint GPS local : marqueur sur la minimap + flèche directionnelle dans le HUD.
+        // Label volontairement court (emoji seul) pour ne pas surcharger la minimap.
+        var color = call.Type.GetTarget() switch
+        {
+            DispatchTarget.EMS    => new Color( 1f, 0.25f, 0.25f ),
+            DispatchTarget.Police => new Color( 0.29f, 0.56f, 0.89f ),
+            _                     => new Color( 1f, 0.85f, 0.2f ),
+        };
+
+        GpsSystem.SetWaypoint( call.Position, call.Type.ToEmoji(), color, call.Id );
+        Log.Info( $"[Dispatch] Waypoint GPS posé sur l'appel #{call.Id} → {call.Position}" );
+    }
+
+    void OnClose( int callId )
+    {
+        DispatchSystem.CloseCall( callId );
+    }
+
+    public override void Tick()
+    {
+        if ( Input.Pressed( "Dispatch" ) && CanSeeDispatch )
+            Toggle();
+
+        // Toggle du curseur (O) uniquement si le panel est effectivement visible.
+        if ( IsOpen && CanSeeDispatch && Input.Pressed( "cursor" ) )
+            ShowCursor = !ShowCursor;
+    }
+
+    protected override int BuildHash() => HashCode.Combine(
+        IsOpen,
+        ShowCursor,
+        _calls.Count,
+        _calls.Sum( x => (int)x.Status ),
+        Time.Now // pour ElapsedLabel
+    );
+}

@@ -1,0 +1,245 @@
+@using Sandbox;
+@using Sandbox.UI;
+@using OpenFramework.Api
+@using OpenFramework.Systems.Pawn
+@inherits Panel
+@namespace OpenFramework
+
+<root>
+    <div class="bg-left"></div>
+    <div class="contain-character">
+        <h1>Bienvenue, Citoyen</h1>
+
+        @if (_characters == null)
+        {
+            <div class="loading">Chargement de tes personnages...</div>
+        }
+        else if (_characters.Count == 0)
+        {
+            <div class="loading">Aucun personnage. Cree-en un !</div>
+        }
+        else
+        {
+            <div class="character-list">
+                @foreach (var character in _characters)
+                {
+                    var isSelected = _selectedCharacterId == character.Id;
+                    var isPendingDelete = _pendingDeleteId == character.Id;
+                    <div class="character-card @(isSelected ? "selected" : "")" onclick=@(() => PreviewCharacter(character))>
+                        <div class="card-info">
+                            <span class="name">@character.FirstName.ToUpper() @character.LastName.ToUpper()</span>
+                        </div>
+                        <div class="card-actions">
+                            @if (IsAdmin)
+                            {
+                                <button class="delete-btn @(isPendingDelete ? "confirm" : "")" onclick=@(() => OnDeleteClicked(character.Id))>
+                                    @(isPendingDelete ? "Confirmer ?" : "Supprimer")
+                                </button>
+                            }
+                            <button class="play-btn" onclick=@(() => PlayCharacter(character.Id))>Jouer</button>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+
+        @if (CanCreateCharacter)
+        {
+            <button class="create-btn" onclick="@ChangeSceneCreateCharacter">Creer un nouveau personnage</button>
+        }
+        else
+        {
+            <button class="create-btn disabled" tooltip="Tu possedes deja un personnage">Creer un nouveau personnage</button>
+        }
+    </div>
+</root>
+
+@code
+{
+    private PlayerManagerHudComponent playerManager = Game.ActiveScene.GetComponentInChildren<PlayerManagerHudComponent>();
+    private List<CharacterApi> _characters;
+    private string _selectedCharacterId;
+    private string _pendingDeleteId; // 1er clic = arme, 2e clic = supprime
+    private CharacterManager Manager => Game.ActiveScene.GetComponentInChildren<CharacterManager>();
+
+    /// <summary>
+    /// Gating UI: le bouton Supprimer n'est rendu que pour les SteamId admin.
+    /// La validation finale d'autorité se fait quand même côté host dans le RPC.
+    /// </summary>
+    private bool IsAdmin => Client.Local?.IsAdmin ?? false;
+
+    /// <summary>
+    /// Gating UI: limite a 1 personnage par joueur. Les admins ne sont pas bloques.
+    /// Tant que la liste n'est pas chargee (_characters == null), on n'autorise pas
+    /// la creation pour eviter qu'un joueur clique avant que sa liste arrive.
+    /// </summary>
+    private bool CanCreateCharacter => IsAdmin || (_characters != null && _characters.Count == 0);
+
+    protected override void OnAfterTreeRender(bool firstTime)
+    {
+        if (_characters != null) return;
+        if ( PlayerApiBridge.Local == null )
+            return;
+
+        PlayerApiBridge.OnCharactersReceived = list =>
+        {
+            _characters = list;
+
+            // Reset l'état de confirmation suppression dès qu'on recharge la liste
+            _pendingDeleteId = null;
+
+            // Si le perso prévisualisé n'existe plus (suppression), on bascule sur le premier
+            if ( _selectedCharacterId != null && _characters != null
+                 && !_characters.Any( c => c.Id == _selectedCharacterId ) )
+            {
+                _selectedCharacterId = null;
+            }
+
+            // Auto-aperçu du premier personnage pour ne pas laisser le modèle par défaut visible.
+            // Try/catch indispensable : si le CharacterManager n'est pas encore prêt (dressers null),
+            // SetGender peut throw, ce qui interromprait la callback AVANT StateHasChanged et laisserait
+            // l'UI bloquée sur "Chargement...". On loggue et on continue — la liste s'affichera quand même.
+            if ( _selectedCharacterId == null && _characters != null && _characters.Count > 0 )
+            {
+                try { PreviewCharacter( _characters[0] ); }
+                catch { }
+            }
+
+            StateHasChanged();
+        };
+
+        PlayerApiBridge.FetchCharacters();
+    }
+
+    /// <summary>
+    /// Met à jour uniquement le modèle de preview (caméra du menu) avec les traits
+    /// du personnage choisi. Pas de spawn, pas d'entrée en jeu.
+    /// </summary>
+    private void PreviewCharacter( CharacterApi character )
+    {
+        if ( character == null ) return;
+        _selectedCharacterId = character.Id;
+        ApplyCharacterToPreview( character );
+        StateHasChanged();
+    }
+
+    /// <summary>
+    /// Lance réellement le personnage en jeu (déclenché uniquement par le bouton JOUER).
+    /// </summary>
+    private void PlayCharacter( string characterId )
+    {
+        TaskManager.Clear();
+        Manager.PreviewCamera.Enabled = false;
+        Manager.PreviewCamera.Priority = -1;
+
+        var character = _characters.FirstOrDefault( c => c.Id == characterId );
+        if ( character == null )
+            return;
+        PlayerApiBridge.OnCharacterSelected = async id =>
+        {
+            // L'apparence est deja hydratee cote host AVANT SpawnPawn par
+            // PlayerApiBridge.HydrateAppearanceFromApi : pas besoin d'appeler
+            // ApplyCharacterToPreview/Manager.ApplyToPlayer ici. Le faire serait
+            // meme dangereux car le Manager du menu peut avoir _currentSkinGroup
+            // == "default" si jamais ses dressers n'etaient pas valides au moment
+            // du load — on ecraserait alors les Saved* corrects par "default".
+            // Petit delai pour laisser le NetworkSpawn se synchroniser cote client
+            // avant le teleport per-character.
+            Log.Info( $"[AppearanceSync][CLIENT] OnCharacterSelected callback id={id} (apparence deja hydratee host-side avant spawn)" );
+            await GameTask.DelayRealtime( 100 );
+
+            PlayerApiBridge.SpawnAtLastPosition( id );
+        };
+
+        Log.Info( $"[AppearanceSync][CLIENT] PlayCharacter -> SelectCharacter({characterId}) char={character.FirstName} {character.LastName}, gender={character.Gender}, color={character.ColorBody}" );
+        PlayerApiBridge.SelectCharacter( characterId );
+    }
+
+    /// <summary>
+    /// Applique gender / skin / morphs au CharacterManager (preview body uniquement).
+    /// Ne touche pas au PlayerPawn — c'est le job de Manager.ApplyToPlayer().
+    /// </summary>
+    private void ApplyCharacterToPreview( CharacterApi character )
+    {
+        var mgr = Manager;
+        if ( mgr == null ) return;
+
+        // Si les dressers ne sont pas encore prêts (Manager pas pleinement initialisé),
+        // SetGender va crash sur activeDresser.Clothing → on saute proprement.
+        // Le perso reste sélectionné côté UI, on ré-applique dès que possible.
+        if ( !mgr.MaleDresser.IsValid() || !mgr.FemaleDresser.IsValid() )
+            return;
+
+        // ── Genre ──
+        mgr.SetGender( character.Gender == Gender.Female );
+
+        // ── Couleur de peau / tête ──
+        // ColorBody.Dark → headIndex 0, ColorBody.Light → headIndex 1
+        var headIndex = character.ColorBody == ColorBody.Dark ? 0 : 1;
+        var skinGroup = character.ColorBody == ColorBody.Dark ? "skin_dark" : "skin_light";
+        mgr.UpdateHeadAndSkin( headIndex, skinGroup );
+
+        // ── Morphs faciaux ──
+        mgr.SetMorph( "BrowDown_L",      character.BrowDown );
+        mgr.SetMorph( "BrowDown_R",      character.BrowDown );
+        mgr.SetMorph( "BrowInnerUp",     character.BrowInnerUp );
+        mgr.SetMorph( "BrowOuterUp_L",   character.BrowOuterUp );
+        mgr.SetMorph( "BrowOuterUp_R",   character.BrowOuterUp );
+
+        mgr.SetMorph( "EyeLookDown_L",   character.EyesLookDown );
+        mgr.SetMorph( "EyeLookDown_R",   character.EyesLookDown );
+        mgr.SetMorph( "EyeLookIn_L",     character.EyesLookIn );
+        mgr.SetMorph( "EyeLookIn_R",     character.EyesLookIn );
+        mgr.SetMorph( "EyeLookOut_L",    character.EyesLookOut );
+        mgr.SetMorph( "EyeLookOut_R",    character.EyesLookOut );
+        mgr.SetMorph( "EyeLookUp_L",     character.EyesLookUp );
+        mgr.SetMorph( "EyeLookUp_R",     character.EyesLookUp );
+        mgr.SetMorph( "EyeSquint_L",     character.EyesSquint );
+        mgr.SetMorph( "EyeSquint_R",     character.EyesSquint );
+        mgr.SetMorph( "EyeWide_L",       character.EyesWide );
+        mgr.SetMorph( "EyeWide_R",       character.EyesWide );
+
+        mgr.SetMorph( "CheekPuff",       character.CheekPuff );
+        mgr.SetMorph( "CheekSquint_L",   character.CheekSquint );
+        mgr.SetMorph( "CheekSquint_R",   character.CheekSquint );
+        mgr.SetMorph( "NoseSneer_L",     character.NoseSneer );
+        mgr.SetMorph( "NoseSneer_R",     character.NoseSneer );
+
+        mgr.SetMorph( "JawForward",      character.JawForward );
+        mgr.SetMorph( "JawLeft",         character.JawLeft );
+        mgr.SetMorph( "JawRight",        character.JawRight );
+        mgr.SetMorph( "MouthDimple_L",   character.MouthDimple );
+        mgr.SetMorph( "MouthDimple_R",   character.MouthDimple );
+        mgr.SetMorph( "MouthRollUpper",  character.MouthRollUpper );
+        mgr.SetMorph( "MouthStretch_L",  character.MouthStretch );
+        mgr.SetMorph( "MouthStretch_R",  character.MouthStretch );
+
+    }
+
+    /// <summary>
+    /// Suppression admin only — 2 clics. Premier clic arme la confirmation,
+    /// deuxième clic envoie la RPC. Le host re-valide l'autorité.
+    /// </summary>
+    private void OnDeleteClicked( string characterId )
+    {
+        if ( !IsAdmin )
+            return;
+
+        if ( _pendingDeleteId != characterId )
+        {
+            _pendingDeleteId = characterId;
+            StateHasChanged();
+            return;
+        }
+
+        _pendingDeleteId = null;
+        PlayerApiBridge.DeleteCharacter( characterId );
+    }
+
+    private void ChangeSceneCreateCharacter()
+    {
+        playerManager.ShowCreator();
+    }
+
+    protected override int BuildHash() => System.HashCode.Combine( _characters?.Count ?? -1, PlayerApiBridge.Local != null, _selectedCharacterId, _pendingDeleteId, IsAdmin );
+}

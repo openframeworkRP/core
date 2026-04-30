@@ -1,0 +1,168 @@
+@import "ui/Styles/Theme.scss";
+
+JobVoteUI {
+    position: absolute;
+    top: 40px;
+    right: 40px;
+    width: 350px; // Largeur fixe pour éviter que ça bouge
+    flex-direction:column;
+    height: auto;
+    // On laisse l'opacité à 1 par défaut, s&box gère l'intro
+    opacity: 1;
+
+    &:intro {
+        opacity: 0;
+        transform: translateX(50px);
+        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    &:outro {
+        opacity: 0;
+        transform: translateX(50px);
+        transition: all 0.2s ease-in;
+    }
+
+    &.showcursor {
+        pointer-events: all;
+    }
+
+    .container {
+        background-color: rgba(25, 25, 30, 0.95);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        padding: 15px;
+        display: flex;
+        flex-direction: column;
+        gap: 15px; // Espace entre Header, Contenu et Actions
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            padding-bottom: 8px;
+
+            .title {
+                font-size: 11px;
+                font-weight: 700;
+                color: rgba(255,255,255,0.4);
+                text-transform: uppercase;
+                letter-spacing: 1px;
+
+            }
+
+            .timer {
+                display: flex;
+                align-items: center;
+                gap: 5px;
+                color: #eb5e28;
+                font-weight: 700;
+                font-size: 14px;
+
+                i {
+                    font-size: 16px;
+                }
+            }
+        }
+
+        .content {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+
+            .icon-area {
+                width: 42px;
+                height: 42px;
+                min-width: 42px; // Empêche l'écrasement de l'icône
+                background-color: rgba(255,255,255,0.05);
+                border-radius: 8px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                i {
+                    font-size: 24px;
+                    color: white;
+                }
+            }
+
+            .text-area {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                overflow: hidden; // Coupe le texte s'il est trop long
+
+                .candidate {
+                    font-size: 15px;
+                    color: white;
+                    font-weight: 500;
+                    white-space: nowrap; // Empêche le retour à la ligne
+
+                    b {
+                        color: #eb5e28;
+                        font-weight: 700;
+                        margin-right: 5px;
+                    }
+                }
+
+                .position {
+                    font-size: 12px;
+                    color: rgba(255,255,255,0.6);
+                }
+            }
+        }
+        // --- C'EST ICI QUE CA CORRIGE TES BOUTONS ---
+        .actions {
+            display: flex;
+            flex-direction: row; // Force l'horizontal
+            width: 100%; // Prend toute la largeur
+            gap: 10px;
+
+            &.disabled {
+                opacity: 0.5;
+                pointer-events: none;
+            }
+
+            button {
+                flex-grow: 1; // S'étend pour remplir l'espace
+                flex-basis: 0; // Partage l'espace équitablement
+                height: 40px; // Hauteur FIXE (empêche l'étirement vertical moche)
+
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 8px;
+                border-radius: 6px;
+                border: 1px solid transparent;
+                cursor: pointer;
+                font-size: 13px;
+                font-weight: 600;
+                white-space: nowrap; // Empêche le texte vertical "A c c e p t e r"
+
+                &.btn-yes {
+                    background-color: rgba(76, 175, 80, 0.1);
+                    color: #81c784;
+                    border-color: rgba(76, 175, 80, 0.2);
+
+                    &:hover, &.voted {
+                        background-color: #4caf50;
+                        color: white;
+                    }
+                }
+
+                &.btn-no {
+                    background-color: rgba(244, 67, 54, 0.1);
+                    color: #e57373;
+                    border-color: rgba(244, 67, 54, 0.2);
+
+                    &:hover, &.voted {
+                        background-color: #f44336;
+                        color: white;
+                    }
+                }
+            }
+        }
+    }
+}

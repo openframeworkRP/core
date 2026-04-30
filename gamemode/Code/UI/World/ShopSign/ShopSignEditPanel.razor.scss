@@ -1,0 +1,179 @@
+.sign-edit-overlay {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.55);
+    pointer-events: all;
+}
+
+.sign-edit-box {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+    background-color: rgba(22, 16, 8, 0.97);
+    border: 2px solid rgba(245, 215, 142, 0.4);
+    border-radius: 10px;
+    padding: 24px 32px;
+    width: 540px;
+    pointer-events: all;
+}
+
+.edit-title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #f5d78e;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+    align-self: center;
+}
+
+.sign-preview {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    padding: 12px 16px;
+    min-height: 64px;
+    border: 1px solid rgba(245, 215, 142, 0.25);
+
+    .sign-preview-text {
+        font-weight: bold;
+        color: #f5d78e;
+        text-align: center;
+        text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+        font-family: "Roboto Slab", serif;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+    }
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+// Reset de la bulle de valeur affichee par defaut a cote du thumb (qui sortait
+// du panel sur la screenshot). On a deja la valeur courante dans le <label> au
+// dessus du slider, pas besoin du tooltip integre.
+SliderControl {
+    height: 20px;
+    align-items: center;
+    overflow: visible;
+
+    .value, .tooltip, .label {
+        display: none;
+    }
+
+    .track {
+        background-color: rgba(255, 255, 255, 0.08);
+        height: 6px;
+        border-radius: 3px;
+        overflow: visible;
+
+        .inner {
+            background-color: rgba(245, 215, 142, 0.85);
+            border-radius: 3px;
+        }
+    }
+
+    // Le thumb etait positionne en absolute hors du panel (cf screenshot 27.04
+    // 21h00 : losanges a droite hors-cadre). On le cache : la barre suffit, on
+    // clique directement dessus pour set la valeur.
+    .thumb {
+        display: none;
+    }
+}
+
+.field-label {
+    font-size: 13px;
+    color: rgba(245, 215, 142, 0.85);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.edit-input {
+    width: 100%;
+    padding: 10px 14px;
+    font-size: 18px;
+    color: white;
+    background-color: rgba(255,255,255,0.08);
+    border: 1px solid rgba(245,215,142,0.35);
+    border-radius: 6px;
+    pointer-events: all;
+}
+
+.color-presets {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.color-swatch {
+    width: 36px;
+    height: 36px;
+    border-radius: 6px;
+    border: 2px solid rgba(255,255,255,0.15);
+    cursor: pointer;
+    pointer-events: all;
+    transition: border-color 0.15s, transform 0.15s;
+
+    &:hover {
+        border-color: rgba(245,215,142,0.7);
+        transform: scale(1.06);
+    }
+
+    &.selected {
+        border-color: #f5d78e;
+        transform: scale(1.08);
+    }
+}
+
+.edit-hint {
+    font-size: 11px;
+    color: rgba(255,255,255,0.4);
+    align-self: flex-end;
+}
+
+.edit-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 4px;
+}
+
+.btn-confirm, .btn-cancel {
+    padding: 10px 28px;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+    pointer-events: all;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.btn-confirm {
+    background-color: rgba(245, 215, 142, 0.85);
+    color: #1a1008;
+
+    &:hover {
+        background-color: rgba(245, 215, 142, 1);
+    }
+}
+
+.btn-cancel {
+    background-color: rgba(255,255,255,0.08);
+    color: rgba(255,255,255,0.6);
+    border: 1px solid rgba(255,255,255,0.15);
+
+    &:hover {
+        background-color: rgba(255,255,255,0.14);
+    }
+}

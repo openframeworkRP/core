@@ -1,0 +1,56 @@
+﻿@using Sandbox;
+@using Sandbox.UI;
+@using Editor;
+@using Sandbox.UI.Navigation;
+
+@implements Sandbox.UI.Navigation.INavigatorPage
+@namespace OpenFramework.World.Devices.Apps.Armury
+@inherits Panel
+
+<root>
+   <div class="tab">
+       Recapitulatif Des Actions :
+   </div>
+
+   <div class="container">
+       <div class="finance">
+            <span>Finance</span>
+            <div class="finance-total">
+                <span>Finance Total : 10.000 $</span>
+                <span> Taxe Fonciere  : 10%</span>
+                <span> Taxe Revenue  : 10%</span>
+            </div>
+       </div>
+
+        <div class="sells">
+            <span>Ventes</span>
+            <div class="sells-total">
+                <span>Desert Eagle : 5.000 $</span>
+                <span>AK 47 : 15.000 $</span>
+                <span>M4A1 : 15.000 $</span>
+            </div>
+            
+        </div>
+
+        <div class="employees">
+            <span>Employe</span>
+            <div class="employe-total">
+                <span>Liste de touts les employes :</span>
+                <ul>
+                    <li>Peterson Twinsd</li>
+                    <li>Benjamin Mbk</li>
+                    <li>Fernandez Mathieu</li>
+                    <li>Tom  Marmhotte</li>
+                    <li>Darril Dada</li>
+                    <li>Jean Nanou</li>
+                </ul>
+            </div>
+        </div>
+
+   </div>
+</root>
+
+@code
+{
+    //TODO FINANCE : RECUPERE L'ARGENT TOTAL DU GOURVENEMENT
+}

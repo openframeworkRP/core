@@ -1,0 +1,24 @@
+﻿@using Sandbox;
+@using Sandbox.UI;
+@using Editor;
+@using Sandbox.UI.Navigation;
+
+@implements Sandbox.UI.Navigation.INavigatorPage
+@namespace Facepunch.UI
+@inherits Panel
+
+<root>
+    <div class="bglogo" src="ui/atm/logo_login.png"></div>
+    <div class="roundcardlogo" src="ui/atm/round_card.png"></div>
+    <div class="cardlogo" src="ui/atm/card_logo.png"></div>
+</root>
+
+@code
+{
+    Client client = Client.Local;
+
+    protected override int BuildHash()
+    {
+        return HashCode.Combine("");
+    }
+}

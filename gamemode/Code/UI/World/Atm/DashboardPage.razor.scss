@@ -1,0 +1,43 @@
+@import "ui/Styles/Theme.scss";
+@import "ui/Styles/MenuSystem.scss";
+DashboardPage {
+    height: 100px;
+    width: 100px;
+
+
+    .current {
+        position: relative;
+        background-color: rgba(25, 25, 25, 0.7);
+        flex-direction: row;
+        height: 150px;
+        width: 100px;
+        //padding: 2px;
+
+
+        .value {
+            color: #f1f1f1; // Couleur normale (blanc cassé)
+            transition: color 0.2s ease;
+
+            &.negative {
+                color: #ff5555; // Rouge vif pour le découvert
+                font-weight: bold;
+                text-shadow: 0 0 10px rgba(255, 85, 85, 0.3);
+            }
+        }
+
+        .bank {
+            position: relative;
+            padding: 2px;
+            font-size: 5px;
+            height:100%;
+            width:100%;
+            // margin: 2px;
+            //background-color: red
+            flex-direction: row;
+            color: white;
+            justify-content:center;
+            align-items:center;
+            gap:2px;
+        }
+    }
+}

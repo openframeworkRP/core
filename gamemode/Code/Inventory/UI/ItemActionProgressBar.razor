@@ -1,0 +1,52 @@
+﻿@using Sandbox;
+@using Sandbox.UI;
+@using System;
+@inherits Panel
+@namespace OpenFramework.Inventory
+
+<root>
+    <div class="container">
+        <div class="label">@ActionLabel</div>
+        <div class="bar-background">
+            <div class="bar-fill" style="width: @(Progress * 100)%;"></div>
+        </div>
+    </div>
+</root>
+
+@code {
+    public static ItemActionProgressBar Instance { get; private set; }
+    public string ActionLabel { get; set; } = "Utilisation...";
+    public float Progress { get; set; }
+
+    private float _duration;
+    private RealTimeSince _timeSinceStart;
+
+    [Rpc.Broadcast]
+    public static void StartProgress(float duration, string label)
+    {
+        // Si on en crée un nouveau, l'ancien est supprimé proprement
+        if (Instance != null) Instance.Delete();
+
+        Instance = Utility.Utils.CreatePanelInstance<ItemActionProgressBar>();
+        if (Instance == null) return;
+
+        Instance.ActionLabel = label;
+        Instance._duration = duration;
+        Instance._timeSinceStart = 0;
+    }
+
+    public override void Tick()
+    {
+        // On calcule la progression jusqu'à la fin
+        Progress = Math.Clamp(_timeSinceStart / _duration, 0, 1);
+
+        // On supprime dès que c'est fini, s&box lancera la classe .outro
+        if (_timeSinceStart >= _duration)
+        {
+            Delete();
+            if (Instance == this) Instance = null;
+        }
+    }
+
+    protected override int BuildHash() => HashCode.Combine(Progress, ActionLabel);
+}

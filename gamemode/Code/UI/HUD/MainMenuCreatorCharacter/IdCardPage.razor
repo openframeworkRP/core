@@ -1,0 +1,198 @@
+﻿@using Sandbox;
+@using Sandbox.UI;
+@using Sandbox.UI.Navigation;
+@namespace OpenFramework
+
+@implements INavigatorPage
+@inherits Panel
+
+<root>
+    <div class="bg-right"></div>
+    <div class="id-card-container">
+        @* Côté Droit : Formulaire de saisie *@
+        <div class="form-side">
+            <h1>Enregistrement Identité</h1>
+
+            <div class="input-group">
+                <label>Nom</label>
+                @* Limité à 15 caractères *@
+                <TextEntry Value:bind=@PlayerName Placeholder="Ex: Doe" MaxLength=@(15) />
+            </div>
+            @if (string.IsNullOrEmpty(PlayerName))
+            {
+                <label class="error-msg">Nom incomplet</label>
+            }
+            <div class="input-group">
+                <label>Prénom</label>
+                <TextEntry Value:bind=@PlayerNickName Placeholder="Ex: John" MaxLength=@(15) />
+            </div>
+            @if (string.IsNullOrEmpty(PlayerNickName))
+            {
+                <label class="error-msg">Prenom incomplet</label>
+            }
+            <div class="input-group">
+                <label>Date de Naissance</label>
+                <TextEntry Value:bind=@BirthDateString Placeholder="JJMMAAAA" MaxLength=@(8) />
+                <label class="date-hint">@FormatDatePreview()</label>
+            </div>
+            @if (!string.IsNullOrEmpty(BirthDateError))
+            {
+                <label class="error-msg">@BirthDateError</label>
+            }
+
+            <div class="input-group">
+                <label>Pays de Naissance</label>
+                <div class="country-selector">
+                    <i class="flag-icon">@GetFlagIcon(BirthCountry)</i>
+
+                    <DropDown class="custom-dropdown" Value:bind=@BirthCountry></DropDown>
+                </div>
+            </div>
+
+            @if (BirthCountry == CountryList.USA)
+            {
+                <div class="input-group">
+                    <label>Ville de Naissance</label>
+                    <div class="country-selector">
+                        <i class="flag-icon">@GetFlagIcon(BirthCity)</i>
+                        <DropDown class="custom-dropdown" Value:bind=@BirthCity></DropDown>
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+    <button class="next-btn" onclick="@ValidateAndNext">Valider l'identité</button>
+</root>
+
+@code
+{
+
+    private CharacterManager Manager => Game.ActiveScene.GetComponentInChildren<CharacterManager>();
+    
+    // Variables liées aux inputs
+    public string PlayerName { get; set; } = "";
+    public string PlayerNickName { get; set; } = "";
+    public string BirthDateString { get; set; } = "20051998";
+    public string BirthDateError { get; set; } = "";
+
+    private string FormatDatePreview()
+    {
+        if (string.IsNullOrEmpty(BirthDateString)) return "";
+        var digits = BirthDateString;
+        if (digits.Length >= 4)
+            return digits[..2] + "/" + digits[2..4] + (digits.Length > 4 ? "/" + digits[4..] : "");
+        if (digits.Length >= 2)
+            return digits[..2] + "/" + digits[2..];
+        return digits;
+    }
+
+    private bool TryParseBirthDate(out int day, out int month, out int year)
+    {
+        day = 0; month = 0; year = 0;
+        if (string.IsNullOrEmpty(BirthDateString) || BirthDateString.Length != 8)
+        {
+            BirthDateError = "Entrez 8 chiffres (JJMMAAAA).";
+            return false;
+        }
+
+        if (!int.TryParse(BirthDateString[..2], out day) || !int.TryParse(BirthDateString[2..4], out month) || !int.TryParse(BirthDateString[4..], out year))
+        {
+            BirthDateError = "Chiffres uniquement.";
+            return false;
+        }
+        if (day < 1 || day > 31) { BirthDateError = "Jour invalide (1-31)."; return false; }
+        if (month < 1 || month > 12) { BirthDateError = "Mois invalide (1-12)."; return false; }
+        if (year < 1965) { BirthDateError = "L'année doit être 1965 ou après."; return false; }
+        if (year > 2008) { BirthDateError = "L'année doit être 2008 ou avant."; return false; }
+
+        BirthDateError = "";
+        return true;
+    }
+
+    protected override void OnAfterTreeRender(bool firstTime)
+    {
+        if (firstTime && !string.IsNullOrEmpty(CharacterCreationState.LastName))
+        {
+            PlayerName = CharacterCreationState.LastName;
+            PlayerNickName = CharacterCreationState.FirstName;
+            BirthDateString = $"{CharacterCreationState.BirthDay:D2}{CharacterCreationState.BirthMonth:D2}{CharacterCreationState.BirthYears}";
+            BirthCountry = CharacterCreationState.BirthCountry;
+            BirthCity = CharacterCreationState.BirthCity;
+            StateHasChanged();
+        }
+    }
+    ///public string BirthDate = $"{BirthDay}/{BirthMonth}/{BirthYears}";
+    public enum CountryList
+    {
+        France,
+        Belgique,
+        Suisse,
+        Canada,
+        USA,
+        Allemagne
+    }
+
+    public CountryList BirthCountry { get; set; } = CountryList.France;
+
+    // Petite fonction pour retourner l'icône ou l'image du drapeau
+    // S&box possède des icônes de type "flag" dans ses polices d'icônes
+    string GetFlagIcon(CountryList country)
+    {
+        return country switch
+        {
+            CountryList.France => "flag", // Remplace par le nom d'une texture d'image si tu en as
+            CountryList.USA => "flag",
+            _ => "public" // Icône de globe par défaut
+        };
+    }
+    
+
+    public enum CityList
+    {
+        Alabama, Alaska, Arizona, Arkansas, California, Colorado, Connecticut,
+        Delaware, Florida, Georgia, Hawaii, Idaho, Illinois, Indiana, Iowa,
+        Kansas, Kentucky, Louisiana, Maine, Maryland, Massachusetts, Michigan,
+        Minnesota, Mississippi, Missouri, Montana, Nebraska, Nevada, NewHampshire,
+        NewJersey, NewMexico, NewYork, NorthCarolina, NorthDakota, Ohio, Oklahoma,
+        Oregon, Pennsylvania, RhodeIsland, SouthCarolina, SouthDakota, Tennessee,
+        Texas, Utah, Vermont, Virginia, Washington, WestVirginia, Wisconsin, Wyoming, TownSend, LosSantos, ExtraUSA
+    }
+
+    public CityList BirthCity { get; set; } = CityList.Alabama;
+
+    // Petite fonction pour retourner l'icône ou l'image du drapeau
+    // S&box possède des icônes de type "flag" dans ses polices d'icônes
+    string GetFlagIcon(CityList country)
+    {
+        return country switch
+        {
+            _ => "public" // Icône de globe par défaut
+        };
+    }
+
+
+    void ValidateAndNext()
+    {
+        if (string.IsNullOrEmpty(PlayerName) || string.IsNullOrEmpty(PlayerNickName)) return;
+        if (!TryParseBirthDate(out int day, out int month, out int year)) return;
+
+        // ── Sauvegarde dans le state global ──
+        CharacterCreationState.LastName   = PlayerName;
+        CharacterCreationState.FirstName  = PlayerNickName;
+        CharacterCreationState.BirthDay   = day;
+        CharacterCreationState.BirthMonth = month;
+        CharacterCreationState.BirthYears = year;
+        CharacterCreationState.BirthCountry = BirthCountry;
+        CharacterCreationState.BirthCity = BirthCountry == CountryList.USA
+            ? BirthCity
+            : CityList.ExtraUSA;
+        // ─────────────────────────────────────
+
+        var host = Ancestors.OfType<MenuCreatorCharacter>().FirstOrDefault();
+        host?.GoToStep("/corps");
+    }
+
+
+    protected override int BuildHash() => HashCode.Combine(PlayerName, PlayerNickName, BirthDateString, BirthDateError, BirthCountry);
+}

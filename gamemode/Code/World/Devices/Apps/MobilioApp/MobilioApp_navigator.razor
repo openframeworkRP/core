@@ -1,0 +1,173 @@
+@using Sandbox.UI.Navigation
+@using OpenFramework.World.Devices.Apps.Mobilio
+
+@namespace OpenFramework.World.Devices.Apps.Mobilio
+@inherits Panel
+
+<root>
+
+    <div class="sidebar">
+
+        <div class="brand">
+            <svg src="ui/icons/apps/mobilio_icon.svg" />
+            <label>Mobilio</label>
+        </div>
+
+        <div class="nav-section">
+            <label class="section-title">Catégories</label>
+
+            @foreach ( var cat in _categories )
+            {
+                var c = cat;
+                <div class="nav-item @(_activeCategory == c ? "active" : "")"
+                     @onclick=@(() => SelectCategory( c ))>
+                    <svg src=@c.Icon />
+                    <label>@c.Label</label>
+                </div>
+            }
+        </div>
+
+        <div class="close-btn" @onclick=@(() => App?.Close())>
+            <svg src="ui/icons/close.svg" />
+            <label>Fermer</label>
+        </div>
+    </div>
+
+    <div class="content">
+
+        <div class="content-header">
+            <label class="page-title">@_activeCategory?.Label</label>
+            <label class="page-sub">@_filteredItems.Count article(s)</label>
+        </div>
+
+        <div class="product-grid" tabindex="0" @ref=@_gridRef @onmouseover=@(() => _gridRef?.Focus())>
+            @foreach ( var item in _filteredItems )
+            {
+                var i = item;
+                <div class="product-card" @onclick=@(() => SelectItem( i ))>
+                    <div class="product-img">
+                        <svg src=@i.Icon />
+                    </div>
+                    <div class="product-body">
+                        <label class="product-name">@i.Name</label>
+                        <label class="product-desc">@i.Description</label>
+                        <div class="product-footer">
+                            <label class="product-price">@(i.Price)$</label>
+                            <div class="buy-btn" @onclick=@(() => Buy( i ))>
+                                <svg src="ui/icons/cart.svg" />
+                                <label>Acheter</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            @if ( _filteredItems.Count == 0 )
+            {
+                <div class="empty-state">
+                    <svg src="ui/icons/apps/mobilio_icon.svg" />
+                    <label>Aucun article disponible</label>
+                </div>
+            }
+        </div>
+    </div>
+
+    @if ( _selectedItem != null )
+    {
+        <div class="detail-panel">
+            <div class="detail-close" @onclick=@(() => _selectedItem = null)>
+                <svg src="ui/icons/close.svg" />
+            </div>
+            <div class="detail-img">
+                <svg src=@_selectedItem.Icon />
+            </div>
+            <label class="detail-name">@_selectedItem.Name</label>
+            <label class="detail-desc">@_selectedItem.Description</label>
+            <label class="detail-price">@_selectedItem.Price $</label>
+            <div class="detail-buy" @onclick=@(() => Buy( _selectedItem ))>
+                <svg src="ui/icons/cart.svg" />
+                <label>Acheter maintenant</label>
+            </div>
+        </div>
+    }
+
+</root>
+
+@code {
+    public MobilioApp App { get; set; }
+
+    private Panel _gridRef = null;
+    private MobilioCategory _activeCategory;
+    private MobilioItem _selectedItem;
+
+    // ── Data ────────────────────────────────────────────────────
+
+    private record MobilioCategory( string Id, string Label, string Icon );
+    private record MobilioItem( string Id, string Name, string Description, string Icon, int Price, string CategoryId );
+
+    private List<MobilioCategory> _categories = new()
+    {
+        new( "furniture",   "Mobilier",     "ui/icons/chair.svg"      ),
+        new( "lighting",    "Éclairage",    "ui/icons/lamp.svg"       ),
+        new( "electronics", "Électronique", "ui/icons/tv.svg"         ),
+        new( "deco",        "Déco",         "ui/icons/plant.svg"      ),
+        new( "weapons",     "Armurerie",    "ui/icons/apps/armurier_icon.svg" ),
+    };
+
+    private List<MobilioItem> _allItems = new()
+    {
+        // Mobilier
+        new( "chair_01",   "Chaise",          "Chaise design moderne",          "ui/icons/chair.svg",   250,  "furniture"   ),
+        new( "table_01",   "Table basse",     "Table basse en bois massif",     "ui/icons/chair.svg",   450,  "furniture"   ),
+        new( "sofa_01",    "Canapé 3 places", "Canapé en cuir synthétique",     "ui/icons/chair.svg",   1200, "furniture"   ),
+        new( "bed_01",     "Lit double",      "Lit double avec sommier",        "ui/icons/chair.svg",   800,  "furniture"   ),
+        // Éclairage
+        new( "lamp_01",    "Lampe de sol",    "Lampe sur pied réglable",        "ui/icons/lamp.svg",    180,  "lighting"    ),
+        new( "lamp_02",    "Suspension",      "Suspension industrielle",         "ui/icons/lamp.svg",    220,  "lighting"    ),
+        // Électronique
+        new( "tv_01",      "Télévision 55\"", "Smart TV 4K OLED",               "ui/icons/tv.svg",      1800, "electronics" ),
+        new( "pc_01",      "PC Bureau",       "Config gaming haute perf.",       "ui/icons/tv.svg",      2400, "electronics" ),
+        // Déco
+        new( "plant_01",   "Plante verte",    "Monstera XXL en pot",            "ui/icons/plant.svg",   80,   "deco"        ),
+        new( "frame_01",   "Tableau",         "Impression artistique 60x80",    "ui/icons/plant.svg",   120,  "deco"        ),
+        // Armurerie
+        new( "mag_01",     "Chargeur 30",     "Chargeur pour arme automatique", "ui/icons/apps/armurier_icon.svg", 150, "weapons" ),
+        new( "scope_01",   "Viseur x4",       "Lunette de visée 4x",            "ui/icons/apps/armurier_icon.svg", 350, "weapons" ),
+    };
+
+    private List<MobilioItem> _filteredItems = new();
+
+    // ── Lifecycle ────────────────────────────────────────────────
+
+    protected override void OnAfterTreeRender( bool firstRender )
+    {
+        if ( firstRender )
+            SelectCategory( _categories[0] );
+    }
+
+    // ── Actions ──────────────────────────────────────────────────
+
+    private void SelectCategory( MobilioCategory cat )
+    {
+        _activeCategory = cat;
+        _selectedItem = null;
+        _filteredItems = _allItems.Where( i => i.CategoryId == cat.Id ).ToList();
+        StateHasChanged();
+    }
+
+    private void SelectItem( MobilioItem item )
+    {
+        _selectedItem = item;
+        StateHasChanged();
+    }
+
+    private void Buy( MobilioItem item )
+    {
+        Log.Info( $"[Mobilio] Achat : {item.Name} — {item.Price}$" );
+        // TODO : déduire de l'argent du joueur
+        StateHasChanged();
+    }
+
+    protected override int BuildHash() =>
+        HashCode.Combine( _activeCategory?.Id, _selectedItem?.Id, _filteredItems.Count );
+}

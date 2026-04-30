@@ -1,0 +1,184 @@
+@using OpenFramework.Utility
+@using OpenFramework.Inventory
+@namespace OpenFramework.UI.World.Storage
+@attribute [StyleSheet]
+@inherits Panel
+
+<root class="code-overlay">
+    <div class="code-box">
+        <div class="code-title">@Title</div>
+        <div class="code-hint">@Hint</div>
+
+        <TextEntry class="code-input"
+                   MaxLength=@(4)
+                   onsubmit="@OnConfirm"
+                   Value:bind=@_input
+                   @ref="InputEntry" />
+
+        <div class="code-display">
+            @for ( int i = 0; i < 4; i++ )
+            {
+                var filled = i < ( _input?.Length ?? 0 );
+                <div class="code-digit @(filled ? "filled" : "")">@(filled ? "●" : "")</div>
+            }
+        </div>
+
+        <div class="code-hint code-hint-small">Entrée pour valider · Échap pour annuler</div>
+
+        <div class="code-actions">
+            <button class="code-cancel" onclick=@Cancel>Annuler</button>
+            <button class="code-confirm @(CanConfirm ? "" : "disabled")" onclick=@OnConfirm>
+                @ConfirmLabel
+            </button>
+        </div>
+    </div>
+</root>
+
+@code {
+    public static StorageCodePanel Instance { get; private set; }
+
+    public enum Mode { Define, Unlock }
+
+    public TextEntry InputEntry { get; set; }
+
+    private StorageComponent _storage;
+    private Mode _mode;
+    private string _input = "";
+    private bool _needsFocus = true;
+
+    // Une fois la TextEntry focus une fois, on coupe definitivement le fallback
+    // clavier global pour eviter que les memes touches soient capturees par les
+    // deux systemes (double-input qui faisait sauter le dernier digit en frappe
+    // rapide).
+    private bool _focusAcquiredOnce = false;
+
+    // Anti-spam : un meme digit ne peut etre re-capture par le fallback que
+    // toutes les ~80ms, pour eviter qu'une frappe maintenue / un repeat ne
+    // double les chiffres pendant la fenetre avant focus.
+    private const float FallbackDebounceSeconds = 0.08f;
+    private RealTimeSince _timeSinceLastFallbackKey = 0f;
+
+    private string Title => _mode == Mode.Define ? "Definir le code" : "Entrer le code";
+    private string Hint => _mode == Mode.Define
+        ? "Choisissez un code a 4 chiffres. Il verrouillera votre coffre."
+        : "Entrez le code a 4 chiffres du proprietaire.";
+    private string ConfirmLabel => _mode == Mode.Define ? "Valider" : "Deverrouiller";
+    private bool CanConfirm => ( _input?.Length ?? 0 ) == 4 && ( _input?.All( char.IsDigit ) ?? false );
+
+    public static void Open( StorageComponent storage, Mode mode )
+    {
+        Close();
+
+        Instance = Utils.CreatePanelInstance<StorageCodePanel>();
+        Instance._storage = storage;
+        Instance._mode = mode;
+        Instance._input = "";
+        Mouse.Visibility = MouseVisibility.Visible;
+    }
+
+    public static void Close()
+    {
+        if ( Instance == null ) return;
+        Instance.Delete();
+        Instance = null;
+        Mouse.Visibility = MouseVisibility.Auto;
+    }
+
+    void OnConfirm()
+    {
+        if ( !CanConfirm ) return;
+        if ( !_storage.IsValid() ) { Close(); return; }
+
+        if ( _mode == Mode.Define )
+            StorageComponent.SetLockCode( _storage, _input );
+        else
+            StorageComponent.TryUnlock( _storage, _input );
+
+        Close();
+    }
+
+    void Cancel() => Close();
+
+    public override void Tick()
+    {
+        base.Tick();
+
+        if ( _needsFocus && InputEntry != null )
+        {
+            InputEntry.Focus();
+            if ( InputEntry.HasFocus )
+            {
+                _needsFocus = false;
+                _focusAcquiredOnce = true;
+            }
+        }
+
+        // Fallback : uniquement avant la 1ere acquisition de focus de la
+        // TextEntry. Une fois focus acquis on coupe definitivement le fallback
+        // pour eviter le double-capture (TextEntry + fallback voyaient la meme
+        // touche en meme temps en frappe rapide, faisant sauter le dernier
+        // digit). Le fallback couvre seulement la fenetre de race a l'ouverture
+        // depuis le QuickMenu.
+        if ( !_focusAcquiredOnce )
+        {
+            // Anti-spam : on n'accepte qu'une touche tous les ~80ms cote fallback
+            // pour pas qu'un repeat clavier (touche maintenue) ne double les
+            // chiffres avant que la TextEntry prenne le relai.
+            if ( _timeSinceLastFallbackKey >= FallbackDebounceSeconds )
+            {
+                bool consumed = false;
+
+                for ( int d = 0; d <= 9; d++ )
+                {
+                    if ( Input.Keyboard.Pressed( d.ToString() ) && ( _input?.Length ?? 0 ) < 4 )
+                    {
+                        _input = ( _input ?? "" ) + d.ToString();
+                        if ( InputEntry != null )
+                        {
+                            InputEntry.Text = _input;
+                            InputEntry.CaretPosition = _input.Length;
+                        }
+                        consumed = true;
+                        break;
+                    }
+                }
+
+                if ( !consumed && Input.Keyboard.Pressed( "BACKSPACE" ) && !string.IsNullOrEmpty( _input ) )
+                {
+                    _input = _input[..^1];
+                    if ( InputEntry != null )
+                    {
+                        InputEntry.Text = _input;
+                        InputEntry.CaretPosition = _input.Length;
+                    }
+                    consumed = true;
+                }
+
+                if ( consumed )
+                    _timeSinceLastFallbackKey = 0f;
+            }
+
+            if ( Input.Keyboard.Pressed( "ENTER" ) )
+            {
+                OnConfirm();
+                return;
+            }
+        }
+
+        // Filtre defensif : ne garder que les chiffres, tronque a 4
+        if ( !string.IsNullOrEmpty( _input ) )
+        {
+            var filtered = new string( _input.Where( char.IsDigit ).ToArray() );
+            if ( filtered.Length > 4 ) filtered = filtered[..4];
+            if ( filtered != _input ) _input = filtered;
+        }
+
+        if ( Input.EscapePressed )
+        {
+            Input.EscapePressed = false;
+            Close();
+        }
+    }
+
+    protected override int BuildHash() => HashCode.Combine( _input, _mode );
+}

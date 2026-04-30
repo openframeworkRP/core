@@ -1,0 +1,206 @@
+InventoryContextMenu {
+    position: absolute;
+    z-index: 100;
+    pointer-events: all;
+    width: 260px;
+    background-color: rgba(15, 15, 15, 0.98);
+    border-left: 3px solid #ff8000;
+    // Box-shadow fonctionne, mais reste léger pour les perfs
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+    display: flex;
+    flex-direction: column;
+
+    .overlay {
+        position: absolute;
+        left: -500px;
+        top: -500px;
+        width: 2048px;
+        height: 2048px;
+        z-index: -1;
+        //background-color: red;
+    }
+
+    .item-header {
+        padding: 12px;
+        background-color: rgba(255, 128, 0, 0.05);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        display: flex;
+        flex-direction: column;
+
+        .title-row {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            margin-bottom: 6px;
+
+            .brand-accent {
+                width: 3px;
+                height: 12px;
+                background-color: #ff8000;
+                margin-right: 8px;
+            }
+
+            .item-name {
+                font-size: 13px;
+                font-weight: 900;
+                color: white;
+                text-transform: uppercase;
+            }
+        }
+
+        .status-badge {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            padding: 2px 8px;
+            border-radius: 4px;
+
+            &.timer {
+                background-color: rgba(255, 128, 0, 0.15);
+
+                label, span {
+                    color: #ffb366;
+                    font-size: 10px;
+                    font-weight: 700;
+                }
+            }
+
+            &.expired {
+                background-color: rgba(255, 50, 50, 0.2);
+
+                label, span {
+                    color: #ff5555;
+                    font-size: 10px;
+                    font-weight: 700;
+                }
+            }
+        }
+    }
+
+    .item-details {
+        padding: 8px 12px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+        background-color: rgba(0, 0, 0, 0.2);
+        display: flex;
+        flex-direction: column;
+
+        .item-description {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.55);
+            font-style: italic;
+            margin-bottom: 6px;
+            line-height: 14px;
+            white-space: normal;
+            width: 100%;
+        }
+
+        .detail-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        .detail-row {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+
+            .detail-label {
+                font-size: 11px;
+                font-weight: 700;
+                color: rgba(255, 255, 255, 0.4);
+                letter-spacing: 0.5px;
+            }
+
+            .detail-value {
+                font-size: 11px;
+                font-weight: 700;
+                color: rgba(255, 255, 255, 0.85);
+
+                &.highlight {
+                    color: #ff8000;
+                }
+            }
+        }
+    }
+
+    .actions {
+        padding: 6px;
+        display: flex;
+        flex-direction: column;
+
+        .separator {
+            height: 1px;
+            background-color: rgba(255, 255, 255, 0.08);
+            margin: 4px 8px;
+        }
+
+        .action-btn {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            padding: 8px 12px;
+            margin-bottom: 2px;
+            border-radius: 2px;
+            cursor: pointer;
+
+            label, .btn-text {
+                color: rgba(255, 255, 255, 0.7);
+                font-size: 11px;
+                font-weight: 700;
+                pointer-events: none;
+            }
+
+            .icon {
+                width: 20px;
+                font-size: 13px;
+                margin-right: 8px;
+                pointer-events: none;
+            }
+
+            &:hover {
+                background-color: rgba(255, 255, 255, 0.05);
+
+                label, .btn-text {
+                    color: white;
+                }
+            }
+
+            &.primary:hover {
+                background-color: rgba(255, 128, 0, 0.2);
+
+                label, .btn-text {
+                    color: #ff8000;
+                }
+            }
+
+            &.danger:hover {
+                background-color: rgba(255, 50, 50, 0.15);
+
+                label, .btn-text {
+                    color: #ff5555;
+                }
+            }
+
+            &.cancel {
+                justify-content: center;
+                margin-top: 4px;
+
+                label {
+                    font-size: 9px;
+                    opacity: 0.5;
+                }
+
+                &:hover {
+                    background-color: transparent;
+
+                    label {
+                        opacity: 1;
+                        text-decoration: underline;
+                    }
+                }
+            }
+        }
+    }
+}

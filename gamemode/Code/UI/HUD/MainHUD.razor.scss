@@ -1,0 +1,45 @@
+@import "/UI/Styles/Theme.scss";
+
+MainHUD {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    color: $text-color;
+    transition: all 0.5s 0.5s ease-in-out;
+
+    &:intro {
+        Canvas {
+            opacity: 0;
+        }
+    }
+
+   
+}
+
+.crosshair
+{
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background-color: white;
+}
+
+.cinematic-bar {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 12%;
+    background-color: black;
+    pointer-events: none;
+    z-index: 1000;
+
+    &.top {
+        top: 0;
+    }
+
+    &.bottom {
+        bottom: 0;
+    }
+}

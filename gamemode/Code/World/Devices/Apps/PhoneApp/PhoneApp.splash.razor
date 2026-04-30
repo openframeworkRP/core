@@ -1,0 +1,20 @@
+@using Sandbox.UI;
+@inherits BaseAppSplashScreen
+@namespace OpenFramework.World.Devices.Apps.Phone
+
+<root>
+    <div class="content">
+        <div class="logo-container">
+            <svg src="ui/icons/apps/phone_icon.svg" class="phone-icon" color="white" />
+        </div>
+    </div>
+</root>
+
+@code {
+    public override Type AppInterface => typeof(PhoneApp);
+
+    public PhoneApp_splash()
+    {
+        UntilClose = 2f;
+    }
+}

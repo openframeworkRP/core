@@ -1,0 +1,118 @@
+@using Sandbox;
+@using Sandbox.UI;
+@using OpenFramework.Dialog
+@using OpenFramework.Systems.Pawn
+@inherits PanelComponent
+@namespace OpenFramework
+
+<root>
+    <div class="menu-wrapper">
+
+        <div class="npc-name">@NpcName</div>
+
+        <div class="button-container">
+            <div class="btn" onclick=@UseNpc>
+                <label>UTILISER</label>
+            </div>
+
+            <div class="btn" onclick=@LunchDialog>
+                <label>CONVERSER</label>
+            </div>
+
+            <div class="btn quit" onclick=@QuitMenu>
+                <label>QUITTER</label>
+            </div>
+        </div>
+    </div>
+</root>
+
+@code
+{
+    [Property]
+    public DialoguePannel DialoguePannel { get; set; }
+
+    [Property]
+    public PanelComponent UsePanel { get; set; }
+
+    [Property]
+    public string NpcName { get; set; }
+
+    private Angles _savedEyeAngles;
+    private bool _hasSaved;
+
+    private void LunchDialog()
+    {
+	    DialoguePannel.Enabled = true;
+	    // On ne restore pas la camera, le dialogue garde le lock
+	    this.Enabled = false;
+    }
+
+	private void QuitMenu()
+	{
+		RestoreCamera();
+		this.Enabled = false;
+	}
+
+	private void UseNpc()
+	{
+		RestoreCamera();
+		UsePanel.Enabled = true;
+		this.Enabled = false;
+	}
+
+	protected override void OnAwake()
+	{
+		base.OnAwake();
+		UsePanel.Enabled = false;
+		DialoguePannel.Enabled = false;
+	}
+
+	protected override void OnEnabled()
+	{
+		base.OnEnabled();
+		FocusCameraOnNpc();
+	}
+
+	private void FocusCameraOnNpc()
+	{
+		var pawn = Client.Local?.PlayerPawn;
+		if (pawn == null) return;
+
+		// Sauvegarder les angles actuels
+		_savedEyeAngles = pawn.EyeAngles;
+		_hasSaved = true;
+
+		// Lock le joueur
+		pawn.IsInNpcMenu = true;
+
+		// Calculer la direction vers le torse du NPC
+		var npcPos = GameObject.WorldPosition + Vector3.Up * 50f;
+		var playerEyePos = pawn.WorldPosition + Vector3.Up * 64f;
+		var direction = (npcPos - playerEyePos).Normal;
+		var lookAngles = Rotation.LookAt(direction).Angles();
+
+		pawn.EyeAngles = lookAngles;
+
+		// Zoom leger
+		var camController = pawn.GameObject.Components.GetInDescendantsOrSelf<CameraController>();
+		camController?.AddFieldOfViewOffset(-15f);
+	}
+
+	private void RestoreCamera()
+	{
+		var pawn = Client.Local?.PlayerPawn;
+		if (pawn == null || !_hasSaved) return;
+
+		pawn.IsInNpcMenu = false;
+		pawn.EyeAngles = _savedEyeAngles;
+		_hasSaved = false;
+	}
+
+	protected override void OnDisabled()
+	{
+		// Si on quitte sans avoir restore (ex: dialogue qui prend le relais)
+		// ne pas restore ici car le dialogue a besoin du lock
+	}
+
+	protected override int BuildHash() => System.HashCode.Combine( DialoguePannel, NpcName );
+}

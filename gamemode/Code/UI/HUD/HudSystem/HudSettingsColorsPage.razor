@@ -1,0 +1,45 @@
+@namespace OpenFramework.UI
+@using Sandbox.UI.Navigation
+@implements INavigatorPage
+@inherits Panel
+
+<root>
+    <ul>
+        @foreach (var color in Colors)
+        {
+            <li style="background-color:@color.Rgba"></li>
+        }
+    </ul>
+
+    <div class="auto_hide">
+        <div class="title">
+            <span>Auto Hide</span>
+            <span>0 Hide | 100 Visible</span>
+        </div>
+    </div>
+</root>
+
+
+@code {
+    private static readonly Color[] Colors = new Color[]
+    {
+        Color.FromRgba(0xFFFFFFFF), // Blanc pur
+        Color.FromRgba(0xC8C8C8FF), // Gris clair
+        Color.FromRgba(0x7A7A7AFF), // Gris moyen
+        Color.FromRgba(0x404040FF), // Gris foncé
+        Color.FromRgba(0x000000FF), // Noir profond
+        Color.FromRgba(0xFF4444FF), // Rouge vif
+        Color.FromRgba(0xFF66CCFF), // Rose néon
+        Color.FromRgba(0xAA33FFFF), // Violet électrique
+        Color.FromRgba(0x6600CCFF), // Violet foncé
+        Color.FromRgba(0x33B5E5FF), // Bleu clair
+        Color.FromRgba(0x3399FFFF), // Bleu moyen
+        Color.FromRgba(0x33CCCCFF), // Cyan doux
+        Color.FromRgba(0x66FF66FF), // Vert clair
+        Color.FromRgba(0x00CC66FF), // Vert vif
+        Color.FromRgba(0xFFEE33FF), // Jaune vif
+        Color.FromRgba(0xFF8800FF), // Orange vif
+        Color.FromRgba(0xFF6600FF), // Orange profond
+        Color.FromRgba(0xFF3333FF), // Rouge-orangé
+    };
+}

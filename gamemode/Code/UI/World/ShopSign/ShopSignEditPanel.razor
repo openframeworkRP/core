@@ -1,0 +1,219 @@
+@using OpenFramework.Utility
+@using OpenFramework.Systems.Tools
+@namespace OpenFramework.UI.World.ShopSigns
+@attribute [StyleSheet]
+@inherits Panel
+
+<root class="sign-edit-overlay">
+    <div class="sign-edit-box">
+        <div class="edit-title">Modifier l'enseigne</div>
+
+        <div class="sign-preview" style="background-color: @PreviewBgCss">
+            <div class="sign-preview-text" style="font-size: @PreviewFontSizeCss">@(string.IsNullOrWhiteSpace(_pendingText) ? "Aperçu" : _pendingText)</div>
+        </div>
+
+        <div class="field">
+            <label class="field-label">Texte</label>
+            <TextEntry class="edit-input"
+                       MaxLength=@(40)
+                       Placeholder="Nom de votre shop..."
+                       onsubmit="@OnConfirm"
+                       Value:bind=@_pendingText
+                       @ref="InputEntry" />
+        </div>
+
+        <div class="field">
+            <label class="field-label">Taille du texte : @(_pendingFontSize.ToString("0"))px</label>
+            <SliderControl Min=@(ShopSign.MinFontSize) Max=@(ShopSign.MaxFontSize) Step=@(2f)
+                           Value=@_pendingFontSize
+                           OnValueChanged=@((float v) => OnFontSizeChanged(v)) />
+        </div>
+
+        <div class="field">
+            <label class="field-label">Couleur de fond</label>
+            <div class="color-presets">
+                @foreach ( var preset in BackgroundPresets )
+                {
+                    var captured = preset;
+                    <button class="color-swatch @(IsSelectedColor(captured) ? "selected" : "")"
+                            style="background-color: @ToRgbaCss(captured.WithAlpha(1f))"
+                            onclick=@(() => SelectColor(captured))></button>
+                }
+            </div>
+        </div>
+
+        <div class="field">
+            <label class="field-label">Opacité du fond : @((_pendingBgColor.a * 100f).ToString("0"))%</label>
+            <SliderControl Min=@(0f) Max=@(1f) Step=@(0.05f)
+                           Value=@_pendingBgColor.a
+                           OnValueChanged=@((float a) => OnAlphaChanged(a)) />
+        </div>
+
+        <div class="edit-buttons">
+            <button class="btn-cancel" onclick=@OnCancel>Annuler</button>
+            <button class="btn-confirm" onclick=@OnConfirm>Enregistrer</button>
+        </div>
+
+        <div class="edit-hint">Entrée pour valider · Échap pour annuler · Max 40 caractères</div>
+    </div>
+</root>
+
+@code {
+    public static ShopSignEditPanel Instance { get; private set; }
+
+    public TextEntry InputEntry { get; set; }
+
+    private ShopSign _sign;
+    private string _pendingText = "";
+    private float _pendingFontSize = ShopSign.DefaultFontSize;
+    private Color _pendingBgColor = ShopSign.DefaultBackground;
+
+    // Snapshot des valeurs au moment du Open() : utilise pour rollback si Annuler.
+    private string _originalText = "";
+    private float _originalFontSize = ShopSign.DefaultFontSize;
+    private Color _originalBgColor = ShopSign.DefaultBackground;
+
+    private bool _needsFocus = true;
+
+    // Palette adaptee a differents styles d'enseignes (bois, neon, classique...)
+    private static readonly Color[] BackgroundPresets = new[]
+    {
+        new Color( 20f / 255f, 12f / 255f, 4f / 255f, 1f ),     // Brun fonce (defaut bois)
+        new Color( 0f, 0f, 0f, 1f ),                            // Noir
+        new Color( 0.96f, 0.96f, 0.92f, 1f ),                   // Blanc casse
+        new Color( 0.55f, 0.12f, 0.12f, 1f ),                   // Rouge enseigne
+        new Color( 0.10f, 0.30f, 0.55f, 1f ),                   // Bleu enseigne
+        new Color( 0.10f, 0.40f, 0.18f, 1f ),                   // Vert enseigne
+        new Color( 0.55f, 0.40f, 0.10f, 1f ),                   // Dore / ocre
+        new Color( 0.40f, 0.10f, 0.45f, 1f ),                   // Violet
+        new Color( 0.95f, 0.55f, 0.05f, 1f ),                   // Orange
+        new Color( 0.10f, 0.55f, 0.55f, 1f ),                   // Cyan
+    };
+
+    public static void Open( ShopSign sign )
+    {
+        if ( ShopSign.DebugLogs ) Log.Info( $"[ShopSignEditPanel] Open appele : sign valid={sign.IsValid()}, name='{sign?.GameObject?.Name}', text='{sign?.SignText}'" );
+        Close();
+
+        Instance = Utils.CreatePanelInstance<ShopSignEditPanel>();
+        if ( Instance == null )
+        {
+            Log.Warning( "[ShopSignEditPanel] CreatePanelInstance a retourne null - panel HUD introuvable ?" );
+            return;
+        }
+        Instance._sign = sign;
+
+        Instance._pendingText = sign?.SignText ?? "";
+        Instance._pendingFontSize = sign?.FontSize ?? ShopSign.DefaultFontSize;
+        Instance._pendingBgColor = sign?.BackgroundColor ?? ShopSign.DefaultBackground;
+
+        Instance._originalText = Instance._pendingText;
+        Instance._originalFontSize = Instance._pendingFontSize;
+        Instance._originalBgColor = Instance._pendingBgColor;
+
+        Mouse.Visibility = MouseVisibility.Visible;
+        if ( ShopSign.DebugLogs ) Log.Info( $"[ShopSignEditPanel] Panel cree, mouse visible. Pending text='{Instance._pendingText}', size={Instance._pendingFontSize:0}, color={Instance._pendingBgColor.Hex}" );
+    }
+
+    public static void Close()
+    {
+        if ( Instance == null ) return;
+        if ( ShopSign.DebugLogs ) Log.Info( "[ShopSignEditPanel] Close" );
+        Instance.Delete();
+        Instance = null;
+        Mouse.Visibility = MouseVisibility.Auto;
+    }
+
+    // Push live des valeurs en cours vers le serveur. Texte vide => le RPC garde
+    // le SignText courant cote sign, ce qui permet de modifier juste la taille
+    // ou la couleur sans avoir tape un nouveau texte.
+    void PushLive()
+    {
+        if ( !_sign.IsValid() )
+        {
+            Log.Warning( "[ShopSignEditPanel] PushLive : _sign invalide, abandon" );
+            return;
+        }
+        var text = _pendingText?.Trim() ?? "";
+        if ( ShopSign.DebugLogs ) Log.Info( $"[ShopSignEditPanel] PushLive -> RpcUpdateSign(text='{text}', size={_pendingFontSize:0}, color={_pendingBgColor.Hex})" );
+        _sign.RpcUpdateSign( text, _pendingFontSize, _pendingBgColor );
+    }
+
+    void OnFontSizeChanged( float v )
+    {
+        if ( ShopSign.DebugLogs ) Log.Info( $"[ShopSignEditPanel] OnFontSizeChanged : {v:0}" );
+        _pendingFontSize = v;
+        PushLive();
+        StateHasChanged();
+    }
+
+    void OnAlphaChanged( float a )
+    {
+        if ( ShopSign.DebugLogs ) Log.Info( $"[ShopSignEditPanel] OnAlphaChanged : {a:0.00}" );
+        _pendingBgColor = _pendingBgColor.WithAlpha( a );
+        PushLive();
+        StateHasChanged();
+    }
+
+    void SelectColor( Color c )
+    {
+        if ( ShopSign.DebugLogs ) Log.Info( $"[ShopSignEditPanel] SelectColor : {c.Hex}" );
+        _pendingBgColor = c.WithAlpha( _pendingBgColor.a );
+        PushLive();
+        StateHasChanged();
+    }
+
+    bool IsSelectedColor( Color c )
+    {
+        return MathF.Abs( c.r - _pendingBgColor.r ) < 0.01f
+            && MathF.Abs( c.g - _pendingBgColor.g ) < 0.01f
+            && MathF.Abs( c.b - _pendingBgColor.b ) < 0.01f;
+    }
+
+    void OnConfirm()
+    {
+        if ( ShopSign.DebugLogs ) Log.Info( $"[ShopSignEditPanel] OnConfirm : text='{_pendingText}', size={_pendingFontSize:0}, color={_pendingBgColor.Hex}" );
+        PushLive();
+        Close();
+    }
+
+    void OnCancel()
+    {
+        if ( ShopSign.DebugLogs ) Log.Info( "[ShopSignEditPanel] OnCancel : restauration des valeurs d'origine" );
+        // Rollback : on renvoie les valeurs d'origine au sign pour annuler les
+        // changements live qui ont ete pousses pendant l'edition.
+        if ( _sign.IsValid() )
+            _sign.RpcUpdateSign( _originalText, _originalFontSize, _originalBgColor );
+        Close();
+    }
+
+    public override void Tick()
+    {
+        base.Tick();
+
+        if ( _needsFocus && InputEntry != null )
+        {
+            InputEntry.Focus();
+            if ( InputEntry.HasFocus )
+                _needsFocus = false;
+        }
+
+        if ( Input.EscapePressed )
+        {
+            Input.EscapePressed = false;
+            OnCancel();
+        }
+    }
+
+    string PreviewBgCss => ToRgbaCss( _pendingBgColor );
+    // Apercu reduit : on divise la taille reelle pour rester dans la boite (~ 40% de la valeur reelle)
+    string PreviewFontSizeCss => $"{(_pendingFontSize * 0.4f).ToString("0", System.Globalization.CultureInfo.InvariantCulture)}px";
+
+    static string ToRgbaCss( Color c )
+    {
+        var ci = System.Globalization.CultureInfo.InvariantCulture;
+        return $"rgba({(int)(c.r * 255)}, {(int)(c.g * 255)}, {(int)(c.b * 255)}, {c.a.ToString("0.000", ci)})";
+    }
+
+    protected override int BuildHash() => HashCode.Combine( _pendingText, _pendingFontSize, _pendingBgColor );
+}

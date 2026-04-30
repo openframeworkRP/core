@@ -1,0 +1,19 @@
+@using Sandbox;
+@using Sandbox.UI;
+@inherits PanelComponent
+@namespace OpenFramework
+
+<root>
+	<OpenFramework.UI.HUD.Clothings.DressingRoomMenu/>
+</root>
+
+@code
+{
+
+	
+
+	/// <summary>
+	/// the hash determines if the system should be rebuilt. If it changes, it will be rebuilt
+	/// </summary>
+	protected override int BuildHash() => System.HashCode.Combine( "" );
+}

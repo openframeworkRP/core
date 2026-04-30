@@ -1,0 +1,64 @@
+CloseButton {
+    position: absolute;
+    z-index: 999;
+    pointer-events: all;
+    // Style pour Ordinateur / TV
+    &.computer_type, &.tv_type {
+        top: 20px;
+        right: 20px;
+
+        .close-btn {
+            width: 40px;
+            height: 40px;
+            background-color: rgba(black, 0.5);
+            border-radius: 50%;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.2s;
+
+            svg {
+                width: 20px;
+                height: 20px;
+                color: white;
+            }
+
+            &:hover {
+                background-color: crimson;
+            }
+        }
+    }
+    // Style pour iPhone (Home Indicator)
+    &.phone_type {
+        bottom: 8px;
+        left: 0;
+        right: 0;
+        width: 100%;
+        height: 20px; // Zone de clic
+        justify-content: center;
+        align-items: center;
+
+        .home-indicator {
+            width: 35%;
+            height: 5px;
+            background-color: white;
+            border-radius: 10px;
+            opacity: 0.6;
+            // La transition doit être sur la propriété transform et opacity
+            transition: transform 0.2s cubic-bezier(0.18, 0.89, 0.32, 1.28), opacity 0.2s ease;
+            // On s'assure que le pivot de l'animation est correct
+            transform: translateY(0);
+            cursor:pointer;
+        }
+        // Quand la souris survole la ZONE de détection (le parent)
+        &:hover .home-indicator {
+            opacity: 1;
+            // Elle monte de 4 pixels vers le haut
+            transform: translateY(-4px);
+        }
+        // Petit effet "pressé" quand on clique
+        &:active .home-indicator {
+            transform: translateY(-2px) scaleX(0.95);
+            opacity: 0.8;
+        }
+    }
+}

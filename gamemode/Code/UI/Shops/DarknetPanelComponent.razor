@@ -1,0 +1,183 @@
+@using Sandbox;
+@using Sandbox.UI;
+@using OpenFramework.Command
+@using OpenFramework.GameLoop
+@using OpenFramework.Inventory
+@using OpenFramework.Systems
+@using OpenFramework.Systems.Shop_System
+@using static Facepunch.NotificationSystem
+@inherits PanelComponent
+@namespace OpenFramework
+
+<root>
+    <div class="wrapper">
+
+        @* ── HEADER ──*@
+        <div class="header">
+            <div class="header-top">
+                <button class="close-btn" @onclick="@(() => Enabled = false)">✕</button>
+                <span class="shop-name">@DarknetCatalogue.DisplayName</span>
+                <div class="wallet">
+                    <span class="wallet-label">Solde</span>
+                    <span class="wallet-amount">$@MoneySystem.Get()</span>
+                </div>
+            </div>
+            <div class="categories">
+                <div class="category @(SelectedCategory == null ? "active" : "")"
+                     @onclick="@(() => SelectedCategory = null)">
+                    Tous
+                </div>
+                @foreach (var cat in DarknetCatalogue.Categories)
+                {
+                    var localCat = cat;
+                    <div class="category @(SelectedCategory == localCat ? "active" : "")"
+                         @onclick="@(() => SelectedCategory = localCat)">
+                        @localCat.Name
+                    </div>
+                }
+            </div>
+        </div>
+
+        <div class="body">
+
+            @* ── GRILLE ITEMS ──*@
+            <div class="grid">
+                @foreach (var item in SelectedItems)
+                {
+                    var localItem = item;
+                    <div class="card">
+                        <div class="card-preview">
+                            @if (localItem.Item?.WorldObjectPrefab != null)
+                            {
+                                <OpenFramework.Model3DIcon ModelPath="@localItem.Item.WorldObjectPrefab.ResourcePath" />
+                            }
+                        </div>
+                        <div class="card-bottom">
+                            <span class="card-name">@localItem.Item?.Name</span>
+                            <div class="card-footer">
+                                <span class="card-price">$@localItem.Item.Price</span>
+                                @if (localItem.Item != null)
+                                {
+                                    var localMeta = localItem.Item;
+                                    <button class="card-btn" @onclick="@(() => AddToCart(localMeta, localItem.Item.Price))">
+                                        +
+                                    </button>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            @* ── PANIER ──*@
+            <div class="cart">
+                <span class="cart-title">Panier</span>
+
+                <div class="cart-lines">
+                    @if (CartLines.Count == 0)
+                    {
+                        <div class="cart-empty">Votre panier est vide</div>
+                    }
+                    else
+                    {
+                        @foreach (var line in CartLines)
+                        {
+                            var localLine = line;
+                            <div class="cart-line">
+                                <div class="cart-line-left">
+                                    <span class="cart-line-name">@localLine.Item.Name</span>
+                                    <span class="cart-line-price">$@(localLine.Price* localLine.Quantity)</span>
+                                </div>
+                                <div class="cart-qty">
+                                    <button @onclick="@(() => Decrement(localLine))">−</button>
+                                    <span>@localLine.Quantity</span>
+                                    <button @onclick="@(() => Increment(localLine))">+</button>
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+
+                <div class="cart-footer">
+                    <div class="cart-total">
+                        <span>Total</span>
+                        <span class="cart-total-price">$@CartTotal</span>
+                    </div>
+                    <div class="cart-buy">
+                        <button class="btn-clear" @onclick="@ClearCart">Vider</button>
+                        <button class="btn-buy" @onclick="@Purchase">Acheter</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</root>
+
+@code
+{
+    [Property] public ShopCatalogueResource DarknetCatalogue { get; set; }
+
+    Client player => Client.Local;
+    InventoryContainer Container => Client.Local?.PlayerPawn?.GameObject.Components.Get<InventoryContainer>(FindMode.EnabledInSelfAndChildren);
+    ShopCatalogueResource.ShopCategory SelectedCategory { get; set; }
+
+    IEnumerable<ShopCatalogueResource.ShopItem> SelectedItems =>
+        SelectedCategory == null
+            ? DarknetCatalogue.Categories.SelectMany(c => c.Items.Where(i => i.Item != null))
+            : SelectedCategory.Items.Where(i => i.Item != null);
+
+    // === Panier ===
+    record CartLine(ItemMetadata Item, int Price)
+    {
+        public int Quantity { get; set; } = 1;
+    }
+
+    List<CartLine> CartLines { get; set; } = new();
+    int CartTotal => CartLines.Sum(l => l.Price * l.Quantity);
+
+    void AddToCart(ItemMetadata item, int price)
+    {
+        var existing = CartLines.FirstOrDefault(l => l.Item == item);
+        if (existing != null) existing.Quantity++;
+        else CartLines.Add(new CartLine(item, price));
+    }
+
+    void Increment(CartLine line) => line.Quantity++;
+
+    void Decrement(CartLine line)
+    {
+        if (line.Quantity <= 1) CartLines.Remove(line);
+        else line.Quantity--;
+    }
+
+    void ClearCart() => CartLines.Clear();
+
+    void Purchase()
+    {
+        if (player == null) return;
+        if (CartLines.Count == 0) return;
+
+        if (MoneySystem.Get() < CartTotal)
+        {
+            player.Notify(NotificationType.Error, "Vous n'avez pas assez d'argent.");
+            return;
+        }
+
+        foreach (var line in CartLines)
+        {
+            MoneySystem.Remove(line.Price * line.Quantity);
+            // Un seul appel avec la quantite totale : si l'inventaire deborde,
+            // tout le surplus va dans UN SEUL carton (au lieu d'un carton par item).
+            InventoryContainer.Add(Container, line.Item.ResourceName, line.Quantity);
+
+            player.Notify(NotificationType.Success, $"Achat de {line.Item.Name} x{line.Quantity} pour ${line.Price * line.Quantity}.");
+        }
+
+        ClearCart();
+    }
+
+    protected override int BuildHash() =>
+        HashCode.Combine(SelectedCategory, CartLines.Count, CartTotal, MoneySystem.Get());
+}

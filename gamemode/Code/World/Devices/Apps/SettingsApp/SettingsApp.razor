@@ -1,0 +1,241 @@
+@using OpenFramework.Systems.Jobs
+@using OpenFramework.World.Devices
+@using System.Linq
+
+@inherits BaseApp
+@namespace OpenFramework.World.Devices.Apps.Settings
+
+<root class="settings-root">
+
+    <div class="settings-header">
+        @if ( _activeCategory != null )
+        {
+            <div class="back-btn" @onclick=@GoBack>
+                <svg src="ui/icons/chevron_left.svg" />
+                <label>Réglages</label>
+            </div>
+            <label class="header-title">@_activeCategory</label>
+        }
+        else
+        {
+            <label class="header-title">Réglages</label>
+        }
+    </div>
+
+    <div class="settings-scroll">
+
+        @if ( _activeCategory == null )
+        {
+
+            <div class="profile-card settings-group">
+                <div class="profile-avatar">
+                    <img src="avatar:@Client.Local.SteamId" />
+                </div>
+                <div class="profile-info">
+                    <label class="profile-name">Mon Téléphone</label>
+                    <label class="profile-sub">OpenFramework OS</label>
+                </div>
+                <svg class="chevron" src="ui/icons/chevron_right.svg" />
+            </div>
+
+            @foreach ( var category in GetFilteredCategories() )
+            {
+                var cat = category;
+                var items = GetSettingsForCategory( cat );
+
+                <div class="settings-group">
+                    @foreach ( var setting in items )
+                    {
+                        <div class="settings-row" @onclick=@(() => OnRowClick( cat, setting ))>
+                            <div class="row-icon" style="background-color: @(setting.IconColor ?? "#8E8E93")">
+                                @if ( !string.IsNullOrEmpty( setting.Icon ) )
+                                {
+                                    <svg src=@setting.Icon />
+                                }
+                            </div>
+
+                            <div class="row-content">
+                                <label class="row-label">@setting.Label</label>
+                                @if ( IsToggle( setting ) )
+                                {
+                                    <div class="toggle @(GetBool(setting) ? "on" : "off")"
+                                         @onclick=@(() => ToggleSetting( setting ))>
+                                        <div class="thumb" />
+                                    </div>
+                                }
+                                else
+                                {
+                                    <label class="row-value">@setting.Value</label>
+                                    <svg class="chevron" src="ui/icons/chevron_right.svg" />
+                                }
+                            </div>
+                        </div>
+
+                        @if ( setting != items.Last() )
+                        {
+                            <div class="separator" />
+                        }
+                    }
+                </div>
+
+                <label class="category-label">@cat</label>
+            }
+        }
+        else
+        {
+            var items = GetSettingsForCategory( _activeCategory );
+
+            <div class="settings-group">
+                @foreach ( var setting in items )
+                {
+                    <div class="settings-row detail">
+                        <div class="row-icon" style="background-color: @(setting.IconColor ?? "#8E8E93")">
+                            @if ( !string.IsNullOrEmpty( setting.Icon ) )
+                            {
+                                <svg src=@setting.Icon />
+                            }
+                        </div>
+                        <div class="row-content">
+                            <label class="row-label">@setting.Label</label>
+
+                            @if ( IsToggle( setting ) )
+                            {
+                                <div class="toggle @(GetBool(setting) ? "on" : "off")"
+                                     @onclick=@(() => ToggleSetting( setting ))>
+                                    <div class="thumb" />
+                                </div>
+                            }
+                            else
+                            {
+                                <TextEntry Value=@setting.Value
+                                           @onchange=@(e => OnValueChanged( setting, e.Value?.ToString() )) />
+                            }
+                        </div>
+                    </div>
+
+                    @if ( setting != items.Last() )
+                    {
+                        <div class="separator" />
+                    }
+                }
+            </div>
+
+            <div class="save-btn" @onclick=@Save>
+                <svg src="ui/icons/checkmark.svg" />
+                <label>Enregistrer</label>
+            </div>
+
+            @if ( _savedFeedback )
+            {
+                <label class="saved-feedback">✓ Paramètres enregistrés</label>
+            }
+        }
+
+    </div>
+</root>
+
+@code {
+    public override string AppId => "settings";
+    public override string DisplayName => "Réglages";
+    public override string Icon => "ui/icons/apps/settings_icon.svg";
+    public override string IconColor => "default";
+    public override string BackgroundColor => "#fff";
+    public override bool IsSystemApp => true;
+    public override JobList JobAccess => JobList.None;
+    public override Type SplashScreen => typeof( SettingsApp_splash );
+    public override DeviceKind Compatibility => DeviceKind.Phone | DeviceKind.Tablet | DeviceKind.Computer;
+
+    private string _activeCategory = null;
+    private string _searchQuery = "";
+    private bool _savedFeedback = false;
+
+    protected override void OnAfterTreeRender(bool firstTime)
+    {
+        if (firstTime)
+             Focus();
+    }
+
+    private IEnumerable<string> GetFilteredCategories()
+    {
+        var all = DevicesManager.Instance.Settings
+            .Select( s => s.Category )
+            .Distinct()
+            .Where( c => !string.IsNullOrEmpty( c ) );
+
+        if ( string.IsNullOrWhiteSpace( _searchQuery ) )
+            return all;
+
+        return all.Where( cat =>
+            GetSettingsForCategory( cat ).Any( s =>
+                s.Label?.Contains( _searchQuery, StringComparison.OrdinalIgnoreCase ) == true ) );
+    }
+
+    private List<BaseSettingsDefinition> GetSettingsForCategory( string category )
+    {
+        return DevicesManager.Instance.Settings
+            .Where( s => s.Category == category )
+            .Where( s => string.IsNullOrWhiteSpace( _searchQuery )
+                         || s.Label?.Contains( _searchQuery, StringComparison.OrdinalIgnoreCase ) == true )
+            .ToList();
+    }
+
+    private bool IsToggle( BaseSettingsDefinition s )
+    {
+        var v = s.Value?.ToLower();
+        return v is "true" or "false" or "activé" or "désactivé" or "enabled" or "disabled";
+    }
+
+    private bool GetBool( BaseSettingsDefinition s )
+    {
+        var v = s.Value?.ToLower();
+        return v is "true" or "activé" or "enabled";
+    }
+
+    private void OnRowClick( string category, BaseSettingsDefinition setting )
+    {
+        if ( IsToggle( setting ) )
+        {
+            ToggleSetting( setting );
+            return;
+        }
+        _activeCategory = category;
+        StateHasChanged();
+    }
+
+    private void ToggleSetting( BaseSettingsDefinition setting )
+    {
+        var isOn = GetBool( setting );
+        setting.Value = isOn ? "Désactivé" : "Activé";
+        setting.OnChanged?.Invoke( setting.Value );
+        DevicesManager.Instance.SaveSettings();
+        StateHasChanged();
+    }
+
+    private void OnValueChanged( BaseSettingsDefinition setting, string newValue )
+    {
+        setting.Value = newValue;
+        setting.OnChanged?.Invoke( newValue );
+    }
+
+    private async void Save()
+    {
+        DevicesManager.Instance.SaveSettings();
+        _savedFeedback = true;
+        StateHasChanged();
+        await Task.Delay( 2000 );
+        _savedFeedback = false;
+        StateHasChanged();
+    }
+
+    private void GoBack()
+    {
+        _activeCategory = null;
+        StateHasChanged();
+    }
+
+    protected override int BuildHash()
+    {
+        return HashCode.Combine( _activeCategory, _searchQuery, _savedFeedback,
+            DevicesManager.Instance.Settings.Count );
+    }
+}

@@ -1,0 +1,132 @@
+@using Sandbox;
+@using Sandbox.UI;
+@using Sandbox.UI.Navigation;
+@namespace OpenFramework
+@inherits NavigationHost
+
+<root>
+    <div class="navbar @(IsHidingUI ? "hidden" : "")">
+        @* �tape 1 : Identit� *@
+        <div class="step-container @(Step >= 1 ? "active" : "")" onclick="@(() => GoToStep("/"))">
+            <div class="icon-box">
+                <svg src="ui/icons/id.svg" />
+            </div>
+            <label>Identite</label>
+        </div>
+        <div class="path @(Step >= 2 ? "active" : "")"></div>
+        
+        @* �tape 2 : Corpus *@
+        <div class="step-container @(Step >= 2 ? "active" : "")" onclick="@(() => GoToStep("/corpus"))">
+            <div class="icon-box">
+                <svg src="ui/icons/human.svg" />
+            </div>
+            <label>Corps</label>
+        </div>
+        <div class="path @(Step >= 3 ? "active" : "")"></div>
+        
+        @* �tape 3 : Apparence *@
+        <div class="step-container @(Step >= 3 ? "active" : "")" onclick="@(() => GoToStep("/apparence"))">
+            <div class="icon-box">
+                <svg src="ui/icons/cloth.svg" />
+            </div>
+            <label>Apparence</label>
+        </div>
+        <div class="path @(Step >= 4 ? "active" : "")"></div>
+
+        @* �tape 4 : Validation *@
+        <div class="step-container @(Step >= 4 ? "active" : "")" onclick="@(() => GoToStep("/validation"))">
+            <div class="icon-box">
+                <svg src="ui/icons/success.svg" />
+            </div>
+            <label>Validation</label>
+        </div>
+        <div class="path @(Step >= 5 ? "active" : "")"></div>
+
+        <div class="step-container @(Step >= 5 ? "active" : "")" onclick="@(() => GoToStep("/regles"))">
+            <div class="icon-box">
+                <svg src="ui/icons/id.svg" />
+            </div>
+            <label>Regles</label>
+        </div>
+    </div>
+
+    @* C'est ici que tes pages (IdCardPage, etc.) s'afficheront *@
+    <div class="navigator-canvas" slot="navigator-canvas"></div>
+</root>
+
+@code {
+
+    [Property] public int Step { get; set; } = 1;
+    public bool IsHidingUI { get; set; } = false;
+   
+
+    public static MenuCreatorCharacter Instance { get; private set; }
+
+    protected override void OnAfterTreeRender(bool firstTime)
+    {
+        base.OnAfterTreeRender(firstTime);
+        Instance = this;
+    }
+
+    public void SetUIVisibility(bool hide)
+    {
+        IsHidingUI = hide;
+        StateHasChanged();
+    }
+
+
+    public MenuCreatorCharacter()
+    {
+        DefaultUrl = "/";
+        
+        AddDestination("/", typeof(IdCardPage));
+        
+        AddDestination("/corps", typeof(CreatorPage));
+        
+        AddDestination("/apparence", typeof(AppearancePage));
+        
+        AddDestination("/validation", typeof(ValidatePage));
+
+        AddDestination("/regles", typeof(RulesPage));
+
+    }
+    
+    public void GoToStep(string url)
+    {
+        // 1. D�clencher la navigation
+        Navigate(url);
+
+        // 2. Mettre � jour l'index du stepper en fonction de l'URL
+        UpdateStepFromUrl(url);
+
+        CreatorDebug.Info($"[Creator] Navigation vers : {url}");
+    }
+
+    private void UpdateStepFromUrl(string url)
+    {
+        if (url == "/") Step = 1;
+        
+        else if (url == "/corps") Step = 2;
+        
+        else if (url == "/apparence") Step = 3;
+        
+        else if (url == "/validation") Step = 4;
+
+        else if (url == "/regles") Step = 5;
+
+        StateHasChanged();
+    }
+
+    // Si tu navigues depuis l'int�rieur d'une page (ex: bouton "Suivant"),
+    // tu peux appeler cette m�thode pour synchroniser le stepper.
+    public void SetStep(int index)
+    {
+        Step = index;
+        StateHasChanged();
+    }
+    
+    // M�thode pour avancer (� appeler depuis tes pages de cr�ation)
+    public void NextStep() => Step++;
+
+    protected override int BuildHash() => System.HashCode.Combine(Step);
+}

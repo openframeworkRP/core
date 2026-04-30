@@ -1,0 +1,152 @@
+@inherits Panel
+@namespace Facepunch
+@using static Facepunch.NotificationSystem
+@using System.Threading.Tasks
+@using System.Text.RegularExpressions
+@using OpenFramework.GameLoop
+
+
+<root class="@GetClassType()">
+    @if (StackCount > 1)
+    {
+        <span class="stack-count">x@(StackCount)</span>
+    }
+    <div class="message" @ref="MessagePanelRef"></div>
+</root>
+
+@code {
+    NotificationType _type = NotificationType.Generic;
+    string _message = "N/A";
+    RealTimeUntil SelfDelete = 4f;
+    Panel MessagePanelRef;
+
+    public int StackCount { get; set; } = 1;
+
+    public NotificationItem(NotificationType type, string message)
+    {
+        _type = type;
+        _message = message;
+    }
+
+    public bool Matches(NotificationType type, string message)
+    {
+        return _type == type && _message == message;
+    }
+
+    /// <summary>
+    /// Reset the timer and increment the stack count.
+    /// </summary>
+    public void Stack()
+    {
+        StackCount++;
+        SelfDelete = 4f;
+    }
+
+    protected override void OnAfterTreeRender(bool firstRender)
+    {
+        if (!firstRender)
+            return;
+
+        SelfDelete = 4f;
+        var panel = new Panel();
+        panel.ChildContent = (builder) =>
+        {
+            builder.AddMarkupContent(0, GetMessage());
+        };
+
+        MessagePanelRef.AddChild(panel);
+
+    }
+
+    string GetIconType() => _type switch
+    {
+        NotificationType.Generic => "ui/icons/announce.svg",
+        NotificationType.Error => "ui/icons/error.svg",
+        NotificationType.Info => "ui/icons/info.svg",
+        NotificationType.Warning => "ui/icons/warning.svg",
+        NotificationType.Success => "ui/icons/success.svg",
+        _ => "ui/icons/thumb_up.svg"
+    };
+
+    string GetIconColor() => _type switch
+    {
+        NotificationType.Generic => "#eb5e28",
+        NotificationType.Error => "#FA3A37",
+        NotificationType.Info => "#3742FA",
+        NotificationType.Warning => "#FAD237",
+        NotificationType.Success => "#4caf50",
+        _ => "#eb5e28"
+    };
+
+    string GetClassType() => _type switch
+    {
+        NotificationType.Generic => "generic",
+        NotificationType.Error => "error",
+        NotificationType.Info => "info",
+        NotificationType.Warning => "warning",
+        NotificationType.Success => "success",
+        _ => "custom"
+    };
+
+    // Returns HTML string that we render as MarkupString
+    string GetMessage()
+    {
+        // Handle <font ...>...</font> (any case, across lines)
+        var result = Regex.Replace(
+            _message,
+            @"<\s*font(.*?)>(.*?)</\s*font\s*>",
+            match =>
+            {
+                string attributes = match.Groups[1].Value;
+                string content = match.Groups[2].Value;
+
+                string style = "";
+
+                string GetAttr(string name)
+                    => Regex.Match(attributes, $@"\b{name}\s*=\s*[""'](.*?)[""']", RegexOptions.IgnoreCase).Groups[1].Value;
+
+                if (!string.IsNullOrEmpty(GetAttr("color")))
+                    style += $"color:{GetAttr("color")};";
+
+                // support boolean-ish flags (bold/italic/underline/strikethrough)
+                if (Regex.IsMatch(attributes, @"\bbold\b", RegexOptions.IgnoreCase))
+                    style += "font-weight:bold;";
+                if (Regex.IsMatch(attributes, @"\bitalic\b", RegexOptions.IgnoreCase))
+                    style += "font-style:italic;";
+                if (Regex.IsMatch(attributes, @"\bunderline\b", RegexOptions.IgnoreCase))
+                    style += "text-decoration:underline;";
+                if (Regex.IsMatch(attributes, @"\bstrikethrough\b", RegexOptions.IgnoreCase))
+                    style += "text-decoration:line-through;";
+
+                if (!string.IsNullOrEmpty(GetAttr("size")))
+                    style += $"font-size:{GetAttr("size")};";
+                if (!string.IsNullOrEmpty(GetAttr("family")))
+                    style += $"font-family:{GetAttr("family")};";
+                if (!string.IsNullOrEmpty(GetAttr("bgcolor")))
+                    style += $"background-color:{GetAttr("bgcolor")};";
+                if (!string.IsNullOrEmpty(GetAttr("align")))
+                    style += $"text-align:{GetAttr("align")};";
+
+                if (!string.IsNullOrEmpty(GetAttr("link")))
+                    content = $"<a href='{GetAttr("link")}'>{content}</a>";
+
+                if (!string.IsNullOrEmpty(GetAttr("animation")))
+                    style += $"animation:{GetAttr("animation")};";
+
+                // Use a span so it plays nice inside your div.message
+                return $"<label style='{style}margin:0 5px 0 5px'>{content}</label>";
+            },
+            RegexOptions.IgnoreCase | RegexOptions.Singleline
+        );
+
+        return result;
+    }
+
+    public override void Tick()
+    {
+        if (SelfDelete)
+            Delete();
+    }
+
+    protected override int BuildHash() => HashCode.Combine( StackCount, (int)(Time.Now * 5f) );
+}

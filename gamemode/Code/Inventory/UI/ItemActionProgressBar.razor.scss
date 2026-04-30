@@ -1,0 +1,61 @@
+ItemActionProgressBar {
+    position: absolute;
+    bottom: 22%;
+    left: 50%;
+    transform: translateX(-50%);
+    pointer-events: none;
+    // État de base (visible)
+    opacity: 1;
+    transition: all 0.3s ease-in-out;
+    // Transition d'entrée
+    &.intro {
+        opacity: 0;
+        transform: translateX(-50%) translateY(20px);
+    }
+    // Transition de sortie (quand Instance.Delete() est appelé)
+    &.outro {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-20px);
+    }
+
+    .container {
+        width: 320px;
+        padding: 12px;
+        background-color: rgba( 0, 0, 0, 0.85 ); // Un peu plus opaque pour le contraste
+        border-radius: 6px;
+        border: 1px solid rgba( 255, 255, 255, 0.1 );
+        box-shadow: 0 4px 15px rgba( 0, 0, 0, 0.5 );
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .label {
+        color: #ffffff;
+        font-family: "Poppins", sans-serif;
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        margin-bottom: 8px;
+        text-shadow: 0 2px 4px rgba( 0, 0, 0, 0.5 );
+    }
+
+    .bar-background {
+        width: 100%;
+        height: 8px; // Un poil plus épais pour mieux voir le remplissage
+        background-color: rgba( 0, 0, 0, 0.4 ); // Fond sombre pour simuler le creux
+        border-radius: 4px;
+        overflow: hidden;
+        // On remplace l'inset par une bordure très fine et sombre
+        border: 1px solid rgba( 0, 0, 0, 0.5 );
+    }
+
+    .bar-fill {
+        height: 100%;
+        background-color: #fdea60; // Ta couleur "backpack"
+        transition: width 0.1s linear;
+        // Brillance externe autorisée
+        box-shadow: 0 0 10px rgba( 252, 234, 96, 0.3 );
+    }
+}

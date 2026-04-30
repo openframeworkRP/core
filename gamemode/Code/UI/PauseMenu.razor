@@ -1,0 +1,1070 @@
+@inherits PanelComponent
+@using Sandbox.WeatherSystem
+@using Facepunch
+@using OpenFramework.Inventory
+@using OpenFramework.Systems
+@using OpenFramework.UI
+@using OpenFramework.Systems.MinimapSystem
+@using OpenFramework.Systems.Pawn
+@using OpenFramework.Systems.Vehicles.UI
+@using OpenFramework.Systems.Crafting
+@using OpenFramework.UI.QuickMenuSystem
+@using OpenFramework.UI.World.ShopSigns
+@using OpenFramework.World
+@using OpenFramework
+@using OpenFramework.Command
+@using OpenFramework.Systems.Jobs
+@using System.Net.Http
+
+@if (Client.Local == null || _weatherSystem == null)
+    return;
+
+<root class="@(IsOpen ? "open" : "")">
+@if (IsOpen)
+{
+    <div class="topbar">
+        <div class="server">
+            <img src="ui/core_opacity.png"/>
+            <div>
+                <span>OpenFramework</span>
+                <span>Pause Menu</span>
+            </div>
+        </div>
+        @*<div class="data">
+            <div class="case">
+                <div class="icon"><svg src="ui/icons/clock.svg" color="white" /></div>
+                <div class="value">@(_weatherSystem.Hour1)@(_weatherSystem.Hour2):@(_weatherSystem.Minute1)@(_weatherSystem.Minute2)</div>
+            </div>
+            <div class="case">
+                <div class="icon"><svg src="ui/icons/players.svg" color="white" /></div>
+                <div class="value">@(GameUtils.AllPlayers.Count())/@(Networking.MaxPlayers)</div>
+            </div>
+            <div class="case">
+                <div class="icon"><svg src="ui/icons/id.svg" color="white" /></div>
+                <div class="value">@GameUtils.AllPlayers.ToList().IndexOf(Client.Local)</div>
+            </div>
+            <div class="case">
+                <div class="icon"><svg src="ui/icons/money.svg" color="white" /></div>
+                <div class="value">@MoneySystem.Get()</div>
+            </div>
+        </div>*@
+        <div class="end">
+            <button @onclick=@(() => { IsOpen = !IsOpen;})>Fermer</button>
+        </div>
+    </div>
+    <div class="content">
+        <div class="actions">
+            <div class="action" @onclick=@(() => { IsOpen = !IsOpen; })>
+                <div class="background" style="background-image:url('ui/maps/union_city.png');" />
+                <button>Resume</button>
+            </div>
+            <div class="action @(CurrentTab == Tab.Players ? "active" : "")" @onclick=@(() => CurrentTab = Tab.Players)>
+                <button>Joueurs</button>
+            </div>
+            <div class="action @(CurrentTab == Tab.Wiki ? "active" : "")" @onclick=@(() => { CurrentTab = Tab.Wiki; LoadWiki(); TaskManager.CompleteStep("open_wiki"); })>
+                <button>Wiki</button>
+            </div>
+            <div class="action @(CurrentTab == Tab.Map ? "active" : "")" @onclick=@(() => CurrentTab = Tab.Map)>
+                <div class="background" style="background-image:url('@MinimapImage');" />
+                <button>Map</button>
+            </div>
+            <div class="action @(CurrentTab == Tab.Feedback ? "active" : "")" @onclick=@(() => CurrentTab = Tab.Feedback)>
+                <button>Feedback</button>
+            </div>
+            @if (Client.Local?.IsAdmin ?? false)
+            {
+                <div class="action @(CurrentTab == Tab.Admin ? "active" : "")" @onclick=@(() => { CurrentTab = Tab.Admin; RefreshAdminMenu(); })>
+                    <button>Admin</button>
+                </div>
+            }
+            <div class="action" @onclick=@(() => OnSettingsClicked())>
+                <button>Settings</button>
+            </div>
+            <div class="action" @onclick=@(() => Game.Disconnect())>
+                <button>Exit</button>
+            </div>
+        </div>
+        <div class="right-panel">
+            @if (CurrentTab == Tab.Players)
+            {
+                <div class="players-panel">
+                    <div class="players-header">
+                        <svg src="ui/icons/players.svg" color="white" />
+                        <span>Joueurs</span>
+                    </div>
+                    <ul class="players-list">
+                        @foreach (var group in GameUtils.AllPlayers
+                            .Where(p => p?.Data != null && !string.IsNullOrEmpty(p.Data.Job))
+                            .GroupBy(p => p.Data.Job))
+                        {
+                            <li class="job-header">@(group.Key.ToUpper()) (@(GetPlayersInJob(group.Key)))</li>
+
+                            @foreach (var player in group)
+                            {
+                                if (player == null || !player.IsValid || player.Connection == null || player.Connection.IsConnecting)
+                                    continue;
+
+                                <li style="@GetPlayerStyle(player)" onrightclick=@(() => OpenContextMenu(player))>
+                                        <span class="name">@(Client.Local.IsAdmin ? $"{player.Data.FirstName.ToUpper()} {player.Data.LastName.ToUpper()}" : "Inconnu")</span>
+                                    <span class="jobname">@player.Data.Job</span>
+                                    <span class="ping">@player.Connection.Ping ms</span>
+                                    <div class="actions @(Client.Local.IsAdmin ? "visible" : "no-display")">
+                                        <div class="action-btn" onclick=@(() => Commands.Kick(player))><svg src="ui/icons/kick.svg" color="white" /><span class="tooltip">Kick</span></div>
+                                        <div class="action-btn"><svg src="ui/icons/ban.svg" color="white" /><span class="tooltip">Ban</span></div>
+                                        <div class="action-btn" onclick=@(() => Commands.Freeze(player, -1f))><svg src="ui/icons/freeze.svg" color="@(player.PlayerPawn.IsValid() && player.PlayerPawn.IsFrozen ? "#3742FA" : "white")" /><span class="tooltip">Freeze</span></div>
+                                        <div class="action-btn" onclick=@(() => Commands.Bring(player))><svg src="ui/icons/teleport.svg" color="white" /><span class="tooltip">Ramener</span></div>
+                                        <div class="action-btn" onclick=@(() => Commands.TeleportTo(player))><svg src="ui/icons/goto.svg" color="white" /><span class="tooltip">Aller à</span></div>
+                                        <div class="action-btn" onclick=@(() => Commands.Slap(player))><svg src="ui/icons/slap.svg" color="white" /><span class="tooltip">Slap</span></div>
+                                        <div class="action-btn" onclick=@(() => Commands.Noclip(player))><svg src="ui/icons/noclip.svg" color="@(player.PlayerPawn.IsValid() && player.PlayerPawn.IsNoclipping ? "#3742FA" : "white")" /><span class="tooltip">Noclip</span></div>
+                                        <div class="action-btn" onclick=@(() => { if (player.IsGlobalVocalMuted) Commands.Unmute(player); else Commands.Mute(player); })><svg src="@(player.IsGlobalVocalMuted ? "ui/icons/mute.svg" : "ui/icons/unmute.svg")" color="@(player.IsGlobalVocalMuted ? "#3742FA" : "white")" /><span class="tooltip">@(player.IsGlobalVocalMuted ? "Unmute" : "Mute")</span></div>
+                                        <div class="action-btn" onclick=@(() => Commands.Godmode(player))><svg src="ui/icons/godmode.svg" color="@(player.Pawn.IsValid() && (player.Pawn.HealthComponent?.IsGodMode ?? false) ? "#3742FA" : "white")" /><span class="tooltip">Godmode</span></div>
+                                    </div>
+                                </li>
+                            }
+                        }
+                    </ul>
+
+                    @if (_contextMenuPlayer != null && Client.Local.IsAdmin)
+                    {
+                        <div class="context-overlay" onclick=@(() => CloseContextMenu()) />
+                        <div class="context-menu">
+                            <div class="context-header">
+                                <span>@_contextMenuPlayer.Data.FirstName @_contextMenuPlayer.Data.LastName</span>
+                            </div>
+                            <div class="context-item" onclick=@(() => ContextAction(() => Commands.Bring(_contextMenuPlayer)))>
+                                <svg src="ui/icons/teleport.svg" color="white" />
+                                <span>Ramener</span>
+                            </div>
+                            <div class="context-item" onclick=@(() => ContextAction(() => Commands.TeleportTo(_contextMenuPlayer)))>
+                                <svg src="ui/icons/goto.svg" color="white" />
+                                <span>Se téléporter</span>
+                            </div>
+                            <div class="context-separator" />
+                            <div class="context-item" onclick=@(() => ContextAction(() => Commands.Freeze(_contextMenuPlayer, -1f)))>
+                                <svg src="ui/icons/freeze.svg" color="@(_contextMenuPlayer.PlayerPawn.IsValid && _contextMenuPlayer.PlayerPawn.IsFrozen ? "#3742FA" : "white")" />
+                                <span>@(_contextMenuPlayer.PlayerPawn.IsValid && _contextMenuPlayer.PlayerPawn.IsFrozen ? "Unfreeze" : "Freeze")</span>
+                            </div>
+                            <div class="context-item" onclick=@(() => ContextAction(() => Commands.Slap(_contextMenuPlayer)))>
+                                <svg src="ui/icons/slap.svg" color="white" />
+                                <span>Slap</span>
+                            </div>
+                            <div class="context-item" onclick=@(() => ContextAction(() => Commands.Noclip(_contextMenuPlayer)))>
+                                <svg src="ui/icons/noclip.svg" color="@(_contextMenuPlayer.PlayerPawn.IsValid && _contextMenuPlayer.PlayerPawn.IsNoclipping ? "#3742FA" : "white")" />
+                                <span>@(_contextMenuPlayer.PlayerPawn.IsValid && _contextMenuPlayer.PlayerPawn.IsNoclipping ? "Disable Noclip" : "Noclip")</span>
+                            </div>
+                            <div class="context-item" onclick=@(() => ContextAction(() => Commands.Godmode(_contextMenuPlayer)))>
+                                <svg src="ui/icons/godmode.svg" color="@(_contextMenuPlayer.Pawn.IsValid && _contextMenuPlayer.Pawn.HealthComponent.IsGodMode ? "#3742FA" : "white")" />
+                                <span>@(_contextMenuPlayer.Pawn.IsValid && _contextMenuPlayer.Pawn.HealthComponent.IsGodMode ? "Disable Godmode" : "Godmode")</span>
+                            </div>
+                            <div class="context-item" onclick=@(() => ContextAction(() => Commands.Heal(_contextMenuPlayer)))>
+                                <svg src="ui/icons/health_and_safety.svg" color="white" />
+                                <span>Heal</span>
+                            </div>
+                            @if (_contextMenuPlayer.IsGlobalVocalMuted)
+                            {
+                                <div class="context-item" onclick=@(() => ContextAction(() => Commands.Unmute(_contextMenuPlayer)))>
+                                    <svg src="ui/icons/mute.svg" color="#3742FA" />
+                                    <span>Unmute</span>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="context-item" onclick=@(() => ContextAction(() => Commands.Mute(_contextMenuPlayer)))>
+                                    <svg src="ui/icons/unmute.svg" color="white" />
+                                    <span>Mute</span>
+                                </div>
+                            }
+                            <div class="context-separator" />
+                            <div class="context-item" onclick=@(() => { _contextSubMenu = _contextSubMenu == "money" ? null : "money"; })>
+                                <svg src="ui/icons/money.svg" color="white" />
+                                <span>Give Money</span>
+                            </div>
+                            @if (_contextSubMenu == "money")
+                            {
+                                <div class="context-sub">
+                                    <TextEntry Numeric @ref="ContextMoneyEntry" Placeholder="Montant..." />
+                                    <button class="context-confirm" onclick=@ConfirmGiveMoney>OK</button>
+                                </div>
+                            }
+                            <div class="context-item" onclick=@(() => { _contextSubMenu = _contextSubMenu == "item" ? null : "item"; })>
+                                <svg src="ui/icons/box.svg" color="white" />
+                                <span>Give Item</span>
+                            </div>
+                            @if (_contextSubMenu == "item")
+                            {
+                                <div class="context-sub">
+                                    <div class="context-sub-row">
+                                        <TextEntry @ref="ContextItemSearchEntry" Placeholder="Rechercher un item..." />
+                                        <TextEntry Numeric @ref="ContextItemQuantityEntry" Placeholder="Qté" />
+                                    </div>
+                                    <div class="context-item-list">
+                                        @foreach (var item in GetFilteredItems())
+                                        {
+                                            <div class="context-item-entry @(_contextSelectedItem == item ? "selected" : "")" onclick=@(() => _contextSelectedItem = item)>
+                                                <span>@item.Name</span>
+                                                <span class="context-item-type">@item.ItemCategoryType</span>
+                                            </div>
+                                        }
+                                    </div>
+                                    <button class="context-confirm" onclick=@ConfirmGiveItem>Donner</button>
+                                </div>
+                            }
+                            <div class="context-item" onclick=@(() => { _contextSubMenu = _contextSubMenu == "job" ? null : "job"; _contextSelectedJob = null; })>
+                                <svg src="ui/icons/work.svg" color="white" />
+                                <span>Set Job</span>
+                            </div>
+                            @if (_contextSubMenu == "job")
+                            {
+                                <div class="context-sub">
+                                    <div class="context-item-list">
+                                        @foreach (var job in GetAvailableJobs())
+                                        {
+                                            <div class="context-item-entry @(_contextSelectedJob == job ? "selected" : "")" onclick=@(() => { _contextSelectedJob = job; _contextSelectedGrade = null; })>
+                                                <span>@job.DisplayName</span>
+                                                <span class="context-item-type">@job.JobIdentifier</span>
+                                            </div>
+                                        }
+                                    </div>
+                                    @if (_contextSelectedJob != null && _contextSelectedJob.HasGrades && _contextSelectedJob.Grades != null && _contextSelectedJob.Grades.Count > 0)
+                                    {
+                                        <div class="context-sub-row">
+                                            <span class="feedback-label">Grade :</span>
+                                        </div>
+                                        <div class="context-item-list">
+                                            @foreach (var grade in _contextSelectedJob.Grades)
+                                            {
+                                                <div class="context-item-entry @(_contextSelectedGrade == grade.Name ? "selected" : "")" onclick=@(() => _contextSelectedGrade = grade.Name)>
+                                                    <span>@grade.Name</span>
+                                                </div>
+                                            }
+                                        </div>
+                                    }
+                                    <button class="context-confirm" onclick=@ConfirmSetJob>Appliquer</button>
+                                </div>
+                            }
+                            <div class="context-separator" />
+                            <div class="context-item danger" onclick=@(() => ContextAction(() => Commands.Kill(_contextMenuPlayer)))>
+                                <svg src="ui/icons/slap.svg" color="white" />
+                                <span>Kill</span>
+                            </div>
+                            <div class="context-item danger" onclick=@(() => ContextAction(() => Commands.Kick(_contextMenuPlayer)))>
+                                <svg src="ui/icons/kick.svg" color="white" />
+                                <span>Kick</span>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+            else if (CurrentTab == Tab.Feedback)
+            {
+                <div class="feedback">
+                    <div class="feedback-header">
+                        <span>Feedback</span>
+                    </div>
+                    <div class="feedback-form">
+                        <div class="feedback-field feedback-title-field">
+                            <span class="feedback-label">Title</span>
+                            <TextEntry @ref="FeedbackTitleEntry" Placeholder="Bug, suggestion, question..." />
+                        </div>
+                        <div class="feedback-field feedback-content-field">
+                            <span class="feedback-label">Description</span>
+                            <TextEntry @ref="FeedbackEntry" Placeholder="Describe in detail..." />
+                        </div>
+                        <div class="feedback-actions">
+                            @if (!string.IsNullOrEmpty(FeedbackStatus))
+                            {
+                                <span class="feedback-status @(FeedbackSent ? "success" : "")">@FeedbackStatus</span>
+                            }
+                            <button class="feedback-send" @onclick=@SendFeedback disabled=@FeedbackSending>
+                                @(FeedbackSending ? "Envoi..." : "Envoyer")
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            }
+            else if (CurrentTab == Tab.Admin)
+            {
+                <div class="admin-panel">
+                    <div class="admin-header">
+                        <svg src="ui/icons/id.svg" color="white" />
+                        <span>Administration</span>
+                    </div>
+                    @if (_adminBreadcrumb.Count > 0)
+                    {
+                        <div class="admin-breadcrumb">
+                            <div class="admin-back" @onclick=@AdminGoBack>
+                                <span>← Retour</span>
+                            </div>
+                            <span class="admin-path">@string.Join(" > ", _adminBreadcrumb.Select(b => b.Label))</span>
+                        </div>
+                    }
+                    @if (_adminInputMode)
+                    {
+                        <div class="admin-input">
+                            <span class="admin-input-label">@_adminInputPrompt</span>
+                            <TextEntry @ref="AdminInputEntry" Placeholder="Entrer une valeur..." />
+                            <div class="admin-input-actions">
+                                <button class="admin-input-cancel" @onclick=@AdminCancelInput>Annuler</button>
+                                <button class="admin-input-confirm" @onclick=@AdminConfirmInput>Valider</button>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="admin-list">
+                            @foreach (var item in CurrentAdminItems)
+                            {
+                                if (!item.Enabled) continue;
+
+                                <div class="admin-item @(item.IsSubMenu ? "has-children" : "")" @onclick=@(() => OnAdminItemClick(item))>
+                                    <span class="admin-item-label">@item.Label</span>
+                                    @if (item.IsSubMenu)
+                                    {
+                                        <span class="admin-item-arrow">→</span>
+                                    }
+                                </div>
+                            }
+                        </div>
+                    }
+                </div>
+            }
+            else if (CurrentTab == Tab.Map)
+            {
+                <Map/>
+            }
+            else
+            {
+                <div class="wiki">
+                    <div class="wiki-header">
+                        <svg src="ui/icons/id.svg" color="white" />
+                        <span>Wiki</span>
+                        <div class="wiki-search">
+                            <TextEntry @ref="WikiSearchEntry" Placeholder="Rechercher un article..." />
+                        </div>
+                    </div>
+
+                    @if (WikiLoading)
+                    {
+                        <div class="wiki-empty">
+                            <span>Chargement du wiki...</span>
+                        </div>
+                    }
+                    else if (!string.IsNullOrEmpty(WikiError))
+                    {
+                        <div class="wiki-empty">
+                            <span>@WikiError</span>
+                        </div>
+                    }
+                    else if (SelectedArticle != null)
+                    {
+                        <div class="wiki-article">
+                            <div class="wiki-back" @onclick=@(() => SelectedArticle = null)>
+                                <span>← Retour</span>
+                            </div>
+                            <div class="wiki-article-header">
+                                <div class="wiki-category-bar" style="background-color: @(SelectedArticle.category_color ?? "#eb5e28")" />
+                                <div class="wiki-article-title">
+                                    <h1>@SelectedArticle.title</h1>
+                                    <span class="wiki-category-tag" style="color: @(SelectedArticle.category_color ?? "white")">@SelectedArticle.category_name</span>
+                                </div>
+                            </div>
+                            <div class="wiki-article-body">
+                                @foreach (var line in (SelectedArticle.content ?? "").Split('\n'))
+                                {
+                                    var trimmed = line.TrimStart('#', ' ');
+                                    if (line.StartsWith("##"))
+                                    {
+                                        <span class="wiki-heading">@trimmed</span>
+                                    }
+                                    else if (line.StartsWith("- "))
+                                    {
+                                        <span class="wiki-list-item">• @line.Substring(2)</span>
+                                    }
+                                    else if (!string.IsNullOrWhiteSpace(line))
+                                    {
+                                        <span class="wiki-paragraph">@line</span>
+                                    }
+                                    else
+                                    {
+                                        <div class="wiki-spacer" />
+                                    }
+                                }
+                            </div>
+                        </div>
+                    }
+                    else if (!string.IsNullOrWhiteSpace(SearchQuery))
+                    {
+                        var results = FilteredArticles.ToList();
+                        if (!results.Any())
+                        {
+                            <div class="wiki-empty">
+                                <span>Aucun résultat pour "@SearchQuery"</span>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="wiki-categories">
+                                @foreach (var group in results.GroupBy(a => a.category_name ?? "Général"))
+                                {
+                                    <div class="wiki-category">
+                                        <div class="wiki-category-name">@group.Key</div>
+                                        <div class="wiki-category-articles">
+                                            @foreach (var article in group)
+                                            {
+                                                <div class="wiki-entry" @onclick=@(() => SelectedArticle = article)>
+                                                    <div class="wiki-entry-color" style="background-color: @(article.category_color ?? "#eb5e28")" />
+                                                    <div class="wiki-entry-text">
+                                                        <span class="wiki-entry-title">@article.title</span>
+                                                        <span class="wiki-entry-summary">@GetSummary(article.content)</span>
+                                                    </div>
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        }
+                    }
+                    else if (WikiCategories == null || !WikiCategories.Any())
+                    {
+                        <div class="wiki-empty">
+                            <span>Aucun article disponible.</span>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="wiki-categories">
+                            @foreach (var category in WikiCategories.OrderBy(c => c.order_index))
+                            {
+                                if (category.articles == null || !category.articles.Any()) continue;
+                                <div class="wiki-category">
+                                    <div class="wiki-category-name">
+                                        <div class="wiki-category-bar" style="background-color: @(category.color ?? "#eb5e28")" />
+                                        <span>@category.name</span>
+                                    </div>
+                                    <div class="wiki-category-articles">
+                                        @foreach (var article in category.articles.OrderBy(a => a.order_index))
+                                        {
+                                            <div class="wiki-entry" @onclick=@(() => SelectedArticle = article)>
+                                                <div class="wiki-entry-color" style="background-color: @(category.color ?? "#eb5e28")" />
+                                                <div class="wiki-entry-text">
+                                                    <span class="wiki-entry-title">@article.title</span>
+                                                    <span class="wiki-entry-summary">@GetSummary(article.content)</span>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+}
+</root>
+
+@code {
+    enum Tab { Players, Wiki, Map, Feedback, Admin }
+
+    // Cache : avant, ces 2 properties scannaient la scene a chaque acces. Avec un
+    // BuildRenderTree appele a chaque rebuild + plusieurs accesseurs dans le tree, ca
+    // multipliait les CollectAll. Memoize avec IsValid pour gerer le despawn.
+    private WeatherSystem _cachedWeatherSystem;
+    public WeatherSystem _weatherSystem
+    {
+        get
+        {
+            if ( !_cachedWeatherSystem.IsValid() )
+                _cachedWeatherSystem = Game.ActiveScene?.GetComponentInChildren<WeatherSystem>();
+            return _cachedWeatherSystem;
+        }
+    }
+
+    private MinimapRenderer _cachedRenderer;
+    MinimapRenderer Renderer
+    {
+        get
+        {
+            if ( !_cachedRenderer.IsValid() )
+                _cachedRenderer = Game.ActiveScene?.GetAllComponents<MinimapRenderer>().FirstOrDefault();
+            return _cachedRenderer;
+        }
+    }
+
+    private string MinimapImage;
+    private string MinimapPath => Renderer?.CurrentMinimapPath ?? "";
+    bool IsOpen = false;
+    Tab CurrentTab = Tab.Players;
+
+    // ── Players ──
+    private string GetPlayerStyle(Client client)
+    {
+        // JobSystem.GetJob peut retourner null (Data.Job vide pour un nouveau perso,
+        // job inconnu, ou JobSystem pas encore initialise dans la scene).
+        var job = JobSystem.GetJob( client?.Data?.Job );
+        if ( job == null ) return "border-color: #888";
+        return $"border-color: {job.Color.Hex}";
+    }
+
+    private int GetPlayersInJob( string jobname ) => JobSystem.GetJob( jobname )?.Employees?.Count ?? 0;
+
+    // ── Context Menu ──
+    // Affiche en modal centre pour etre toujours entierement visible,
+    // peu importe la position du joueur clique dans la liste.
+    Client _contextMenuPlayer;
+
+    void OpenContextMenu(Client player)
+    {
+        if (!Client.Local.IsAdmin) return;
+        _contextMenuPlayer = player;
+        _contextSubMenu = null;
+        _contextSelectedItem = null;
+        _contextSelectedJob = null;
+        _contextSelectedGrade = null;
+    }
+
+    void CloseContextMenu()
+    {
+        _contextMenuPlayer = null;
+        _contextSubMenu = null;
+        _contextSelectedItem = null;
+        _contextSelectedJob = null;
+        _contextSelectedGrade = null;
+    }
+
+    void ContextAction(Action action)
+    {
+        action?.Invoke();
+        CloseContextMenu();
+    }
+
+    // ── Context Sub-Menus ──
+    string _contextSubMenu;
+    TextEntry ContextMoneyEntry { get; set; }
+    TextEntry ContextItemSearchEntry { get; set; }
+    TextEntry ContextItemQuantityEntry { get; set; }
+    ItemMetadata _contextSelectedItem;
+    JobComponent _contextSelectedJob;
+    string _contextSelectedGrade;
+
+    IEnumerable<JobComponent> GetAvailableJobs()
+    {
+        var scene = Game.ActiveScene;
+        if ( scene == null ) return Enumerable.Empty<JobComponent>();
+
+        return scene.GetAllComponents<JobComponent>()
+            .Where( j => j != null && !string.IsNullOrEmpty( j.JobIdentifier ) )
+            .OrderBy( j => j.DisplayName );
+    }
+
+    void ConfirmSetJob()
+    {
+        if ( _contextSelectedJob == null || _contextMenuPlayer == null ) return;
+
+        Commands.SetJob( _contextMenuPlayer, _contextSelectedJob.JobIdentifier, _contextSelectedGrade ?? "" );
+        CloseContextMenu();
+    }
+
+    IEnumerable<ItemMetadata> GetFilteredItems()
+    {
+        var query = ContextItemSearchEntry?.Text?.Trim() ?? "";
+        if (string.IsNullOrEmpty(query)) return Enumerable.Empty<ItemMetadata>();
+
+        return ItemMetadata.All
+            .Where(i => i.Name != null && i.Name.Contains(query, StringComparison.OrdinalIgnoreCase))
+            .OrderBy(i => i.Name)
+            .Take(15);
+    }
+
+    void ConfirmGiveMoney()
+    {
+        var text = ContextMoneyEntry?.Text?.Trim();
+        if (string.IsNullOrEmpty(text) || _contextMenuPlayer == null) return;
+        if (!int.TryParse(text, out var amount) || amount <= 0) return;
+
+        Commands.GiveMoney(_contextMenuPlayer, amount);
+        CloseContextMenu();
+    }
+
+    void ConfirmGiveItem()
+    {
+        if (_contextSelectedItem == null || _contextMenuPlayer == null) return;
+        var qtyText = ContextItemQuantityEntry?.Text?.Trim();
+        int quantity = 1;
+        if (!string.IsNullOrEmpty(qtyText)) int.TryParse(qtyText, out quantity);
+        if (quantity <= 0) quantity = 1;
+
+        Commands.GiveItem(_contextMenuPlayer, _contextSelectedItem.ResourceName, quantity);
+        CloseContextMenu();
+    }
+
+    // ── Wiki API ──
+    private const string WikiApiUrl = "https://service.openframework.fr/api/wiki";
+
+    TextEntry WikiSearchEntry { get; set; }
+    string SearchQuery => WikiSearchEntry?.Text ?? "";
+
+    List<WikiCategoryApi> WikiCategories { get; set; }
+    WikiArticleApi SelectedArticle { get; set; }
+    bool WikiLoading { get; set; }
+    string WikiError { get; set; }
+
+    IEnumerable<WikiArticleApi> FilteredArticles
+    {
+        get
+        {
+            if (WikiCategories == null) return Enumerable.Empty<WikiArticleApi>();
+
+            var all = WikiCategories.SelectMany(c => c.articles ?? new List<WikiArticleApi>());
+
+            if (string.IsNullOrWhiteSpace(SearchQuery)) return all;
+
+            var q = SearchQuery;
+            return all.Where(a =>
+                (a.title?.Contains(q, StringComparison.OrdinalIgnoreCase) ?? false) ||
+                (a.content?.Contains(q, StringComparison.OrdinalIgnoreCase) ?? false));
+        }
+    }
+
+    string GetSummary(string content, int maxLength = 120)
+    {
+        if (string.IsNullOrEmpty(content)) return "";
+        var clean = content.Replace("#", "").Replace("*", "").Replace("- ", "").Trim();
+        if (clean.Length > maxLength) return clean.Substring(0, maxLength) + "...";
+        return clean;
+    }
+
+    async void LoadWiki()
+    {
+        if (WikiLoading) return;
+        WikiLoading = true;
+        WikiError = "";
+
+        var url = WikiApiUrl + "/public";
+
+        try
+        {
+            WikiError = $"Chargement: {url}";
+
+            var response = await Http.RequestAsync(url, "GET");
+            var rawJson = await response.Content.ReadAsStringAsync();
+
+            if (!response.IsSuccessStatusCode)
+            {
+                WikiError = $"HTTP {(int)response.StatusCode} sur {url} — {rawJson?.Substring(0, Math.Min(rawJson?.Length ?? 0, 200))}";
+                return;
+            }
+
+            if (string.IsNullOrEmpty(rawJson))
+            {
+                WikiError = $"Réponse vide depuis {url}";
+                return;
+            }
+
+            WikiCategories = Json.Deserialize<List<WikiCategoryApi>>(rawJson);
+
+            if (WikiCategories == null || WikiCategories.Count == 0)
+            {
+                WikiError = $"0 catégories. JSON: {rawJson.Substring(0, Math.Min(rawJson.Length, 300))}";
+                return;
+            }
+
+            foreach (var cat in WikiCategories)
+            {
+                if (cat.articles == null) continue;
+                foreach (var article in cat.articles)
+                {
+                    article.category_name = cat.name;
+                    article.category_color = cat.color;
+                }
+            }
+
+            WikiError = "";
+        }
+        catch (Exception e)
+        {
+            WikiError = $"Erreur: {e.GetType().Name} - {e.Message}";
+        }
+        finally
+        {
+            WikiLoading = false;
+            Log.Info($"[Wiki] Done. Categories={WikiCategories?.Count ?? 0}, Error='{WikiError}'");
+        }
+    }
+
+    // ── Admin ──
+    List<MenuItem> _adminRootItems = new();
+    List<MenuItem> _adminBreadcrumb = new();
+    List<MenuItem> CurrentAdminItems => _adminBreadcrumb.Count > 0
+        ? _adminBreadcrumb.Last().Children ?? new()
+        : _adminRootItems;
+
+    void RefreshAdminMenu()
+    {
+        _adminBreadcrumb.Clear();
+        _adminRootItems = new AdminActionMenu().BuildMenu();
+    }
+
+    void AdminGoBack()
+    {
+        if (_adminBreadcrumb.Count > 0)
+            _adminBreadcrumb.RemoveAt(_adminBreadcrumb.Count - 1);
+    }
+
+    // ── Admin Input ──
+    bool _adminInputMode = false;
+    string _adminInputPrompt = "";
+    Action<string> _adminInputCallback;
+    TextEntry AdminInputEntry { get; set; }
+
+    async void OnAdminItemClick(MenuItem item)
+    {
+        if (item.OnInputConfirm != null)
+        {
+            _adminInputMode = true;
+            _adminInputPrompt = item.InputPrompt ?? item.Label;
+            _adminInputCallback = item.OnInputConfirm;
+            return;
+        }
+
+        if (item.IsSubMenu)
+        {
+            _adminBreadcrumb.Add(item);
+        }
+        else if (item.OnSelect != null)
+        {
+            await item.Invoke();
+            if (item.GoBackOnSelect)
+                AdminGoBack();
+            else
+                RefreshAdminMenu();
+        }
+    }
+
+    void AdminConfirmInput()
+    {
+        var value = AdminInputEntry?.Text?.Trim();
+        if (string.IsNullOrEmpty(value)) return;
+
+        _adminInputCallback?.Invoke(value);
+        AdminCancelInput();
+        RefreshAdminMenu();
+    }
+
+    void AdminCancelInput()
+    {
+        _adminInputMode = false;
+        _adminInputPrompt = "";
+        _adminInputCallback = null;
+        if (AdminInputEntry != null) AdminInputEntry.Text = "";
+    }
+
+    // ── Feedback ──
+    TextEntry FeedbackTitleEntry { get; set; }
+    TextEntry FeedbackEntry { get; set; }
+    bool FeedbackSending { get; set; }
+    bool FeedbackSent { get; set; }
+    string FeedbackStatus { get; set; } = "";
+
+    async void SendFeedback()
+    {
+        var title = FeedbackTitleEntry?.Text?.Trim();
+        var message = FeedbackEntry?.Text?.Trim();
+        if (string.IsNullOrEmpty(title) || string.IsNullOrEmpty(message)) return;
+        if (FeedbackSending) return;
+
+        FeedbackSending = true;
+        FeedbackStatus = "";
+
+        try
+        {
+            var playerName = Client.Local?.DisplayName ?? "Unknown";
+            var steamId = Client.Local?.SteamId ?? 0;
+
+            var payload = new
+            {
+                embeds = new[]
+                {
+                    new
+                    {
+                        title = title,
+                        description = message,
+                        color = 15425832,
+                        fields = new[]
+                        {
+                            new { name = "Player", value = playerName, inline = true },
+                            new { name = "SteamID", value = steamId.ToString(), inline = true }
+                        }
+                    }
+                }
+            };
+
+            var content = Http.CreateJsonContent(payload);
+            var response = await Http.RequestAsync(
+                "https://discord.com/api/webhooks/1488196286757863436/Gjbwk1WC_lCm7ILmIDfo_kuxf8ZuMuBCuVgUL-ZhV2c7awBHXynW0os4hIhXGRpkF2UP",
+                "POST",
+                content
+            );
+
+            if (response.IsSuccessStatusCode)
+            {
+                FeedbackSent = true;
+                FeedbackStatus = "Feedback envoyé !";
+                if (FeedbackTitleEntry != null) FeedbackTitleEntry.Text = "";
+                if (FeedbackEntry != null) FeedbackEntry.Text = "";
+            }
+            else
+            {
+                FeedbackSent = false;
+                FeedbackStatus = "Échec de l'envoi.";
+            }
+        }
+        catch
+        {
+            FeedbackSent = false;
+            FeedbackStatus = "Erreur lors de l'envoi.";
+        }
+        finally
+        {
+            FeedbackSending = false;
+        }
+    }
+
+    // ── Map ──
+    string WorldToMap(Vector3 worldPos)
+    {
+        if (Renderer == null) return "";
+        var pos = Renderer.FromWorld(worldPos);
+        return $"left: {Length.Fraction(pos.x)}; top: {Length.Fraction(pos.y)};";
+    }
+
+    protected override void OnAwake()
+    {
+        MinimapImage = Scene.GetComponentInChildren<MinimapRenderer>()?.CurrentMinimapPath ?? "ui/maps/union_city.png";
+    }
+
+    protected override void OnStart()
+    {
+    }
+
+    /// <summary>
+    /// Ferme n'importe quel menu ouvert avant d'ouvrir le pause menu.
+    /// Retourne true si un menu a été fermé.
+    /// </summary>
+    bool TryCloseOpenMenus()
+    {
+        Mouse.Visibility = MouseVisibility.Auto;
+
+        // Sous-menu contextuel d'inventaire (clic droit sur un item) — prio sur la fermeture de l'inventaire
+        if (OpenFramework.Inventory.UI.InventorySlot.HasActiveContextMenu)
+        {
+            OpenFramework.Inventory.UI.InventorySlot.CloseActiveContextMenu();
+            return true;
+        }
+
+        // Inventaire
+        if (OpenFramework.Inventory.UI.FullInventory.Instance is { IsOpen: true })
+        {
+            OpenFramework.Inventory.UI.FullInventory.Toggle();
+            return true;
+        }
+
+        // Quick Menu (action menu)
+        if (QuickMenu.Instance is { IsOpen: true })
+        {
+            QuickMenu.Close();
+            return true;
+        }
+
+        // NPC Dialogue ET tout UsePanel encore ouvert sur un NPC.
+        // OpenUsePanel() passe State=Closed avant que le panel soit ferme,
+        // donc le check State seul laissait l'utilisateur bloque par un panel
+        // orphelin (IsInNpcMenu reste a true tant qu'on ne Close pas).
+        bool anyNpcPanelOpen = false;
+        string anyNpcPanelName = null;
+        foreach (var npc in Game.ActiveScene?.GetAllComponents<NpcLogical>() ?? Enumerable.Empty<NpcLogical>())
+        {
+            if (npc?.UsePanel != null && npc.UsePanel.IsValid() && npc.UsePanel.Enabled)
+            {
+                anyNpcPanelOpen = true;
+                anyNpcPanelName = npc.PnjName ?? npc.GameObject?.Name;
+                break;
+            }
+        }
+        var pawnLocal = Client.Local?.PlayerPawn as OpenFramework.Systems.Pawn.PlayerPawn;
+        if (NpcInteractionManager.Instance is { State: not NpcMenuState.Closed } || anyNpcPanelOpen)
+        {
+            NpcInteractionManager.Instance?.Close();
+            return true;
+        }
+        // Filet de securite : si rien d'autre n'est detecte mais le pawn est encore
+        // verrouille en NPC menu (panel ferme par autre chemin sans restore), on libere.
+        if (pawnLocal != null && pawnLocal.IsInNpcMenu)
+        {
+            pawnLocal.IsInNpcMenu = false;
+            return true;
+        }
+
+        // Personal Radial Menu
+        if (PersonalRadialMenu.Instance is { IsOpen: true })
+        {
+            PersonalRadialMenu.Close();
+            return true;
+        }
+
+        // HUD Settings
+        if (HudSettingsUI.Instance is { IsOpen: true })
+        {
+            HudSettingsUI.Instance.Close();
+            return true;
+        }
+
+        // Door Radial Menu
+        if (DoorRadialMenu.Instance is { IsOpen: true })
+        {
+            DoorRadialMenu.Close();
+            return true;
+        }
+
+        // Vehicle Radial Menu
+        if (VehicleRadialMenu.Instance is { IsOpen: true })
+        {
+            VehicleRadialMenu.Close();
+            return true;
+        }
+
+        // Player / Furniture Radial Menu
+        if (PlayerRadialMenu.Instance is { IsOpen: true })
+        {
+            PlayerRadialMenu.Close();
+            return true;
+        }
+
+        // Enseigne de shop — edit panel
+        if (ShopSignEditPanel.Instance != null)
+        {
+            ShopSignEditPanel.Close();
+            return true;
+        }
+
+        // Vehicle Inspection Panel
+        if (VehicleInspectionPanel.Instance is { IsVisible: true })
+        {
+            VehicleInspectionPanel.Instance.Close();
+            return true;
+        }
+
+        // Crafting UI (Close() delete le panel, donc Instance != null = ouvert)
+        if (CraftingUI.Instance != null)
+        {
+            CraftingUI.Instance.Delete();
+            CraftingUI.Instance = null;
+            return true;
+        }
+
+        // Props Menu
+        if (Facepunch.UI.PropsMenu.Instance is { IsOpen: true })
+        {
+            Facepunch.UI.PropsMenu.Close();
+            return true;
+        }
+
+        // Map (;)
+        /*if (Map.Instance is { IsOpen: true })
+        {
+            Map.Instance.Close();
+            return true;
+        }*/
+
+        return false;
+    }
+
+    private void OnSettingsClicked()
+    {
+        IsOpen = false;
+        Game.Overlay.ShowSettingsModal( null );
+    }
+
+    protected override void OnUpdate()
+    {
+        if (Input.EscapePressed)
+        {
+            Input.EscapePressed = false;
+
+            // Si un menu est ouvert, on le ferme au lieu d'ouvrir le pause menu
+            if (TryCloseOpenMenus())
+                return;
+
+            IsOpen = !IsOpen;
+
+            if (!IsOpen)
+            {
+                SelectedArticle = null;
+                CurrentTab = Tab.Players;
+                _contextMenuPlayer = null;
+                _adminBreadcrumb.Clear();
+                _adminRootItems.Clear();
+                AdminCancelInput();
+                FeedbackStatus = "";
+                FeedbackSent = false;
+                if (WikiSearchEntry != null) WikiSearchEntry.Text = "";
+                if (FeedbackTitleEntry != null) FeedbackTitleEntry.Text = "";
+                if (FeedbackEntry != null) FeedbackEntry.Text = "";
+            }
+        }
+    }
+
+    protected override int BuildHash()
+    {
+        // Menu ferme : hash stable, aucun rebuild
+        if ( !IsOpen ) return 0;
+
+        var hc = new HashCode();
+        hc.Add( CurrentTab );
+        hc.Add( SearchQuery );
+        hc.Add( SelectedArticle );
+        hc.Add( WikiLoading );
+        hc.Add( WikiError );
+        hc.Add( _contextMenuPlayer );
+        hc.Add( _contextSubMenu );
+        hc.Add( _contextSelectedItem );
+        hc.Add( _contextSelectedJob );
+        hc.Add( _contextSelectedGrade );
+        hc.Add( _adminBreadcrumb.Count );
+        hc.Add( _adminInputMode );
+        hc.Add( _adminInputPrompt );
+        hc.Add( FeedbackSending );
+        hc.Add( FeedbackSent );
+        hc.Add( FeedbackStatus );
+        // Tab joueurs : refresh a 2fps pour ping/list updates
+        if ( CurrentTab == Tab.Players )
+            hc.Add( (int)(Time.Now * 2f) );
+        return hc.ToHashCode();
+    }
+
+    // ── API Data Models ──
+    public class WikiCategoryApi
+    {
+        public int id { get; set; }
+        public string type { get; set; }
+        public string name { get; set; }
+        public string color { get; set; }
+        public int order_index { get; set; }
+        public List<WikiArticleApi> articles { get; set; } = new();
+    }
+
+    public class WikiArticleApi
+    {
+        public int id { get; set; }
+        public int category_id { get; set; }
+        public string title { get; set; }
+        public string slug { get; set; }
+        public string content { get; set; }
+        public int published { get; set; }
+        public int order_index { get; set; }
+        public string category_name { get; set; }
+        public string category_color { get; set; }
+    }
+}

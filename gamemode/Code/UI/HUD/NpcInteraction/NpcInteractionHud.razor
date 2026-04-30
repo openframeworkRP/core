@@ -1,0 +1,103 @@
+@using Sandbox;
+@using Sandbox.UI;
+@using OpenFramework.Dialog
+@inherits Panel
+@namespace OpenFramework.UI.HUD
+
+<root>
+    @if (Manager?.State == NpcMenuState.Greeting && Manager.CurrentNpc != null)
+    {
+        <div class="overlay">
+            <div class="greeting-box">
+                <div class="greeting-header">
+                    <div class="accent-bar"></div>
+                    <label class="greeting-name">@Manager.CurrentNpc.PnjName</label>
+                </div>
+                <label class="greeting-text">
+                    @Manager.CurrentNpc.GreetingMessage
+                </label>
+                <div class="greeting-actions">
+                    <div class="btn" onclick=@OnUse>
+                        <label>UTILISER</label>
+                    </div>
+                    <div class="btn quit" onclick=@OnQuit>
+                        <label>QUITTER</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else if (Manager?.State == NpcMenuState.Interaction && Manager.CurrentNpc != null)
+    {
+        <div class="overlay">
+            <div class="menu-wrapper">
+                <div class="npc-name">@Manager.CurrentNpc.PnjName</div>
+                <div class="button-container">
+                    <div class="btn" onclick=@OnUse>
+                        <label>UTILISER</label>
+                    </div>
+                    <div class="btn" onclick=@OnConverse>
+                        <label>CONVERSER</label>
+                    </div>
+                    <div class="btn quit" onclick=@OnQuit>
+                        <label>QUITTER</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else if (Manager?.State == NpcMenuState.Dialogue && Manager.CurrentDialogueNode != null)
+    {
+        <div class="overlay dialogue-mode">
+            <div class="dialogue-box">
+                <div class="dialogue-header">
+                    <div class="accent-bar"></div>
+                    <label class="dialogue-name">@Manager.CurrentNpc?.PnjName</label>
+                </div>
+                <label class="dialogue-text">
+                    @Manager.CurrentDialogueNode.Message
+                </label>
+                <div class="dialogue-choices">
+                    @foreach (var choice in Manager.CurrentDialogueNode.Choices)
+                    {
+                        var localChoice = choice;
+                        <button class="choice-button" onclick="@(() => Manager.SelectChoice(localChoice))">
+                            <label>@localChoice.Text</label>
+                        </button>
+                    }
+                    <button class="choice-button close" onclick=@OnQuit>
+                        <label>Quitter</label>
+                    </button>
+                </div>
+            </div>
+        </div>
+    }
+</root>
+
+@code
+{
+    private NpcInteractionManager Manager => NpcInteractionManager.Instance;
+
+    private void OnUse()
+    {
+        Manager?.CurrentNpc?.ClientDebug($"NpcInteractionHud.OnUse clic UTILISER npc={Manager?.CurrentNpc?.PnjName} state={Manager?.State}");
+        Manager?.OpenUsePanel();
+    }
+
+    private void OnConverse()
+    {
+        Manager?.StartDialogue();
+    }
+
+    private void OnQuit()
+    {
+        Manager?.Close();
+    }
+
+    protected override int BuildHash() => HashCode.Combine(
+        Manager?.State,
+        Manager?.CurrentNpc,
+        Manager?.CurrentDialogueNode,
+        Manager?.CurrentDialogueNode?.Message
+    );
+}

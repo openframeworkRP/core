@@ -1,0 +1,122 @@
+@using Sandbox;
+@using Sandbox.UI;
+
+@inherits Panel
+@namespace OpenFramework.UI.HUD.Clothings
+
+<root>
+    @if (DressingArea.IsValid() && DressingArea.IsPlayerInside)
+    {
+        <div class="container">
+            <h1>Dresser Room</h1>
+            <div class="list-temp">
+                <h1>List Preview</h1>
+
+                @if (ClothShop != null)
+                {
+                    @foreach (var entry in ClothShop.MaSelection)
+                    {
+                        <div class="pack-card">
+                            <span>@entry.Item?.Name</span> 
+                            <div class="controls">
+                                
+                                <button onclick="@(() => ClothShop.ToggleHideSingle(entry.Item))">
+                                    @(ClothShop.SelectedItem == entry.Item ? "Hide" : "Show")
+                                </button>
+
+                                @if (ClothShop.SelectedItem == entry.Item)
+                                {
+                                    <ColorPickerControl Tooltip="Choisir une couleur" Property="@TargetColor" />
+                                }
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+            <div class="actions-footer">
+                <button class="apply-btn" onclick="@ApplyToAll">APPLIQUER LA TENUE</button>
+            </div>
+        </div>
+        <button onclick="@HandleExit">QUITTER</button>
+    }
+</root>
+
+@code
+{
+    private ShopDressingRoom DressingArea => Scene.GetAllComponents<ShopDressingRoom>().FirstOrDefault();
+    private ClothingShopManager ClothShop => Scene.GetAllComponents<ClothingShopManager>().FirstOrDefault();
+
+    // --- TA LOGIQUE DE PROPRIÉTÉ SÉRIALISÉE ---
+    public SerializedProperty TargetColor { get; set; }
+    private Color _colorValue = Color.White;
+
+    public Color ColorValue
+    {
+        get => _colorValue;
+        set
+        {
+            if (_colorValue == value) return;
+            _colorValue = value;
+
+            if (ClothShop != null && ClothShop.SelectedItem != null)
+            {
+                // On trouve l'entrée dans la liste et on met à jour sa couleur sauvegardée
+                var entry = ClothShop.MaSelection.FirstOrDefault(x => x.Item == ClothShop.SelectedItem);
+                if (entry != null) entry.Tint = value;
+
+                // On applique le changement visuel immédiat
+                ClothShop.RefreshColorsOnly(value);
+            }
+        }
+    }
+
+    /// debug 
+    public void ApplyToAll()
+    {
+        if (ClothShop == null || ClothShop.MaSelection.Count == 0) return;
+
+        // On récupère le joueur local (toi)
+        var localPlayer = Scene.GetAllComponents<PlayerPawn>().FirstOrDefault(x => !x.IsProxy);
+        if (localPlayer == null) return;
+
+        // Pour chaque vêtement dans ta liste de test
+        foreach (var entry in ClothShop.MaSelection)
+        {
+            if (entry.Item?.ClothingResource == null) continue;
+
+            // ON APPELLE LE BROADCAST !
+            // On envoie : Toi, le chemin du fichier, et la couleur sauvegardée
+            ClothShop.BroadcastEquip(
+                localPlayer.GameObject,
+                entry.Item.ClothingResource.ResourcePath,
+                entry.Tint
+            );
+        }
+
+        Log.Info("Tenue envoyée au serveur !");
+    }
+
+    protected override void OnAfterTreeRender(bool firstTime)
+    {
+        if (firstTime)
+        {
+            // On crée le lien entre le composant UI et ta variable ColorValue
+            TargetColor = TypeLibrary.CreateProperty<Color>(
+                "ColorValue",
+                () => _colorValue,
+                val => ColorValue = val
+            );
+
+            StateHasChanged();
+        }
+    }
+
+    public void HandleExit()
+    {
+        if (!DressingArea.IsValid()) return;
+        DressingArea.IsPlayerInside = false;
+        DressingArea.ApplyCameraSettings(false);
+    }
+
+    protected override int BuildHash() => System.HashCode.Combine(DressingArea?.IsPlayerInside, ClothShop?.SelectedItem);
+}

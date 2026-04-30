@@ -1,0 +1,57 @@
+@using Sandbox.World
+@using OpenFramework.GameLoop
+@using Sandbox.UI.Navigation;
+
+@inherits NavigationHost
+@namespace Facepunch.UI
+
+<root>
+    <div class="bglife" src="ui/atm/logo_login.png"></div>
+    <div class="container">
+       
+        <div class="navbar">
+            <a href="/">
+                <svg class="icon" src="ui/icons/home.svg" color="white" />
+                <span>DashBoard</span>
+            </a>
+            <a href="/withdraw">
+                <svg class="icon" src="ui/icons/home.svg" color="white" />
+                <span>Withdraw</span>
+            </a>
+            <a href="/deposit">
+                <svg class="icon" src="ui/icons/home.svg" color="white" />
+                <span>Deposit</span>
+            </a>
+        </div>
+        <div class="navigator-canvas" slot="navigator-canvas"></div>
+    </div>
+    
+</root>
+
+@code {
+
+    public Atm ParentAtm { get; set; }
+    private Vector3 Position => Client.Local.PlayerPawn.WorldPosition;
+    private PlayerPawn Pawn => Client.Local.PlayerPawn;
+
+    public AtmMenu()
+    {
+        DefaultUrl = "/";
+        AddDestination("/", typeof(DashboardPage));
+        AddDestination("/deposit", typeof(DepositPage));
+        AddDestination("/withdraw", typeof(WithdrawPage));
+        
+        
+    }
+
+    public override void Tick()
+    {
+       
+    }
+    /*
+    private void Close()
+    {
+        Atm.DisconnectFromATM(ParentAtm);
+        Delete();
+    }*/
+}

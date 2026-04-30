@@ -1,0 +1,374 @@
+@using OpenFramework.Extension
+@using OpenFramework.Systems.Jobs
+@using System.Linq
+
+@inherits BaseApp
+@namespace OpenFramework.World.Devices.Apps.Bank
+
+<root class="bank-root">
+
+    @* ── HEADER ── *@
+    <div class="bank-header">
+        <div class="header-top">
+            <div class="back-or-logo">
+                @if ( _activeTab != "home" )
+                {
+                    <div class="back-btn" @onclick=@(() => SetTab("home"))>
+                        <svg src="ui/icons/chevron_left.svg" />
+                    </div>
+                }
+                else
+                {
+                    <svg class="bank-logo" src="ui/icons/apps/bank_icon.svg" />
+                }
+            </div>
+            <label class="bank-name">Union Bank</label>
+            <image class="header-avatar" src="avatar:@Client.Local.SteamId" />
+        </div>
+
+        @* Carte bancaire (visible uniquement sur home) *@
+        @if ( _activeTab == "home" )
+        {
+            <div class="bank-card">
+                <div class="card-shine" />
+                <div class="card-top">
+                    <label class="card-label">Compte courant</label>
+                    <svg src="ui/icons/apps/bank_icon.svg" />
+                </div>
+                <div class="card-balance">
+                    <label class="balance-amount">@_balance.ToString("N0") $</label>
+                    <label class="balance-label">Solde disponible</label>
+                </div>
+                <div class="card-bottom">
+                    <label class="card-owner">@Client.Local.DisplayName</label>
+                    <label class="card-number">•••• •••• 4829</label>
+                </div>
+            </div>
+        }
+        else
+        {
+            <label class="section-title">@GetTabTitle()</label>
+        }
+    </div>
+
+    @* ── CONTENU ── *@
+    <div class="bank-content" tabindex="0" @ref=@_contentRef @onmouseover=@(() => _contentRef?.Focus())>
+
+        @* ── HOME ── *@
+        @if ( _activeTab == "home" )
+        {
+            @* Actions rapides *@
+            <div class="quick-actions">
+                <div class="action-pill" @onclick=@(() => SetTab("transfer"))>
+                    <div class="action-icon">
+                        <svg src="ui/icons/send.svg" />
+                    </div>
+                    <label>Virement</label>
+                </div>
+                <div class="action-pill" @onclick=@(() => SetTab("withdraw"))>
+                    <div class="action-icon">
+                        <svg src="ui/icons/withdraw.svg" />
+                    </div>
+                    <label>Retrait</label>
+                </div>
+                <div class="action-pill" @onclick=@(() => SetTab("deposit"))>
+                    <div class="action-icon">
+                        <svg src="ui/icons/deposit.svg" />
+                    </div>
+                    <label>Dépôt</label>
+                </div>
+                <div class="action-pill" @onclick=@(() => SetTab("history"))>
+                    <div class="action-icon">
+                        <svg src="ui/icons/clock.svg" />
+                    </div>
+                    <label>Historique</label>
+                </div>
+            </div>
+
+            @* Dernières transactions *@
+            <div class="section-header">
+                <label>Transactions récentes</label>
+                <div class="see-all" @onclick=@(() => SetTab("history"))>
+                    <label>Voir tout</label>
+                    <svg src="ui/icons/chevron_right.svg" />
+                </div>
+            </div>
+
+            <div class="transaction-list">
+                @foreach ( var tx in _transactions.Take( 4 ) )
+                {
+                    <div class="tx-row">
+                        <div class="tx-icon @(tx.Amount > 0 ? "income" : "expense")">
+                            <svg src=@(tx.Amount > 0 ? "ui/icons/deposit.svg" : "ui/icons/withdraw.svg") />
+                        </div>
+                        <div class="tx-info">
+                            <label class="tx-label">@tx.Label</label>
+                            <label class="tx-date">@tx.Date</label>
+                        </div>
+                        <label class="tx-amount @(tx.Amount > 0 ? "positive" : "negative")">
+                            @(tx.Amount > 0 ? "+" : "")@tx.Amount.ToString("N0") $
+                        </label>
+                    </div>
+                }
+
+                @if ( !_transactions.Any() )
+                {
+                    <div class="tx-empty">
+                        <label>Aucune transaction</label>
+                    </div>
+                }
+            </div>
+        }
+
+        @* ── VIREMENT ── *@
+        @if ( _activeTab == "transfer" )
+        {
+            <div class="form-block">
+                <label class="form-label">Destinataire</label>
+                <div class="contact-picker-list">
+                    @foreach ( var player in GetOnlinePlayers() )
+                    {
+                        var p = player;
+                        <div class="contact-row @(_selectedTarget?.SteamId == p.SteamId ? "selected" : "")"
+                             @onclick=@(() => _selectedTarget = p)>
+                            <image class="contact-avatar" src="avatar:@p.SteamId" />
+                            <label>@p.DisplayName</label>
+                            @if ( _selectedTarget?.SteamId == p.SteamId )
+                            {
+                                <svg class="check" src="ui/icons/checkmark.svg" />
+                            }
+                        </div>
+                    }
+                    @if ( !GetOnlinePlayers().Any() )
+                    {
+                        <label class="form-hint">Aucun joueur en ligne</label>
+                    }
+                </div>
+
+                <label class="form-label">Montant</label>
+                <div class="amount-input-row">
+                    <TextEntry @ref=@_amountEntry Placeholder="0" />
+                    <label class="currency">$</label>
+                </div>
+
+                <label class="form-label">Motif <span class="optional">(optionnel)</span></label>
+                <TextEntry @ref=@_noteEntry Placeholder="Ex: loyer, remboursement..." />
+
+                <div class="form-action-btn @(_selectedTarget == null ? "disabled" : "")"
+                     @onclick=@DoTransfer>
+                    <svg src="ui/icons/send.svg" />
+                    <label>Envoyer</label>
+                </div>
+            </div>
+        }
+
+        @* ── RETRAIT ── *@
+        @if ( _activeTab == "withdraw" )
+        {
+            <div class="form-block">
+                <div class="balance-reminder">
+                    <label class="br-label">Solde disponible</label>
+                    <label class="br-amount">@_balance.ToString("N0") $</label>
+                </div>
+
+                <label class="form-label">Montant à retirer</label>
+                <div class="amount-input-row">
+                    <TextEntry @ref=@_amountEntry Placeholder="0" />
+                    <label class="currency">$</label>
+                </div>
+
+                <div class="preset-amounts">
+                    @foreach ( var preset in new[] { 100, 500, 1000, 5000 } )
+                    {
+                        var p = preset;
+                        <div class="preset-btn" @onclick=@(() => SetPreset(p))>
+                            <label>@p $</label>
+                        </div>
+                    }
+                </div>
+
+                <div class="form-action-btn" @onclick=@DoWithdraw>
+                    <svg src="ui/icons/withdraw.svg" />
+                    <label>Retirer</label>
+                </div>
+            </div>
+        }
+
+        @* ── DÉPÔT ── *@
+        @if ( _activeTab == "deposit" )
+        {
+            <div class="form-block">
+                <label class="form-label">Montant à déposer</label>
+                <div class="amount-input-row">
+                    <TextEntry @ref=@_amountEntry Placeholder="0" />
+                    <label class="currency">$</label>
+                </div>
+
+                <div class="preset-amounts">
+                    @foreach ( var preset in new[] { 100, 500, 1000, 5000 } )
+                    {
+                        var p = preset;
+                        <div class="preset-btn" @onclick=@(() => SetPreset(p))>
+                            <label>@p $</label>
+                        </div>
+                    }
+                </div>
+
+                <div class="form-action-btn gold" @onclick=@DoDeposit>
+                    <svg src="ui/icons/deposit.svg" />
+                    <label>Déposer</label>
+                </div>
+            </div>
+        }
+
+        @* ── HISTORIQUE ── *@
+        @if ( _activeTab == "history" )
+        {
+            <div class="transaction-list full">
+                @foreach ( var tx in _transactions )
+                {
+                    <div class="tx-row">
+                        <div class="tx-icon @(tx.Amount > 0 ? "income" : "expense")">
+                            <svg src=@(tx.Amount > 0 ? "ui/icons/deposit.svg" : "ui/icons/withdraw.svg") />
+                        </div>
+                        <div class="tx-info">
+                            <label class="tx-label">@tx.Label</label>
+                            <label class="tx-date">@tx.Date</label>
+                        </div>
+                        <label class="tx-amount @(tx.Amount > 0 ? "positive" : "negative")">
+                            @(tx.Amount > 0 ? "+" : "")@tx.Amount.ToString("N0") $
+                        </label>
+                    </div>
+                }
+
+                @if ( !_transactions.Any() )
+                {
+                    <div class="tx-empty">
+                        <label>Aucune transaction</label>
+                    </div>
+                }
+            </div>
+        }
+
+    </div>
+
+    @* ── FEEDBACK ── *@
+    @if ( _feedback != null )
+    {
+        <div class="feedback-toast @(_feedbackSuccess ? "success" : "error")">
+            <svg src=@(_feedbackSuccess ? "ui/icons/checkmark.svg" : "ui/icons/error.svg") />
+            <label>@_feedback</label>
+        </div>
+    }
+
+</root>
+
+@code {
+    public override string AppId           => "bank";
+    public override string DisplayName     => "Banque";
+    public override string Icon            => "ui/icons/apps/bank_icon.svg";
+    public override string IconColor       => "#C9A84C";
+    public override string BackgroundColor => "#0A0A0A";
+    public override bool   IsSystemApp     => false;
+    public override JobList JobAccess      => JobList.None;
+    public override Type   SplashScreen    => typeof( BankApp_splash );
+    public override DeviceKind Compatibility => DeviceKind.Phone | DeviceKind.Tablet | DeviceKind.Computer;
+
+    // ── État ─────────────────────────────────────────────────────
+    private string  _activeTab     = "home";
+    private int     _balance       = 12_450; // TODO: brancher sur Client.Local.Data.BankBalance
+    private Panel   _contentRef  = null;
+    private TextEntry _amountEntry = null;
+    private TextEntry _noteEntry   = null;
+    private Client  _selectedTarget;
+    private string  _feedback;
+    private bool    _feedbackSuccess;
+
+    // ── Data fictive ─────────────────────────────────────────────
+    private record Transaction( string Label, string Date, int Amount );
+
+    private List<Transaction> _transactions = new()
+    {
+        new( "Salaire",           "Aujourd'hui",   +3200  ),
+        new( "Loyer appartement", "Hier",          -800   ),
+        new( "Virement reçu",     "Il y a 2j",     +500   ),
+        new( "Achat véhicule",    "Il y a 3j",     -15000 ),
+        new( "Prime de travail",  "Il y a 5j",     +1000  ),
+        new( "Courses",           "Il y a 6j",     -120   ),
+    };
+
+    // ── Helpers ──────────────────────────────────────────────────
+    private void SetTab( string tab )
+    {
+        _activeTab     = tab;
+        _selectedTarget = null;
+        _feedback      = null;
+        StateHasChanged();
+    }
+
+    private string GetTabTitle() => _activeTab switch
+    {
+        "transfer" => "Virement",
+        "withdraw" => "Retrait",
+        "deposit"  => "Dépôt",
+        "history"  => "Historique",
+        _          => ""
+    };
+
+    private IEnumerable<Client> GetOnlinePlayers() =>
+        Connection.All
+        .Select(c => c.GetClient())
+        .Where(c => c != null && c != Client.Local);
+
+    private void SetPreset( int amount )
+    {
+        if ( _amountEntry != null ) _amountEntry.Text = amount.ToString();
+    }
+
+    // ── Actions (TODO: brancher RPC) ─────────────────────────────
+    private async void DoTransfer()
+    {
+        if ( _selectedTarget == null ) return;
+        if ( !int.TryParse( _amountEntry?.Text, out int amount ) || amount <= 0 ) return;
+
+        var note = _noteEntry?.Text?.Trim() ?? "";
+
+        // TODO: RPC virement
+        var msg = string.IsNullOrEmpty( note )
+            ? $"Virement de {amount}$ envoyé à {_selectedTarget.DisplayName}"
+            : $"Virement de {amount}$ envoyé à {_selectedTarget.DisplayName} ({note})";
+        ShowFeedback( msg, true );
+        SetTab( "home" );
+    }
+
+    private async void DoWithdraw()
+    {
+        if ( !int.TryParse( _amountEntry?.Text, out int amount ) || amount <= 0 ) return;
+
+        // TODO: RPC retrait
+        ShowFeedback( $"{amount}$ retirés avec succès", true );
+        SetTab( "home" );
+    }
+
+    private async void DoDeposit()
+    {
+        if ( !int.TryParse( _amountEntry?.Text, out int amount ) || amount <= 0 ) return;
+
+        // TODO: RPC dépôt
+        ShowFeedback( $"{amount}$ déposés avec succès", true );
+        SetTab( "home" );
+    }
+
+    private async void ShowFeedback( string msg, bool success )
+    {
+        _feedback        = msg;
+        _feedbackSuccess = success;
+        StateHasChanged();
+        await Task.Delay( 3000 );
+        _feedback = null;
+        StateHasChanged();
+    }
+
+    protected override int BuildHash() =>
+        HashCode.Combine( _activeTab, _balance, _feedback, _selectedTarget?.SteamId );
+}

@@ -1,0 +1,13 @@
+@using OpenFramework.Systems.Npc
+
+@inherits BaseAppSplashScreen
+@namespace OpenFramework.World.Devices.Apps.Police
+
+<root>
+    <svg src="ui/icons/apps/policeicon.svg" color="#273CF5" />
+</root>
+
+@code {
+    public override Type AppInterface => typeof(PoliceApp);
+
+}

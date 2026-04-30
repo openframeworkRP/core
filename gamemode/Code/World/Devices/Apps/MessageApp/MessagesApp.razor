@@ -1,0 +1,248 @@
+@using Sandbox
+@using Sandbox.UI
+@using OpenFramework.Systems
+@using OpenFramework.Systems.Jobs
+@using OpenFramework.Systems.Dispatch
+@using OpenFramework.World.Devices.Apps.Phone
+@inherits BaseApp
+@namespace OpenFramework.World.Devices.Apps.Messages
+
+<root>
+    <div class="navigation-content">
+
+        @if (_activeConversation == null)
+        {
+            <div class="page-header"><span>Messages</span></div>
+            @if (!_conversations.Any())
+            {
+                <div class="empty-state">
+                    <svg src="ui/icons/message.svg" />
+                    <span>Aucun message</span>
+                </div>
+            }
+            else
+            {
+                <div class="list" tabindex="0" @ref=@_listRef @onmouseover=@(() => _listRef?.Focus())>
+                    @foreach (var conv in _conversations.OrderByDescending(x => x.LastMessage?.SentAt ?? 0))
+                    {
+                        var cv = conv;
+                        <div class="list-item" @onclick=@(() => OpenConversation(cv))>
+                            <div class="avatar" style="background-color: @cv.AvatarColor">
+                                <span>@GetContactEmoji(cv.ContactId)</span>
+                            </div>
+                            <div class="item-info">
+                                <span class="name">@cv.ContactName</span>
+                                <span class="sub preview">@cv.LastPreview</span>
+                            </div>
+                            <span class="time-label">@cv.LastMessage?.TimeLabel</span>
+                        </div>
+                    }
+                </div>
+            }
+        }
+        else
+        {
+            <div class="conversation-header">
+                <button class="back-btn" @onclick=@(() => _activeConversation = null)>‹</button>
+                <div class="avatar small" style="background-color: @_activeConversation.AvatarColor">
+                    <span>@GetContactEmoji(_activeConversation.ContactId)</span>
+                </div>
+                <span class="conv-name">@_activeConversation.ContactName</span>
+            </div>
+
+            <div class="messages-list" tabindex="0" @ref=@_chatRef @onmouseover=@(() => _chatRef?.Focus())>
+                @foreach (var msg in _activeConversation.Messages)
+                {
+                    <div class="message @(msg.IsMine ? "mine" : "theirs")">
+                        @if (msg.Type == MessageType.Dispatch)
+                        {
+                            <div class="dispatch-msg">
+                                <span>🚨 @msg.Content</span>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="bubble"><span>@msg.Content</span></div>
+                        }
+                        <span class="msg-time">@msg.TimeLabel</span>
+                    </div>
+                }
+            </div>
+
+            <div class="message-input-area">
+                @if (IsServiceContact(_activeConversation.ContactId))
+                {
+                    <button class="btn-dispatch-shortcut" @onclick=@(() => _showDispatchPicker = !_showDispatchPicker)>🚨</button>
+
+                    @if (_showDispatchPicker)
+                    {
+                        <div class="dispatch-picker">
+                            @foreach (DispatchType type in Enum.GetValues(typeof(DispatchType)))
+                            {
+                                var t = type;
+                                <button class="dispatch-type-btn" @onclick=@(() => SendDispatchFromSms(t))>@t.ToLabel()</button>
+                            }
+                        </div>
+                    }
+                }
+                <TextEntry @ref="_messageEntry" class="msg-input" Placeholder="Message..."
+                           @onmouseleave=@(() => _chatRef?.Focus()) />
+                <button class="send-btn" @onclick=@SendMessage>
+                    <svg src="ui/icons/send.svg" color="white"/>
+                </button>
+            </div>
+        }
+
+    </div>
+
+    <div class="tab-bar">
+        <div class="tab new-msg-tab" @onclick=@OpenContactPicker>
+            <svg src="ui/icons/add.svg" color="white"/>
+            <label>Nouveau</label>
+        </div>
+    </div>
+
+    @if (_showContactPicker)
+    {
+        <div class="contact-picker-overlay" @onclick=@(() => _showContactPicker = false)>
+            <div class="contact-picker">
+                <div class="picker-header"><span>Nouveau message</span></div>
+                @foreach (var contact in PhoneContact.Services)
+                {
+                    var c = contact;
+                    <div class="list-item" @onclick=@(() => StartNewConversation(c))>
+                        <div class="avatar service" style="background-color: @c.AvatarColor"><span>@c.Emoji</span></div>
+                        <div class="item-info">
+                            <span class="name">@c.Name</span>
+                            <span class="sub">@c.Number</span>
+                        </div>
+                    </div>
+                }
+                @foreach (var contact in PhoneContact.GetPlayerContacts())
+                {
+                    var c = contact;
+                    <div class="list-item" @onclick=@(() => StartNewConversation(c))>
+                        <div class="avatar" style="background-color: @c.AvatarColor"><span>@c.Emoji</span></div>
+                        <div class="item-info">
+                            <span class="name">@c.Name</span>
+                            <span class="sub">En ligne</span>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+
+</root>
+
+@code {
+    public override string AppId           => "messages";
+    public override string DisplayName     => "Messages";
+    public override string Icon            => "ui/icons/apps/messages_icon.svg";
+    public override string IconColor       => "white";
+    public override string BackgroundColor => "#34C759";
+    public override bool   IsSystemApp     => true;
+    public override Type   SplashScreen    => typeof(MessagesApp_splash);
+    public override JobList JobAccess      => JobList.None;
+    public override DeviceKind Compatibility => DeviceKind.Phone;
+    public MessagesApp() { IsPinned = true; }
+
+    private List<PhoneConversation> _conversations      = new();
+    private PhoneConversation       _activeConversation = null;
+    private TextEntry               _messageEntry;
+    private Panel                   _listRef = null;
+    private Panel                   _chatRef = null;
+    private bool                    _showDispatchPicker = false;
+    private bool                    _showContactPicker  = false;
+    private int                     _unreadCount        = 0;
+
+    private bool IsServiceContact( string id )
+        => PhoneContact.Services.Any( x => x.Id == id );
+
+    private PhoneContact GetContactById( string id )
+    {
+        var s = PhoneContact.Services.FirstOrDefault( x => x.Id == id );
+        return s ?? PhoneContact.GetPlayerContacts().FirstOrDefault( x => x.Id == id );
+    }
+
+    private string GetContactEmoji( string id ) => GetContactById( id )?.Emoji ?? "👤";
+
+    private void OpenConversation( PhoneConversation conv )
+    {
+        _activeConversation = conv;
+        _showDispatchPicker = false;
+    }
+
+    private void OpenContactPicker() => _showContactPicker = true;
+
+    private void StartNewConversation( PhoneContact contact )
+    {
+        var conv = _conversations.FirstOrDefault( x => x.ContactId == contact.Id );
+        if ( conv == null )
+        {
+            conv = new PhoneConversation { ContactId = contact.Id, ContactName = contact.Name, AvatarColor = contact.AvatarColor };
+            _conversations.Add( conv );
+        }
+        _activeConversation = conv;
+        _showContactPicker  = false;
+        _showDispatchPicker = false;
+    }
+
+    private void SendMessage()
+    {
+        if ( _activeConversation == null || _messageEntry == null ) return;
+        var text = _messageEntry.Text?.Trim();
+        if ( string.IsNullOrEmpty( text ) ) return;
+
+        _activeConversation.Messages.Add( new PhoneMessage
+        {
+            SenderId = Client.Local?.SteamId.ToString(), SenderName = "Moi",
+            Content = text, SentAt = Time.Now, IsMine = true, Type = MessageType.Text,
+        } );
+
+        if ( !IsServiceContact( _activeConversation.ContactId ) )
+            PhoneItemSystem.SendSms(_activeConversation.ContactId, text);
+
+        _messageEntry.Text = "";
+    }
+
+    private void SendDispatchFromSms( DispatchType type )
+    {
+        if ( _activeConversation == null ) return;
+        var msg = $"Demande de dispatch : {type.ToLabel()}";
+        _activeConversation.Messages.Add( new PhoneMessage { Content = msg, SentAt = Time.Now, IsMine = true, Type = MessageType.Dispatch } );
+        PhoneItemSystem.SendDispatchRequest( _activeConversation.ContactId, type.ToString(), msg );
+        _showDispatchPicker = false;
+    }
+
+    [Rpc.Broadcast]
+    public static void ReceiveSms( string senderId, string senderName, string content )
+    {
+        var app = Game.ActiveScene?.GetAllComponents<MessagesApp>().FirstOrDefault();
+        if ( app == null ) return;
+
+        var conv = app._conversations.FirstOrDefault( x => x.ContactId == senderId );
+        if ( conv == null )
+        {
+            conv = new PhoneConversation { ContactId = senderId, ContactName = senderName, AvatarColor = "#555" };
+            app._conversations.Add( conv );
+        }
+
+        conv.Messages.Add( new PhoneMessage { SenderId = senderId, SenderName = senderName, Content = content, SentAt = Time.Now, IsMine = false, Type = MessageType.Text } );
+        app._unreadCount++;
+
+        Facepunch.NotificationSystem.Notify( Facepunch.NotificationSystem.NotificationType.Info, $"📱 {senderName} : {content}" );
+    }
+
+    [Rpc.Broadcast]
+    public static void ConfirmSmsSent( string recipientId, string content )
+    {
+        var app = Game.ActiveScene?.GetAllComponents<MessagesApp>().FirstOrDefault();
+        if ( app == null ) return;
+        var conv = app._conversations.FirstOrDefault( x => x.ContactId == recipientId );
+        if ( conv == null ) return;
+        conv.Messages.Add( new PhoneMessage { Content = content, SentAt = Time.Now, IsMine = true, Type = content.StartsWith( "🚨" ) ? MessageType.Dispatch : MessageType.Text } );
+    }
+
+    protected override int BuildHash() => HashCode.Combine( _conversations.Count, _activeConversation?.Messages.Count, _unreadCount, _showDispatchPicker, _showContactPicker );
+}

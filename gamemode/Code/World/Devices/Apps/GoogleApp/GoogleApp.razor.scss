@@ -1,0 +1,21 @@
+GoogleApp {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: #181818;
+    border-radius: 16px;
+
+    &.phoneapp {
+        WebNavigator {
+            margin-top: 35px;
+        }
+    }
+
+    &.computerapp {
+    }
+
+    &.tabletapp {
+    }
+}

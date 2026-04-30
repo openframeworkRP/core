@@ -1,0 +1,217 @@
+@import "/UI/Styles/Theme.scss";
+
+HudSettingsUI {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: $surface-dark;
+    backdrop-filter: blur(5px);
+    padding: 10px;
+    flex-direction: column;
+    color: white;
+    font-family: $font-ui;
+    pointer-events: none;
+    display: none;
+    opacity: 0;
+    transition: $transition-normal;
+    z-index: 500;
+
+    &.open {
+        display: flex;
+        opacity: 1;
+        pointer-events: all;
+    }
+
+    .topbar {
+        height: 9%;
+
+        .server {
+            width: 20%;
+            border-right: $border-light;
+            justify-content: space-evenly;
+            align-items: center;
+
+            img {
+                height: 48px;
+                width: 48px;
+            }
+
+            div {
+                flex-direction: column;
+            }
+
+            span {
+                &:first-child {
+                    font-size: 28px;
+                    font-weight: bold;
+                    letter-spacing: 1px;
+                    text-transform: uppercase;
+                }
+
+                &:last-child {
+                    font-size: 16px;
+                    font-weight: normal;
+                    letter-spacing: 1px;
+                    opacity: $text-muted;
+                }
+            }
+        }
+
+        .end {
+            margin-left: auto;
+            align-items: center;
+
+            button {
+                padding: 8px 20px;
+                background-color: $surface-input;
+                border: $border-light;
+                color: white;
+                font-size: 16px;
+                cursor: pointer;
+
+                &:hover {
+                    background-color: $red;
+                }
+            }
+        }
+    }
+
+    .content {
+        flex-grow: 1;
+        margin-top: 20px;
+        gap: 20px;
+        flex-wrap: wrap;
+        align-content: flex-start;
+        padding: 20px;
+        justify-content: center;
+
+        .section {
+            width: 360px;
+            background-color: $surface-input;
+            border: $border-light;
+            padding: 20px;
+            flex-direction: column;
+            gap: 16px;
+
+            .section-header {
+                align-items: center;
+                gap: 10px;
+                padding-bottom: 10px;
+                border-bottom: $border-light;
+
+                svg {
+                    width: 22px;
+                    height: 22px;
+                }
+
+                span {
+                    font-size: 20px;
+                    font-weight: 600;
+                    letter-spacing: 1px;
+                    text-transform: uppercase;
+                }
+            }
+
+            .toggle-list {
+                flex-direction: column;
+                gap: 8px;
+
+                .toggle-row {
+                    align-items: center;
+                    justify-content: space-between;
+                    padding: 10px 12px;
+                    background-color: rgba(0, 0, 0, 0.25);
+                    cursor: pointer;
+                    transition: $transition-fast;
+
+                    &:hover {
+                        background-color: $surface-input-focus;
+                    }
+
+                    span {
+                        font-size: 16px;
+                    }
+
+                    .toggle {
+                        width: 42px;
+                        height: 22px;
+                        background-color: rgba(255, 255, 255, 0.15);
+                        border-radius: 11px;
+                        justify-content: flex-start;
+                        padding: 2px;
+                        transition: $transition-fast;
+
+                        .knob {
+                            width: 18px;
+                            height: 18px;
+                            background-color: white;
+                            border-radius: 50%;
+                            transition: $transition-fast;
+                        }
+
+                        &.on {
+                            background-color: $accent;
+                            justify-content: flex-end;
+                        }
+                    }
+                }
+
+                .distance-row {
+                    flex-direction: column;
+                    padding: 10px 12px;
+                    background-color: rgba(0, 0, 0, 0.25);
+                    gap: 8px;
+
+                    .distance-header {
+                        flex-direction: row;
+                        justify-content: space-between;
+                        align-items: center;
+
+                        .distance-label {
+                            font-size: 16px;
+                        }
+
+                        .distance-value {
+                            font-size: 14px;
+                            opacity: 0.7;
+                            font-weight: 600;
+                        }
+                    }
+
+                    SliderControl {
+                        width: 100%;
+                        height: 20px;
+                        align-items: center;
+                        overflow: visible;
+
+                        // Cache les overlays texte du SliderControl (on a deja notre label)
+                        .value, .tooltip, .label {
+                            display: none;
+                        }
+
+                        .track {
+                            background-color: rgba(255, 255, 255, 0.08);
+                            height: 6px;
+                            border-radius: 3px;
+                            overflow: visible;
+
+                            .inner {
+                                background-color: $accent;
+                                border-radius: 3px;
+                            }
+                        }
+
+                        // Le thumb du SliderControl s&box est buggé visuellement
+                        // (voir CreatorPage / ShopSignEditPanel qui le cachent aussi).
+                        // On clique directement sur la track pour set la valeur.
+                        .thumb {
+                            display: none;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

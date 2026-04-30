@@ -1,0 +1,135 @@
+﻿@namespace Facepunch.UI
+@using Sandbox
+@using Sandbox.UI
+@using Sandbox.Events
+@using OpenFramework.Command
+@using OpenFramework.Utility
+@using OpenFramework.GameLoop
+@using OpenFramework.Systems.Jobs
+@inherits Panel
+
+@if (!isCuffed)
+    return;
+
+<root class="@(isCuffed ? "show" : "")">
+
+    <h1>Vous purges votre peine.</h1>
+
+    @{
+        <p>Votre temps de peine.</p>
+
+        <!-- Compte à rebours lisible -->
+        <p>Vous etes libere dans : <strong>@TimeUtils.DelayToReadable(RemainingRespawn, TimeUtils.Style.Horloge)</strong></p>
+
+        <!-- TA ProgressBar telle quelle (0–100%) -->
+        <ProgressBar Value=@ProgressPct Width=@(520) />
+    }
+</root>
+
+@code {
+    // --- Accès joueurs/état ---
+    public Client Client => Client.Local;
+    public PlayerPawn Player => Client?.PlayerPawn;
+    public HandcuffComponent cuffComp => Player.GetComponent<HandcuffComponent>();
+    private bool isCuffed => cuffComp.IsCuffed;
+
+    // --- Médecins en ligne (null-safe + joueurs valides) ---
+    private int DoctorsOnline {
+        get {
+            var job = JobSystem.GetJob("police");
+            if (job == null || job.Employees == null)
+                return 0;
+
+            // Filtre: connectés, valides, pas spectateurs si tu as ce concept
+            var count = 0;
+            foreach (var emp in job.Employees)
+            {
+                try {
+                    if (emp?.IsValid == true &&
+                        emp.PlayerPawn?.IsValid == true &&
+                        emp.PlayerPawn.HealthComponent.State != LifeState.Dead)
+                        count++;
+                } catch { /* ignore */ }
+            }
+            return count;
+        }
+    }
+
+    // --- Timer de respawn côté client ---
+    // On calcule la différence entre le point de fin synchronisé et le temps actuel
+    private float RemainingRespawn => Client?.GetRemaining(Client.JailEndTime) ?? 0f;
+
+    // Si tu connais la durée totale (ex: 180s), mets-la ici pour une barre de progression correcte.
+    // Sinon on fallback sur 180s comme valeur par défaut.
+    private const float FallbackTotal = 180f;
+    private float TotalRespawnDelay {
+        get {
+            // Si tu as un champ total côté client, remplace le fallback :
+            // return Client.TotalRespawnDelay;
+            return MathF.Max(FallbackTotal, RemainingRespawn); // S’assure que le total >= restant
+        }
+    }
+
+    private float TotalDuration => Constants.Instance?.RespawnDelay ?? 180f; // Ajoute un fallback non-nul
+
+    private float ProgressPct
+    {
+        get
+        {
+            // 1. Si pas de temps de fin, la barre est vide
+            if ( Client.RespawnEndTime <= 0 ) return 0f;
+
+            // 2. Récupération sécurisée du total (ne jamais diviser par zéro)
+            float total = TotalDuration > 0 ? TotalDuration : 180f;
+
+            // 3. Calcul du temps restant (EndTime - Now)
+            float remaining = Client.GetRemaining(Client.JailEndTime);
+
+            // 4. Calcul de la progression
+            float elapsed = total - remaining;
+            float pct = (elapsed / total) * 100f;
+
+            // Debug Log pour voir ce qui est à 0 dans ta console
+            // Log.Info($"Total: {total}, Remaining: {remaining}, Pct: {pct}");
+
+            return Math.Clamp( pct, 0f, 100f );
+        }
+    }
+
+
+    // --- BuildHash pour re-render fluide sans spam ---
+    /*protected override int BuildHash()
+    {
+        if (!IsDead)
+            return 0;
+
+        // On réactualise ~toutes les 100ms quand on affiche un countdown (pas de médecins).
+        int doctors = DoctorsOnline;
+        int bucketMs = doctors <= 0 ? (int)(RemainingRespawn * 10f) : 0; // 0.1 s buckets
+
+        return HashCode.Combine(Time.Now);
+    }*/
+
+    protected override int BuildHash()
+    {
+        return HashCode.Combine( (int)(Time.Now * 2f) );
+    }
+
+    // --- Actions ---
+    private void RespawnNow()
+    {
+        Commands.RPC_Respawn(Client.Local);
+    }
+
+    // Util
+    private static string FormatTime(float seconds)
+    {
+        if (seconds < 0f) seconds = 0f;
+        var ts = TimeSpan.FromSeconds(seconds);
+        // mm:ss (ou ss:fff si tu préfères très précis)
+        if (ts.TotalMinutes >= 1)
+            return ts.ToString(@"m\:ss");
+        else
+            return ts.ToString(@"s\.fff");
+    }
+}

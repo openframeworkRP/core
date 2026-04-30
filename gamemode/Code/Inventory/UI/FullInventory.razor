@@ -1,0 +1,732 @@
+@using OpenFramework.Systems.Weapons
+@using OpenFramework
+@using OpenFramework.Systems.Pawn
+@using System.Text.Json
+@using OpenFramework.Utility
+
+@namespace OpenFramework.Inventory.UI
+@inherits Panel
+
+<root class="@(IsOpen ? "open" : "")">
+    <div class="blur-overlay"></div>
+
+    <div class="close__btn" @onclick=@Toggle>
+        <svg src="ui/icons/close.svg" color="white" />
+    </div>
+
+    <div class="main-layout">
+
+        <div class="side-panel">
+            <div class="header">
+                <div class="icon-title">
+                    <div class="pink-box"><svg src="ui/icons/backpack.svg" color="black" /></div>
+                    <div class="title-text">
+                        <span class="sub">MAIN</span>
+                        <span class="main">INVENTORY</span>
+                    </div>
+                </div>
+                <div class="weight @GetWeightColor()">
+                    <small>@Container.CurrentWeight.ToString("0.0")</small>/@(Container.MaxWeight) KG
+                </div>
+            </div>
+
+            <div class="slots-container">
+                @for (int i = 0; i < Container.Capacity; i++)
+                {
+                    var slotIndex = i;
+                    var item = Container.Items.FirstOrDefault(x => x.SlotIndex == slotIndex);
+                    // Cacher les armes actuellement équipées (elles sont dans la weapon bar)
+                    if (item != null && IsItemEquipped(item))
+                        item = null;
+                    <InventorySlot Container=@Container
+                                   SlotIndex=@slotIndex
+                                   Item=@item
+                                   IsRemote=@false />
+                }
+            </div>
+        </div>
+
+        <div class="center-panel">
+            <div class="header">
+                <div class="pink-box"><span>👤</span></div>
+                <div class="title-text">
+                    <span class="sub">CHARACTER</span>
+                    <span class="main">CUSTOMIZATION</span>
+                </div>
+            </div>
+
+            <div class="equipment-view">
+                <div class="slots-column">
+                    <InventorySlot Container=@ClothingContainer SlotIndex=@(0) Item=@(ClothingContainer?.Items.FirstOrDefault(x => x.SlotIndex == 0)) GhostIcon="ui/icons/mask.svg" />
+                    <InventorySlot Container=@ClothingContainer SlotIndex=@(1) Item=@(ClothingContainer?.Items.FirstOrDefault(x => x.SlotIndex == 1)) GhostIcon="ui/icons/shirt.svg" />
+                    <InventorySlot Container=@ClothingContainer SlotIndex=@(2) Item=@(ClothingContainer?.Items.FirstOrDefault(x => x.SlotIndex == 2)) GhostIcon="ui/icons/gloves.svg" />
+                    <InventorySlot Container=@ClothingContainer SlotIndex=@(3) Item=@(ClothingContainer?.Items.FirstOrDefault(x => x.SlotIndex == 3)) GhostIcon="ui/icons/pants.svg" />
+                    <InventorySlot Container=@ClothingContainer SlotIndex=@(4) Item=@(ClothingContainer?.Items.FirstOrDefault(x => x.SlotIndex == 4)) GhostIcon="ui/icons/shoes.svg" />
+                </div>
+
+                <div class="player-see-through">
+                    <ScenePanel @ref="CharacterPanel" class="preview-panel" />
+                </div>
+
+                <div class="slots-column">
+                    <InventorySlot Container=@ClothingContainer SlotIndex=@(5) Item=@(ClothingContainer?.Items.FirstOrDefault(x => x.SlotIndex == 5)) GhostIcon="ui/icons/watch.svg" />
+                    <InventorySlot Container=@ClothingContainer SlotIndex=@(6) Item=@(ClothingContainer?.Items.FirstOrDefault(x => x.SlotIndex == 6)) GhostIcon="ui/icons/glasses.svg" />
+                    <InventorySlot Container=@ClothingContainer SlotIndex=@(7) Item=@(ClothingContainer?.Items.FirstOrDefault(x => x.SlotIndex == 7)) GhostIcon="ui/icons/cloth.svg" />
+                    <InventorySlot Container=@ClothingContainer SlotIndex=@(8) Item=@(ClothingContainer?.Items.FirstOrDefault(x => x.SlotIndex == 8)) GhostIcon="ui/icons/headset.svg" />
+                    <InventorySlot Container=@ClothingContainer SlotIndex=@(9) Item=@(ClothingContainer?.Items.FirstOrDefault(x => x.SlotIndex == 9)) GhostIcon="ui/icons/backpack.svg" />
+                </div>
+            </div>
+
+            <div class="hotbar-area">
+                <div class="divider">
+                    <div class="bar"></div>
+                    <span>SLOTS</span>
+                    <div class="bar"></div>
+                </div>
+                <div class="hotbar-row">
+                    @for (int i = 0; i < 4; i++)
+                    {
+                        var idx = i;
+                        <WeaponSlot SlotNumber=@(idx + 1) Equipment=@(GetWeaponAtSlot(idx)) />
+                    }
+                </div>
+            </div>
+        </div>
+
+        @if (NearbyContainer != null)
+        {
+            var friskedPawn = FriskedPlayerPawn;
+            <div class="side-panel">
+                @if (friskedPawn != null)
+                {
+                    // === MODE FOUILLE : joueur avec mains levées ou menotté ===
+                    var friskedClothingContainer = friskedPawn.Components
+                        .Get<ClothingEquipment>(FindMode.EnabledInSelfAndChildren)?.Container;
+
+                    <div class="header">
+                        <div class="icon-title">
+                            <div class="pink-box"><span>🔍</span></div>
+                            <div class="title-text">
+                                <span class="sub">FOUILLE</span>
+                                <span class="main">@friskedPawn.DisplayName.ToUpper()</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    @if (friskedClothingContainer != null)
+                    {
+                        <div class="frisk-section-label">VÊTEMENTS</div>
+                        <div class="frisk-clothing-grid">
+                            @for (int i = 0; i < 10; i++)
+                            {
+                                var si = i;
+                                var clothingItem = friskedClothingContainer.Items.FirstOrDefault(x => x.SlotIndex == si);
+                                <InventorySlot Container=@friskedClothingContainer
+                                               SlotIndex=@si
+                                               Item=@clothingItem
+                                               IsRemote=@true />
+                            }
+                        </div>
+                    }
+
+                    <div class="frisk-section-label">INVENTAIRE &nbsp;<small>@NearbyContainer.CurrentWeight.ToString("0.0")/@(NearbyContainer.MaxWeight) KG</small></div>
+                    <div class="slots-container">
+                        @for (int i = 0; i < NearbyContainer.Capacity; i++)
+                        {
+                            var slotIndex = i;
+                            var item = NearbyContainer.Items.FirstOrDefault(x => x.SlotIndex == slotIndex);
+                            <InventorySlot Container=@NearbyContainer
+                                           SlotIndex=@slotIndex
+                                           Item=@item
+                                           IsRemote=@true />
+                        }
+                    </div>
+
+                    <div class="trade-footer">
+                        <div class="actions">
+                            <button class="btn-confirm" onclick=@TakeAll>TOUT PRENDRE ✓</button>
+                            <button class="btn-icon" onclick=@CloseNearby>✕</button>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    // === CONTAINER NORMAL (caisse, coffre, véhicule, etc.) ===
+                    <div class="header">
+                        <div class="icon-title">
+                            <div class="pink-box"><span>📦</span></div>
+                            <div class="title-text">
+                                <span class="sub">NEARBY</span>
+                                <span class="main">@NearbyContainer.Name.ToUpper()</span>
+                            </div>
+                        </div>
+                        <div class="weight">
+                            <small>@NearbyContainer.CurrentWeight.ToString("0.0")</small>/@(NearbyContainer.MaxWeight) KG
+                        </div>
+                    </div>
+
+                    <div class="slots-container">
+                        @for (int i = 0; i < NearbyContainer.Capacity; i++)
+                        {
+                            var slotIndex = i;
+                            var item = NearbyContainer.Items.FirstOrDefault(x => x.SlotIndex == slotIndex);
+                            <InventorySlot Container=@NearbyContainer
+                                           SlotIndex=@slotIndex
+                                           Item=@item
+                                           IsRemote=@true />
+                        }
+                    </div>
+
+                    <div class="trade-footer">
+                        <div class="actions">
+                            <button class="btn-confirm" onclick=@TakeAll>TOUT PRENDRE ✓</button>
+                            <button class="btn-icon" onclick=@CloseNearby>✕</button>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+
+    </div>
+</root>
+
+@code {
+    public bool IsOpen { get; set; } = false;
+    public static FullInventory Instance { get; private set; }
+
+    private Client _self => Client.Local;
+    private InventoryContainer Container => _self?.PlayerPawn?.Components.Get<InventoryContainer>(FindMode.EnabledInSelfAndChildren);
+    private ClothingEquipment ClothingEquip => _self?.PlayerPawn?.Components.Get<ClothingEquipment>(FindMode.EnabledInSelfAndChildren);
+    private InventoryContainer ClothingContainer => ClothingEquip?.Container;
+    public InventoryContainer NearbyContainer { get; set; }
+
+    // Joueur fouillé : non-null si NearbyContainer appartient à un autre joueur (GetInAncestorsOrSelf remonte la hiérarchie du GO)
+    private PlayerPawn FriskedPlayerPawn
+    {
+        get
+        {
+            var fp = NearbyContainer?.Components.GetInAncestorsOrSelf<PlayerPawn>();
+            return (fp != null && !fp.IsLocallyControlled) ? fp : null;
+        }
+    }
+
+    private ScenePanel CharacterPanel;
+    private Scene _previewScene;
+    private Dresser _previewDresser;
+    private int _lastClothingHash;
+    private int _pendingClothingHash;
+    private bool _isApplyingPreview;
+    private RealTimeSince _timeSinceLastRefresh;
+    private const float PreviewRefreshCooldown = 0.15f;
+
+    /// <summary>
+    /// Liste plate de toutes les armes équipées (exclut Punch et Handheld).
+    /// </summary>
+    private List<Equipment> EquippedWeapons => _self?.PlayerPawn?.Inventory?.Equipment?
+        .Where(e => e.Resource.Slot != EquipmentSlot.Punch && e.Resource.Slot != EquipmentSlot.Handheld)
+        .ToList() ?? new();
+
+    /// <summary>
+    /// Map slot UI (0-3) → Equipment. Persistant entre les frames.
+    /// </summary>
+    private Dictionary<int, Equipment> _weaponSlotMap = new();
+
+    /// <summary>
+    /// Slot UI réservé pour la prochaine arme équipée (set avant Use()).
+    /// -1 = pas de réservation.
+    /// </summary>
+    private int _reservedSlot = -1;
+    private bool _mapDirtyThisFrame = false;
+
+    private void RefreshWeaponSlotMap()
+    {
+        // Ne rafraîchir qu'une fois par frame
+        if (_mapDirtyThisFrame) return;
+        _mapDirtyThisFrame = true;
+
+        var current = EquippedWeapons;
+
+        // 1. Retirer les armes qui ne sont plus équipées
+        foreach (var key in _weaponSlotMap.Keys.ToList())
+        {
+            var eq = _weaponSlotMap[key];
+            if (eq == null || !eq.IsValid() || !current.Contains(eq))
+            {
+                InventoryDebug.Info($"[WeaponSlotMap] Removed stale entry at slot {key} (null={eq == null}, valid={eq?.IsValid()})");
+                _weaponSlotMap.Remove(key);
+            }
+        }
+
+        // 2. Ajouter les nouvelles armes
+        foreach (var equip in current)
+        {
+            if (_weaponSlotMap.ContainsValue(equip)) continue;
+
+            // Nouvelle arme détectée
+            int targetSlot = -1;
+
+            // Utiliser le slot réservé — forcer la place même si occupée par un fantôme
+            if (_reservedSlot >= 0 && _reservedSlot < 4)
+            {
+                // Si le slot réservé est occupé, vérifier si c'est vraiment valide
+                if (_weaponSlotMap.ContainsKey(_reservedSlot))
+                {
+                    var blocker = _weaponSlotMap[_reservedSlot];
+                    InventoryDebug.Info($"[WeaponSlotMap] Slot {_reservedSlot} blocked by {blocker?.Resource?.Name} (valid={blocker?.IsValid()})");
+                    // Forcer le déplacement du bloqueur vers un autre slot libre
+                    _weaponSlotMap.Remove(_reservedSlot);
+                    if (blocker != null && blocker.IsValid())
+                    {
+                        for (int j = 0; j < 4; j++)
+                        {
+                            if (j != _reservedSlot && !_weaponSlotMap.ContainsKey(j))
+                            {
+                                _weaponSlotMap[j] = blocker;
+                                InventoryDebug.Info($"[WeaponSlotMap] Moved {blocker.Resource?.Name} to slot {j}");
+                                break;
+                            }
+                        }
+                    }
+                }
+                targetSlot = _reservedSlot;
+                InventoryDebug.Info($"[WeaponSlotMap] Using reserved slot {_reservedSlot} for {equip.Resource?.Name}");
+            }
+
+            // Sinon premier slot libre
+            if (targetSlot == -1)
+            {
+                for (int i = 0; i < 4; i++)
+                {
+                    if (!_weaponSlotMap.ContainsKey(i))
+                    {
+                        targetSlot = i;
+                        break;
+                    }
+                }
+            }
+
+            if (targetSlot >= 0)
+            {
+                _weaponSlotMap[targetSlot] = equip;
+                InventoryDebug.Info($"[WeaponSlotMap] Assigned {equip.Resource?.Name} to slot {targetSlot}");
+            }
+
+            // Réservation consommée
+            _reservedSlot = -1;
+        }
+    }
+
+    public void ReserveWeaponSlot(int slotIndex)
+    {
+        InventoryDebug.Info($"[WeaponSlotMap] Reserved slot {slotIndex}");
+        _reservedSlot = slotIndex;
+    }
+
+    public void SwapWeaponSlots(int slotA, int slotB)
+    {
+        _mapDirtyThisFrame = false;
+        RefreshWeaponSlotMap();
+
+        _weaponSlotMap.TryGetValue(slotA, out var a);
+        _weaponSlotMap.TryGetValue(slotB, out var b);
+
+        _weaponSlotMap.Remove(slotA);
+        _weaponSlotMap.Remove(slotB);
+
+        if (a != null) _weaponSlotMap[slotB] = a;
+        if (b != null) _weaponSlotMap[slotA] = b;
+
+        InventoryDebug.Info($"[WeaponSlotMap] Swapped slot {slotA} <-> {slotB}");
+    }
+
+    private Equipment GetWeaponAtSlot(int index)
+    {
+        RefreshWeaponSlotMap();
+        return _weaponSlotMap.TryGetValue(index, out var eq) ? eq : null;
+    }
+
+    /// <summary>
+    /// Vérifie si un InventoryItem est actuellement lié à un Equipment équipé.
+    /// </summary>
+    private bool IsItemEquipped(InventoryItem item)
+    {
+        if (item?.Metadata?.IsWeapon != true) return false;
+        return EquippedWeapons.Any(e => e.LinkedItem == item);
+    }
+
+    public FullInventory()
+    {
+        Instance = this;
+    }
+
+    /// <summary>
+    /// Appelé depuis DroppedInventory.OnUse (ou n'importe quel IUse nearby).
+    /// Ouvre l'inventaire et affiche le container dans le panel droit.
+    /// Remplace RemoteContainerUI.Open.
+    /// </summary>
+    [Rpc.Broadcast]
+    public static void OpenNearby(InventoryContainer container)
+    {
+        if (Instance == null) return;
+        Instance.NearbyContainer = container;
+        Instance.IsOpen = true;
+    }
+
+    protected override void OnAfterTreeRender(bool firstTime)
+    {
+        if (firstTime) InitPreview();
+    }
+
+    void InitPreview()
+    {
+        _previewScene = new Scene();
+        _previewScene.LoadFromFile("scenes/inventory_preview.scene");
+        CharacterPanel.RenderScene = _previewScene;
+
+        _previewDresser = _previewScene.GetAllComponents<Dresser>().FirstOrDefault();
+        InventoryDebug.Info($"[InventoryPreview] InitPreview — scene loaded, Dresser found: {_previewDresser != null}");
+
+        if (_previewDresser == null)
+        {
+            var allComponents = _previewScene.GetAllComponents<Component>().ToList();
+            InventoryDebug.Warning($"[InventoryPreview] Dresser NOT found! Components in scene ({allComponents.Count}):");
+            foreach (var c in allComponents.Take(20))
+                InventoryDebug.Info($"  - {c.GetType().Name} on '{c.GameObject?.Name}'");
+        }
+        else
+        {
+            InventoryDebug.Info($"[InventoryPreview] Dresser on '{_previewDresser.GameObject?.Name}', BodyTarget: {_previewDresser.BodyTarget != null}");
+
+            // Si le BodyTarget n'est pas assigné, chercher le SkinnedModelRenderer dans la scene
+            if (_previewDresser.BodyTarget == null)
+            {
+                var body = _previewScene.GetAllComponents<SkinnedModelRenderer>().FirstOrDefault();
+                if (body != null)
+                {
+                    _previewDresser.BodyTarget = body;
+                    InventoryDebug.Info($"[InventoryPreview] BodyTarget auto-assigned: '{body.GameObject?.Name}' (model: {body.Model?.ResourceName})");
+                }
+                else
+                {
+                    InventoryDebug.Warning("[InventoryPreview] No SkinnedModelRenderer found in preview scene!");
+                    var allComps = _previewScene.GetAllComponents<Component>().ToList();
+                    foreach (var c in allComps.Take(20))
+                        InventoryDebug.Info($"  - {c.GetType().Name} on '{c.GameObject?.Name}'");
+                }
+            }
+        }
+
+        RefreshPreviewClothing();
+    }
+
+    public override void OnDeleted()
+    {
+        //_previewScene?.Delete();
+    }
+
+    public static void Toggle()
+    {
+        if (Instance == null) return;
+        Instance.IsOpen = !Instance.IsOpen;
+
+        if (Instance.IsOpen)
+        {
+            TaskManager.CompleteStep( "check_inventory" );
+            InventoryDebug.Info("[InventoryPreview] Toggle OPEN — refreshing preview clothing");
+            Instance.RefreshPreviewClothing();
+            // Si le joueur est dans un véhicule, afficher le storage le plus proche
+            Instance.TryAttachVehicleStorage();
+        }
+        else
+        {
+            InventorySlot.CloseActiveContextMenu();
+            InventorySlot.CloseActiveDrag();
+            // Ferme le panel nearby quand on ferme l'inventaire
+            Instance.CloseNearby();
+        }
+    }
+
+    /// <summary>
+    /// Cherche le VehicleStorage le plus proche du joueur (dans ou hors véhicule).
+    /// </summary>
+    void TryAttachVehicleStorage()
+    {
+        var pawn = _self?.PlayerPawn;
+        if (pawn == null) return;
+
+        // Position de référence : siège si dans un véhicule, sinon position du joueur
+        Vector3 refPos = pawn.WorldPosition;
+        if (pawn.CurrentCar is OpenFramework.Systems.Vehicles.Vehicle inVehicle)
+        {
+            var seat = inVehicle.Seats?.FirstOrDefault(s => s.IsValid() && s.Player == pawn);
+            if (seat != null) refPos = seat.WorldPosition;
+        }
+
+        // Chercher le VehicleStorage le plus proche dans toute la scène
+        float maxRange = 150f; // distance max en inches pour détecter un storage à pied
+        OpenFramework.Systems.Vehicles.VehicleStorage best = null;
+        float bestDist = float.MaxValue;
+
+        foreach (var s in Game.ActiveScene.GetAllComponents<OpenFramework.Systems.Vehicles.VehicleStorage>())
+        {
+            if (!s.IsValid() || !s.Container.IsValid() || s.IsBusy) continue;
+            float dist = refPos.Distance(s.WorldPosition);
+
+            // Si dans le véhicule : pas de limite de distance (on est dedans)
+            // Si à pied : limiter à maxRange
+            bool inThisVehicle = pawn.CurrentCar != null && s.Vehicle != null && s.Vehicle == pawn.CurrentCar;
+            if (!inThisVehicle && dist > maxRange) continue;
+
+            if (dist < bestDist) { bestDist = dist; best = s; }
+        }
+
+        if (best != null)
+        {
+            if (best.Vehicle.IsValid() && best.Vehicle.ShowInventoryLogs)
+                Log.Info($"[FullInventory] Auto-attach {best.DisplayName} (dist={bestDist:F1}in)");
+
+            NearbyContainer = best.Container;
+            best.Open(pawn);
+        }
+    }
+
+    void TakeAll()
+    {
+        if (NearbyContainer == null || Container == null) return;
+        foreach (var item in NearbyContainer.Items.ToList())
+            InventoryContainer.MoveItem(item, Container, -1);
+    }
+
+    void CloseNearby()
+    {
+        if (NearbyContainer != null)
+        {
+            // Libère le verrou IsBusy sur le DroppedInventory / VehicleStorage / TrashBin côté Host
+            DroppedInventory.Release(Client.Local);
+            OpenFramework.Systems.Vehicles.VehicleStorage.Release(Client.Local);
+            OpenFramework.Systems.Jobs.TrashBin.Release(Client.Local);
+            NearbyContainer = null;
+        }
+    }
+
+    int ComputeClothingHash()
+    {
+        var playerDresser = _self?.PlayerPawn?.Components.Get<Dresser>(FindMode.EverythingInSelfAndChildren);
+        if (playerDresser?.Clothing == null) return 0;
+
+        int hash = 17;
+        foreach (var entry in playerDresser.Clothing)
+        {
+            unchecked
+            {
+                hash = hash * 31 + (entry.Clothing?.ResourcePath?.GetHashCode() ?? 0);
+            }
+        }
+        return hash;
+    }
+
+    void RefreshPreviewClothing()
+    {
+        _ = RefreshPreviewClothingAsync();
+    }
+
+    async System.Threading.Tasks.Task RefreshPreviewClothingAsync()
+    {
+        if (_isApplyingPreview) return;
+        _isApplyingPreview = true;
+
+        try
+        {
+            const int MaxIterations = 5;
+            int iterations = 0;
+            while (true)
+            {
+                if (++iterations > MaxIterations)
+                {
+                    InventoryDebug.Warning($"[InventoryPreview] RefreshPreviewClothingAsync — max iterations ({MaxIterations}) atteint, abandon pour eviter un stall");
+                    break;
+                }
+
+                if (_previewDresser == null)
+                {
+                    InventoryDebug.Warning("[InventoryPreview] RefreshPreviewClothingAsync — _previewDresser is null, skipping");
+                    return;
+                }
+
+                var playerDresser = _self?.PlayerPawn?.Components.Get<Dresser>(FindMode.EverythingInSelfAndChildren);
+                if (playerDresser == null)
+                {
+                    InventoryDebug.Warning("[InventoryPreview] RefreshPreviewClothingAsync — playerDresser is null, skipping");
+                    return;
+                }
+
+                int appliedHash = ComputeClothingHash();
+
+                // Vérifier que la scène preview est toujours valide avant Apply()
+                if (_previewScene == null || !_previewDresser.IsValid())
+                {
+                    InventoryDebug.Warning("[InventoryPreview] RefreshPreviewClothingAsync — preview scene/dresser invalide, skipping");
+                    return;
+                }
+
+                // Detache la scene du panel pendant Apply() pour empecher ScenePanel.Tick
+                // de tiquer la scene pendant qu'on modifie les vetements (NRE dans Scene.SharedTick).
+                var originalRenderScene = CharacterPanel?.RenderScene;
+                if (CharacterPanel != null) CharacterPanel.RenderScene = null;
+
+                _previewDresser.Clothing = new List<ClothingContainer.ClothingEntry>(playerDresser.Clothing);
+
+                try
+                {
+                    await _previewDresser.Apply();
+                }
+                catch (System.Exception applyEx)
+                {
+                    InventoryDebug.Warning($"[InventoryPreview] Dresser.Apply() exception: {applyEx.Message}");
+                    if (CharacterPanel != null && originalRenderScene != null) CharacterPanel.RenderScene = originalRenderScene;
+                    return;
+                }
+
+                await GameTask.Yield();
+
+                // Rattache la scene au panel apres Apply
+                if (CharacterPanel != null && originalRenderScene != null) CharacterPanel.RenderScene = originalRenderScene;
+
+                if (_previewDresser == null || !_previewDresser.IsValid()) return;
+
+                RefreshPreviewAppearance();
+
+                // Si le hash a changé pendant Apply(), on relance une passe. Sinon on sort.
+                if (_pendingClothingHash == appliedHash) break;
+                _lastClothingHash = _pendingClothingHash;
+                _timeSinceLastRefresh = 0f;
+            }
+        }
+        catch (System.Exception ex)
+        {
+            InventoryDebug.Warning($"[InventoryPreview] RefreshPreviewClothingAsync exception: {ex.Message}");
+        }
+        finally
+        {
+            _isApplyingPreview = false;
+        }
+    }
+
+    void RefreshPreviewAppearance()
+    {
+        var previewBody = _previewDresser?.BodyTarget;
+        if (previewBody == null) return;
+
+        // Copier le model (male/female) depuis le body du joueur
+        var playerBody = _self?.PlayerPawn?.Components.Get<PlayerBody>(FindMode.EverythingInSelfAndChildren);
+        if (playerBody?.Renderer != null && playerBody.Renderer.Model != null)
+        {
+            previewBody.Model = playerBody.Renderer.Model;
+        }
+
+        // Appliquer skin tone, head index et morphs depuis les données sauvegardées du client
+        var client = _self;
+        if (client == null) return;
+
+        var skinGroup = client.SavedSkinGroup ?? "default";
+        var headIndex = client.SavedHeadIndex;
+        var morphsJson = client.SavedMorphsJson ?? "{}";
+
+        previewBody.MaterialGroup = skinGroup;
+        previewBody.SetBodyGroup("head", headIndex);
+
+        // Appliquer les morphs
+        if (!string.IsNullOrEmpty(morphsJson) && morphsJson != "{}" && previewBody.Morphs != null)
+        {
+            try
+            {
+                var morphs = JsonSerializer.Deserialize<Dictionary<string, float>>(morphsJson);
+                if (morphs != null)
+                {
+                    foreach (var (name, value) in morphs)
+                        previewBody.Morphs.Set(name, Math.Clamp(value, 0f, 1f));
+                }
+            }
+            catch (Exception e)
+            {
+                InventoryDebug.Warning($"[InventoryPreview] Erreur parsing morphs: {e.Message}");
+            }
+        }
+
+        InventoryDebug.Info($"[InventoryPreview] Appearance applied — skin: {skinGroup}, head: {headIndex}");
+    }
+
+    string GetWeightColor()
+    {
+        if (Container == null) return "weight_normal";
+        float ratio = Container.CurrentWeight / Container.MaxWeight;
+        if (ratio >= 1.0f) return "weight_full";
+        if (ratio >= 0.8f) return "weight_warning";
+        return "weight_normal";
+    }
+
+    public override void Tick()
+    {
+        // Reset le flag pour permettre un refresh de la weapon slot map ce frame
+        _mapDirtyThisFrame = false;
+
+        if (Input.Pressed("Inventory"))
+            Toggle();
+
+        // Rafraîchir le mannequin preview si les vêtements équipés ont changé
+        // Debounce + guard anti-réentrance pour éviter les NRE dans Scene.Nav_Update
+        // quand le joueur change très rapidement de vêtements.
+        if (IsOpen && _previewDresser != null)
+        {
+            int clothingHash = ComputeClothingHash();
+            if (clothingHash != _lastClothingHash)
+            {
+                _pendingClothingHash = clothingHash;
+
+                if (!_isApplyingPreview && _timeSinceLastRefresh >= PreviewRefreshCooldown)
+                {
+                    _lastClothingHash = _pendingClothingHash;
+                    _timeSinceLastRefresh = 0f;
+                    _ = RefreshPreviewClothingAsync();
+                }
+            }
+        }
+
+        // Auto-fermer uniquement les DroppedInventory vides (pas les joueurs, ni
+        // les véhicules, ni les coffres/storages qui restent consultables vides).
+        if (NearbyContainer?.Items?.Count() == 0)
+        {
+            bool isProtected = NearbyContainer.Components.GetInAncestorsOrSelf<PlayerPawn>() != null
+                || NearbyContainer.Components.GetInAncestorsOrSelf<OpenFramework.Systems.Vehicles.VehicleStorage>() != null
+                || NearbyContainer.Components.GetInAncestorsOrSelf<OpenFramework.Inventory.StorageComponent>() != null;
+            if (!isProtected)
+                CloseNearby();
+        }
+    }
+
+    private int EquipmentHash
+    {
+        get
+        {
+            var list = EquippedWeapons;
+            return HashCode.Combine(
+                list.Count,
+                list.ElementAtOrDefault(0)?.Resource?.Name,
+                list.ElementAtOrDefault(1)?.Resource?.Name,
+                list.ElementAtOrDefault(2)?.Resource?.Name,
+                list.ElementAtOrDefault(3)?.Resource?.Name
+            );
+        }
+    }
+
+    protected override int BuildHash() => HashCode.Combine(
+        IsOpen,
+        NearbyContainer,
+        NearbyContainer?.Items?.Count(),
+        NearbyContainer?.CurrentWeight,
+        Container?.CurrentWeight,
+        ClothingContainer?.Items?.Count(),
+        Container?.Items?.Count(),
+        EquipmentHash
+    );
+}

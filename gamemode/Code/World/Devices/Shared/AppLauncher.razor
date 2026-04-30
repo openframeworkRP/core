@@ -1,0 +1,65 @@
+﻿@using Sandbox;
+@using Sandbox.UI;
+@using OpenFramework.Systems.Jobs
+@using OpenFramework.World.Devices
+
+@namespace OpenFramework.World.Devices.Shared
+@inherits Panel
+
+@* La classe racine change selon le device (phone, computer, tablet) *@
+<root class="@(Device?.Kind.ToString().ToLower() + "_appcontainer")">
+
+    @* Conteneur principal des applications *@
+    <div class="appcontainer">
+        @foreach (var app in DevicesManager.Instance.LoadedApps)
+        {
+            @* 1. Filtre de compatibilité (L'app supporte-t-elle ce device ?) *@
+            @if (!app.Compatibility.HasFlag(Device.Kind) && !app.Compatibility.HasFlag(DeviceKind.All)) continue;
+
+            @* 2. Filtre de métier (Job) *@
+            @if (app.JobAccess != JobList.None && Client.Local.Data.Job != app.JobAccess.ToString().ToLower()) continue;
+
+            @* 3. Si on affiche le Dock, on ne montre pas les apps épinglées dans la grille principale *@
+            @if (/*ShowPinned && app is IAppPinned pinned && */app.IsPinned) continue;
+
+            <div class="app" @onclick=@(() => Device.OpenApp(app, Container))>
+                <div class="icon" style="background-color: @app.BackgroundColor">
+                    <svg src=@app.Icon color=@(app.IconColor == "default" ? null : app.IconColor)/>
+                </div>
+                <label>@app.DisplayName</label>
+            </div>
+        }
+    </div>
+
+    @* Affichage conditionnel du Dock (Pinned Apps) *@
+    @if (ShowPinned)
+    {
+        <div class="pinned_app">
+            @foreach (var app in DevicesManager.Instance.LoadedApps)
+            {
+                @if (/*app is IAppPinned pinned && */app.IsPinned && (app.Compatibility.HasFlag(Device.Kind) || app.Compatibility.HasFlag(DeviceKind.All)))
+                {
+                    <div class="app" @onclick=@(() => Device.OpenApp(app, Container))>
+                        <div class="icon" style="background-color: @app.BackgroundColor">
+                            <svg src=@app.Icon color=@(app.IconColor == "default" ? null : app.IconColor) />
+                        </div>
+                        @* Note: Sur iPhone, on cache souvent le label dans le dock via SCSS *@
+                        <label>@app.DisplayName</label>
+                    </div>
+                }
+            }
+        </div>
+    }
+</root>
+
+@code {
+    public IDevice Device { get; set; }
+    public bool ShowPinned { get; set; } = true;
+    public Panel Container { get; set; }
+
+    protected override int BuildHash()
+    {
+        // Re-render si le device, le background ou le mode pinned change
+        return HashCode.Combine(ShowPinned);
+    }
+}

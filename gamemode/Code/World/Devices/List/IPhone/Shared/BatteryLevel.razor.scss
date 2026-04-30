@@ -1,0 +1,27 @@
+BatteryLevel {
+    flex-direction: row;
+    align-items: center;
+
+    .battery-shell {
+        width: 22px;
+        height: 11px;
+        border: 1px solid rgba(white, 0.35);
+        border-radius: 3px;
+        padding: 1px;
+        position: relative;
+
+        .fill {
+            height: 100%;
+            border-radius: 1px;
+            transition: width 0.5s ease, background-color 0.5s ease;
+        }
+    }
+
+    .tip {
+        width: 2px;
+        height: 4px;
+        background-color: rgba(white, 0.35);
+        border-radius: 0 1px 1px 0;
+        margin-left: 1px;
+    }
+}

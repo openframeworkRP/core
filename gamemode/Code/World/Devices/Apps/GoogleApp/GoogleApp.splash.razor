@@ -1,0 +1,13 @@
+@using OpenFramework.Systems.Npc
+
+@inherits BaseAppSplashScreen
+@namespace OpenFramework.World.Devices.Apps.Google
+
+<root>
+    <svg src="ui/icons/apps/google_icon.svg"/>
+</root>
+
+@code {
+    public override Type AppInterface => typeof(GoogleApp);
+
+}

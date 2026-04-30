@@ -1,0 +1,168 @@
+﻿@namespace Facepunch
+@attribute [StyleSheet]
+@inherits Panel
+
+@if ( !Client.Viewer.Pawn.IsValid() ) return;
+
+<root>
+    @if (Renderer.IsValid())
+    {
+        <div class="mask" style="@MapRot()">
+            <div class="map-parent">
+                <div style="@MapTransform()">
+                   
+                    <div class="overlay" style="background-image: url( @Renderer.CurrentMinimapPath )" />
+
+                </div>
+            </div>
+        </div>
+
+        <div class="markers">
+            @foreach ( var element in _cachedElements )
+            {
+                @if ( !element.IsValid() || ( Client.Viewer.Pawn is PlayerPawn player && !element.IsVisible( player ) ) )
+                    continue;
+
+                @if ( element is IMinimapIcon icon && !string.IsNullOrEmpty( icon.IconPath ) )
+                {
+                    string style = WorldToMap( icon.WorldPosition );
+
+                    if ( icon is IDirectionalMinimapIcon { EnableDirectional: true } dir )
+                        style += RotationToMap( dir.Direction );
+                    else
+                        style += RotationToMap( FixedMode ? 0 : Client.Viewer.Pawn?.EyeAngles.yaw ?? 0 );
+
+                    if (icon is ICustomMinimapIcon custom)
+                        style += custom.CustomStyle;
+
+                    <div class="marker" style="background-image: url( @icon.IconPath ); @style z-index: @icon.IconOrder;" />
+                }
+                
+                if ( element is IMinimapLabel label )
+                {
+                    <div class="label" style="@WorldToMap( label.WorldPosition ) @LabelStyles( label )">
+                        @label.Label
+                    </div>
+                }
+            }
+
+            <!-- POV Marker -->
+            @if ( Client.Viewer.Pawn is not PlayerPawn || Client.Viewer.Pawn?.HealthComponent?.State == LifeState.Alive )
+            {
+                <div class="marker @(SpectateSystem.Instance?.IsFreecam ?? false ? "" : "viewer")" style="@WorldToMap( ViewPos ) @RotationToMap( ViewYaw ) background-tint: white" />
+            }
+
+        </div>
+    }
+</root>
+
+@code
+{
+    private MinimapRenderer _cachedRenderer;
+    private readonly List<IMinimapElement> _cachedElements = new();
+    private TimeSince _elementRefreshTimer = 999f;
+
+    public MinimapRenderer Renderer
+    {
+        get
+        {
+            if ( !_cachedRenderer.IsValid() )
+                _cachedRenderer = Game.ActiveScene.GetAllComponents<MinimapRenderer>().FirstOrDefault();
+            return _cachedRenderer;
+        }
+    }
+
+    public override void Tick()
+    {
+        if ( _elementRefreshTimer > 1f )
+        {
+            _cachedElements.Clear();
+            foreach ( var e in Game.ActiveScene.GetAllComponents<IMinimapElement>() )
+                _cachedElements.Add( e );
+            _elementRefreshTimer = 0;
+        }
+    }
+
+    private PlayerPawn Player => Client.Viewer.PlayerPawn;
+
+    public Vector3 ViewPos => Client.Viewer.Pawn?.WorldPosition ?? Vector3.Zero;
+    public float ViewYaw => Client.Viewer.Pawn?.EyeAngles.yaw ?? 0;
+
+    public float Zoom => 10;
+    /* <div class="minimap" style="background-image: url( @Renderer.CurrentMinimapPath )" />
+
+    <div class="volume" style="@GetBox(volume) @GetBoxStyles(volume)">
+        <div class="bg" style="@GetLineStyles(volume)" />
+    </div>*/
+
+    // shows full map, embiggened
+    public bool FullMode => false;//Input.Down( "score" );
+    // doesn't rotate the map with the player
+    public bool FixedMode => FullMode;
+
+    // generic
+    string WorldToMap( Vector3 worldPosition )
+    {
+        var position = FullMode ? Renderer.FromWorld( worldPosition ) : Renderer.FromWorldRadar( worldPosition, ViewPos, FixedMode ? 0 : ViewYaw, Zoom );
+        return $"left: {Length.Fraction( position.x )}; top: {Length.Fraction( position.y )};";
+    }
+
+    string LabelStyles( IMinimapLabel label )
+    {
+        return $"color: {label.LabelColor.Rgba};";
+    }
+
+    string GetBox( IMinimapVolume volume )
+    {
+        var min = Renderer.FromWorld(volume.WorldPosition + (volume.Size / 2));
+        var max = Renderer.FromWorld(volume.WorldPosition - (volume.Size / 2));
+        var remappedSize = max - min;
+        float yaw = 0f;
+
+        // TODO: make this work in fixed mode
+        if ( FixedMode )
+        {
+            yaw = -volume.Angles.yaw;
+        }
+
+        return $"left: {Length.Fraction(min.x)}; top: {Length.Fraction(min.y)}; width:{Length.Fraction(remappedSize.x)}; height:{Length.Fraction(remappedSize.y)};transform: rotateZ({yaw}deg);";
+    }
+
+    string GetBoxStyles(IMinimapVolume volume)
+    {
+        return $"background-color: darken( {volume.Color.Rgba}, 0.05 ); border: 10px solid red;";
+    }
+
+    string GetLineStyles(IMinimapVolume volume)
+    {
+        return $"background-color: {volume.LineColor.Rgba};";
+    }
+
+    string RotationToMap( Angles rot )
+    {
+        return RotationToMap(rot.yaw);
+    }
+
+    string RotationToMap( float yaw )
+    {
+        return $"transform: translateX(-50%) translateY(-50%) rotate({-(yaw - (FixedMode ? 0 : ViewYaw))}deg);";
+    }
+
+    string MapTransform()
+    {
+        if (FullMode) return "left: 0; top: 0; width: 100%; height: 100%;";
+        var position = -Renderer.FromWorld(ViewPos) * Zoom;
+        return $"position: absolute; left: {Length.Fraction( position.x )}; top: {Length.Fraction( position.y )}; width: {Zoom * 100}%; height: {Zoom * 100}%";
+    }
+
+    string MapRot()
+    {
+        if ( FixedMode ) return "transform: none;";
+        return $"transform-origin: center center; transform: rotate({(FixedMode ? 0 : ViewYaw)}deg); ";
+    }
+
+    protected override int BuildHash()
+    {
+        return HashCode.Combine( (int)(Time.Now * 20f) ); // 20fps max
+    }
+}

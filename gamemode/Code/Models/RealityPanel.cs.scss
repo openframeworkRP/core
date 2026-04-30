@@ -1,0 +1,8 @@
+RealityPanel {
+    transition: all 0.2s ease-in-out;
+
+    &.triggered {
+        display:flex;
+        opacity:1;
+    }
+}

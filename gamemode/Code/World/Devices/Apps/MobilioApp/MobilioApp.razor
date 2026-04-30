@@ -1,0 +1,21 @@
+@using OpenFramework.Systems.Jobs
+
+@inherits BaseApp
+@namespace OpenFramework.World.Devices.Apps.Mobilio
+
+<root>
+    <MobilioApp_navigator App=@this />
+</root>
+
+@code {
+    public override string AppId => "mobilio";
+    public override string DisplayName => "Mobilio";
+    public override string Icon => "ui/icons/apps/mobilio_icon.svg";
+    public override string IconColor => "#226D68";
+    public override string BackgroundColor => "#fff";
+    public override bool IsSystemApp => false;
+    public override bool IsHidden => true;
+    public override JobList JobAccess => JobList.None;
+    public override Type SplashScreen => typeof( MobilioApp_splash );
+    public override DeviceKind Compatibility => DeviceKind.Phone | DeviceKind.Computer | DeviceKind.Tablet;
+}

@@ -1,0 +1,388 @@
+@using Sandbox;
+@using Sandbox.UI;
+@using OpenFramework.Command
+@using OpenFramework.GameLoop
+@using OpenFramework.Inventory
+@using OpenFramework.Systems
+@using OpenFramework.Systems.Pawn
+@using OpenFramework.Systems.Shop_System
+@using static Facepunch.NotificationSystem
+@inherits PanelComponent
+@namespace OpenFramework
+
+<root>
+<div class="wrapper">
+
+    @* HEADER *@
+    <div class="header">
+        <div class="header-top">
+            <button class="close-btn" @onclick="@(() => Enabled = false)">✕</button>
+            <span class="shop-name">@(CoiffeurCatalogue?.DisplayName ?? "Coiffeur")</span>
+            <div class="wallet">
+                <span class="wallet-label">Solde</span>
+                <span class="wallet-amount">$@MoneySystem.Get()</span>
+            </div>
+        </div>
+        <div class="categories">
+            <div class="category @(CurrentTab == Tab.Hair ? "active" : "")" @onclick="@(() => CurrentTab = Tab.Hair)">Coupes</div>
+            <div class="category @(CurrentTab == Tab.Beard ? "active" : "")" @onclick="@(() => CurrentTab = Tab.Beard)">Barbes</div>
+        </div>
+    </div>
+
+    <div class="body">
+
+        @* GRILLE STYLES *@
+        <div class="grid">
+            @* Option "rase / chauve" qui retire le style courant *@
+            <div class="card @(IsCurrentStyleEmpty() ? "selected" : "")" @onclick="@(() => SelectStyle(null))">
+                <div class="card-preview"></div>
+                <div class="card-bottom">
+                    <span class="card-name">@(CurrentTab == Tab.Hair ? "Chauve" : "Rasé")</span>
+                    <div class="card-footer">
+                        <span class="card-price">$0</span>
+                    </div>
+                </div>
+            </div>
+
+            @foreach (var item in StylesForCurrentTab)
+            {
+                var localItem = item;
+                var isSelected = IsStyleSelected(localItem);
+                <div class="card @(isSelected ? "selected" : "")" @onclick="@(() => SelectStyle(localItem))">
+                    <div class="card-preview">
+                        @if (localItem.Item?.PreviewObject != null)
+                        {
+                            <OpenFramework.Model3DIcon ModelPath="@localItem.Item.PreviewObject.ResourcePath" />
+                        }
+                    </div>
+                    <div class="card-bottom">
+                        <span class="card-name">@(localItem.Item?.Name ?? "Style")</span>
+                        <div class="card-footer">
+                            <span class="card-price">$@(localItem.Item?.Price ?? CutPrice)</span>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        @* PANNEAU DROIT — couleurs + apply *@
+        <div class="cart">
+            <span class="cart-title">@(CurrentTab == Tab.Hair ? "Couleur cheveux" : "Couleur barbe")</span>
+
+            <div class="palette">
+                @foreach (var swatch in Palette)
+                {
+                    var localHex = swatch;
+                    <div class="swatch @(IsCurrentColor(localHex) ? "selected" : "")"
+                         style="background-color: @localHex"
+                         @onclick="@(() => SetCurrentColor(localHex))"></div>
+                }
+            </div>
+
+            <div class="hex-row">
+                <span class="hex-label">Hex</span>
+                <TextEntry class="hex-input" Value:bind="@CurrentColorHexBinding" />
+            </div>
+
+            <div class="recap">
+                <div class="recap-line">
+                    <span>Cheveux</span>
+                    <div class="recap-color" style="background-color: @PendingHairColor"></div>
+                </div>
+                <div class="recap-line">
+                    <span>Barbe</span>
+                    <div class="recap-color" style="background-color: @PendingBeardColor"></div>
+                </div>
+                <div class="recap-line">
+                    <span>Total</span>
+                    <span class="cart-total-price">$@TotalPrice</span>
+                </div>
+            </div>
+
+            <div class="cart-buy">
+                <button class="btn-clear" @onclick="@ResetPending">Annuler</button>
+                <button class="btn-buy" @onclick="@Apply">Appliquer</button>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+</root>
+
+@code
+{
+    /// <summary>
+    /// Catalogue partage avec le pattern Vetementier — chaque ShopItem est un
+    /// Clothing de categorie Hair pour les coupes ou Facial pour les barbes.
+    /// On filtre par categorie dynamiquement selon l'onglet.
+    /// </summary>
+    [Property] public ShopCatalogueResource CoiffeurCatalogue { get; set; }
+
+    /// <summary>Distance max (cm) avant fermeture auto.</summary>
+    [Property] public float MaxDistance { get; set; } = 100f;
+
+    /// <summary>Prix d'une coupe / barbe si l'item du catalogue n'a pas de prix.</summary>
+    [Property] public int CutPrice { get; set; } = 50;
+
+    enum Tab { Hair, Beard }
+
+    Tab CurrentTab { get; set; } = Tab.Hair;
+
+    Client player => Client.Local;
+    InventoryContainer Container => Client.Local?.PlayerPawn?.GameObject.Components.Get<InventoryContainer>(FindMode.EnabledInSelfAndChildren);
+    private NpcLogical OwningNpc => GameObject?.Root?.Components.Get<NpcLogical>(FindMode.EnabledInSelfAndDescendants);
+
+    // Palette par defaut (hex). Volontairement courte — l'utilisateur peut taper son hex.
+    static readonly string[] Palette =
+    {
+        "#000000", "#3a2a1c", "#6b4226", "#a87149",
+        "#d4a373", "#e8c39e", "#cc4422", "#e07a5f",
+        "#7a5cff", "#3aaaff", "#22aa44", "#aaaaaa",
+        "#dddddd", "#ffffff",
+    };
+
+    // Etat "en attente" — modifies par l'UI mais pas encore commit a l'API.
+    string PendingHairColor { get; set; } = "#3a2a1c";
+    string PendingBeardColor { get; set; } = "#3a2a1c";
+
+    // Style en attente : null = "rase/chauve", sinon le ResourcePath du Clothing.
+    string PendingHairStylePath { get; set; }
+    string PendingBeardStylePath { get; set; }
+
+    // Indique si l'utilisateur a effectivement choisi un style (sinon on garde le style courant en API).
+    bool HairStyleTouched { get; set; }
+    bool BeardStyleTouched { get; set; }
+
+    IEnumerable<ShopCatalogueResource.ShopItem> StylesForCurrentTab
+    {
+        get
+        {
+            if ( CoiffeurCatalogue?.Categories == null ) return Enumerable.Empty<ShopCatalogueResource.ShopItem>();
+            var wantedCategory = CurrentTab == Tab.Hair
+                ? Sandbox.Clothing.ClothingCategory.Hair
+                : Sandbox.Clothing.ClothingCategory.Facial;
+            return CoiffeurCatalogue.Categories
+                .SelectMany( c => c.Items )
+                .Where( i => i?.Item?.ClothingResource != null && i.Item.ClothingResource.Category == wantedCategory );
+        }
+    }
+
+    int TotalPrice
+    {
+        get
+        {
+            // Tarif minimal du coiffeur si on ne change que la couleur, sinon prix de l'item choisi.
+            int total = 0;
+            if ( HairStyleTouched && PendingHairStylePath != null )
+            {
+                var item = FindItemByPath( PendingHairStylePath );
+                total += item?.Item?.Price ?? CutPrice;
+            }
+            if ( BeardStyleTouched && PendingBeardStylePath != null )
+            {
+                var item = FindItemByPath( PendingBeardStylePath );
+                total += item?.Item?.Price ?? CutPrice;
+            }
+            // Frais de coloration si on ne change que la couleur (pas de style touche).
+            if ( !HairStyleTouched && !BeardStyleTouched && IsColorTouched() )
+                total += CutPrice;
+            return total;
+        }
+    }
+
+    bool IsColorTouched()
+    {
+        var c = Client.Local;
+        return c != null && (
+            !string.Equals( PendingHairColor, c.SavedHairColor, StringComparison.OrdinalIgnoreCase ) ||
+            !string.Equals( PendingBeardColor, c.SavedBeardColor, StringComparison.OrdinalIgnoreCase ) );
+    }
+
+    ShopCatalogueResource.ShopItem FindItemByPath( string resourcePath )
+    {
+        if ( string.IsNullOrEmpty( resourcePath ) || CoiffeurCatalogue?.Categories == null ) return null;
+        return CoiffeurCatalogue.Categories
+            .SelectMany( c => c.Items )
+            .FirstOrDefault( i => i?.Item?.ClothingResource?.ResourcePath == resourcePath );
+    }
+
+    bool IsStyleSelected( ShopCatalogueResource.ShopItem item )
+    {
+        var path = item?.Item?.ClothingResource?.ResourcePath;
+        if ( string.IsNullOrEmpty( path ) ) return false;
+        return CurrentTab == Tab.Hair
+            ? PendingHairStylePath == path
+            : PendingBeardStylePath == path;
+    }
+
+    bool IsCurrentStyleEmpty()
+    {
+        return CurrentTab == Tab.Hair
+            ? (HairStyleTouched && string.IsNullOrEmpty( PendingHairStylePath ))
+            : (BeardStyleTouched && string.IsNullOrEmpty( PendingBeardStylePath ));
+    }
+
+    void SelectStyle( ShopCatalogueResource.ShopItem item )
+    {
+        var path = item?.Item?.ClothingResource?.ResourcePath;
+        if ( CurrentTab == Tab.Hair )
+        {
+            PendingHairStylePath = path;
+            HairStyleTouched = true;
+        }
+        else
+        {
+            PendingBeardStylePath = path;
+            BeardStyleTouched = true;
+        }
+    }
+
+    bool IsCurrentColor( string hex )
+    {
+        var current = CurrentTab == Tab.Hair ? PendingHairColor : PendingBeardColor;
+        return string.Equals( current, hex, StringComparison.OrdinalIgnoreCase );
+    }
+
+    void SetCurrentColor( string hex )
+    {
+        if ( CurrentTab == Tab.Hair ) PendingHairColor = hex;
+        else PendingBeardColor = hex;
+    }
+
+    /// <summary>
+    /// Binding bidirectionnel pour le hex courant (selon l'onglet). Permet a l'utilisateur de
+    /// taper sa propre couleur dans le TextEntry.
+    /// </summary>
+    string CurrentColorHexBinding
+    {
+        get => CurrentTab == Tab.Hair ? PendingHairColor : PendingBeardColor;
+        set
+        {
+            // Validation tres permissive — PlayerBody.TryParseHexColor fera l'autorite finale.
+            if ( string.IsNullOrWhiteSpace( value ) ) return;
+            SetCurrentColor( value.Trim() );
+        }
+    }
+
+    void ResetPending()
+    {
+        var c = Client.Local;
+        PendingHairColor = c?.SavedHairColor ?? "#3a2a1c";
+        PendingBeardColor = c?.SavedBeardColor ?? "#3a2a1c";
+        PendingHairStylePath = c?.SavedHairStyle;
+        PendingBeardStylePath = c?.SavedBeardStyle;
+        HairStyleTouched = false;
+        BeardStyleTouched = false;
+    }
+
+    void Apply()
+    {
+        if ( player == null ) return;
+        var pawn = player.PlayerPawn;
+        if ( pawn == null || !pawn.IsValid() ) return;
+
+        var total = TotalPrice;
+        if ( total > 0 && MoneySystem.Get() < total )
+        {
+            player.Notify( NotificationType.Error, "Vous n'avez pas assez d'argent." );
+            return;
+        }
+
+        // 1) Re-equipement effectif des nouveaux styles. On reutilise le meme
+        // mecanisme que le vendeur de vetements : ajout d'un item Clothing dans
+        // l'inventaire => ClothingEquipment auto-equipe le slot Hair / Facial.
+        // L'ancien Clothing du meme slot est automatiquement remplace par le
+        // dresser (cf BroadcastEquip).
+        if ( HairStyleTouched ) ApplyStyleChange( PendingHairStylePath );
+        if ( BeardStyleTouched ) ApplyStyleChange( PendingBeardStylePath );
+
+        // 2) Couleurs — RPC.Broadcast vers tous les clients + persistance host-side.
+        Client.BroadcastHairColor(
+            pawn.GameObject,
+            PendingHairColor ?? "#3a2a1c",
+            PendingBeardColor ?? "#3a2a1c",
+            HairStyleTouched ? (PendingHairStylePath ?? "") : (player.SavedHairStyle ?? ""),
+            BeardStyleTouched ? (PendingBeardStylePath ?? "") : (player.SavedBeardStyle ?? "") );
+
+        // 3) Debit
+        if ( total > 0 )
+        {
+            MoneySystem.Remove( total );
+            player.Notify( NotificationType.Success, $"Coiffeur : ${total} debites." );
+        }
+        else
+        {
+            player.Notify( NotificationType.Success, "Coiffeur : ajustement applique." );
+        }
+
+        // Sync l'etat "pending" sur le nouvel etat "saved" pour que des
+        // modifications successives ne re-debitent pas la coloration.
+        HairStyleTouched = false;
+        BeardStyleTouched = false;
+    }
+
+    void ApplyStyleChange( string clothingResourcePath )
+    {
+        // Trouve la metadata correspondante dans le catalogue (necessaire pour
+        // InventoryContainer.Add qui prend un ResourceName).
+        var item = FindItemByPath( clothingResourcePath );
+        if ( item?.Item == null )
+        {
+            // Cas "rase / chauve" — on retire les vetements du slot via le dresser.
+            // Le DBoardcast classique BroadcastRemoveClothing demande un Clothing
+            // existant; on prend le current style enregistre cote client si dispo.
+            var currentPath = CurrentTab == Tab.Hair ? player?.SavedHairStyle : player?.SavedBeardStyle;
+            if ( !string.IsNullOrEmpty( currentPath ) && player?.PlayerPawn != null )
+                ClothingEquipment.BroadcastRemoveClothing( player.PlayerPawn.GameObject, currentPath );
+            return;
+        }
+
+        InventoryContainer.Add( Container, item.Item.ResourceName, 1 );
+    }
+
+    protected override void OnEnabled()
+    {
+        base.OnEnabled();
+        ResetPending();
+        OwningNpc?.ClientDebug( $"CoiffeurPanelComponent.OnEnabled Catalogue={(CoiffeurCatalogue != null ? CoiffeurCatalogue.DisplayName : "NULL")}" );
+    }
+
+    protected override void OnDisabled()
+    {
+        base.OnDisabled();
+        OwningNpc?.ClientDebug( "CoiffeurPanelComponent.OnDisabled" );
+    }
+
+    protected override void OnUpdate()
+    {
+        if ( !Enabled ) return;
+
+        // Fermeture par echap. On consomme l'event pour eviter qu'un autre panel
+        // ouvert (inventaire, etc.) reagisse au meme appui — c'est le pattern
+        // utilise par AtmUI / StorageCodePanel.
+        if ( Input.EscapePressed )
+        {
+            Input.EscapePressed = false;
+            Enabled = false;
+            return;
+        }
+
+        var pawn = Client.Local?.PlayerPawn;
+        if ( pawn == null || !pawn.IsValid() ) return;
+        var distance = Vector3.DistanceBetween( pawn.WorldPosition, GameObject.WorldPosition );
+        if ( distance > MaxDistance )
+        {
+            OwningNpc?.ClientDebug( $"CoiffeurPanelComponent distance={distance:F1} > {MaxDistance} -> close" );
+            Enabled = false;
+        }
+    }
+
+    protected override int BuildHash() =>
+        HashCode.Combine(
+            CurrentTab,
+            PendingHairColor, PendingBeardColor,
+            PendingHairStylePath, PendingBeardStylePath,
+            HairStyleTouched, BeardStyleTouched,
+            MoneySystem.Get() );
+}

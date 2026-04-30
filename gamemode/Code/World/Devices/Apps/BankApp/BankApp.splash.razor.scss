@@ -1,0 +1,17 @@
+BankApp_splash {
+    justify-content: center;
+    align-items: center;
+    background-color: #0A0A0A;
+
+    svg {
+        height: 80px;
+        width: 80px;
+        opacity: 0;
+        animation: gold-fade 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+}
+
+@keyframes gold-fade {
+    0%   { opacity: 0; transform: scale(0.85); }
+    100% { opacity: 1; transform: scale(1); }
+}

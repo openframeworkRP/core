@@ -1,0 +1,88 @@
+﻿@using Editor
+@using Sandbox.UI
+@using Sandbox.UI.Navigation
+@using OpenFramework.Systems
+
+@implements Sandbox.UI.Navigation.INavigatorPage
+@namespace Facepunch.UI
+@inherits Panel
+
+<root>
+    <div class="deposit-container">
+
+        <h1>DEPOSE VOTRE ARGENT EN BANQUE</h1>
+         
+        <div class="input-deposit">
+            <span>Montant sur votre Compte : @client.Data.Bank</span>
+            <panel>
+                <TextEntry numeric onblur="@InputBlurred" @ref="InputEntry"></TextEntry>
+            </panel>
+            <button onclick=@OnSubmit>DEPOSE VOTRE ARGENT</button>
+        </div>
+
+    </div>
+</root>
+
+@code {
+
+    Client client = Client.Local;
+
+    public TextEntry InputEntry { get; set; }
+
+    protected override void OnAfterTreeRender(bool firstTime)
+    {
+        base.OnAfterTreeRender(firstTime);
+
+        if (!firstTime)
+            return;
+
+        InputEntry.MaxLength = 10;
+    }
+
+    private void OnSubmit()
+    {
+        var amountMoney = InputEntry.Text.ToInt();
+
+        if (amountMoney <= 0)
+        {
+            client.Notify(
+                NotificationSystem.NotificationType.Error,
+                "Veuillez entrer un montant valide."
+            );
+            return;
+        }
+
+        if (amountMoney > MoneySystem.Get())
+        {
+            client.Notify(
+                NotificationSystem.NotificationType.Error,
+                "Vous n'avez pas assez d'argent."
+            );
+            return;
+        }
+
+        Client.DepositMoney(amountMoney);
+        
+
+        client.Notify(
+        NotificationSystem.NotificationType.Success,
+        $"Dépôt de {amountMoney} $ effectué."
+        );
+        
+
+        // 4. On force l'UI à se redessiner avec les nouvelles valeurs reçues
+        StateHasChanged();
+
+    }
+
+
+    protected override int BuildHash()
+    {
+        return HashCode.Combine(MoneySystem.Get(), client.Data.Bank);
+    }
+
+    private void InputBlurred()
+    {
+        InputEntry.Text = string.Empty;
+    }
+}

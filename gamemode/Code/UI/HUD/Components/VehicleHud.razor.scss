@@ -1,0 +1,108 @@
+VehicleHud {
+    position: absolute;
+    bottom: 40px;
+    right: 40px;
+    pointer-events: none;
+
+    .vehicle-hud {
+        flex-direction: column;
+        width: 220px;
+        padding: 14px 18px;
+        gap: 10px;
+        background-color: rgba(0, 0, 0, 0.55);
+        border-radius: 6px;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    // ── Top row : speed + gear ──
+    .top-row {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        height: 40px;
+    }
+
+    .speed-block {
+        flex-direction: row;
+        align-items: baseline;
+        gap: 6px;
+        flex-shrink: 0;
+
+        .speed-value {
+            font-size: 34px;
+            font-weight: 900;
+            color: white;
+            letter-spacing: -1px;
+        }
+
+        .speed-unit {
+            font-size: 11px;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.35);
+            letter-spacing: 1px;
+        }
+    }
+
+    .gear-block {
+        flex-shrink: 0;
+
+        .gear-value {
+            font-size: 28px;
+            font-weight: 900;
+            color: #ff8000;
+
+            &.shifting {
+                opacity: 0.3;
+            }
+        }
+    }
+
+    // ── RPM bar ──
+    .rpm-block {
+        width: 100%;
+        height: 5px;
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 3px;
+        overflow: hidden;
+
+        .rpm-bar-fill {
+            height: 100%;
+            background-color: #ff8000;
+            transition: width 0.05s ease-out;
+            border-radius: 3px;
+
+            &.danger {
+                background-color: #ff3333;
+            }
+        }
+    }
+
+    // ── Fuel bar ──
+    .fuel-block {
+        width: 100%;
+        height: 5px;
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 3px;
+        overflow: hidden;
+
+        .fuel-bar-fill {
+            height: 100%;
+            transition: width 0.2s ease-out;
+            border-radius: 3px;
+
+            &.normal {
+                background-color: #33cc66;
+            }
+
+            &.low {
+                background-color: #ff3333;
+            }
+
+            &.empty {
+                background-color: #ff3333;
+                opacity: 0.4;
+            }
+        }
+    }
+}

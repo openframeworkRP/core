@@ -1,0 +1,45 @@
+@import "ui/Styles/Theme.scss";
+@import "ui/Styles/MenuSystem.scss";
+TransactionPage {
+    flex-direction: column;
+    background-color: grey;
+    align-items: center;
+
+    button {
+        width: 75px;
+        justify-content: center;
+        align-items: center;
+        background-color: rgba(crimson, 1);
+        align-self: center;
+
+        &:hover {
+            background-color: rgba(crimson, 0.9);
+        }
+    }
+
+    h3 {
+        label {
+            font-size: 5px;
+        }
+    }
+
+    select {
+        justify-content: center;
+        height: 20px;
+        width: 100px;
+        align-items: center;
+
+        &:hover {
+            background-color: transparent;
+        }
+
+        option {
+            background-color: red;
+        }
+
+        .result{
+            position:relative;
+            justify-content:center;
+        }
+    }
+}

@@ -1,0 +1,67 @@
+﻿@using Sandbox;
+@using Sandbox.UI;
+@using Editor;
+@using Sandbox.UI.Navigation;
+
+@implements Sandbox.UI.Navigation.INavigatorPage
+@namespace Facepunch.UI
+@inherits Panel
+
+<root>
+    <!-- Bank Transfer History -->
+    <h3>Historique de Transactions Bancaire</h3>
+    <ul>
+        @foreach (var entry in client.Data.BankTransferHistory)
+        {
+            <li>@entry.Key @entry.Value</li>
+        }
+        
+        @if (client.Data.BankTransferHistory.Count == 0)
+        {
+            <span>Pas d'Historique Bancaire</span>
+        }
+    </ul>
+
+    
+    <!-- Player Selection -->
+    <h3>Envoyer de L'Argent</h3>
+    <select @bind="selectedSteamId">
+        <option  value="">-- Selectionne un joueur --</option>
+        @foreach (var player in GameUtils.GetPlayers().Where(p => p != Client.Local))
+        {
+            <option  value="@player.SteamId">@player.DisplayName</option>
+        }
+    </select>
+
+    <!-- Amount input -->
+    <input type="number" @bind="amount" min="1" placeholder="Amount" />
+
+    <button @onclick="SendMoney">Envoyer</button>   
+</root>
+
+@code {
+    Client client = Client.Local;
+    ulong selectedSteamId = 0;
+    int amount = 0;
+
+    void SendMoney()
+    {
+        if (selectedSteamId == 0 || amount <= 0)
+        {
+            Log.Warning("Please select a valid player and amount.");
+            return;
+        }
+
+        var recipient = GameUtils.GetPlayers().FirstOrDefault(p => p.SteamId == selectedSteamId);
+        if (recipient == null)
+        {
+            Log.Warning("Recipient not found.");
+            return;
+        }
+
+        // Here you can call an RPC or server method to actually transfer the money
+        Log.Info($"Sending {amount} to {recipient.DisplayName}");
+        // Example:
+        // BankSystem.TransferMoney(Client.Local, recipient, amount);
+    }
+}

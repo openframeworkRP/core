@@ -1,0 +1,24 @@
+@using OpenFramework.Systems.Npc
+@using OpenFramework.Systems.Jobs
+
+@inherits BaseApp
+@namespace OpenFramework.World.Devices
+
+<root>
+    <button class="close">
+        <svg src="ui/icons/close.svg" color="white" @onclick=@(() => OnClose()) />
+    </button>
+    Netflix
+</root>
+
+@code {
+    public override string AppId => "netflix";
+    public override string DisplayName => "Netflix";
+    public override string Icon => "ui/icons/apps/netflix_icon.svg";
+    public override string IconColor => "#db0000";
+    public override string BackgroundColor => "#000000";
+    public override bool IsSystemApp => false;
+    public override JobList JobAccess => JobList.None;
+    public override Type SplashScreen => typeof(NetflixApp_splash);
+    public override DeviceKind Compatibility => DeviceKind.TV | DeviceKind.Phone | DeviceKind.Computer | DeviceKind.Tablet;
+}

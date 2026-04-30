@@ -1,0 +1,80 @@
+$accent: #D66D2D;
+$accent-hover: #f17b34;
+$glass-bg: rgba(15, 15, 15, 0.85);
+$glass-border: rgba(255, 255, 255, 0.08);
+
+Interaction
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.15);
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+	pointer-events: all;
+
+    .menu-wrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        align-items: center;
+    }
+
+    .npc-name {
+        font-size: 24px;
+        font-weight: 800;
+        color: $accent;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-family: Poppins;
+    }
+
+    .button-container {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+
+        .btn {
+            background-color: $glass-bg;
+            border: 1px solid $glass-border;
+            padding: 14px 50px;
+            min-width: 280px;
+            transition: all 0.15s ease;
+            cursor: pointer;
+            border-radius: 6px;
+            backdrop-filter: blur(20px);
+
+            label {
+                color: rgba(255, 255, 255, 0.7);
+                font-size: 18px;
+                font-family: Poppins;
+                pointer-events: none;
+                letter-spacing: 1px;
+            }
+
+            &:hover {
+                background-color: $accent;
+                border: 1px solid $accent-hover;
+                transform: translateX(8px);
+
+                label {
+                    color: white;
+                }
+            }
+
+            &.quit {
+                margin-top: 5px;
+                border-left: 3px solid rgba(255, 60, 0, 0.5);
+
+                &:hover {
+                    background-color: rgba(255, 60, 0, 0.9);
+                    border: 1px solid #ff3c00;
+                    border-left: 3px solid white;
+                }
+            }
+        }
+    }
+}

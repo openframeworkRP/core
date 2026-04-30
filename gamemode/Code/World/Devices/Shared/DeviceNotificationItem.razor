@@ -1,0 +1,30 @@
+﻿@namespace OpenFramework.World.Devices.Shared
+@inherits Panel
+
+
+<root>
+    <div class="icon">
+        <svg src=@Icon color="white"/>
+    </div>
+    <label style="font-size: @(FontSize)px">@Title</label>
+</root>
+
+
+@code {
+    public string Title { get; init; } = string.Empty;
+    public string Icon { get; init; } = string.Empty;
+
+    public DeviceNotificationItem(string title, string icon)
+    {
+        Title = title;
+        Icon = icon;
+    }
+
+    private int FontSize => Title.Length switch
+    {
+        <= 20 => 14,
+        <= 40 => 12,
+        <= 60 => 10,
+        _ => 9
+    };
+}

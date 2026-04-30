@@ -1,0 +1,75 @@
+@using Sandbox;
+@using Sandbox.UI;
+@using System.Collections.Generic;
+@inherits PanelComponent
+@namespace OpenFramework.Dialog
+
+<root class="dialogue-overlay">
+	@if (CurrentNode != null)
+	{
+		<div class="dialogue-container">
+			<div class="choices-list">
+				@foreach (var choice in CurrentNode.Choices)
+				{
+					<button class="choice-button" onclick="@(() => SelectChoice(choice))">
+						<label>@choice.Text</label>
+					</button>
+				}
+
+				<button class="choice-button close" onclick=@QuitMenu>
+					<label>Quitter</label>
+				</button>
+			</div>
+
+			<div class="message-box">
+				<div class="header">
+					<div class="accent-bar"></div>
+					<label class="title">@NpcName</label>
+				</div>
+				<label class="message-text">
+					@CurrentNode.Message
+				</label>
+			</div>
+		</div>
+	}
+</root>
+
+@code
+{
+	[Property] public DialogueNode CurrentNode { get; set; }
+	[Property] public string NpcName { get; set; }
+	private DialogueNode firstNode { get; set; }
+
+	private void SelectChoice(DialogueChoice choice)
+	{
+		choice.Action?.Invoke();
+		CurrentNode = choice.NextNode;
+		if (CurrentNode == null)
+		{
+			RestoreAndClose();
+		}
+	}
+
+	private void QuitMenu()
+	{
+		CurrentNode = firstNode;
+		RestoreAndClose();
+	}
+
+	private void RestoreAndClose()
+	{
+		var pawn = Client.Local?.PlayerPawn;
+		if (pawn != null)
+		{
+			pawn.IsInNpcMenu = false;
+		}
+		this.Enabled = false;
+	}
+
+	protected override void OnAwake()
+	{
+		firstNode = CurrentNode;
+	}
+
+	protected override int BuildHash() => System.HashCode.Combine(CurrentNode, CurrentNode?.Message, NpcName);
+}

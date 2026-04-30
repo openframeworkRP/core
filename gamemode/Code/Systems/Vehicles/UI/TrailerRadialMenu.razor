@@ -1,0 +1,154 @@
+@namespace OpenFramework.Systems.Vehicles.UI
+@attribute [StyleSheet]
+@inherits Panel
+@using OpenFramework.Systems.Pawn
+
+<root class="@(IsOpen ? "open" : "")">
+    <div class="radial-bg">
+        <div class="center-dot"></div>
+
+        @foreach ( var (item, index) in Items.Select( (v, i) => (v, i) ) )
+        {
+            float angle = GetAngle( index );
+            float distPct = 32f;
+            float xPct = 50f + MathF.Cos( angle ) * distPct;
+            float yPct = 50f + MathF.Sin( angle ) * distPct;
+
+            <div class="radial-item @(HoveredIndex == index ? "hovered" : "")"
+                 style="left: @($"{xPct:F1}%"); top: @($"{yPct:F1}%");"
+                 onclick="@(() => SelectItem( index ))">
+                <img class="radial-icon" src="@item.Icon" />
+                <span class="radial-label">@item.Label</span>
+            </div>
+        }
+
+        @if ( HoveredIndex >= 0 && HoveredIndex < Items.Count )
+        {
+            float hAngle = GetAngle( HoveredIndex );
+            <div class="selection-line" style="transform: rotate(@($"{hAngle * 180f / MathF.PI + 90f:F1}deg"))"></div>
+        }
+    </div>
+</root>
+
+@code {
+    public static TrailerRadialMenu Instance { get; private set; }
+
+    public bool IsOpen { get; private set; }
+    public int HoveredIndex { get; private set; } = -1;
+
+    private List<RadialItem> Items { get; set; } = new();
+    private TrailerHitch _hitch;
+
+    public record RadialItem( string Label, string Icon, Action OnSelect );
+
+    protected override void OnAfterTreeRender( bool firstTime )
+    {
+        if ( firstTime )
+            Instance = this;
+    }
+
+    private static RealTimeSince _lastOpenTime;
+
+    public static void Open( TrailerHitch hitch )
+    {
+        if ( _lastOpenTime < 0.5f ) return;
+        _lastOpenTime = 0f;
+
+        if ( Instance != null && Instance.IsOpen )
+        {
+            Instance.IsOpen = false;
+            return;
+        }
+
+        bool needCreate = false;
+        try { needCreate = Instance == null || Instance.Parent == null; }
+        catch { needCreate = true; }
+
+        if ( needCreate )
+        {
+            Instance = null;
+            var hud = Game.ActiveScene?.GetComponentInChildren<Facepunch.UI.MainHUD>( true );
+            if ( hud == null ) return;
+
+            Instance = new TrailerRadialMenu();
+            Instance.Items = new();
+            hud.Panel.AddChild( Instance );
+        }
+
+        if ( Instance == null ) return;
+
+        Instance._hitch = hitch;
+        Instance.Items ??= new();
+        Instance.Items.Clear();
+
+        BuildItems( hitch, Instance.Items );
+
+        if ( Instance.Items.Count == 0 ) return;
+
+        Instance.IsOpen = true;
+        Instance.HoveredIndex = -1;
+    }
+
+    private static void BuildItems( TrailerHitch hitch, List<RadialItem> items )
+    {
+        if ( hitch.IsConnected )
+        {
+            items.Add( new RadialItem( "Décrocher", "/ui/icons/leave.svg", () =>
+            {
+                hitch.RequestDecouple();
+                Close();
+            }));
+        }
+        else
+        {
+            items.Add( new RadialItem( "Accrocher", "/ui/icons/getin.svg", () =>
+            {
+                hitch.RequestCouple();
+                Close();
+            }));
+        }
+    }
+
+    public static void Close()
+    {
+        if ( Instance != null )
+            Instance.IsOpen = false;
+    }
+
+    void SelectItem( int index )
+    {
+        if ( index < 0 || index >= Items.Count ) return;
+        Items[index].OnSelect?.Invoke();
+    }
+
+    float GetAngle( int index )
+    {
+        if ( Items.Count == 0 ) return 0f;
+        float step = MathF.PI * 2f / Items.Count;
+        return -MathF.PI / 2f + step * index;
+    }
+
+    private const float MaxHitchDistance = 150f;
+
+    public override void Tick()
+    {
+        base.Tick();
+        if ( !IsOpen ) return;
+
+        if ( _hitch.IsValid() )
+        {
+            var pawn = Game.ActiveScene?.GetAllComponents<PlayerPawn>()
+                .FirstOrDefault( x => !x.IsProxy );
+            if ( pawn != null && Vector3.DistanceBetween( pawn.WorldPosition, _hitch.WorldPosition ) > MaxHitchDistance )
+            {
+                IsOpen = false;
+            }
+        }
+        else
+        {
+            IsOpen = false;
+        }
+    }
+
+    protected override int BuildHash() => HashCode.Combine( IsOpen, HoveredIndex, _hitch?.IsConnected );
+}

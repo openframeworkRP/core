@@ -1,0 +1,152 @@
+@using Sandbox;
+@using Sandbox.UI;
+@using OpenFramework.Systems.Vehicles;
+@inherits PanelComponent
+@namespace OpenFramework.Systems.Vehicles.UI
+
+<root>
+    @if (Vehicle != null && Vehicle.Engine != null && Vehicle.Gearbox != null)
+    {
+        var engine = Vehicle.Engine;
+        var gearbox = Vehicle.Gearbox;
+        float speedKmh = Vehicle.DbgCarSpeed * 3.6f;
+        float rpm = engine.RPM;
+        float maxRpm = engine.MaxRPM;
+        float rpmPercent = Math.Clamp(rpm / maxRpm * 100f, 0f, 100f);
+        float speedPercent = Math.Clamp(speedKmh / MaxSpeedDisplay * 100f, 0f, 100f);
+        int gear = gearbox.CurrentGear;
+        bool isShifting = gearbox.IsShifting;
+        string gearText = gear switch { -1 => "R", 0 => "N", _ => gear.ToString() };
+        string rpmColor = GetRpmColor(rpmPercent);
+
+        float rpmAngle = -130f + (rpmPercent / 100f * 260f);
+        float speedAngle = -130f + (speedPercent / 100f * 260f);
+
+        // Scale factor based on panel size (reference: 250x120)
+        float pw = PanelWidth;
+        float ph = PanelHeight;
+        float s = Math.Min(pw / 250f, ph / 120f);
+
+        // Precomputed sizes
+        string speedFs = $"{42f * s:F0}px";
+        string unitFs = $"{12f * s:F0}px";
+        string gearFs = $"{24f * s:F0}px";
+        string gearBigFs = $"{32f * s:F0}px";
+        string infoFs = $"{10f * s:F0}px";
+        string gaugeValFs = $"{14f * s:F0}px";
+        string gaugeLblFs = $"{7f * s:F0}px";
+        string barH = $"{8f * s:F0}px";
+        string barSmH = $"{6f * s:F0}px";
+        string gaugeSize = $"{(int)(ph * 0.7f)}px";
+        string gaugeBigSize = $"{(int)(ph * 0.85f)}px";
+        string needleW = $"{Math.Max(2f, 2f * s):F0}px";
+        string dotSize = $"{8f * s:F0}px";
+        string gap = $"{6f * s:F0}px";
+        string pad = $"{8f * s:F0}px";
+
+        @if (Style == DashboardStyle.Digital)
+        {
+            <div class="dash digital" style="gap: @gap; padding: @pad">
+                <div class="speed-block" style="gap: @($"{4f * s:F0}px")">
+                    <span class="speed" style="font-size: @speedFs">@($"{(int)speedKmh}")</span>
+                    <span class="unit" style="font-size: @unitFs">KM/H</span>
+                </div>
+
+                <div class="rpm-bar" style="height: @barH">
+                    <div class="rpm-fill" style="width: @($"{rpmPercent:F0}%"); background-color: @rpmColor"></div>
+                </div>
+
+                <div class="bottom-row">
+                    <span class="info" style="font-size: @infoFs">@($"{(int)rpm}") RPM</span>
+                    <span class="gear @(isShifting ? "shifting" : "")" style="font-size: @gearFs">@gearText</span>
+                    <span class="info" style="font-size: @infoFs">@($"{Vehicle.Odometer:F2}") km</span>
+                </div>
+            </div>
+        }
+        else if (Style == DashboardStyle.Analog)
+        {
+            <div class="dash analog" style="gap: @gap; padding: @pad">
+                <div class="gauge" style="width: @gaugeSize; height: @gaugeSize">
+                    <div class="gauge-bg"></div>
+                    <div class="needle" style="transform: rotate(@($"{rpmAngle:F0}")deg); width: @needleW"></div>
+                    <div class="needle-dot" style="width: @dotSize; height: @dotSize"></div>
+                    <span class="gauge-val" style="font-size: @gaugeValFs; bottom: @($"{16f * s:F0}px")">@($"{(int)rpm}")</span>
+                    <span class="gauge-lbl" style="font-size: @gaugeLblFs; bottom: @($"{6f * s:F0}px")">RPM</span>
+                </div>
+
+                <div class="center" style="gap: @($"{2f * s:F0}px")">
+                    <span class="gear-big @(isShifting ? "shifting" : "")" style="font-size: @gearBigFs">@gearText</span>
+                    <span class="odo" style="font-size: @infoFs">@($"{Vehicle.Odometer:F2}") km</span>
+                </div>
+
+                <div class="gauge" style="width: @gaugeSize; height: @gaugeSize">
+                    <div class="gauge-bg"></div>
+                    <div class="needle" style="transform: rotate(@($"{speedAngle:F0}")deg); width: @needleW"></div>
+                    <div class="needle-dot" style="width: @dotSize; height: @dotSize"></div>
+                    <span class="gauge-val" style="font-size: @gaugeValFs; bottom: @($"{16f * s:F0}px")">@($"{(int)speedKmh}")</span>
+                    <span class="gauge-lbl" style="font-size: @gaugeLblFs; bottom: @($"{6f * s:F0}px")">KM/H</span>
+                </div>
+            </div>
+        }
+        else @* Mixed *@
+        {
+            <div class="dash mixed" style="gap: @($"{10f * s:F0}px"); padding: @pad">
+                <div class="gauge" style="width: @gaugeBigSize; height: @gaugeBigSize">
+                    <div class="gauge-bg"></div>
+                    <div class="needle" style="transform: rotate(@($"{speedAngle:F0}")deg); width: @needleW"></div>
+                    <div class="needle-dot" style="width: @dotSize; height: @dotSize"></div>
+                    <span class="gauge-val" style="font-size: @gaugeValFs; bottom: @($"{16f * s:F0}px")">@($"{(int)speedKmh}")</span>
+                    <span class="gauge-lbl" style="font-size: @gaugeLblFs; bottom: @($"{6f * s:F0}px")">KM/H</span>
+                </div>
+
+                <div class="side" style="gap: @($"{4f * s:F0}px")">
+                    <span class="gear-big @(isShifting ? "shifting" : "")" style="font-size: @gearBigFs">@gearText</span>
+
+                    <div class="rpm-bar" style="height: @barSmH">
+                        <div class="rpm-fill" style="width: @($"{rpmPercent:F0}%"); background-color: @rpmColor"></div>
+                    </div>
+                    <span class="info" style="font-size: @infoFs">@($"{(int)rpm}") RPM</span>
+
+                    <span class="odo" style="font-size: @infoFs">@($"{Vehicle.Odometer:F2}") km</span>
+                </div>
+            </div>
+        }
+    }
+</root>
+
+@code {
+    [Property] public Vehicle Vehicle { get; set; }
+    [Property] public DashboardStyle Style { get; set; } = DashboardStyle.Digital;
+    [Property] public float MaxSpeedDisplay { get; set; } = 260f;
+
+    float PanelWidth => GetPanelSize().x;
+    float PanelHeight => GetPanelSize().y;
+
+    Vector2 GetPanelSize()
+    {
+        var wp = Components.GetInAncestorsOrSelf<Sandbox.WorldPanel>();
+        if (wp.IsValid())
+            return wp.PanelSize;
+        return new Vector2(250, 120);
+    }
+
+    string GetRpmColor(float pct)
+    {
+        if (pct < 50f)
+        {
+            float t = pct / 50f;
+            int r = (int)(80 + t * 175);
+            int g = (int)(200 - t * 100);
+            return $"rgb({r},{g},0)";
+        }
+        else
+        {
+            float t = (pct - 50f) / 50f;
+            int g = (int)(100 - t * 100);
+            return $"rgb(255,{g},0)";
+        }
+    }
+
+    // Throttle 10Hz : evite le rebuild a chaque ms via DateTime.Now
+    protected override int BuildHash() => (int)(Time.Now * 10f);
+}

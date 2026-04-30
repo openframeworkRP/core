@@ -1,0 +1,27 @@
+HeadBagOverlay
+{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+
+    .overlay
+    {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-color: rgba( 0, 0, 0, 0.96 );
+        backdrop-filter: blur( 120px );
+        backdrop-filter-saturate: 0.15;
+        backdrop-filter-brightness: 0.25;
+    }
+
+    .grain
+    {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-color: rgba( 8, 5, 2, 0.9 );
+    }
+}

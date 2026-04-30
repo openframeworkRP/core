@@ -1,0 +1,154 @@
+@inherits BaseMarkerPanel
+@namespace OpenFramework.UI
+@using OpenFramework.Systems.Weapons
+
+@if ( !Player.IsValid() ) return;
+
+<style>
+    PlayerMarkerPanel
+    {
+        justify-content: flex-end;
+        align-items: center;
+        flex-direction: column-reverse;
+        text-shadow: 1px 1px 1px rgba( black, 1 );
+        transform: translateX(-50%) translateY(-100%);
+       
+        .dot
+        {
+            width: 6px;
+            height: 6px;
+            border-radius: 100px;
+            background-color: @PersonalColor.Hex;
+            box-shadow: 2px 2px 2px rgba( black, 0.5 );
+        }
+
+        .name
+        {
+            text-shadow: 1px 1px 1px rgba( black, 1 );
+            font-weight: 900;
+            color: @MarkerColor.Hex;
+        }
+
+        .hp
+        {
+            text-shadow: 1px 1px 1px rgba( black, 1 );
+            color: @MarkerColor.Hex;
+        }
+
+        .weapons
+        {
+            label
+            {
+                text-shadow: 1px 1px 1px rgba( black, 1 );
+            }
+            gap: -8px;
+
+            height: 48px;
+
+            .icon {
+                width: 64px;
+                height: 64px;
+            }
+        }
+
+        Icon {
+            background-image-tint: @MarkerColor.Hex;
+        }
+    }
+</style>
+
+<root>
+    @if ( !Marker.IsValid() )
+        return;
+
+    @if ( Player.IsPossessed )
+        return;
+
+    @if ( Marker.IsBehind ) 
+        return;
+
+    @if ( Player?.HealthComponent?.State != LifeState.Alive )
+        return;
+
+    @if ( !Viewer.IsValid() )
+        return;
+
+    @if ( Marker.IsOffScreen )
+    {
+        //
+    }
+    else
+    {
+        @if (IsInView)
+        {
+            <div class="dot" />
+
+            @if (LookingAt)
+            {
+                <label class="name">@Player.DisplayName</label>
+            }
+        }
+    }
+</root>
+
+@code
+{
+    public PlayerPawn Player => Object?.GameObject?.Components?.Get<PlayerPawn>();
+    private PlayerPawn Viewer => Client.Viewer.PlayerPawn;
+    public Color MarkerColor => Color.White;
+    public Color PersonalColor => Color.White;
+
+    bool LookingAt => MathF.Abs( Marker.CenterDistance.x ) < 0.1f && MathF.Abs( Marker.CenterDistance.y ) < 0.2f;
+
+    private float MaxEnemyDistance => 262144;
+
+    SceneTraceResult GetTrace()
+    {
+        var distance = Viewer.AimRay.Position.DistanceSquared( Player.AimRay.Position );
+        if (distance > MaxEnemyDistance) return default;
+
+        var direction = (Player.AimRay.Position - Viewer.AimRay.Position).Normal;
+        var tr = Scene.Trace.Ray( Viewer.AimRay.Position, Viewer.AimRay.Position + direction * distance )
+            .IgnoreGameObjectHierarchy( Viewer.GameObject )
+            .Run();
+
+        return tr;
+    }
+
+    bool IsInView
+    {
+        get
+        {
+            var tr = GetTrace();
+            if ( !tr.Hit ) return false;
+            if ( Player is null ) return false;
+
+            return tr.GameObject.Root == Player.GameObject;
+        }
+    }
+
+    private bool CanShowWeapon( Equipment equipment )
+    {
+        //if ( equipment.Resource.Slot == EquipmentSlot.Melee ) return false;
+        //if ( equipment.Resource.Slot == EquipmentSlot.Special ) return false;
+        return true;
+    }
+
+    protected override void OnAfterTreeRender( bool firstTime )
+    {
+        if ( firstTime ) 
+        {
+            Log.Info( $"MarkerPanelTypeOverride: Created PlayerMarkerPanel for \"{Player?.DisplayName}\"" );
+        }
+    }
+
+    protected override int BuildHash()
+    {
+        return System.HashCode.Combine(
+            Player?.HealthComponent?.State,
+            Marker?.IsOffScreen,
+            Marker?.IsBehind,
+            Player?.IsPossessed
+        );
+    }
+}

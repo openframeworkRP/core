@@ -1,0 +1,26 @@
+@using OpenFramework.Systems.Npc
+@using OpenFramework.Systems.Jobs
+
+@inherits BaseApp
+@namespace OpenFramework.World.Devices.Apps.Police
+
+<root>
+    <button class="close">
+        <svg src="ui/icons/close.svg" color="white" @onclick=@(() => OnClose()) />
+    </button>
+
+   <PoliceApp_navigator/>
+
+</root>
+
+@code {
+    public override string AppId => "police";
+    public override string DisplayName => "Police";
+    public override string Icon => "ui/icons/apps/policeicon.svg";
+    public override string IconColor => "#273CF5";
+    public override string BackgroundColor => "#FFFFFF";
+    public override bool IsSystemApp => (JobAccess == JobList.None ? false : true);
+    public override JobList JobAccess => JobList.Police;
+    public override Type SplashScreen => typeof(PoliceApp_splash);
+    public override DeviceKind Compatibility => DeviceKind.TV | DeviceKind.Phone | DeviceKind.Computer | DeviceKind.Tablet;
+}

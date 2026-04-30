@@ -1,0 +1,31 @@
+﻿@using OpenFramework.World.Devices
+@namespace OpenFramework.World.Devices.Shared
+@inherits Panel
+
+@if (AppRef == null) return;
+
+<root class="@(Context.Device.Kind.ToString().ToLower() + "_type")">
+    @if (Context.Device.Kind == DeviceKind.Phone)
+    {
+        @* Sur iPhone, on simule la barre de swipe home *@
+        <div class="home-indicator" @onclick=@(() => AppRef.Close())></div>
+    }
+    else
+    {
+        @* Sur PC/TV, un bouton classique en haut à droite *@
+        <button class="close-btn" @onclick=@(() => AppRef.Close())>
+            <svg src="ui/icons/close.svg" />
+        </button>
+    }
+</root>
+
+@code {
+    private IApp AppRef { get; set; }
+    private AppContext Context { get; set; }
+
+    public CloseButton(IApp _appref, AppContext _context)
+    {
+        AppRef = _appref;
+        Context = _context;
+    }
+}

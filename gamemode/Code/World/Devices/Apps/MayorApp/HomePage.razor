@@ -1,0 +1,56 @@
+﻿@using Sandbox;
+@using Sandbox.UI;
+@using Editor;
+@using Sandbox.UI.Navigation;
+
+@implements Sandbox.UI.Navigation.INavigatorPage
+@namespace OpenFramework.World.Devices.Apps.Mayor
+@inherits Panel
+
+<root>
+   <div class="tab">
+       Recapitulatif Des Actions :
+   </div>
+
+   <div class="container">
+       <div class="finance">
+            <span>Finance</span>
+            <div class="finance-total">
+                <span>Finance Total : 500.000 $</span>
+                <span> Taxe Fonciere  : 10%</span>
+                <span> Taxe Revenue  : 10%</span>
+            </div>
+       </div>
+
+        <div class="rules">
+            <span>Reglement</span>
+            <div class="reglement-total">
+                <span>Touts citoyen a le droit de taper Tymtimp</span>
+                <span> Taxe Fonciere  : 10%</span>
+                <span> Taxe Revenue  : 10%</span>
+            </div>
+            
+        </div>
+
+        <div class="employees">
+            <span>Employe</span>
+            <div class="employe-total">
+                <span>Liste de touts les employes :</span>
+                <ul>
+                    <li>Peterson Twinsd</li>
+                    <li>Benjamin Mbk</li>
+                    <li>Fernandez Mathieu</li>
+                    <li>Tom  Marmhotte</li>
+                    <li>Darril Dada</li>
+                    <li>Jean Nanou</li>
+                </ul>
+            </div>
+        </div>
+
+   </div>
+</root>
+
+@code
+{
+    //TODO FINANCE : RECUPERE L'ARGENT TOTAL DU GOURVENEMENT
+}

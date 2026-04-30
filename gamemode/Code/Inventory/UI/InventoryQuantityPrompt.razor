@@ -1,0 +1,233 @@
+@namespace OpenFramework.Inventory.UI
+@using Sandbox
+@using Sandbox.UI
+@inherits Panel
+
+<div class="prompt-header">
+    <span class="brand-accent"></span>
+    <label class="title">@Title</label>
+    <div class="spacer"></div>
+    <button class="close-x" onclick=@(() => Cancel())>×</button>
+</div>
+
+<div class="prompt-body">
+    <div class="item-row">
+        <label class="item-name">@Item?.Name</label>
+        <label class="stack-info">x@(Item?.Quantity)</label>
+    </div>
+
+    <div class="qty-display">
+        <label class="qty-current">@_quantity</label>
+        <label class="qty-max">/ @Max</label>
+    </div>
+
+    <div class="qty-row">
+        <button class="qty-btn" onclick=@(() => Adjust(-1))>−</button>
+        <TextEntry class="qty-input"
+                   MaxLength=@(6)
+                   OnTextEdited=@OnQtyTextEdited
+                   onsubmit=@Confirm
+                   @ref="QtyEntry" />
+        <button class="qty-btn" onclick=@(() => Adjust(1))>+</button>
+    </div>
+
+    <div class="quick-row">
+        <button class="quick-btn" onclick=@(() => SetQuantity(Min))>MIN</button>
+        <button class="quick-btn" onclick=@(() => SetQuantity(Math.Max(Min, Max / 2)))>½</button>
+        <button class="quick-btn" onclick=@(() => SetQuantity(Max))>MAX</button>
+    </div>
+</div>
+
+<div class="actions">
+    <button class="action-btn confirm" onclick=@Confirm>
+        <span class="icon">@ConfirmIcon</span>
+        <span class="btn-text">@ConfirmLabel</span>
+    </button>
+</div>
+
+@code {
+    public InventoryItem Item { get; set; }
+    public string Title { get; set; } = "Quantité";
+    public string ConfirmLabel { get; set; } = "OK";
+    public string ConfirmIcon { get; set; } = "✔";
+    public int Min { get; set; } = 1;
+    public int Max { get; set; } = 1;
+    public Action<int> OnConfirmed { get; set; }
+
+    public TextEntry QtyEntry { get; set; }
+
+    private int _quantity = 1;
+    private int _focusAttempts;
+
+    /// <summary>
+    /// Met a jour la quantite logique et synchronise le texte du TextEntry.
+    /// </summary>
+    private void SetQuantity(int v)
+    {
+        var clamped = Math.Clamp(v, Min, Max);
+        _quantity = clamped;
+        // On vide le texte : le placeholder montre la valeur courante.
+        // Si l'utilisateur tape, sa frappe est la valeur, point.
+        if (QtyEntry != null)
+            QtyEntry.Text = "";
+        Log.Info($"[QuantityPrompt] SetQuantity={clamped}");
+        StateHasChanged();
+    }
+
+    /// <summary>
+    /// Affiche un prompt et invoque <paramref name="onConfirmed"/> avec la quantite choisie.
+    /// Si <paramref name="anchor"/> est fourni, la fenetre se positionne juste a cote de ce panel.
+    /// </summary>
+    public static InventoryQuantityPrompt Show(Panel root, InventoryItem item, string title,
+        string confirmLabel, string confirmIcon, int min, int max, int initial, Action<int> onConfirmed,
+        Panel anchor = null)
+    {
+        if (root == null || item == null) return null;
+        if (max < min) return null;
+
+        // Ferme tout autre prompt actif pour eviter les empilements
+        root.Children.OfType<InventoryQuantityPrompt>().ToList().ForEach(p => p.Delete());
+
+        var prompt = new InventoryQuantityPrompt
+        {
+            Item = item,
+            Title = title,
+            ConfirmLabel = confirmLabel,
+            ConfirmIcon = confirmIcon,
+            Min = Math.Max(1, min),
+            Max = Math.Max(1, max),
+            OnConfirmed = onConfirmed
+        };
+        prompt._quantity = Math.Clamp(initial, prompt.Min, prompt.Max);
+
+        root.AddChild(prompt);
+
+        // Positionnement a cote de l'ancre, sinon centre.
+        if (anchor != null && anchor.IsValid)
+        {
+            var rect = anchor.Box.Rect;
+            const float gap = 6f;
+            const float cardW = 200f;
+            const float cardH = 180f;
+
+            float x = rect.Right + gap;
+            float y = rect.Top;
+
+            if (x + cardW > Screen.Width) x = rect.Left - cardW - gap;
+            if (x < 4) x = 4;
+            if (y + cardH > Screen.Height) y = Screen.Height - cardH - 4;
+            if (y < 4) y = 4;
+
+            prompt.Style.Left = Length.Pixels(x);
+            prompt.Style.Top = Length.Pixels(y);
+        }
+        else
+        {
+            prompt.Style.Left = Length.Pixels(Screen.Width * 0.5f - 100f);
+            prompt.Style.Top = Length.Pixels(Screen.Height * 0.5f - 90f);
+        }
+
+        return prompt;
+    }
+
+    private void Adjust(int delta) => SetQuantity(_quantity + delta);
+
+    private void Confirm()
+    {
+        ApplyTextValue();
+        var qty = _quantity;
+        var cb = OnConfirmed;
+        Log.Info($"[QuantityPrompt] Confirm: qty={qty}, entryText='{QtyEntry?.Text}'");
+        Delete();
+        cb?.Invoke(qty);
+    }
+
+    private void Cancel() => Delete();
+
+    /// <summary>
+    /// Lit le contenu actuel du TextEntry et applique la valeur (clampee) a _quantity.
+    /// Si le texte est vide, on garde la valeur courante (boutons +/-/MIN/½/MAX).
+    /// </summary>
+    private void ApplyTextValue()
+    {
+        var raw = QtyEntry?.Text;
+        if (string.IsNullOrWhiteSpace(raw))
+        {
+            Log.Info($"[QuantityPrompt] ApplyTextValue: champ vide, on garde _quantity={_quantity}");
+            return;
+        }
+        var digits = new string(raw.Where(char.IsDigit).ToArray());
+        if (digits.Length == 0) return;
+        if (int.TryParse(digits, out var v))
+        {
+            var clamped = Math.Clamp(v, Min, Max);
+            Log.Info($"[QuantityPrompt] ApplyTextValue: '{raw}' -> {v} -> clamp {clamped}");
+            _quantity = clamped;
+        }
+    }
+
+    private void OnQtyTextEdited(string raw)
+    {
+        Log.Info($"[QuantityPrompt] OnTextEdited: '{raw}'");
+        if (string.IsNullOrEmpty(raw)) return;
+
+        // Filtre defensif : ne garde que les chiffres
+        var digits = new string(raw.Where(char.IsDigit).ToArray());
+        if (digits != raw && QtyEntry != null)
+            QtyEntry.Text = digits;
+
+        if (string.IsNullOrEmpty(digits)) return;
+        if (int.TryParse(digits, out var v))
+        {
+            var bounded = Math.Clamp(v, Min, Max);
+            if (bounded != _quantity)
+            {
+                _quantity = bounded;
+                StateHasChanged();
+            }
+        }
+    }
+
+    private int _framesSinceOpen;
+
+    public override void Tick()
+    {
+        if (IsDeleting) return;
+        if (Item == null || !Item.IsValid || Max < Min) { Delete(); return; }
+
+        // Tentatives de focus pendant quelques frames
+        if (QtyEntry != null && _focusAttempts < 8 && !QtyEntry.HasFocus)
+        {
+            QtyEntry.Focus();
+            _focusAttempts++;
+        }
+
+        // Si l'item a perdu de la quantite (consomme ailleurs), on reborne
+        if (Max > Item.Quantity)
+        {
+            Max = Math.Max(Min, Item.Quantity);
+            if (_quantity > Max) SetQuantity(Max);
+        }
+
+        _framesSinceOpen++;
+        if (_framesSinceOpen < 2) return;
+
+        if (Input.EscapePressed)
+        {
+            Input.EscapePressed = false;
+            Cancel();
+            return;
+        }
+
+        // Clic en dehors du panel → fermer
+        if (Input.Pressed("attack1") || Input.Pressed("attack2"))
+        {
+            var rect = Box.Rect;
+            if (rect.Width <= 0 || rect.Height <= 0) return;
+            if (!rect.IsInside(Mouse.Position))
+                Cancel();
+        }
+    }
+
+    protected override int BuildHash() => HashCode.Combine(Item, _quantity, Min, Max, Title);
+}

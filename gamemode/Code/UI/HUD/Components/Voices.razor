@@ -1,0 +1,26 @@
+@namespace Facepunch.UI
+@attribute [StyleSheet]
+@using OpenFramework
+@using Sandbox
+@inherits Panel
+
+<root>
+    @if (MyRadio is { IsActivate: true })
+    {
+        <div class="radio-indicator">
+            <div class="radio-dot" />
+            <label class="radio-freq">@MyRadio.Frequency.ToString("0.0") MHz</label>
+        </div>
+    }
+</root>
+
+@code
+{
+    private RadioComponent MyRadio => Scene.GetAllComponents<PlayerVoiceComponent>()
+        .FirstOrDefault(x => !x.IsProxy)?.Components.Get<RadioComponent>();
+
+    protected override int BuildHash()
+    {
+        return HashCode.Combine(MyRadio?.IsActivate, MyRadio?.Frequency);
+    }
+}

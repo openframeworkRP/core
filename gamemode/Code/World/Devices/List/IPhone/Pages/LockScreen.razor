@@ -1,0 +1,125 @@
+﻿@using Sandbox;
+@using Sandbox.UI;
+@using Editor;
+@using Sandbox.UI.Navigation;
+@using Sandbox.WeatherSystem;
+@using OpenFramework.World.Devices.Shared
+
+@implements IDevice.IScreenContext
+@inherits Panel
+@namespace OpenFramework.World.Devices.Phone
+
+@if (Client.Local == null) return;
+
+<root style="background-image:url(@LockBackground)">
+    <div class="swiper"
+         style="top: @(CurrentOffset)px;
+               backdrop-filter: blur(@(CurrentBlur)px);
+               opacity: @(CurrentOpacity);
+               transition: @(IsDragging ? "none" : "all 0.3s cubic-bezier(0.25, 1, 0.5, 1)")">
+
+        <div class="header">
+            <div class="time">@_weatherSystem?.GetFormattedTime()</div>
+            <div class="date">@DateTime.Now.ToString("dddd, MMMM dd")</div>
+        </div>
+
+        <DeviceNotificationContainer />
+
+        <div class="bar"></div>
+    </div>
+</root>
+
+@code {
+    public IDevice AttachedDevice { get; set; }
+    WeatherSystem _weatherSystem => Game.ActiveScene?.GetComponentInChildren<WeatherSystem>();
+
+    private bool IsDragging = true;
+    private Vector2 StartMousePos;
+    private float CurrentOffset = 0f;
+
+    private const float Threshold = 450f; // Distance pour déverrouiller
+    public string LockBackground => DevicesManager.Instance.Settings
+       .FirstOrDefault(x => x.Id == "lock_wallpaper")?.Value ?? "ui/phone/background/iphone_wallpaper_v1.png";
+
+    // Calcul du flou dynamique (commence à 25px, descend à 0px)
+    private float CurrentBlur => Math.Max(0, 0.01f * (0.5f - (Math.Abs(CurrentOffset) / Threshold)));
+
+    // Calcul de l'opacité (pour le fondu)
+    private float CurrentOpacity => Math.Max(0, 1f - (Math.Abs(CurrentOffset) / Threshold));
+    protected override void OnMouseDown(MousePanelEvent e)
+    {
+        Log.Info($"Clic détecté à : {e.LocalPosition.y} | Hauteur totale : {Box.Rect.Height}");
+
+        if (e.LocalPosition.y > Box.Rect.Height * 0.8f)
+        {
+            IsDragging = true;
+            StartMousePos = e.LocalPosition;
+            Style.Cursor = "move";
+            Log.Info($"[iPhone] Drag Start");
+            e.StopPropagation();
+        }
+    }
+
+    protected override void OnMouseMove(MousePanelEvent e)
+    {
+        // 1. Gérer l'apparence du curseur au survol
+        if (!IsDragging)
+        {
+            float grabZoneHeight = 100f;
+            if (e.LocalPosition.y > (Box.Rect.Height - grabZoneHeight))
+            {
+                Style.Cursor = "pointer";
+            }
+            else
+            {
+                Style.Cursor = "default"; // Remet le curseur par défaut
+            }
+        }
+
+        // 2. Gérer le drag
+        if (!IsDragging) return;
+
+        float diff = e.LocalPosition.y - StartMousePos.y;
+        CurrentOffset = Math.Min(0, diff);
+
+        if (Math.Abs(CurrentOffset) > Threshold)
+        {
+            Unlock();
+        }
+
+        StateHasChanged();
+    }
+
+    protected override void OnMouseUp(MousePanelEvent e)
+    {
+        if (!IsDragging) return;
+        Log.Info("[iPhone] Drag Reset");
+        ResetPosition();
+        Style.Cursor = "default";
+    }
+
+    private void ResetPosition()
+    {
+        IsDragging = false;
+        CurrentOffset = 0;
+        StateHasChanged();
+    }
+
+    private void Unlock()
+    {
+        IsDragging = false;
+        Log.Info("[iPhone] UNLOCKED");
+        // 'this' est ton Panel actuel.
+        // La méthode d'extension va chercher le NavigationHost tout seule.
+        Delete();
+        Parent.AddChild(new HomeScreen() { AttachedDevice = AttachedDevice });
+    }
+
+    public override void Tick()
+    {
+        if (AttachedDevice is BaseDevice device)
+            device.SwipeOffset = CurrentOffset;
+    }
+
+    protected override int BuildHash() => HashCode.Combine( (int)(Time.Now * 2f), CurrentOffset, IsDragging );
+}

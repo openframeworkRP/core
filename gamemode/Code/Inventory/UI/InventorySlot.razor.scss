@@ -1,0 +1,311 @@
+@import "ui/Styles/Theme.scss";
+
+$main-color: #ff8000;
+$green-money: #5BFF8C;
+
+InventorySlot {
+    background-color: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    width: 90px;
+    height: 90px;
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        width: 100%;
+        height: 50%;
+        opacity: 0.1;
+    }
+
+    &:not(.empty) {
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+
+        &:hover {
+            background-color: rgba(255, 255, 255, 0.08);
+            background-image: linear-gradient(-90deg, rgba($main-color, 0.2), transparent);
+        }
+    }
+
+    &.active {
+        border: 2px solid $main-color;
+        background-color: rgba(255, 75, 104, 0.1);
+    }
+    // Slot source pendant le drag : on le rend discret, il reste en place
+    &.is-dragging {
+        opacity: 0.25;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        background-color: transparent;
+        background-image: none;
+        pointer-events: none;
+        // On cache le contenu visuel du slot source
+        .preview-panel, .static-fallback, .quantity, .ammo-info, .durability-bar, .category-icon {
+            opacity: 0;
+        }
+    }
+    // Slot cible survolé pendant un drag entrant
+    &.drag-over {
+        border: 2px solid $main-color;
+        background-color: rgba($main-color, 0.15);
+        background-image: linear-gradient(-90deg, rgba($main-color, 0.25), transparent);
+        transform: scale(1.06);
+    }
+    // Ghost visuel qui suit la souris (panel séparé rendu par Razor)
+    &.drag-ghost {
+        position: absolute;
+        background-color: rgba(18, 18, 18, 0.95);
+        border: 2px solid $main-color;
+        border-radius: 4px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.7), 0 0 14px rgba($main-color, 0.35);
+        align-items: center;
+        justify-content: center;
+        pointer-events: none;
+        z-index: 9999;
+        // Légère animation d'apparition
+        transition: box-shadow 0.1s ease;
+
+        .preview-panel {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+        }
+
+        .quantity {
+            position: absolute;
+            bottom: 4px;
+            right: 6px;
+            font-size: 11px;
+            color: $main-color;
+            font-weight: 900;
+            z-index: 5;
+            pointer-events: none;
+        }
+    }
+
+    .item-icon, .preview-panel, .static-fallback {
+        width: 100%;
+        height: 100%;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+    }
+
+    // Affichee quand le slot n'est pas hovered (le rendu 3D n'est cree
+    // qu'au hover pour eviter de payer N scenes 3D paralleles).
+    // Variante .thumb : thumbnail rendue du Model (cache global).
+    // Variante par categorie : icone SVG fallback si pas de PreviewObject.
+    .static-fallback {
+        svg {
+            width: 60%;
+            height: 60%;
+            opacity: 0.85;
+        }
+
+        &.thumb {
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+    }
+
+    svg {
+        width: 40%;
+        height: 40%;
+        opacity: 0.5;
+    }
+
+    .quantity {
+        position: absolute;
+        z-index: 5;
+        bottom: 4px;
+        right: 6px;
+        font-size: 11px;
+        color: $main-color;
+        font-weight: 900;
+        pointer-events: none;
+    }
+
+    .ammo-info {
+        position: absolute;
+        top: 4px;
+        left: 6px;
+        font-size: 10px;
+        color: rgba(255, 255, 255, 0.6);
+        font-weight: 700;
+        pointer-events: none;
+        z-index: 5;
+    }
+
+    .durability-bar {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 3px;
+        background-color: rgba(0, 0, 0, 0.4);
+        z-index: 5;
+        pointer-events: none;
+
+        .fill {
+            height: 100%;
+            background-color: $main-color;
+            transition: width 0.3s ease;
+        }
+    }
+
+    .category-icon {
+        position: absolute;
+        top: 4px;
+        right: 4px;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        opacity: 0.5;
+        pointer-events: none;
+
+        &.weapon {
+            background-color: #ff4444;
+        }
+
+        &.magazine {
+            background-color: #ffaa00;
+        }
+
+        &.ammo {
+            background-color: #ffdd00;
+        }
+
+        &.food {
+            background-color: #44ff88;
+        }
+
+        &.clothing {
+            background-color: #44aaff;
+        }
+
+        &.tools {
+            background-color: #aa88ff;
+        }
+
+        &.document {
+            background-color: #ffffff;
+        }
+
+        &.furniture {
+            background-color: #aa6644;
+        }
+
+        &.minerals {
+            background-color: #88ddff;
+        }
+
+        &.misc {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+    }
+
+    // ── Overlay cooldown transfert rapide ──
+    .transfer-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        align-items: center;
+        justify-content: center;
+        z-index: 10;
+        pointer-events: none;
+    }
+
+    .transfer-sweep {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0.6);
+    }
+
+    .transfer-ring {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        border: 3px solid rgba($main-color, 0.8);
+        border-top: 3px solid transparent;
+        box-shadow: 0 0 12px rgba($main-color, 0.4);
+        position: absolute;
+    }
+
+    // ── Overlay cooldown change de vêtement ──
+    .equip-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        align-items: center;
+        justify-content: center;
+        z-index: 11;
+        pointer-events: none;
+        background-color: rgba(0, 0, 0, 0.35);
+    }
+
+    .equip-ring {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        position: absolute;
+        box-shadow: 0 0 14px rgba(0, 170, 255, 0.45);
+    }
+
+    .equip-ring-mask {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background-color: rgba(15, 15, 20, 0.9);
+        position: absolute;
+    }
+
+    .equip-progress-bar {
+        position: absolute;
+        bottom: 6px;
+        left: 10%;
+        width: 80%;
+        height: 4px;
+        background-color: rgba(0, 0, 0, 0.5);
+        border-radius: 2px;
+        overflow: hidden;
+        pointer-events: none;
+
+        .equip-progress-fill {
+            height: 100%;
+            background-color: rgba(0, 170, 255, 0.95);
+            box-shadow: 0 0 6px rgba(0, 170, 255, 0.6);
+            transition: width 0.05s linear;
+        }
+    }
+
+    .slot-number {
+        position: absolute;
+        bottom: -48px;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: $main-color;
+        width: 32px;
+        height: 32px;
+
+        label {
+            font-size: 16px;
+            font-weight: 900;
+            font-family: Poppins;
+        }
+
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        color: white;
+    }
+}

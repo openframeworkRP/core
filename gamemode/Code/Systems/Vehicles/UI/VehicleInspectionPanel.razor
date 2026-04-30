@@ -1,0 +1,125 @@
+@namespace OpenFramework.Systems.Vehicles.UI
+@attribute [StyleSheet]
+@inherits Panel
+
+<root class="@(IsVisible ? "visible" : "")">
+    <div class="inspection-card">
+        <div class="header">
+            <span class="title">@Label</span>
+            <span class="close" onclick="@Close">X</span>
+        </div>
+
+        <div class="health-row">
+            <span class="health-label">Etat</span>
+            <span class="health-value" style="color: @HealthColor">@($"{HealthPct:F0}")%</span>
+        </div>
+
+        <div class="bar-container">
+            <div class="bar-fill" style="width: @($"{HealthPct:F0}%"); background-color: @HealthColor"></div>
+        </div>
+
+        <div class="info-row">
+            <span class="info-label">Km composant</span>
+            <span class="info-value">@($"{Km:F1}") km</span>
+        </div>
+
+        <div class="info-row">
+            <span class="info-label">Duree de vie</span>
+            <span class="info-value">@($"{LifespanKm:F0}") km</span>
+        </div>
+
+        <div class="status-row">
+            <span class="status @StatusClass">@StatusText</span>
+        </div>
+    </div>
+</root>
+
+@code {
+    public static VehicleInspectionPanel Instance { get; private set; }
+
+    public new bool IsVisible { get; private set; }
+    public string Label { get; private set; } = "";
+    public float HealthPct { get; private set; }
+    public float Km { get; private set; }
+    public float LifespanKm { get; private set; }
+    public bool IsFlat { get; private set; }
+
+    private RealTimeSince _showTime;
+
+    public static void Show( string label, float healthPct, float km, float lifespanKm, bool isFlat = false )
+    {
+        bool needCreate = false;
+        try { needCreate = Instance == null || Instance.Parent == null; }
+        catch { needCreate = true; }
+
+        if ( needCreate )
+        {
+            Instance = null;
+            var hud = Game.ActiveScene?.GetComponentInChildren<Facepunch.UI.MainHUD>( true );
+            if ( hud == null ) return;
+
+            Instance = new VehicleInspectionPanel();
+            hud.Panel.AddChild( Instance );
+        }
+
+        Instance.Label = label;
+        Instance.HealthPct = healthPct;
+        Instance.Km = km;
+        Instance.LifespanKm = lifespanKm;
+        Instance.IsFlat = isFlat;
+        Instance.IsVisible = true;
+        Instance._showTime = 0f;
+    }
+
+    public void Close()
+    {
+        IsVisible = false;
+    }
+
+    public override void Tick()
+    {
+        base.Tick();
+
+        if ( IsVisible && _showTime > 8f )
+            IsVisible = false;
+    }
+
+    string HealthColor
+    {
+        get
+        {
+            if ( HealthPct > 60f ) return "#66cc66";
+            if ( HealthPct > 35f ) return "#ddcc33";
+            if ( HealthPct > 15f ) return "#e68c1e";
+            return "#dd3333";
+        }
+    }
+
+    string StatusText
+    {
+        get
+        {
+            if ( IsFlat ) return "CREVE";
+            if ( HealthPct <= 0f ) return "HS - HORS SERVICE";
+            if ( HealthPct <= 15f ) return "CRITIQUE";
+            if ( HealthPct <= 35f ) return "USE";
+            if ( HealthPct <= 60f ) return "CORRECT";
+            return "BON ETAT";
+        }
+    }
+
+    string StatusClass
+    {
+        get
+        {
+            if ( IsFlat ) return "hs";
+            if ( HealthPct <= 0f ) return "hs";
+            if ( HealthPct <= 15f ) return "critical";
+            if ( HealthPct <= 35f ) return "worn";
+            if ( HealthPct <= 60f ) return "fair";
+            return "good";
+        }
+    }
+
+    protected override int BuildHash() => HashCode.Combine( IsVisible, Label, HealthPct, Km );
+}

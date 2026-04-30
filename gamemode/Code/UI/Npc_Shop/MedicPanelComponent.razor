@@ -1,0 +1,51 @@
+@using Facepunch
+@using Sandbox;
+@using Sandbox.UI;
+@using OpenFramework.Systems.Jobs;
+@using OpenFramework.Systems;
+@inherits PanelComponent
+@namespace OpenFramework
+
+<root>
+<div class="wrapper">
+
+    <div class="header">
+        <button class="close-btn" @onclick="@(() => Enabled = false)">✕</button>
+        <span class="title">Soins Urgent</span>
+    </div>
+
+    <div class="body">
+        <div class="medic-details">
+            <span class="medic-name">Soins D'Urgence</span>
+            <span class="medic-desc">Restaure entièrement votre santé</span>
+            <span class="medic-price">$@MedicPrice</span>
+        </div>
+
+        <div class="actions">
+            <button class="btn-heal" @onclick="@HealPlayer">Soigner</button>
+            <button class="btn-cancel" @onclick="@(() => Enabled = false)">Annuler</button>
+        </div>
+    </div>
+
+</div>
+</root>
+
+@code
+{
+    int MedicPrice = 1000;
+
+    void HealPlayer()
+    {
+        if (!MoneySystem.CanAfford(MedicPrice))
+        {
+            Client.Local.Notify(NotificationSystem.NotificationType.Error, "Vous n'avez pas assez d'argent.");
+            return;
+        }
+
+        MoneySystem.Remove(MedicPrice);
+        MedicJob.GiveMedicine(Client.Local.PlayerPawn);
+        Enabled = false;
+    }
+
+    protected override int BuildHash() => System.HashCode.Combine(MoneySystem.Get());
+}

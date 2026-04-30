@@ -1,0 +1,529 @@
+// ══════════════════════════════════════════════
+//  Union Bank — Luxury dark banking
+// ══════════════════════════════════════════════
+
+$bg:         #0A0A0A;
+$bg-card:    #141414;
+$bg-input:   #1A1A1A;
+$gold:       #C9A84C;
+$gold-light: #E8C97A;
+$gold-dim:   rgba(201, 168, 76, 0.15);
+$text:       #FFFFFF;
+$text-muted: #666666;
+$text-sub:   #444444;
+$green:      #34C759;
+$red:        #FF3B30;
+$border:     rgba(255,255,255,0.06);
+$radius:     12px;
+
+BankApp {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    top:0;
+}
+
+.bank-root {
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    background-color: $bg;
+    overflow: hidden;
+}
+
+// ── HEADER ─────────────────────────────────────
+.bank-header {
+    flex-direction: column;
+    padding: 14px 16px 0;
+    background-color: $bg;
+    flex-shrink: 0;
+
+    .header-top {
+        flex-direction: row;
+        align-items: center;
+        margin-bottom: 14px;
+
+        .back-or-logo {
+            width: 28px;
+            height: 28px;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+
+            .bank-logo {
+                width: 22px;
+                height: 22px;
+                color: $gold;
+            }
+
+            .back-btn {
+                cursor: pointer;
+                width: 28px;
+                height: 28px;
+                align-items: center;
+                justify-content: center;
+
+                svg {
+                    width: 16px;
+                    height: 16px;
+                    color: $gold;
+                }
+
+                &:hover { opacity: 0.7; }
+            }
+        }
+
+        .bank-name {
+            flex-grow: 1;
+            font-size: 14px;
+            font-weight: 600;
+            color: $text-muted;
+            text-align: center;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .header-avatar {
+            width: 28px;
+            height: 28px;
+            border-radius: 14px;
+            border: 1px solid $gold-dim;
+            background-color: #1A1A1A;
+        }
+    }
+
+    .section-title {
+        font-size: 20px;
+        font-weight: 700;
+        color: $text;
+        margin-bottom: 16px;
+    }
+}
+
+// ── CARTE BANCAIRE ─────────────────────────────
+.bank-card {
+    width: 100%;
+    height: 130px;
+    border-radius: 14px;
+    background-color: #111;
+    border: 1px solid rgba($gold, 0.25);
+    padding: 14px 16px;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    position: relative;
+    overflow: hidden;
+
+    // Reflet diagonal
+    .card-shine {
+        position: absolute;
+        top: -40px;
+        right: -20px;
+        width: 120px;
+        height: 200px;
+        background-color: rgba($gold, 0.04);
+        transform: rotate(35deg);
+        pointer-events: none;
+    }
+
+    .card-top {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+
+        .card-label {
+            font-size: 10px;
+            color: $text-muted;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        svg {
+            width: 18px;
+            height: 18px;
+            color: $gold;
+        }
+    }
+
+    .card-balance {
+        flex-direction: column;
+        gap: 2px;
+
+        .balance-amount {
+            font-size: 26px;
+            font-weight: 300;
+            color: $text;
+            letter-spacing: 1px;
+        }
+
+        .balance-label {
+            font-size: 9px;
+            color: $text-muted;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+    }
+
+    .card-bottom {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+
+        .card-owner {
+            font-size: 11px;
+            color: $text-muted;
+            font-weight: 500;
+        }
+
+        .card-number {
+            font-size: 11px;
+            color: $text-sub;
+            letter-spacing: 2px;
+        }
+    }
+}
+
+// ── CONTENU ────────────────────────────────────
+.bank-content {
+    flex-direction: column;
+    flex-grow: 1;
+    overflow-y: scroll;
+    padding: 0 16px 20px;
+}
+
+// ── ACTIONS RAPIDES ────────────────────────────
+.quick-actions {
+    flex-direction: row;
+    gap: 8px;
+    margin-bottom: 20px;
+
+    .action-pill {
+        flex: 1;
+        flex-direction: column;
+        align-items: center;
+        gap: 6px;
+        padding: 10px 6px;
+        background-color: $bg-card;
+        border-radius: $radius;
+        border: 1px solid $border;
+        cursor: pointer;
+        transition: background-color 0.15s ease, border-color 0.15s ease;
+
+        &:hover {
+            background-color: #1A1A1A;
+            border-color: rgba($gold, 0.3);
+        }
+
+        .action-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background-color: $gold-dim;
+            align-items: center;
+            justify-content: center;
+
+            svg {
+                width: 15px;
+                height: 15px;
+                color: $gold;
+            }
+        }
+
+        label {
+            font-size: 9px;
+            color: $text-muted;
+            text-align: center;
+            cursor: pointer;
+        }
+    }
+}
+
+// ── SECTION HEADER ─────────────────────────────
+.section-header {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+
+    label {
+        font-size: 13px;
+        font-weight: 600;
+        color: $text;
+    }
+
+    .see-all {
+        flex-direction: row;
+        align-items: center;
+        gap: 2px;
+        cursor: pointer;
+
+        label {
+            font-size: 11px;
+            color: $gold;
+            cursor: pointer;
+        }
+
+        svg {
+            width: 10px;
+            height: 10px;
+            color: $gold;
+        }
+
+        &:hover { opacity: 0.7; }
+    }
+}
+
+// ── TRANSACTIONS ───────────────────────────────
+.transaction-list {
+    flex-direction: column;
+    gap: 2px;
+
+    &.full { gap: 2px; }
+}
+
+.tx-row {
+    flex-direction: row;
+    align-items: center;
+    padding: 10px 0;
+    gap: 10px;
+    border-bottom: 1px solid $border;
+
+    .tx-icon {
+        width: 34px;
+        height: 34px;
+        border-radius: 9px;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+
+        svg { width: 15px; height: 15px; color: white; }
+
+        &.income  { background-color: rgba($green, 0.15); svg { color: $green; } }
+        &.expense { background-color: rgba($red, 0.12);   svg { color: $red;   } }
+    }
+
+    .tx-info {
+        flex-direction: column;
+        flex-grow: 1;
+        gap: 2px;
+
+        .tx-label { font-size: 12px; font-weight: 500; color: $text; }
+        .tx-date  { font-size: 10px; color: $text-muted; }
+    }
+
+    .tx-amount {
+        font-size: 12px;
+        font-weight: 600;
+        &.positive { color: $green; }
+        &.negative { color: $text; }
+    }
+}
+
+.tx-empty {
+    padding: 30px 0;
+    align-items: center;
+    justify-content: center;
+    label { font-size: 12px; color: $text-sub; }
+}
+
+// ── FORMULAIRES ────────────────────────────────
+.form-block {
+    flex-direction: column;
+    gap: 10px;
+    padding-top: 4px;
+
+    .form-label {
+        font-size: 11px;
+        color: $text-muted;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-top: 4px;
+
+        .optional { color: $text-sub; text-transform: none; letter-spacing: 0; }
+    }
+
+    .form-hint {
+        font-size: 11px;
+        color: $text-sub;
+        padding: 10px 0;
+    }
+
+    TextEntry {
+        background-color: $bg-input;
+        border: 1px solid $border;
+        border-radius: 8px;
+        padding: 9px 12px;
+        color: $text;
+        font-size: 13px;
+        caret-color: $gold;
+
+        &:focus { border-color: rgba($gold, 0.4); }
+    }
+
+    .amount-input-row {
+        flex-direction: row;
+        align-items: center;
+        background-color: $bg-input;
+        border: 1px solid $border;
+        border-radius: 8px;
+        overflow: hidden;
+
+        TextEntry {
+            flex-grow: 1;
+            background-color: transparent;
+            border: none;
+            border-radius: 0;
+            font-size: 20px;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        .currency {
+            font-size: 16px;
+            font-weight: 600;
+            color: $gold;
+            padding: 0 14px 0 0;
+        }
+    }
+
+    .preset-amounts {
+        flex-direction: row;
+        gap: 6px;
+
+        .preset-btn {
+            flex: 1;
+            padding: 7px 4px;
+            background-color: $bg-card;
+            border: 1px solid $border;
+            border-radius: 8px;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background-color 0.15s, border-color 0.15s;
+
+            label {
+                font-size: 11px;
+                font-weight: 600;
+                color: $text-muted;
+                cursor: pointer;
+            }
+
+            &:hover {
+                background-color: $gold-dim;
+                border-color: rgba($gold, 0.3);
+                label { color: $gold; }
+            }
+        }
+    }
+
+    .balance-reminder {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 14px;
+        background-color: $gold-dim;
+        border-radius: 8px;
+        border: 1px solid rgba($gold, 0.2);
+        margin-bottom: 4px;
+
+        .br-label  { font-size: 11px; color: $text-muted; }
+        .br-amount { font-size: 16px; font-weight: 600; color: $gold; }
+    }
+
+    .contact-picker-list {
+        flex-direction: column;
+        background-color: $bg-card;
+        border-radius: 10px;
+        border: 1px solid $border;
+        overflow: hidden;
+        max-height: 150px;
+        overflow-y: scroll;
+
+        .contact-row {
+            flex-direction: row;
+            align-items: center;
+            gap: 10px;
+            padding: 9px 12px;
+            cursor: pointer;
+            border-bottom: 1px solid $border;
+            transition: background-color 0.1s;
+
+            &:last-child { border-bottom: none; }
+            &:hover { background-color: rgba(255,255,255,0.03); }
+
+            &.selected {
+                background-color: $gold-dim;
+            }
+
+            .contact-avatar {
+                width: 28px;
+                height: 28px;
+                border-radius: 14px;
+                background-color: #222;
+                flex-shrink: 0;
+            }
+
+            label { font-size: 12px; color: $text; flex-grow: 1; }
+
+            .check {
+                width: 14px;
+                height: 14px;
+                color: $gold;
+            }
+        }
+    }
+
+    .form-action-btn {
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 13px;
+        border-radius: 10px;
+        background-color: $gold;
+        cursor: pointer;
+        margin-top: 8px;
+        transition: opacity 0.15s ease;
+
+        svg { width: 14px; height: 14px; color: #0A0A0A; }
+        label { font-size: 13px; font-weight: 700; color: #0A0A0A; cursor: pointer; }
+
+        &:hover { opacity: 0.85; }
+
+        &.disabled {
+            background-color: $bg-card;
+            pointer-events: none;
+            svg { color: $text-sub; }
+            label { color: $text-sub; }
+        }
+
+        &.gold { background-color: $gold; }
+    }
+}
+
+// ── TOAST FEEDBACK ─────────────────────────────
+.feedback-toast {
+    position: absolute;
+    bottom: 20px;
+    left: 16px;
+    right: 16px;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 14px;
+    border-radius: 10px;
+    z-index: 99;
+    animation: slide-up 0.3s ease;
+
+    svg { width: 14px; height: 14px; color: white; flex-shrink: 0; }
+    label { font-size: 12px; font-weight: 500; color: white; }
+
+    &.success { background-color: rgba($green, 0.9); }
+    &.error   { background-color: rgba($red, 0.9);   }
+}
+
+@keyframes slide-up {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+}

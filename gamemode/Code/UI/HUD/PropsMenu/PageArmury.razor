@@ -1,0 +1,175 @@
+@using Editor;
+@using OpenFramework.Command
+@using Sandbox.UI.Navigation;
+@using OpenFramework.Inventory
+@using OpenFramework.Systems
+@using OpenFramework.Systems.Armury_Systems;
+@using OpenFramework.GameLoop;
+@using static Facepunch.NotificationSystem;
+@implements INavigatorPage
+@inherits Panel
+@namespace Facepunch.UI
+
+@if (Client.Local == null)
+    return;
+<root>
+    <div class="topbar">
+        <span class="title">
+            Armurier Menu
+        </span>
+        <span class="title">
+            🏦 : @player.Data.Bank
+        </span>
+        <span class="title">
+            💵 : @MoneySystem.Get()
+        </span>
+    </div>
+
+    <div class="container">
+
+        <div class="container-licenses">
+            <div class="licenses">
+
+                @foreach (var license in AllLicenses)
+
+                {
+
+                    <div class="license @(license == SelectedLicense ? "active" : "")"
+                         @onclick=@(() => { SelectedLicense = license; SelectedCategory = null; })>
+
+                        <span>@license.Name</span>
+
+                    </div>
+
+                }
+
+            </div>
+        </div>
+
+        
+
+        <div class="categories">
+
+            @foreach (var category in SelectedCategories)
+
+            {
+
+                <div class="category @(category == SelectedCategory ? "active" : "")"
+                     @onclick=@(() => SelectedCategory = category)>
+
+                    <span>@category.Name</span>
+
+                </div>
+
+            }
+
+        </div>
+
+        <div class="items">
+            @foreach (var entry in SelectedItems)
+            {
+                <div class="item-info">
+                    <div class="item-preview">
+                        <OpenFramework.Model3DIcon ModelPath="@entry.Item.PreviewObject.ResourcePath" />
+                    </div>
+                    <div class="item-details">
+                        <span class="item-name">@entry.Item.Name.ToUpper()</span>
+                        <span class="item-price">@entry.Item.Price $</span>
+                    </div>
+                    <div class="buy">
+                        <button @onclick=@(() => BuyCash(entry.Item))>💵 Cash</button>
+                        <button @onclick=@(() => BuyBank(entry.Item))>🏦 Banque</button>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</root>
+
+@code
+{
+
+    Client player = Client.Local;
+    private PlayerPawn Pawn => Client.Local.PlayerPawn;
+
+    ArmuryCatalogueManager ammunationCatalogue => Scene.GetComponentInChildren<ArmuryCatalogueManager>();
+
+    // Toutes les licenses de tous les catalogues
+    IEnumerable<ArmuryCatalogueResource.ArmuryLicense> AllLicenses =>
+        ammunationCatalogue?.ArmuryCatalogueResources
+            .Where(c => c != null)
+            .SelectMany(c => c.Licenses)
+        ?? Enumerable.Empty<ArmuryCatalogueResource.ArmuryLicense>();
+
+    // License sélectionnée
+    ArmuryCatalogueResource.ArmuryLicense SelectedLicense { get; set; }
+
+    // Catégories de la license sélectionnée
+    IEnumerable<ArmuryCatalogueResource.ArmuryCategory> SelectedCategories =>
+        SelectedLicense?.Categories ?? Enumerable.Empty<ArmuryCatalogueResource.ArmuryCategory>();
+
+    // Catégorie sélectionnée
+    ArmuryCatalogueResource.ArmuryCategory SelectedCategory { get; set; }
+
+    // Items de la catégorie sélectionnée
+    IEnumerable<ArmuryCatalogueResource.ArmuryItem> SelectedItems =>
+        SelectedCategory?.Items.Where(i => i.Item != null)
+        ?? Enumerable.Empty<ArmuryCatalogueResource.ArmuryItem>();
+
+
+    void BuyBank(ItemMetadata meta)
+    {
+        if (player.Data.Bank > 0)
+        {
+            if (player.Data.CurrentProps < Constants.Instance.MaxProps)
+            {
+                //player.Data.Bank -= meta.Price;
+
+                Client.RemoveBank(meta.Price);
+
+                player.Notify(NotificationType.Success, $"Vous venez d'acheter {meta.Name} pour {meta.Price} $ .");
+
+                Commands.RPC_GiveProps(Client.Local, meta.ResourceName, 1);
+                //player.Data.CurrentProps++;
+            }
+            else
+            {
+                player.Notify(NotificationType.Error, $"Vous venez pouvez plus acheter de props.");
+            }
+
+        }
+        else
+        {
+            player.Notify(NotificationType.Error, $"Vous n'avez pas d'argent en Banque.");
+        }
+    }
+
+    void BuyCash(ItemMetadata meta)
+    {
+        if (MoneySystem.Get() > 0)
+        {
+            if (player.Data.CurrentProps < Constants.Instance.MaxProps)
+            {
+                // player.Data.Money -= meta.Price;
+
+                player.Notify(NotificationType.Success, $"Vous venez d'acheter {meta.Name} pour {meta.Price} $ .");
+
+                MoneySystem.Remove(meta.Price);
+
+                Commands.RPC_GiveProps(Client.Local, meta.ResourceName, 1);
+                //player.Data.CurrentProps++;
+            }
+            else
+            {
+                player.Notify(NotificationType.Error, $"Vous venez pouvez plus acheter de props.");
+            }
+
+        }
+        else
+        {
+            player.Notify(NotificationType.Error, $"Vous n'avez pas d'argent en Poche.");
+        }
+    }
+
+    protected override int BuildHash() => System.HashCode.Combine(SelectedLicense, SelectedCategory);
+}

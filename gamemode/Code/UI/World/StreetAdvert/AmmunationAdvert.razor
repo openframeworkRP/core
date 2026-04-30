@@ -1,0 +1,19 @@
+@using OpenFramework.Systems.Jobs
+@inherits Panel
+@namespace OpenFramework.UI.World.StreetAdvert
+
+<root>
+    <div class="bglife" src="advert/pub_ammunation.png"></div>
+</root>
+
+
+@code
+{
+    
+
+    protected override int BuildHash()
+    {
+        // Panel statique (juste une image) — hash stable evite un re-render chaque frame
+        return 0;
+    }
+}

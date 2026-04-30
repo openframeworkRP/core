@@ -1,0 +1,14 @@
+@using Sandbox;
+@using Sandbox.UI;
+@using Facepunch;
+@inherits PanelComponent
+@namespace OpenFramework.Systems.Vehicles.UI
+
+<root>
+    <Minimap class="vehicle-minimap" />
+</root>
+
+@code {
+    // Throttle 10Hz : la minimap se rafraichit assez vite pour rester fluide
+    protected override int BuildHash() => (int)(Time.Now * 10f);
+}

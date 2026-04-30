@@ -1,0 +1,184 @@
+HudSystem {
+    height: 100%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 30px;
+    width: 350px;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 30px 0;
+
+    // --- HEADER (HAUT) ---
+    .project_header {
+        flex-direction: row;
+        align-items: baseline;
+        gap: 6px;
+        opacity: 0.9;
+
+        .project_name {
+            font-weight: 900;
+            font-size: 22px;
+            text-transform: uppercase;
+            color: white;
+            letter-spacing: -0.5px;
+        }
+
+        .version {
+            font-size: 12px;
+            color: #ff8000;
+            font-weight: 800;
+        }
+    }
+
+    // --- STACK DU BAS ---
+    .bottom_stack {
+        flex-direction: column;
+        gap: 20px;
+        align-items: flex-start;
+
+        .stats_group {
+            flex-direction: column;
+            gap: 10px;
+            padding-left: 15px;
+            border-left: 2px solid #ff8000;
+
+            .data_item {
+                flex-direction: column;
+
+                .title {
+                    font-size: 10px;
+                    font-weight: 800;
+                    color: #ff8000;
+                    letter-spacing: 1px;
+                }
+
+                .value {
+                    font-size: 22px;
+                    font-weight: 700;
+                    color: white;
+                    margin-top: -2px;
+                }
+            }
+        }
+
+        .map_section {
+            flex-direction: column;
+            gap: 8px;
+
+            // ── Map + vehicle speed side by side ──
+            .map_row {
+                flex-direction: row;
+                align-items: flex-end;
+                gap: 12px;
+                overflow: visible;
+            }
+
+            .minimap_circle {
+                width: 200px;
+                height: 150px;
+                overflow: hidden;
+                position: relative;
+                border: 2px solid rgba(255, 255, 255, 0.1);
+                flex-shrink: 0;
+
+                .minimap_render {
+                    width: 100%;
+                    height: 100%;
+                }
+
+                .map_ring {
+                    position: absolute;
+                    top: -1px;
+                    left: -1px;
+                    right: -1px;
+                    bottom: -1px;
+                    border-radius: 50%;
+                    border: 2px solid #ff8000;
+                    opacity: 0.0;
+                    z-index: 3;
+                }
+            }
+
+            // ── Vehicle speed/gear à droite de la carte ──
+            .vehicle_side {
+                flex-direction: column;
+                justify-content: flex-end;
+
+                .vehicle_line {
+                    font-size: 16px;
+                    font-weight: 700;
+                    color: white;
+                    white-space: nowrap;
+
+                    .gear {
+                        color: #ff8000;
+                        font-weight: 900;
+
+                        &.shifting {
+                            opacity: 0.3;
+                        }
+                    }
+                }
+
+                .vehicle_odo {
+                    font-size: 10px;
+                    font-weight: 600;
+                    color: rgba(255, 255, 255, 0.25);
+                    letter-spacing: 0.5px;
+                }
+            }
+
+            // ── Barres sous la carte (vitals + RPM) ──
+            .bars_under_map {
+                width: 200px;
+                flex-direction: column;
+                gap: 4px;
+
+                .bar_row {
+                    height: 6px;
+                    width: 100%;
+
+                    .bar_container {
+                        width: 100%;
+                        height: 100%;
+                        background-color: rgba(0, 0, 0, 0.4);
+                        overflow: hidden;
+
+                        .bar_fill {
+                            height: 100%;
+                            transition: width 0.3s ease-out;
+
+                            &.hunger {
+                                background-color: #ff8000;
+                            }
+
+                            &.thirst {
+                                background-color: #00aaff;
+                            }
+
+                            &.stamina {
+                                background-color: #F5F5F5;
+                            }
+
+                            &.rpm {
+                                background-color: #ff8000;
+                                transition: width 0.05s ease-out;
+
+                                &.danger {
+                                    background-color: #ff3333;
+                                }
+                            }
+
+                            &.fuel {
+                                background-color: #33cc66;
+                                transition: width 0.2s ease-out;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}

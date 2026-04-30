@@ -1,0 +1,59 @@
+@import "/UI/Styles/Theme.scss";
+
+NotificationItem {
+    padding: 6px 10px;
+    flex-shrink: 0;
+    align-items: flex-start;
+    gap: 6px;
+    font-family: $font-ui;
+
+    // Background discret, coherent avec la minimap (bordure rgba(255,255,255,0.1))
+    background-color: rgba(0, 0, 0, 0.55);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 2px;
+
+    width: 100%;
+    max-width: 100%;
+
+    &:intro {
+        sound-in: ui_press;
+        transform: translateX(-10px);
+        opacity: 0;
+    }
+
+    &:outro {
+        transform: translateX(-10px);
+        opacity: 0;
+    }
+
+    .stack-count {
+        font-size: 12px;
+        font-weight: 700;
+        color: $accent;
+        opacity: 0.7;
+        flex-shrink: 0;
+    }
+
+    .message {
+        font-size: 12px;
+        font-weight: 500;
+        color: white;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+        flex-grow: 1;
+        white-space: normal;
+        word-break: break-all;
+    }
+
+    &.success .stack-count { color: $success-color; }
+    &.warning .stack-count { color: $yellow; }
+    &.error   .stack-count { color: $red; }
+    &.info    .stack-count { color: $blue; }
+    &.generic .stack-count { color: $accent; }
+
+    // Liseré de couleur à gauche selon le type (accent visuel discret)
+    &.success { border-left: 2px solid $success-color; }
+    &.warning { border-left: 2px solid $yellow; }
+    &.error   { border-left: 2px solid $red; }
+    &.info    { border-left: 2px solid $blue; }
+    &.generic { border-left: 2px solid $accent; }
+}

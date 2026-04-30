@@ -1,0 +1,34 @@
+@using Sandbox;
+@using Sandbox.UI;
+@using Facepunch
+@inherits Panel
+@namespace OpenFramework
+
+<root>
+    <div class="contain-keys">
+        <div class="keys">
+            <Image Texture="@Input.GetGlyph("Voice", InputGlyphSize.Small, true)" />
+            <span>Voix</span>
+        </div>
+        <div class="keys">
+            <Image Texture="@Input.GetGlyph("voiceup", InputGlyphSize.Small, true)" />
+            <span>Cycle De Voix</span>
+        </div>
+        <div class="keys">
+            <Image Texture="@Input.GetGlyph("Chat", InputGlyphSize.Small, true)" />
+            <span>Chat</span>
+        </div>
+    </div>
+    
+    
+    
+</root>
+
+@code
+{
+
+    /// <summary>
+	/// the hash determines if the system should be rebuilt. If it changes, it will be rebuilt
+	/// </summary>
+	protected override int BuildHash() => System.HashCode.Combine( "");
+}

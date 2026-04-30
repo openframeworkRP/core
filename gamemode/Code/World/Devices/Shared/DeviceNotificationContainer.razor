@@ -1,0 +1,34 @@
+﻿@namespace OpenFramework.World.Devices.Shared
+@inherits Panel
+
+<root>
+</root>
+
+@code {
+    public static DeviceNotificationContainer Instance { get; private set; }
+
+    public DeviceNotificationContainer()
+    {
+        Instance = this;
+    }
+
+    protected override void OnAfterTreeRender(bool firstRender)
+    {
+        if (!firstRender) return;
+
+        // Recharge l'historique depuis PhoneItemSystem qui lui survit
+        var history = PhoneItemSystem.Local?.NotificationHistory;
+        if (history == null) return;
+
+        Log.Info(history);
+
+        foreach (var notif in history)
+            AddChild(new DeviceNotificationItem(notif.Title, notif.Icon));
+    }
+
+    [Rpc.Broadcast]
+    public static void Push(string title, string icon)
+    {
+        Instance?.AddChild(new DeviceNotificationItem(title, icon));
+    }
+}

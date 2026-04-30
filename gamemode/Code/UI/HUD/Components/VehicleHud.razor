@@ -1,0 +1,66 @@
+@namespace OpenFramework.UI
+@using OpenFramework.Systems.Vehicles
+@inherits Panel
+
+@{
+    var vehicle = GetVehicle();
+    if (vehicle == null) return;
+
+    var engine = vehicle.Engine;
+    var gearbox = vehicle.Gearbox;
+    if (engine == null || gearbox == null) return;
+
+    float speedKmh = vehicle.DbgCarSpeed * 3.6f;
+    float rpm = engine.RPM;
+    float maxRpm = engine.MaxRPM;
+    float rpmPercent = Math.Clamp(rpm / maxRpm * 100f, 0f, 100f);
+    int gear = gearbox.CurrentGear;
+    bool isShifting = gearbox.IsShifting;
+    string gearText = gear switch
+    {
+        -1 => "R",
+        0 => "N",
+        _ => gear.ToString()
+    };
+    bool rpmDanger = rpmPercent > 85f;
+
+    // Fuel
+    float fuelPercent = engine.FuelCapacity > 0f ? Math.Clamp(engine.FuelLevel / engine.FuelCapacity * 100f, 0f, 100f) : 100f;
+    string fuelState = engine.IsOutOfFuel ? "empty" : engine.IsLowFuel ? "low" : "normal";
+}
+
+<root>
+    <div class="vehicle-hud">
+
+        <div class="top-row">
+            <div class="speed-block">
+                <span class="speed-value">@($"{(int)speedKmh}")</span>
+                <span class="speed-unit">KM/H</span>
+            </div>
+            <div class="gear-block">
+                <span class="gear-value @(isShifting ? "shifting" : "")">@gearText</span>
+            </div>
+        </div>
+
+        <div class="rpm-block">
+            <div class="rpm-bar-fill @(rpmDanger ? "danger" : "")" style="width: @($"{rpmPercent:F0}%")"></div>
+        </div>
+
+        <div class="fuel-block">
+            <div class="fuel-bar-fill @fuelState" style="width: @($"{fuelPercent:F0}%")"></div>
+        </div>
+
+    </div>
+</root>
+
+@code {
+    Vehicle GetVehicle()
+    {
+        var pawn = Client.Local?.PlayerPawn;
+        if (pawn == null) return null;
+        return pawn.CurrentCar as Vehicle;
+    }
+
+    // Throttle 10Hz pour les compteurs vehicule (vitesse/RPM) — imperceptible visuellement
+    protected override int BuildHash() => (int)(Time.Now * 10f);
+}

@@ -1,0 +1,355 @@
+// ══════════════════════════════════════════════
+//  SettingsApp — style iOS 17
+// ══════════════════════════════════════════════
+
+$bg-primary:   #1C1C1E;
+$bg-group:     #2C2C2E;
+$bg-search:    #3A3A3C;
+$accent:       #007AFF;
+$text-primary: #FFFFFF;
+$text-secondary: #8E8E93;
+$separator:    rgba(255,255,255,0.08);
+$radius-group: 12px;
+$radius-icon:  9px;
+
+.settings-root {
+    width: 100%;
+    height: 100%;
+    position:absolute;
+    z-index:10;
+    top:0;
+    flex-direction: column;
+    background-color: $bg-primary;
+    overflow-x: scroll;
+    pointer-events:all;
+}
+
+// ── HEADER ──────────────────────────────────
+.settings-header {
+    flex-direction: row;
+    align-items: center;
+    padding: 16px 20px 8px;
+    min-height: 52px;
+    position: relative;
+    margin-top:30px;
+
+    .header-title {
+        font-size: 22px;
+        font-weight: 700;
+        color: $text-primary;
+        flex-grow: 1;
+    }
+
+    .back-btn {
+        flex-direction: row;
+        align-items: center;
+        gap: 4px;
+        color: $accent;
+        margin-right: 12px;
+        cursor: pointer;
+
+        svg {
+            width: 14px;
+            height: 14px;
+            color: $accent;
+        }
+
+        label {
+            font-size: 16px;
+            color: $accent;
+            cursor: pointer;
+        }
+
+        &:hover {
+            opacity: 0.7;
+        }
+    }
+}
+
+// ── SEARCH BAR ─────────────────────────────
+.search-bar {
+    flex-direction: row;
+    align-items: center;
+    background-color: $bg-search;
+    border-radius: 10px;
+    margin: 4px 16px 12px;
+    padding: 8px 12px;
+    gap: 8px;
+
+    svg {
+        width: 16px;
+        height: 16px;
+        color: $text-secondary;
+        flex-shrink: 0;
+    }
+
+    TextEntry {
+        flex-grow: 1;
+        background-color: transparent;
+        border: none;
+        color: $text-primary;
+        font-size: 15px;
+        caret-color: $accent;
+
+        /*&::placeholder {
+            color: $text-secondary;
+        }*/
+    }
+}
+
+// ── SCROLL CONTAINER ───────────────────────
+.settings-scroll {
+    flex-direction: column;
+    overflow-y: scroll;
+    flex-grow: 1;
+    padding: 0 16px 40px;
+    gap: 6px;
+}
+
+// ── PROFIL ─────────────────────────────────
+.profile-card {
+    flex-direction: row;
+    align-items: center;
+    padding: 14px 16px;
+    gap: 14px;
+    margin-bottom: 4px;
+    cursor: pointer;
+
+    &:hover {
+        background-color: rgba(255,255,255,0.05);
+    }
+
+    .profile-avatar {
+        width: 56px;
+        height: 56px;
+        border-radius: 28px;
+        background-color: #48484A;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+
+        svg {
+            width: 32px;
+            height: 32px;
+            color: $text-secondary;
+        }
+    }
+
+    .profile-info {
+        flex-direction: column;
+        flex-grow: 1;
+        gap: 3px;
+
+        .profile-name {
+            font-size: 17px;
+            font-weight: 600;
+            color: $text-primary;
+        }
+
+        .profile-sub {
+            font-size: 13px;
+            color: $text-secondary;
+        }
+    }
+
+    .chevron {
+        width: 14px;
+        height: 14px;
+        color: $text-secondary;
+        flex-shrink: 0;
+    }
+}
+
+// ── GROUPE ─────────────────────────────────
+.settings-group {
+    background-color: $bg-group;
+    border-radius: $radius-group;
+    flex-direction: column;
+    overflow-y: scroll;
+    margin-bottom: 2px;
+    flex-shrink:0;
+}
+
+.category-label {
+    font-size: 12px;
+    color: $text-secondary;
+    padding: 4px 16px 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+
+// ── ROW ────────────────────────────────────
+.settings-row {
+    flex-direction: row;
+    align-items: center;
+    padding: 11px 14px;
+    gap: 12px;
+    min-height: 48px;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+    flex-shrink:0;
+
+    &:hover {
+        background-color: rgba(255,255,255,0.04);
+    }
+
+    &.detail {
+        padding: 12px 16px;
+        min-height: 52px;
+        cursor: default;
+
+        &:hover {
+            background-color: transparent;
+        }
+    }
+}
+
+// ── ICÔNE DE RÉGLAGE ───────────────────────
+.row-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: $radius-icon;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+
+    svg {
+        width: 24px;
+        height: 24px;
+        color: white;
+    }
+}
+
+// ── CONTENU DE LA ROW ──────────────────────
+.row-content {
+    flex-grow: 1;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+
+    .row-label {
+        font-size: 15px;
+        color: $text-primary;
+        flex-grow: 1;
+    }
+
+    .row-value {
+        font-size: 15px;
+        color: $text-secondary;
+    }
+
+    .chevron {
+        width: 13px;
+        height: 13px;
+        color: $text-secondary;
+        flex-shrink: 0;
+    }
+
+    TextEntry {
+        background-color: rgba(255,255,255,0.06);
+        border-radius: 8px;
+        border: 1px solid rgba(255,255,255,0.12);
+        padding: 6px 10px;
+        color: $text-primary;
+        font-size: 14px;
+        min-width: 140px;
+        caret-color: $accent;
+
+        &:focus {
+            border-color: $accent;
+        }
+    }
+}
+
+// ── SÉPARATEUR ─────────────────────────────
+.separator {
+    height: 1px;
+    background-color: $separator;
+    margin-left: 56px; // aligné après l'icône
+}
+
+// ── TOGGLE ─────────────────────────────────
+.toggle {
+    width: 48px;
+    height: 28px;
+    border-radius: 14px;
+    background-color: #3A3A3C;
+    padding: 3px;
+    transition: background-color 0.25s ease;
+    cursor: pointer;
+    flex-shrink: 0;
+    align-items: center;
+
+    .thumb {
+        width: 22px;
+        height: 22px;
+        border-radius: 11px;
+        background-color: white;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+        transition: margin-left 0.25s ease;
+        margin-left: 0px;
+    }
+
+    &.on {
+        background-color: #34C759;
+
+        .thumb {
+            margin-left: 20px;
+        }
+    }
+
+    &:hover {
+        opacity: 0.85;
+    }
+}
+
+// ── BOUTON SAVE ────────────────────────────
+.save-btn {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background-color: $accent;
+    border-radius: 12px;
+    padding: 14px;
+    margin: 16px 0 6px;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+
+    svg {
+        width: 16px;
+        height: 16px;
+        color: white;
+    }
+
+    label {
+        font-size: 16px;
+        font-weight: 600;
+        color: white;
+        cursor: pointer;
+    }
+
+    &:hover {
+        opacity: 0.85;
+    }
+
+    &:active {
+        opacity: 0.7;
+    }
+}
+
+// ── FEEDBACK SAVE ──────────────────────────
+.saved-feedback {
+    text-align: center;
+    font-size: 13px;
+    color: #34C759;
+    padding: 4px 0;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to   { opacity: 1; transform: translateY(0); }
+}

@@ -1,0 +1,13 @@
+@using OpenFramework.Systems.Npc
+
+@inherits BaseAppSplashScreen
+@namespace OpenFramework.World.Devices.Apps.Settings
+
+<root>
+    <svg src="ui/icons/apps/settings_icon.svg"/>
+</root>
+
+@code {
+    public override Type AppInterface => typeof(SettingsApp);
+
+}

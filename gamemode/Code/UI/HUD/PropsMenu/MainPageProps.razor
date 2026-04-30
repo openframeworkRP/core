@@ -1,0 +1,143 @@
+﻿@using Facepunch
+@using Sandbox;
+@using Sandbox.UI;
+@using OpenFramework.GameLoop;
+@using Editor;
+@using OpenFramework.Command
+@using Sandbox.UI.Navigation;
+@using OpenFramework.Inventory
+@using OpenFramework.Systems;
+@using static Facepunch.NotificationSystem
+
+@implements INavigatorPage
+@inherits Panel
+@namespace Facepunch.UI
+
+
+@if (Client.Local == null)
+        return;
+<root>
+    <div class="topbar">
+        <span class="title">
+            Props Menu
+        </span>
+        <span class="title">
+            🏦 : @player.Data.Bank
+        </span>
+        <span class="title">
+            💵 : @MoneySystem.Get()
+        </span>
+        <span class="title">
+            Props Limits : @Pawn.Client.Data.CurrentProps / @Constants.Instance.MaxProps
+        </span>
+    </div>
+   
+    <div class="container-item">
+        @foreach (var meta in GetFilteredItems())
+        {
+            <div class="furniture">
+
+                <!-- Image -->
+                <div class="furniture-img">
+                    @if (meta.WorldObjectPrefab != null)
+                    {
+                        /* On utilise ton composant ModelIcon avec le chemin du prefab */
+                        <OpenFramework.Model3DIcon ModelPath="@meta.WorldObjectPrefab.ResourcePath" />
+                    }
+                </div>
+
+                <!-- Infos -->
+                <div class="furniture-info">
+                    <div class="furniture-name">@meta.Name.ToUpper()</div>
+                    <div class="furniture-price">@meta.Price $</div>
+                    <!-- Bouton Acheter -->
+                    <div class="buy">
+                        <button @onclick=@(() => BuyCash(meta))>💵 Cash</button>
+                        <button @onclick=@(() => BuyBank(meta))>🏦 Banque</button>
+                    </div>
+                </div>
+
+            </div>
+        }
+        
+    </div>
+
+</root>
+
+@code
+{
+    Client player = Client.Local;
+    private PlayerPawn Pawn => Client.Local.PlayerPawn;
+    InventoryContainer Container => Client.Local?.PlayerPawn?.GameObject.Components.Get<InventoryContainer>(FindMode.EnabledInSelfAndChildren);
+    private ItemMetadata.ItemType? activeFilter = null;
+
+    void SetFilter(ItemMetadata.ItemType? filter)
+    {
+        activeFilter = filter;
+    }
+
+    IEnumerable<ItemMetadata> GetFilteredItems()
+    {
+        if (activeFilter == null)
+            return ItemMetadata.All.Where(meta => meta.IsFurniture);
+
+        return ItemMetadata.All.Where(meta => meta.IsFurniture && meta.ItemCategoryType == activeFilter);
+    }
+
+
+    void BuyBank(ItemMetadata meta)
+    {
+        if (player.Data.Bank > 0)
+        {
+            if (player.Data.CurrentProps < Constants.Instance.MaxProps)
+            {
+                //player.Data.Bank -= meta.Price;
+
+                Client.RemoveBank(meta.Price);
+
+                player.Notify(NotificationType.Success, $"Vous venez d'acheter {meta.Name} pour {meta.Price} $ .");
+
+                Commands.RPC_GiveProps(Client.Local, meta.ResourceName, 1);
+                //player.Data.CurrentProps++;
+            }
+            else
+            {
+                player.Notify(NotificationType.Error, $"Vous venez pouvez plus acheter de props.");
+            }
+
+        }
+        else
+        {
+            player.Notify(NotificationType.Error, $"Vous n'avez pas d'argent en Banque.");
+        }
+    }
+
+    void BuyCash(ItemMetadata meta)
+    {
+        if (MoneySystem.Get() > 0)
+        {
+            if (player.Data.CurrentProps < Constants.Instance.MaxProps)
+            {
+                player.Notify(NotificationType.Success, $"Vous venez d'acheter {meta.Name} pour {meta.Price} $ .");
+
+                MoneySystem.Remove(meta.Price);
+
+                Commands.RPC_GiveProps(Client.Local, meta.ResourceName, 1);
+                //player.Data.CurrentProps++;
+            }
+            else
+            {
+                player.Notify(NotificationType.Error, $"Vous venez pouvez plus acheter de props.");
+            }
+
+        }else
+        {
+            player.Notify(NotificationType.Error, $"Vous n'avez pas d'argent en Poche.");
+        }
+    }
+
+    protected override int BuildHash()
+    {
+        return HashCode.Combine(player.Data.Bank, MoneySystem.Get(), player.Data.CurrentProps, Constants.Instance.MaxProps);
+    }
+}

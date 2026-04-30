@@ -1,0 +1,67 @@
+@namespace Facepunch.UI
+@using Sandbox.Events
+@using OpenFramework
+@using OpenFramework.ChatSystem
+@using OpenFramework.Inventory
+@using OpenFramework.Inventory.UI
+@using OpenFramework.Systems
+@using OpenFramework.UI
+@using OpenFramework.UI.HUD
+@using OpenFramework.UI.HUD.Components
+@using OpenFramework.World.Devices
+@inherits PanelComponent
+
+@if (!IsHudEnabled)
+    return;
+
+@{
+    var alive = IsPlayerAlive;
+}
+
+<root>
+
+    @if (alive)
+    {
+        <Voices/>
+        <DamageOverlay />
+        <HudSystem />
+        <MarkerSystem />
+        <PlayAreaOverlay />
+        <FullInventory/>
+        <DispatchUI />
+        <GpsHud />
+        <NpcInteractionHud/>
+        <TaskTrackerHud />
+    }
+
+    @if ( !alive )
+    {
+        <DeathOverlay />
+    }
+
+    <NotificationContainer />
+
+    @if (OpenFramework.UI.HudSettingsUI.CinematicMode)
+    {
+        <div class="cinematic-bar top"></div>
+        <div class="cinematic-bar bottom"></div>
+    }
+</root>
+
+@code {
+    [ConVar("cl_drawhud")]
+    public static bool IsHudEnabled { get; set; } = true;
+
+    private static bool IsPlayerAlive =>
+        Client.Local.IsValid()
+        && Client.Local.Pawn.IsValid()
+        && Client.Local.PlayerPawn?.HealthComponent?.State == LifeState.Alive;
+    
+    protected override int BuildHash() =>
+        HashCode.Combine(
+            IsHudEnabled,
+            IsPlayerAlive,
+            Client.Local?.PlayerPawn?.IsAFK ?? false,
+            OpenFramework.UI.HudSettingsUI.CinematicMode
+        );
+}

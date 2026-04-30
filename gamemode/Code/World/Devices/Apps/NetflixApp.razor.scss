@@ -1,0 +1,27 @@
+NetflixApp {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: black;
+
+    .close {
+        top: 25px;
+        right: 25px;
+        z-index: 50;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        position:absolute;
+
+        svg {
+            height: 48px;
+            width: 48px;
+        }
+
+        &:hover {
+            background-color: rgba(crimson, 0.2);
+        }
+    }
+}

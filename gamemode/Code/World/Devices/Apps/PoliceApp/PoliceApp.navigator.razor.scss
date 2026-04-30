@@ -1,0 +1,107 @@
+@import "ui/Styles/Theme.scss";
+@import "ui/Styles/MenuSystem.scss";
+
+PoliceApp_navigator {
+    height: 100%;
+    width: 100%;
+    background-color: white;
+    flex-direction: row;
+
+
+
+    .navbar {
+        height: 100%;
+        width: 15%;
+        background-color: #212E53;
+        align-content: center;
+        align-items: center;
+        overflow: hidden;
+        padding: 35px 15px;
+        flex-direction: column;
+
+        .branding {
+            height: 80px;
+            width: 80px;
+
+
+            svg {
+                height: 54px;
+                width: 54px;
+                justify-content: center;
+            }
+
+            &:hover {
+                border-radius: 6px;
+                background-color: rgba(grey,0.5);
+            }
+        }
+
+        ul {
+            flex-direction: column;
+        }
+
+        a {
+            height: 64px;
+            width: 100%;
+            //align-content:center;
+            justify-content: center;
+            align-items: center;
+            margin: 10px;
+            margin-left: 25px;
+            padding: 10px;
+            cursor: pointer;
+            gap: 5px;
+            transition: all 0.2s ease-in-out;
+            opacity: 0.5;
+            border-radius: 6px;
+            /*
+            a {
+                font-size: 16px;
+            }
+            */
+
+            svg {
+                height: 54px;
+                width: 32px;
+            }
+
+            &:active {
+                sound-in: ui_press;
+            }
+
+            &:hover {
+                //background-color: rgba($main-color, 0.7);
+                sound-in: ui.button.over;
+                background-color: rgba(#273CF5, 0.35);
+                border: 2px solid rgba(white,0.8);
+            }
+
+            &.active {
+                opacity: 1;
+                background-color: rgba(#273CF5, 0.8);
+                border: 2px solid rgba(white,0.8);
+
+                .icon {
+                    //filter: brightness(0) saturate(100%) invert(22%) sepia(92%) saturate(2916%) hue-rotate(274deg) brightness(76%) contrast(136%);
+                }
+            }
+        }
+    }
+
+    .navigator-canvas, .navigator-body {
+        height: 100%;
+        width: 100%;
+        flex: 1;
+        /*
+        .page-title {
+            * {
+                font-size: 32px;
+                font-weight: 600;
+                color: white;
+                margin-bottom: 20px;
+                letter-spacing: 2px;
+            }
+        }
+        */
+    }
+}

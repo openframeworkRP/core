@@ -1,0 +1,21 @@
+@namespace OpenFramework.World.Devices.Phone
+@inherits Panel
+
+<root>
+    <div class="battery-shell">
+        <div class="fill" style="width: @(Percentage)%; background-color: @GetBatteryColor();"></div>
+    </div>
+    <div class="tip"></div>
+</root>
+
+@code {
+    public float Percentage { get; set; } = 100; // 0 à 100
+    public bool IsCharging { get; set; } = false;
+
+    private string GetBatteryColor()
+    {
+        if (IsCharging) return "#34c759"; // Vert iOS
+        if (Percentage <= 20) return "#ff3b30"; // Rouge iOS
+        return "white";
+    }
+}

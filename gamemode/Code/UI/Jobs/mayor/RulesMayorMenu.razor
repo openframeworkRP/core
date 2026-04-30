@@ -1,0 +1,146 @@
+@using Facepunch
+@using OpenFramework.ChatSystem
+@using OpenFramework.Systems.Jobs
+@using OpenFramework.Utility
+@namespace OpenFramework.UI
+
+<root>
+    <div class="overlay">
+        <div class="panel">
+
+            <div class="left">
+                <div class="header">
+                    <span class="title">Lois de la Ville</span>
+                    <span class="subtitle">Maire de Union City</span>
+                </div>
+
+                <div class="section">
+                    <span class="label">Nouvelle loi</span>
+                    <TextEntry @ref="InputEntry" placeholder="Rédigez une loi..."></TextEntry>
+                    <button class="btn-publish" @onclick=@AddRule>Publier</button>
+                </div>
+
+                @if ( EditingRule != null )
+                {
+                    <div class="section edit-section">
+                        <span class="label">Modifier la loi</span>
+                        <TextEntry @ref="EditEntry"></TextEntry>
+                        <div class="edit-actions">
+                            <button class="btn-confirm" @onclick=@(() => ConfirmEdit(EditingRule))>Confirmer</button>
+                            <button class="btn-cancel"  @onclick=@CancelEdit>Annuler</button>
+                        </div>
+                    </div>
+                }
+
+                <div class="spacer"></div>
+
+                <button class="btn-delete-all" @onclick=@DeleteAll>Abroger toutes les lois</button>
+
+                <button class="close" @onclick=@(() => Close())>
+                    <svg src="ui/icons/close.svg" />
+                </button>
+            </div>
+
+            <div class="right">
+                <div class="right-header">
+                    <span class="right-title">Lois en vigueur</span>
+                    <span class="count">@(GetMayorJob()?.Rules.Count ?? 0) loi(s)</span>
+                </div>
+
+                <div class="rules-list">
+                    @if ( GetMayorJob()?.Rules.Count == 0 )
+                    {
+                        <div class="empty">Aucune loi publiée.</div>
+                    }
+                    else
+                    {
+                        var index = 1;
+                        @foreach ( var rule in GetMayorJob()?.Rules ?? new() )
+                        {
+                            var r     = rule;
+                            var i     = index++;
+                            <div class="rule-row @(EditingRule == r ? "selected" : "")">
+                                <span class="rule-index">@i</span>
+                                <span class="rule-text">@r</span>
+                                <div class="rule-btns">
+                                    <button class="btn-edit"   @onclick=@(() => StartEdit(r))>✎</button>
+                                    <button class="btn-remove" @onclick=@(() => DeleteRule(r))>✕</button>
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+
+        </div>
+    </div>
+</root>
+
+@code
+{
+    public TextEntry InputEntry { get; set; }
+    public TextEntry EditEntry  { get; set; }
+
+    private string EditingRule = null;
+
+    // Cache : appele 3x dans le tree par re-render. Avant, GetComponentInChildren<MayorJob>()
+    // scannait toute la scene a chaque appel. Maintenant on passe par JobSystem.Instance
+    // (singleton) puis on resolve le MayorJob — O(1) en steady state.
+    private MayorJob _cachedMayorJob;
+    private MayorJob GetMayorJob()
+    {
+        if ( !_cachedMayorJob.IsValid() )
+            _cachedMayorJob = JobSystem.GetJob( "mayor" ) as MayorJob;
+        return _cachedMayorJob;
+    }
+
+    private void AddRule()
+    {
+        if ( InputEntry == null ) return;
+        var text = InputEntry.Text;
+        if ( string.IsNullOrWhiteSpace( text ) ) return;
+        MayorJob.AddRule( text );
+        InputEntry.Text = "";
+    }
+
+    private void StartEdit( string rule )
+    {
+        EditingRule = rule;
+    }
+
+    private void ConfirmEdit(string oldRule)
+    {
+        if (EditEntry == null) return;
+        var newText = EditEntry.Text;
+        if (string.IsNullOrWhiteSpace(newText)) return;
+        MayorJob.EditRule(oldRule, newText);
+        EditingRule = null;
+    }
+
+    private void CancelEdit()
+    {
+        EditingRule = null;
+    }
+
+    private void DeleteRule( string rule )
+    {
+        if ( EditingRule == rule ) EditingRule = null;
+        MayorJob.DeleteRule( rule );
+    }
+
+    private void DeleteAll()
+    {
+        EditingRule = null;
+        MayorJob.DeleteAllRules();
+    }
+
+    public static void Open()
+    {
+        Utils.CreatePanelInstance<RulesMayorMenu>();
+    }
+
+    public void Close()
+    {
+        Delete();
+    }
+}

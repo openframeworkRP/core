@@ -1,0 +1,97 @@
+@using Sandbox
+@using Sandbox.UI
+@using OpenFramework.Inventory
+@using OpenFramework.World
+@using OpenFramework.Utility
+
+@namespace OpenFramework.UI.World
+@inherits Panel
+
+<root>
+<div class="wrapper">
+
+    @* ── HEADER ──*@
+    <div class="header">
+        <div class="header-top">
+            <button class="close-btn" onclick=@Close>✕</button>
+            <span class="shop-name">Casier Police</span>
+        </div>
+    </div>
+
+    <div class="body">
+
+        @* ── GRILLE ITEMS ──*@
+        <div class="grid">
+            @foreach (var item in _items)
+            {
+                var localItem = item;
+                <div class="card">
+                    <div class="card-preview">
+                        @if (localItem.Item1.WorldObjectPrefab != null)
+                        {
+                            <OpenFramework.Model3DIcon ModelPath="@localItem.Item1.WorldObjectPrefab.ResourcePath" />
+                        }
+                        else if (@localItem.Item1.Icon != null)
+                        {
+                            <img class="card-icon" src=@localItem.Item1.Icon.ResourcePath />
+                        }
+                    </div>
+                    <div class="card-bottom">
+                        <span class="card-name">@localItem.Item1.Name</span>
+                        <div class="card-footer">
+                            <button class="card-btn" onclick=@(() => TakeItem(localItem.Item1))>Prendre</button>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            @if (_items.Count == 0)
+            {
+                <div class="empty-msg">
+                    <span>Aucun équipement disponible.</span>
+                </div>
+            }
+        </div>
+
+    </div>
+
+</div>
+</root>
+
+@code {
+    public static PoliceLockerUI Instance { get; private set; }
+    public PoliceLockerUI() => Instance = this;
+
+    private PoliceLocker _locker;
+    private List<AvailableItem> _items = new();
+
+    private PlayerPawn LocalPawn => Client.Local?.PlayerPawn as PlayerPawn;
+
+    void TakeItem( ItemMetadata meta )
+    {
+        if ( _locker == null || meta == null ) return;
+        PoliceLocker.RequestTakeItem( _locker, meta.ResourceName, LocalPawn );
+    }
+
+    void Close()
+    {
+        Delete();
+        if ( Instance == this ) Instance = null;
+    }
+
+    public static void OpenLocal( PoliceLocker locker )
+    {
+        Instance?.Delete();
+
+        var ui = Utils.CreatePanelInstance<PoliceLockerUI>();
+        if ( ui == null ) return;
+
+        ui._locker = locker;
+        ui._items = locker.AvailableItems.Where( x => x.Item1 != null && x.Item1.IsEnabled ).ToList();
+    }
+
+    [Rpc.Broadcast]
+    public static void Open( PoliceLocker locker ) => OpenLocal( locker );
+
+    protected override int BuildHash() => System.HashCode.Combine( _locker, _items.Count );
+}

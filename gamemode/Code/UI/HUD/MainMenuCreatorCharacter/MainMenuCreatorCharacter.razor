@@ -1,0 +1,27 @@
+@using Sandbox;
+@using Sandbox.UI;
+@inherits PanelComponent
+@namespace OpenFramework
+
+<root>
+    <MenuCreatorCharacter/>
+</root>
+
+@code
+{
+    public static bool IsCreatorOpen { get; private set; }
+
+    protected override void OnEnabled()
+    {
+        IsCreatorOpen = true;
+        Panel.Style.Display = DisplayMode.Flex;
+    }
+
+    protected override void OnDisabled()
+    {
+        IsCreatorOpen = false;
+        Panel.Style.Display = DisplayMode.None;
+    }
+
+    protected override int BuildHash() => System.HashCode.Combine("");
+}

@@ -1,0 +1,76 @@
+@import "ui/Styles/Theme.scss";
+LoginPage {
+    height: 100%;
+    width: 100%;
+    background-color: palegreen;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .bglogo {
+        position: relative;
+        height: 50%;
+        width: 50%;
+        z-index: -2;
+        background-image: url("ui/atm/logo_login.png");
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position: center;
+        opacity: 1;
+    }
+
+    .roundcardlogo {
+        position: relative;
+        height: 15%;
+        width: 15%;
+        z-index: -2;
+        background-image: url("ui/atm/round_card.png");
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position: center;
+        opacity: 1;
+    }
+
+    .cardlogo {
+        transition: all 0.2s ease-in-out;
+        bottom: 6px;
+        position: relative;
+        height: 15%;
+        width: 15%;
+        background-image: url("ui/atm/card_logo.png");
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position: center;
+        animation: slide 1.2s ease-in-out infinite;
+    }
+
+    .button-entercard {
+        justify-content: center;
+        align-items: center;
+        height: 15px;
+        width: 60px;
+        //background-color: red;
+        border-radius: 8px;
+        border: 1px solid transparent; /* <- FIX */
+
+        &:hover {
+            background-color: wheat;
+            border: 1px solid black;
+        }
+    }
+}
+
+@keyframes slide {
+    0% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-12px);
+    }
+
+    100% {
+        transform: translateY(0px);
+    }
+}
+

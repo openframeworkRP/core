@@ -1,0 +1,83 @@
+@using Sandbox;
+@using Sandbox.UI;
+@using Facepunch;
+@using OpenFramework.Systems.Pawn;
+@using OpenFramework.Utility
+@inherits Panel
+@namespace OpenFramework
+@attribute [StyleSheet]
+
+<root>
+    <div class="overlay" @onclick=@(() => Close()) />
+    <div class="container">
+        <div class="header">
+            <svg src="ui/icons/speaker.svg" color="white" />
+            <span>Fréquence Radio</span>
+        </div>
+        <div class="input-row">
+            <TextEntry @ref="InputEntry" Placeholder="Ex: 100.0" />
+            <span class="unit">MHz</span>
+        </div>
+        <button class="confirm" onclick="@InputSubmitted">Valider</button>
+    </div>
+</root>
+
+@code
+{
+    [ConVar( "radio_debug" )]
+    public static bool RadioDebug { get; set; } = false;
+
+    public TextEntry InputEntry { get; set; }
+    private RadioComponent radioComp => Client.Local?.PlayerPawn?.Components.Get<RadioComponent>();
+
+    private void InputSubmitted()
+    {
+        if (InputEntry == null) return;
+
+        string text = InputEntry?.Text;
+        if ( RadioDebug ) Log.Info( $"[RadioMenu] Submit: text='{text}' radioComp={radioComp != null}" );
+
+        if (string.IsNullOrWhiteSpace(text)) return;
+        if (radioComp == null) return;
+
+        var freq = text.ToFloat();
+        if ( RadioDebug ) Log.Info( $"[RadioMenu] Changing frequency to {freq}" );
+        radioComp.ChangeFrequency(freq);
+        Close();
+    }
+
+    public static void Open()
+    {
+        Utils.CreatePanelInstance<RadioMenu>();
+    }
+
+    private bool _needsFocus = true;
+
+    public override void Tick()
+    {
+        base.Tick();
+
+        if (_needsFocus && InputEntry != null)
+        {
+            InputEntry.Focus();
+            if (InputEntry.HasFocus)
+            {
+                _needsFocus = false;
+                if ( RadioDebug ) Log.Info( $"[RadioMenu] Focus acquired" );
+            }
+        }
+
+        if ( RadioDebug ) Log.Info( $"[RadioMenu] Tick: HasFocus={InputEntry?.HasFocus} Text='{InputEntry?.Text}' Value='{InputEntry?.Value}'" );
+
+        if (Input.EscapePressed)
+        {
+            Input.EscapePressed = false;
+            Close();
+        }
+    }
+
+    public void Close()
+    {
+        Delete();
+    }
+}

@@ -1,0 +1,120 @@
+@using Facepunch
+@using Sandbox.World
+@using OpenFramework.NpcSystem
+@using OpenFramework.Systems.Jobs
+
+@inherits PanelComponent
+@implements IDevice
+@namespace OpenFramework.World.Devices
+
+<root style="background-image:url(@CurrentBackground)">
+    <div class="toolsbar">
+        @if (CurrentApp != null)
+        {
+            <div style="flex-direction:column;">
+                <svg class="poweroff" src="ui/icons/apps/close_app.svg" color="white" />
+                <span>Fermer </span>
+            </div>
+        }
+
+        <svg class="poweroff" src="ui/icons/power.svg" color="white"/>
+    </div>
+
+    <div class="topbar">
+        Smart TV
+    </div>
+    <div class="main">
+        <div class="sidenav">
+            <svg src="ui/icons/apps/apps.svg" color="white"/>
+        </div>
+        <div class="appcontainer">
+            @foreach (var app in DevicesManager.Instance.LoadedApps)
+            {
+                @if (app.JobAccess != JobList.None && Client.Local.Data.Job != app.JobAccess.ToString().ToLower())
+                    continue;
+
+                <div class="app" @onclick=@(() => OpenApp(app))>
+                    <svg src=@app.Icon color="@((string.IsNullOrEmpty(app.IconColor) ? "white" : app.IconColor))" />
+                    @app.DisplayName
+                </div>
+            }
+        </div>
+    </div>
+    
+    
+</root>
+
+@code {
+    public DeviceKind Kind => DeviceKind.TV;
+    public DeviceCapabilities Capabilities => DeviceCapabilities.Speakers | DeviceCapabilities.Network;
+    public List<string> Backgrounds => new()
+    {
+        "ui/background/device_bg01.jpg",
+        "ui/background/device_bg02.jpg",
+        "ui/background/device_bg03.jpg",
+        "ui/background/device_bg04.jpg",
+        "ui/background/device_bg05.jpg",
+        "ui/background/device_bg06.jpg",
+        "ui/background/device_bg07.jpg",
+        "ui/background/device_bg08.jpg",
+        "ui/background/device_bg09.jpg",
+        "ui/background/device_bg10.jpg",
+    };
+    public string CurrentBackground { get; set; }
+    public TimeUntil RefreshBackground { get; private set; } = 10f;
+
+    /// App courante (si ouverte)
+    public IApp CurrentApp { get; set; }
+    public List<IApp> OpenedApps { get; } = new();
+
+    /// Ouvre/ferme une app (le shell gère l’UI)
+    public void OpenApp(IApp app)
+    {
+        CurrentApp = app;
+        app.Open(new(this));
+    }
+
+    public void PowerOn()
+    {
+    }
+
+    public void PowerOff()
+    {
+        CurrentApp.Close();
+        CurrentApp = null;
+    }
+
+    protected override void OnAwake()
+    {
+        CurrentBackground = Backgrounds[0];
+    }
+
+    protected override void OnUpdate()
+    {
+        if (RefreshBackground)
+        {
+            RefreshBackground = 10f;
+            RandomizeBackground();
+        }
+    }
+
+    private void RandomizeBackground()
+    {
+        if (Backgrounds.Count == 0)
+            return;
+
+        string image;
+        do
+        {
+            image = Backgrounds[Game.Random.Int(0, Backgrounds.Count - 1)];
+        }
+        while (image == CurrentBackground);
+
+        CurrentBackground = image;
+    }
+
+    protected override int BuildHash()
+    {
+        return HashCode.Combine(CurrentBackground, CurrentApp);
+    }
+}

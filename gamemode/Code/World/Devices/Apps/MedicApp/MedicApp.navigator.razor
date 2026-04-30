@@ -1,0 +1,33 @@
+@using System;
+@using Sandbox.UI;
+@using Sandbox.UI.Navigation;
+
+@namespace OpenFramework.World.Devices.Apps.Medic
+@inherits NavigationHost
+
+<root>
+    <div class="navbar">
+        <svg class="branding" src="ui/icons/apps/medic_icon.svg" color="#FF1414" />
+        <ul>
+            <a href="/">
+                <svg class="icon" src="ui/icons/home.svg" color="#FF1414" />
+                <span>Accueil</span>
+            </a>
+            <a href="/finance">
+                <svg class="icon" src="ui/icons/apps/finance.svg" color="#FF1414" />
+                <span>Finance</span>
+            </a>
+        </ul>
+    </div>
+    <div class="navigator-canvas" slot="navigator-canvas" />
+</root>
+
+@code
+{
+    public MedicApp_navigator()
+    {
+        DefaultUrl = "/";
+        AddDestination("/", typeof(HomePageMedic));
+        AddDestination("/finance", typeof(FinancePageMedic));
+    }
+}

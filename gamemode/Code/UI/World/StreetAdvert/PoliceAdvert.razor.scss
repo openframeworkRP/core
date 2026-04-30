@@ -1,0 +1,50 @@
+PoliceAdvert {
+    height: 100%;
+    width: 100%;
+    //background-color: blue;
+    justify-content: center;
+    transition: all 0.2s ease-in-out;
+    flex-direction: column;
+    align-items: center;
+
+    .bglife {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        z-index: -2;
+        background-image: url("ui/advert/pub_police.png");
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position: center;
+        opacity: 1;
+    }
+
+    span {
+        transition: all 0.2s ease-in-out;
+        font-size: 100px;
+        align-content: center;
+        justify-content: center;
+    }
+
+    @keyframes slide {
+        0% {
+            transform: translateX(0);
+        }
+
+        33% {
+            transform: translateX(-100%);
+        }
+
+        66% {
+            transform: translateX(-200%);
+        }
+
+        100% {
+            transform: translateX(0);
+        }
+    }
+
+    &:intro {
+        animation: slide 6s infinite;
+    }
+}

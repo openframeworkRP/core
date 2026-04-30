@@ -1,0 +1,10 @@
+@import "ui/Styles/Theme.scss";
+
+WebNavigator {
+    height: 100%;
+    width: 100%;
+
+    WebSurface {
+        display:none;
+    }
+}

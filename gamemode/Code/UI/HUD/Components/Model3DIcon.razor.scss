@@ -1,0 +1,11 @@
+Model3DIcon {
+	width: 100px;
+	height: 100px;
+	background-color: #1a1a1a;
+	display: flex;
+
+	.scene-panel {
+		width: 100%;
+		height: 100%;
+	}
+}

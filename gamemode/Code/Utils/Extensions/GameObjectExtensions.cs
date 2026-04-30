@@ -1,0 +1,37 @@
+using Scene = Sandbox.Scene;
+
+namespace OpenFramework.Utility;
+
+public static partial class GameObjectExtensions
+{
+	/// <summary>
+	/// Take damage. Only the host can call this.
+	/// </summary>
+	/// <param name="go"></param>
+	/// <param name="damageInfo"></param>
+	public static void TakeDamage( this GameObject go, Systems.Pawn.DamageInfo damageInfo )
+	{
+		if ( !Networking.IsHost )
+		{
+			Log.Warning( $"Tried to run TakeDamage on {go}, but we're not the host." );
+			return;
+		}
+
+		foreach ( var damageable in go.Root.GetComponents<HealthComponent>() )
+		{
+			damageable.TakeDamage( damageInfo );
+		}
+	}
+
+	public static void CopyPropertiesTo( this Component src, Component dst )
+	{
+		var json = src.Serialize().AsObject();
+		json.Remove( "__guid" );
+		dst.DeserializeImmediately( json );
+	}
+
+	public static string GetScenePath( this GameObject go )
+	{
+		return go is Scene ? "" : $"{go.Parent.GetScenePath()}/{go.Name}";
+	}
+}

@@ -1,0 +1,24 @@
+@import "ui/Styles/Theme.scss";
+
+HomeScreen {
+    height: 100%;
+    width: 100%;
+    padding: 20px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: all 0.2s ease;
+    overflow: hidden;
+    z-index: 1;
+    position: absolute;
+    justify-content: center;
+    opacity: 1;
+
+    &:outro {
+        opacity: 0;
+    }
+
+    &:intro {
+        opacity: 0;
+    }
+}

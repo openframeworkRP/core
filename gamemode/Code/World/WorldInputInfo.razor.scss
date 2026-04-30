@@ -1,0 +1,47 @@
+WorldInputInfo {
+    /* On force le panel à être centré sur le pivot du GameObject */
+    height: 100%;
+    width: 100%;
+    //background-color: red;
+    flex-direction: column;
+    align-items: center;
+    padding: 12px 20px;
+    transition: all 0.2s ease;
+
+    &:intro, &:outro {
+        opacity:0;
+    }
+
+    Image {
+        width: 48px;
+        height: 48px;
+        margin-right: 15px;
+    }
+
+    .content {
+        flex-direction: column;
+    }
+
+    .label {
+        font-family: Poppins, Roboto, sans-serif;
+        font-size: 10px;
+        font-weight: 700;
+        color: white;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .progress-bg {
+        height: 6px;
+        width: 150px;
+        background-color: rgba( 255, 255, 255, 0.1 );
+        margin-top: 5px;
+        border-radius: 3px;
+        overflow: hidden;
+    }
+
+    .progress-bar {
+        height: 100%;
+        transition: width 0.3s ease-out;
+    }
+}

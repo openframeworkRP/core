@@ -1,0 +1,343 @@
+@namespace OpenFramework.World
+@attribute [StyleSheet]
+@inherits Panel
+@using Facepunch
+@using OpenFramework.Systems.Pawn
+
+<root class="@(IsOpen ? "open" : "")">
+    <div class="radial-bg">
+        <div class="center-dot"></div>
+
+        @if (_subItems != null)
+        {
+            <div class="radial-subtitle">@_subTitle</div>
+
+            @foreach (var (item, index) in _subItems.Select((v, i) => (v, i)))
+            {
+                float angle = GetAngle(index, _subItems.Count);
+                float distPct = 32f;
+                float xPct = 50f + MathF.Cos(angle) * distPct;
+                float yPct = 50f + MathF.Sin(angle) * distPct;
+
+                var capturedItem = item;
+                <div class="radial-item @(HoveredIndex == index ? "hovered" : "")"
+                     style="left: @($"{xPct:F1}%"); top: @($"{yPct:F1}%");"
+                     onclick="@(() => OnSubItemClick(capturedItem))">
+                    <img class="radial-icon" src="@item.Icon" />
+                    <span class="radial-label">@item.Label</span>
+                </div>
+            }
+
+            <div class="radial-back" onclick="@(() => { _subItems = null; _subTitle = null; })">
+                <span>Retour</span>
+            </div>
+        }
+        else
+        {
+            @foreach (var (item, index) in Items.Select((v, i) => (v, i)))
+            {
+                float angle = GetAngle(index, Items.Count);
+                float distPct = 32f;
+                float xPct = 50f + MathF.Cos(angle) * distPct;
+                float yPct = 50f + MathF.Sin(angle) * distPct;
+
+                <div class="radial-item @(HoveredIndex == index ? "hovered" : "")"
+                     style="left: @($"{xPct:F1}%"); top: @($"{yPct:F1}%");"
+                     onclick="@(() => SelectItem(index))">
+                    <img class="radial-icon" src="@item.Icon" />
+                    <span class="radial-label">@item.Label</span>
+                </div>
+            }
+        }
+
+        @if (HoveredIndex >= 0)
+        {
+            int count = _subItems?.Count ?? Items.Count;
+            if (HoveredIndex < count)
+            {
+                float hAngle = GetAngle(HoveredIndex, count);
+                <div class="selection-line" style="transform: rotate(@($"{hAngle * 180f / MathF.PI + 90f:F1}deg"))"></div>
+            }
+        }
+    </div>
+</root>
+
+@code {
+    public static DoorRadialMenu Instance { get; private set; }
+
+    public bool IsOpen { get; private set; }
+    public int HoveredIndex { get; private set; } = -1;
+
+    private List<RadialItem> Items { get; set; } = new();
+    private Door _door;
+
+    // Sub-menu state
+    private List<RadialItem> _subItems;
+    private string _subTitle;
+
+    public record RadialItem(string Label, string Icon, Action OnSelect, List<RadialItem> Children = null);
+
+    protected override void OnAfterTreeRender(bool firstTime)
+    {
+        if (firstTime)
+            Instance = this;
+    }
+
+    private static RealTimeSince _lastOpenTime;
+
+    public static void Open(Door door)
+    {
+        if (_lastOpenTime < 0.5f) return;
+        _lastOpenTime = 0f;
+
+        if (Instance != null && Instance.IsOpen)
+        {
+            Instance.IsOpen = false;
+            return;
+        }
+
+        bool needCreate = false;
+        try { needCreate = Instance == null || Instance.Parent == null; }
+        catch { needCreate = true; }
+
+        if (needCreate)
+        {
+            Instance = null;
+            var hud = Game.ActiveScene?.GetComponentInChildren<Facepunch.UI.MainHUD>(true);
+            if (hud == null) return;
+
+            Instance = new DoorRadialMenu();
+            Instance.Items = new();
+            hud.Panel.AddChild(Instance);
+        }
+
+        if (Instance == null) return;
+
+        Instance._door = door;
+        Instance._subItems = null;
+        Instance._subTitle = null;
+        Instance.Items ??= new();
+        Instance.Items.Clear();
+
+        BuildItems(door, Instance.Items);
+
+        if (Instance.Items.Count == 0) return;
+
+        Instance.IsOpen = true;
+        Instance.HoveredIndex = -1;
+    }
+
+    private static void BuildItems(Door door, List<RadialItem> items)
+    {
+        string playerJob = Client.Local.Data.Job ?? "";
+        bool hasJobAccess = door.CanBeAllowedJob &&
+                            !string.IsNullOrEmpty(door.JobName) &&
+                            string.Equals(door.JobName, playerJob, StringComparison.OrdinalIgnoreCase);
+
+        // Ouvrir / Fermer
+        if (door.State == Door.DoorState.Closed || door.State == Door.DoorState.Open)
+        {
+            if (door.IsLocked)
+            {
+                items.Add(new RadialItem("Verrouillée", "/ui/icons/keypad.svg", null));
+            }
+            else
+            {
+                var label = door.State == Door.DoorState.Open ? "Fermer" : "Ouvrir";
+                items.Add(new RadialItem(label, "/ui/icons/home.svg", () =>
+                {
+                    Door.Toggle(door);
+                    Close();
+                }));
+            }
+        }
+
+        // Achat / Propriété
+        if (door.CanBePurchased)
+        {
+            if (door.Owner == null)
+            {
+                items.Add(new RadialItem("Acheter", "/ui/icons/shop.svg", () =>
+                {
+                    Door.TryToBuy(door);
+                    Close();
+                }));
+            }
+
+            if (door.Owner == Client.Local)
+            {
+                items.Add(new RadialItem("Vendre", "/ui/icons/money.svg", () =>
+                {
+                    Door.TryToSell(door);
+                    Close();
+                }));
+
+                // Partager - sous-menu avec joueurs proches de la porte
+                var shareRadius = 300f;
+                var sharePlayers = GameUtils.AllPlayers
+                    .Where(p => p != door.Owner && !door.CoOwners.Contains(p))
+                    .Where(p => p.PlayerPawn.IsValid() && Vector3.DistanceBetween(p.PlayerPawn.WorldPosition, door.WorldPosition) < shareRadius)
+                    .ToList();
+
+                if (sharePlayers.Count > 0)
+                {
+                    var shareChildren = sharePlayers
+                        .Select(p => new RadialItem(p.DisplayName, "/ui/icons/human.svg", () =>
+                        {
+                            Door.ShareDoor(door, p);
+                            Close();
+                        }))
+                        .ToList();
+
+                    items.Add(new RadialItem("Partager", "/ui/icons/contacts.svg", null, shareChildren));
+                }
+
+                // Retirer clé - sous-menu
+                if (door.CoOwners != null && door.CoOwners.Count > 0)
+                {
+                    var unshareChildren = door.CoOwners
+                        .Select(co =>
+                        {
+                            var p = GameUtils.AllPlayers.FirstOrDefault(x => x == co);
+                            var name = p != null ? p.DisplayName : co.ToString();
+                            return new RadialItem(name, "/ui/icons/close.svg", () =>
+                            {
+                                Door.RemoveShareDoor(door, co);
+                                Close();
+                            });
+                        })
+                        .ToList();
+
+                    items.Add(new RadialItem("Retirer clé", "/ui/icons/close.svg", null, unshareChildren));
+                }
+            }
+            else if (door.CoOwners != null && door.CoOwners.Contains(Client.Local))
+            {
+                items.Add(new RadialItem("Rendre la clé", "/ui/icons/leave.svg", () =>
+                {
+                    Door.RemoveShareDoor(door, Client.Local);
+                    Close();
+                }));
+            }
+        }
+
+        // Donner clé — admin ou owner peuvent donner une clé physique à un joueur proche
+        bool canGiveKey = door.Owner != null && (Client.Local.IsAdmin || door.Owner == Client.Local);
+        if (canGiveKey)
+        {
+            var keyTargets = GameUtils.AllPlayers
+                .Where(p => p != Client.Local
+                    && p.PlayerPawn.IsValid()
+                    && Vector3.DistanceBetween(p.PlayerPawn.WorldPosition, door.WorldPosition) < 300f)
+                .ToList();
+
+            if (keyTargets.Count > 0)
+            {
+                var keyChildren = keyTargets
+                    .Select(p => new RadialItem(p.DisplayName, "/ui/icons/human.svg", () =>
+                    {
+                        Door.GiveDoorKey(door, p);
+                        Close();
+                    }))
+                    .ToList();
+
+                items.Add(new RadialItem("Donner clé", "/ui/icons/keys.svg", null, keyChildren));
+            }
+        }
+
+        // Toquer — visible si la porte est possédée et qu'on n'y a pas accès
+        bool isStranger = door.Owner != null
+            && door.Owner != Client.Local
+            && (door.CoOwners == null || !door.CoOwners.Contains(Client.Local))
+            && !hasJobAccess;
+
+        if (isStranger)
+        {
+            items.Add(new RadialItem("Toquer", "/ui/icons/announce.svg", () =>
+            {
+                Door.Knock(door);
+                Close();
+            }));
+        }
+
+        // Verrouiller / Déverrouiller
+        if (door.Owner == Client.Local || (door.CoOwners != null && door.CoOwners.Contains(Client.Local)) || hasJobAccess)
+        {
+            if (door.IsLocked)
+            {
+                items.Add(new RadialItem("Déverrouiller", "/ui/icons/keypad.svg", () =>
+                {
+                    Door.Unlock(door);
+                    Close();
+                }));
+            }
+            else
+            {
+                items.Add(new RadialItem("Verrouiller", "/ui/icons/keypad.svg", () =>
+                {
+                    Door.Lock(door);
+                    Close();
+                }));
+            }
+        }
+    }
+
+    void SelectItem(int index)
+    {
+        if (index < 0 || index >= Items.Count) return;
+        var item = Items[index];
+
+        if (item.Children != null && item.Children.Count > 0)
+        {
+            _subItems = item.Children;
+            _subTitle = item.Label;
+            HoveredIndex = -1;
+        }
+        else
+        {
+            item.OnSelect?.Invoke();
+        }
+    }
+
+    void OnSubItemClick(RadialItem item)
+    {
+        item.OnSelect?.Invoke();
+    }
+
+    public static void Close()
+    {
+        if (Instance != null)
+            Instance.IsOpen = false;
+    }
+
+    float GetAngle(int index, int count)
+    {
+        if (count == 0) return 0f;
+        float step = MathF.PI * 2f / count;
+        return -MathF.PI / 2f + step * index;
+    }
+
+    private const float MaxDoorDistance = 200f;
+
+    public override void Tick()
+    {
+        base.Tick();
+        if (!IsOpen) return;
+
+        if (_door.IsValid())
+        {
+            var pawn = Game.ActiveScene?.GetAllComponents<PlayerPawn>()
+                .FirstOrDefault(x => !x.IsProxy);
+            if (pawn != null && Vector3.DistanceBetween(pawn.WorldPosition, _door.WorldPosition) > MaxDoorDistance)
+            {
+                IsOpen = false;
+            }
+        }
+        else
+        {
+            IsOpen = false;
+        }
+    }
+
+    protected override int BuildHash() => HashCode.Combine(IsOpen, HoveredIndex, _subItems?.Count);
+}

@@ -1,0 +1,56 @@
+﻿@using Sandbox;
+@using Sandbox.UI;
+@using OpenFramework.World.Devices
+@using OpenFramework.World.Devices.Shared
+
+@implements IDevice.IScreenContext
+@inherits Panel
+@namespace OpenFramework.World.Devices.Phone
+
+@if (Client.Local == null) return;
+
+<root style="background-image:url(@CurrentBackground)">
+
+    @* ── Apps ── *@
+    <AppLauncher Device=@AttachedDevice Container=@this ShowPinned=@false />
+    <AppLauncher Device=@AttachedDevice Container=@this ShowPinned=@true />
+
+    @* ── Control Center (swipe haut → bas) ── *@
+    @if ( _controlCenterOpen )
+    {
+        <div class="control-center" @onclick=@CloseControlCenter>
+            <label class="cc-title">Centre de contrôle</label>
+            @* Ajoute ici tes tiles (Wi-Fi, Bluetooth, Volume…) *@
+        </div>
+    }
+
+    @* ── Swipe global (toujours au-dessus) ── *@
+    <SwipeGesture
+        OnSwipeDown=@OpenControlCenter
+        OnSwipeUp=@CloseControlCenter />
+
+</root>
+
+@code {
+    public IDevice AttachedDevice { get; set; }
+
+    public string CurrentBackground => DevicesManager.Instance.Settings
+    .FirstOrDefault( x => x.Id == "home_wallpaper" )?.Value
+        ?? "ui/phone/background/iphone_wallpaper_v1.png";
+
+    private bool _controlCenterOpen = false;
+
+    private void OpenControlCenter()
+    {
+        _controlCenterOpen = true;
+        StateHasChanged();
+    }
+
+    private void CloseControlCenter()
+    {
+        _controlCenterOpen = false;
+        StateHasChanged();
+    }
+
+    protected override int BuildHash() => HashCode.Combine( CurrentBackground, _controlCenterOpen );
+}

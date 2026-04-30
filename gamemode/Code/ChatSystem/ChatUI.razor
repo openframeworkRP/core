@@ -1,0 +1,405 @@
+@using Sandbox;
+@using Sandbox.UI;
+@using System;
+@using System.Collections.Generic;
+@using System.Linq;
+@using System.Text.RegularExpressions;
+@using OpenFramework.Command;
+@using OpenFramework.Database.DTO
+@using OpenFramework.Extension;
+@using OpenFramework.Models;
+@using OpenFramework.Discord;
+@using OpenFramework.Api;
+@using OpenFramework.Systems.Jobs;
+@using static Facepunch.NotificationSystem;
+
+@namespace OpenFramework.ChatSystem
+@inherits PanelComponent
+
+<root class="@(IsTriggered ? "triggered" : "")">
+    <div class="left">
+        <panel class="entries" @ref="MessagesCanvas"></panel>
+
+        <panel class="input">
+            <TextEntry @ref="InputEntry" onblur="@InputBlurred" onsubmit="@InputSubmitted"></TextEntry>
+            <div class="actions">
+                <div class="@(IsEmojiPage ? "active" : "")" onclick="@OpenEmojis">
+                    <svg src="ui/icons/emoji/sunglasses.svg" color="white" />
+                </div>
+                <div onclick="@OpenSettings">
+                    <svg src="ui/icons/settings.svg" color="white" />
+                </div>
+            </div>
+        </panel>
+
+        @{
+            var matching = MatchingCommands?.ToList();
+        }
+
+        @if (CommandWriting && matching != null && matching.Count != 0)
+        {
+            <div class="commandfinder show">
+                @foreach (var command in matching)
+                {
+                    <div class="command @(FocusedCommand == command ? "active" : "")" onclick="@(() => FillCommand(command))">
+                        <div class="icon"><svg src="@command.Icon" color="gray" /></div>
+                        <span class="name">@(InputEntry?.Text?[0])@(command.Aliases.FirstOrDefault() ?? command.Name)</span>
+                        @foreach (var arg in command.Arguments)
+                        {
+                            <span class="arg @(arg.Value ? "optional" : "")">@($"<{arg.Key}>{(arg.Value ? "" : "*")}")</span>
+                        }
+                        <span class="desc">(@(string.IsNullOrEmpty(command.Description) ? "N/A" : command.Description))</span>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+
+    <div class="right @(RightIsOpen ? "show" : "")" @ref="RightPanel">
+        <svg class="closebtn" src="UI/icons/close.svg" color="white" onclick="@CloseRight"></svg>
+        @if (IsSettingsPage)
+        {
+            <div class="settingspage"><label>Paramètres</label></div>
+        }
+        else if (IsEmojiPage)
+        {
+            <div class="emojipage">
+                @if (EmojiList != null)
+                {
+                    @foreach (var grouping in EmojiList.GroupBy(x => x.Category))
+                    {
+                        <div class="category">
+                            <span class="title">@grouping.Key</span>
+                            <div class="list">
+                                @foreach (var emoji in grouping)
+                                {
+                                    <span class="emoji" onclick=@(() => AddEmoji(emoji.Emoji))>@emoji.Emoji</span>
+                                }
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+        }
+    </div>
+</root>
+
+@code {
+    public static ChatUI Instance { get; private set; }
+
+    // UI References
+    public TextEntry InputEntry { get; set; }
+    public Panel MessagesCanvas { get; set; }
+    private Panel RightPanel;
+
+    // State
+    private bool RightIsOpen, IsEmojiPage, IsSettingsPage;
+    public bool IsTriggered = false;
+
+    // Data
+    public List<ChatMessage> Messages { get; set; } = new();
+    public IEnumerable<ChatEmoji> EmojiList { get; protected set; }
+    private IEnumerable<CommandDTO> AllCommands = Enumerable.Empty<CommandDTO>();
+
+    // Command Logic
+    private CommandDTO FocusedCommand = null;
+    private bool CommandWriting => InputEntry != null && (InputEntry.Text.StartsWith("/") || InputEntry.Text.StartsWith("!")) && InputEntry.Text.Length >= 2;
+
+    private IEnumerable<CommandDTO> MatchingCommands
+    {
+        get
+        {
+            if (AllCommands == null || string.IsNullOrWhiteSpace(InputEntry?.Text) || InputEntry.Text.Length < 2)
+                return Enumerable.Empty<CommandDTO>();
+
+            string inputWithoutPrefix = InputEntry.Text[1..];
+            var parts = inputWithoutPrefix.Split(' ', StringSplitOptions.None);
+            var commandPart = parts[0].ToLower();
+
+            if (parts.Length > 1 || inputWithoutPrefix.EndsWith(' '))
+            {
+                return AllCommands.Where(c => c.Name.Equals(commandPart, StringComparison.OrdinalIgnoreCase) ||
+                    (c.Aliases?.Any(a => a.Equals(commandPart, StringComparison.OrdinalIgnoreCase)) ?? false));
+            }
+
+            return AllCommands.Where(c => c.Name.StartsWith(commandPart, StringComparison.OrdinalIgnoreCase) ||
+                (c.Aliases?.Any(a => a.StartsWith(commandPart, StringComparison.OrdinalIgnoreCase)) ?? false))
+                .OrderBy(c => c.Name);
+        }
+    }
+
+    public ChatUI()
+    {
+        Instance = this;
+        EmojiList = FileSystem.Mounted.ReadJson("ui/chatemoji.json", new List<ChatEmoji>());
+    }
+
+    protected override void OnAwake()
+    {
+        AllCommands = TypeLibrary.GetMethodsWithAttribute<CommandAttribute>()
+           .Select(m => new CommandDTO
+           {
+               Name = m.Attribute.Name,
+               Aliases = m.Attribute.ChatCommand,
+               Description = m.Attribute.Description,
+               Icon = m.Attribute.Icon,
+               Arguments = m.Method.Parameters.ToDictionary(p => p.Name, p => p.IsOptional)
+           }).ToList();
+
+        if (InputEntry != null)
+        {
+            InputEntry.MaxLength = 128;
+            InputEntry.AllowEmojiReplace = true;
+            InputEntry.HistoryCookie = "chat_input_history";
+            InputEntry.HistoryMaxItems = 50;
+        }
+
+    }
+
+    // --- LOGIQUE CHAT ---
+
+    private void InputSubmitted()
+    {
+        string text = InputEntry?.Text;
+        if (string.IsNullOrWhiteSpace(text)) return;
+
+        // Autoriser les commandes (/ ou !) meme en etant mort, pour que les admins puissent /hp, /revive, etc.
+        bool isCommand = text.StartsWith('/') || text.StartsWith('!');
+        if (Client.Local?.IsChatMuted == true && !isCommand)
+        {
+            Client.Local.Notify(NotificationType.Error, "Vous ne pouvez pas parler en étant mort.");
+            InputEntry.Text = "";
+            return;
+        }
+
+        var msg = new ChatMessage
+        {
+            AuthorId = Connection.Local.Id,
+            AuthorName = Client.Local.DisplayName,
+            Message = text.Trim(),
+            Time = DateTime.Now
+        };
+
+        Send(msg);
+
+        InputEntry.AddToHistory( msg.Message.Trim() );
+        InputEntry.Text = "";
+    }
+
+    private void InputBlurred()
+    {
+        // Ne pas fermer le chat si le panneau emoji/settings est ouvert (le blur vient du clic sur un emoji)
+        if ( RightIsOpen ) return;
+
+        InputEntry.Text = string.Empty;
+        IsTriggered = false;
+    }
+
+    public void Send(ChatMessage message)
+    {
+        if (message.IsCommand) { HandleCommand(message); return; }
+        Receive(message);
+    }
+
+    [Rpc.Broadcast]
+    public static void Receive(ChatMessage message)
+    {
+        if (Instance == null) return;
+        Instance.Messages.Add(message);
+        Instance.MessagesCanvas?.AddChild(new ChatEntry(message));
+
+        // Forward vers Discord (host uniquement, pas les messages déjà de Discord ni les commandes system)
+        if (Networking.IsHost && !message.IsFromDiscord && !message.HostMessage && DiscordBridge.Instance != null)
+        {
+            _ = DiscordBridge.Instance.SendToDiscord(message.AuthorName, message.Message);
+        }
+
+        // Audit chat (host uniquement, exclus messages système et bot Discord).
+        // Le SteamId vient de la connexion qui a déclenché le RPC broadcast.
+        if (Networking.IsHost && !message.IsFromDiscord && !message.HostMessage && ApiComponent.Instance != null)
+        {
+            var caller = Rpc.Caller;
+            if (caller != null)
+            {
+                _ = ApiComponent.Instance.LogChat(
+                    (ulong)caller.SteamId.Value,
+                    message.AuthorName ?? caller.DisplayName ?? "",
+                    "global",
+                    message.Message ?? "",
+                    message.IsCommand);
+            }
+        }
+    }
+
+    private void HandleCommand(ChatMessage message)
+    {
+        string[] tokens = message.Message.Remove(0, 1).Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        if (tokens.Length == 0) return;
+
+        string cmdName = tokens[0];
+        var context = CommandCallback.Find(cmdName);
+        if (context == null) { Client.Local.Notify(NotificationType.Error, $"Inconnu : {cmdName}"); return; }
+
+        var builder = CommandCallback.Call(cmdName);
+        for (int i = 0; i < context.Args.Length; i++)
+        {
+            var param = context.Args[i];
+            if (i + 1 < tokens.Length) builder.Set(param.Name, tokens[i + 1]);
+            else if (!param.IsOptional) { Client.Local.Notify(NotificationType.Error, $"Manquant : {param.Name}"); return; }
+        }
+        builder.Execute();
+    }
+
+    private void AddEmoji(string emoji)
+    {
+        if (InputEntry == null) return;
+        InputEntry.Text += emoji;
+        InputEntry.CaretPosition = InputEntry.TextLength;
+        InputEntry.Focus();
+    }
+
+    private void OpenSettings() { IsEmojiPage = false; IsSettingsPage = !IsSettingsPage; RightIsOpen = IsSettingsPage; }
+    private void OpenEmojis() { IsSettingsPage = false; IsEmojiPage = !IsEmojiPage; RightIsOpen = IsEmojiPage; }
+    private void CloseRight() { RightIsOpen = false; IsSettingsPage = false; IsEmojiPage = false; }
+
+    private void FillCommand(CommandDTO command)
+    {
+        var alias = command.Aliases.FirstOrDefault() ?? command.Name;
+        InputEntry.Text = $"{InputEntry.Text.First()}{alias.ToLower()} ";
+        InputEntry.CaretPosition = InputEntry.Text.Length;
+        InputEntry.Focus();
+    }
+
+    protected override void OnUpdate()
+    {
+        if (Input.Pressed("ChatUI"))
+        {
+            if(!IsTriggered)
+            {
+                InputEntry?.Focus();
+                IsTriggered = true;
+            }
+            else 
+            {
+                IsTriggered = false;
+                CloseRight();
+                InputEntry?.Blur();
+                RightIsOpen = false;
+            }
+        }
+
+        if (!IsTriggered) return;
+
+    }
+
+
+    protected override int BuildHash() => HashCode.Combine(IsTriggered, InputEntry?.Text, RightIsOpen);
+
+    // --- STRUCTURES ---
+
+    public struct ChatMessage
+    {
+        public Guid AuthorId { get; set; }
+        public string AuthorName { get; set; }
+        public string Message { get; set; }
+        public bool HostMessage { get; set; }
+        public bool IsFromDiscord { get; set; }
+        public string DiscordAuthor { get; set; }
+        public string Background { get; set; }
+        public DateTime Time { get; set; }
+        public bool Processed { get; set; }
+        public bool IsCommand => Message.StartsWith('!') || Message.StartsWith('/');
+
+        public string GetFormattedMessage()
+        {
+            if (IsCommand) return Message;
+
+            // Format cible : {c=red|s=14|b|i}Texte{/}
+            // c = color, s = size, b = bold, i = italic
+            return Regex.Replace(Message, @"\{(.*?)\}(.*?)\{\/\}", match =>
+            {
+                string paramsRaw = match.Groups[1].Value;
+                string content = match.Groups[2].Value;
+
+                List<string> styles = new List<string>();
+                string[] parts = paramsRaw.Split('|');
+
+                foreach (var part in parts)
+                {
+                    if (part.StartsWith("c=")) // Couleur
+                        styles.Add($"color:{part.Substring(2)}");
+
+                    else if (part.StartsWith("s=")) // Taille
+                        styles.Add($"font-size:{part.Substring(2)}");
+
+                    else if (part == "b") // Gras
+                        styles.Add("font-weight:bold");
+
+                    else if (part == "i") // Italique
+                        styles.Add("font-style:italic");
+
+                    else if (part == "u") // Souligné
+                        styles.Add("text-decoration:underline");
+                }
+
+                string styleString = string.Join(";", styles);
+                return $"<span class='message' style='{styleString}'>{content}</span>";
+            });
+        }
+    }
+
+    public class ChatEntry : Panel
+    {
+        public ChatEntry(ChatMessage msg)
+        {
+            AddClass("chatentry");
+            SetClass("fromhost", msg.HostMessage);
+
+            var clientData = Connection.Find(msg.AuthorId)?.GetClient()?.Data;
+            var job = clientData?.Job;
+
+            SetClass("fromdiscord", msg.IsFromDiscord);
+
+            ChildContent = builder =>
+            {
+                int seq = 0;
+
+                // 1. Auteur
+                builder.OpenElement(seq++, "span");
+                builder.AddAttribute(seq++, "class", "author");
+                if (msg.IsFromDiscord)
+                {
+                    builder.AddContent(seq++, $"[HRP/Discord] {msg.DiscordAuthor ?? "Inconnu"}: ");
+                }
+                else if (!msg.HostMessage && job != null)
+                {
+                    var jobObj = JobSystem.GetJob(job);
+                    if (jobObj != null)
+                        builder.AddContent(seq++, $"[{jobObj.DisplayName}] ");
+                }
+
+                if (!msg.IsFromDiscord)
+                    builder.AddContent(seq++, $"{(msg.HostMessage ? "📢 SYSTEM" : msg.AuthorName)}: ");
+                builder.CloseElement();
+
+                // 2. Message (On injecte directement le markup ici)
+                // On ne crée PAS de nouveau span manuellement, GetFormattedMessage s'en occupe
+                builder.AddMarkupContent(seq++, msg.GetFormattedMessage());
+
+                // 3. Heure
+                builder.OpenElement(seq++, "span");
+                builder.AddAttribute(seq++, "class", "time");
+                builder.AddContent(seq++, msg.Time.ToString("HH:mm"));
+                builder.CloseElement();
+            };
+        }
+
+        protected override async void OnParametersSet()
+        {
+            await Task.Delay(8000);
+            AddClass("faded");
+        }
+    }
+
+    public class ChatEmoji { public string Emoji { get; set; } public string Category { get; set; } }
+}

@@ -1,0 +1,186 @@
+VehicleDashboardScreen {
+    width: 100%;
+    height: 100%;
+    font-family: Poppins, sans-serif;
+    background-color: rgba(5, 5, 8, 0.95);
+    justify-content: center;
+    align-items: center;
+
+    .dash {
+        width: 100%;
+        height: 100%;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+    }
+
+    // ── DIGITAL ──
+    .digital {
+        flex-direction: column;
+
+        .speed-block {
+            flex-direction: row;
+            align-items: baseline;
+            justify-content: center;
+
+            .speed {
+                font-weight: 900;
+                color: white;
+            }
+
+            .unit {
+                font-weight: 700;
+                color: rgba(255, 255, 255, 0.3);
+            }
+        }
+
+        .rpm-bar {
+            width: 85%;
+            background-color: rgba(255, 255, 255, 0.08);
+            border-radius: 2px;
+            overflow: hidden;
+
+            .rpm-fill {
+                height: 100%;
+                border-radius: 2px;
+                transition: width 0.05s ease-out;
+            }
+        }
+
+        .bottom-row {
+            flex-direction: row;
+            width: 85%;
+            justify-content: space-between;
+            align-items: center;
+
+            .info {
+                font-weight: 600;
+                color: rgba(255, 255, 255, 0.25);
+            }
+
+            .gear {
+                font-weight: 900;
+                color: #ff8000;
+
+                &.shifting {
+                    opacity: 0.3;
+                }
+            }
+        }
+    }
+
+    // ── ANALOG ──
+    .analog {
+        .center {
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            .gear-big {
+                font-weight: 900;
+                color: #ff8000;
+
+                &.shifting {
+                    opacity: 0.3;
+                }
+            }
+
+            .odo {
+                font-weight: 600;
+                color: rgba(255, 255, 255, 0.2);
+            }
+        }
+    }
+
+    // ── MIXED ──
+    .mixed {
+        .side {
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex-grow: 1;
+
+            .gear-big {
+                font-weight: 900;
+                color: #ff8000;
+
+                &.shifting {
+                    opacity: 0.3;
+                }
+            }
+
+            .rpm-bar {
+                width: 80%;
+                background-color: rgba(255, 255, 255, 0.08);
+                border-radius: 2px;
+                overflow: hidden;
+
+                .rpm-fill {
+                    height: 100%;
+                    border-radius: 2px;
+                    transition: width 0.05s ease-out;
+                }
+            }
+
+            .info {
+                font-weight: 600;
+                color: rgba(255, 255, 255, 0.3);
+            }
+
+            .odo {
+                font-weight: 600;
+                color: rgba(255, 255, 255, 0.2);
+            }
+        }
+    }
+
+    // ── SHARED GAUGE ──
+    .gauge {
+        position: relative;
+        justify-content: center;
+        align-items: center;
+        flex-shrink: 0;
+
+        .gauge-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 128, 0, 0.35);
+            background-color: rgba(0, 0, 0, 0.3);
+        }
+
+        .needle {
+            position: absolute;
+            height: 35%;
+            background-color: #ff3333;
+            border-radius: 1px;
+            bottom: 50%;
+            transform-origin: bottom center;
+        }
+
+        .needle-dot {
+            position: absolute;
+            border-radius: 50%;
+            background-color: #333;
+            border: 1px solid rgba(255, 128, 0, 0.5);
+        }
+
+        .gauge-val {
+            position: absolute;
+            font-weight: 900;
+            color: white;
+            align-self: center;
+        }
+
+        .gauge-lbl {
+            position: absolute;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.3);
+            letter-spacing: 1px;
+            align-self: center;
+        }
+    }
+}

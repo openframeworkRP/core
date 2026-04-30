@@ -1,0 +1,170 @@
+@import "ui/Styles/Theme.scss";
+
+$accent: #D66D2D;
+$accent-hover: #f17b34;
+$glass-bg: rgba(15, 15, 15, 0.85);
+$glass-card: rgba(255, 255, 255, 0.04);
+$glass-border: rgba(255, 255, 255, 0.08);
+
+IdCardPage {
+    width: 100%;
+    height: 100%;
+    pointer-events: all;
+
+    .bg-right {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 28%;
+        height: 100%;
+        background-color: rgba(5, 5, 7, 1);
+    }
+
+    .id-card-container {
+        position: absolute;
+        left: 20px;
+        top: 10%;
+        width: 26%;
+        flex-direction: row;
+    }
+
+    .form-side {
+        flex: 1;
+        padding: 40px;
+        flex-direction: column;
+        gap: 10px;
+
+        h1 {
+            font-size: 28px;
+            color: $accent;
+            margin-bottom: 10px;
+            width: 100%;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+        }
+
+        .input-group {
+            flex-direction: column;
+
+            label {
+                color: rgba(255, 255, 255, 0.5);
+                font-size: 12px;
+                text-transform: uppercase;
+                margin-bottom: 4px;
+            }
+
+            .flag-icon {
+                align-items: center;
+                margin-right: 10px;
+            }
+
+            .date-hint {
+                color: rgba(255, 255, 255, 0.3);
+                font-size: 12px;
+                margin-top: 2px;
+            }
+
+            TextEntry {
+                background-color: rgba(255, 255, 255, 0.06);
+                padding: 10px;
+                border-radius: 4px;
+                color: white;
+                border: 1px solid $glass-border;
+                align-content: center;
+
+                &:focus {
+                    border-color: $accent;
+                }
+
+                &.invalid {
+                    border-color: #ff4444;
+                    box-shadow: 0 0 5px rgba(255, 68, 68, 0.3);
+                }
+            }
+
+            .custom-dropdown {
+                background-color: rgba(0, 0, 0, 0.4);
+                border: 1px solid $glass-border;
+                border-radius: 4px;
+                padding: 8px 12px;
+                color: red;
+                font-family: "Poppins";
+                transition: all 0.2s ease;
+                justify-content: center;
+
+                .option {
+                    padding: 8px 12px;
+                    border-radius: 4px;
+                    margin: 2px;
+                    transition: all 0.1s ease;
+
+                    &:hover {
+                        background-color: rgba(white, 0.1);
+                    }
+
+                    &.active {
+                        background-color: $accent;
+                        color: white;
+                    }
+
+                    label {
+                        font-size: 13px;
+                    }
+                }
+
+                .text {
+                    font-size: 14px;
+                    text-transform: uppercase;
+                    letter-spacing: 1px;
+                }
+
+                .icon {
+                    color: $accent;
+                    align-items: center;
+                }
+
+                &:hover {
+                    background-color: rgba(255, 255, 255, 0.1);
+                    border-color: $accent;
+                    cursor: pointer;
+                }
+
+                &.active {
+                    background-color: rgba(15, 15, 15, 0.95);
+                }
+            }
+        }
+
+        .dropdown_indicator {
+            color: $accent;
+            font-size: 18px;
+        }
+
+        .error-msg {
+            color: red;
+            font-size: 12px;
+        }
+    }
+
+    .next-btn {
+        position: absolute;
+        bottom: 20px;
+        left: 1.5%;
+        width: 25%;
+        height: 45px;
+        background-color: $accent;
+        color: white;
+        font-size: 12px;
+        font-weight: bold;
+        text-transform: uppercase;
+        border-radius: 4px;
+        justify-content: center;
+        align-items: center;
+
+        &:hover {
+            background-color: $accent-hover;
+            cursor: pointer;
+        }
+    }
+}

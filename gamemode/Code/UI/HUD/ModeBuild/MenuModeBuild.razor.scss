@@ -1,0 +1,136 @@
+MenuModeBuild {
+    background-color: transparent;
+    height: 100%;
+    width: 100%;
+
+    .container {
+        padding: 5px;
+        position: relative;
+        flex-direction: column;
+        background-color: transparent;
+        height: 100%;
+        width: 100%;
+
+        .title {
+            margin-left: 8px;
+            color: white;
+            font-size: 15px;
+        }
+
+        .container-keys {
+            position: absolute;
+            flex-direction: row;
+            background-color: transparent;
+            height: 5%;
+            width: 25%;
+            justify-content: flex-start;
+            align-content: center;
+            top: 93%;
+            left: 0;
+            gap: 5px;
+            margin-left: 20px;
+
+            .keys {
+                width: 100%;
+                height: 100%; // Hauteur fixe pour l'uniformité
+                border-radius: 0px; // Bordure plus carrée pour le côté moderne
+                background-color: rgba(0, 0, 0, 0.85); // Noir profond transparent
+                backdrop-filter: blur(20px);
+                border-right: 3px solid #ff8000; // Accent orange sur le côté droit
+                color: #ffffff;
+                align-items: center;
+                //gap: 12px;
+                padding: 0 15px;
+                align-content: center;
+                justify-content: space-between; // Espace entre la touche et le texte
+                // Effet de surbrillance sur le texte important
+                font-family: "Poppins", sans-serif;
+                font-weight: 600;
+                text-transform: uppercase;
+
+                span {
+                    align-items: center;
+                }
+            }
+        }
+        /*
+        .contain-keys {
+            flex-direction: column;
+            gap: 5px; // Un peu plus d'espace pour la clarté
+            background-color: transparent; // On enlève le rouge de test
+
+            .keys {
+                width: 100%;
+                height: 100%; // Hauteur fixe pour l'uniformité
+                border-radius: 0px; // Bordure plus carrée pour le côté moderne
+                background-color: rgba(0, 0, 0, 0.85); // Noir profond transparent
+                backdrop-filter: blur(20px);
+                border-right: 3px solid #ff8000; // Accent orange sur le côté droit
+                color: #ffffff;
+                align-items: center;
+                gap: 12px;
+                padding: 0 15px;
+                align-content: center;
+                justify-content: space-between; // Espace entre la touche et le texte
+                // Effet de surbrillance sur le texte important
+                font-family: "Poppins", sans-serif;
+                font-weight: 600;
+                text-transform: uppercase;
+
+                span {
+                    align-content: center;
+                }
+            }
+        }*/
+
+
+        .menu-custom {
+            //display:none;
+            position: absolute;
+            margin-right: 15px;
+            top: 200px;
+            right: 0;
+            flex-direction: column;
+            width: 15%;
+            height: 50%;
+            background-color: rgba(black,0.98);
+            align-content: center;
+            padding: 8px;
+            pointer-events: all;
+            align-items: center;
+
+            .title {
+                padding: 0px;
+                margin: 0px;
+            }
+
+            .advanced-mode {
+                gap: 10px;
+                align-content: center;
+            }
+
+            .model-color {
+                flex-direction: column;
+                align-items: center;
+
+                ColorPickerControl {
+                    width: 60%;
+                    height: 60%;
+
+                    .sv, .hue {
+                        pointer-events: all;
+                        flex-grow: 1;
+                    }
+
+                    .alpha {
+                        display: none;
+                    }
+
+                    .handle {
+                        pointer-events: none; /* Le petit rond ne doit pas bloquer le clic dessous */
+                    }
+                }
+            }
+        }
+    }
+}

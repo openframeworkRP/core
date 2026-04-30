@@ -1,0 +1,613 @@
+@namespace OpenFramework.Inventory.UI
+@using OpenFramework.Utility
+@using OpenFramework.Systems.Weapons
+@using OpenFramework.Systems.Pawn
+@using OpenFramework.Systems.Tools
+@inherits Panel
+
+<div class="overlay" @onclick=@(() => Delete()) onrightclick=@(() => Delete())></div>
+
+<root>
+    <div class="item-header">
+        <div class="title-row">
+            <span class="brand-accent"></span>
+            <label class="item-name">@Item.Name</label>
+        </div>
+
+        @if (Item.TimeRemaining > 0)
+        {
+            <div class="status-badge timer">
+                <span class="icon">⏳</span>
+                <span>@TimeUtils.DelayToReadable(Item.TimeRemaining)</span>
+            </div>
+        }
+        else if (Item.IsExpired)
+        {
+            <div class="status-badge expired">
+                <span class="icon">⚠️</span>
+                <span>PÉRIMÉ</span>
+            </div>
+        }
+    </div>
+
+    <div class="item-details">
+        @if (!string.IsNullOrEmpty(Item.Metadata?.Description))
+        {
+            <p class="item-description">@Item.Metadata.Description</p>
+        }
+
+        <div class="detail-grid">
+
+            @if (Item.Metadata?.Weight > 0)
+            {
+                <div class="detail-row">
+                    <span class="detail-label">POIDS</span>
+                    <span class="detail-value">@Item.Metadata.Weight kg</span>
+                </div>
+            }
+
+            @if (Item.Metadata?.IsWeapon == true && Item.Metadata?.AmmoType != null)
+            {
+                <div class="detail-row">
+                    <span class="detail-label">CALIBRE</span>
+                    <span class="detail-value">@Item.Metadata.AmmoType.Name</span>
+                </div>
+            }
+
+            @if (Item.Metadata?.IsMagazine == true)
+            {
+                <div class="detail-row">
+                    <span class="detail-label">MUNITIONS</span>
+                    <span class="detail-value highlight">@Item.MagAmmo / @Item.MagCapacity</span>
+                </div>
+                @if (Item.Metadata?.MagAmmoType != null)
+                {
+                    <div class="detail-row">
+                        <span class="detail-label">CALIBRE</span>
+                        <span class="detail-value">@Item.Metadata.MagAmmoType.Name</span>
+                    </div>
+                }
+            }
+
+            @if (Item.Metadata?.IsAmmo == true)
+            {
+                <div class="detail-row">
+                    <span class="detail-label">DÉGÂTS</span>
+                    <span class="detail-value">@Item.Metadata.BaseDamage</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">CALIBRE</span>
+                    <span class="detail-value">@Item.Metadata.BulletCaliber mm</span>
+                </div>
+                @if (Item.Metadata.BulletCount > 1)
+                {
+                    <div class="detail-row">
+                        <span class="detail-label">PROJECTILES</span>
+                        <span class="detail-value">x@Item.Metadata.BulletCount</span>
+                    </div>
+                }
+            }
+
+            @if (Item.Metadata?.IsPack == true)
+            {
+                <div class="detail-row">
+                    <span class="detail-label">CONTENU</span>
+                    <span class="detail-value">@Item.PackCount / @Item.Metadata.PackCapacity</span>
+                </div>
+            }
+
+            @if (Item.Metadata?.CanHeal == true)
+            {
+                <div class="detail-row">
+                    <span class="detail-label">SOINS</span>
+                    <span class="detail-value">+@Item.Metadata.HealAmount HP</span>
+                </div>
+                @if (UsesLeft != null)
+                {
+                    <div class="detail-row">
+                        <span class="detail-label">UTILISATIONS</span>
+                        <span class="detail-value">@UsesLeft</span>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+
+    <div class="actions">
+
+        @if (!IsRemote)
+        {
+            @if (Item.Metadata.IsMagazine && Item.MagAmmo < Item.Metadata.MagCapacity && HasCompatibleAmmoSource)
+            {
+                <button class="action-btn primary" onclick=@OnFillMagazine>
+                    <span class="icon">🔋</span>
+                    <span class="btn-text">REMPLIR</span>
+                </button>
+            }
+
+            @if (Item.Metadata.IsMagazine && CompatibleEquippedAmmo != null)
+            {
+                <button class="action-btn primary" onclick=@OnEquipMagazine>
+                    <span class="icon">🔫</span>
+                    <span class="btn-text">EQUIPER</span>
+                </button>
+            }
+
+            @if (Item.Metadata.IsClothing && !IsInClothingSlot)
+            {
+                <button class="action-btn primary" onclick=@OnEquipClothing>
+                    <span class="icon">👕</span>
+                    <span class="btn-text">EQUIPER</span>
+                </button>
+            }
+
+            @if (Item.Metadata.IsClothing && IsInClothingSlot)
+            {
+                <button class="action-btn primary" onclick=@OnUnequipClothing>
+                    <span class="icon">👕</span>
+                    <span class="btn-text">DESEQUIPER</span>
+                </button>
+            }
+
+            @if (Item.Metadata?.ResourceName == "head-bag" && FriskedPawn != null)
+            {
+                <button class="action-btn primary" onclick=@OnPutBagOnFriskedHead>
+                    <span class="icon">🎭</span>
+                    <span class="btn-text">Mettre sur la tête</span>
+                </button>
+            }
+
+            @if (Item.Metadata.IsWeapon && !IsWeaponEquipped)
+            {
+                <button class="action-btn primary" onclick=@OnEquipWeapon>
+                    <span class="icon">🔫</span>
+                    <span class="btn-text">EQUIPER</span>
+                </button>
+            }
+
+            @if (Item.Metadata.IsWeapon && IsWeaponEquipped)
+            {
+                <button class="action-btn primary" onclick=@OnUnequipWeapon>
+                    <span class="icon">🔫</span>
+                    <span class="btn-text">DESEQUIPER</span>
+                </button>
+            }
+
+            @if (Item.Metadata.IsConsumable)
+            {
+                <button class="action-btn primary" onclick=@OnUse>
+                    <span class="icon">⚡</span>
+                    <span class="btn-text">UTILISER</span>
+                </button>
+            }
+
+            @if (Item.Metadata.IsFurniture && Item.Metadata.WorldObjectPrefab != null)
+            {
+                <button class="action-btn primary" onclick=@OnPlaceProp>
+                    <span class="icon">🪑</span>
+                    <span class="btn-text">POSER</span>
+                </button>
+            }
+
+            @if (FullInventory.Instance?.NearbyContainer != null)
+            {
+                <button class="action-btn secondary" onclick=@OnTransferToNearby>
+                    <span class="icon">📦</span>
+                    <span class="btn-text">Transférer</span>
+                </button>
+            }
+
+            @if (!IsInClothingSlot)
+            {
+                @if (Item.Quantity > 1)
+                {
+                    <button class="action-btn primary" onclick=@OnSplit>
+                        <span class="icon">✂️</span>
+                        <span class="btn-text">Séparer…</span>
+                    </button>
+                }
+
+                <button class="action-btn danger" onclick=@OnDropPrompt>
+                    <span class="icon">🗑️</span>
+                    <span class="btn-text">@(Item.Quantity > 1 ? "Jeter…" : "Jeter")</span>
+                </button>
+            }
+        }
+        else
+        {
+            @if (Item.Metadata.IsConsumable)
+            {
+                <button class="action-btn primary" onclick=@OnUse>
+                    <span class="icon">⚡</span>
+                    <span class="btn-text">CONSOMMER</span>
+                </button>
+            }
+
+            <button class="action-btn primary" onclick=@OnTakeItem>
+                <span class="icon">🎒</span>
+                <span class="btn-text">Prendre</span>
+            </button>
+
+            <button class="action-btn primary" onclick=@OnTakeAll>
+                <span class="icon">🎒</span>
+                <span class="btn-text">Tout prendre</span>
+            </button>
+        }
+
+        <div class="separator"></div>
+
+        <button class="action-btn cancel" onclick=@(() => Delete())>
+            ANNULER
+        </button>
+    </div>
+</root>
+
+@code {
+    public InventoryItem Item { get; set; }
+    public InventoryContainer Container { get; set; }
+    public bool IsRemote { get; set; } = false;
+    public InventorySlot SourceSlot { get; set; }
+
+    private ClothingEquipment ClothingEquip => Client.Local?.PlayerPawn?.Components
+        .Get<ClothingEquipment>(FindMode.EnabledInSelfAndChildren);
+
+    // Joueur fouillé : NearbyContainer appartient à un autre joueur, et il a les mains levées/menotté
+    private PlayerPawn FriskedPawn
+    {
+        get
+        {
+            if (IsRemote) return null;
+            var nearby = FullInventory.Instance?.NearbyContainer;
+            if (nearby == null) return null;
+            var fp = nearby.Components.GetInAncestorsOrSelf<PlayerPawn>();
+            if (fp == null || fp.IsLocallyControlled) return null;
+            if (!fp.IsHandsUp && !fp.IsHandcuffed) return null;
+            return fp;
+        }
+    }
+
+    private bool IsInClothingSlot => ClothingEquip?.Container != null && Container == ClothingEquip.Container;
+
+    /// <summary>
+    /// Vérifie si l'arme de cet item est actuellement équipée (Equipment lié existant).
+    /// </summary>
+    private bool IsWeaponEquipped
+    {
+        get
+        {
+            if (Item?.Metadata?.IsWeapon != true) return false;
+            var pawn = Client.Local?.PlayerPawn;
+            if (pawn == null) return false;
+            return pawn.Inventory.Equipment.Any(e => e.LinkedItem == Item);
+        }
+    }
+
+    // ── Remplir chargeur ─────────────────────────
+
+    private bool HasCompatibleAmmoSource
+    {
+        get
+        {
+            var pawn = Client.Local?.PlayerPawn;
+            if (pawn == null || Item == null) return false;
+            var inv = pawn.Components.Get<InventoryContainer>(FindMode.EnabledInSelfAndChildren);
+            if (inv == null) return false;
+            return inv.Items.Any(x => InventoryContainer.CanTransferBullets(x, Item));
+        }
+    }
+
+    void OnFillMagazine()
+    {
+        var pawn = Client.Local?.PlayerPawn;
+        if (pawn == null || Item == null) { Delete(); return; }
+
+        var inv = pawn.Components.Get<InventoryContainer>(FindMode.EnabledInSelfAndChildren);
+        if (inv == null) { Delete(); return; }
+
+        var source = inv.Items
+            .Where(x => InventoryContainer.CanTransferBullets(x, Item))
+            .OrderByDescending(x => x.Metadata.IsPack ? x.PackCount : x.Metadata.IsMagazine ? x.MagAmmo : x.Quantity)
+            .FirstOrDefault();
+
+        if (source != null)
+            InventoryContainer.TransferBulletsWithProgress(source, Item, 1.5f);
+
+        Delete();
+    }
+
+    // ── Equiper chargeur dans l'arme ─────────────────
+
+    private WeaponAmmo CompatibleEquippedAmmo
+    {
+        get
+        {
+            if (Item?.Metadata?.IsMagazine != true) return null;
+            var magAmmoType = Item.Metadata.MagAmmoType;
+            if (magAmmoType == null) return null;
+
+            var pawn = Client.Local?.PlayerPawn;
+            if (pawn == null) return null;
+
+            foreach (var eq in pawn.Inventory.Equipment)
+            {
+                var ammo = eq.GetComponentInChildren<WeaponAmmo>();
+                if (ammo == null) continue;
+                var weaponAmmoType = ammo.LinkedItem?.Metadata?.AmmoType;
+                if (weaponAmmoType == null) continue;
+                if (magAmmoType == weaponAmmoType) return ammo;
+            }
+            return null;
+        }
+    }
+
+    void OnEquipMagazine()
+    {
+        var ammo = CompatibleEquippedAmmo;
+        if (ammo == null || Item == null) { Delete(); return; }
+
+        // On declenche le reload normal (avec animation) en pre-selectionnant CE chargeur.
+        var reloadable = ammo.Components.GetInAncestorsOrSelf<Reloadable>();
+        Log.Info($"[Inventory:EquipMag] ammo found, reloadable={(reloadable != null ? "yes" : "NO")}, item={Item.Metadata?.ResourceName}");
+
+        if (reloadable != null)
+        {
+            reloadable.StartReloadWithMagazine(Item);
+        }
+        else
+        {
+            // Fallback si l'arme n'a pas de composant Reloadable (rare)
+            Log.Warning("[Inventory:EquipMag] No Reloadable component found, falling back to instant swap");
+            WeaponAmmo.RPC_EquipMagazine(ammo, Item);
+        }
+        Delete();
+    }
+
+    // ── Clothing ──────────────────────────────────
+
+    void OnEquipClothing()
+    {
+        var equip = ClothingEquip;
+        if (equip != null && Item != null)
+        {
+            var itemToEquip = Item;
+            if (SourceSlot != null)
+            {
+                SourceSlot.StartClothingChange(
+                    () => ClothingEquipment.Equip(equip, itemToEquip),
+                    $"EQUIP {itemToEquip.Name} (via menu)");
+            }
+            else
+            {
+                ClothingEquipment.Equip(equip, itemToEquip);
+            }
+        }
+        Delete();
+    }
+
+    void OnUnequipClothing()
+    {
+        var equip = ClothingEquip;
+        if (equip != null && Item != null)
+        {
+            var itemToUnequip = Item;
+            if (SourceSlot != null)
+            {
+                SourceSlot.StartClothingChange(
+                    () => ClothingEquipment.Unequip(equip, itemToUnequip),
+                    $"UNEQUIP {itemToUnequip.Name} (via menu)");
+            }
+            else
+            {
+                ClothingEquipment.Unequip(equip, itemToUnequip);
+            }
+        }
+        Delete();
+    }
+
+    // ── Armes ─────────────────────────────────────
+
+    void OnEquipWeapon()
+    {
+        if (Item?.Metadata?.IsWeapon != true) { Delete(); return; }
+        // Appelle Use() qui déclenche GiveWeapon côté host
+        InventoryContainer.Use(Item);
+        Delete();
+    }
+
+    void OnUnequipWeapon()
+    {
+        if (Item?.Metadata?.IsWeapon != true) { Delete(); return; }
+        var pawn = Client.Local?.PlayerPawn;
+        if (pawn == null) { Delete(); return; }
+
+        // Trouve l'Equipment lié à cet item et le retire via RPC host
+        var equipment = pawn.Inventory.Equipment.FirstOrDefault(e => e.LinkedItem == Item);
+        if (equipment != null)
+            PlayerInventory.RPC_UnequipWeapon(equipment);
+
+        Delete();
+    }
+
+    // ── Inventaire joueur ──────────────────────────
+
+    void OnUse()
+    {
+        InventoryContainer.Use(Item);
+        Delete();
+    }
+
+    void OnDropPrompt()
+    {
+        var pawn = Client.Local?.PlayerPawn;
+        if (pawn == null || Item == null) { Delete(); return; }
+
+        // Stack de 1 → drop direct, pas besoin de prompt
+        if (Item.Quantity <= 1)
+        {
+            DoDrop(1);
+            Delete();
+            return;
+        }
+
+        var root = Ancestors.OfType<RootPanel>().FirstOrDefault();
+        if (root == null) { Delete(); return; }
+
+        var item = Item;
+        var max = Item.Quantity;
+        var anchor = (Panel)SourceSlot ?? this;
+        InventoryQuantityPrompt.Show(
+            root, item,
+            title: $"Jeter {item.Name}",
+            confirmLabel: "JETER",
+            confirmIcon: "🗑️",
+            min: 1,
+            max: max,
+            initial: max,
+            onConfirmed: qty =>
+            {
+                if (item == null || !item.IsValid) return;
+                DoDrop(Math.Clamp(qty, 1, item.Quantity));
+            },
+            anchor: anchor);
+
+        Delete();
+    }
+
+    void OnSplit()
+    {
+        if (Item == null || Item.Quantity <= 1) { Delete(); return; }
+        if (Container == null) { Delete(); return; }
+
+        var root = Ancestors.OfType<RootPanel>().FirstOrDefault();
+        if (root == null) { Delete(); return; }
+
+        var item = Item;
+        var container = Container;
+        // Pour separer, on doit laisser au moins 1 dans la pile d'origine
+        var maxSplit = Math.Max(1, item.Quantity - 1);
+        var initial = Math.Max(1, item.Quantity / 2);
+        var anchor = (Panel)SourceSlot ?? this;
+
+        InventoryQuantityPrompt.Show(
+            root, item,
+            title: $"Séparer {item.Name}",
+            confirmLabel: "SÉPARER",
+            confirmIcon: "✂️",
+            min: 1,
+            max: maxSplit,
+            initial: initial,
+            onConfirmed: qty =>
+            {
+                if (item == null || !item.IsValid) return;
+                int realMax = Math.Max(0, item.Quantity - 1);
+                int amount = Math.Clamp(qty, 1, realMax);
+                if (amount <= 0) return;
+                Log.Info($"[Inventory] Split {item.Name} : {amount}/{item.Quantity - amount}");
+                InventoryContainer.MoveItem(item, container, -1, amount, forceNewStack: true);
+            },
+            anchor: anchor);
+
+        Delete();
+    }
+
+    void DoDrop(int quantity)
+    {
+        var pawn = Client.Local?.PlayerPawn;
+        if (pawn == null || Item == null) return;
+
+        var t = pawn.WorldTransform;
+        t.Position += t.Rotation.Forward * 50f + Vector3.Up * 30f;
+        InventoryContainer.Drop(Item, t, quantity);
+    }
+
+    void OnPlaceProp()
+    {
+        var pawn = Client.Local?.PlayerPawn;
+        if (pawn == null || Item?.Metadata == null) { Delete(); return; }
+
+        var placer = pawn.Components.Get<PropPlacer>( FindMode.EnabledInSelfAndDescendants );
+        if (placer == null) { Delete(); return; }
+
+        placer.StartPlacing( Item.Metadata );
+
+        // Fermer l'inventaire pour ne pas bloquer la vue
+        if (FullInventory.Instance != null)
+            FullInventory.Instance.IsOpen = false;
+
+        Delete();
+    }
+
+    void OnPutBagOnFriskedHead()
+    {
+        var selfPawn = Client.Local?.PlayerPawn as PlayerPawn;
+        var frisked = FriskedPawn;
+        if (selfPawn == null || frisked == null) { Delete(); return; }
+        frisked.RequestPutBagOnHead(selfPawn);
+        Delete();
+    }
+
+    void OnTransferToNearby()
+    {
+        var nearby = FullInventory.Instance?.NearbyContainer;
+        if (nearby != null)
+            InventoryContainer.MoveItem(Item, nearby, -1);
+        Delete();
+    }
+
+    // ── Container nearby ───────────────────────────
+
+    void OnTakeItem()
+    {
+        var pawn = Client.Local?.PlayerPawn;
+        if (pawn == null || Item == null) { Delete(); return; }
+
+        var playerInventory = pawn.Components.Get<InventoryContainer>(FindMode.EnabledInSelfAndChildren);
+        if (playerInventory != null)
+            InventoryContainer.MoveItem(Item, playerInventory, -1, 1);
+        Delete();
+    }
+
+    void OnTakeAll()
+    {
+        if (Container == null) { Delete(); return; }
+
+        var pawn = Client.Local?.PlayerPawn;
+        if (pawn == null) { Delete(); return; }
+
+        var playerInventory = pawn.Components.Get<InventoryContainer>(FindMode.EnabledInSelfAndChildren);
+        if (playerInventory != null)
+        {
+            foreach (var item in Container.Items.ToList())
+                InventoryContainer.MoveItem(item, playerInventory, -1);
+        }
+        Delete();
+    }
+
+    // Laisser le menu se dessiner au moins une frame avant d'ecouter les clics
+    // (sinon le clic qui a ouvert le menu referme immediatement le nouveau menu)
+    private int _framesSinceOpen;
+
+    public override void Tick()
+    {
+        if (IsDeleting) return;
+        if (Item == null) { Delete(); return; }
+
+        _framesSinceOpen++;
+        if (_framesSinceOpen < 2) return;
+
+        // Ferme le menu si on clique (gauche ou droit) en dehors du menu
+        if (Input.Pressed("attack1") || Input.Pressed("attack2"))
+        {
+            var rect = Box.Rect;
+            if (rect.Width <= 0 || rect.Height <= 0) return; // pas encore layout
+
+            var mouse = Mouse.Position;
+            if (!rect.IsInside(mouse))
+                Delete();
+        }
+    }
+
+    private string UsesLeft => Item?.Attributes.TryGetValue("uses_left", out var v) == true ? v : null;
+
+    protected override int BuildHash() => HashCode.Combine(Item?.TimeRemaining, Item?.IsExpired, IsRemote, Item?.PackCount, Item?.MagAmmo, Item?.Quantity);
+}

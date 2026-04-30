@@ -1,0 +1,154 @@
+@using Sandbox;
+@using Sandbox.UI;
+@using System.Linq;
+@using Sandbox.UI.Navigation;
+@using OpenFramework.Api
+@using OpenFramework.Inventory
+@namespace OpenFramework
+
+@implements INavigatorPage
+@inherits Panel
+
+<root>
+    <div class="bg-right"></div>
+
+    @if (ShowFade)
+    {
+        <div class="fade-overlay @(FadeOut ? "fade-out" : "")"></div>
+    }
+
+    <div class="container-info">
+        <h1>Confirmation</h1>
+
+        <div class="info-identite">
+            <div class="info-row">
+                <label>Nom :</label>
+                <span>@CharacterCreationState.LastName</span>
+            </div>
+            <div class="info-row">
+                <label>Prenom :</label>
+                <span>@CharacterCreationState.FirstName</span>
+            </div>
+            <div class="info-row">
+                <label>Naissance :</label>
+                <span>@($"{CharacterCreationState.BirthDay:D2}/{CharacterCreationState.BirthMonth:D2}/{CharacterCreationState.BirthYears}")</span>
+            </div>
+            <div class="info-row">
+                <label>Pays :</label>
+                <span>@CharacterCreationState.BirthCountry</span>
+            </div>
+            <div class="info-row">
+                <label>Sexe :</label>
+                <span>@(CharacterCreationState.IsFemale ? "Femme" : "Homme")</span>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="navigation-buttons">
+        <button class="back-btn" onclick=@GoBack>
+            RETOUR
+        </button>
+        <button class="next-btn" onclick=@ValidateAndNext>
+            VALIDER
+        </button>
+    </div>
+
+    <div class="camera-controls">
+        <div class="control-group">
+
+            <label>Rotation</label>
+            <div class="button-row">
+                <button onmousedown="@(() => { Manager.RotationDirection = -1; HandleUI(true); })"
+                        onmouseup="@(() => { Manager.RotationDirection = 0; HandleUI(false); })"
+                        onmouseleave="@(() => { Manager.RotationDirection = 0; HandleUI(false); })">
+                    ↺
+                </button>
+                <button onmousedown="@(() => { Manager.RotationDirection = 1; HandleUI(true); })"
+                        onmouseup="@(() => { Manager.RotationDirection = 0; HandleUI(false); })"
+                        onmouseleave="@(() => { Manager.RotationDirection = 0; HandleUI(false); })">
+                    ↻
+                </button>
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label>Zoom</label>
+            <div class="button-row">
+                <button onmousedown="@(() => { Manager.ZoomDir = -1; HandleUI(true); })"
+                        onmouseup="@(() => { Manager.ZoomDir = 0; HandleUI(false); })"
+                        onmouseleave="@(() => { Manager.ZoomDir = 0; HandleUI(false); })">
+                    +
+                </button>
+
+                <button onmousedown="@(() => { Manager.ZoomDir = 1; HandleUI(true); })"
+                        onmouseup="@(() => { Manager.ZoomDir = 0; HandleUI(false); })"
+                        onmouseleave="@(() => { Manager.ZoomDir = 0; HandleUI(false); })">
+                    -
+                </button>
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label>Hauteur</label>
+            <div class="button-row">
+                <button onmousedown="@(() => { Manager.HeightDir = 1; HandleUI(true); })"
+                        onmouseup="@(() => { Manager.HeightDir = 0; HandleUI(false); })"
+                        onmouseleave="@(() => { Manager.HeightDir = 0; HandleUI(false); })">
+                    ▲
+                </button>
+
+                <button onmousedown="@(() => { Manager.HeightDir = -1; HandleUI(true); })"
+                        onmouseup="@(() => { Manager.HeightDir = 0; HandleUI(false); })"
+                        onmouseleave="@(() => { Manager.HeightDir = 0; HandleUI(false); })">
+                    ▼
+                </button>
+            </div>
+        </div>
+    </div>
+
+</root>
+
+@code
+{
+
+    private CharacterManager Manager => Game.ActiveScene.GetComponentInChildren<CharacterManager>();
+
+    private MainMenuCreatorCharacter SceneMap { get; set; }
+
+    //private ClothingCatalogResource.ClothingMainCategory SelectedMain;
+    //private ClothingCatalogResource.ClothingSubCategory SelectedSub;
+    private PlayerManagerHudComponent playerManager = Game.ActiveScene.GetComponentInChildren<PlayerManagerHudComponent>();
+    private async void HandleUI(bool hide)
+    {
+        if (MenuCreatorCharacter.Instance == null) return;
+
+        if (hide)
+        {
+            MenuCreatorCharacter.Instance.SetUIVisibility(true);
+        }
+        else
+        {
+            await Task.Delay(100);
+            MenuCreatorCharacter.Instance.SetUIVisibility(false);
+        }
+    }
+
+    void GoBack()
+    {
+        var host = Ancestors.OfType<MenuCreatorCharacter>().FirstOrDefault();
+        host?.GoToStep("/apparence");
+    }
+
+    bool ShowFade = false;
+    bool FadeOut = false;
+
+    void ValidateAndNext()
+    {
+        Manager?.SetCameraPreset(196.6f, 44.4f);
+        var host = Ancestors.OfType<MenuCreatorCharacter>().FirstOrDefault();
+        host?.GoToStep("/regles");
+    }
+
+    protected override int BuildHash() => HashCode.Combine(Manager?.IsFemale, Manager?.ActiveBody, ShowFade, FadeOut);
+}

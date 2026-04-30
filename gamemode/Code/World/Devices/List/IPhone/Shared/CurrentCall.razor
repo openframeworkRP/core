@@ -1,0 +1,61 @@
+﻿@using Sandbox;
+@using Sandbox.UI;
+@using OpenFramework.World.Devices
+@inherits Panel
+@namespace OpenFramework.World.Devices.Phone
+
+<root>
+    <div class="blur-background"></div>
+    
+    <div class="call-info">
+        <label class="status">APPEL EN COURS...</label>
+        <label class="caller-name">@CallerName</label>
+        <label class="timer">@FormattedTime</label>
+    </div>
+
+    <div class="actions">
+        <div class="action-row">
+            <div class="button-wrapper">
+                <div class="btn-circle" @onclick=@(() => ToggleMute())>
+                    <svg src="ui/icons/mute.svg" class="@(IsMuted ? "active" : "")" color="white" />
+                </div>
+                <label>silence</label>
+            </div>
+            
+            <div class="button-wrapper">
+                <div class="btn-circle" @onclick=@(() => ToggleSpeaker())>
+                    <svg src="ui/icons/speaker.svg" class="@(IsSpeaker ? "active" : "")" color="white" />
+                </div>
+                <label>haut-parleur</label>
+            </div>
+        </div>
+
+        <div class="hangup-row">
+            <div class="hangup-btn" @onclick=@(() => HangUp())>
+                <svg src="ui/icons/hangup.svg" color="white" />
+            </div>
+        </div>
+    </div>
+</root>
+
+@code {
+    [Parameter] public string CallerName { get; set; } = "Inconnu";
+    [Parameter] public DeviceKind Kind { get; set; } = DeviceKind.Phone;
+    
+    private RealTimeSince TimeStarted { get; set; } = 0;
+    private bool IsMuted { get; set; }
+    private bool IsSpeaker { get; set; }
+
+    private string FormattedTime => $"{(int)TimeStarted / 60:00}:{(int)TimeStarted % 60:00}";
+
+    public void HangUp()
+    {
+        // Logique pour fermer la modale
+        Delete();
+    }
+
+    private void ToggleMute() => IsMuted = !IsMuted;
+    private void ToggleSpeaker() => IsSpeaker = !IsSpeaker;
+
+    protected override int BuildHash() => HashCode.Combine( (int)(Time.Now * 2f) );
+}

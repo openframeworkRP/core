@@ -1,0 +1,25 @@
+﻿@import "/UI/Styles/Theme.scss";
+
+ProgressBar {
+    width: 160px;
+    height: 8px;
+    background-color: rgba( black, 0.5 );
+    border-radius: 1px;
+    overflow: hidden;
+    position: relative;
+
+    * {
+        transition: all 0.2s ease;
+    }
+
+    .inner {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+    }
+
+    .inner {
+        transition: all 0.2s ease;
+    }
+}

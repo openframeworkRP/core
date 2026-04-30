@@ -1,0 +1,84 @@
+﻿@using Sandbox;
+@using Sandbox.UI;
+@using Editor;
+@using Sandbox.UI.Navigation;
+
+@implements Sandbox.UI.Navigation.INavigatorPage
+@namespace OpenFramework.World.Devices.Apps.Police
+@inherits Panel
+
+<root>
+   <div class="container">
+
+       <div class="topbar">
+            <span>Bienvenue Officer DADA [555]</span>
+       </div>
+
+       <div class="row-last">
+
+            <div class="last-calls">
+                <span>Appel citoyen</span>
+                <div class="info">
+                    <span>Pris par Officier Dada</span>
+                    <span>Motif : Meurtre</span>
+                </div>
+                <div class="status">
+                    <span>Status : En Cours</span>
+                </div>
+            </div>
+
+            <div class="last-search">
+                <span>Recherches Recentes</span>
+                <div class="info">
+                    <span> Darril Mendez</span>
+                    <span> Model Vehicule : Sultan</span>
+                </div>
+                <div class="status">
+                    <span>Status : En Cours</span>
+                </div>
+            </div>
+
+            <div class="last-report">
+                <span>Reports</span>
+                <div class="info">
+                    <span> Darril Mendez</span>
+                    <span> Attendu dans au poste</span>
+                </div>
+            </div>
+       </div>
+        
+
+        <div class="units">
+            <span>Unite En Service</span>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Matricule</th>
+                        <th>Nom</th>
+                        <th>Grade</th>
+                        <th>Departement</th>
+                        <th>Status</th>
+                        <th>localisation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>555</td>
+                        <td>Dada</td>
+                        <td>Officier</td>
+                        <td>Police</td>
+                        <td>OK</td>
+                        <td>Ville</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        
+   </div>
+</root>
+
+@code
+{
+    
+}

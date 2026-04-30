@@ -1,0 +1,804 @@
+@using Sandbox;
+@using Sandbox.UI;
+@using System.Linq;
+@using System.Threading.Tasks;
+@using OpenFramework.Extension
+
+@namespace OpenFramework.Inventory.UI
+@inherits Panel
+
+
+<root class="@(Item == null ? "empty" : "filled") @(IsActive ? "active" : "") @(IsDragOver ? "drag-over" : "") @(IsDragging ? "is-dragging" : "")"
+      tooltip=@( Item != null ? Item.Metadata.Name:"Vide")
+      draggable="@(Item != null)">
+
+    @if (Item != null && Item.Metadata != null)
+    {
+        @if (Item.Quantity > 1)
+        {
+            <div class="quantity">x@(Item.Quantity)</div>
+        }
+
+        <div class="ammo-info">
+            @if (Item.Metadata.IsWeapon)
+            {
+                <span>@Item.Attributes.GetInt("primary_ammo", 0)</span>
+            }
+            else if (Item.Metadata.IsMagazine)
+            {
+                <span class="mag-count">@Item.MagAmmo/@Item.Metadata.MagCapacity</span>
+            }
+            else if (Item.Metadata.IsPack)
+            {
+                <span class="mag-count">@Item.PackCount/@Item.Metadata.PackCapacity</span>
+            }
+        </div>
+
+        @if (Item.Attributes.ContainsKey("durability"))
+        {
+            <div class="durability-bar">
+                <div class="fill" style="width: @(Item.Attributes.GetInt("durability", 100))%;"></div>
+            </div>
+        }
+
+        @if (Item.Metadata?.Icon != null)
+        {
+            <image @ref="IconImage" class="static-fallback thumb" />
+        }
+        else
+        {
+            <div class="static-fallback @Item.Metadata.ItemCategoryType.ToString().ToLower()">
+                <svg src="@GetCategoryIcon(Item.Metadata.ItemCategoryType)" />
+            </div>
+        }
+
+        @if (_isTransferring)
+        {
+            <div class="transfer-overlay">
+                <div class="transfer-sweep" style="height: @((1f - TransferProgress) * 100)%;"></div>
+                <div class="transfer-ring"></div>
+            </div>
+        }
+
+    }
+
+    @if (Item == null && !string.IsNullOrEmpty(GhostIcon))
+    {
+        <svg src="@GhostIcon" class="ghost-icon" />
+    }
+
+    @if (_isClothingChanging)
+    {
+        <div class="equip-overlay">
+            <div class="equip-ring"
+                 style="background: conic-gradient(rgba(0, 170, 255, 0.95) @(ClothingChangeProgress * 100)%, rgba(0, 0, 0, 0.35) @(ClothingChangeProgress * 100)%);"></div>
+            <div class="equip-ring-mask"></div>
+            <div class="equip-progress-bar">
+                <div class="equip-progress-fill" style="width: @(ClothingChangeProgress * 100)%;"></div>
+            </div>
+        </div>
+    }
+</root>
+
+@code {
+    [Change(nameof(OnItemChanged))]
+    public InventoryItem Item { get; set; }
+
+    public string GhostIcon { get; set; }
+    public bool IsActive { get; set; } = false;
+    public InventoryContainer Container { get; set; }
+    public int SlotIndex { get; set; }
+    public bool IsRemote { get; set; } = false;
+
+    // Le slot affiche uniquement l'icone PNG pre-generee (Item.Metadata.Icon).
+    // Plus de rendu 3D temps-reel : tous les PNG sont generes en batch via
+    // l'outil editor "OpenFramework > Generate Item Icons".
+    private Sandbox.UI.Image IconImage;
+    private bool IsHovered = false;
+    private static InventoryContextMenu s_activeMenu;
+
+    public static bool HasActiveContextMenu => s_activeMenu is { IsDeleting: false };
+
+    public static bool CloseActiveContextMenu()
+    {
+        if (s_activeMenu == null) return false;
+        s_activeMenu.Delete();
+        s_activeMenu = null;
+        return true;
+    }
+
+    public static bool CloseActiveDrag()
+    {
+        if (s_ghost == null && s_draggingSlot == null) return false;
+
+        s_ghost?.Delete();
+        s_ghost = null;
+
+        s_draggingSlot?.StateHasChanged();
+        s_draggingSlot = null;
+        s_draggingItem = null;
+        s_dropHandled = false;
+
+        ResetAllDragOver();
+        WeaponSlot.ClearHighlight();
+
+        return true;
+    }
+
+    // ── Double clic ───────────────────────────────
+    private RealTimeSince _timeSinceLastClick;
+    private const float DoubleClickThreshold = 0.3f;
+
+    // ── Cooldown transfert rapide ─────────────────
+    private bool _isTransferring;
+    private RealTimeSince _transferStart;
+    private InventoryContainer _transferTarget;
+    private const float TransferDuration = 1f;
+
+    private float TransferProgress => _isTransferring
+        ? Math.Clamp(_transferStart / TransferDuration, 0, 1)
+        : 0;
+
+    // ── Cooldown change de vêtement (équip/déséquip) ──
+    private bool _isClothingChanging;
+    private RealTimeSince _clothingChangeStart;
+    private System.Action _pendingClothingAction;
+    private const float ClothingChangeDuration = 0.6f;
+
+    private float ClothingChangeProgress => _isClothingChanging
+        ? Math.Clamp(_clothingChangeStart / ClothingChangeDuration, 0, 1)
+        : 0;
+
+    private static InventorySlot s_activeClothingChangeSlot;
+
+    public static bool IsAnyClothingChangeInProgress => s_activeClothingChangeSlot != null;
+
+    public void StartClothingChange(System.Action action, string description = null)
+    {
+        if (action == null) return;
+        if (_isClothingChanging)
+        {
+            Log.Info($"[ClothingDebug] StartClothingChange IGNORE (slot #{SlotIndex} deja en cours) — {description}");
+            return;
+        }
+        if (IsAnyClothingChangeInProgress)
+        {
+            Log.Info($"[ClothingDebug] StartClothingChange IGNORE (slot #{s_activeClothingChangeSlot?.SlotIndex} deja en cours globalement) — {description}");
+            return;
+        }
+
+        Log.Info($"[ClothingDebug] StartClothingChange QUEUED on slot #{SlotIndex} ({ContainerDebugName(Container)}) — {description}");
+
+        _isClothingChanging = true;
+        _clothingChangeStart = 0f;
+        _pendingClothingAction = action;
+        s_activeClothingChangeSlot = this;
+        StateHasChanged();
+    }
+
+    private static string ContainerDebugName(InventoryContainer c)
+    {
+        if (c == null) return "null";
+        var pawn = Client.Local?.PlayerPawn;
+        if (pawn != null)
+        {
+            var clothingEquip = pawn.Components.Get<ClothingEquipment>(FindMode.EnabledInSelfAndChildren);
+            if (clothingEquip != null && c == clothingEquip.Container) return "CLOTHING";
+            if (c == pawn.InventoryContainer) return "MAIN";
+        }
+        return c.Name ?? "?";
+    }
+
+    private void CancelClothingChange()
+    {
+        _isClothingChanging = false;
+        _pendingClothingAction = null;
+        if (s_activeClothingChangeSlot == this)
+            s_activeClothingChangeSlot = null;
+    }
+
+    // ── État drag partagé (static) ────────────────
+    private static InventoryItem s_draggingItem;
+    private static InventorySlot s_draggingSlot;
+    public static bool s_dropHandled;
+    public static InventorySlot s_currentDragOverPublic
+    {
+        get => s_currentDragOver;
+        set
+        {
+            if (value == s_currentDragOver) return;
+            var old = s_currentDragOver;
+            s_currentDragOver = value;
+            old?.StateHasChanged();
+            value?.StateHasChanged();
+        }
+    }
+
+    // ── Ghost panel (rendu dans RootPanel, hors flux) ──
+    private static DragGhost s_ghost;
+
+    // ── Un seul slot peut être drag-over à la fois ──
+    private static InventorySlot s_currentDragOver;
+
+    private bool IsDragging => s_draggingSlot == this;
+    private bool IsDragOver => s_currentDragOver == this;
+
+    // ─────────────────────────────────────────────
+    //  DRAG — SOURCE
+    // ─────────────────────────────────────────────
+
+    public override bool WantsDrag => Item != null;
+
+    protected override void OnDragStart(DragEvent e)
+    {
+        if (Item == null || _isTransferring) return;
+
+        CloseActiveContextMenu();
+
+        s_draggingItem = Item;
+        s_draggingSlot = this;
+        s_dropHandled = false;
+        InventoryDebug.Info($"[DragDebug] === DRAG START === slot{SlotIndex} item={Item.Name}");
+
+        e.Value = Item;
+
+        // Crée le ghost dans le RootPanel — totalement hors du flux des slots
+        s_ghost?.Delete();
+        var root = Ancestors.OfType<RootPanel>().FirstOrDefault();
+        if (root != null)
+        {
+            s_ghost = root.AddChild<DragGhost>();
+            s_ghost.SetItem(Item, Box.Rect.Width, Box.Rect.Height);
+            s_ghost.MoveTo(e.ScreenPosition);
+        }
+
+        StateHasChanged();
+    }
+
+    protected override void OnDrag(DragEvent e)
+    {
+        if (!IsDragging) return;
+        s_ghost?.MoveTo(e.ScreenPosition);
+
+        // Détecte le slot sous la souris à chaque frame (fiable même à haute vitesse)
+        var hoveredSlot = FindSlotAtPosition(Mouse.Position);
+        if (hoveredSlot != s_currentDragOver)
+        {
+            var old = s_currentDragOver;
+            s_currentDragOver = hoveredSlot;
+            old?.StateHasChanged();
+            hoveredSlot?.StateHasChanged();
+        }
+
+        // Détecte si on survole un WeaponSlot (highlight orange)
+        {
+            var hoveredWeapon = (s_draggingItem?.Metadata?.IsWeapon == true)
+                ? FindWeaponSlotAtPosition(Mouse.Position)
+                : null;
+
+            if (hoveredWeapon != WeaponSlot.CurrentHovered)
+            {
+                var oldWs = WeaponSlot.CurrentHovered;
+                WeaponSlot.CurrentHovered = hoveredWeapon;
+                oldWs?.StateHasChanged();
+                hoveredWeapon?.StateHasChanged();
+            }
+        }
+
+        StateHasChanged();
+    }
+
+    protected override void OnDragEnd(DragEvent e)
+    {
+        if (!IsDragging) return;
+
+        InventoryDebug.Info($"[DragDebug] === DRAG END === s_currentDragOver=slot{s_currentDragOver?.SlotIndex}");
+
+        s_ghost?.Delete();
+        s_ghost = null;
+
+        // Si OnDrop n'a pas été déclenché (slot vide ou hors slot),
+        // on cherche manuellement le slot sous la souris au moment du release.
+        if (!s_dropHandled && s_draggingItem != null)
+        {
+            var targetSlot = FindSlotAtPosition(Mouse.Position);
+
+            if (targetSlot != null && targetSlot != this && targetSlot.Container != null)
+            {
+                s_dropHandled = true;
+
+                var clothingEquip = Client.Local?.PlayerPawn?.Components
+                    .Get<ClothingEquipment>(FindMode.EnabledInSelfAndChildren);
+
+                if (clothingEquip != null && targetSlot.Container == clothingEquip.Container)
+                {
+                    // Drop sur un slot clothing → équiper uniquement si le type correspond au slot ciblé
+                    var existing = targetSlot.Item;
+                    Log.Info($"[ClothingDebug] OnDragEnd EQUIP attempt: {s_draggingItem.Name} (from {ContainerDebugName(Container)} slot #{SlotIndex}) → CLOTHING slot #{targetSlot.SlotIndex} ({(ClothingEquipment.Slot)targetSlot.SlotIndex}) | existing there: {existing?.Name ?? "<empty>"}");
+
+                    if (ClothingEquipment.CanEquipInSlot(s_draggingItem.Metadata, targetSlot.SlotIndex))
+                    {
+                        var itemToEquip = s_draggingItem;
+                        targetSlot.StartClothingChange(
+                            () => ClothingEquipment.Equip(clothingEquip, itemToEquip),
+                            $"EQUIP {itemToEquip.Name} → slot #{targetSlot.SlotIndex}");
+                    }
+                    else
+                    {
+                        Log.Info($"[ClothingDebug] DROP REJECTED — {s_draggingItem.Name} n'est pas compatible avec le slot {(ClothingEquipment.Slot)targetSlot.SlotIndex}");
+                    }
+                }
+                else if (clothingEquip != null && Container == clothingEquip.Container)
+                {
+                    // Drag depuis clothing slot vers inventaire → déséquiper dans le slot ciblé
+                    Log.Info($"[ClothingDebug] OnDragEnd UNEQUIP attempt: {s_draggingItem.Name} (from CLOTHING slot #{SlotIndex}) → {ContainerDebugName(targetSlot.Container)} slot #{targetSlot.SlotIndex} | existing there: {targetSlot.Item?.Name ?? "<empty>"}");
+
+                    var itemToUnequip = s_draggingItem;
+                    var destContainer = targetSlot.Container;
+                    var destSlotIndex = targetSlot.SlotIndex;
+                    StartClothingChange(
+                        () => ClothingEquipment.Unequip(clothingEquip, itemToUnequip, destContainer, destSlotIndex),
+                        $"UNEQUIP {itemToUnequip.Name} → {ContainerDebugName(destContainer)} slot #{destSlotIndex}");
+                }
+                else if (targetSlot.Item != null && InventoryContainer.CanTransferBullets(s_draggingItem, targetSlot.Item))
+                {
+                    // Drop d'une boîte/pack sur un chargeur compatible → transférer les balles
+                    InventoryContainer.TransferBullets(s_draggingItem, targetSlot.Item);
+                }
+                else if (targetSlot.Item != null && InventoryContainer.CanTransferBullets(targetSlot.Item, s_draggingItem))
+                {
+                    // Drop d'un chargeur sur une boîte/pack → transférer (sens inverse)
+                    InventoryContainer.TransferBullets(targetSlot.Item, s_draggingItem);
+                }
+                else
+                {
+                    InventoryContainer.MoveItem(s_draggingItem, targetSlot.Container, targetSlot.SlotIndex);
+                }
+            }
+            else
+            {
+                // Vérifie si on drop sur un WeaponSlot (hotbar armes)
+                var weaponSlot = FindWeaponSlotAtPosition(Mouse.Position);
+                InventoryDebug.Info($"[DragDebug] WeaponSlot lookup: weaponSlot={weaponSlot != null}, isWeapon={s_draggingItem.Metadata?.IsWeapon}, mousePos={Mouse.Position}");
+                if (weaponSlot != null && s_draggingItem.Metadata?.IsWeapon == true)
+                {
+                    InventoryDebug.Info($"[DragDebug] DROP ON WEAPON SLOT #{weaponSlot.SlotNumber} — equipping {s_draggingItem.Name}");
+                    s_dropHandled = true;
+                    // Réserve le slot UI cible AVANT d'équiper
+                    FullInventory.Instance?.ReserveWeaponSlot(weaponSlot.SlotNumber - 1);
+                    InventoryContainer.Use(s_draggingItem);
+                }
+                else if (!IsRemote)
+                {
+                    // Vraiment hors UI → jeter au sol
+                    var pawn = Client.Local?.PlayerPawn;
+                    if (pawn != null)
+                    {
+                        var t = pawn.WorldTransform;
+                        t.Position += t.Rotation.Forward * 50f + Vector3.Up * 30f;
+
+                        // Si l'item vient d'un slot clothing, retirer le visuel du dresser
+                        var clothingEquip = pawn.Components
+                            .Get<ClothingEquipment>(FindMode.EnabledInSelfAndChildren);
+                        if (clothingEquip != null && Container == clothingEquip.Container
+                            && s_draggingItem.Metadata?.IsClothing == true
+                            && s_draggingItem.Metadata?.ClothingResource != null)
+                        {
+                            ClothingEquipment.BroadcastRemoveClothing(
+                                pawn.GameObject,
+                                s_draggingItem.Metadata.ClothingResource.ResourcePath);
+                        }
+
+                        InventoryContainer.Drop(s_draggingItem, t, s_draggingItem.Quantity);
+                    }
+                }
+            }
+        }
+
+        // Reset IsDragOver sur TOUS les slots avant de nullifier s_draggingSlot
+        // OnDragLeave n'est pas toujours appelé si le drag se termine brusquement
+        ResetAllDragOver();
+        WeaponSlot.ClearHighlight();
+
+        s_draggingItem = null;
+        s_draggingSlot = null;
+        s_dropHandled = false;
+
+        StateHasChanged();
+    }
+
+    private static void ResetAllDragOver()
+    {
+        if (s_currentDragOver != null)
+        {
+            var old = s_currentDragOver;
+            s_currentDragOver = null;
+            old.StateHasChanged();
+        }
+    }
+
+    /// <summary>
+    /// Cherche un InventorySlot sous la position souris au moment du release.
+    /// Utilise Panel.FindInRect pour une détection native s&box.
+    /// </summary>
+    public static InventorySlot FindSlotAtPosition(Vector2 screenPos, Panel source = null)
+    {
+        var refPanel = source ?? (Panel)s_draggingSlot;
+        var root = refPanel?.Ancestors.OfType<RootPanel>().FirstOrDefault();
+        if (root == null) return null;
+
+        // Petit rect 1x1 centré sur la souris
+        var rect = new Rect(screenPos.x - 1f, screenPos.y - 1f, 2f, 2f);
+
+        return root.FindInRect(rect, false)
+            .OfType<InventorySlot>()
+            .FirstOrDefault(s => s != s_draggingSlot && s.Container != null);
+    }
+
+    /// <summary>
+    /// Cherche un WeaponSlot sous la position souris.
+    /// </summary>
+    public static WeaponSlot FindWeaponSlotAtPosition(Vector2 screenPos, Panel source = null)
+    {
+        var refPanel = source ?? (Panel)s_draggingSlot;
+        var root = refPanel?.Ancestors.OfType<RootPanel>().FirstOrDefault();
+        if (root == null) return null;
+
+        var rect = new Rect(screenPos.x - 1f, screenPos.y - 1f, 2f, 2f);
+
+        var allPanels = root.FindInRect(rect, false).ToList();
+
+        // Cherche directement un WeaponSlot
+        var direct = allPanels.OfType<WeaponSlot>().FirstOrDefault();
+        if (direct != null) return direct;
+
+        // Sinon, cherche un WeaponSlot parent d'un des panels trouvés
+        // (FindInRect peut retourner le <root> child plutôt que le component)
+        foreach (var panel in allPanels)
+        {
+            var ancestor = panel.Ancestors.OfType<WeaponSlot>().FirstOrDefault();
+            if (ancestor != null) return ancestor;
+            if (panel.Parent is WeaponSlot ws) return ws;
+        }
+
+        return null;
+    }
+
+    // ─────────────────────────────────────────────
+    //  DROP — CIBLE  (signatures Panel.Drag.cs)
+    // ─────────────────────────────────────────────
+
+    // OnDragEnter/OnDragLeave ne sont plus utilisés pour le highlight.
+    // La détection est faite dans OnDrag via FindSlotAtPosition chaque frame.
+
+    protected override void OnDrop(PanelEvent e)
+    {
+        if (s_currentDragOver == this)
+            s_currentDragOver = null;
+
+        if (e.Value is not InventoryItem draggedItem) return;
+        if (Container == null)
+        {
+            Log.Warning("[Inventory] OnDrop: Container cible non défini !");
+            return;
+        }
+
+        s_dropHandled = true;
+
+        // Détecte si on drop sur un slot d'équipement clothing
+        var clothingEquip = Client.Local?.PlayerPawn?.Components
+            .Get<ClothingEquipment>(FindMode.EnabledInSelfAndChildren);
+
+        if (clothingEquip != null && Container == clothingEquip.Container)
+        {
+            Log.Info($"[ClothingDebug] OnDrop EQUIP attempt: {draggedItem.Name} (from {ContainerDebugName(s_draggingSlot?.Container)} slot #{s_draggingSlot?.SlotIndex}) → CLOTHING slot #{SlotIndex} ({(ClothingEquipment.Slot)SlotIndex}) | existing there: {Item?.Name ?? "<empty>"}");
+
+            // Drop sur un slot clothing → équiper uniquement si le type correspond au slot ciblé
+            if (ClothingEquipment.CanEquipInSlot(draggedItem.Metadata, SlotIndex))
+            {
+                var itemToEquip = draggedItem;
+                StartClothingChange(
+                    () => ClothingEquipment.Equip(clothingEquip, itemToEquip),
+                    $"EQUIP {itemToEquip.Name} → slot #{SlotIndex}");
+            }
+            else
+            {
+                Log.Info($"[ClothingDebug] OnDrop REJECTED — {draggedItem.Name} n'est pas compatible avec le slot {(ClothingEquipment.Slot)SlotIndex}");
+            }
+        }
+        else if (clothingEquip != null && s_draggingSlot?.Container == clothingEquip.Container)
+        {
+            Log.Info($"[ClothingDebug] OnDrop UNEQUIP attempt: {draggedItem.Name} (from CLOTHING slot #{s_draggingSlot.SlotIndex}) → {ContainerDebugName(Container)} slot #{SlotIndex} | existing there: {Item?.Name ?? "<empty>"}");
+
+            // Drag DEPUIS un slot clothing vers l'inventaire → déséquiper dans le slot ciblé
+            var itemToUnequip = draggedItem;
+            var destContainer = Container;
+            var destSlotIndex = SlotIndex;
+            var sourceSlot = s_draggingSlot;
+            sourceSlot.StartClothingChange(
+                () => ClothingEquipment.Unequip(clothingEquip, itemToUnequip, destContainer, destSlotIndex),
+                $"UNEQUIP {itemToUnequip.Name} → {ContainerDebugName(destContainer)} slot #{destSlotIndex}");
+        }
+        else if (Item != null && InventoryContainer.CanTransferBullets(draggedItem, Item))
+        {
+            // Drop d'une boîte/pack sur un chargeur compatible → transférer les balles
+            InventoryContainer.TransferBullets(draggedItem, Item);
+        }
+        else if (Item != null && InventoryContainer.CanTransferBullets(Item, draggedItem))
+        {
+            // Drop d'un chargeur sur une boîte/pack → transférer (sens inverse)
+            InventoryContainer.TransferBullets(Item, draggedItem);
+        }
+        else
+        {
+            // Comportement normal
+            InventoryContainer.MoveItem(draggedItem, Container, SlotIndex);
+        }
+
+        StateHasChanged();
+    }
+
+    // ─────────────────────────────────────────────
+    //  SOURIS
+    // ─────────────────────────────────────────────
+
+    protected override void OnMouseOver(MousePanelEvent e)
+    {
+        IsHovered = true;
+    }
+
+    protected override void OnMouseOut(MousePanelEvent e)
+    {
+        IsHovered = false;
+        if (s_currentDragOver == this)
+            s_currentDragOver = null;
+    }
+
+    /// <summary>
+    /// Icone statique de fallback (categorie) quand l'item n'a pas d'Icon assigne.
+    /// </summary>
+    private static string GetCategoryIcon(ItemMetadata.ItemType type)
+    {
+        return type switch
+        {
+            ItemMetadata.ItemType.Weapon => "ui/icons/pistol.svg",
+            ItemMetadata.ItemType.Magazine => "ui/icons/box.svg",
+            ItemMetadata.ItemType.Ammo => "ui/icons/box.svg",
+            ItemMetadata.ItemType.Document => "ui/icons/id.svg",
+            ItemMetadata.ItemType.Furniture => "ui/icons/home.svg",
+            ItemMetadata.ItemType.Food => "ui/icons/hunger.svg",
+            ItemMetadata.ItemType.Minerals => "ui/icons/box.svg",
+            ItemMetadata.ItemType.Clothing => "ui/icons/shirt.svg",
+            ItemMetadata.ItemType.Tools => "ui/icons/hammer.svg",
+            _ => "ui/icons/box.svg",
+        };
+    }
+
+    protected override async void OnMouseDown(MousePanelEvent e)
+    {
+        if (Item == null) return;
+
+        // Clic pendant un transfert en cours → annuler le transfert
+        if (_isTransferring)
+        {
+            CancelTransfer();
+            e.StopPropagation();
+            return;
+        }
+
+        // Double clic gauche → vêtement: équiper/déséquiper ; sinon: transfert rapide
+        if (e.MouseButton == MouseButtons.Left)
+        {
+            if (_timeSinceLastClick < DoubleClickThreshold)
+            {
+                if (Item.Metadata?.IsClothing == true && TryDoubleClickClothing())
+                {
+                    e.StopPropagation();
+                    _timeSinceLastClick = 999f;
+                    return;
+                }
+
+                if (Item.Metadata?.IsConsumable == true && !IsRemote)
+                {
+                    InventoryContainer.Use(Item);
+                    e.StopPropagation();
+                    _timeSinceLastClick = 999f;
+                    return;
+                }
+
+                TransferQuickly();
+                e.StopPropagation();
+                _timeSinceLastClick = 999f;
+                return;
+            }
+            _timeSinceLastClick = 0f;
+        }
+
+        // Shift + Clic gauche → transfert rapide
+        if (e.MouseButton == MouseButtons.Left && Input.Down("Run"))
+        {
+            TransferQuickly();
+            e.StopPropagation();
+            return;
+        }
+
+        // Ctrl + Clic gauche → split en deux
+        if (e.MouseButton == MouseButtons.Left && Input.Down("Duck"))
+        {
+            SplitHalf();
+            e.StopPropagation();
+            return;
+        }
+
+        // Clic droit → menu contextuel
+        if (e.MouseButton == MouseButtons.Right)
+        {
+            CloseActiveContextMenu();
+
+            // Ferme tout autre InventoryContextMenu qui traînerait
+            var hudRoot = Ancestors.OfType<RootPanel>().FirstOrDefault();
+            hudRoot?.Children.OfType<InventoryContextMenu>().ToList().ForEach(m => m.Delete());
+
+            s_activeMenu = new InventoryContextMenu();
+            s_activeMenu.Item = Item;
+            s_activeMenu.Container = Container;
+            s_activeMenu.IsRemote = IsRemote;
+            s_activeMenu.SourceSlot = this;
+
+            hudRoot?.AddChild(s_activeMenu);
+
+            var screenPos = Box.Rect.TopLeft + e.LocalPosition;
+            s_activeMenu.Style.Left = Length.Pixels(screenPos.x);
+            s_activeMenu.Style.Top = Length.Pixels(screenPos.y);
+            s_activeMenu.Style.Position = PositionMode.Absolute;
+
+            e.StopPropagation();
+        }
+    }
+
+    // ─────────────────────────────────────────────
+    //  TRANSFERT RAPIDE
+    // ─────────────────────────────────────────────
+
+    // ─────────────────────────────────────────────
+    //  DOUBLE CLIC CLOTHING
+    // ─────────────────────────────────────────────
+
+    private bool TryDoubleClickClothing()
+    {
+        if (Item == null || Container == null) return false;
+
+        var clothingEquip = Client.Local?.PlayerPawn?.Components
+            .Get<ClothingEquipment>(FindMode.EnabledInSelfAndChildren);
+        if (clothingEquip == null) return false;
+
+        var item = Item;
+
+        // Déjà dans un slot clothing → désequiper
+        if (Container == clothingEquip.Container)
+        {
+            StartClothingChange(
+                () => ClothingEquipment.Unequip(clothingEquip, item),
+                $"UNEQUIP {item.Name} (double clic)");
+            return true;
+        }
+
+        // Dans l'inventaire → équiper
+        StartClothingChange(
+            () => ClothingEquipment.Equip(clothingEquip, item),
+            $"EQUIP {item.Name} (double clic)");
+        return true;
+    }
+
+    private void TransferQuickly()
+    {
+        if (_isTransferring) return;
+
+        var pawn = Client.Local?.PlayerPawn;
+        if (pawn == null || Item == null) return;
+
+        var playerInventory = pawn.Components.Get<InventoryContainer>(FindMode.EnabledInSelfAndChildren);
+        if (playerInventory == null) return;
+
+        InventoryContainer target = IsRemote
+            ? playerInventory
+            : FullInventory.Instance?.NearbyContainer;
+
+        if (target != null)
+        {
+            _isTransferring = true;
+            _transferStart = 0;
+            _transferTarget = target;
+        }
+    }
+
+    private void CancelTransfer()
+    {
+        _isTransferring = false;
+        _transferTarget = null;
+    }
+
+    // ─────────────────────────────────────────────
+    //  SPLIT EN DEUX
+    // ─────────────────────────────────────────────
+
+    private void SplitHalf()
+    {
+        if (Item == null || Item.Quantity <= 1) return;
+
+        int half = Item.Quantity / 2;
+
+        Log.Info($"[Inventory] Split {Item.Name} : {half}/{Item.Quantity - half}");
+        InventoryContainer.MoveItem(Item, Container, -1, half, forceNewStack: true);
+    }
+
+    // ─────────────────────────────────────────────
+    //  ICONE
+    // ─────────────────────────────────────────────
+
+    private void OnItemChanged(InventoryItem oldValue, InventoryItem newValue)
+    {
+        UpdateIconImage();
+    }
+
+    /// <summary>
+    /// Synchronise la texture du panel image avec l'Icon de l'item courant.
+    /// Appele a chaque changement d'item, et chaque Tick au cas ou le @ref
+    /// n'aurait pas encore ete instancie au moment d'OnItemChanged.
+    /// </summary>
+    private void UpdateIconImage()
+    {
+        if (!IconImage.IsValid()) return;
+        var icon = Item?.Metadata?.Icon;
+        if (IconImage.Texture != icon)
+            IconImage.Texture = icon;
+    }
+
+    public override void Tick()
+    {
+        // Synchronise la texture de l'image (le @ref peut etre null au
+        // premier OnItemChanged, donc on assure ici).
+        UpdateIconImage();
+
+        // ── Cooldown transfert rapide ──
+        if (_isTransferring)
+        {
+            // Annuler si l'item a disparu (pris par quelqu'un d'autre)
+            if (Item == null || _transferTarget == null)
+            {
+                CancelTransfer();
+            }
+            else if (_transferStart >= TransferDuration)
+            {
+                // Terminé → exécuter le transfert
+                Log.Info($"[Inventory] Transfert rapide {Item.Name} → {_transferTarget.Name}");
+                InventoryContainer.MoveItem(Item, _transferTarget, -1);
+                CancelTransfer();
+            }
+        }
+
+        // ── Cooldown change de vêtement ──
+        if (_isClothingChanging && _clothingChangeStart >= ClothingChangeDuration)
+        {
+            var action = _pendingClothingAction;
+            Log.Info($"[ClothingDebug] EXECUTING pending action on slot #{SlotIndex} ({ContainerDebugName(Container)})");
+            CancelClothingChange();
+            try { action?.Invoke(); }
+            catch (System.Exception ex) { Log.Warning($"[ClothingDebug] Clothing change failed: {ex.Message}"); }
+        }
+    }
+
+    protected override int BuildHash() => HashCode.Combine(
+        Item,
+        Item?.Quantity,
+        HashCode.Combine(Item?.MagAmmo, Item?.PackCount),
+        Item?.Attributes.GetHashCode(),
+        IsHovered,
+        IsDragging,
+        IsDragOver,
+        HashCode.Combine(
+            _isTransferring ? (int)(TransferProgress * 100) : 0,
+            _isClothingChanging ? (int)(ClothingChangeProgress * 100) : 0
+        )
+    );
+}

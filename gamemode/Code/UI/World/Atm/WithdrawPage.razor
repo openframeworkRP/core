@@ -1,0 +1,80 @@
+﻿@using Sandbox;
+@using Sandbox.UI;
+@using Editor;
+@using Sandbox.UI.Navigation;
+@using OpenFramework.Systems
+
+@implements Sandbox.UI.Navigation.INavigatorPage
+@namespace Facepunch.UI
+@inherits Panel
+
+<root>
+    <div class="deposit-container">
+
+        <h1 class="title">RETIRE VOTRE ARGENT DE LA BANQUE</h1>
+         
+        <div class="input-deposit">
+            <span>Montant sur votre Compte : @client.Data.Bank</span>
+            <NumberEntry  onblur="@InputBlurred" @ref="InputEntry"></NumberEntry>
+            <button onclick=@OnSubmit>Retire De la Banque</button>
+        </div>
+
+    </div>
+</root>
+
+@code
+{
+    Client client = Client.Local;
+
+    public NumberEntry InputEntry { get; set; }
+    
+    protected override void OnAfterTreeRender(bool firstTime)
+    {
+        base.OnAfterTreeRender(firstTime);
+
+        if (!firstTime)
+            return;
+
+        InputEntry.MaxLength = 10;
+    }
+
+    private void OnSubmit()
+    {
+        var amountMoney = InputEntry.Text.ToInt();
+
+        // Empêche les montants négatifs ou zéro
+        if (amountMoney <= 0)
+        {
+            client.Notify(NotificationSystem.NotificationType.Error,
+                "Veuillez entrer un montant valide.");
+            return;
+        }
+
+        // Empêche de retirer plus que ce qu'il y a en banque
+        if (amountMoney > client.Data.Bank)
+        {
+            client.Notify(NotificationSystem.NotificationType.Error,
+                "Fonds insuffisants sur votre compte bancaire.");
+            return;
+        }
+
+        Client.RemoveBank(amountMoney);
+        MoneySystem.Add(Client.Local, amountMoney);
+
+        client.Notify(
+            NotificationSystem.NotificationType.Success,
+            $"Vous avez retiré {amountMoney} $ de votre compte en banque."
+        );
+    }
+
+
+    protected override int BuildHash()
+    {
+        return HashCode.Combine(MoneySystem.Get(), client.Data.Bank);
+    }
+
+    private void InputBlurred()
+    {
+        InputEntry.Text = string.Empty;
+    }
+}

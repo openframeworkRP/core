@@ -1,0 +1,48 @@
+@using Sandbox;
+@using Sandbox.UI;
+@inherits PanelComponent
+@namespace OpenFramework.World
+
+@attribute [Icon( "grass" )]
+@attribute [Title("Weed Pot UI")]
+@attribute [Category("Roleplay")]
+@attribute [EditorHandle("editor/component_icons/weed_pot.svg")]
+
+@if(!PotRef.IsValid())
+    return;
+
+<root>
+    <label class="title">CULTURE EN COURS</label>
+
+    <div class="progress-container">
+        <div class="progress-bar @PotRef.Type.ToString()" style="width: @(PotRef.TotalGrowthPercent)%"></div>
+        <label class="percentage">@PotRef.TotalGrowthPercent.ToString("F0")%</label>
+    </div>
+
+    <div class="stats">
+        <div class="stat-item @(PotRef.WaterLevel < 20 ? "low" : "")">
+            <label class="icon">💧</label>
+            <label>@PotRef.WaterLevel.ToString("F0")%</label>
+        </div>
+
+        <div class="stat-item @(PotRef.IsInSunlight ? "boost" : "")">
+            <label class="icon">☀️</label>
+            <label>@(PotRef.IsInSunlight ? "BOOST" : "OMBRE")</label>
+        </div>
+    </div>
+    <label class="description">@PotRef.GetDescription()</label>
+</root>
+
+@code
+{
+    [Property] public WeedPot PotRef { get; set; }
+
+
+    protected override int BuildHash() => System.HashCode.Combine(
+        PotRef?.TotalGrowthPercent,
+        PotRef?.HasSoil,
+        PotRef?.HasSeed,
+        PotRef?.WaterLevel,
+        PotRef?.IsInSunlight
+    );
+}

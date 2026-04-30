@@ -1,0 +1,351 @@
+@import "ui/styles/colors.scss";
+
+$background-color: rgba( black, 0.75 );
+
+ChatUI {
+    position: absolute;
+    z-index: 5;
+    font-size: 20px;
+    color: white;
+    top: 30px;
+    left: 30px;
+    transition: all 0.2s ease-in-out;
+    font-family: Poppins;
+    pointer-events: none;
+
+    &.triggered {
+        pointer-events: all;
+
+        .left {
+            .entries {
+                transition: all 0.3s ease-in;
+            }
+
+            .input {
+                opacity: 1;
+                transition: all 0.3s ease-in;
+
+                textentry {
+                    cursor: text;
+                }
+            }
+
+            .faded {
+                opacity: 1;
+            }
+        }
+    }
+
+    .left {
+        width: 600px;
+        flex-direction: column;
+        gap: 15px;
+
+        .entries {
+            height: 300px;
+            width: 100%;
+            gap: 15px;
+            flex-direction: column;
+            justify-content: flex-end;
+            overflow: scroll;
+            overflow-x: hidden;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .input {
+            opacity: 0;
+            //border-image: url("ui/spacer.png") 1;
+            background-color: rgba(0, 0, 0, 0.55);
+            //border: 0.2px solid orangered;
+            outline: 0.2px solid orangered;
+            backdrop-filter: blur(20px);
+            gap: 15px;
+
+            textentry {
+                height: 48px;
+                flex: 1;
+                align-items: center;
+                font-size: 15px;
+                word-break: break-all;
+                border-radius: 0px;
+                //box-shadow: 0 0 10px rgba(0, 0, 0, 0.5), 0 0 2px rgba(0, 0, 0, 0.5);
+                /*&::before {
+                    content: '';
+                    position: absolute;
+                    left: -3px;
+                    height: 50%;
+                    width: 5px;
+                    border-radius: 8px;
+                    background-color: orangered;
+                }*/
+            }
+
+            .actions {
+                cursor: pointer;
+                gap: 10px;
+
+
+                div {
+                    height: 48px;
+                    width: 48px;
+                    padding: 10px;
+                    align-items: center;
+                    justify-content: center;
+                    transition: all 0.2s ease-out;
+                    border-radius: 0px;
+
+
+                    svg {
+                        height: 100%;
+                        width: 100%;
+                        opacity: 0.5;
+                        transition: all 0.2s ease-out;
+                    }
+
+                    &.active {
+                        transform: scale(1.05);
+
+                        svg {
+                            opacity: 1;
+                        }
+
+                        background-color: rgba(#eb5e28, 0.8);
+                    }
+
+                    &:hover {
+                        transform: scale(1.05);
+                        color: #ffde34;
+                        background-color: rgba(#eb5e28, 0.5);
+
+                        svg {
+                            opacity: 1;
+                        }
+                    }
+                }
+            }
+        }
+
+
+        .commandfinder {
+            min-height: 50px;
+            width: 100%;
+            background-color: rgba(10, 10, 10, 0.15);
+            opacity: 0;
+            transition: all 0.2s ease-in-out;
+            flex-direction: column;
+
+            .command {
+                height: 50px;
+                width: 100%;
+                align-items: center;
+                gap: 5px;
+                flex-shrink: 0;
+                padding: 5px 5px;
+                transition: all 0.2s ease-in-out;
+
+                .icon {
+                    background-color: rgba($blue, 0.1);
+                    padding: 2px;
+                    border-radius: 8px;
+                    transition: all 0.2s ease-in-out;
+
+                    svg {
+                        height: 30px;
+                        width: 30px;
+                    }
+                }
+
+                .name {
+                    text-transform: lowercase;
+                }
+
+                .arg {
+                    color: $green;
+
+                    &.optional {
+                        color: $yellow;
+                    }
+                }
+
+                .desc {
+                    color: gray;
+                    margin-left: auto;
+                    max-width: 200px;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+
+                    * {
+                        font-size: 15px;
+                    }
+                }
+
+                &:hover, &.active {
+                    background-color: rgba(orange, 0.25);
+                    transition: all 0.2s ease-in-out;
+                    cursor: pointer;
+
+                    .icon {
+                        background-color: rgba($blue, 0.5);
+
+                        svg {
+                            filter: brightness(0) saturate(100%) invert(18%) sepia(82%) saturate(4246%) hue-rotate(239deg) brightness(100%) contrast(97%)
+                        }
+                    }
+                }
+            }
+
+            &.show {
+                opacity: 1;
+            }
+        }
+    }
+
+    .right {
+        position: relative;
+        height: 100%;
+        width: 300px;
+        margin-left: 5px;
+        background-color: rgba(10, 10, 10, 0.15);
+        display: none;
+        opacity: 0;
+        transition: all 0.5s ease-in-out;
+
+        &.show {
+            display: flex;
+            opacity: 1;
+        }
+
+        .closebtn {
+            height: 20px;
+            width: 20px;
+            position: absolute;
+            z-index: 5;
+            right: 10px;
+            top: 10px;
+            cursor: pointer;
+        }
+
+        .emojipage {
+            height: 100%;
+            width: 100%;
+            flex-direction: column;
+            align-items: center;
+            overflow-y: scroll;
+            transition: all 0.5s ease-in-out;
+            gap: 25px;
+
+            .category {
+                width: 100%;
+                flex-shrink: 0;
+                flex-direction: column;
+                align-items: center;
+                background-color: rgba(10, 10, 10, 0.15);
+
+                .title {
+                    text-decoration: underline;
+                }
+
+                .list {
+                    .emoji {
+                        cursor: pointer;
+                    }
+                }
+
+                &:nth-child(1) {
+                    margin-top: 50px;
+                }
+            }
+        }
+    }
+}
+
+ChatEntry, .chatentry {
+    height: 25%;
+    width: 100%;
+    flex-shrink: 0;
+    transition: all 0.2s ease;
+    gap: 5px;
+    flex-direction: column;
+    border-radius: 0px;
+    padding: 0 15px;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.53);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5), 0 0 2px rgba(0, 0, 0, 0.5);
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(8px);
+
+    &:nth-child(even) {
+        //background: linear-gradient(to right, rgba($blue, 0.05), rgba(0, 0, 0, 0.1));
+    }
+
+    .background {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        background-image: url("ui/background/announcement.png");
+        background-size: cover;
+        background-position: center;
+        top: 0;
+        left: 0;
+        opacity: 0.2;
+    }
+
+    &::before:not(.fromhost) {
+        content: '';
+        position: absolute;
+        left: -3px;
+        height: 50%;
+        width: 5px;
+        border-radius: 16px;
+        background-color: white;
+    }
+
+    &.fromhost {
+        height: 40%;
+        //border: 3px solid rgba(white, 0.2);
+    }
+
+    &.jobannounce {
+    }
+
+    &.fromdiscord {
+        border-left: 4px solid #5865F2;
+
+        .author {
+            color: #5865F2;
+        }
+    }
+
+    &.faded {
+        opacity: 0;
+    }
+
+    .author {
+        font-size: 18px;
+        //background-color:rgba(80, 80, 80, 0.5);
+    }
+
+    .message {
+        cursor: text;
+        font-size: 18px;
+        opacity: 0.5;
+        /** {
+            font-family: Poppins;
+        }*/
+    }
+
+    .job {
+        position: absolute;
+        right: 10px;
+        top: 35px;
+        opacity: 0.5;
+    }
+
+    .time {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+    }
+} 

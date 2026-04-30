@@ -1,0 +1,90 @@
+@using OpenFramework.UI.RadialMenu
+@namespace OpenFramework.UI.RadialMenu
+@inherits PanelComponent
+
+<root>
+    <div class="radial-container">
+
+        @for (int i = 0; i < _items.Count; i++)
+        {
+            var item = _items[i];
+            var selected = i == _selectedIndex;
+            var disabled = !item.IsEnabled;
+            var angle = GetAngleDeg(i, _items.Count);
+            var rad = angle * MathF.PI / 180f;
+            var dist = 550f;
+            var x = MathF.Sin(rad) * dist;
+            var y = -MathF.Cos(rad) * dist;
+            var bgStyle = selected ? $"border-color: {item.Color}; background-color: {item.Color}22;" : "";
+
+            <div class="radial-item @(selected ? "selected" : "") @(disabled ? "disabled" : "")"
+                 style="transform: translate(@(x)px, @(y)px);">
+                <div class="item-bg" style="@bgStyle"></div>
+                @if (!string.IsNullOrEmpty(item.Icon))
+                {
+                    <svg src="@item.Icon" class="item-icon" style="color: @(selected? item.Color: "rgba(255,255,255,0.7)");" />
+                }
+                <span class="item-label">@item.Label</span>
+            </div>
+        }
+
+        <div class="radial-close">
+            <span>✕</span>
+        </div>
+
+    </div>
+</root>
+
+@code {
+    private List<RadialMenuItem> _items = new();
+    private int _selectedIndex = -1;
+    private Vector2 _lastDir = Vector2.Zero;
+
+    public void SetItems(List<RadialMenuItem> items)
+    {
+        _items = items ?? new();
+        _lastDir = Vector2.Zero;
+        _selectedIndex = -1;
+        StateHasChanged();
+    }
+
+    public RadialMenuItem GetSelected()
+    {
+        if (_selectedIndex < 0 || _selectedIndex >= _items.Count) return null;
+        var item = _items[_selectedIndex];
+        return item.IsEnabled ? item : null;
+    }
+
+    protected override void OnUpdate()
+    {
+        if (_items.Count == 0) return;
+
+        // Prend le delta caméra de cette frame
+        var look = Input.AnalogLook;
+        var dir = new Vector2(look.yaw, -look.pitch);
+
+        // On ne met à jour la direction que si le joueur bouge activement
+        // Quand il s'arrête (dir ≈ 0), on conserve _lastDir → sélection stable
+        if (dir.Length > 0.05f)
+            _lastDir = dir;
+
+        // Pas encore de direction → pas de sélection
+        if (_lastDir.Length < 0.05f)
+        {
+            _selectedIndex = -1;
+            return;
+        }
+
+        var angleDeg = MathF.Atan2(_lastDir.x, -_lastDir.y) * 180f / MathF.PI;
+        if (angleDeg < 0) angleDeg += 360f;
+
+        var slice = 360f / _items.Count;
+        _selectedIndex = Math.Clamp((int)MathF.Floor((angleDeg + slice / 2f) % 360f / slice), 0, _items.Count - 1);
+
+        if (!_items[_selectedIndex].IsEnabled) _selectedIndex = -1;
+    }
+
+    private float GetAngleDeg(int index, int total) => 360f / total * index;
+
+    protected override int BuildHash() => HashCode.Combine(_items.Count, _selectedIndex);
+}

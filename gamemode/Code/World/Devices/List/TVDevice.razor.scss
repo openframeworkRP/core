@@ -1,0 +1,156 @@
+TVDevice {
+    height: 100%;
+    width: 100%;
+    color: white;
+    //background-color: rgb(25, 25, 25);
+    font-family: Mina;
+    letter-spacing: 1px;
+    transition: all 0.2s ease;
+    padding: 20px;
+    pointer-events: all;
+    flex-direction: column;
+    gap: 50px;
+    background-size: cover;
+    background-position: center;
+
+    &::before {
+        content: '';
+        height: 100%;
+        width: 100%;
+        top: 0;
+        left: 0;
+        position: absolute;
+        backdrop-filter: blur(1px);
+        background-color: rgba(25, 25, 25, 0.5);
+    }
+
+    .toolsbar {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 500;
+        background-color: rgba(white, 0.1);
+        height: 100%;
+        width: 10px;
+        transition: all 0.2s ease;
+        flex-direction: column;
+        align-items: center;
+        padding: 15px;
+
+        svg {
+            height: 80px;
+            width: 80px;
+            transition: all 0.2s ease;
+            display: none;
+            opacity: 0;
+        }
+
+        .poweroff {
+            margin-top: auto;
+
+            &:hover {
+                filter: brightness(0) saturate(100%) invert(12%) sepia(83%) saturate(4736%) hue-rotate(355deg) brightness(91%) contrast(117%)
+            }
+        }
+
+        label {
+            display:none;
+            opacity:0;
+        }
+
+        &:hover {
+            background-color: rgba(25, 25, 25, 0.9);
+            width: 256px;
+            backdrop-filter: blur(5px);
+
+            * {
+                display: flex;
+                opacity: 1;
+            }
+        }
+    }
+
+    * {
+        font-size: 45px;
+    }
+
+    .topbar {
+        height: 80px;
+        width: 100%;
+        border-bottom: 5px solid rgba(gray, 0.4);
+    }
+
+    .main {
+        width: 100%;
+        gap: 20px;
+
+        .sidenav {
+            height: 100%;
+            width: 20%;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+
+            svg {
+                height: 80px;
+                width: 80px;
+                transition: all 0.2s ease;
+            }
+        }
+
+        .appcontainer {
+            height: 100%;
+            width: 80%;
+            flex-wrap: wrap;
+            gap: 10px;
+            overflow-y: scroll;
+
+            .app {
+                flex-direction: column;
+                background-color: rgba(255, 255, 255, 0.9);
+                align-items: center;
+                justify-content: center;
+                height: 128px;
+                width: 200px;
+                transition: all 0.2s ease;
+                //border-radius: 6px;
+                position: relative;
+                border: 1px solid rgba(black, 0.6);
+
+                label {
+                    display: none;
+                }
+
+                svg {
+                    height: 80px;
+                    width: 80px;
+                    transition: all 0.2s ease;
+                }
+
+                &::before {
+                    content: '';
+                    position: absolute;
+                    //z-index: -1;
+                    height: 100%;
+                    width: 100%;
+
+                    &:hover {
+                        backdrop-filter: blur(1px);
+                    }
+                }
+
+                &:hover {
+                    background-color: rgba(gray, 0.9);
+
+                    svg {
+                        transform: scale(1.1);
+                    }
+
+                    &::before {
+                        backdrop-filter: blur(1px);
+                    }
+                }
+            }
+        }
+    }
+}

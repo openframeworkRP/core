@@ -1,0 +1,408 @@
+﻿@using Sandbox;
+@using Sandbox.UI;
+@using System.Linq;
+@using Sandbox.UI.Navigation;
+@using OpenFramework.Inventory
+@namespace OpenFramework
+
+@implements INavigatorPage
+@inherits Panel
+
+<root>
+    <div class="bg-right"></div>
+    <div class="inspector">
+        <div class="sidebar">
+            @foreach (var cat in Manager.ActiveCatalog.MainCategories)
+            {
+                <div class="nav-btn @(SelectedMain == cat ? "active" : "")" onclick="@(() => SelectMain(cat))">
+                    <img src="@cat.Icon" />
+                </div>
+            }
+        </div>
+
+        <div class="content">
+            <div class="grid">
+                <div class="card empty-card @(!HasEquippedInMain() ? "active" : "")" onclick="@(() => ClearMainCategory())">
+                    <svg src="ui/icons/close.svg" />
+                </div>
+                @if (SelectedMain?.SubCategories != null)
+                {
+                    @foreach (var sub in SelectedMain.SubCategories)
+                    {
+                        @foreach (var item in sub.Items)
+                        {
+                            var resource = item.ClothingResource;
+                            if (resource == null) continue;
+
+                            <div class="card @(IsEquipped(item.ClothingResource) ? "active" : "")" onclick="@(() => ApplyClothing(item))">
+                                <img src="@resource.Icon.Path" class="clothing-icon" />
+                            </div>
+                        }
+                    }
+                }
+            </div>
+
+            @if (IsColorPickerOpen)
+            {
+                <div class="color-picker-container">
+                    <ColorPickerControl Tooltip="Choisir une couleur" Property="@TargetColor" />
+                    <button class="close-btn" onclick="@(() => IsColorPickerOpen = false)">Terminer</button>
+                </div>
+            }
+
+        </div>
+    </div>
+
+    <div class="camera-controls">
+        <div class="control-group">
+
+            <label>Rotation</label>
+            <div class="button-row">
+                <button onmousedown="@(() => { Manager.RotationDirection = -1; HandleUI(true); })"
+                        onmouseup="@(() => { Manager.RotationDirection = 0; HandleUI(false); })"
+                        onmouseleave="@(() => { Manager.RotationDirection = 0; HandleUI(false); })">
+                    ↺
+                </button>
+                <button onmousedown="@(() => { Manager.RotationDirection = 1; HandleUI(true); })"
+                        onmouseup="@(() => { Manager.RotationDirection = 0; HandleUI(false); })"
+                        onmouseleave="@(() => { Manager.RotationDirection = 0; HandleUI(false); })">
+                    ↻
+                </button>
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label>Zoom</label>
+            <div class="button-row">
+                <button onmousedown="@(() => { Manager.ZoomDir = -1; HandleUI(true); })"
+                        onmouseup="@(() => { Manager.ZoomDir = 0; HandleUI(false); })"
+                        onmouseleave="@(() => { Manager.ZoomDir = 0; HandleUI(false); })">
+                    +
+                </button>
+
+                <button onmousedown="@(() => { Manager.ZoomDir = 1; HandleUI(true); })"
+                        onmouseup="@(() => { Manager.ZoomDir = 0; HandleUI(false); })"
+                        onmouseleave="@(() => { Manager.ZoomDir = 0; HandleUI(false); })">
+                    -
+                </button>
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label>Hauteur</label>
+            <div class="button-row">
+                <button onmousedown="@(() => { Manager.HeightDir = 1; HandleUI(true); })"
+                        onmouseup="@(() => { Manager.HeightDir = 0; HandleUI(false); })"
+                        onmouseleave="@(() => { Manager.HeightDir = 0; HandleUI(false); })">
+                    ▲
+                </button>
+
+                <button onmousedown="@(() => { Manager.HeightDir = -1; HandleUI(true); })"
+                        onmouseup="@(() => { Manager.HeightDir = 0; HandleUI(false); })"
+                        onmouseleave="@(() => { Manager.HeightDir = 0; HandleUI(false); })">
+                    ▼
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="navigation-buttons">
+        <button class="back-btn" onclick="@GoBack">RETOUR</button>
+        <button class="next-btn" onclick="@ValidateAndNext">VALIDER APPARENCE</button>
+    </div>
+</root>
+
+@code
+{
+
+    private CharacterManager Manager => Game.ActiveScene.GetComponentInChildren<CharacterManager>();
+
+    private ClothingCatalogResource.ClothingMainCategory SelectedMain;
+    private ClothingCatalogResource.ClothingSubCategory SelectedSub;
+    private bool IsColorPickerOpen = false;
+    private ItemMetadata CurrentEditingItem;
+    public SerializedProperty TargetColor { get; set; }
+    private Color _colorValue = Color.White;
+
+    private async void HandleUI(bool hide)
+    {
+        if (MenuCreatorCharacter.Instance == null) return;
+
+        if (hide)
+        {
+            MenuCreatorCharacter.Instance.SetUIVisibility(true);
+        }
+        else
+        {
+            // On attend 100ms pour être sûr que l'action est finie
+            // et éviter les clignotements de l'UI
+            await Task.Delay(100);
+            MenuCreatorCharacter.Instance.SetUIVisibility(false);
+        }
+    }
+    // Dans ton @code Razor
+    public Color ColorValue
+    {
+        get => _colorValue;
+        set
+        {
+            if (_colorValue == value) return;
+            _colorValue = value;
+
+            if (CurrentEditingItem?.ClothingResource != null && Manager != null)
+            {
+                var resName = CurrentEditingItem.ClothingResource.ResourceName;
+                Manager.ClothingTints[resName] = value;
+
+                var activeDresser = Manager.IsFemale ? Manager.FemaleDresser : Manager.MaleDresser;
+
+                // CORRECTION : On cherche un enfant dont le nom CONTIENT le nom de la ressource
+                var obj = activeDresser.GameObject.Children
+                            .FirstOrDefault(x => x.Name.Contains(resName, StringComparison.OrdinalIgnoreCase));
+
+                if (obj.IsValid())
+                {
+                    var renderer = obj.Components.Get<ModelRenderer>(FindMode.EverythingInSelfAndChildren);
+                    if (renderer.IsValid()) renderer.Tint = value;
+                }
+            }
+        }
+    }
+
+    void ToggleColorPicker(PanelEvent e, ItemMetadata item)
+    {
+        e.StopPropagation();
+
+        if (item?.ClothingResource == null) return;
+
+        // Mise à jour de l'item en cours d'édition
+        CurrentEditingItem = item;
+
+        // Récupération de la couleur
+        if (Manager.ClothingTints.TryGetValue(item.ClothingResource.ResourceName, out var existingColor))
+            _colorValue = existingColor;
+        else
+            _colorValue = Color.White;
+
+        // SÉCURITÉ : On vérifie que la propriété sérialisée existe
+        if (TargetColor == null)
+        {
+           TargetColor = TypeLibrary.CreateProperty<Color>(
+                "ColorValue",
+                () => _colorValue,
+                val => ColorValue = val
+            );
+        }
+
+        IsColorPickerOpen = !IsColorPickerOpen;
+        StateHasChanged();
+    }
+
+    protected override void OnAfterTreeRender(bool firstTime)
+    {
+        if (firstTime)
+        {
+            // On crée la liaison une fois pour toutes
+            TargetColor = TypeLibrary.CreateProperty<Color>(
+                "ColorValue",
+                () => _colorValue,
+                val => ColorValue = val
+            );
+        }
+    }
+
+
+    // Initialisation au chargement
+    protected override void OnParametersSet()
+    {
+        if (SelectedMain == null && Manager?.ActiveCatalog?.MainCategories.Count > 0)
+        {
+            SelectMain(Manager.ActiveCatalog.MainCategories[0]);
+        }
+    }
+
+    void SelectMain(ClothingCatalogResource.ClothingMainCategory cat)
+    {
+        SelectedMain = cat;
+        SelectedSub = cat.SubCategories.FirstOrDefault();
+
+        // Camera preset selon la catégorie
+        if (Manager != null)
+        {
+            var index = Manager.ActiveCatalog.MainCategories.IndexOf(cat);
+            var name = cat.Name?.ToLower() ?? "";
+
+            // Adapter selon l'index ou le nom de la catégorie
+            if (name.Contains("cheveu") || name.Contains("hair") || name.Contains("barbe") || name.Contains("beard") || index == 0 || index == 1)
+            {
+                Manager.SetCameraPreset(133.7f, 52.1f);
+            }
+            else if (name.Contains("bijou") || name.Contains("jewel") || name.Contains("accessor") || index == 2)
+            {
+                Manager.SetCameraPreset(150.5f, 19.9f);
+            }
+            else if (name.Contains("haut") || name.Contains("top") || name.Contains("shirt") || name.Contains("veste") || index == 3)
+            {
+                Manager.SetCameraPreset(170f, 33.1f);
+            }
+            else if (name.Contains("bas") || name.Contains("pant") || name.Contains("jean") || index == 4)
+            {
+                Manager.SetCameraPreset(196.6f, 10f);
+            }
+            else if (name.Contains("chaussure") || name.Contains("shoe") || name.Contains("foot") || index == 5)
+            {
+                Manager.SetCameraPreset(196.6f, 10f);
+            }
+            else
+            {
+                Manager.SetCameraPreset(170f, 33.1f);
+            }
+        }
+
+        StateHasChanged();
+    }
+    private bool IsEquipped(Clothing asset)
+    {
+        if (asset == null || Manager == null) return false;
+
+        // On récupère dynamiquement le dresser actif (Male ou Female)
+        var activeDresser = Manager.IsFemale ? Manager.FemaleDresser : Manager.MaleDresser;
+
+        if (activeDresser?.Clothing == null) return false;
+
+        // On vérifie si l'asset est présent dans la liste actuelle
+        return activeDresser.Clothing.Any(x => x.Clothing == asset);
+    }
+
+
+    bool HasEquippedInMain()
+    {
+        if (SelectedMain?.SubCategories == null || Manager == null) return false;
+        return SelectedMain.SubCategories.Any(sub =>
+            sub.Items.Any(i => i.ClothingResource != null && IsEquipped(i.ClothingResource)));
+    }
+
+    void ClearMainCategory()
+    {
+        if (SelectedMain?.SubCategories == null || Manager == null) return;
+
+        var activeDresser = Manager.IsFemale ? Manager.FemaleDresser : Manager.MaleDresser;
+        var currentClothes = new Dictionary<string, ClothingContainer.ClothingEntry>();
+
+        if (activeDresser?.Clothing != null)
+        {
+            foreach (var entry in activeDresser.Clothing)
+            {
+                if (entry.Clothing == null) continue;
+                currentClothes[entry.Clothing.ResourceName] = entry;
+            }
+        }
+
+        foreach (var sub in SelectedMain.SubCategories)
+        {
+            foreach (var item in sub.Items)
+            {
+                if (item.ClothingResource != null)
+                    currentClothes.Remove(item.ClothingResource.ResourceName);
+            }
+        }
+
+        var container = new ClothingContainer();
+        foreach (var entry in currentClothes.Values)
+            container.Clothing.Add(entry);
+
+        _ = Manager.UpdateClothing(container);
+        StateHasChanged();
+    }
+
+    void ApplyClothing(ItemMetadata item)
+    {
+        var asset = item?.ClothingResource;
+        if (Manager == null || asset == null) return;
+
+        var activeDresser = Manager.IsFemale ? Manager.FemaleDresser : Manager.MaleDresser;
+        var currentClothes = new Dictionary<string, ClothingContainer.ClothingEntry>();
+
+        if (activeDresser?.Clothing != null)
+        {
+            foreach (var entry in activeDresser.Clothing)
+            {
+                if (entry.Clothing == null) continue;
+                currentClothes[entry.Clothing.ResourceName] = entry;
+            }
+        }
+
+        // Toggle : si déjà équipé, on enlève
+        if (currentClothes.ContainsKey(asset.ResourceName))
+        {
+            currentClothes.Remove(asset.ResourceName);
+        }
+        else
+        {
+            // Trouver la MainCategory de l'item dans le catalogue actif
+            var mainCat = Manager.ActiveCatalog.MainCategories
+                .FirstOrDefault(cat => cat.SubCategories
+                    .Any(sub => sub.Items.Contains(item)));
+
+            if (mainCat != null)
+            {
+                // Retirer tous les items équipés qui appartiennent à la même catégorie principale
+                var itemsInCat = mainCat.SubCategories
+                    .SelectMany(sub => sub.Items)
+                    .Where(i => i.ClothingResource != null)
+                    .Select(i => i.ClothingResource.ResourceName)
+                    .ToHashSet();
+
+                foreach (var key in itemsInCat)
+                    currentClothes.Remove(key);
+            }
+
+            currentClothes[asset.ResourceName] = new ClothingContainer.ClothingEntry { Clothing = asset };
+        }
+
+        var container = new ClothingContainer();
+        foreach (var entry in currentClothes.Values)
+            container.Clothing.Add(entry);
+
+        _ = Manager.UpdateClothing(container);
+        StateHasChanged();
+    }
+
+
+    void GoBack()
+    {
+        var host = Ancestors.OfType<MenuCreatorCharacter>().FirstOrDefault();
+        host?.GoToStep("/corps");
+    }
+
+    void ValidateAndNext()
+    {
+        // Sauvegarder les vêtements choisis comme ItemMetadata ResourceNames
+        CharacterCreationState.SelectedClothingItems.Clear();
+
+        var activeDresser = Manager.IsFemale ? Manager.FemaleDresser : Manager.MaleDresser;
+        if (activeDresser?.Clothing != null)
+        {
+            foreach (var entry in activeDresser.Clothing)
+            {
+                if (entry.Clothing == null) continue;
+
+                // Trouver l'ItemMetadata correspondant au Clothing resource
+                var itemMeta = ItemMetadata.All.FirstOrDefault(x =>
+                    x.IsClothing && x.ClothingResource == entry.Clothing);
+
+                if (itemMeta != null)
+                {
+                    CharacterCreationState.SelectedClothingItems.Add(itemMeta.ResourceName);
+                }
+            }
+        }
+
+        Manager?.SetCameraPreset(196.6f, 44.4f);
+        var host = Ancestors.OfType<MenuCreatorCharacter>().FirstOrDefault();
+        host?.GoToStep("/validation");
+    }
+
+
+
+    protected override int BuildHash() => HashCode.Combine( SelectedMain, Manager?.MaleDresser?.Clothing?.Count );
+}

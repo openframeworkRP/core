@@ -1,0 +1,145 @@
+@import "ui/Styles/Theme.scss";
+
+HomePageArmury {
+    width: 100%;
+    padding: 10px;
+    transition: all 0.2s ease;
+    gap: 10px;
+
+    //background-color:#FF5714;
+
+    * {
+        color: black;
+        font-size: 24px;
+    }
+
+    .tab {
+        font-size: 54px;
+        height: 10%;
+        width: 100%;
+        align-items: center;
+    }
+
+    .container {
+        height: 100%;
+        gap: 50px;
+
+
+        .finance {
+            border-radius: 6px;
+            backdrop-filter: blur(20px);
+            height: 100%;
+            width: 30%;
+            padding: 10px;
+            margin: 5px;
+            color: white;
+            flex-direction: column;
+
+            .finance-total {
+                opacity: 0;
+            }
+
+            span {
+                &:first-child {
+                    color: white;
+                }
+            }
+
+            &:hover {
+                transition: all 0.2s ease;
+                border: 2px solid rgba(black,0.8);
+                width: 100%;
+                align-content: center;
+                align-items: center;
+
+                .finance-total {
+                    transition: all 0.5s ease;
+                    opacity: 1;
+                    flex-direction: column;
+                    text-align: center;
+                }
+            }
+        }
+
+        .sells {
+            border-radius: 6px;
+            backdrop-filter: blur(20px);
+            height: 100%;
+            width: 30%;
+            padding: 10px;
+            margin: 5px;
+            color: white;
+            flex-direction: column;
+
+            .sells-total {
+                opacity: 0;
+            }
+
+            span {
+                &:first-child {
+                    color: white;
+                }
+            }
+
+            &:hover {
+                transition: all 0.2s ease;
+                border: 2px solid rgba(black,0.8);
+                width: 100%;
+                align-content: center;
+                align-items: center;
+
+                .sells-total {
+                    transition: all 0.5s ease;
+                    opacity: 1;
+                    flex-direction: column;
+                    text-align: center;
+                }
+            }
+        }
+
+        .employees {
+            border-radius: 6px;
+            backdrop-filter: blur(20px);
+            height: 100%;
+            width: 30%;
+            padding: 10px;
+            margin: 5px;
+            color: white;
+            color: white;
+            flex-direction: column;
+
+            .employe-total {
+                opacity: 0;
+            }
+
+            span {
+                &:first-child {
+                    color: white;
+                }
+            }
+
+            &:hover {
+                transition: all 0.2s ease;
+                border: 2px solid rgba(black,0.8);
+                width: 100%;
+                align-content: center;
+                align-items: center;
+
+                .employe-total {
+                    transition: all 0.5s ease;
+                    opacity: 1;
+                    flex-direction: column;
+                    text-align: center;
+
+                    ul {
+                        //background-color:red;
+                        justify-content: center;
+                        padding: 15px;
+                        flex-direction: column;
+                        list-style-position: inside;
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,92 @@
+$accent: #D66D2D;
+$accent-glow: rgba(214, 109, 45, 0.4);
+
+TaskTrackerHud {
+    position: absolute;
+    top: 160px;
+    left: 30px;
+    width: 350px;
+    flex-direction: column;
+    pointer-events: none;
+    transition: opacity 1s ease;
+
+    &.fade-out {
+        opacity: 0;
+    }
+
+    .task-header {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin-bottom: 14px;
+
+        .task-title {
+            color: white;
+            font-size: 16px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.8);
+        }
+    }
+
+    .task-steps {
+        flex-direction: column;
+        gap: 6px;
+        padding-left: 8px;
+    }
+
+    .step {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 10px;
+        padding: 4px 0;
+
+        .step-text {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+            font-weight: 600;
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+
+            .step-hint {
+                color: rgba(255, 255, 255, 0.35);
+                font-size: 12px;
+                font-weight: 400;
+            }
+        }
+
+        &.completed {
+            .step-text {
+                color: rgba(255, 255, 255, 0.3);
+                text-decoration: line-through;
+
+                .step-hint {
+                    color: rgba(255, 255, 255, 0.15);
+                }
+            }
+        }
+    }
+
+    .step-bullet {
+        width: 14px;
+        height: 14px;
+        justify-content: center;
+        align-items: center;
+        flex-shrink: 0;
+    }
+
+    .bullet-done {
+        width: 10px;
+        height: 10px;
+        background-color: $accent;
+        border-radius: 50%;
+    }
+
+    .bullet-pending {
+        width: 10px;
+        height: 10px;
+        border: 2px solid rgba(255, 255, 255, 0.35);
+        border-radius: 50%;
+    }
+}

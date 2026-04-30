@@ -1,0 +1,128 @@
+@import "ui/Styles/Theme.scss";
+@import "ui/Styles/MenuSystem.scss";
+
+MedicApp_navigator {
+    height: 100%;
+    width: 100%;
+    //background-color: white;
+    flex-direction: row;
+
+
+
+    .navbar {
+        height: 100%;
+        width: 15%;
+        background-color: rgba(white,1);
+        align-content: center;
+        align-items: center;
+        overflow: hidden;
+        padding: 35px 15px;
+        flex-direction: column;
+
+        .branding {
+            height: 80px;
+            width: 80px;
+
+
+            svg {
+                height: 54px;
+                width: 54px;
+                justify-content: center;
+            }
+
+            &:hover {
+                border-radius: 6px;
+                background-color: rgba(grey,0.5);
+            }
+        }
+
+        ul {
+            flex-direction: column;
+        }
+
+        a {
+            height: 64px;
+            width: 100%;
+            //align-content:center;
+            justify-content: center;
+            align-items: center;
+            margin: 10px;
+            margin-left: 25px;
+            padding: 10px;
+            cursor: pointer;
+            gap: 5px;
+            transition: all 0.2s ease-in-out;
+            opacity: 0.8;
+            border-radius: 6px;
+            color: black;
+            /*
+            a {
+                font-size: 16px;
+            }
+            */
+
+            svg {
+                height: 54px;
+                width: 32px;
+            }
+
+            &:active {
+                sound-in: ui_press;
+            }
+
+            &:hover {
+                //background-color: rgba($main-color, 0.7);
+                sound-in: ui.button.over;
+                background-color: rgba(#FF1414, 0.35);
+                border: 2px solid rgba(#FF1414,0.8);
+            }
+
+            &.active {
+                opacity: 1;
+                background-color: rgba(#FF1414, 0.8);
+                border: 2px solid rgba(#FF1414,0.8);
+                color: white;
+
+                .icon {
+                    //filter: brightness(0) saturate(100%) invert(22%) sepia(92%) saturate(2916%) hue-rotate(274deg) brightness(76%) contrast(136%);
+                }
+            }
+        }
+    }
+
+    .close {
+        top: 25px;
+        right: 25px;
+        z-index: 50;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        position: absolute;
+
+        svg {
+            height: 48px;
+            width: 48px;
+        }
+
+        &:hover {
+            background-color: rgba(crimson, 0.2);
+        }
+    }
+
+    .navigator-canvas, .navigator-body {
+        height: 100%;
+        width: 100%;
+        flex: 1;
+        /*
+        .page-title {
+            * {
+                font-size: 32px;
+                font-weight: 600;
+                color: white;
+                margin-bottom: 20px;
+                letter-spacing: 2px;
+            }
+        }
+        */
+    }
+}

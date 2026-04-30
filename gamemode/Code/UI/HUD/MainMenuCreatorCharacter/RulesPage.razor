@@ -1,0 +1,224 @@
+@using Sandbox;
+@using Sandbox.UI;
+@using System.Linq;
+@using System.Runtime.InteropServices.Marshalling
+@using Sandbox.UI.Navigation;
+@using OpenFramework.Api
+@using OpenFramework.Inventory
+@namespace OpenFramework
+
+@implements INavigatorPage
+@inherits Panel
+
+<root>
+    <div class="bg-right"></div>
+
+    <div class="rules-container">
+        <h1>Code de conduite</h1>
+        <p class="subtitle">Veuillez lire et accepter les regles avant de rejoindre la ville.</p>
+
+        <div class="rules-list">
+            <div class="rule">
+                <span class="rule-number">1</span>
+                <div class="rule-content">
+                    <label class="rule-title">Respect du Roleplay</label>
+                    <p>Vous devez rester dans votre personnage en toute circonstance. Le HRP (Hors RolePlay) est interdit en jeu. .</p>
+                </div>
+            </div>
+
+            <div class="rule">
+                <span class="rule-number">2</span>
+                <div class="rule-content">
+                    <label class="rule-title">Fear RP</label>
+                    <p>Vous devez craindre pour votre vie. Si quelqu'un vous menace avec une arme, vous devez cooperer.</p>
+                </div>
+            </div>
+
+            <div class="rule">
+                <span class="rule-number">3</span>
+                <div class="rule-content">
+                    <label class="rule-title">No RDM / VDM</label>
+                    <p>Il est interdit de tuer ou de renverser des joueurs sans raison RP valable. Toute agression doit avoir une justification roleplay.</p>
+                </div>
+            </div>
+
+            <div class="rule">
+                <span class="rule-number">4</span>
+                <div class="rule-content">
+                    <label class="rule-title">New Life Rule</label>
+                    <p>Apres votre mort, vous oubliez les evenements qui y ont mene. Vous ne pouvez pas retourner sur le lieu de votre mort pendant 15 minutes.</p>
+                </div>
+            </div>
+
+            <div class="rule">
+                <span class="rule-number">5</span>
+                <div class="rule-content">
+                    <label class="rule-title">Respect des joueurs</label>
+                    <p>Les insultes, discriminations et harcelements hors-RP sont strictement interdits. Le respect mutuel est obligatoire.</p>
+                </div>
+            </div>
+
+            <div class="rule">
+                <span class="rule-number">6</span>
+                <div class="rule-content">
+                    <label class="rule-title">Pas de Power Gaming</label>
+                    <p>Vous ne pouvez pas forcer une action sur un autre joueur sans lui laisser la possibilite de reagir.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="accept-check" onclick="@ToggleAccept">
+            <div class="checkbox @(HasAccepted ? "checked" : "")">
+                @if (HasAccepted)
+                {
+                    <span>✓</span>
+                }
+            </div>
+            <label>J'ai lu et j'accepte les conditions d'utilisation du serveur.</label>
+        </div>
+    </div>
+
+    <div class="navigation-buttons">
+        <button class="back-btn" onclick="@GoBack">RETOUR</button>
+        <button class="next-btn @(!HasAccepted || IsCreating ? "disabled" : "")" onclick="@StartGame">@(IsCreating ? "CREATION EN COURS..." : "ENTRER EN VILLE")</button>
+    </div>
+</root>
+
+@code
+{
+    private CharacterManager Manager => Game.ActiveScene.GetComponentInChildren<CharacterManager>();
+    private PlayerManagerHudComponent playerManager => Game.ActiveScene.GetAllComponents<PlayerManagerHudComponent>().FirstOrDefault();
+
+    private bool HasAccepted = false;
+    private bool IsCreating = false;
+
+    void ToggleAccept()
+    {
+        HasAccepted = !HasAccepted;
+        StateHasChanged();
+    }
+
+    void GoBack()
+    {
+        var host = Ancestors.OfType<MenuCreatorCharacter>().FirstOrDefault();
+        host?.GoToStep("/validation");
+    }
+
+    async void StartGame()
+    {
+        if (!HasAccepted) return;
+        if (IsCreating) return;
+        IsCreating = true;
+        StateHasChanged();
+
+        Log.Info("[Creator] === DEBUT VALIDATION ===" );
+
+        var dto = CharacterCreationState.BuildDto();
+        dto.ActualJob = "citizen";
+        var mgr = Manager;
+        var pm = playerManager;
+
+        if (mgr == null)
+        {
+            Log.Warning("[Creator] Manager est null");
+            IsCreating = false;
+            return;
+        }
+
+        var host = Ancestors.OfType<MenuCreatorCharacter>().FirstOrDefault();
+        host?.SetUIVisibility(true);
+
+        await Task.Frame();
+
+        mgr.PreviewCamera.Enabled = false;
+        mgr.PreviewCamera.Priority = -1;
+
+        mgr.MaleBody.Tags.Add("charactermodel");
+        mgr.FemaleBody.Tags.Add("charactermodel");
+
+        // Sauvegarder les vêtements choisis AVANT le reset
+        var selectedClothing = new List<string>(CharacterCreationState.SelectedClothingItems);
+        CharacterCreationState.Reset();
+
+        // Crée le personnage côté API (le serveur spawn aussi le pawn)
+        PlayerApiBridge.OnCharacterCreated = async created =>
+        {
+            // Try/finally garantit que IsCreating revienne a false meme si une exception
+            // remonte (NRE, sync timeout). Sans ca, le bouton restait bloque sur
+            // "CREATION EN COURS..." et le menu ne fermait jamais.
+            try
+            {
+                Log.Info( $"[Creator] OnCharacterCreated → {created?.FirstName} {created?.LastName}, waiting for pawn..." );
+
+                // Attendre que le pawn soit synchronisé côté client
+                for ( int i = 0; i < 20; i++ )
+                {
+                    if ( Client.Local?.PlayerPawn != null ) break;
+                    await GameTask.DelayRealtime( 100 );
+                }
+
+                var target = Client.Local;
+                if ( target?.PlayerPawn == null )
+                {
+                    Log.Warning( "[Creator] PlayerPawn toujours null après attente, abandon" );
+                    return;
+                }
+
+                Log.Info( $"[Creator] Pawn ready, applying appearance..." );
+                mgr.ApplyToPlayer();
+                Log.Info( "[Creator] ApplyToPlayer OK" );
+
+                var container = target.PlayerPawn.GameObject.Components
+                    .Get<InventoryContainer>( FindMode.EnabledInSelfAndChildren );
+
+                PlayerApiBridge.OnInventoryReceived = items =>
+                {
+                    if ( container == null ) return;
+                    foreach ( var item in items )
+                        InventoryContainer.Add( container, item.ItemGameId, item.Count );
+                };
+                PlayerApiBridge.FetchInventory();
+
+                var clothingEquip = target.PlayerPawn.GameObject.Components
+                    .Get<ClothingEquipment>( FindMode.EnabledInSelfAndChildren );
+
+                if ( clothingEquip != null )
+                {
+                    foreach ( var itemResName in selectedClothing )
+                        clothingEquip.EquipFromResourceName( itemResName );
+
+                    Log.Info( $"[Creator] {selectedClothing.Count} vêtements équipés" );
+                }
+
+                var pawn = target.PlayerPawn;
+                pawn.Possess();
+                pawn.CameraController.SetActive( true );
+                pawn.CameraController.Mode = CameraMode.FirstPerson;
+
+                if ( pm != null )
+                    pm.SwitchToGame();
+                else
+                    Log.Warning( "[Creator] PlayerManagerHudComponent introuvable — le menu ne pourra pas se fermer automatiquement" );
+
+                // Initialize tutorial tasks
+                TaskManager.InitNewPlayerTasks();
+
+                Log.Info( "[Creator] === VALIDATION TERMINEE ===" );
+            }
+            catch ( Exception ex )
+            {
+                Log.Error( $"[Creator] Exception pendant la finalisation : {ex}" );
+            }
+            finally
+            {
+                IsCreating = false;
+                StateHasChanged();
+            }
+        };
+
+        Log.Info( "[Creator] Creating character via API..." );
+        PlayerApiBridge.CreateCharacter(dto);
+    }
+
+    protected override int BuildHash() => HashCode.Combine(HasAccepted, IsCreating);
+}

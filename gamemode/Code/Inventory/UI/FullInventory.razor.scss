@@ -1,0 +1,401 @@
+@import "ui/Styles/Theme.scss";
+
+$main-color: #ff8000;
+$green-money: #5BFF8C;
+
+FullInventory {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    display: none;
+    opacity: 0;
+    transition: all 0.2s ease;
+
+    &.open {
+        display: flex;
+        opacity: 1;
+        pointer-events: all;
+    }
+
+    .blur-overlay {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.85);
+        backdrop-filter: blur(20px);
+        z-index: -1;
+    }
+
+    .close__btn {
+        position: absolute;
+        top: 30px;
+        right: 30px;
+        height: 48px;
+        width: 48px;
+        cursor: pointer;
+        background-color: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease;
+
+        svg {
+            height: 100%;
+            width: 100%;
+        }
+
+        &:hover {
+            background-color: rgba(255, 255, 255, 0.08);
+            background-image: linear-gradient(-90deg, rgba($main-color, 0.2), transparent);
+        }
+
+        &.active {
+            border: 2px solid $main-color;
+            background-color: rgba(255, 75, 104, 0.1);
+        }
+    }
+
+    .main-layout {
+        width: 1600px;
+        height: 850px;
+        flex-direction: row;
+        gap: 40px;
+    }
+
+    .side-panel, .center-panel {
+        flex: 1;
+        flex-direction: column;
+
+        .header {
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+
+            .pink-box {
+                width: 44px;
+                height: 44px;
+                background-color: $main-color;
+                border-radius: 0px;
+                justify-content: center;
+                align-items: center;
+                box-shadow: 1px 1px 5px rgba(white, 0.5);
+
+                span {
+                    color: white;
+                    font-size: 20px;
+                    font-weight: 900;
+                }
+            }
+
+            .icon-title {
+                gap: 10px;
+                align-items: center;
+
+                svg {
+                    height: 30px;
+                    width: 30px;
+                }
+            }
+
+            .title-text {
+                flex-direction: column;
+
+                .sub {
+                    * {
+                        font-size: 11px;
+                        font-weight: 800;
+                    }
+
+                    color: rgba(255, 255, 255, 0.4);
+                    letter-spacing: 1px;
+                }
+
+                .main {
+                    * {
+                        font-size: 17px;
+                        font-weight: 900;
+                    }
+
+                    color: white;
+                    margin-top: -3px;
+                }
+            }
+
+            .weight {
+                margin-left: auto;
+                font-size: 14px;
+                font-weight: 700;
+                color: white;
+                
+                /* Style de base pour le texte du poids */
+                &.weight_normal {
+                    color: #ffffff;
+                    transition: color 0.3s ease;
+                }
+                /* État d'alerte (proche de la limite) */
+                &.weight_warning {
+                    color: #ffcc00; /* Jaune/Orange */
+                    font-weight: bold;
+                }
+                /* État critique (Inventaire plein) */
+                &.weight_full {
+                    color: #ff4444; /* Rouge vif */
+                    font-weight: bold;
+                    text-shadow: 0 0 10px rgba(255, 68, 68, 0.5);
+                    animation: weight-pulse 1s infinite alternate;
+                }
+            }
+        }
+    }
+
+    .slots-container {
+        flex-direction: row;
+        flex-wrap: wrap; // Simulation de grille via Flexbox
+        gap: 10px;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        position: relative;
+    }
+
+    .frisk-section-label {
+        font-size: 10px;
+        font-weight: 800;
+        color: rgba(255, 255, 255, 0.4);
+        letter-spacing: 2px;
+        margin-top: 12px;
+        margin-bottom: 6px;
+
+        small {
+            font-size: 10px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.25);
+        }
+    }
+
+    .frisk-clothing-grid {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 6px;
+        margin-bottom: 4px;
+    }
+
+    .center-panel {
+        flex: 1.2;
+        width: 100%;
+        justify-content: space-between;
+        //background-color:green;
+
+        .equipment-view {
+            flex-direction: row;
+            justify-content: space-between;
+            height: 100%;
+            //background-color:blue;
+
+            .player-see-through {
+                width: 50%;
+                height: 100%;
+
+                ScenePanel {
+                    flex: 1;
+                    //background-color:red;
+                }
+            }
+
+            .slots-column {
+                flex-direction: column;
+                gap: 12px;
+            }
+        }
+
+        .hotbar-area {
+            flex-direction: column;
+            align-items: center;
+
+            .divider {
+                width: 100%;
+                margin: 20px 0;
+                align-items: center;
+                justify-content: center;
+                gap: 25px;
+
+                .bar {
+                    height: 5px;
+                    flex: 1;
+                    background-color: rgba(255, 255, 255, 0.05);
+                }
+
+                span {
+                    font-size: 10px;
+                    color: rgba(255, 255, 255, 0.3);
+                }
+            }
+
+            .hotbar-row {
+                flex-direction: row;
+                justify-content: space-between;
+                gap: 12px;
+            }
+        }
+    }
+
+    .trade-footer {
+        margin-top: auto;
+        padding: 20px 0;
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+
+        .currency {
+            align-items: flex-end;
+            margin-bottom: 15px;
+
+            .amount {
+                color: $green-money;
+                font-weight: 800;
+                font-size: 14px;
+            }
+        }
+
+        .actions {
+            flex-direction: row;
+            justify-content: flex-end;
+            gap: 10px;
+
+            .btn-confirm {
+                background-color: $green-money;
+                color: black;
+                padding: 8px 30px;
+                border-radius: 4px;
+                font-weight: 900;
+                transition: all 0.1s ease;
+
+                &:hover {
+                    transform: scale(1.05);
+                }
+            }
+
+            .btn-icon {
+                width: 36px;
+                height: 36px;
+                background-color: rgba(255, 255, 255, 0.1);
+                border-radius: 4px;
+                color: white;
+                justify-content: center;
+                align-items: center;
+
+                &:hover {
+                    background-color: rgba(255, 255, 255, 0.2);
+                }
+            }
+        }
+    }
+}
+
+WeaponSlot {
+    background-color: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    width: 90px;
+    height: 90px;
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        width: 100%;
+        height: 50%;
+        opacity: 0.1;
+        //background-image: linear-gradient(-90deg, white, transparent);
+    }
+
+    &:not(.empty) {
+        cursor: pointer;
+        transition: all 0.2s ease;
+
+        &:hover {
+            background-color: rgba(255, 255, 255, 0.08);
+            background-image: linear-gradient(-90deg, rgba($main-color, 0.2), transparent);
+        }
+    }
+
+    &.active {
+        border: 2px solid $main-color;
+        background-color: rgba(255, 75, 104, 0.1);
+    }
+
+    &.drag-over {
+        border: 2px solid $main-color;
+        background-color: rgba(255, 75, 104, 0.15);
+        transform: scale(1.05);
+        transition: all 0.15s ease;
+    }
+
+    .item-icon, .preview-panel {
+        width: 100%;
+        height: 100%;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        //background-color:red;
+        //pointer-events:none;
+    }
+
+    &.is-dragging {
+        opacity: 0.7;
+        transform: scale(0.9);
+        pointer-events: none; // Sécurité supplémentaire
+    }
+
+    svg {
+        width: 40%;
+        height: 40%;
+        opacity: 0.5;
+        //tint-color: white;
+    }
+
+    .quantity {
+        position: absolute;
+        bottom: 4px;
+        right: 6px;
+        font-size: 11px;
+        color: $main-color;
+        font-weight: 900;
+    }
+
+    .slot-number {
+        position: absolute;
+        bottom: -48px;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: $main-color;
+        width: 32px;
+        height: 32px;
+        //border-radius: 3px;
+
+        label {
+            font-size: 16px;
+            font-weight: 900;
+            font-family: Poppins;
+        }
+
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        color: white;
+    }
+}
+
+@keyframes weight-pulse {
+    from {
+        transform: scale(1.0);
+        opacity: 1;
+    }
+
+    to {
+        transform: scale(1.05);
+        opacity: 0.7;
+    }
+}

@@ -1,0 +1,51 @@
+@using Sandbox;
+@using Sandbox.UI;
+@using OpenFramework.Systems.Clothings;
+@inherits Panel
+@namespace OpenFramework
+
+<root>
+    @if (ClothExpo.CurrentActive.IsValid() && ClothExpo.CurrentActive._hoveredObject.IsValid())
+    {
+        Mouse.Visibility = MouseVisibility.Visible;
+        <div class="container">
+            <span class="title">Produit : @ClothExpo.CurrentActive.ClothingsItems.Name</span>
+            <span class="price">Prix : @ClothExpo.CurrentActive.ClothingsItems.Price.ToString("C")</span>
+            <div class="try-cloth">
+                <button onclick="@TryCloth">Try</button>
+            </div>
+        </div>
+        
+    }
+    else
+    {
+        Mouse.Visibility = MouseVisibility.Hidden;
+    }
+</root>
+
+@code
+{
+    // Récupération du manager
+    private ClothingShopManager clothManagerTempoList => Scene.GetAllComponents<ClothingShopManager>().FirstOrDefault();
+
+    void TryCloth()
+    {
+        var itemChoisi = ClothExpo.CurrentActive?.ClothingsItems;
+
+        if (itemChoisi != null && clothManagerTempoList != null)
+        {
+            // On ne peut plus faire .Add(itemChoisi) directement
+            // On doit créer une nouvelle "entrée" qui contient l'item + une couleur par défaut
+            clothManagerTempoList.MaSelection.Add(new ClothingShopManager.SelectedEntry
+            {
+                Item = itemChoisi,
+                Tint = Color.White
+            });
+        }
+    }
+
+    /// <summary>
+    /// On surveille l'objet survolé pour rafraîchir l'UI (Prix, Nom, etc.)
+    /// </summary>
+    protected override int BuildHash() => System.HashCode.Combine(ClothExpo.CurrentActive, ClothExpo.CurrentActive?._hoveredObject);
+}

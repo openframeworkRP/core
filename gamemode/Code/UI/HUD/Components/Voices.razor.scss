@@ -1,0 +1,25 @@
+Voices {
+    position: absolute;
+    top: 50px;
+    right: 50px;
+
+    .radio-indicator {
+        align-items: center;
+        gap: 8px;
+
+        .radio-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #4ade80;
+            box-shadow: 0 0 6px rgba(74, 222, 128, 0.8);
+        }
+
+        .radio-freq {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+    }
+}

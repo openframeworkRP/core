@@ -1,0 +1,36 @@
+NetworkSignal {
+    height: 14px;
+    align-items: flex-end;
+
+    .bars {
+        display: flex;
+        gap: 2px;
+        align-items: flex-end;
+
+        .bar {
+            width: 3px;
+            background-color: rgba(white, 0.3);
+            border-radius: 1px;
+
+            &.active {
+                background-color: white;
+            }
+
+            &:nth-child(1) {
+                height: 4px;
+            }
+
+            &:nth-child(2) {
+                height: 7px;
+            }
+
+            &:nth-child(3) {
+                height: 10px;
+            }
+
+            &:nth-child(4) {
+                height: 13px;
+            }
+        }
+    }
+}

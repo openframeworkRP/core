@@ -1,0 +1,13 @@
+@using OpenFramework.Systems.Npc
+
+@inherits BaseAppSplashScreen
+@namespace OpenFramework.World.Devices.Apps.Medic
+
+<root>
+    <svg src="ui/icons/apps/medic_icon.svg" color="#FF1414" />
+</root>
+
+@code {
+    public override Type AppInterface => typeof(MedicApp);
+
+}

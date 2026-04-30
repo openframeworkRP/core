@@ -1,0 +1,69 @@
+@import "ui/Styles/Theme.scss";
+
+$radius: 34px;
+
+IPhoneScreen {
+    transition: all 0.2s ease;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    border-radius: $radius;
+    overflow: hidden;
+    pointer-events: all;
+    color: white;
+    z-index:10000;
+
+    * {
+        cursor: phone;
+    }
+
+    &:hover {
+        background-color:red;
+    }
+
+    &:outro {
+        opacity:0;
+    }
+
+    .topbar {
+        position: absolute;
+        top: 18px;
+        width: 100%;
+        height: 6%;
+        z-index: 3;
+        align-items: flex-end;
+        justify-content: space-between;
+
+        .left {
+            height: 90%;
+            width: 35%;
+            align-items: center;
+            justify-content: center;
+            //background-color: green;
+        }
+
+        .right {
+            height: 100%;
+            width: 50%;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+    }
+
+    .navigator-canvas {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        overflow: hidden;
+        border-radius: $radius;
+
+        .baseapp {
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+            border-radius: $radius;
+        }
+    }
+}

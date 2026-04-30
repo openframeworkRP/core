@@ -1,0 +1,219 @@
+$accent:  #fdea60;
+$green:   #5ac864;
+$red:     #e25050;
+$bg:      rgba(12, 12, 18, 0.97);
+$bg2:     rgba(255, 255, 255, 0.03);
+$border:  rgba(255, 255, 255, 0.07);
+$text:    #ffffff;
+$subtext: rgba(255, 255, 255, 0.45);
+
+CraftingUI {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    width: 700px;
+    height: 500px;
+    flex-direction: column;
+    background-color: $bg;
+    border: 1px solid $border;
+    border-radius: 10px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+    pointer-events: all;
+    transition: all 0.2s ease;
+
+    // ── Header ──────────────────────────────────
+    .header {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        padding: 14px 18px;
+        border-bottom: 1px solid $border;
+
+        .title {
+            flex-direction: row;
+            align-items: center;
+            gap: 10px;
+            font-size: 15px;
+            font-weight: 900;
+            color: $text;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        .close-btn {
+            width: 28px;
+            height: 28px;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            color: $subtext;
+            cursor: pointer;
+            transition: all 0.15s;
+            &:hover { background-color: rgba(255,50,50,0.2); color: $text; }
+        }
+    }
+
+    // ── Content ──────────────────────────────────
+    .content {
+        flex: 1;
+        flex-direction: row;
+        overflow: hidden;
+    }
+
+    // ── Liste recettes ───────────────────────────
+    .recipes-list {
+        width: 55%;
+        flex-direction: column;
+        overflow-y: scroll;
+        border-right: 1px solid $border;
+        padding: 8px;
+        gap: 4px;
+    }
+
+    .recipe-item {
+        flex-direction: row;
+        align-items: center;
+        padding: 10px 12px;
+        border-radius: 6px;
+        gap: 12px;
+        cursor: pointer;
+        transition: background-color 0.15s;
+        border: 1px solid transparent;
+        flex-shrink: 0;
+
+        &:hover     { background-color: rgba(255,255,255,0.05); }
+        &.selected  { background-color: rgba($accent, 0.1); border-color: rgba($accent, 0.3); }
+        &.locked    { opacity: 0.45; }
+
+        .recipe-icon {
+            width: 36px;
+            height: 36px;
+            background-color: $bg2;
+            border-radius: 6px;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .recipe-info {
+            flex: 1;
+            flex-direction: column;
+            gap: 2px;
+
+            .recipe-name { font-size: 13px; font-weight: 700; color: $text; }
+            .recipe-ingredients { font-size: 10px; color: $subtext; }
+        }
+
+        .craft-badge {
+            font-size: 14px;
+            color: $green;
+            font-weight: 900;
+        }
+    }
+
+    // ── Détail recette ───────────────────────────
+    .recipe-detail {
+        flex: 1;
+        flex-direction: column;
+        padding: 16px;
+        gap: 14px;
+
+        .detail-header {
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+
+            .detail-name {
+                font-size: 16px;
+                font-weight: 900;
+                color: $text;
+            }
+
+            .detail-duration {
+                font-size: 11px;
+                color: $subtext;
+                background-color: $bg2;
+                padding: 3px 8px;
+                border-radius: 10px;
+                border: 1px solid $border;
+            }
+        }
+
+        .ingredients {
+            flex-direction: column;
+            gap: 6px;
+
+            .ingredient {
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+                padding: 6px 10px;
+                border-radius: 5px;
+                background-color: $bg2;
+                border: 1px solid $border;
+
+                .ing-name { font-size: 12px; color: $text; }
+
+                .ing-qty {
+                    font-size: 12px;
+                    font-weight: 700;
+                }
+
+                &.ok     .ing-qty { color: $green; }
+                &.missing .ing-qty { color: $red; }
+            }
+        }
+
+        .btn-craft {
+            margin-top: auto;
+            padding: 10px;
+            border-radius: 6px;
+            background-color: rgba($accent, 0.2);
+            border: 1px solid rgba($accent, 0.4);
+            color: $accent;
+            font-size: 13px;
+            font-weight: 900;
+            letter-spacing: 1px;
+            cursor: pointer;
+            justify-content: center;
+            transition: all 0.15s;
+
+            &:hover   { background-color: rgba($accent, 0.35); }
+            &.disabled { opacity: 0.3; pointer-events: none; }
+        }
+
+        .progress-area {
+            margin-top: auto;
+            flex-direction: column;
+            gap: 8px;
+
+            .progress-label {
+                font-size: 11px;
+                color: $subtext;
+                text-align: center;
+                font-weight: 700;
+                letter-spacing: 1px;
+                text-transform: uppercase;
+            }
+
+            .progress-bar {
+                width: 100%;
+                height: 8px;
+                background-color: rgba(0,0,0,0.4);
+                border-radius: 4px;
+                overflow: hidden;
+                border: 1px solid rgba(0,0,0,0.5);
+
+                .progress-fill {
+                    height: 100%;
+                    background-color: $accent;
+                    border-radius: 4px;
+                    transition: width 0.1s linear;
+                    box-shadow: 0 0 10px rgba($accent, 0.3);
+                }
+            }
+        }
+    }
+}

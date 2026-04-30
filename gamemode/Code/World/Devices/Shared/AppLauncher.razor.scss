@@ -1,0 +1,178 @@
+AppLauncher {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    // On force un background-size pour éviter les répétitions moches
+    background-size: cover;
+    background-position: center;
+
+    .app {
+        cursor: pointer;
+
+        &:hover {
+            .icon {
+
+                svg {
+                    transform: scale(1.1);
+                }
+            }
+        }
+    }
+
+    .appcontainer {
+        flex-grow: 1;
+        flex-wrap: wrap;
+        //overflow-y: scroll;
+        // Alignement propre au début
+        justify-content: flex-start;
+        align-content: flex-start;
+        // Sécurité : le padding latéral empêche l'arrondi du téléphone de couper l'icône
+        padding: 25px;
+
+        .app {
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            // On utilise une largeur qui permet 4 colonnes sans déborder (environ 22%)
+            //width: 68px;
+            margin-bottom: 5px;
+
+            .icon {
+                height: 54px;
+                width: 54px;
+                padding: 10px;
+                align-items: center;
+                justify-content: center;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+                transition: transform 0.1s ease;
+                flex-shrink: 0; // Empêche s&box de réduire l'icône si manque de place
+
+                svg {
+                    width: 100%;
+                    height: 100%;
+                    color: white;
+                    transition: transform 0.2s ease;
+                }
+            }
+
+            label {
+                color: white;
+                font-size: 11px;
+                margin-top: 5px;
+                text-align: center;
+                width: 100%;
+                text-shadow: 1px 1px 2px black;
+                // Empêche le texte de casser le layout
+                white-space: nowrap;
+                text-overflow: ellipsis;
+            }
+        }
+    }
+    // --- ADAPTATION IPHONE 17 PRO ---
+    &.phone_appcontainer {
+
+        .app {
+            .icon {
+                border-radius: 13px; // Arrondi typique iOS
+            }
+        }
+
+        .appcontainer {
+            // On laisse de la place pour la Dynamic Island en haut
+            padding-top: 35px;
+            // On ajuste le gap pour que les 4 icônes remplissent bien la largeur
+            justify-content: space-between;
+        }
+
+        .pinned_app {
+            height: 60px;
+            margin: 0 15px 30px 15px; // Marge en bas pour la barre de fermeture
+            //background-color: rgba(white, 0.2);
+            // Si tu as activé le blur sur ton projet s&box
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            //justify-content: space-evenly;
+            padding: 0 20px;
+            align-items: center;
+            gap: 10px;
+
+            .app {
+                // Pas de texte dans le dock pour un look plus clean
+                label {
+                    display: none;
+                }
+
+                .icon {
+                    height: 38px;
+                    width: 38px;
+                    padding: 5px;
+                    align-items: center;
+                    justify-content: center;
+                    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+                    transition: transform 0.1s ease;
+                    flex-shrink: 0; // Empêche s&box de réduire l'icône si manque de place
+
+                    svg {
+                        width: 100%;
+                        height: 100%;
+                        color: white;
+                        align-items: center;
+                        justify-content: center;
+                        transition: transform 0.2s ease;
+                    }
+                }
+            }
+        }
+    }
+    // --- ADAPTATION COMPUTER ---
+    &.computer_appcontainer {
+        .appcontainer {
+            padding: 20px;
+            gap: 25px;
+
+            .app {
+                width: 90px;
+
+                .icon {
+                    height: 48px;
+                    width: 48px;
+                    border-radius: 8px;
+                }
+
+                label {
+                    font-size: 13px;
+                }
+            }
+        }
+
+        .pinned_app {
+            height: 60px;
+            width: 90%;
+            background-color: rgba(white, 0.05);
+            backdrop-filter: blur(2px);
+            border-radius: 20px;
+            justify-content: space-evenly;
+            align-items: center;
+            position: absolute;
+            bottom: 25px;
+            gap: 15px;
+
+            .app {
+                flex-direction: row; // Look barre des tâches Windows
+                padding: 0 12px;
+                width: auto;
+
+                .icon {
+                    height: 35px;
+                    width: 35px;
+                }
+
+                label {
+                    margin-left: 10px;
+                    font-size: 12px;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,72 @@
+@using OpenFramework.UI.Components
+@using OpenFramework.World.Devices
+@using OpenFramework.World.Devices.Shared
+@inherits PanelComponent
+@namespace OpenFramework.World.Devices.Phone
+
+<root>
+    <div class="shortcut-list">
+
+        <div class="shortcut-item">
+            <div class="shortcut-icon">
+                <InputHint Action="cursor" />
+            </div>
+            <label>@(_cursorVisible ? "Cacher curseur" : "Afficher curseur")</label>
+        </div>
+
+        <div class="shortcut-item">
+            <div class="shortcut-icon">
+                <InputHint Action="PhoneToggle" />
+            </div>
+            <label>@(_cursorVisible ? "Éteindre le téléphone" : "Allumer le téléphone")</label>
+        </div>
+
+    </div>
+</root>
+
+@code {
+    [Property] public IDevice Device { get; set; }
+
+    private bool _cursorVisible => Mouse.Visibility == MouseVisibility.Visible;
+
+    public static PhoneShortcutView Instance { get; private set; }
+
+    public PhoneShortcutView()
+    {
+        Instance = this;
+    }
+
+    void ToggleCursor()
+    {
+        PhoneItemSystem.PushNotification("Hello.", "ui/icons/apps/messages_icon.svg");
+
+        if(_cursorVisible)
+        {
+            Mouse.Visibility = MouseVisibility.Auto;
+        }
+        else
+        {
+            Mouse.Visibility = MouseVisibility.Visible;
+        }
+    }
+
+    protected override void OnUpdate()
+    {
+        if( Input.Pressed( "cursor" ) )
+        {
+            ToggleCursor();
+        }
+
+        if (Input.Pressed("PhoneToggle"))
+        {
+            if( Device.IsOn )
+                PowerOff();
+            else
+                PowerOn();
+        }
+    }
+
+    private void PowerOn() => Device?.PowerOn();
+    private void PowerOff() => Device?.PowerOff();
+
+}

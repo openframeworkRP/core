@@ -1,0 +1,78 @@
+DepositPage {
+
+    .deposit-container {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-color: rgba(25, 25, 25, 0.7);
+    }
+
+    .deposit-container {
+        flex-direction: column;
+        //background-color: red;
+        width: 100px;
+        height: 100px;
+        align-items: center;
+
+        h1 {
+            &:first-child {
+                label {
+                    font-size: 5px;
+                }
+            }
+        }
+
+        .input-deposit {
+            position: relative;
+            flex-direction: column;
+            width: 100px;
+            height: 100px;
+            justify-content: center;
+            align-items: center;
+
+            span {
+                &:first-child {
+                    label {
+                        font-size: 5px;
+                    }
+                }
+            }
+
+            .TextEntry {
+                position: relative;
+                justify-content: center;
+                background-color: rgb(0, 0, 0);
+                width: 50px;
+                height: 20px;
+                color: white;
+            }
+
+            .button {
+                //padding: 5px 20px;
+                z-index: -2;
+                position: relative;
+                margin-top: 3px;
+                justify-content: center;
+                height: 10px;
+                width: 80px;
+                border-radius: 5px;
+                justify-content: center;
+                align-items: center;
+                cursor: pointer;
+                transition: all 0.2s ease;
+                background-color: rgba(25, 25, 25, 0.7);
+
+                span {
+                    label {
+                        font-size: 8px;
+                    }
+                }
+
+                &:hover {
+                    background-color: rgb(255, 106, 0,0.4);
+                }
+            }
+        }
+    }
+}

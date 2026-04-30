@@ -1,0 +1,164 @@
+@using OpenFramework.Systems.Weapons
+@using OpenFramework.Systems.Pawn
+@using OpenFramework.Inventory
+
+@namespace OpenFramework.Inventory.UI
+@inherits Panel
+
+<root class="@(Equipment == null ? "empty" : "filled") @(IsHighlighted ? "drag-over" : "") @(IsDragging ? "is-dragging" : "")"
+      draggable="@(Equipment != null)">
+    @if (Equipment?.LinkedItem?.Metadata?.Icon != null)
+    {
+        <image @ref="IconImage" class="preview-panel" />
+    }
+    @if (SlotNumber > 0)
+    {
+        <div class="slot-number">@SlotNumber</div>
+    }
+</root>
+
+@code {
+    [Change(nameof(OnEquipmentChanged))]
+    public Equipment Equipment { get; set; } = default;
+    public string GhostIcon { get; set; }
+    public int SlotNumber { get; set; } = 0;
+
+    /// <summary>
+    /// Le WeaponSlot actuellement survolé pendant un drag. Géré par InventorySlot.OnDrag.
+    /// </summary>
+    public static WeaponSlot CurrentHovered { get; set; }
+
+    private bool IsHighlighted => CurrentHovered == this;
+
+    // ── Drag state ──
+    private static Equipment s_draggingEquipment;
+    private static WeaponSlot s_draggingWeaponSlot;
+    private static DragGhost s_ghost;
+
+    private bool IsDragging => s_draggingWeaponSlot == this;
+
+    public override bool WantsDrag => Equipment != null;
+
+    // ── Drag depuis weapon bar ──
+
+    protected override void OnDragStart(DragEvent e)
+    {
+        if (Equipment == null) return;
+
+        s_draggingEquipment = Equipment;
+        s_draggingWeaponSlot = this;
+        InventorySlot.s_dropHandled = false;
+
+        e.Value = Equipment.LinkedItem;
+
+        // Ghost visuel
+        s_ghost?.Delete();
+        var root = Ancestors.OfType<RootPanel>().FirstOrDefault();
+        if (root != null && Equipment.LinkedItem != null)
+        {
+            s_ghost = root.AddChild<DragGhost>();
+            s_ghost.SetItem(Equipment.LinkedItem, Box.Rect.Width, Box.Rect.Height);
+            s_ghost.MoveTo(e.ScreenPosition);
+        }
+
+        StateHasChanged();
+    }
+
+    protected override void OnDrag(DragEvent e)
+    {
+        if (!IsDragging) return;
+        s_ghost?.MoveTo(e.ScreenPosition);
+
+        // Highlight des InventorySlot quand on survole l'inventaire
+        var hoveredInvSlot = InventorySlot.FindSlotAtPosition(Mouse.Position, this);
+        InventorySlot.s_currentDragOverPublic = hoveredInvSlot;
+
+        // Highlight des WeaponSlot quand on survole un autre weapon slot
+        var hoveredWs = InventorySlot.FindWeaponSlotAtPosition(Mouse.Position, this);
+        if (hoveredWs != CurrentHovered)
+        {
+            var oldWs = CurrentHovered;
+            CurrentHovered = hoveredWs;
+            oldWs?.StateHasChanged();
+            hoveredWs?.StateHasChanged();
+        }
+    }
+
+    protected override void OnDragEnd(DragEvent e)
+    {
+        if (!IsDragging) return;
+
+        s_ghost?.Delete();
+        s_ghost = null;
+
+        if (s_draggingEquipment != null)
+        {
+            // Vérifie si on drop sur un autre WeaponSlot (réorganiser)
+            var targetWs = InventorySlot.FindWeaponSlotAtPosition(Mouse.Position, this);
+            if (targetWs != null && targetWs != this)
+            {
+                // Swap entre weapon slots
+                FullInventory.Instance?.SwapWeaponSlots(SlotNumber - 1, targetWs.SlotNumber - 1);
+            }
+            else
+            {
+                // Déséquiper l'arme (la remettre dans l'inventaire)
+                PlayerInventory.RPC_UnequipWeapon(s_draggingEquipment);
+            }
+        }
+
+        ClearHighlight();
+        InventorySlot.s_currentDragOverPublic = null;
+        s_draggingEquipment = null;
+        s_draggingWeaponSlot = null;
+
+        StateHasChanged();
+    }
+
+    // ── Icone PNG ──
+
+    private Sandbox.UI.Image IconImage;
+
+    private void OnEquipmentChanged(Equipment oldValue, Equipment newValue)
+    {
+        UpdateIconImage();
+    }
+
+    private void UpdateIconImage()
+    {
+        if (!IconImage.IsValid()) return;
+        var icon = Equipment?.LinkedItem?.Metadata?.Icon;
+        if (IconImage.Texture != icon)
+            IconImage.Texture = icon;
+    }
+
+    public override void Tick()
+    {
+        // Synchronise la texture de l'image au cas ou le @ref n'aurait pas
+        // ete instancie au moment du OnEquipmentChanged.
+        UpdateIconImage();
+    }
+
+    public static void ClearHighlight()
+    {
+        if (CurrentHovered != null)
+        {
+            var old = CurrentHovered;
+            CurrentHovered = null;
+            old.StateHasChanged();
+        }
+    }
+
+    // ── Clic droit : déséquiper l'arme ──
+
+    protected override void OnMouseDown(MousePanelEvent e)
+    {
+        if (e.MouseButton == MouseButtons.Right && Equipment != null)
+        {
+            PlayerInventory.RPC_UnequipWeapon(Equipment);
+            e.StopPropagation();
+        }
+    }
+
+    protected override int BuildHash() => HashCode.Combine(Equipment, IsHighlighted, IsDragging);
+}

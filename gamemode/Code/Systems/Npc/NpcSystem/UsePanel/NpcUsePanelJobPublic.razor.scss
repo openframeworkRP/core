@@ -1,0 +1,231 @@
+@import "/UI/Styles/Theme.scss";
+
+NpcUsePanelJobPublic {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    pointer-events: all;
+    justify-content: center;
+    align-items: center;
+}
+
+.wrapper {
+    width: 750px;
+    height: 500px;
+    background-color: $surface-dark;
+    border: $border-light;
+    flex-direction: column;
+    color: white;
+    overflow: hidden;
+    backdrop-filter: blur(20px);
+    font-family: $font-ui;
+}
+
+.close-btn {
+    width: 30px;
+    height: 30px;
+    background-color: transparent;
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 16px;
+    font-weight: bold;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    flex-shrink: 0;
+
+    &:hover {
+        color: white;
+        background-color: $surface-input;
+    }
+}
+
+// ── HEADER ──
+.header {
+    background-color: rgba(0, 0, 0, 0.3);
+    padding: 12px 16px;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    border-bottom: $border-light;
+    flex-shrink: 0;
+}
+
+.title {
+    font-size: 20px;
+    font-weight: 800;
+    color: $accent;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    flex-grow: 1;
+}
+
+// ── BODY ──
+.body {
+    flex-direction: row;
+    flex-grow: 1;
+    overflow: hidden;
+}
+
+// ── JOB LIST ──
+.job-list {
+    width: 280px;
+    flex-direction: column;
+    gap: 4px;
+    padding: 12px;
+    overflow-y: scroll;
+    flex-shrink: 0;
+    border-right: $border-subtle;
+}
+
+.job-card {
+    flex-direction: column;
+    gap: 4px;
+    padding: 12px 14px;
+    background-color: $surface-input;
+    border-left: 3px solid transparent;
+    cursor: pointer;
+    transition: $transition-fast;
+
+    &:hover {
+        background-color: $surface-input-focus;
+        border-left: 3px solid $accent-border;
+    }
+
+    &.active {
+        background-color: rgba($accent, 0.12);
+        border-left: 3px solid $accent;
+    }
+}
+
+.job-card-header {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.job-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.badge {
+    font-size: 10px;
+    font-weight: 800;
+    padding: 2px 8px;
+    text-transform: uppercase;
+
+    &.whitelist {
+        background-color: rgba(255, 60, 0, 0.2);
+        color: #ff6030;
+        border: 1px solid rgba(255, 60, 0, 0.3);
+    }
+}
+
+.job-salary {
+    font-size: 12px;
+    color: $success-color;
+    font-weight: 600;
+}
+
+// ── JOB DETAILS ──
+.job-details {
+    flex-grow: 1;
+    flex-direction: column;
+    padding: 16px 20px;
+    gap: 12px;
+    overflow-y: scroll;
+}
+
+.detail-header {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 10px;
+    border-bottom: $border-subtle;
+}
+
+.detail-name {
+    font-size: 22px;
+    font-weight: 800;
+    color: $accent;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.detail-slots {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.5);
+    font-weight: 600;
+    background-color: $surface-input;
+    padding: 4px 10px;
+}
+
+.detail-info {
+    flex-direction: column;
+    gap: 6px;
+}
+
+.info-row {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 12px;
+    background-color: $surface-input;
+}
+
+.info-label {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.4);
+    font-weight: 600;
+}
+
+.info-value {
+    font-size: 14px;
+    color: $success-color;
+    font-weight: 700;
+
+    &.vote {
+        color: #ff6030;
+    }
+}
+
+.detail-desc {
+    flex-grow: 1;
+    padding: 10px 0;
+
+    span {
+        font-size: 13px;
+        color: rgba(255, 255, 255, 0.6);
+        font-weight: 500;
+    }
+}
+
+.no-selection {
+    flex-grow: 1;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.25);
+}
+
+// ── JOIN BUTTON ──
+.btn-join {
+    padding: 14px;
+    background-color: $accent-bg;
+    color: white;
+    font-size: 14px;
+    font-weight: 800;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    transition: $transition-fast;
+
+    &:hover {
+        background-color: $accent-hover;
+    }
+}

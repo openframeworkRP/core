@@ -1,0 +1,78 @@
+﻿@import "/UI/Styles/Theme.scss";
+
+Minimap {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    padding: 0px;
+    opacity: 1;
+    overflow: hidden;
+
+    .map-parent {
+        position: relative;
+        top: 50%;
+        left: 50%;
+        width: 100%;
+        height: 100%;
+    }
+
+    .minimap {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-size: 100%;
+        filter: drop-shadow( 5px 5px 10px rgba( black, 0.5 ) );
+    }
+
+    .overlay {
+        width: 100%;
+        height: 100%;
+        background-size: 100%;
+    }
+
+    .markers {
+        position: absolute;
+        width: 50%;
+        height: 50%;
+        top: 50%;
+        left: 50%;
+    }
+
+    .marker {
+        position: absolute;
+        width: 22px;
+        height: 22px;
+        background-image: url('ui/minimaps/player_icon.png');
+        z-index: 99;
+        transform: translateX(-50%) translateY(-50%);
+        background-size: contain;
+        background-position: center;
+
+        &.viewer {
+            z-index: 200;
+        }
+    }
+
+    .volume {
+        position: absolute;
+        background-color: white;
+        z-index: 5;
+
+        .bg {
+            width: 100%;
+            height: 100%;
+            mask-position: center;
+            mask-size: 16px;
+            opacity: 0;
+            mask-image: url( ui/line_mask.png );
+        }
+    }
+
+    .label {
+        position: absolute;
+        z-index: 10;
+        transform: translateX(-50%) translateY(-50%);
+        text-shadow: 2px 2px 0px rgba( black, 0.5 );
+    }
+}

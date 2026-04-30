@@ -1,0 +1,87 @@
+@using OpenFramework
+@using System.Linq
+@namespace Facepunch.UI
+@inherits Panel
+@attribute [StyleSheet]
+
+@{
+    if ( !TaskManager.IsInitialized ) return;
+
+    var task = TaskManager.ActiveTask;
+
+    // Toutes les taches terminees : on affiche encore quelques secondes
+    if ( task == null && !IsHiding && !HasHidden )
+    {
+        StartHideTimer();
+        return;
+    }
+
+    if ( task == null && HasHidden ) return;
+
+    // Affiche la derniere tache completee pendant le timer
+    if ( task == null && IsHiding )
+    {
+        task = TaskManager.Tasks.LastOrDefault();
+        if ( task == null ) return;
+    }
+}
+
+<root class="@(IsHiding ? "fade-out" : "")">
+    <div class="task-header">
+        <label class="task-title">@task.Title</label>
+    </div>
+
+    <div class="task-steps">
+        @foreach ( var step in task.Steps )
+        {
+            <div class="step @(step.IsCompleted ? "completed" : "")">
+                <div class="step-bullet">
+                    @if ( step.IsCompleted )
+                    {
+                        <div class="bullet-done"></div>
+                    }
+                    else
+                    {
+                        <div class="bullet-pending"></div>
+                    }
+                </div>
+                <label class="step-text">
+                    @step.Description
+                    @if ( step.SubItems?.Count > 0 )
+                    {
+                        <span class="step-hint"> — @string.Join( ", ", step.SubItems )</span>
+                    }
+                </label>
+            </div>
+        }
+    </div>
+</root>
+
+@code
+{
+    private bool IsHiding = false;
+    private bool HasHidden = false;
+
+    private async void StartHideTimer()
+    {
+        IsHiding = true;
+        StateHasChanged();
+        await Task.Delay( 3000 );
+        HasHidden = true;
+        StateHasChanged();
+    }
+
+    protected override int BuildHash()
+    {
+        if ( !TaskManager.IsInitialized ) return 0;
+
+        var task = TaskManager.ActiveTask;
+        if ( task == null ) return HashCode.Combine( IsHiding, HasHidden );
+
+        var stepsHash = 0;
+        foreach ( var s in task.Steps )
+            stepsHash = HashCode.Combine( stepsHash, s.IsCompleted );
+
+        return HashCode.Combine( TaskManager.ActiveTaskIndex, task.Title, stepsHash, IsHiding );
+    }
+}

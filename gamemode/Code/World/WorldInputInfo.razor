@@ -1,0 +1,57 @@
+﻿@using Sandbox;
+@using Sandbox.UI;
+@inherits PanelComponent
+
+@*<root style="opacity: @(IsLookingAt ? 1 : 0); transition: opacity 0.2s;">*@
+<root>
+    <Image class="glyph"
+           Texture=@Input.GetGlyph(ActionName, (InputGlyphSize)GlyphSize, false) />
+
+    <div class="content">
+        @if (!string.IsNullOrEmpty(Label))
+        {
+            <label class="label">@Label</label>
+        }
+
+        @if (ShowProgress)
+        {
+            <div class="progress-bg">
+                <div class="progress-bar" style="width: @(ProgressValue * 100)%; background-color: @AccentColor.ToString();"></div>
+            </div>
+        }
+    </div>
+</root>
+
+@code {
+    [Property] public string ActionName { get; set; } = "Use";
+    [Property] public string Label { get; set; } = "Interagir";
+
+    /// <summary>
+    /// 0 = small
+    /// 1 = medium
+    /// 2 = large
+    /// </summary>
+    [Property] public int GlyphSize { get; set; } = 0;
+    [Property] public Color AccentColor { get; set; } = Color.Cyan;
+    
+    [Property] public bool ShowProgress { get; set; } = false;
+    [Property, Range(0, 1)] public float ProgressValue { get; set; } = 0.5f;
+
+    private bool IsLookingAt { get; set; }
+
+    protected override void OnUpdate()
+    {
+
+        // 2. Raycast pour l'affichage conditionnel
+        var tr = Scene.Trace.Ray( Scene.Camera.ScreenNormalToRay( 0.5f ), 120f )
+            .Run();
+
+        // On affiche si le joueur regarde cet objet OU un de ses enfants (utile pour les modèles complexes)
+        IsLookingAt = tr.Hit && (tr.GameObject == GameObject || tr.GameObject.Parent == GameObject);
+    }
+
+    /// <summary>
+    /// Pour construire le hash de rendu et forcer la mise à jour UI
+    /// </summary>
+    protected override int BuildHash() => System.HashCode.Combine( IsLookingAt, ProgressValue, Label );
+}

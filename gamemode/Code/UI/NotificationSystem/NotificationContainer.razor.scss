@@ -1,0 +1,21 @@
+@import "/UI/Styles/Theme.scss";
+
+NotificationContainer {
+    position: absolute;
+    bottom: 230px;
+    left: 30px;
+    width: 340px;
+    max-width: 340px;
+    max-height: 320px;
+
+    flex-direction: column-reverse;
+    align-items: stretch;
+    gap: 6px;
+    z-index: 1000;
+    pointer-events: none;
+    overflow: hidden;
+
+    * {
+        transition: $transition-normal;
+    }
+}

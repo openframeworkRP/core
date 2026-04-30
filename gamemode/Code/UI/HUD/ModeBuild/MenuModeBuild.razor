@@ -1,0 +1,223 @@
+@using Sandbox;
+@using Sandbox.UI;
+@using Facepunch.UI;
+@inherits Panel
+@namespace OpenFramework
+
+<root>
+    <div class="container">
+        <span class="title">Mode Build</span>
+        <div class="container-keys">
+            <div class="keys">
+                <Image Texture="@Input.GetGlyph("CursorMode", InputGlyphSize.Small, true)" />
+                <span>Cursor</span>
+            </div>
+            <div class="keys">
+                <Image Texture="@Input.GetGlyph("Rotate", InputGlyphSize.Small, true)" />
+                <span>Rotation</span>
+            </div>
+            <div class="keys">
+                <Image Texture="@Input.GetGlyph("attack2", InputGlyphSize.Small, true)" />
+                <span>Freeze</span>
+            </div>
+        </div>
+
+        @if (_lastClickedObject.IsValid())
+        {
+            <div class="menu-custom">
+                <div class="title">
+                    <span>Model : @_lastClickedObject.Name</span>
+                </div>
+                <div class="advanced-mode">
+                    
+                </div>
+                <div class="model-color">
+                    <span>Tint du Model :</span>
+                    @if (TargetColor != null)
+                    {
+                        <ColorPickerControl Tooltip="Choisir une couleur" Property="@TargetColor" />
+                    }
+                </div>
+            </div>
+        }
+    </div>
+</root>
+
+@code
+{
+    public bool _showCursor = false;
+    public float MaxRange = 1000f;
+    public GameObject SelectedObject { get; set; }
+
+    // Garde en mémoire l'objet sur lequel on a cliqué
+    private GameObject _lastClickedObject { get; set; }
+
+    public ToolsGunComponent ToolsObjectSelected => GameObject.Components.Get<ToolsGunComponent>();
+
+    public SerializedProperty TargetColor { get; set; }
+
+
+    private Color _colorValue;
+    public Color ColorValue
+    {
+        get => _colorValue;
+        set
+        {
+            if (_colorValue == value) return; // Évite les boucles infinies
+            _colorValue = value;
+
+            if (_lastClickedObject.IsValid())
+            {
+                var visuals = _lastClickedObject.Components.Get<FurnitureVisual>();
+                visuals?.UpdateColor(value);
+            }
+        }
+    }
+
+    protected override void OnAfterTreeRender(bool firstTime)
+    {
+        if (firstTime)
+        {
+            TargetColor = TypeLibrary.CreateProperty<Color>(
+                "ColorValue",
+                () => _colorValue,
+                (Color val) => { ColorValue = val; }
+            );
+
+            StateHasChanged();
+        }
+    }
+
+    public override void Tick()
+    {
+        if (Input.Pressed("CursorMode"))
+        {
+            _showCursor = !_showCursor;
+            Mouse.Visibility = MouseVisibility.Visible;
+        }
+
+        if (Input.Released("CursorMode"))
+        {
+            _showCursor = !_showCursor;
+            Mouse.Visibility = MouseVisibility.Auto;
+        }
+
+        if (_showCursor)
+        {
+            var ray = Scene.Camera.ScreenNormalToRay(Mouse.Position / Screen.Size);
+            var trace = Scene.Trace.Ray(ray, MaxRange)
+                .Size(2f)
+                .WithTag("furniture")
+                .Run();
+
+            if (trace.Hit)
+            {
+                // LOGIQUE DE SURVOL
+                if (SelectedObject != trace.GameObject)
+                {
+                    ResetSelection(); // Nettoie l'ancien objet survolé
+                    var visuals = trace.GameObject.Components.Get<FurnitureVisual>();
+
+                    if (visuals.IsValid())
+                    {
+                        // Nettoyage de l'ancien
+                        if (SelectedObject.IsValid() && SelectedObject != trace.GameObject)
+                            SelectedObject.Components.Get<FurnitureVisual>()?.SetHover(false, Color.Transparent);
+
+                        SelectedObject = trace.GameObject;
+
+                        // Activation du nouveau (Localement)
+                        Color col = (SelectedObject == _lastClickedObject) ? Color.Green : Color.Orange;
+                        visuals.SetHover(true, col);
+                    }
+
+                }
+
+                // LOGIQUE DE CLIC (SÉLECTION)
+                if (Input.Pressed("attack1"))
+                {
+                    // On récupère le composant visuel de l'objet survolé par la souris
+                    var visuals = SelectedObject?.Components.Get<FurnitureVisual>();
+                    var rb = SelectedObject?.Components.Get<Rigidbody>();
+
+                    // Color
+                    if (visuals.IsValid())
+                    {
+                        Log.Info("OBJET SÉLECTIONNÉ : " + SelectedObject.Name);
+
+                        // 1. Reset visuel de l'ancien objet sélectionné (si existant)
+                        if (_lastClickedObject.IsValid() && _lastClickedObject != SelectedObject)
+                        {
+                            var oldVisuals = _lastClickedObject.Components.Get<FurnitureVisual>();
+                            oldVisuals?.SetHover(false, Color.Transparent);
+                        }
+
+
+
+                        // 2. Mise à jour de la sélection
+                        _lastClickedObject = SelectedObject;
+
+                        // 3. Mise à jour de la couleur dans l'UI (depuis le composant synchronisé)
+                        _colorValue = visuals.CurrentColor;
+
+                        // 4. On force l'outline en VERT pour l'objet sélectionné (Local)
+                        visuals.SetHover(true, Color.Green);
+
+                        // On force l'UI Razor à se rafraîchir pour afficher le nouveau nom/couleur
+                        StateHasChanged();
+                    }
+
+                }
+
+                // LOGIQUE DE RELÂCHEMENT (Si nécessaire)
+                if (Input.Released("attack1"))
+                {
+                    // Ici, on ne reset généralement pas _lastClickedObject,
+                    // sinon on ne peut plus modifier sa couleur dans le menu !
+                    // On vérifie juste si l'objet est toujours valide.
+                    if (_lastClickedObject.IsValid())
+                    {
+                        var visuals = _lastClickedObject.Components.Get<FurnitureVisual>();
+                        // On le garde en VERT pour montrer qu'il est toujours "l'objet cible" du menu
+                        visuals?.SetHover(true, Color.Green);
+                    }
+                }
+            }
+            else
+            {
+                ResetSelection();
+                SelectedObject = null;
+
+                // Si on clique dans le vide, on ferme le menu
+                if (Input.Pressed("attack1"))
+                {
+                    if (_lastClickedObject.IsValid())
+                    {
+                        var visuals = _lastClickedObject.Components.Get<FurnitureVisual>();
+                        // On le garde en VERT pour montrer qu'il est toujours "l'objet cible" du menu
+                        visuals?.SetHover(false, Color.Transparent);
+                    }
+
+                    _lastClickedObject = null;
+                    StateHasChanged(); // Force l'UI à s'actualiser pour masquer le menu
+                }
+            }
+        }
+    }
+
+    public void ResetSelection()
+    {
+        if (!SelectedObject.IsValid()) return;
+
+        // On retire l'outline de survol SEULEMENT si ce n'est pas notre objet sélectionné (cliqué)
+        if (SelectedObject != _lastClickedObject)
+        {
+            if (SelectedObject.Components.TryGet<HighlightOutline>(out var outline))
+            {
+                outline.Color = Color.Transparent;
+            }
+        }
+    }
+
+    protected override int BuildHash() => System.HashCode.Combine(_showCursor, SelectedObject, _lastClickedObject);
+}

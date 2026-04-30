@@ -1,0 +1,153 @@
+$green:   #34C759;
+$blue:    #007AFF;
+$red:     #FF3B30;
+$accent:  #fdea60;
+$bg:      #181818;
+$bg2:     #222;
+$bg3:     #2c2c2c;
+$text:    #ffffff;
+$subtext: rgba(255, 255, 255, 0.45);
+$border:  rgba(255, 255, 255, 0.07);
+
+PhoneApp {
+    position: absolute;
+    top: 0; left: 0;
+    height: 100%; width: 100%;
+    flex-direction: column;
+    color: $text;
+    background-color: $bg;
+
+    .navigation-content {
+        flex: 1; flex-direction: column;
+        padding-top: 45px; overflow: hidden;
+    }
+
+    .page-header {
+        padding: 10px 18px 8px;
+        font-size: 22px; font-weight: 800; color: $text;
+        border-bottom: 1px solid $border;
+    }
+
+    .empty-state {
+        flex: 1; flex-direction: column;
+        align-items: center; justify-content: center;
+        gap: 12px; opacity: 0.3;
+        svg { width: 40px; height: 40px; }
+        span { font-size: 13px; }
+    }
+
+    .list {
+        flex-direction: column; overflow-y: scroll; flex: 1;
+        .list-section-header {
+            padding: 8px 18px 4px; font-size: 11px; font-weight: 700;
+            color: $subtext; text-transform: uppercase; letter-spacing: 1px;
+        }
+    }
+
+    .list-item {
+        flex-direction: row; align-items: center;
+        padding: 10px 18px; gap: 12px;
+        border-bottom: 1px solid $border;
+        cursor: pointer; transition: background-color 0.15s ease;
+        &:hover { background-color: rgba(255,255,255,0.04); }
+
+        .avatar {
+            width: 42px; height: 42px; border-radius: 50%;
+            align-items: center; justify-content: center;
+            flex-shrink: 0; font-size: 18px;
+            &.service { border-radius: 12px; }
+            &.small { width: 32px; height: 32px; font-size: 14px; }
+        }
+
+        .item-info {
+            flex: 1; flex-direction: column; gap: 2px;
+            .name { font-size: 14px; font-weight: 600; color: $text; }
+            .sub { font-size: 11px; color: $subtext; }
+            .missed { color: $red; }
+        }
+
+        .item-actions { flex-direction: row; gap: 8px; }
+        .time-label { font-size: 10px; color: $subtext; }
+    }
+
+    .action-btn {
+        width: 34px; height: 34px; border-radius: 50%;
+        align-items: center; justify-content: center;
+        cursor: pointer; transition: all 0.15s ease;
+        svg { width: 16px; height: 16px; }
+        &.call {
+            background-color: rgba($green, 0.2);
+            &:hover { background-color: rgba($green, 0.45); }
+        }
+        &.sms {
+            background-color: rgba($blue, 0.2);
+            &:hover { background-color: rgba($blue, 0.45); }
+        }
+    }
+
+    // ── Dialer ─────────────────────────────────
+    .dialer {
+        flex-direction: column; align-items: center; padding: 10px 0;
+
+        .display {
+            width: 100%; justify-content: center; min-height: 50px;
+            font-size: 28px; font-weight: 300; letter-spacing: 4px; padding: 0 20px;
+        }
+
+        .grid {
+            flex-wrap: wrap; justify-content: center;
+            gap: 20px; width: 100%; padding: 10px 30px;
+
+            .key {
+                width: 55px; height: 55px; border-radius: 50%;
+                background-color: $bg3;
+                align-items: center; justify-content: center;
+                cursor: pointer; transition: all 0.1s ease;
+                label { font-size: 22px; pointer-events: none; color: $text; }
+                &:hover { background-color: #3a3a3a; }
+                &:active { transform: scale(0.93); }
+            }
+        }
+
+        .call-action {
+            margin-top: 20px; width: 100%;
+            justify-content: center; align-items: center; position: relative;
+
+            .call-btn {
+                width: 60px; height: 60px; border-radius: 50%;
+                background-color: rgba($green, 0.35);
+                align-items: center; justify-content: center;
+                cursor: pointer; transition: all 0.2s ease;
+                svg { width: 30px; height: 30px; }
+                &:hover { background-color: $green; transform: scale(1.05); }
+            }
+
+            .backspace {
+                position: absolute; right: 45px;
+                cursor: pointer; opacity: 0.6; transition: opacity 0.1s;
+                background-color: transparent;
+                svg { height: 28px; width: 26px; }
+                &:hover { opacity: 1; background-color: transparent; }
+            }
+        }
+    }
+
+    // ── Tab bar ────────────────────────────────
+    .tab-bar {
+        height: 85px;
+        background-color: rgba(20, 20, 20, 0.95);
+        border-top: 1px solid #222;
+        padding-bottom: 15px;
+        justify-content: space-evenly;
+        align-items: center;
+
+        .tab {
+            flex-direction: column; align-items: center;
+            opacity: 0.45; cursor: pointer; transition: all 0.2s ease; position: relative;
+            svg { width: 24px; height: 24px; margin-bottom: 4px; }
+            label { font-size: 10px; pointer-events: none; }
+            &:hover { opacity: 0.75; }
+            &.active { opacity: 1; color: $green; svg { color: $green; } }
+        }
+    }
+}

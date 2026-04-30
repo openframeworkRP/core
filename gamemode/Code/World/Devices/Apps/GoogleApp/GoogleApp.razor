@@ -1,0 +1,26 @@
+@using OpenFramework.Systems.Npc
+@using OpenFramework.Systems.Jobs
+
+@inherits BaseApp
+@namespace OpenFramework.World.Devices.Apps.Google
+
+<root>
+    <WebNavigator Url="@(AppContext.Device.Kind == DeviceKind.Phone ? "https://google.com/" : "https://google.com/")" />
+</root>
+
+@code {
+    public override string AppId => "google";
+    public override string DisplayName => "Google";
+    public override string Icon => "ui/icons/apps/google_icon.svg";
+    public override string IconColor => "default";
+    public override string BackgroundColor => "#FFFFFF";
+    public override bool IsSystemApp => false;
+    public override JobList JobAccess => JobList.None;
+    public override Type SplashScreen => typeof(GoogleApp_splash);
+    public override DeviceKind Compatibility => DeviceKind.TV | DeviceKind.Phone | DeviceKind.Computer | DeviceKind.Tablet;
+
+    public GoogleApp()
+    {
+        IsPinned = true;
+    }
+}

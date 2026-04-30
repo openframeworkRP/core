@@ -1,0 +1,39 @@
+@using OpenFramework.Systems.Jobs
+@inherits Panel
+@namespace OpenFramework.UI.World.StreetAdvert
+
+<root>
+    <span class="page-title">
+        Lois de La Ville
+    </span>
+    @if (_job?.Rules != null)
+    {
+        @foreach (var rule in _job.Rules)
+        {
+            <span>@rule</span>
+        }
+    }
+</root>
+
+
+@code
+{
+    private MayorJob _job;
+
+    protected override void OnAfterTreeRender(bool firstTime)
+    {
+        base.OnAfterTreeRender(firstTime);
+        if (firstTime)
+            _job = JobSystem.GetJob("mayor") as MayorJob;
+    }
+
+    protected override int BuildHash()
+    {
+        // Cache local : le property _job appelle JobSystem.GetJob a chaque acces
+        var job = _job;
+        if (job == null || job.Rules == null || Client.Local == null || Client.Local.Data == null)
+            return 0;
+
+        return HashCode.Combine(job.Rules, Client.Local.Data.Job);
+    }
+}

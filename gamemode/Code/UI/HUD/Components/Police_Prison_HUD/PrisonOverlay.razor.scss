@@ -1,0 +1,75 @@
+﻿PrisonOverlay {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.85);
+    color: #fff;
+    font-family: "Inter", Arial, sans-serif;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    transition: all 0.2s ease;
+    display: none;
+    opacity: 0;
+
+    &.show {
+        display: flex;
+        opacity: 1;
+        z-index: 9999;
+    }
+
+    label {
+        font-size: 30px;
+    }
+
+    h1 {
+        label {
+            font-size: 38px;
+        }
+
+        font-weight: 800;
+        color: #ff8a00;
+        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+        margin-bottom: 18px;
+    }
+
+    p {
+        label {
+            font-size: 18px;
+        }
+
+        margin: 4px 0;
+        text-align: center;
+        opacity: 0.9;
+
+        strong {
+            font-weight: 700;
+            color: #fff;
+            margin-left: 10px;
+            margin-right: 10px;
+        }
+    }
+
+    .btn {
+        margin-top: 18px;
+        padding: 10px 20px;
+        background: #ff8a00;
+        color: #111;
+        font-weight: 700;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: background 0.2s ease;
+
+        &:hover {
+            background: #ffa733;
+        }
+    }
+    /* Ajout d'un petit hint en bas */
+    .hint {
+        font-size: 13px;
+        opacity: 0.6;
+        margin-top: 6px;
+        text-align: center;
+    }
+}

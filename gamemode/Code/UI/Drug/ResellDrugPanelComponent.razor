@@ -1,0 +1,93 @@
+@using Sandbox;
+@using Sandbox.UI;
+@using OpenFramework.Inventory
+@using OpenFramework.Systems
+@using static Facepunch.NotificationSystem
+@inherits PanelComponent
+@namespace OpenFramework
+
+<root>
+<div class="wrapper">
+
+    <div class="header">
+        <button class="close-btn" @onclick="@(() => Enabled = false)">✕</button>
+        <span class="title">Revente</span>
+        <span class="subtitle">@ResellDrug?.Drug?.Name</span>
+    </div>
+
+    <div class="body">
+
+        <div class="drug-card">
+            @if (ResellDrug?.Drug?.WorldObjectPrefab != null)
+            {
+                <div class="drug-preview">
+                    <OpenFramework.Model3DIcon ModelPath="@ResellDrug.Drug.WorldObjectPrefab.ResourcePath" />
+                </div>
+            }
+            <div class="drug-details">
+                <span class="drug-name">@ResellDrug?.Drug?.Name</span>
+                <span class="drug-stock">Stock : @ResellDrug?.GetPlayerStock()</span>
+                <span class="drug-price">$@ResellDrug?.ResellPrice / unité</span>
+            </div>
+        </div>
+
+        <div class="qty-row @(HasStock ? "" : "disabled")">
+            <button class="qty-btn" @onclick="@Decrement">−</button>
+            <span class="qty-value">@Quantity</span>
+            <button class="qty-btn" @onclick="@Increment">+</button>
+            <button class="qty-max" @onclick="@SetMax">MAX</button>
+        </div>
+
+        <div class="total-row">
+            <span class="total-label">Total</span>
+            <span class="total-value">$@(Quantity * (ResellDrug?.ResellPrice ?? 0))</span>
+        </div>
+
+    </div>
+
+    <div class="footer">
+        <button class="btn-sell @(HasStock ? "" : "disabled")" @onclick="@Sell">Vendre</button>
+        <button class="btn-cancel" @onclick="@(() => Enabled = false)">Annuler</button>
+    </div>
+
+</div>
+</root>
+
+@code
+{
+    [Property] public ResellDrugComponent ResellDrug { get; set; }
+
+    int Quantity { get; set; } = 1;
+
+    bool HasStock => ResellDrug?.GetPlayerStock() > 0;
+
+    void Increment()
+    {
+        if (!HasStock) return;
+        if (Quantity < ResellDrug.GetPlayerStock())
+            Quantity++;
+    }
+
+    void Decrement()
+    {
+        if (!HasStock) return;
+        if (Quantity > 1)
+            Quantity--;
+    }
+
+    void SetMax()
+    {
+        if (!HasStock) return;
+        Quantity = ResellDrug.GetPlayerStock();
+    }
+
+    void Sell()
+    {
+        if (!HasStock || ResellDrug == null) return;
+        ResellDrug.Resell(Quantity);
+        Quantity = 1;
+    }
+
+    protected override int BuildHash() =>
+        HashCode.Combine(Quantity, ResellDrug?.GetPlayerStock(), ResellDrug?.ResellPrice);
+}

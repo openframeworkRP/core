@@ -1,0 +1,146 @@
+@using Sandbox;
+@using Sandbox.UI;
+@using System.Collections.Generic;
+@inherits Panel
+@namespace OpenFramework
+
+<root>
+    <ScenePanel @ref="ScenePanel" class="scene-panel" />
+</root>
+
+
+@code {
+    public ScenePanel ScenePanel { get; set; }
+    private GameObject _modelObject;
+
+    [Property] public string ModelPath { get; set; }
+
+    protected override void OnAfterTreeRender(bool firstTime)
+    {
+        if (!firstTime) return;
+        BuildScene();
+    }
+
+    protected override void OnParametersSet() => BuildScene();
+
+    private void BuildScene()
+    {
+        if (ScenePanel == null || string.IsNullOrEmpty(ModelPath)) return;
+
+        var scene = ScenePanel.RenderScene;
+        if (!scene.IsValid()) return;
+
+        using (scene.Push())
+        {
+            _modelObject?.Destroy();
+            _modelObject = new GameObject();
+            _modelObject.Name = "IconModel";
+
+            // 1. CHARGEMENT
+            // 1. CHARGEMENT
+            if (ModelPath.EndsWith(".prefab"))
+            {
+                var prefabFile = ResourceLibrary.Get<PrefabFile>(ModelPath);
+                if (prefabFile != null)
+                {
+                    var clone = GameObject.Clone(prefabFile, new CloneConfig
+                    {
+                        Parent = _modelObject,
+                        StartEnabled = true,
+                        Transform = Transform.Zero
+                    });
+
+                    // --- NOUVEAU : On d�sactive la physique pour l'ic�ne ---
+                    // On cherche tous les Rigidbody et ModelPhysics dans l'objet clon�
+                    var physicsStuff = clone.GetComponentsInChildren<Rigidbody>(true);
+                    foreach (var rb in physicsStuff)
+                    {
+                        rb.Enabled = false; // D�sactive le composant physique
+                    }
+
+                    // Optionnel : D�sactiver aussi les collisions pour �tre s�r
+                    var colliders = clone.GetComponentsInChildren<Collider>(true);
+                    foreach (var c in colliders)
+                    {
+                        c.Enabled = false;
+                    }
+                }
+            }
+            else
+            {
+                var renderer = _modelObject.Components.Create<ModelRenderer>();
+                renderer.Model = Model.Load(ModelPath);
+            }
+
+            // 2. LOGIQUE DE CENTRAGE
+            var allRenderers = _modelObject.GetComponentsInChildren<ModelRenderer>(true);
+
+            BBox bounds = new BBox();
+            bool foundBounds = false;
+
+            foreach (var r in allRenderers)
+            {
+                if (r.Model == null || r.Model.IsError) continue;
+
+                var worldBounds = r.Bounds.Transform(r.WorldTransform);
+
+                if (!foundBounds)
+                {
+                    bounds = worldBounds;
+                    foundBounds = true;
+                }
+                else
+                {
+                    // On fusionne les bo�tes en �tendant la bo�te actuelle
+                    // pour inclure les points min et max de la nouvelle bo�te.
+                    // C'est la m�thode manuelle qui fonctionne sur TOUTES les versions.
+                    bounds = bounds.AddPoint(worldBounds.Mins);
+                    bounds = bounds.AddPoint(worldBounds.Maxs);
+                }
+            }
+
+            if (foundBounds)
+            {
+                // 1. Centrage parfait
+                _modelObject.WorldPosition = -bounds.Center;
+
+                // 2. Configuration de la Cam�ra
+                var camObj = new GameObject();
+                var cam = camObj.Components.Create<CameraComponent>();
+
+                // --- LOGIQUE DE CADRAGE ANTI-D�BORDEMENT ---
+
+                // On r�cup�re la plus grande dimension
+                float maxDimension = System.Math.Max(bounds.Size.x, System.Math.Max(bounds.Size.y, bounds.Size.z));
+
+                // On augmente le recul : 2.5f au lieu de 1.8f pour laisser de l'air autour
+                float distance = maxDimension * 2.5f;
+
+                // S�curit� mini pour les petits objets
+                if (distance < 60f) distance = 60f;
+
+                // Positionnement de la cam�ra
+                // On utilise un angle l�g�rement plus plat (0.3f) pour mieux voir la largeur de la TV
+                camObj.WorldPosition = new Vector3(-distance, distance * 0.5f, distance * 0.3f);
+                camObj.WorldRotation = Rotation.LookAt(Vector3.Zero - camObj.WorldPosition);
+
+                cam.BackgroundColor = Color.Transparent;
+
+                // IMPORTANT : Un FOV bas (30-35) agit comme un zoom optique.
+                // Cela �vite la d�formation "Grand Angle" qui fait d�passer les coins de la TV.
+                cam.FieldOfView = 30;
+            }
+
+            // 4. LUMI�RE
+            var lightObj = new GameObject();
+            lightObj.WorldRotation = Rotation.From(0, 0, 0);
+            lightObj.Components.Create<DirectionalLight>();
+        }
+    }
+
+    public override void Tick()
+    {
+        if (_modelObject.IsValid())
+            _modelObject.WorldRotation *= Rotation.FromYaw(20 * Time.Delta);
+    }
+}

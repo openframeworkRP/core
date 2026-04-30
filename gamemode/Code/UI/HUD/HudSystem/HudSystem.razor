@@ -1,0 +1,180 @@
+@namespace OpenFramework.UI
+@using Facepunch
+@using Sandbox.WeatherSystem
+@using OpenFramework.Systems
+@using OpenFramework.Systems.Jobs
+@using OpenFramework.Systems.Vehicles
+@using OpenFramework.UI.Components
+@using Facepunch.UI
+@inherits Panel
+
+@{
+    var vehicle = GetVehicle();
+    bool inVehicle = vehicle != null;
+    bool isFirstPerson = Self?.PlayerPawn?.CameraController?.Mode == OpenFramework.Systems.Pawn.CameraMode.FirstPerson;
+    bool hasHeadBag = Self?.PlayerPawn?.HasHeadBagEquipped ?? false;
+    bool hideMap = (inVehicle && isFirstPerson) || hasHeadBag;
+}
+
+<root>
+    <div class="project_header">
+        <span class="project_name">OpenFramework</span>
+        <span class="version">V1</span>
+    </div>
+
+    <div class="bottom_stack">
+        @if (_voteSystem != null && _voteSystem.CurrentVote.IssuerSteamId != 0 && HudSettingsUI.ShowVoteNotification && !LocalHasVoted && (JobVoteUI.Instance == null || !JobVoteUI.Instance.HideUI))
+        {
+            <div class="vote_notification">
+                <span class="label">VOTE EN COURS</span>
+                <div class="progress_mini" style="width:@(Length.Percent((float)_voteSystem.PendingDelay.Passed))"></div>
+            </div>
+        }
+
+        <div class="map_section">
+            <div class="map_row">
+                @if (!hideMap && HudSettingsUI.ShowMinimap)
+                {
+                    <div class="minimap_circle">
+                        <Minimap class="minimap_render" />
+                        <div class="mask_overlay"></div>
+                        <div class="map_ring"></div>
+                    </div>
+                }
+
+                @if (inVehicle && (HudSettingsUI.ShowVehicleSpeed || HudSettingsUI.ShowVehicleOdometer))
+                {
+                    @{
+                        int spd = (int)(vehicle.DbgCarSpeed * 3.6f);
+                        string gr = vehicle.Gearbox?.CurrentGear switch { -1 => "R", 0 => "N", var g => g?.ToString() ?? "N" };
+                        bool shifting = vehicle.Gearbox?.IsShifting == true;
+                    }
+                    <div class="vehicle_side">
+                        @if (HudSettingsUI.ShowVehicleSpeed)
+                        {
+                            <span class="vehicle_line">@($"{spd}")Km/H  G:<span class="gear @(shifting ? "shifting" : "")">@gr</span></span>
+                        }
+                        @if (HudSettingsUI.ShowVehicleOdometer)
+                        {
+                            <span class="vehicle_odo">@($"{vehicle.Odometer:F2}") km</span>
+                        }
+                    </div>
+                }
+            </div>
+
+            <div class="bars_under_map">
+                @if (HudSettingsUI.ShowHungerThirst)
+                {
+                    <div class="bar_row">
+                        <div class="bar_container"><div class="bar_fill hunger" style="width: @(Self.Data.Hunger)%"></div></div>
+                    </div>
+                    <div class="bar_row">
+                        <div class="bar_container"><div class="bar_fill thirst" style="width: @(Self.Data.Thirst)%"></div></div>
+                    </div>
+                }
+                @if (!inVehicle && HudSettingsUI.ShowStamina)
+                {
+                    <div class="bar_row">
+                        <div class="bar_container"><div class="bar_fill stamina" style="width: @(Self.Data.Stamina)%"></div></div>
+                    </div>
+                }
+                @if (inVehicle)
+                {
+                    @{
+                        float rpmPct = Math.Clamp((vehicle.Engine?.RPM ?? 0f) / (vehicle.Engine?.MaxRPM ?? 7000f) * 100f, 0f, 100f);
+                        string rpmColor = GetRpmColor(rpmPct);
+                        float fuelPct = (vehicle.Engine?.FuelCapacity ?? 1f) > 0f
+                            ? Math.Clamp((vehicle.Engine?.FuelLevel ?? 0f) / (vehicle.Engine?.FuelCapacity ?? 1f) * 100f, 0f, 100f)
+                            : 100f;
+                        bool fuelLow = vehicle.Engine?.IsLowFuel == true;
+                        bool fuelEmpty = vehicle.Engine?.IsOutOfFuel == true;
+                        string fuelColor = fuelEmpty ? "rgba(255,51,51,0.4)" : fuelLow ? "#ff3333" : "#33cc66";
+                    }
+                    @if (HudSettingsUI.ShowVehicleRpm)
+                    {
+                        <div class="bar_row">
+                            <div class="bar_container"><div class="bar_fill rpm" style="width: @($"{rpmPct:F0}%"); background-color: @rpmColor"></div></div>
+                        </div>
+                    }
+                    @if (HudSettingsUI.ShowVehicleFuel)
+                    {
+                        <div class="bar_row">
+                            <div class="bar_container"><div class="bar_fill fuel" style="width: @($"{fuelPct:F0}%"); background-color: @fuelColor"></div></div>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+
+</root>
+
+@code {
+    // Cache : le pattern `=> Game.ActiveScene.GetComponentInChildren<X>()` faisait un scan
+    // complet de la scene (CollectAll, ~20% CPU profiler) a chaque acces. Avec un BuildRenderTree
+    // ratrapee chaque frame + plusieurs accesseurs par tree, ca multipliait vite.
+    private WeatherSystem _cachedWeatherSystem;
+    WeatherSystem _weatherSystem
+    {
+        get
+        {
+            if ( !_cachedWeatherSystem.IsValid() )
+                _cachedWeatherSystem = Game.ActiveScene?.GetComponentInChildren<WeatherSystem>();
+            return _cachedWeatherSystem;
+        }
+    }
+
+    private JobVoteSystem _cachedVoteSystem;
+    private JobVoteSystem _voteSystem
+    {
+        get
+        {
+            if ( !_cachedVoteSystem.IsValid() )
+                _cachedVoteSystem = Game.ActiveScene?.GetComponentInChildren<JobVoteSystem>();
+            return _cachedVoteSystem;
+        }
+    }
+    Client Self => Client.Local;
+    string CurrentZone => Self?.PlayerPawn?.Zones?.FirstOrDefault()?.DisplayName ?? "En Ville";
+    bool LocalHasVoted => _voteSystem != null &&
+        (_voteSystem.UpVotes.Contains(Client.Local?.SteamId ?? 0UL) ||
+         _voteSystem.DownVotes.Contains(Client.Local?.SteamId ?? 0UL));
+    Vehicle GetVehicle()
+    {
+        var pawn = Self?.PlayerPawn;
+        if (pawn == null) return null;
+        return pawn.CurrentCar as Vehicle;
+    }
+
+    /// <summary>Dégradé vert → orange → rouge selon le % RPM.</summary>
+    string GetRpmColor(float pct)
+    {
+        if (pct < 50f)
+        {
+            // vert → orange (0-50%)
+            float t = pct / 50f;
+            int r = (int)(80 + t * 175);   // 80 → 255
+            int g = (int)(200 - t * 100);  // 200 → 100
+            return $"rgb({r},{g},0)";
+        }
+        else
+        {
+            // orange → rouge (50-100%)
+            float t = (pct - 50f) / 50f;
+            int r = 255;
+            int g = (int)(100 - t * 100);  // 100 → 0
+            return $"rgb({r},{g},0)";
+        }
+    }
+
+    protected override int BuildHash()
+    {
+        if (Client.Local == null)
+            return 0;
+
+        // Throttle a 10Hz : DateTime.Now changeait chaque ms et forcait un rebuild quasi
+        // chaque frame, declenchant tous les GetComponentInChildren des accessors plus haut.
+        // 10Hz est imperceptible visuellement pour un HUD (barres HP/faim/soif/stamina/vitesse).
+        return (int)(Time.Now * 10f);
+    }
+}
