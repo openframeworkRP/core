@@ -1,0 +1,121 @@
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:modeldoc29:version{3cec427c-1b0e-4d48-a90a-0436f33a6041} -->
+{
+	rootNode = 
+	{
+		_class = "RootNode"
+		children = 
+		[
+			{
+				_class = "ClothShapeList"
+				children = 
+				[
+					{
+						_class = "ClothShapeCapsule"
+						name = "ClothUpper_Head"
+						parent_bone = "head"
+						cloth_collision_layer0 = true
+						cloth_collision_layer1 = true
+						cloth_collision_layer2 = true
+						cloth_collision_layer3 = true
+						cloth_stickiness = 0.0
+						cloth_collision_priority = 0
+						vertex_map = ""
+						inverted_collision = false
+						radius0 = 6.75
+						radius1 = 7.25
+						point0 = [ -2.0, 0.5, 0.0 ]
+						point1 = [ 9.0, 0.5, 0.0 ]
+					},
+					{
+						_class = "ClothShapeCapsule"
+						name = "ClothUpper_Neck"
+						parent_bone = "neck_0"
+						cloth_collision_layer0 = true
+						cloth_collision_layer1 = true
+						cloth_collision_layer2 = true
+						cloth_collision_layer3 = true
+						cloth_stickiness = 0.0
+						cloth_collision_priority = 0
+						vertex_map = ""
+						inverted_collision = false
+						radius0 = 6.0
+						radius1 = 7.0
+						point0 = [ -2.0, 0.5, 0.0 ]
+						point1 = [ 7.0, 0.5, 0.0 ]
+					},
+					{
+						_class = "ClothShapeCapsule"
+						name = "ClothUpper_Spine2"
+						parent_bone = "spine_2"
+						cloth_collision_layer0 = true
+						cloth_collision_layer1 = true
+						cloth_collision_layer2 = true
+						cloth_collision_layer3 = true
+						cloth_stickiness = 0.0
+						cloth_collision_priority = 0
+						vertex_map = ""
+						inverted_collision = false
+						radius0 = 7.0
+						radius1 = 7.5
+						point0 = [ -5.0, 0.0, 0.0 ]
+						point1 = [ 2.0, 0.0, 0.0 ]
+					},
+					{
+						_class = "ClothShapeCapsule"
+						name = "ClothUpper_Spine0"
+						parent_bone = "spine_0"
+						cloth_collision_layer0 = true
+						cloth_collision_layer1 = true
+						cloth_collision_layer2 = true
+						cloth_collision_layer3 = true
+						cloth_stickiness = 0.0
+						cloth_collision_priority = 0
+						vertex_map = ""
+						inverted_collision = false
+						radius0 = 7.5
+						radius1 = 8.0
+						point0 = [ 0.0, 0.0, 0.0 ]
+						point1 = [ 7.0, 0.0, 0.0 ]
+					},
+					{
+						_class = "ClothShapeCapsule"
+						name = "ClothUpper_ShoulderR"
+						parent_bone = "clavicle_R"
+						cloth_collision_layer0 = true
+						cloth_collision_layer1 = true
+						cloth_collision_layer2 = true
+						cloth_collision_layer3 = true
+						cloth_stickiness = 0.0
+						cloth_collision_priority = 0
+						vertex_map = ""
+						inverted_collision = false
+						radius0 = 6.0
+						radius1 = 4.0
+						point0 = [ 2.0, 0.0, 0.0 ]
+						point1 = [ 5.5, 0.0, -1.0 ]
+					},
+					{
+						_class = "ClothShapeCapsule"
+						name = "ClothUpper_ShoulderL"
+						parent_bone = "clavicle_L"
+						cloth_collision_layer0 = true
+						cloth_collision_layer1 = true
+						cloth_collision_layer2 = true
+						cloth_collision_layer3 = true
+						cloth_stickiness = 0.0
+						cloth_collision_priority = 0
+						vertex_map = ""
+						inverted_collision = false
+						radius0 = 6.0
+						radius1 = 4.0
+						point0 = [ 2.0, 0.0, 0.0 ]
+						point1 = [ 5.5, 0.0, 1.0 ]
+					},
+				]
+			},
+		]
+		model_archetype = ""
+		primary_associated_entity = ""
+		anim_graph_name = ""
+	}
+}

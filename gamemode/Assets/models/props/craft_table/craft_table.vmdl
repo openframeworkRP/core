@@ -1,0 +1,171 @@
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:modeldoc30:version{8c2d7a91-9c42-4bf0-883a-5a3b1762d4f1} -->
+{
+	rootNode = 
+	{
+		_class = "RootNode"
+		children = 
+		[
+			{
+				_class = "MaterialGroupList"
+				children = 
+				[
+					{
+						_class = "DefaultMaterialGroup"
+						remaps = 
+						[
+							{
+								from = "mat_workbench.vmat"
+								to = "models/props/craft_table/textures/mat_workbench.vmat"
+							},
+							{
+								from = "mat_vice.vmat"
+								to = "models/props/craft_table/textures/mat_vice.vmat"
+							},
+							{
+								from = "mat_tools.vmat"
+								to = "models/props/craft_table/textures/mat_tools.vmat"
+							},
+							{
+								from = "mat_tool_cabinet.vmat"
+								to = "models/props/craft_table/textures/mat_tool_cabinet.vmat"
+							},
+						]
+						use_global_default = false
+						global_default_material = "materials/default.vmat"
+					},
+				]
+			},
+			{
+				_class = "PhysicsShapeList"
+				children = 
+				[
+					{
+						_class = "PhysicsShapeBox"
+						parent_bone = ""
+						surface_prop = "wood"
+						collision_tags = "solid"
+						origin = [ -2.776617, 0.031605, 23.029505 ]
+						angles = [ 0.0, 0.0, 0.0 ]
+						dimensions = [ 109.511063, 32.413589, 45.638416 ]
+					},
+				]
+			},
+			{
+				_class = "RenderMeshList"
+				children = 
+				[
+					{
+						_class = "RenderMeshFile"
+						filename = "models/props/craft_table/source/lod0.fbx"
+						import_translation = [ 0.0, 0.0, 0.0 ]
+						import_rotation = [ 0.0, 0.0, 0.0 ]
+						import_scale = 1.0
+						align_origin_x_type = "None"
+						align_origin_y_type = "None"
+						align_origin_z_type = "None"
+						parent_bone = ""
+						import_filter = 
+						{
+							exclude_by_default = true
+							exception_list = 
+							[
+								"Light_Fixture_Base_low",
+								"Light_Fixture_Plate_low",
+								"Light_Fixture_Bulbs_low",
+								"Light_Fixture_Fittings_low",
+								"Light_Fixture_Ends_low",
+								"Light_Fixture_Cord_low",
+								"Pegboard_Sheet_low",
+								"Pegboard_Frame_low",
+								"Pegboard_Hook_Pliers_low",
+								"Pegboard_Hook_Screwdriver_low",
+								"Pegboard_Hook_General_low1",
+								"Pegboard_Hook_General_low2",
+								"Pegboard_Hook_General_low3",
+								"Pegboard_Hook_General_low4",
+								"Pegboard_Hook_Pliers_low1",
+								"Pegboard_Hook_Pliers_low2",
+								"Pegboard_Hook_Pliers_low3",
+								"Pegboard_Hook_General_low5",
+								"Pegboard_Hook_General_low6",
+								"Pegboard_Hook_General_low7",
+								"Pegboard_Hook_General_low8",
+								"Pegboard_Hook_General_low9",
+								"Pegboard_Hook_General_low10",
+								"Pegboard_Hook_General_low11",
+								"Workbench_Group_1_low",
+								"Workbench_Group_2_low",
+								"Workbench_Group_3_low",
+								"Workbench_Group_4_low",
+								"Workbench_Group_5_low",
+								"Vice_Slide_low",
+								"Vice_Base_low",
+								"Vice_Handle_low",
+								"Vice_Bolts_low",
+								"Tool_Cabinet_Body_low",
+								"Tool_Cabinet_Drawers_low",
+								"Tool_Cabinet_Handles_low",
+								"Tool_Cabinet_Bolts_low",
+								"Tool_Cabinet_Details_low",
+								"Tool_Cabinet_Wheel_Front_Lock_low",
+								"Tool_Cabinet_Wheel_Back_Lock_low",
+								"Tool_Cabinet_Wheel_Front_low",
+								"Tool_Cabinet_Wheel_Back_low",
+								"Hardware_low",
+								"Adjustable_Wrench_L_low",
+								"Adjustable_Wrench_L_Slide_low",
+								"Adjustable_Wrench_L_Wheel_low",
+								"Adjustable_Wrench_S_low",
+								"Adjustable_Wrench_S_Slide_low",
+								"Adjustable_Wrench_S_Wheel_low",
+								"Angled_Pliers_Right_Grip_low",
+								"Angled_Pliers_Left_low",
+								"Angled_Pliers_Left_Grip_low",
+								"Angled_Pliers_Right_low",
+								"Angled_Pliers_Bolt_low",
+								"Box_Cutter_Body_low",
+								"Box_Cutter_Cap_low",
+								"Box_Cutter_Lock_low",
+								"Box_Cutter_Blade_low",
+								"Duct_Tape_low",
+								"Hammer_Head_low",
+								"Hammer_Handle_low",
+								"Measuring_Tape_Lock_low",
+								"Measuring_Tape_End_low",
+								"Measuring_Tape_Body_low",
+								"Measuring_Tape_Clip_low",
+								"Pliers_Jaw_Right_low",
+								"Pliers_Jaw_Left_low",
+								"Pliers_Handles_low",
+								"Scissors_Pivot_low",
+								"Scissors_Grip_Fingers_low",
+								"Scissors_Blade_Fingers_low",
+								"Scissors_Blade_Thumb_low",
+								"Scissors_Grip_Thumb_low",
+								"Screwdriver_L_Handle_low",
+								"Screwdriver_L_Shaft_low",
+								"Screwdriver_L_Handle_low1",
+								"Screwdriver_L_Shaft_low1",
+								"Screwdriver_L_Handle_low2",
+								"Screwdriver_L_Shaft_low2",
+								"Screwdriver_S_Shaft_low",
+								"Screwdriver_S_Handle_low",
+								"Screwdriver_S_Shaft_low1",
+								"Screwdriver_S_Handle_low1",
+								"Screwdriver_S_Shaft_low2",
+								"Screwdriver_S_Handle_low2",
+								"Wrench_L_low",
+								"Wrench_M_low",
+								"Wrench_S_low",
+							]
+						}
+					},
+				]
+			},
+		]
+		model_archetype = ""
+		primary_associated_entity = ""
+		anim_graph_name = ""
+		base_model_name = ""
+	}
+}

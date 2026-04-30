@@ -1,0 +1,994 @@
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:modeldoc30:version{8c2d7a91-9c42-4bf0-883a-5a3b1762d4f1} -->
+{
+	rootNode = 
+	{
+		_class = "RootNode"
+		children = 
+		[
+			{
+				_class = "LODGroupList"
+				children = 
+				[
+					{
+						_class = "LODGroup"
+						switch_threshold = 0.0
+						meshes = 
+						[
+							"pot_lod0",
+							"dirt_lod0",
+							"plant1_lod0",
+							"plant2_lod0",
+							"plant3_lod0",
+							"plant4_lod0",
+							"plant5_lod0",
+							"plant6_lod0",
+							"plant7_lod0",
+							"plant8_lod0",
+							"plant9_lod0",
+							"plant10_lod0",
+							"plant11_lod0",
+							"plant12_lod0",
+						]
+					},
+					{
+						_class = "LODGroup"
+						switch_threshold = 25.0
+						meshes = 
+						[
+							"pot_lod1",
+							"dirt_lod1",
+							"plant1_lod1",
+							"plant2_lod1",
+							"plant3_lod1",
+							"plant4_lod1",
+							"plant5_lod1",
+							"plant6_lod1",
+							"plant7_lod1",
+							"plant8_lod1",
+							"plant9_lod1",
+							"plant10_lod1",
+							"plant11_lod1",
+							"plant12_lod1",
+						]
+					},
+				]
+			},
+			{
+				_class = "BodyGroupList"
+				children = 
+				[
+					{
+						_class = "BodyGroup"
+						name = "base"
+						children = 
+						[
+							{
+								_class = "BodyGroupChoice"
+								meshes = 
+								[
+									"pot_lod0",
+									"pot_lod1",
+								]
+							},
+						]
+						hidden_in_tools = false
+					},
+					{
+						_class = "BodyGroup"
+						name = "dirt"
+						children = 
+						[
+							{
+								_class = "BodyGroupChoice"
+								meshes = [  ]
+							},
+							{
+								_class = "BodyGroupChoice"
+								meshes = 
+								[
+									"dirt_lod0",
+									"dirt_lod1",
+								]
+							},
+						]
+						hidden_in_tools = false
+					},
+					{
+						_class = "BodyGroup"
+						name = "plant1"
+						children = 
+						[
+							{
+								_class = "BodyGroupChoice"
+								meshes = [  ]
+							},
+							{
+								_class = "BodyGroupChoice"
+								meshes = 
+								[
+									"plant1_lod0",
+									"plant1_lod1",
+								]
+							},
+						]
+						hidden_in_tools = false
+					},
+					{
+						_class = "BodyGroup"
+						name = "plant2"
+						children = 
+						[
+							{
+								_class = "BodyGroupChoice"
+								meshes = [  ]
+							},
+							{
+								_class = "BodyGroupChoice"
+								meshes = 
+								[
+									"plant2_lod0",
+									"plant2_lod1",
+								]
+							},
+						]
+						hidden_in_tools = false
+					},
+					{
+						_class = "BodyGroup"
+						name = "plant3"
+						children = 
+						[
+							{
+								_class = "BodyGroupChoice"
+								meshes = [  ]
+							},
+							{
+								_class = "BodyGroupChoice"
+								meshes = 
+								[
+									"plant3_lod0",
+									"plant3_lod1",
+								]
+							},
+						]
+						hidden_in_tools = false
+					},
+					{
+						_class = "BodyGroup"
+						name = "plant4"
+						children = 
+						[
+							{
+								_class = "BodyGroupChoice"
+								meshes = [  ]
+							},
+							{
+								_class = "BodyGroupChoice"
+								meshes = 
+								[
+									"plant4_lod0",
+									"plant4_lod1",
+								]
+							},
+						]
+						hidden_in_tools = false
+					},
+					{
+						_class = "BodyGroup"
+						name = "plant5"
+						children = 
+						[
+							{
+								_class = "BodyGroupChoice"
+								meshes = [  ]
+							},
+							{
+								_class = "BodyGroupChoice"
+								meshes = 
+								[
+									"plant5_lod0",
+									"plant5_lod1",
+								]
+							},
+						]
+						hidden_in_tools = false
+					},
+					{
+						_class = "BodyGroup"
+						name = "plant6"
+						children = 
+						[
+							{
+								_class = "BodyGroupChoice"
+								meshes = [  ]
+							},
+							{
+								_class = "BodyGroupChoice"
+								meshes = 
+								[
+									"plant6_lod0",
+									"plant6_lod1",
+								]
+							},
+						]
+						hidden_in_tools = false
+					},
+					{
+						_class = "BodyGroup"
+						name = "plant7"
+						children = 
+						[
+							{
+								_class = "BodyGroupChoice"
+								meshes = [  ]
+							},
+							{
+								_class = "BodyGroupChoice"
+								meshes = 
+								[
+									"plant7_lod0",
+									"plant7_lod1",
+								]
+							},
+						]
+						hidden_in_tools = false
+					},
+					{
+						_class = "BodyGroup"
+						name = "plant8"
+						children = 
+						[
+							{
+								_class = "BodyGroupChoice"
+								meshes = [  ]
+							},
+							{
+								_class = "BodyGroupChoice"
+								meshes = 
+								[
+									"plant8_lod0",
+									"plant8_lod1",
+								]
+							},
+						]
+						hidden_in_tools = false
+					},
+					{
+						_class = "BodyGroup"
+						name = "plant9"
+						children = 
+						[
+							{
+								_class = "BodyGroupChoice"
+								meshes = [  ]
+							},
+							{
+								_class = "BodyGroupChoice"
+								meshes = 
+								[
+									"plant9_lod0",
+									"plant9_lod1",
+								]
+							},
+						]
+						hidden_in_tools = false
+					},
+					{
+						_class = "BodyGroup"
+						name = "plant10"
+						children = 
+						[
+							{
+								_class = "BodyGroupChoice"
+								meshes = [  ]
+							},
+							{
+								_class = "BodyGroupChoice"
+								meshes = 
+								[
+									"plant10_lod0",
+									"plant10_lod1",
+								]
+							},
+						]
+						hidden_in_tools = false
+					},
+					{
+						_class = "BodyGroup"
+						name = "plant11"
+						children = 
+						[
+							{
+								_class = "BodyGroupChoice"
+								meshes = [  ]
+							},
+							{
+								_class = "BodyGroupChoice"
+								meshes = 
+								[
+									"plant11_lod0",
+									"plant11_lod1",
+								]
+							},
+						]
+						hidden_in_tools = false
+					},
+					{
+						_class = "BodyGroup"
+						name = "plant12"
+						children = 
+						[
+							{
+								_class = "BodyGroupChoice"
+								meshes = [  ]
+							},
+							{
+								_class = "BodyGroupChoice"
+								meshes = 
+								[
+									"plant12_lod0",
+									"plant12_lod1",
+								]
+							},
+						]
+						hidden_in_tools = false
+					},
+				]
+			},
+			{
+				_class = "MaterialGroupList"
+				children = 
+				[
+					{
+						_class = "DefaultMaterialGroup"
+						remaps = 
+						[
+							{
+								from = "bud01.vmat"
+								to = "models/props/weed_pot/textures/bud01.vmat"
+							},
+							{
+								from = "dirt.vmat"
+								to = "materials/ground_soil_01.vmat"
+							},
+							{
+								from = "leaf01_big.vmat"
+								to = "models/props/weed_pot/textures/leaf01_big.vmat"
+							},
+							{
+								from = "leaf01_small.vmat"
+								to = "models/props/weed_pot/textures/leaf01_small.vmat"
+							},
+							{
+								from = "pot.vmat"
+								to = "models/props/texture_shared/pot.vmat"
+							},
+							{
+								from = "stem01.vmat"
+								to = "models/props/weed_pot/textures/stem01.vmat"
+							},
+							{
+								from = "threats01.vmat"
+								to = "models/props/weed_pot/textures/threats01.vmat"
+							},
+						]
+						use_global_default = false
+						global_default_material = ""
+					},
+					{
+						_class = "MaterialGroup"
+						name = "purple"
+						remaps = 
+						[
+							{
+								from = "models/props/weed_pot/textures/leaf01_small.vmat"
+								to = "models/props/weed_pot/textures/leaf02_small.vmat"
+							},
+							{
+								from = "models/props/weed_pot/textures/leaf01_big.vmat"
+								to = "models/props/weed_pot/textures/leaf02_big.vmat"
+							},
+							{
+								from = "models/props/weed_pot/textures/stem01.vmat"
+								to = "models/props/weed_pot/textures/stem02.vmat"
+							},
+							{
+								from = "models/props/weed_pot/textures/bud01.vmat"
+								to = "models/props/weed_pot/textures/bud02.vmat"
+							},
+							{
+								from = "models/props/weed_pot/textures/threats01.vmat"
+								to = "models/props/weed_pot/textures/threats02.vmat"
+							},
+						]
+					},
+				]
+			},
+			{
+				_class = "PhysicsShapeList"
+				children = 
+				[
+					{
+						_class = "PhysicsShapeCylinder"
+						parent_bone = ""
+						surface_prop = "plastic"
+						collision_tags = "solid"
+						radius = 15.372094
+						point0 = [ 0.0, 0.0, 0.0 ]
+						point1 = [ 0.0, 0.0, 24.225286 ]
+					},
+				]
+			},
+			{
+				_class = "RenderMeshList"
+				children = 
+				[
+					{
+						_class = "RenderMeshFile"
+						name = "pot_lod0"
+						filename = "models/props/weed_pot/source/weed_pot.fbx"
+						import_translation = [ 0.0, 0.0, 0.0 ]
+						import_rotation = [ 0.0, 0.0, 0.0 ]
+						import_scale = 1.0
+						align_origin_x_type = "None"
+						align_origin_y_type = "None"
+						align_origin_z_type = "None"
+						parent_bone = ""
+						import_filter = 
+						{
+							exclude_by_default = true
+							exception_list = 
+							[
+								"pot",
+							]
+						}
+					},
+					{
+						_class = "RenderMeshFile"
+						name = "pot_lod1"
+						filename = "models/props/weed_pot/source/weed_pot.fbx"
+						import_translation = [ 0.0, 0.0, 0.0 ]
+						import_rotation = [ 0.0, 0.0, 0.0 ]
+						import_scale = 1.0
+						align_origin_x_type = "None"
+						align_origin_y_type = "None"
+						align_origin_z_type = "None"
+						parent_bone = ""
+						import_filter = 
+						{
+							exclude_by_default = true
+							exception_list = 
+							[
+								"pot_lod1",
+							]
+						}
+					},
+					{
+						_class = "RenderMeshFile"
+						name = "dirt_lod0"
+						filename = "models/props/weed_pot/source/weed_pot.fbx"
+						import_translation = [ 0.0, 0.0, 0.0 ]
+						import_rotation = [ 0.0, 0.0, 0.0 ]
+						import_scale = 1.0
+						align_origin_x_type = "None"
+						align_origin_y_type = "None"
+						align_origin_z_type = "None"
+						parent_bone = ""
+						import_filter = 
+						{
+							exclude_by_default = true
+							exception_list = 
+							[
+								"dirt",
+							]
+						}
+					},
+					{
+						_class = "RenderMeshFile"
+						name = "dirt_lod1"
+						filename = "models/props/weed_pot/source/weed_pot.fbx"
+						import_translation = [ 0.0, 0.0, 0.0 ]
+						import_rotation = [ 0.0, 0.0, 0.0 ]
+						import_scale = 1.0
+						align_origin_x_type = "None"
+						align_origin_y_type = "None"
+						align_origin_z_type = "None"
+						parent_bone = ""
+						import_filter = 
+						{
+							exclude_by_default = true
+							exception_list = 
+							[
+								"dirt_lod1",
+							]
+						}
+					},
+					{
+						_class = "RenderMeshFile"
+						name = "plant1_lod0"
+						filename = "models/props/weed_pot/source/weed_pot.fbx"
+						import_translation = [ 0.0, 0.0, 0.0 ]
+						import_rotation = [ 0.0, 0.0, 0.0 ]
+						import_scale = 1.0
+						align_origin_x_type = "None"
+						align_origin_y_type = "None"
+						align_origin_z_type = "None"
+						parent_bone = ""
+						import_filter = 
+						{
+							exclude_by_default = true
+							exception_list = 
+							[
+								"1",
+							]
+						}
+					},
+					{
+						_class = "RenderMeshFile"
+						name = "plant1_lod1"
+						filename = "models/props/weed_pot/source/weed_pot.fbx"
+						import_translation = [ 0.0, 0.0, 0.0 ]
+						import_rotation = [ 0.0, 0.0, 0.0 ]
+						import_scale = 1.0
+						align_origin_x_type = "None"
+						align_origin_y_type = "None"
+						align_origin_z_type = "None"
+						parent_bone = ""
+						import_filter = 
+						{
+							exclude_by_default = true
+							exception_list = 
+							[
+								"1",
+							]
+						}
+					},
+					{
+						_class = "RenderMeshFile"
+						name = "plant2_lod0"
+						filename = "models/props/weed_pot/source/weed_pot.fbx"
+						import_translation = [ 0.0, 0.0, 0.0 ]
+						import_rotation = [ 0.0, 0.0, 0.0 ]
+						import_scale = 1.0
+						align_origin_x_type = "None"
+						align_origin_y_type = "None"
+						align_origin_z_type = "None"
+						parent_bone = ""
+						import_filter = 
+						{
+							exclude_by_default = true
+							exception_list = 
+							[
+								"2",
+							]
+						}
+					},
+					{
+						_class = "RenderMeshFile"
+						name = "plant2_lod1"
+						filename = "models/props/weed_pot/source/weed_pot.fbx"
+						import_translation = [ 0.0, 0.0, 0.0 ]
+						import_rotation = [ 0.0, 0.0, 0.0 ]
+						import_scale = 1.0
+						align_origin_x_type = "None"
+						align_origin_y_type = "None"
+						align_origin_z_type = "None"
+						parent_bone = ""
+						import_filter = 
+						{
+							exclude_by_default = true
+							exception_list = 
+							[
+								"2_lod1",
+							]
+						}
+					},
+					{
+						_class = "RenderMeshFile"
+						name = "plant3_lod0"
+						filename = "models/props/weed_pot/source/weed_pot.fbx"
+						import_translation = [ 0.0, 0.0, 0.0 ]
+						import_rotation = [ 0.0, 0.0, 0.0 ]
+						import_scale = 1.0
+						align_origin_x_type = "None"
+						align_origin_y_type = "None"
+						align_origin_z_type = "None"
+						parent_bone = ""
+						import_filter = 
+						{
+							exclude_by_default = true
+							exception_list = 
+							[
+								"3",
+							]
+						}
+					},
+					{
+						_class = "RenderMeshFile"
+						name = "plant3_lod1"
+						filename = "models/props/weed_pot/source/weed_pot.fbx"
+						import_translation = [ 0.0, 0.0, 0.0 ]
+						import_rotation = [ 0.0, 0.0, 0.0 ]
+						import_scale = 1.0
+						align_origin_x_type = "None"
+						align_origin_y_type = "None"
+						align_origin_z_type = "None"
+						parent_bone = ""
+						import_filter = 
+						{
+							exclude_by_default = true
+							exception_list = 
+							[
+								"3_lod1",
+							]
+						}
+					},
+					{
+						_class = "RenderMeshFile"
+						name = "plant4_lod0"
+						filename = "models/props/weed_pot/source/weed_pot.fbx"
+						import_translation = [ 0.0, 0.0, 0.0 ]
+						import_rotation = [ 0.0, 0.0, 0.0 ]
+						import_scale = 1.0
+						align_origin_x_type = "None"
+						align_origin_y_type = "None"
+						align_origin_z_type = "None"
+						parent_bone = ""
+						import_filter = 
+						{
+							exclude_by_default = true
+							exception_list = 
+							[
+								"4",
+							]
+						}
+					},
+					{
+						_class = "RenderMeshFile"
+						name = "plant4_lod1"
+						filename = "models/props/weed_pot/source/weed_pot.fbx"
+						import_translation = [ 0.0, 0.0, 0.0 ]
+						import_rotation = [ 0.0, 0.0, 0.0 ]
+						import_scale = 1.0
+						align_origin_x_type = "None"
+						align_origin_y_type = "None"
+						align_origin_z_type = "None"
+						parent_bone = ""
+						import_filter = 
+						{
+							exclude_by_default = true
+							exception_list = 
+							[
+								"4_lod1",
+							]
+						}
+					},
+					{
+						_class = "RenderMeshFile"
+						name = "plant5_lod0"
+						filename = "models/props/weed_pot/source/weed_pot.fbx"
+						import_translation = [ 0.0, 0.0, 0.0 ]
+						import_rotation = [ 0.0, 0.0, 0.0 ]
+						import_scale = 1.0
+						align_origin_x_type = "None"
+						align_origin_y_type = "None"
+						align_origin_z_type = "None"
+						parent_bone = ""
+						import_filter = 
+						{
+							exclude_by_default = true
+							exception_list = 
+							[
+								"5",
+							]
+						}
+					},
+					{
+						_class = "RenderMeshFile"
+						name = "plant5_lod1"
+						filename = "models/props/weed_pot/source/weed_pot.fbx"
+						import_translation = [ 0.0, 0.0, 0.0 ]
+						import_rotation = [ 0.0, 0.0, 0.0 ]
+						import_scale = 1.0
+						align_origin_x_type = "None"
+						align_origin_y_type = "None"
+						align_origin_z_type = "None"
+						parent_bone = ""
+						import_filter = 
+						{
+							exclude_by_default = true
+							exception_list = 
+							[
+								"5_lod1",
+							]
+						}
+					},
+					{
+						_class = "RenderMeshFile"
+						name = "plant6_lod0"
+						filename = "models/props/weed_pot/source/weed_pot.fbx"
+						import_translation = [ 0.0, 0.0, 0.0 ]
+						import_rotation = [ 0.0, 0.0, 0.0 ]
+						import_scale = 1.0
+						align_origin_x_type = "None"
+						align_origin_y_type = "None"
+						align_origin_z_type = "None"
+						parent_bone = ""
+						import_filter = 
+						{
+							exclude_by_default = true
+							exception_list = 
+							[
+								"6",
+							]
+						}
+					},
+					{
+						_class = "RenderMeshFile"
+						name = "plant6_lod1"
+						filename = "models/props/weed_pot/source/weed_pot.fbx"
+						import_translation = [ 0.0, 0.0, 0.0 ]
+						import_rotation = [ 0.0, 0.0, 0.0 ]
+						import_scale = 1.0
+						align_origin_x_type = "None"
+						align_origin_y_type = "None"
+						align_origin_z_type = "None"
+						parent_bone = ""
+						import_filter = 
+						{
+							exclude_by_default = true
+							exception_list = 
+							[
+								"6_lod1",
+							]
+						}
+					},
+					{
+						_class = "RenderMeshFile"
+						name = "plant7_lod0"
+						filename = "models/props/weed_pot/source/weed_pot.fbx"
+						import_translation = [ 0.0, 0.0, 0.0 ]
+						import_rotation = [ 0.0, 0.0, 0.0 ]
+						import_scale = 1.0
+						align_origin_x_type = "None"
+						align_origin_y_type = "None"
+						align_origin_z_type = "None"
+						parent_bone = ""
+						import_filter = 
+						{
+							exclude_by_default = true
+							exception_list = 
+							[
+								"7",
+							]
+						}
+					},
+					{
+						_class = "RenderMeshFile"
+						name = "plant7_lod1"
+						filename = "models/props/weed_pot/source/weed_pot.fbx"
+						import_translation = [ 0.0, 0.0, 0.0 ]
+						import_rotation = [ 0.0, 0.0, 0.0 ]
+						import_scale = 1.0
+						align_origin_x_type = "None"
+						align_origin_y_type = "None"
+						align_origin_z_type = "None"
+						parent_bone = ""
+						import_filter = 
+						{
+							exclude_by_default = true
+							exception_list = 
+							[
+								"7_lod1",
+							]
+						}
+					},
+					{
+						_class = "RenderMeshFile"
+						name = "plant8_lod0"
+						filename = "models/props/weed_pot/source/weed_pot.fbx"
+						import_translation = [ 0.0, 0.0, 0.0 ]
+						import_rotation = [ 0.0, 0.0, 0.0 ]
+						import_scale = 1.0
+						align_origin_x_type = "None"
+						align_origin_y_type = "None"
+						align_origin_z_type = "None"
+						parent_bone = ""
+						import_filter = 
+						{
+							exclude_by_default = true
+							exception_list = 
+							[
+								"8",
+							]
+						}
+					},
+					{
+						_class = "RenderMeshFile"
+						name = "plant8_lod1"
+						filename = "models/props/weed_pot/source/weed_pot.fbx"
+						import_translation = [ 0.0, 0.0, 0.0 ]
+						import_rotation = [ 0.0, 0.0, 0.0 ]
+						import_scale = 1.0
+						align_origin_x_type = "None"
+						align_origin_y_type = "None"
+						align_origin_z_type = "None"
+						parent_bone = ""
+						import_filter = 
+						{
+							exclude_by_default = true
+							exception_list = 
+							[
+								"8_lod1",
+							]
+						}
+					},
+					{
+						_class = "RenderMeshFile"
+						name = "plant9_lod0"
+						filename = "models/props/weed_pot/source/weed_pot.fbx"
+						import_translation = [ 0.0, 0.0, 0.0 ]
+						import_rotation = [ 0.0, 0.0, 0.0 ]
+						import_scale = 1.0
+						align_origin_x_type = "None"
+						align_origin_y_type = "None"
+						align_origin_z_type = "None"
+						parent_bone = ""
+						import_filter = 
+						{
+							exclude_by_default = true
+							exception_list = 
+							[
+								"9",
+							]
+						}
+					},
+					{
+						_class = "RenderMeshFile"
+						name = "plant9_lod1"
+						filename = "models/props/weed_pot/source/weed_pot.fbx"
+						import_translation = [ 0.0, 0.0, 0.0 ]
+						import_rotation = [ 0.0, 0.0, 0.0 ]
+						import_scale = 1.0
+						align_origin_x_type = "None"
+						align_origin_y_type = "None"
+						align_origin_z_type = "None"
+						parent_bone = ""
+						import_filter = 
+						{
+							exclude_by_default = true
+							exception_list = 
+							[
+								"9_lod1",
+							]
+						}
+					},
+					{
+						_class = "RenderMeshFile"
+						name = "plant10_lod0"
+						filename = "models/props/weed_pot/source/weed_pot.fbx"
+						import_translation = [ 0.0, 0.0, 0.0 ]
+						import_rotation = [ 0.0, 0.0, 0.0 ]
+						import_scale = 1.0
+						align_origin_x_type = "None"
+						align_origin_y_type = "None"
+						align_origin_z_type = "None"
+						parent_bone = ""
+						import_filter = 
+						{
+							exclude_by_default = true
+							exception_list = 
+							[
+								"10",
+							]
+						}
+					},
+					{
+						_class = "RenderMeshFile"
+						name = "plant10_lod1"
+						filename = "models/props/weed_pot/source/weed_pot.fbx"
+						import_translation = [ 0.0, 0.0, 0.0 ]
+						import_rotation = [ 0.0, 0.0, 0.0 ]
+						import_scale = 1.0
+						align_origin_x_type = "None"
+						align_origin_y_type = "None"
+						align_origin_z_type = "None"
+						parent_bone = ""
+						import_filter = 
+						{
+							exclude_by_default = true
+							exception_list = 
+							[
+								"10_lod1",
+							]
+						}
+					},
+					{
+						_class = "RenderMeshFile"
+						name = "plant11_lod0"
+						filename = "models/props/weed_pot/source/weed_pot.fbx"
+						import_translation = [ 0.0, 0.0, 0.0 ]
+						import_rotation = [ 0.0, 0.0, 0.0 ]
+						import_scale = 1.0
+						align_origin_x_type = "None"
+						align_origin_y_type = "None"
+						align_origin_z_type = "None"
+						parent_bone = ""
+						import_filter = 
+						{
+							exclude_by_default = true
+							exception_list = 
+							[
+								"11",
+							]
+						}
+					},
+					{
+						_class = "RenderMeshFile"
+						name = "plant11_lod1"
+						filename = "models/props/weed_pot/source/weed_pot.fbx"
+						import_translation = [ 0.0, 0.0, 0.0 ]
+						import_rotation = [ 0.0, 0.0, 0.0 ]
+						import_scale = 1.0
+						align_origin_x_type = "None"
+						align_origin_y_type = "None"
+						align_origin_z_type = "None"
+						parent_bone = ""
+						import_filter = 
+						{
+							exclude_by_default = true
+							exception_list = 
+							[
+								"11_lod1",
+							]
+						}
+					},
+					{
+						_class = "RenderMeshFile"
+						name = "plant12_lod0"
+						filename = "models/props/weed_pot/source/weed_pot.fbx"
+						import_translation = [ 0.0, 0.0, 0.0 ]
+						import_rotation = [ 0.0, 0.0, 0.0 ]
+						import_scale = 1.0
+						align_origin_x_type = "None"
+						align_origin_y_type = "None"
+						align_origin_z_type = "None"
+						parent_bone = ""
+						import_filter = 
+						{
+							exclude_by_default = true
+							exception_list = 
+							[
+								"12",
+							]
+						}
+					},
+					{
+						_class = "RenderMeshFile"
+						name = "plant12_lod1"
+						filename = "models/props/weed_pot/source/weed_pot.fbx"
+						import_translation = [ 0.0, 0.0, 0.0 ]
+						import_rotation = [ 0.0, 0.0, 0.0 ]
+						import_scale = 1.0
+						align_origin_x_type = "None"
+						align_origin_y_type = "None"
+						align_origin_z_type = "None"
+						parent_bone = ""
+						import_filter = 
+						{
+							exclude_by_default = true
+							exception_list = 
+							[
+								"12_lod1",
+							]
+						}
+					},
+				]
+			},
+		]
+		model_archetype = ""
+		primary_associated_entity = ""
+		anim_graph_name = ""
+		base_model_name = ""
+	}
+}

@@ -1,0 +1,599 @@
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:modeldoc29:version{3cec427c-1b0e-4d48-a90a-0436f33a6041} -->
+{
+	rootNode = 
+	{
+		_class = "RootNode"
+		children = 
+		[
+			{
+				_class = "AnimConstraintList"
+				children = 
+				[
+					{
+						_class = "Prefab"
+						target_file = "models/citizen_human/prefabs/human_animconstraintlist.vmdl_prefab"
+					},
+					{
+						_class = "Folder"
+						name = "CopyPinky"
+						note = "Citizen animations don\'t have a fifth finger, so let\'s copy the ring onto the pinky during this transition period"
+						children = 
+						[
+							{
+								_class = "AnimConstraintOrient"
+								children = 
+								[
+									{
+										_class = "AnimConstraintBoneInput"
+										parent_bone = "finger_ring_0_R"
+										relative_origin = [ 0.0, 0.0, 0.0 ]
+										relative_angles = [ 0.0, 0.0, 0.0 ]
+										weight = 1.0
+									},
+									{
+										_class = "AnimConstraintSlave"
+										parent_bone = "finger_pinky_0_R"
+										relative_origin = [ 0.0, 0.0, 0.0 ]
+										relative_angles = [ 0.0, 0.0, 0.0 ]
+										weight = 1.0
+									},
+								]
+							},
+							{
+								_class = "AnimConstraintOrient"
+								children = 
+								[
+									{
+										_class = "AnimConstraintBoneInput"
+										parent_bone = "finger_ring_1_R"
+										relative_origin = [ 0.0, 0.0, 0.0 ]
+										relative_angles = [ 0.0, 0.0, 0.0 ]
+										weight = 1.0
+									},
+									{
+										_class = "AnimConstraintSlave"
+										parent_bone = "finger_pinky_1_R"
+										relative_origin = [ 0.0, 0.0, 0.0 ]
+										relative_angles = [ 0.0, 0.0, 0.0 ]
+										weight = 1.0
+									},
+								]
+							},
+							{
+								_class = "AnimConstraintOrient"
+								children = 
+								[
+									{
+										_class = "AnimConstraintBoneInput"
+										parent_bone = "finger_ring_2_R"
+										relative_origin = [ 0.0, 0.0, 0.0 ]
+										relative_angles = [ 0.0, 0.0, 0.0 ]
+										weight = 1.0
+									},
+									{
+										_class = "AnimConstraintSlave"
+										parent_bone = "finger_pinky_2_R"
+										relative_origin = [ 0.0, 0.0, 0.0 ]
+										relative_angles = [ 0.0, 0.0, 0.0 ]
+										weight = 1.0
+									},
+								]
+							},
+							{
+								_class = "AnimConstraintOrient"
+								children = 
+								[
+									{
+										_class = "AnimConstraintBoneInput"
+										parent_bone = "finger_ring_0_L"
+										relative_origin = [ 0.0, 0.0, 0.0 ]
+										relative_angles = [ 0.0, 0.0, 0.0 ]
+										weight = 1.0
+									},
+									{
+										_class = "AnimConstraintSlave"
+										parent_bone = "finger_pinky_0_L"
+										relative_origin = [ 0.0, 0.0, 0.0 ]
+										relative_angles = [ 0.0, 0.0, 0.0 ]
+										weight = 1.0
+									},
+								]
+							},
+							{
+								_class = "AnimConstraintOrient"
+								children = 
+								[
+									{
+										_class = "AnimConstraintBoneInput"
+										parent_bone = "finger_ring_1_L"
+										relative_origin = [ 0.0, 0.0, 0.0 ]
+										relative_angles = [ 0.0, 0.0, 0.0 ]
+										weight = 1.0
+									},
+									{
+										_class = "AnimConstraintSlave"
+										parent_bone = "finger_pinky_1_L"
+										relative_origin = [ 0.0, 0.0, 0.0 ]
+										relative_angles = [ 0.0, 0.0, 0.0 ]
+										weight = 1.0
+									},
+								]
+							},
+							{
+								_class = "AnimConstraintOrient"
+								children = 
+								[
+									{
+										_class = "AnimConstraintBoneInput"
+										parent_bone = "finger_ring_2_L"
+										relative_origin = [ 0.0, 0.0, 0.0 ]
+										relative_angles = [ 0.0, 0.0, 0.0 ]
+										weight = 1.0
+									},
+									{
+										_class = "AnimConstraintSlave"
+										parent_bone = "finger_pinky_2_L"
+										relative_origin = [ 0.0, 0.0, 0.0 ]
+										relative_angles = [ 0.0, 0.0, 0.0 ]
+										weight = 1.0
+									},
+								]
+							},
+						]
+					},
+				]
+			},
+			{
+				_class = "ModelModifierList"
+				children = 
+				[
+					{
+						_class = "ModelModifier_ScaleAndMirror"
+						note = "We\'re working in centimeters at the source (which makes more sense for us), and then letting the engine take care of the conversion to inches at this step. So if you want to create something for the Humans (like clothing), you should also model it in centimeters (matching the provided source files), and use a ScaleAndMirror modifier at 0.3937."
+						scale = 0.3937
+						mirror_x = false
+						mirror_y = false
+						mirror_z = false
+						flip_bone_forward = false
+						swap_left_and_right_bones = false
+					},
+				]
+			},
+			{
+				_class = "MaterialGroupList"
+				children = 
+				[
+					{
+						_class = "DefaultMaterialGroup"
+						remaps = 
+						[
+							{
+								from = "m_playermodelhead.vmat"
+								to = "models/citizen_human/heads/citizen_human_femalehead01/citizen_human_femalehead01.vmat"
+							},
+							{
+								from = "female_body.vmat"
+								to = "models/citizen_human/bodies/female/female_body_mode_dark.vmat"
+							},
+							{
+								from = "m_playermodeleyes.vmat"
+								to = "models/citizen_human/heads/citizen_human_malehead01/eyes_dark.vmat"
+							},
+							{
+								from = "m_playermodelmouth.vmat"
+								to = "models/citizen_human/heads/citizen_human_malehead01/mouth.vmat"
+							},
+							{
+								from = "underwear.vmat"
+								to = "models/citizen_human/bodies/underwear.vmat"
+							},
+							{
+								from = "m_playermodelhead02.vmat"
+								to = "models/citizen_human/heads/citizen_human_femalehead02/citizen_human_femalehead02.vmat"
+							},
+						]
+						use_global_default = false
+						global_default_material = "models/citizen_human/bodies/male/body_mode_dark.vmat"
+					},
+					{
+						_class = "MaterialGroup"
+						name = "skin_dark"
+						remaps = 
+						[
+							{
+								from = "models/citizen_human/heads/citizen_human_malehead01/eyes_dark.vmat"
+								to = "models/citizen_human/heads/citizen_human_malehead01/eyes_dark.vmat"
+							},
+						]
+					},
+					{
+						_class = "MaterialGroup"
+						name = "skin_light"
+						remaps = 
+						[
+							{
+								from = "models/citizen_human/heads/citizen_human_malehead01/eyes_dark.vmat"
+								to = "models/citizen_human/heads/citizen_human_malehead01/eyes_light.vmat"
+							},
+							{
+								from = "models/citizen_human/bodies/female/female_body_mode_dark.vmat"
+								to = "models/citizen_human/bodies/female/female_body_mode_light.vmat"
+							},
+						]
+					},
+				]
+			},
+			{
+				_class = "RenderMeshList"
+				children = 
+				[
+					{
+						_class = "RenderMeshFile"
+						name = "chest"
+						filename = "models/citizen_human/bodies/female/citizen_human_body_female.fbx"
+						import_translation = [ 0.0, 0.0, 0.0 ]
+						import_rotation = [ 0.0, 0.0, 0.0 ]
+						import_scale = 1.0
+						align_origin_x_type = "None"
+						align_origin_y_type = "None"
+						align_origin_z_type = "None"
+						parent_bone = ""
+						import_filter = 
+						{
+							exclude_by_default = true
+							exception_list = 
+							[
+								"human_female_chest",
+								"human_female_underwear_chest",
+							]
+						}
+					},
+					{
+						_class = "RenderMeshFile"
+						name = "hands"
+						filename = "models/citizen_human/bodies/female/citizen_human_body_female.fbx"
+						import_translation = [ 0.0, 0.0, 0.0 ]
+						import_rotation = [ 0.0, 0.0, 0.0 ]
+						import_scale = 1.0
+						align_origin_x_type = "None"
+						align_origin_y_type = "None"
+						align_origin_z_type = "None"
+						parent_bone = ""
+						import_filter = 
+						{
+							exclude_by_default = false
+							exception_list = 
+							[
+								"human_female_feet",
+								"human_female_chest",
+								"human_female_legs",
+								"human_female_underwear_pants",
+								"human_female_underwear_chest",
+							]
+						}
+					},
+					{
+						_class = "RenderMeshFile"
+						name = "legs"
+						filename = "models/citizen_human/bodies/female/citizen_human_body_female.fbx"
+						import_translation = [ 0.0, 0.0, 0.0 ]
+						import_rotation = [ 0.0, 0.0, 0.0 ]
+						import_scale = 1.0
+						align_origin_x_type = "None"
+						align_origin_y_type = "None"
+						align_origin_z_type = "None"
+						parent_bone = ""
+						import_filter = 
+						{
+							exclude_by_default = false
+							exception_list = 
+							[
+								"human_female_hands",
+								"human_female_feet",
+								"human_female_chest",
+								"human_female_underwear_chest",
+							]
+						}
+					},
+					{
+						_class = "RenderMeshFile"
+						name = "feet"
+						filename = "models/citizen_human/bodies/female/citizen_human_body_female.fbx"
+						import_translation = [ 0.0, 0.0, 0.0 ]
+						import_rotation = [ 0.0, 0.0, 0.0 ]
+						import_scale = 1.0
+						align_origin_x_type = "None"
+						align_origin_y_type = "None"
+						align_origin_z_type = "None"
+						parent_bone = ""
+						import_filter = 
+						{
+							exclude_by_default = false
+							exception_list = 
+							[
+								"human_female_hands",
+								"human_female_chest",
+								"human_female_legs",
+								"human_female_underwear_pants",
+								"human_female_underwear_chest",
+							]
+						}
+					},
+					{
+						_class = "RenderMeshFile"
+						name = "head_01"
+						filename = "models/citizen_human/heads/citizen_human_femalehead01/citizen_human_femalehead01.fbx"
+						import_translation = [ 0.0, 0.0, 0.0 ]
+						import_rotation = [ 0.0, 0.0, 0.0 ]
+						import_scale = 1.0
+						align_origin_x_type = "None"
+						align_origin_y_type = "None"
+						align_origin_z_type = "None"
+						parent_bone = ""
+						import_filter = 
+						{
+							exclude_by_default = false
+							exception_list = [  ]
+						}
+					},
+					{
+						_class = "RenderMeshFile"
+						name = "head_02"
+						filename = "models/citizen_human/heads/citizen_human_femalehead02/citizen_human_femalehead02.fbx"
+						import_translation = [ 0.0, 0.0, 0.0 ]
+						import_rotation = [ 0.0, 0.0, 0.0 ]
+						import_scale = 1.0
+						align_origin_x_type = "None"
+						align_origin_y_type = "None"
+						align_origin_z_type = "None"
+						parent_bone = ""
+						import_filter = 
+						{
+							exclude_by_default = true
+							exception_list = 
+							[
+								"FemaleModel_low",
+								"citizen_human_femalehead01",
+								"citizen_human_femalehead02",
+								"PlayerModelHeadBarbara_LOD0",
+								"PlayerModelHeadAmy_LOD0",
+							]
+						}
+					},
+					{
+						_class = "RenderMeshFile"
+						name = "eyes_01"
+						filename = "models/citizen_human/heads/citizen_human_femalehead01/citizen_human_femalehead01_eyes.fbx"
+						import_translation = [ 0.0, 0.0, 0.0 ]
+						import_rotation = [ 0.0, 0.0, 0.0 ]
+						import_scale = 1.0
+						align_origin_x_type = "None"
+						align_origin_y_type = "None"
+						align_origin_z_type = "None"
+						parent_bone = ""
+						import_filter = 
+						{
+							exclude_by_default = true
+							exception_list = 
+							[
+								"FemaleModel_low",
+								"citizen_human_femalehead01",
+								"PlayerEyesMale_Adam_LOD0",
+								"human_female_eyes_01",
+							]
+						}
+					},
+					{
+						_class = "RenderMeshFile"
+						name = "jaw_01"
+						filename = "models/citizen_human/heads/citizen_human_malehead01/citizen_human_malehead01_jaw.fbx"
+						import_translation = [ 0.0, 0.0, 0.0 ]
+						import_rotation = [ 0.0, 0.0, 0.0 ]
+						import_scale = 1.0
+						align_origin_x_type = "None"
+						align_origin_y_type = "None"
+						align_origin_z_type = "None"
+						parent_bone = ""
+						import_filter = 
+						{
+							exclude_by_default = true
+							exception_list = 
+							[
+								"FemaleModel_low",
+								"citizen_human_femalehead01",
+								"PlayerMouthMale_Adam_LOD0",
+								"human_female_jaw_01",
+							]
+						}
+					},
+					{
+						_class = "RenderMeshFile"
+						name = "eyes_02"
+						filename = "models/citizen_human/heads/citizen_human_femalehead01/citizen_human_femalehead01_eyes.fbx"
+						import_translation = [ 0.0, 0.0, 0.0 ]
+						import_rotation = [ 0.0, 0.0, 0.0 ]
+						import_scale = 1.0
+						align_origin_x_type = "None"
+						align_origin_y_type = "None"
+						align_origin_z_type = "None"
+						parent_bone = ""
+						import_filter = 
+						{
+							exclude_by_default = true
+							exception_list = 
+							[
+								"FemaleModel_low",
+								"citizen_human_femalehead01",
+								"PlayerEyesMale_Adam_LOD0",
+								"human_female_eyes_01",
+							]
+						}
+					},
+					{
+						_class = "RenderMeshFile"
+						name = "jaw_02"
+						filename = "models/citizen_human/heads/citizen_human_malehead01/citizen_human_malehead01_jaw.fbx"
+						import_translation = [ 0.0, 0.0, 0.0 ]
+						import_rotation = [ 0.0, 0.0, 0.0 ]
+						import_scale = 1.0
+						align_origin_x_type = "None"
+						align_origin_y_type = "None"
+						align_origin_z_type = "None"
+						parent_bone = ""
+						import_filter = 
+						{
+							exclude_by_default = true
+							exception_list = 
+							[
+								"FemaleModel_low",
+								"citizen_human_femalehead01",
+								"PlayerMouthMale_Adam_LOD0",
+								"human_female_jaw_01",
+							]
+						}
+					},
+				]
+			},
+			{
+				_class = "AnimationList"
+				children = 
+				[
+					{
+						_class = "Prefab"
+						target_file = "models/citizen_human/prefabs/human_animationlist.vmdl_prefab"
+					},
+					{
+						_class = "Prefab"
+						target_file = "models/citizen_human/prefabs/human_animationlist_debug.vmdl_prefab"
+					},
+					{
+						_class = "Prefab"
+						target_file = "models/citizen_human/prefabs/human_animationlist_menu.vmdl_prefab"
+					},
+				]
+				default_root_bone_name = "pelvis"
+			},
+			{
+				_class = "BoneMarkupList"
+				children = 
+				[
+					{
+						_class = "Prefab"
+						target_file = "models/citizen_human/prefabs/human_bonemarkuplist.vmdl_prefab"
+					},
+				]
+				bone_cull_type = "None"
+			},
+			{
+				_class = "AttachmentList"
+				children = 
+				[
+					{
+						_class = "Prefab"
+						target_file = "models/citizen_human/prefabs/human_attachmentlist.vmdl_prefab"
+					},
+				]
+			},
+			{
+				_class = "PhysicsJointList"
+				children = 
+				[
+					{
+						_class = "Prefab"
+						target_file = "models/citizen_human/prefabs/human_physicsjointlist.vmdl_prefab"
+					},
+				]
+			},
+			{
+				_class = "PhysicsShapeList"
+				children = 
+				[
+					{
+						_class = "Prefab"
+						target_file = "models/citizen_human/prefabs/human_physicsshapelist.vmdl_prefab"
+					},
+				]
+			},
+			{
+				_class = "HitboxSetList"
+				children = 
+				[
+					{
+						_class = "Prefab"
+						target_file = "models/citizen_human/prefabs/human_hitboxsetlist.vmdl_prefab"
+					},
+				]
+			},
+			{
+				_class = "IKData"
+				children = 
+				[
+					{
+						_class = "Prefab"
+						target_file = "models/citizen_human/prefabs/human_ikdata.vmdl_prefab"
+					},
+				]
+			},
+			{
+				_class = "PoseParamList"
+				children = 
+				[
+					{
+						_class = "Prefab"
+						name = "citizen_poseparamlist"
+						target_file = "models/citizen/prefabs/citizen_poseparamlist.vmdl_prefab"
+					},
+				]
+			},
+			{
+				_class = "WeightListList"
+				children = 
+				[
+					{
+						_class = "Prefab"
+						name = "Citizen_weightlists"
+						target_file = "models/citizen/prefabs/citizen_weightlistlist.vmdl_prefab"
+					},
+				]
+			},
+			{
+				_class = "GameDataList"
+				children = 
+				[
+					{
+						_class = "Prefab"
+						target_file = "models/citizen_human/prefabs/human_gamedatalist.vmdl_prefab"
+					},
+				]
+			},
+			{
+				_class = "ClothShapeList"
+				children = 
+				[
+					{
+						_class = "Prefab"
+						target_file = "models/citizen_human/prefabs/human_clothshapelist_lower.vmdl_prefab"
+					},
+					{
+						_class = "Prefab"
+						target_file = "models/citizen_human/prefabs/human_clothshapelist_upper.vmdl_prefab"
+					},
+				]
+			},
+			{
+				_class = "BodyGroupList"
+				children = 
+				[
+					{
+						_class = "Prefab"
+						target_file = "models/citizen_human/prefabs/human_bodygrouplist.vmdl_prefab"
+					},
+				]
+			},
+		]
+		model_archetype = ""
+		primary_associated_entity = ""
+		anim_graph_name = "models/citizen/citizen_human_f.vanmgrph"
+		base_model_name = ""
+	}
+}

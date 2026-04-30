@@ -1,0 +1,327 @@
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:modeldoc29:version{3cec427c-1b0e-4d48-a90a-0436f33a6041} -->
+{
+	rootNode = 
+	{
+		_class = "RootNode"
+		children = 
+		[
+			{
+				_class = "IKData"
+				children = 
+				[
+					{
+						_class = "IKRigBiped"
+						note = "Disabled due to causing sequence bound issues, and most likely being an outdated system that should not be used"
+						children = 
+						[
+							{
+								_class = "IKChainOld"
+								name = "right_leg_IKold"
+								children = 
+								[
+									{
+										_class = "IKRuleGround"
+										trace_height = 20.0
+										trace_radius = 2.5
+										z_spring_strength = 10.0
+										normal_spring_strength = 10.0
+									},
+								]
+								end_effector_bone = "ankle_R"
+								root_bone = ""
+								end_effector_target_bone = "foot_R_IK_target"
+								reverse_footlock_bone = "ball_R"
+								max_lock_distance_to_target = 5.0
+								footstep_footstep_sound_type = "Left"
+								footstep_sound = ""
+								footstep_attachment = ""
+								solver = "IKSOLVER_TwoBone"
+								hyperextension_release_dot_threshold = -0.984808
+								use_target_instead_of_lock_threshold = 1.0
+								break_restoration_time = 0.15
+								soften_time = 0.5
+								soften_percentage = 0.1
+							},
+							{
+								_class = "IKChainOld"
+								name = "left_leg_IKold"
+								children = 
+								[
+									{
+										_class = "IKRuleGround"
+										trace_height = 20.0
+										trace_radius = 2.5
+										z_spring_strength = 10.0
+										normal_spring_strength = 10.0
+									},
+								]
+								end_effector_bone = "ankle_L"
+								root_bone = ""
+								end_effector_target_bone = "foot_L_IK_target"
+								reverse_footlock_bone = "ball_L"
+								max_lock_distance_to_target = 5.0
+								footstep_footstep_sound_type = "Left"
+								footstep_sound = ""
+								footstep_attachment = ""
+								solver = "IKSOLVER_TwoBone"
+								hyperextension_release_dot_threshold = -0.984808
+								use_target_instead_of_lock_threshold = 1.0
+								break_restoration_time = 0.15
+								soften_time = 0.5
+								soften_percentage = 0.1
+							},
+							{
+								_class = "IKChainOld"
+								name = "right_arm_IKold"
+								end_effector_bone = "hand_R"
+								root_bone = ""
+								end_effector_target_bone = "hand_R_IK_target"
+								reverse_footlock_bone = ""
+								max_lock_distance_to_target = 6.0
+								footstep_footstep_sound_type = "Left"
+								footstep_sound = ""
+								footstep_attachment = ""
+								solver = "IKSOLVER_TwoBone"
+								hyperextension_release_dot_threshold = 0.937995
+								use_target_instead_of_lock_threshold = 0.01
+								break_restoration_time = 0.15
+								soften_time = 0.5
+								soften_percentage = 0.1
+							},
+							{
+								_class = "IKChainOld"
+								name = "left_arm_IKold"
+								end_effector_bone = "hand_L"
+								root_bone = ""
+								end_effector_target_bone = "hand_L_IK_target"
+								reverse_footlock_bone = ""
+								max_lock_distance_to_target = 6.0
+								footstep_footstep_sound_type = "Left"
+								footstep_sound = ""
+								footstep_attachment = ""
+								solver = "IKSOLVER_TwoBone"
+								hyperextension_release_dot_threshold = 0.937995
+								use_target_instead_of_lock_threshold = 0.01
+								break_restoration_time = 0.15
+								soften_time = 0.5
+								soften_percentage = 0.1
+							},
+						]
+						disabled = true
+						initial_master_blend_amount = 1.0
+						abs_origin_drop_height = 24.0
+						abs_origin_drop_height_spring_strength = 500.0
+						default_tilt_spring_strength = 5.0
+						tilt_bone = ""
+						animgraph_master_blend_parameter_name = ""
+						system = "IKSYSTEMTYPE_Animgraph"
+					},
+					{
+						_class = "IKChain"
+						name = "right_leg_IK"
+						children = 
+						[
+							{
+								_class = "IKChainJoint"
+								name = "leg_upper_R"
+								children = 
+								[
+									{
+										_class = "IKChainJoint"
+										name = "leg_lower_R"
+										children = 
+										[
+											{
+												_class = "IKChainJoint"
+												name = "ankle_R"
+												children = 
+												[
+													{
+														_class = "IKJointConstraint_Hinge"
+														constrained_joint = ""
+														hinge_axis = "Up"
+														min_radians = -2.094395
+														max_radians = 0.0
+													},
+												]
+												bone = "ankle_R"
+											},
+										]
+										bone = "leg_lower_R"
+									},
+								]
+								bone = "leg_upper_R"
+							},
+						]
+						m_bDoBonesOrientAlongPositiveX = true
+						"m_DefaultSolverSettings.m_nNumIterations" = 6
+						"m_DefaultSolverSettings.m_SolverType " = "IKSOLVER_TwoBone"
+						"m_DefaultTargetSettings.m_Bone" = 
+						{
+							m_Name = "foot_R_IK_target"
+						}
+						"m_DefaultTargetSettings.m_TargetSource" = "Bone"
+						"m_Data.m_DefaultTargetSettings.m_AnimgraphParameterNamePosition" = 
+						{
+							m_id = 4294967295
+						}
+						"m_Data.m_EndEffectorFixedOffsetAttachment" = 
+						{
+							m_Name = ""
+						}
+						"m_Data.m_bParentJointRequiresAlignment" = true
+					},
+					{
+						_class = "IKChain"
+						name = "left_leg_IK"
+						children = 
+						[
+							{
+								_class = "IKChainJoint"
+								name = "leg_upper_L"
+								children = 
+								[
+									{
+										_class = "IKChainJoint"
+										name = "leg_lower_L"
+										children = 
+										[
+											{
+												_class = "IKChainJoint"
+												name = "ankle_L"
+												children = 
+												[
+													{
+														_class = "IKJointConstraint_Hinge"
+														constrained_joint = ""
+														hinge_axis = "Up"
+														min_radians = -2.094395
+														max_radians = 0.0
+													},
+												]
+												bone = "ankle_L"
+											},
+										]
+										bone = "leg_lower_L"
+									},
+								]
+								bone = "leg_upper_L"
+							},
+						]
+						m_bDoBonesOrientAlongPositiveX = true
+						"m_DefaultSolverSettings.m_nNumIterations" = 6
+						"m_DefaultSolverSettings.m_SolverType " = "IKSOLVER_TwoBone"
+						"m_DefaultTargetSettings.m_Bone" = 
+						{
+							m_Name = "foot_L_IK_target"
+						}
+						"m_DefaultTargetSettings.m_TargetSource" = "Bone"
+						"m_Data.m_DefaultTargetSettings.m_AnimgraphParameterNamePosition" = 
+						{
+							m_id = 4294967295
+						}
+						"m_Data.m_EndEffectorFixedOffsetAttachment" = 
+						{
+							m_Name = ""
+						}
+						"m_Data.m_bParentJointRequiresAlignment" = true
+					},
+					{
+						_class = "IKChain"
+						name = "right_arm_IK"
+						children = 
+						[
+							{
+								_class = "IKChainJoint"
+								name = "arm_upper_R"
+								children = 
+								[
+									{
+										_class = "IKChainJoint"
+										name = "arm_lower_R1"
+										children = 
+										[
+											{
+												_class = "IKChainJoint"
+												name = "hand_R1"
+												bone = "hand_R"
+											},
+										]
+										bone = "arm_lower_R"
+									},
+								]
+								bone = "arm_upper_R"
+							},
+						]
+						m_bDoBonesOrientAlongPositiveX = true
+						"m_DefaultSolverSettings.m_nNumIterations" = 6
+						"m_DefaultSolverSettings.m_SolverType " = "IKSOLVER_TwoBone"
+						"m_DefaultTargetSettings.m_Bone" = 
+						{
+							m_Name = "hand_R_IK_target"
+						}
+						"m_DefaultTargetSettings.m_TargetSource" = "Bone"
+						"m_Data.m_DefaultTargetSettings.m_AnimgraphParameterNamePosition" = 
+						{
+							m_id = 4294967295
+						}
+						"m_Data.m_EndEffectorFixedOffsetAttachment" = 
+						{
+							m_Name = ""
+						}
+						"m_Data.m_bParentJointRequiresAlignment" = true
+					},
+					{
+						_class = "IKChain"
+						name = "left_arm_IK"
+						children = 
+						[
+							{
+								_class = "IKChainJoint"
+								name = "arm_upper_L"
+								children = 
+								[
+									{
+										_class = "IKChainJoint"
+										name = "arm_lower_L1"
+										children = 
+										[
+											{
+												_class = "IKChainJoint"
+												name = "hand_L1"
+												bone = "hand_L"
+											},
+										]
+										bone = "arm_lower_L"
+									},
+								]
+								bone = "arm_upper_L"
+							},
+						]
+						m_bDoBonesOrientAlongPositiveX = true
+						"m_DefaultSolverSettings.m_nNumIterations" = 6
+						"m_DefaultSolverSettings.m_SolverType " = "IKSOLVER_TwoBone"
+						"m_DefaultTargetSettings.m_Bone" = 
+						{
+							m_Name = "hand_L_IK_target"
+						}
+						"m_DefaultTargetSettings.m_TargetSource" = "Bone"
+						"m_Data.m_DefaultTargetSettings.m_AnimgraphParameterNamePosition" = 
+						{
+							m_id = 4294967295
+						}
+						"m_Data.m_EndEffectorFixedOffsetAttachment" = 
+						{
+							m_Name = ""
+						}
+						"m_Data.m_bParentJointRequiresAlignment" = true
+					},
+				]
+			},
+		]
+		model_archetype = ""
+		primary_associated_entity = ""
+		anim_graph_name = ""
+		base_model_name = ""
+	}
+}

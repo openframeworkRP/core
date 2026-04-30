@@ -1,0 +1,566 @@
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:modeldoc29:version{3cec427c-1b0e-4d48-a90a-0436f33a6041} -->
+{
+	rootNode = 
+	{
+		_class = "RootNode"
+		children = 
+		[
+			{
+				_class = "GameDataList"
+				children = 
+				[
+					{
+						_class = "Folder"
+						name = "AmbientOcclusion"
+						children = 
+						[
+							{
+								_class = "Folder"
+								name = "AO_Body"
+								children = 
+								[
+									{
+										_class = "GenericGameData"
+										name = "AO_pelvis"
+										disabled = true
+										game_class = "ao_proxy_capsule"
+										game_keys = 
+										{
+											bonename = "pelvis"
+											radius = 11.0
+											point0 = [ 3.5, 0.0, -5.6 ]
+											point1 = [ 3.5, 0.0, 5.6 ]
+										}
+									},
+									{
+										_class = "GenericGameData"
+										name = "AO_spine_1"
+										disabled = true
+										game_class = "ao_proxy_capsule"
+										game_keys = 
+										{
+											bonename = "spine_1"
+											radius = 15.0
+											point0 = [ -5.0, 1.0, 0.0 ]
+											point1 = [ 5.0, 0.0, 0.0 ]
+										}
+									},
+									{
+										_class = "GenericGameData"
+										name = "AO_spine_2"
+										disabled = true
+										game_class = "ao_proxy_capsule"
+										game_keys = 
+										{
+											bonename = "spine_2"
+											radius = 15.0
+											point0 = [ 0.0, 0.5, 0.0 ]
+											point1 = [ 6.15887, 0.807945, 0.0 ]
+										}
+									},
+									{
+										_class = "GenericGameData"
+										name = "AO_head"
+										disabled = true
+										game_class = "ao_proxy_capsule"
+										game_keys = 
+										{
+											bonename = "head"
+											radius = 15.0
+											point0 = [ 13.1741, 1.20182, 0.0 ]
+											point1 = [ 23.0, 0.5, 0.0 ]
+										}
+									},
+								]
+								disabled = true
+							},
+							{
+								_class = "Folder"
+								name = "AO_Arms"
+								children = 
+								[
+									{
+										_class = "Folder"
+										name = "AO_Fingers"
+										children = 
+										[
+											{
+												_class = "GenericGameData"
+												name = "middleR"
+												disabled = true
+												game_class = "ao_proxy_box"
+												game_keys = 
+												{
+													bonename = "finger_middle_meta_R"
+													dimensions = [ 10.0, 8.0, 5.01962 ]
+													offset_origin = [ 0.0, 0.0, -0.123934 ]
+													offset_angles = [ 0.0, 0.0, 0.0 ]
+												}
+											},
+											{
+												_class = "GenericGameData"
+												name = "middleL"
+												disabled = true
+												game_class = "ao_proxy_box"
+												game_keys = 
+												{
+													bonename = "finger_middle_meta_L"
+													dimensions = [ 10.0, 8.0, 5.01962 ]
+													offset_origin = [ 0.0, 0.0, -0.123934 ]
+													offset_angles = [ 0.0, 0.0, 0.0 ]
+												}
+											},
+										]
+										disabled = true
+									},
+									{
+										_class = "GenericGameData"
+										name = "AO_arm_upper_R"
+										disabled = true
+										game_class = "ao_proxy_capsule"
+										game_keys = 
+										{
+											bonename = "arm_upper_R_twist0"
+											radius = 3.0
+											point0 = [ 10.0, 0.0, 0.0 ]
+											point1 = [ 23.0, 0.0, 0.0 ]
+										}
+									},
+									{
+										_class = "GenericGameData"
+										name = "AO_arm_lower_R"
+										disabled = true
+										game_class = "ao_proxy_capsule"
+										game_keys = 
+										{
+											bonename = "arm_lower_R"
+											radius = 3.5
+											point0 = [ 0.0, 0.0, 0.0 ]
+											point1 = [ 16.0, -0.45, -0.2 ]
+										}
+									},
+									{
+										_class = "GenericGameData"
+										name = "AO_arm_upper_L"
+										disabled = true
+										game_class = "ao_proxy_capsule"
+										game_keys = 
+										{
+											bonename = "arm_upper_L_twist0"
+											radius = 3.0
+											point0 = [ 10.0, 0.0, 0.0 ]
+											point1 = [ 23.0, 0.0, 0.0 ]
+										}
+									},
+									{
+										_class = "GenericGameData"
+										name = "AO_arm_lower_L"
+										disabled = true
+										game_class = "ao_proxy_capsule"
+										game_keys = 
+										{
+											bonename = "arm_lower_L"
+											radius = 3.5
+											point0 = [ 0.0, 0.0, 0.0 ]
+											point1 = [ 16.0, -0.45, 0.2 ]
+										}
+									},
+								]
+								disabled = true
+							},
+							{
+								_class = "Folder"
+								name = "AO_Legs"
+								children = 
+								[
+									{
+										_class = "GenericGameData"
+										name = "AO_leg_upper_R"
+										disabled = true
+										game_class = "ao_proxy_capsule"
+										game_keys = 
+										{
+											bonename = "leg_upper_R"
+											radius = 4.0
+											point0 = [ 1.0, 0.0, 0.0 ]
+											point1 = [ 32.0, 0.0, 0.0 ]
+										}
+									},
+									{
+										_class = "GenericGameData"
+										name = "AO_leg_lower_R"
+										disabled = true
+										game_class = "ao_proxy_capsule"
+										game_keys = 
+										{
+											bonename = "leg_lower_R"
+											radius = 4.0
+											point0 = [ 1.0, 0.0, 0.0 ]
+											point1 = [ 31.5, 0.3, 0.0 ]
+										}
+									},
+									{
+										_class = "GenericGameData"
+										name = "AO_leg_upper_L"
+										disabled = true
+										game_class = "ao_proxy_capsule"
+										game_keys = 
+										{
+											bonename = "leg_upper_L"
+											radius = 4.0
+											point0 = [ 1.0, 0.0, 0.0 ]
+											point1 = [ 32.0, 0.0, 0.0 ]
+										}
+									},
+									{
+										_class = "GenericGameData"
+										name = "AO_leg_lower_L"
+										disabled = true
+										game_class = "ao_proxy_capsule"
+										game_keys = 
+										{
+											bonename = "leg_lower_L"
+											radius = 4.0
+											point0 = [ 1.0, 0.0, 0.0 ]
+											point1 = [ 31.5, 0.3, 0.0 ]
+										}
+									},
+									{
+										_class = "GenericGameData"
+										name = "AO_ball_L"
+										disabled = true
+										game_class = "ao_proxy_box"
+										game_keys = 
+										{
+											bonename = "ball_L"
+											dimensions = [ 2.89231, 12.1082, 8.16608 ]
+											offset_origin = [ -4.28861, 1.14763, -1.2134 ]
+											offset_angles = [ 0.0, 80.0, 10.0 ]
+										}
+									},
+									{
+										_class = "GenericGameData"
+										name = "AO_ball_R"
+										disabled = true
+										game_class = "ao_proxy_box"
+										game_keys = 
+										{
+											bonename = "ball_R"
+											dimensions = [ 2.68416, 12.1082, 8.03004 ]
+											offset_origin = [ -4.34551, 1.26333, 1.40549 ]
+											offset_angles = [ 0.0, 80.0, -10.0 ]
+										}
+									},
+								]
+								disabled = true
+							},
+						]
+						disabled = true
+					},
+					{
+						_class = "Folder"
+						name = "LookAtChains"
+						children = 
+						[
+							{
+								_class = "LookAtChain"
+								name = "AimChain"
+								lookat_chain = 
+								{
+									name = ""
+									bones = 
+									[
+										{
+											name = "spine_2"
+											weight = 1.0
+										},
+										{
+											name = "spine_1"
+											weight = 0.7
+										},
+										{
+											name = "spine_0"
+											weight = 0.45
+										},
+										{
+											name = "pelvis"
+											weight = 0.2
+										},
+									]
+								}
+							},
+							{
+								_class = "LookAtChain"
+								name = "AimChain_Halved"
+								lookat_chain = 
+								{
+									name = ""
+									bones = 
+									[
+										{
+											name = "spine_2"
+											weight = 0.5
+										},
+										{
+											name = "spine_1"
+											weight = 0.36
+										},
+										{
+											name = "spine_0"
+											weight = 0.24
+										},
+										{
+											name = "pelvis"
+											weight = 0.12
+										},
+									]
+								}
+							},
+							{
+								_class = "LookAtChain"
+								name = "AimChain_Quarter"
+								lookat_chain = 
+								{
+									name = ""
+									bones = 
+									[
+										{
+											name = "spine_2"
+											weight = 0.2
+										},
+										{
+											name = "spine_1"
+											weight = 0.16
+										},
+										{
+											name = "spine_0"
+											weight = 0.12
+										},
+										{
+											name = "pelvis"
+											weight = 0.08
+										},
+									]
+								}
+							},
+							{
+								_class = "LookAtChain"
+								name = "AimChain_NoPelvis"
+								lookat_chain = 
+								{
+									name = ""
+									bones = 
+									[
+										{
+											name = "spine_2"
+											weight = 1.0
+										},
+										{
+											name = "spine_1"
+											weight = 0.6
+										},
+										{
+											name = "spine_0"
+											weight = 0.3
+										},
+										{
+											name = "pelvis"
+											weight = 0.0
+										},
+									]
+								}
+							},
+							{
+								_class = "LookAtChain"
+								name = "AimChain_NoPelvis_25percent"
+								lookat_chain = 
+								{
+									name = ""
+									bones = 
+									[
+										{
+											name = "spine_2"
+											weight = 0.25
+										},
+										{
+											name = "spine_1"
+											weight = 0.15
+										},
+										{
+											name = "spine_0"
+											weight = 0.1
+										},
+										{
+											name = "pelvis"
+											weight = 0.0
+										},
+									]
+								}
+							},
+							{
+								_class = "LookAtChain"
+								name = "LookChain"
+								lookat_chain = 
+								{
+									name = ""
+									bones = 
+									[
+										{
+											name = "head"
+											weight = 0.6
+										},
+										{
+											name = "neck_0"
+											weight = 0.35
+										},
+									]
+								}
+							},
+							{
+								_class = "LookAtChain"
+								name = "LookChain_Halved"
+								lookat_chain = 
+								{
+									name = ""
+									bones = 
+									[
+										{
+											name = "head"
+											weight = 0.3
+										},
+										{
+											name = "neck_0"
+											weight = 0.15
+										},
+									]
+								}
+							},
+							{
+								_class = "LookAtChain"
+								name = "LookChain_LessNeck"
+								lookat_chain = 
+								{
+									name = ""
+									bones = 
+									[
+										{
+											name = "head"
+											weight = 0.6
+										},
+										{
+											name = "neck_0"
+											weight = 0.15
+										},
+									]
+								}
+							},
+							{
+								_class = "LookAtChain"
+								name = "RightHandAim"
+								lookat_chain = 
+								{
+									name = ""
+									bones = 
+									[
+										{
+											name = "hand_R"
+											weight = 1.0
+										},
+									]
+								}
+							},
+							{
+								_class = "LookAtChain"
+								name = "EyeRLookChain"
+								lookat_chain = 
+								{
+									name = ""
+									bones = 
+									[
+										{
+											name = "eye_R"
+											weight = 1.0
+										},
+									]
+								}
+							},
+							{
+								_class = "LookAtChain"
+								name = "EyeLLookChain"
+								lookat_chain = 
+								{
+									name = ""
+									bones = 
+									[
+										{
+											name = "eye_L"
+											weight = 1.0
+										},
+									]
+								}
+							},
+						]
+					},
+					{
+						_class = "Feet"
+						children = 
+						[
+							{
+								_class = "Foot"
+								name = "right_foot"
+								anklebone = "ankle_R"
+								toebone = "ball_R"
+								balloffset = [ 5.2, 0.0, 0.0 ]
+								heeloffset = [ 1.85, -3.5, 0.2 ]
+								autolevel = true
+								traceheight = 40.0
+								traceradius = 2.0
+							},
+							{
+								_class = "Foot"
+								name = "left_foot"
+								anklebone = "ankle_L"
+								toebone = "ball_L"
+								balloffset = [ 5.2, 0.0, 0.0 ]
+								heeloffset = [ 1.85, -3.5, 0.2 ]
+								autolevel = true
+								traceheight = 40.0
+								traceradius = 2.0
+							},
+							{
+								_class = "SlopeTrace"
+								m_Settings = 
+								{
+									m_vTraceOffset = [ 0.0, 0.0, 10.0 ]
+								}
+							},
+						]
+						locktolerance = 0.6
+						heighttolerance = 2.0
+						sanitizetrajectories = true
+					},
+					{
+						_class = "MovementSettings"
+						movementsettings = 
+						{
+							name = ""
+							speeds = [  ]
+							runspeed = 320.0
+							walkspeed = 150.0
+							maxSpringTension = 100.0
+							springConstant = 10.0
+							useSmoothPaths = true
+							useMotionDamping = false
+							sharpStartAngle = 180.0
+							m_vTraceScale = [ 1.0, 1.0, 1.0 ]
+						}
+					},
+				]
+			},
+		]
+		model_archetype = ""
+		primary_associated_entity = ""
+		anim_graph_name = ""
+		base_model_name = ""
+	}
+}

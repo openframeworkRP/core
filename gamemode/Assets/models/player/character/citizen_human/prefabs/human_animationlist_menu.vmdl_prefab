@@ -1,0 +1,3380 @@
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:modeldoc29:version{3cec427c-1b0e-4d48-a90a-0436f33a6041} -->
+{
+	rootNode = 
+	{
+		_class = "RootNode"
+		children = 
+		[
+			{
+				_class = "AnimationList"
+				children = 
+				[
+					{
+						_class = "Folder"
+						name = "MainMenu"
+						children = 
+						[
+							{
+								_class = "AnimFile"
+								name = "IdleMenu_Exit"
+								children = 
+								[
+									{
+										_class = "AnimAddLayer"
+										anim_name = "_CONVERT_CITIZEN_ANIMS"
+									},
+								]
+								activity_name = ""
+								activity_weight = 1
+								weight_list_name = ""
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = true
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = false
+								disable_compression = false
+								disable_interpolation = false
+								enable_scale = false
+								source_filename = "models/citizen/animations/menu/Citizen@IdleMenu_Exit.fbx"
+								start_frame = -1
+								end_frame = -1
+								framerate = -1.0
+								take = 0
+								reverse = false
+							},
+							{
+								_class = "AnimFile"
+								name = "IdleMenu_Exit_In_delta"
+								children = 
+								[
+									{
+										_class = "AnimSubtract"
+										anim_name = "IdleMenu_Exit_In_delta"
+										frame = 0
+									},
+								]
+								activity_name = ""
+								activity_weight = 1
+								weight_list_name = ""
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = false
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = false
+								disable_compression = false
+								disable_interpolation = false
+								enable_scale = false
+								source_filename = "models/citizen/animations/menu/Citizen@IdleMenu_Exit_In.fbx"
+								start_frame = -1
+								end_frame = -1
+								framerate = -1.0
+								take = 0
+								reverse = false
+							},
+							{
+								_class = "AnimFile"
+								name = "IdleMenu_Exit_Out_delta"
+								children = 
+								[
+									{
+										_class = "AnimSubtract"
+										anim_name = "IdleMenu_Exit_Out_delta"
+										frame = 0
+									},
+								]
+								activity_name = ""
+								activity_weight = 1
+								weight_list_name = ""
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = false
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = false
+								disable_compression = false
+								disable_interpolation = false
+								enable_scale = false
+								source_filename = "models/citizen/animations/menu/Citizen@IdleMenu_Exit_Out.fbx"
+								start_frame = -1
+								end_frame = -1
+								framerate = -1.0
+								take = 0
+								reverse = false
+							},
+							{
+								_class = "AnimFile"
+								name = "IdleMenu_Exit_Fidget_01_delta"
+								children = 
+								[
+									{
+										_class = "AnimSubtract"
+										anim_name = "IdleMenu_Exit_Fidget_01_delta"
+										frame = 0
+									},
+								]
+								activity_name = ""
+								activity_weight = 1
+								weight_list_name = ""
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = false
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = false
+								disable_compression = false
+								disable_interpolation = false
+								enable_scale = false
+								source_filename = "models/citizen/animations/menu/Citizen@IdleMenu_Exit_Fidget_01.fbx"
+								start_frame = -1
+								end_frame = -1
+								framerate = -1.0
+								take = 0
+								reverse = false
+							},
+							{
+								_class = "AnimFile"
+								name = "IdleMenu_Exit_Fidget_02_delta"
+								children = 
+								[
+									{
+										_class = "AnimSubtract"
+										anim_name = "IdleMenu_Exit_Fidget_02_delta"
+										frame = 0
+									},
+								]
+								activity_name = ""
+								activity_weight = 1
+								weight_list_name = ""
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = false
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = false
+								disable_compression = false
+								disable_interpolation = false
+								enable_scale = false
+								source_filename = "models/citizen/animations/menu/Citizen@IdleMenu_Exit_Fidget_02.fbx"
+								start_frame = -1
+								end_frame = -1
+								framerate = -1.0
+								take = 0
+								reverse = false
+							},
+							{
+								_class = "AnimFile"
+								name = "IdleMenu_Special"
+								children = 
+								[
+									{
+										_class = "AnimAddLayer"
+										anim_name = "_CONVERT_CITIZEN_ANIMS"
+									},
+								]
+								activity_name = ""
+								activity_weight = 1
+								weight_list_name = ""
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = true
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = false
+								disable_compression = false
+								disable_interpolation = false
+								enable_scale = false
+								source_filename = "models/citizen/animations/menu/Citizen@IdleMenu_Special_face.dmx"
+								start_frame = -1
+								end_frame = -1
+								framerate = -1.0
+								take = 0
+								reverse = false
+							},
+						]
+					},
+					{
+						_class = "Folder"
+						name = "AvatarMenu_Entries"
+						children = 
+						[
+							{
+								_class = "AnimFile"
+								name = "AvatarMenu_Entry_Flex"
+								children = 
+								[
+									{
+										_class = "AnimAlign"
+										align_tx = true
+										align_ty = true
+										align_tz = false
+										align_rx = false
+										align_ry = false
+										align_rz = false
+										align_frame_type = "Number"
+										frame = 9999
+										align_to_anim = "IdlePose_Default"
+										align_to_frame_type = "Number"
+										align_to_frame = 2
+										bone = "pelvis"
+									},
+									{
+										_class = "AnimOffset"
+										translation = [ 0.0, 0.0, 0.0 ]
+										rotation_xyz = [ 0.0, 0.0, -90.0 ]
+									},
+									{
+										_class = "AnimAddLayer"
+										anim_name = "_CONVERT_CITIZEN_ANIMS"
+									},
+								]
+								activity_name = ""
+								activity_weight = 1
+								weight_list_name = ""
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = false
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = true
+								disable_compression = false
+								disable_interpolation = false
+								enable_scale = false
+								source_filename = "models/citizen/animations/menu/Citizen@AvatarMenu_Mocap_Flex.fbx"
+								start_frame = 400
+								end_frame = 530
+								framerate = 40.0
+								take = 0
+								reverse = false
+							},
+							{
+								_class = "AnimFile"
+								name = "AvatarMenu_Entry_Jump"
+								children = 
+								[
+									{
+										_class = "AnimAlign"
+										align_tx = true
+										align_ty = true
+										align_tz = false
+										align_rx = false
+										align_ry = false
+										align_rz = false
+										align_frame_type = "Number"
+										frame = 150
+										align_to_anim = "IdlePose_Default"
+										align_to_frame_type = "Number"
+										align_to_frame = 0
+										bone = "pelvis"
+									},
+									{
+										_class = "AnimOffset"
+										translation = [ 0.0, 0.0, 0.0 ]
+										rotation_xyz = [ 0.0, 0.0, -65.0 ]
+									},
+									{
+										_class = "AnimAddLayer"
+										anim_name = "_CONVERT_CITIZEN_ANIMS"
+									},
+								]
+								activity_name = ""
+								activity_weight = 1
+								weight_list_name = ""
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = false
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = true
+								disable_compression = false
+								disable_interpolation = false
+								enable_scale = false
+								source_filename = "models/citizen/animations/menu/Citizen@AvatarMenu_Mocap_Entries.fbx"
+								start_frame = 16
+								end_frame = 166
+								framerate = 40.0
+								take = 0
+								reverse = false
+							},
+							{
+								_class = "AnimFile"
+								name = "AvatarMenu_Entry_RunIn_01"
+								children = 
+								[
+									{
+										_class = "AnimAlign"
+										align_tx = true
+										align_ty = true
+										align_tz = false
+										align_rx = false
+										align_ry = false
+										align_rz = false
+										align_frame_type = "Number"
+										frame = 140
+										align_to_anim = "IdlePose_Default"
+										align_to_frame_type = "Number"
+										align_to_frame = 0
+										bone = "pelvis"
+									},
+									{
+										_class = "AnimOffset"
+										translation = [ 0.0, 0.0, 0.0 ]
+										rotation_xyz = [ 0.0, 0.0, -90.0 ]
+									},
+									{
+										_class = "AnimAddLayer"
+										anim_name = "_CONVERT_CITIZEN_ANIMS"
+									},
+								]
+								activity_name = ""
+								activity_weight = 1
+								weight_list_name = ""
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = false
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = true
+								disable_compression = false
+								disable_interpolation = false
+								enable_scale = false
+								source_filename = "models/citizen/animations/menu/Citizen@AvatarMenu_Mocap_Entries.fbx"
+								start_frame = 3175
+								end_frame = 3285
+								framerate = 42.0
+								take = 0
+								reverse = false
+							},
+							{
+								_class = "AnimFile"
+								name = "AvatarMenu_Entry_RunIn_02"
+								children = 
+								[
+									{
+										_class = "AnimAlign"
+										align_tx = true
+										align_ty = true
+										align_tz = false
+										align_rx = false
+										align_ry = false
+										align_rz = false
+										align_frame_type = "Number"
+										frame = 50
+										align_to_anim = "IdlePose_Default"
+										align_to_frame_type = "Number"
+										align_to_frame = 0
+										bone = "pelvis"
+									},
+									{
+										_class = "AnimOffset"
+										translation = [ 0.0, 0.0, 0.0 ]
+										rotation_xyz = [ 0.0, 0.0, -90.0 ]
+									},
+									{
+										_class = "AnimAddLayer"
+										anim_name = "_CONVERT_CITIZEN_ANIMS"
+									},
+								]
+								activity_name = ""
+								activity_weight = 1
+								weight_list_name = ""
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = false
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = true
+								disable_compression = false
+								disable_interpolation = false
+								enable_scale = false
+								source_filename = "models/citizen/animations/menu/Citizen@AvatarMenu_Mocap_Entries.fbx"
+								start_frame = 3530
+								end_frame = 3580
+								framerate = 36.0
+								take = 0
+								reverse = false
+							},
+							{
+								_class = "AnimFile"
+								name = "AvatarMenu_Entry_TurnAround"
+								children = 
+								[
+									{
+										_class = "AnimAlign"
+										align_tx = true
+										align_ty = true
+										align_tz = false
+										align_rx = false
+										align_ry = false
+										align_rz = false
+										align_frame_type = "Number"
+										frame = 140
+										align_to_anim = "IdlePose_Default"
+										align_to_frame_type = "Number"
+										align_to_frame = 0
+										bone = "pelvis"
+									},
+									{
+										_class = "AnimOffset"
+										translation = [ 0.0, 0.0, 0.0 ]
+										rotation_xyz = [ 0.0, 0.0, -75.0 ]
+									},
+									{
+										_class = "AnimAddLayer"
+										anim_name = "_CONVERT_CITIZEN_ANIMS"
+									},
+								]
+								activity_name = ""
+								activity_weight = 1
+								weight_list_name = ""
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = false
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = true
+								disable_compression = false
+								disable_interpolation = false
+								enable_scale = false
+								source_filename = "models/citizen/animations/menu/Citizen@AvatarMenu_Mocap_Entries.fbx"
+								start_frame = 515
+								end_frame = 640
+								framerate = -1.0
+								take = 0
+								reverse = false
+							},
+							{
+								_class = "AnimFile"
+								name = "AvatarMenu_Entry_WalkIn_01"
+								children = 
+								[
+									{
+										_class = "AnimAlign"
+										align_tx = true
+										align_ty = true
+										align_tz = false
+										align_rx = false
+										align_ry = false
+										align_rz = false
+										align_frame_type = "Number"
+										frame = 140
+										align_to_anim = "IdlePose_Default"
+										align_to_frame_type = "Number"
+										align_to_frame = 0
+										bone = "pelvis"
+									},
+									{
+										_class = "AnimOffset"
+										translation = [ 0.0, 0.0, 0.0 ]
+										rotation_xyz = [ 0.0, 0.0, -80.0 ]
+									},
+									{
+										_class = "AnimAddLayer"
+										anim_name = "_CONVERT_CITIZEN_ANIMS"
+									},
+								]
+								activity_name = ""
+								activity_weight = 1
+								weight_list_name = ""
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = false
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = true
+								disable_compression = false
+								disable_interpolation = false
+								enable_scale = false
+								source_filename = "models/citizen/animations/menu/Citizen@AvatarMenu_Mocap_Entries.fbx"
+								start_frame = 1825
+								end_frame = 1935
+								framerate = 36.0
+								take = 0
+								reverse = false
+							},
+							{
+								_class = "AnimFile"
+								name = "AvatarMenu_Entry_WalkIn_02"
+								children = 
+								[
+									{
+										_class = "AnimAlign"
+										align_tx = true
+										align_ty = true
+										align_tz = false
+										align_rx = false
+										align_ry = false
+										align_rz = false
+										align_frame_type = "Number"
+										frame = 140
+										align_to_anim = "IdlePose_Default"
+										align_to_frame_type = "Number"
+										align_to_frame = 0
+										bone = "pelvis"
+									},
+									{
+										_class = "AnimOffset"
+										translation = [ 0.0, 0.0, 0.0 ]
+										rotation_xyz = [ 0.0, 0.0, -85.0 ]
+									},
+									{
+										_class = "AnimAddLayer"
+										anim_name = "_CONVERT_CITIZEN_ANIMS"
+									},
+								]
+								activity_name = ""
+								activity_weight = 1
+								weight_list_name = ""
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = false
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = true
+								disable_compression = false
+								disable_interpolation = false
+								enable_scale = false
+								source_filename = "models/citizen/animations/menu/Citizen@AvatarMenu_Mocap_Entries.fbx"
+								start_frame = 2155
+								end_frame = 2275
+								framerate = 36.0
+								take = 0
+								reverse = false
+							},
+							{
+								_class = "AnimFile"
+								name = "AvatarMenu_Entry_Wave_01"
+								children = 
+								[
+									{
+										_class = "AnimAlign"
+										align_tx = true
+										align_ty = true
+										align_tz = false
+										align_rx = false
+										align_ry = false
+										align_rz = false
+										align_frame_type = "Number"
+										frame = 140
+										align_to_anim = "IdlePose_Default"
+										align_to_frame_type = "Number"
+										align_to_frame = 0
+										bone = "pelvis"
+									},
+									{
+										_class = "AnimOffset"
+										translation = [ 0.0, 0.0, 0.0 ]
+										rotation_xyz = [ 0.0, 0.0, -70.0 ]
+									},
+									{
+										_class = "AnimAddLayer"
+										anim_name = "_CONVERT_CITIZEN_ANIMS"
+									},
+								]
+								activity_name = ""
+								activity_weight = 1
+								weight_list_name = ""
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = false
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = true
+								disable_compression = false
+								disable_interpolation = false
+								enable_scale = false
+								source_filename = "models/citizen/animations/menu/Citizen@AvatarMenu_Mocap_Entries.fbx"
+								start_frame = 848
+								end_frame = 943
+								framerate = -1.0
+								take = 0
+								reverse = false
+							},
+							{
+								_class = "AnimFile"
+								name = "AvatarMenu_Entry_Wave_02"
+								children = 
+								[
+									{
+										_class = "AnimAlign"
+										align_tx = true
+										align_ty = true
+										align_tz = false
+										align_rx = false
+										align_ry = false
+										align_rz = false
+										align_frame_type = "Number"
+										frame = 140
+										align_to_anim = "IdlePose_Default"
+										align_to_frame_type = "Number"
+										align_to_frame = 0
+										bone = "pelvis"
+									},
+									{
+										_class = "AnimOffset"
+										translation = [ 0.0, 0.0, 0.0 ]
+										rotation_xyz = [ 0.0, 0.0, -75.0 ]
+									},
+									{
+										_class = "AnimAddLayer"
+										anim_name = "_CONVERT_CITIZEN_ANIMS"
+									},
+								]
+								activity_name = ""
+								activity_weight = 1
+								weight_list_name = ""
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = false
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = true
+								disable_compression = false
+								disable_interpolation = false
+								enable_scale = false
+								source_filename = "models/citizen/animations/menu/Citizen@AvatarMenu_Mocap_Entries.fbx"
+								start_frame = 940
+								end_frame = 1025
+								framerate = 36.0
+								take = 0
+								reverse = false
+							},
+							{
+								_class = "AnimFile"
+								name = "AvatarMenu_Entry_Wave_03"
+								children = 
+								[
+									{
+										_class = "AnimAlign"
+										align_tx = true
+										align_ty = true
+										align_tz = false
+										align_rx = false
+										align_ry = false
+										align_rz = false
+										align_frame_type = "Number"
+										frame = 110
+										align_to_anim = "IdlePose_Default"
+										align_to_frame_type = "Number"
+										align_to_frame = 0
+										bone = "pelvis"
+									},
+									{
+										_class = "AnimOffset"
+										translation = [ 0.0, 0.0, 0.0 ]
+										rotation_xyz = [ 0.0, 0.0, -75.0 ]
+									},
+									{
+										_class = "AnimAddLayer"
+										anim_name = "_CONVERT_CITIZEN_ANIMS"
+									},
+								]
+								activity_name = ""
+								activity_weight = 1
+								weight_list_name = ""
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = false
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = true
+								disable_compression = false
+								disable_interpolation = false
+								enable_scale = false
+								source_filename = "models/citizen/animations/menu/Citizen@AvatarMenu_Mocap_Entries.fbx"
+								start_frame = 1115
+								end_frame = 1225
+								framerate = 36.0
+								take = 0
+								reverse = false
+							},
+						]
+					},
+					{
+						_class = "Folder"
+						name = "AvatarMenu_Fidgets"
+						children = 
+						[
+							{
+								_class = "AnimFile"
+								name = "AvatarMenu_FidgetLarge_01"
+								children = 
+								[
+									{
+										_class = "AnimAlign"
+										align_tx = true
+										align_ty = true
+										align_tz = false
+										align_rx = false
+										align_ry = false
+										align_rz = false
+										align_frame_type = "Number"
+										frame = 9999
+										align_to_anim = "IdlePose_Default"
+										align_to_frame_type = "Number"
+										align_to_frame = 2
+										bone = "pelvis"
+									},
+									{
+										_class = "AnimOffset"
+										translation = [ 0.0, 0.0, 0.0 ]
+										rotation_xyz = [ 0.0, 0.0, -100.0 ]
+									},
+									{
+										_class = "AnimAddLayer"
+										anim_name = "_CONVERT_CITIZEN_ANIMS"
+									},
+								]
+								activity_name = ""
+								activity_weight = 1
+								weight_list_name = ""
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = false
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = true
+								disable_compression = false
+								disable_interpolation = false
+								enable_scale = false
+								source_filename = "models/citizen/animations/menu/Citizen@AvatarMenu_Mocap_Fidgets_01.fbx"
+								start_frame = 70
+								end_frame = 455
+								framerate = 40.0
+								take = 0
+								reverse = false
+							},
+							{
+								_class = "AnimFile"
+								name = "AvatarMenu_FidgetLarge_02"
+								children = 
+								[
+									{
+										_class = "AnimAlign"
+										align_tx = true
+										align_ty = true
+										align_tz = false
+										align_rx = false
+										align_ry = false
+										align_rz = false
+										align_frame_type = "Number"
+										frame = 9999
+										align_to_anim = "IdlePose_Default"
+										align_to_frame_type = "Number"
+										align_to_frame = 2
+										bone = "pelvis"
+									},
+									{
+										_class = "AnimOffset"
+										translation = [ 0.0, 0.0, 0.0 ]
+										rotation_xyz = [ 0.0, 0.0, -110.0 ]
+									},
+									{
+										_class = "AnimAddLayer"
+										anim_name = "_CONVERT_CITIZEN_ANIMS"
+									},
+								]
+								activity_name = ""
+								activity_weight = 1
+								weight_list_name = ""
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = false
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = true
+								disable_compression = false
+								disable_interpolation = false
+								enable_scale = false
+								source_filename = "models/citizen/animations/menu/Citizen@AvatarMenu_Mocap_Fidgets_01.fbx"
+								start_frame = 1445
+								end_frame = 1585
+								framerate = 36.0
+								take = 0
+								reverse = false
+							},
+							{
+								_class = "AnimFile"
+								name = "AvatarMenu_FidgetLarge_03"
+								children = 
+								[
+									{
+										_class = "AnimAlign"
+										align_tx = true
+										align_ty = true
+										align_tz = false
+										align_rx = false
+										align_ry = false
+										align_rz = false
+										align_frame_type = "Number"
+										frame = 9999
+										align_to_anim = "IdlePose_Default"
+										align_to_frame_type = "Number"
+										align_to_frame = 2
+										bone = "pelvis"
+									},
+									{
+										_class = "AnimOffset"
+										translation = [ 0.0, 0.0, 0.0 ]
+										rotation_xyz = [ 0.0, 0.0, -110.0 ]
+									},
+									{
+										_class = "AnimAddLayer"
+										anim_name = "_CONVERT_CITIZEN_ANIMS"
+									},
+								]
+								activity_name = ""
+								activity_weight = 1
+								weight_list_name = ""
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = false
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = true
+								disable_compression = false
+								disable_interpolation = false
+								enable_scale = false
+								source_filename = "models/citizen/animations/menu/Citizen@AvatarMenu_Mocap_Fidgets_01.fbx"
+								start_frame = 1900
+								end_frame = 2350
+								framerate = 40.0
+								take = 0
+								reverse = false
+							},
+							{
+								_class = "AnimFile"
+								name = "AvatarMenu_FidgetLarge_04"
+								children = 
+								[
+									{
+										_class = "AnimAlign"
+										align_tx = true
+										align_ty = true
+										align_tz = false
+										align_rx = false
+										align_ry = false
+										align_rz = false
+										align_frame_type = "Number"
+										frame = 9999
+										align_to_anim = "IdlePose_Default"
+										align_to_frame_type = "Number"
+										align_to_frame = 2
+										bone = "pelvis"
+									},
+									{
+										_class = "AnimOffset"
+										translation = [ 0.0, 0.0, 0.0 ]
+										rotation_xyz = [ 0.0, 0.0, -105.0 ]
+									},
+									{
+										_class = "AnimAddLayer"
+										anim_name = "_CONVERT_CITIZEN_ANIMS"
+									},
+								]
+								activity_name = ""
+								activity_weight = 1
+								weight_list_name = ""
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = false
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = true
+								disable_compression = false
+								disable_interpolation = false
+								enable_scale = false
+								source_filename = "models/citizen/animations/menu/Citizen@AvatarMenu_Mocap_Fidgets_01.fbx"
+								start_frame = 3890
+								end_frame = 4080
+								framerate = 40.0
+								take = 0
+								reverse = false
+							},
+							{
+								_class = "AnimFile"
+								name = "AvatarMenu_FidgetLarge_05"
+								children = 
+								[
+									{
+										_class = "AnimAlign"
+										align_tx = true
+										align_ty = true
+										align_tz = false
+										align_rx = false
+										align_ry = false
+										align_rz = false
+										align_frame_type = "Number"
+										frame = 9999
+										align_to_anim = "IdlePose_Default"
+										align_to_frame_type = "Number"
+										align_to_frame = 2
+										bone = "pelvis"
+									},
+									{
+										_class = "AnimOffset"
+										translation = [ 0.0, 0.0, 0.0 ]
+										rotation_xyz = [ 0.0, 0.0, -100.0 ]
+									},
+									{
+										_class = "AnimAddLayer"
+										anim_name = "_CONVERT_CITIZEN_ANIMS"
+									},
+								]
+								activity_name = ""
+								activity_weight = 1
+								weight_list_name = ""
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = false
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = true
+								disable_compression = false
+								disable_interpolation = false
+								enable_scale = false
+								source_filename = "models/citizen/animations/menu/Citizen@AvatarMenu_Mocap_Fidgets_02.fbx"
+								start_frame = 1200
+								end_frame = 1530
+								framerate = 40.0
+								take = 0
+								reverse = false
+							},
+							{
+								_class = "AnimFile"
+								name = "AvatarMenu_FidgetLarge_06"
+								children = 
+								[
+									{
+										_class = "AnimAlign"
+										align_tx = true
+										align_ty = true
+										align_tz = false
+										align_rx = false
+										align_ry = false
+										align_rz = false
+										align_frame_type = "Number"
+										frame = 9999
+										align_to_anim = "IdlePose_Default"
+										align_to_frame_type = "Number"
+										align_to_frame = 2
+										bone = "pelvis"
+									},
+									{
+										_class = "AnimOffset"
+										translation = [ 0.0, 0.0, 0.0 ]
+										rotation_xyz = [ 0.0, 0.0, -95.0 ]
+									},
+									{
+										_class = "AnimAddLayer"
+										anim_name = "_CONVERT_CITIZEN_ANIMS"
+									},
+								]
+								activity_name = ""
+								activity_weight = 1
+								weight_list_name = ""
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = false
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = true
+								disable_compression = false
+								disable_interpolation = false
+								enable_scale = false
+								source_filename = "models/citizen/animations/menu/Citizen@AvatarMenu_Mocap_Fidgets_02.fbx"
+								start_frame = 2035
+								end_frame = 2535
+								framerate = 36.0
+								take = 0
+								reverse = false
+							},
+							{
+								_class = "AnimFile"
+								name = "AvatarMenu_FidgetLarge_07"
+								children = 
+								[
+									{
+										_class = "AnimAlign"
+										align_tx = true
+										align_ty = true
+										align_tz = false
+										align_rx = false
+										align_ry = false
+										align_rz = false
+										align_frame_type = "Number"
+										frame = 9999
+										align_to_anim = "IdlePose_Default"
+										align_to_frame_type = "Number"
+										align_to_frame = 2
+										bone = "pelvis"
+									},
+									{
+										_class = "AnimOffset"
+										translation = [ 0.0, 0.0, 0.0 ]
+										rotation_xyz = [ 0.0, 0.0, -105.0 ]
+									},
+									{
+										_class = "AnimAddLayer"
+										anim_name = "_CONVERT_CITIZEN_ANIMS"
+									},
+								]
+								activity_name = ""
+								activity_weight = 1
+								weight_list_name = ""
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = false
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = true
+								disable_compression = false
+								disable_interpolation = false
+								enable_scale = false
+								source_filename = "models/citizen/animations/menu/Citizen@AvatarMenu_Mocap_Fidgets_02.fbx"
+								start_frame = 3955
+								end_frame = 4235
+								framerate = 40.0
+								take = 0
+								reverse = false
+							},
+							{
+								_class = "AnimFile"
+								name = "AvatarMenu_FidgetSmall_01"
+								children = 
+								[
+									{
+										_class = "AnimAlign"
+										align_tx = true
+										align_ty = true
+										align_tz = false
+										align_rx = false
+										align_ry = false
+										align_rz = false
+										align_frame_type = "Number"
+										frame = 9999
+										align_to_anim = "IdlePose_Default"
+										align_to_frame_type = "Number"
+										align_to_frame = 2
+										bone = "pelvis"
+									},
+									{
+										_class = "AnimOffset"
+										translation = [ 0.0, 0.0, 0.0 ]
+										rotation_xyz = [ 0.0, 0.0, -100.0 ]
+									},
+									{
+										_class = "AnimAddLayer"
+										anim_name = "_CONVERT_CITIZEN_ANIMS"
+									},
+								]
+								activity_name = ""
+								activity_weight = 1
+								weight_list_name = ""
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = false
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = true
+								disable_compression = false
+								disable_interpolation = false
+								enable_scale = false
+								source_filename = "models/citizen/animations/menu/Citizen@AvatarMenu_Mocap_Fidgets_01.fbx"
+								start_frame = 470
+								end_frame = 555
+								framerate = 40.0
+								take = 0
+								reverse = false
+							},
+							{
+								_class = "AnimFile"
+								name = "AvatarMenu_FidgetSmall_02"
+								children = 
+								[
+									{
+										_class = "AnimAlign"
+										align_tx = true
+										align_ty = true
+										align_tz = false
+										align_rx = false
+										align_ry = false
+										align_rz = false
+										align_frame_type = "Number"
+										frame = 9999
+										align_to_anim = "IdlePose_Default"
+										align_to_frame_type = "Number"
+										align_to_frame = 2
+										bone = "pelvis"
+									},
+									{
+										_class = "AnimOffset"
+										translation = [ 0.0, 0.0, 0.0 ]
+										rotation_xyz = [ 0.0, 0.0, -110.0 ]
+									},
+									{
+										_class = "AnimAddLayer"
+										anim_name = "_CONVERT_CITIZEN_ANIMS"
+									},
+								]
+								activity_name = ""
+								activity_weight = 1
+								weight_list_name = ""
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = false
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = true
+								disable_compression = false
+								disable_interpolation = false
+								enable_scale = false
+								source_filename = "models/citizen/animations/menu/Citizen@AvatarMenu_Mocap_Fidgets_01.fbx"
+								start_frame = 2400
+								end_frame = 2585
+								framerate = 40.0
+								take = 0
+								reverse = false
+							},
+							{
+								_class = "AnimFile"
+								name = "AvatarMenu_FidgetSmall_03"
+								children = 
+								[
+									{
+										_class = "AnimAlign"
+										align_tx = true
+										align_ty = true
+										align_tz = false
+										align_rx = false
+										align_ry = false
+										align_rz = false
+										align_frame_type = "Number"
+										frame = 9999
+										align_to_anim = "IdlePose_Default"
+										align_to_frame_type = "Number"
+										align_to_frame = 2
+										bone = "pelvis"
+									},
+									{
+										_class = "AnimOffset"
+										translation = [ 0.0, 0.0, 0.0 ]
+										rotation_xyz = [ 0.0, 0.0, -110.0 ]
+									},
+									{
+										_class = "AnimAddLayer"
+										anim_name = "_CONVERT_CITIZEN_ANIMS"
+									},
+								]
+								activity_name = ""
+								activity_weight = 1
+								weight_list_name = ""
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = false
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = true
+								disable_compression = false
+								disable_interpolation = false
+								enable_scale = false
+								source_filename = "models/citizen/animations/menu/Citizen@AvatarMenu_Mocap_Fidgets_01.fbx"
+								start_frame = 2615
+								end_frame = 2780
+								framerate = 40.0
+								take = 0
+								reverse = false
+							},
+							{
+								_class = "AnimFile"
+								name = "AvatarMenu_FidgetSmall_04"
+								children = 
+								[
+									{
+										_class = "AnimAlign"
+										align_tx = true
+										align_ty = true
+										align_tz = false
+										align_rx = false
+										align_ry = false
+										align_rz = false
+										align_frame_type = "Number"
+										frame = 9999
+										align_to_anim = "IdlePose_Default"
+										align_to_frame_type = "Number"
+										align_to_frame = 2
+										bone = "pelvis"
+									},
+									{
+										_class = "AnimOffset"
+										translation = [ 0.0, 0.0, 0.0 ]
+										rotation_xyz = [ 0.0, 0.0, -110.0 ]
+									},
+									{
+										_class = "AnimAddLayer"
+										anim_name = "_CONVERT_CITIZEN_ANIMS"
+									},
+								]
+								activity_name = ""
+								activity_weight = 1
+								weight_list_name = ""
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = false
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = true
+								disable_compression = false
+								disable_interpolation = false
+								enable_scale = false
+								source_filename = "models/citizen/animations/menu/Citizen@AvatarMenu_Mocap_Fidgets_01.fbx"
+								start_frame = 2790
+								end_frame = 2890
+								framerate = 40.0
+								take = 0
+								reverse = false
+							},
+							{
+								_class = "AnimFile"
+								name = "AvatarMenu_FidgetSmall_05"
+								children = 
+								[
+									{
+										_class = "AnimAlign"
+										align_tx = true
+										align_ty = true
+										align_tz = false
+										align_rx = false
+										align_ry = false
+										align_rz = false
+										align_frame_type = "Number"
+										frame = 9999
+										align_to_anim = "IdlePose_Default"
+										align_to_frame_type = "Number"
+										align_to_frame = 2
+										bone = "pelvis"
+									},
+									{
+										_class = "AnimOffset"
+										translation = [ 0.0, 0.0, 0.0 ]
+										rotation_xyz = [ 0.0, 0.0, -110.0 ]
+									},
+									{
+										_class = "AnimAddLayer"
+										anim_name = "_CONVERT_CITIZEN_ANIMS"
+									},
+								]
+								activity_name = ""
+								activity_weight = 1
+								weight_list_name = ""
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = false
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = true
+								disable_compression = false
+								disable_interpolation = false
+								enable_scale = false
+								source_filename = "models/citizen/animations/menu/Citizen@AvatarMenu_Mocap_Fidgets_01.fbx"
+								start_frame = 2905
+								end_frame = 3030
+								framerate = 40.0
+								take = 0
+								reverse = false
+							},
+							{
+								_class = "AnimFile"
+								name = "AvatarMenu_FidgetSmall_06"
+								children = 
+								[
+									{
+										_class = "AnimAlign"
+										align_tx = true
+										align_ty = true
+										align_tz = false
+										align_rx = false
+										align_ry = false
+										align_rz = false
+										align_frame_type = "Number"
+										frame = 9999
+										align_to_anim = "IdlePose_Default"
+										align_to_frame_type = "Number"
+										align_to_frame = 2
+										bone = "pelvis"
+									},
+									{
+										_class = "AnimOffset"
+										translation = [ 0.0, 0.0, 0.0 ]
+										rotation_xyz = [ 0.0, 0.0, -110.0 ]
+									},
+									{
+										_class = "AnimAddLayer"
+										anim_name = "_CONVERT_CITIZEN_ANIMS"
+									},
+								]
+								activity_name = ""
+								activity_weight = 1
+								weight_list_name = ""
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = false
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = true
+								disable_compression = false
+								disable_interpolation = false
+								enable_scale = false
+								source_filename = "models/citizen/animations/menu/Citizen@AvatarMenu_Mocap_Fidgets_01.fbx"
+								start_frame = 3120
+								end_frame = 3200
+								framerate = 40.0
+								take = 0
+								reverse = false
+							},
+							{
+								_class = "AnimFile"
+								name = "AvatarMenu_FidgetSmall_07"
+								children = 
+								[
+									{
+										_class = "AnimAlign"
+										align_tx = true
+										align_ty = true
+										align_tz = false
+										align_rx = false
+										align_ry = false
+										align_rz = false
+										align_frame_type = "Number"
+										frame = 9999
+										align_to_anim = "IdlePose_Default"
+										align_to_frame_type = "Number"
+										align_to_frame = 2
+										bone = "pelvis"
+									},
+									{
+										_class = "AnimOffset"
+										translation = [ 0.0, 0.0, 0.0 ]
+										rotation_xyz = [ 0.0, 0.0, -110.0 ]
+									},
+									{
+										_class = "AnimAddLayer"
+										anim_name = "_CONVERT_CITIZEN_ANIMS"
+									},
+								]
+								activity_name = ""
+								activity_weight = 1
+								weight_list_name = ""
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = false
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = true
+								disable_compression = false
+								disable_interpolation = false
+								enable_scale = false
+								source_filename = "models/citizen/animations/menu/Citizen@AvatarMenu_Mocap_Fidgets_01.fbx"
+								start_frame = 3210
+								end_frame = 3275
+								framerate = 40.0
+								take = 0
+								reverse = false
+							},
+							{
+								_class = "AnimFile"
+								name = "AvatarMenu_FidgetSmall_08"
+								children = 
+								[
+									{
+										_class = "AnimAlign"
+										align_tx = true
+										align_ty = true
+										align_tz = false
+										align_rx = false
+										align_ry = false
+										align_rz = false
+										align_frame_type = "Number"
+										frame = 9999
+										align_to_anim = "IdlePose_Default"
+										align_to_frame_type = "Number"
+										align_to_frame = 2
+										bone = "pelvis"
+									},
+									{
+										_class = "AnimOffset"
+										translation = [ 0.0, 0.0, 0.0 ]
+										rotation_xyz = [ 0.0, 0.0, -110.0 ]
+									},
+									{
+										_class = "AnimAddLayer"
+										anim_name = "_CONVERT_CITIZEN_ANIMS"
+									},
+								]
+								activity_name = ""
+								activity_weight = 1
+								weight_list_name = ""
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = false
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = true
+								disable_compression = false
+								disable_interpolation = false
+								enable_scale = false
+								source_filename = "models/citizen/animations/menu/Citizen@AvatarMenu_Mocap_Fidgets_01.fbx"
+								start_frame = 3325
+								end_frame = 3425
+								framerate = 40.0
+								take = 0
+								reverse = false
+							},
+							{
+								_class = "AnimFile"
+								name = "AvatarMenu_FidgetSmall_09"
+								children = 
+								[
+									{
+										_class = "AnimAlign"
+										align_tx = true
+										align_ty = true
+										align_tz = false
+										align_rx = false
+										align_ry = false
+										align_rz = false
+										align_frame_type = "Number"
+										frame = 9999
+										align_to_anim = "IdlePose_Default"
+										align_to_frame_type = "Number"
+										align_to_frame = 2
+										bone = "pelvis"
+									},
+									{
+										_class = "AnimOffset"
+										translation = [ 0.0, 0.0, 0.0 ]
+										rotation_xyz = [ 0.0, 0.0, -100.0 ]
+									},
+									{
+										_class = "AnimAddLayer"
+										anim_name = "_CONVERT_CITIZEN_ANIMS"
+									},
+								]
+								activity_name = ""
+								activity_weight = 1
+								weight_list_name = ""
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = false
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = true
+								disable_compression = false
+								disable_interpolation = false
+								enable_scale = false
+								source_filename = "models/citizen/animations/menu/Citizen@AvatarMenu_Mocap_Fidgets_02.fbx"
+								start_frame = 480
+								end_frame = 690
+								framerate = 40.0
+								take = 0
+								reverse = false
+							},
+							{
+								_class = "AnimFile"
+								name = "AvatarMenu_FidgetSmall_10"
+								children = 
+								[
+									{
+										_class = "AnimAlign"
+										align_tx = true
+										align_ty = true
+										align_tz = false
+										align_rx = false
+										align_ry = false
+										align_rz = false
+										align_frame_type = "Number"
+										frame = 9999
+										align_to_anim = "IdlePose_Default"
+										align_to_frame_type = "Number"
+										align_to_frame = 2
+										bone = "pelvis"
+									},
+									{
+										_class = "AnimOffset"
+										translation = [ 0.0, 0.0, 0.0 ]
+										rotation_xyz = [ 0.0, 0.0, -110.0 ]
+									},
+									{
+										_class = "AnimAddLayer"
+										anim_name = "_CONVERT_CITIZEN_ANIMS"
+									},
+								]
+								activity_name = ""
+								activity_weight = 1
+								weight_list_name = ""
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = false
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = true
+								disable_compression = false
+								disable_interpolation = false
+								enable_scale = false
+								source_filename = "models/citizen/animations/menu/Citizen@AvatarMenu_Mocap_Fidgets_01.fbx"
+								start_frame = 3535
+								end_frame = 3665
+								framerate = 40.0
+								take = 0
+								reverse = false
+							},
+							{
+								_class = "AnimFile"
+								name = "AvatarMenu_FidgetSmall_11"
+								children = 
+								[
+									{
+										_class = "AnimAlign"
+										align_tx = true
+										align_ty = true
+										align_tz = false
+										align_rx = false
+										align_ry = false
+										align_rz = false
+										align_frame_type = "Number"
+										frame = 9999
+										align_to_anim = "IdlePose_Default"
+										align_to_frame_type = "Number"
+										align_to_frame = 2
+										bone = "pelvis"
+									},
+									{
+										_class = "AnimOffset"
+										translation = [ 0.0, 0.0, 0.0 ]
+										rotation_xyz = [ 0.0, 0.0, -100.0 ]
+									},
+									{
+										_class = "AnimAddLayer"
+										anim_name = "_CONVERT_CITIZEN_ANIMS"
+									},
+								]
+								activity_name = ""
+								activity_weight = 1
+								weight_list_name = ""
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = false
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = true
+								disable_compression = false
+								disable_interpolation = false
+								enable_scale = false
+								source_filename = "models/citizen/animations/menu/Citizen@AvatarMenu_Mocap_Fidgets_02.fbx"
+								start_frame = 745
+								end_frame = 840
+								framerate = 40.0
+								take = 0
+								reverse = false
+							},
+							{
+								_class = "AnimFile"
+								name = "AvatarMenu_FidgetSmall_12"
+								children = 
+								[
+									{
+										_class = "AnimAlign"
+										align_tx = true
+										align_ty = true
+										align_tz = false
+										align_rx = false
+										align_ry = false
+										align_rz = false
+										align_frame_type = "Number"
+										frame = 9999
+										align_to_anim = "IdlePose_Default"
+										align_to_frame_type = "Number"
+										align_to_frame = 2
+										bone = "pelvis"
+									},
+									{
+										_class = "AnimOffset"
+										translation = [ 0.0, 0.0, 0.0 ]
+										rotation_xyz = [ 0.0, 0.0, -100.0 ]
+									},
+									{
+										_class = "AnimAddLayer"
+										anim_name = "_CONVERT_CITIZEN_ANIMS"
+									},
+								]
+								activity_name = ""
+								activity_weight = 1
+								weight_list_name = ""
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = false
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = true
+								disable_compression = false
+								disable_interpolation = false
+								enable_scale = false
+								source_filename = "models/citizen/animations/menu/Citizen@AvatarMenu_Mocap_Fidgets_02.fbx"
+								start_frame = 865
+								end_frame = 920
+								framerate = 40.0
+								take = 0
+								reverse = false
+							},
+							{
+								_class = "AnimFile"
+								name = "AvatarMenu_FidgetSmall_13"
+								children = 
+								[
+									{
+										_class = "AnimAlign"
+										align_tx = true
+										align_ty = true
+										align_tz = false
+										align_rx = false
+										align_ry = false
+										align_rz = false
+										align_frame_type = "Number"
+										frame = 9999
+										align_to_anim = "IdlePose_Default"
+										align_to_frame_type = "Number"
+										align_to_frame = 2
+										bone = "pelvis"
+									},
+									{
+										_class = "AnimOffset"
+										translation = [ 0.0, 0.0, 0.0 ]
+										rotation_xyz = [ 0.0, 0.0, -90.0 ]
+									},
+									{
+										_class = "AnimAddLayer"
+										anim_name = "_CONVERT_CITIZEN_ANIMS"
+									},
+								]
+								activity_name = ""
+								activity_weight = 1
+								weight_list_name = ""
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = false
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = true
+								disable_compression = false
+								disable_interpolation = false
+								enable_scale = false
+								source_filename = "models/citizen/animations/menu/Citizen@AvatarMenu_Mocap_Fidgets_02.fbx"
+								start_frame = 1585
+								end_frame = 1710
+								framerate = 40.0
+								take = 0
+								reverse = false
+							},
+							{
+								_class = "AnimFile"
+								name = "AvatarMenu_FidgetSmall_14"
+								children = 
+								[
+									{
+										_class = "AnimAlign"
+										align_tx = true
+										align_ty = true
+										align_tz = false
+										align_rx = false
+										align_ry = false
+										align_rz = false
+										align_frame_type = "Number"
+										frame = 9999
+										align_to_anim = "IdlePose_Default"
+										align_to_frame_type = "Number"
+										align_to_frame = 2
+										bone = "pelvis"
+									},
+									{
+										_class = "AnimOffset"
+										translation = [ 0.0, 0.0, 0.0 ]
+										rotation_xyz = [ 0.0, 0.0, -90.0 ]
+									},
+									{
+										_class = "AnimAddLayer"
+										anim_name = "_CONVERT_CITIZEN_ANIMS"
+									},
+								]
+								activity_name = ""
+								activity_weight = 1
+								weight_list_name = ""
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = false
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = true
+								disable_compression = false
+								disable_interpolation = false
+								enable_scale = false
+								source_filename = "models/citizen/animations/menu/Citizen@AvatarMenu_Mocap_Fidgets_02.fbx"
+								start_frame = 1900
+								end_frame = 2020
+								framerate = 40.0
+								take = 0
+								reverse = false
+							},
+							{
+								_class = "AnimFile"
+								name = "AvatarMenu_FidgetSmall_15"
+								children = 
+								[
+									{
+										_class = "AnimAlign"
+										align_tx = true
+										align_ty = true
+										align_tz = false
+										align_rx = false
+										align_ry = false
+										align_rz = false
+										align_frame_type = "Number"
+										frame = 9999
+										align_to_anim = "IdlePose_Default"
+										align_to_frame_type = "Number"
+										align_to_frame = 2
+										bone = "pelvis"
+									},
+									{
+										_class = "AnimOffset"
+										translation = [ 0.0, 0.0, 0.0 ]
+										rotation_xyz = [ 0.0, 0.0, -95.0 ]
+									},
+									{
+										_class = "AnimAddLayer"
+										anim_name = "_CONVERT_CITIZEN_ANIMS"
+									},
+								]
+								activity_name = ""
+								activity_weight = 1
+								weight_list_name = ""
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = false
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = true
+								disable_compression = false
+								disable_interpolation = false
+								enable_scale = false
+								source_filename = "models/citizen/animations/menu/Citizen@AvatarMenu_Mocap_Fidgets_02.fbx"
+								start_frame = 3725
+								end_frame = 3820
+								framerate = 40.0
+								take = 0
+								reverse = false
+							},
+						]
+					},
+					{
+						_class = "Folder"
+						name = "AvatarMenu_ExamineArms"
+						children = 
+						[
+							{
+								_class = "AnimFile"
+								name = "AvatarMenu_ExamineArms_01"
+								children = 
+								[
+									{
+										_class = "AnimAlign"
+										align_tx = true
+										align_ty = true
+										align_tz = false
+										align_rx = false
+										align_ry = false
+										align_rz = false
+										align_frame_type = "Number"
+										frame = 1
+										align_to_anim = "IdlePose_Default"
+										align_to_frame_type = "Number"
+										align_to_frame = 1
+										bone = "pelvis"
+									},
+									{
+										_class = "AnimOffset"
+										translation = [ 0.0, 0.0, 0.0 ]
+										rotation_xyz = [ 0.0, 0.0, -110.0 ]
+									},
+									{
+										_class = "AnimSmoothLoop"
+										frames_from_start = 0
+										frames_from_end = 0
+									},
+									{
+										_class = "AnimAddLayer"
+										anim_name = "_CONVERT_CITIZEN_ANIMS"
+									},
+								]
+								activity_name = ""
+								activity_weight = 1
+								weight_list_name = ""
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = false
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = true
+								disable_compression = false
+								disable_interpolation = false
+								enable_scale = false
+								source_filename = "models/citizen/animations/menu/Citizen@AvatarMenu_Mocap_ExamineArms.fbx"
+								start_frame = 35
+								end_frame = 350
+								framerate = 40.0
+								take = 0
+								reverse = false
+							},
+							{
+								_class = "AnimFile"
+								name = "AvatarMenu_ExamineArms_02"
+								children = 
+								[
+									{
+										_class = "AnimAlign"
+										align_tx = true
+										align_ty = true
+										align_tz = false
+										align_rx = false
+										align_ry = false
+										align_rz = false
+										align_frame_type = "Number"
+										frame = 1
+										align_to_anim = "IdlePose_Default"
+										align_to_frame_type = "Number"
+										align_to_frame = 1
+										bone = "pelvis"
+									},
+									{
+										_class = "AnimOffset"
+										translation = [ 0.0, 0.0, 0.0 ]
+										rotation_xyz = [ 0.0, 0.0, -110.0 ]
+									},
+									{
+										_class = "AnimSmoothLoop"
+										frames_from_start = 0
+										frames_from_end = 0
+									},
+									{
+										_class = "AnimAddLayer"
+										anim_name = "_CONVERT_CITIZEN_ANIMS"
+									},
+								]
+								activity_name = ""
+								activity_weight = 1
+								weight_list_name = ""
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = false
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = true
+								disable_compression = false
+								disable_interpolation = false
+								enable_scale = false
+								source_filename = "models/citizen/animations/menu/Citizen@AvatarMenu_Mocap_ExamineArms.fbx"
+								start_frame = 410
+								end_frame = 615
+								framerate = 40.0
+								take = 0
+								reverse = false
+							},
+							{
+								_class = "AnimFile"
+								name = "AvatarMenu_ExamineArms_03"
+								children = 
+								[
+									{
+										_class = "AnimAlign"
+										align_tx = true
+										align_ty = true
+										align_tz = false
+										align_rx = false
+										align_ry = false
+										align_rz = false
+										align_frame_type = "Number"
+										frame = 1
+										align_to_anim = "IdlePose_Default"
+										align_to_frame_type = "Number"
+										align_to_frame = 1
+										bone = "pelvis"
+									},
+									{
+										_class = "AnimOffset"
+										translation = [ 0.0, 0.0, 0.0 ]
+										rotation_xyz = [ 0.0, 0.0, -110.0 ]
+									},
+									{
+										_class = "AnimSmoothLoop"
+										frames_from_start = 0
+										frames_from_end = 0
+									},
+									{
+										_class = "AnimAddLayer"
+										anim_name = "_CONVERT_CITIZEN_ANIMS"
+									},
+								]
+								activity_name = ""
+								activity_weight = 1
+								weight_list_name = ""
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = false
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = true
+								disable_compression = false
+								disable_interpolation = false
+								enable_scale = false
+								source_filename = "models/citizen/animations/menu/Citizen@AvatarMenu_Mocap_ExamineArms.fbx"
+								start_frame = 690
+								end_frame = 900
+								framerate = 36.0
+								take = 0
+								reverse = false
+							},
+							{
+								_class = "AnimFile"
+								name = "AvatarMenu_ExamineArms_04_Loop"
+								children = 
+								[
+									{
+										_class = "AnimAlign"
+										align_tx = true
+										align_ty = true
+										align_tz = false
+										align_rx = false
+										align_ry = false
+										align_rz = false
+										align_frame_type = "Number"
+										frame = 1
+										align_to_anim = "IdlePose_Default"
+										align_to_frame_type = "Number"
+										align_to_frame = 1
+										bone = "pelvis"
+									},
+									{
+										_class = "AnimOffset"
+										translation = [ 0.0, 0.0, 0.0 ]
+										rotation_xyz = [ 0.0, 0.0, -110.0 ]
+									},
+									{
+										_class = "AnimSmoothLoop"
+										frames_from_start = 60
+										frames_from_end = 60
+									},
+									{
+										_class = "AnimAddLayer"
+										anim_name = "_CONVERT_CITIZEN_ANIMS"
+									},
+								]
+								activity_name = ""
+								activity_weight = 1
+								weight_list_name = ""
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = false
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = true
+								disable_compression = false
+								disable_interpolation = false
+								enable_scale = false
+								source_filename = "models/citizen/animations/menu/Citizen@AvatarMenu_Mocap_ExamineArms.fbx"
+								start_frame = 980
+								end_frame = 1365
+								framerate = 40.0
+								take = 0
+								reverse = false
+							},
+							{
+								_class = "AnimFile"
+								name = "AvatarMenu_ExamineArms_05"
+								children = 
+								[
+									{
+										_class = "AnimAlign"
+										align_tx = true
+										align_ty = true
+										align_tz = false
+										align_rx = false
+										align_ry = false
+										align_rz = false
+										align_frame_type = "Number"
+										frame = 1
+										align_to_anim = "IdlePose_Default"
+										align_to_frame_type = "Number"
+										align_to_frame = 1
+										bone = "pelvis"
+									},
+									{
+										_class = "AnimOffset"
+										translation = [ 0.0, 0.0, 0.0 ]
+										rotation_xyz = [ 0.0, 0.0, -110.0 ]
+									},
+									{
+										_class = "AnimSmoothLoop"
+										frames_from_start = 0
+										frames_from_end = 0
+									},
+									{
+										_class = "AnimAddLayer"
+										anim_name = "_CONVERT_CITIZEN_ANIMS"
+									},
+								]
+								activity_name = ""
+								activity_weight = 1
+								weight_list_name = ""
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = false
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = true
+								disable_compression = false
+								disable_interpolation = false
+								enable_scale = false
+								source_filename = "models/citizen/animations/menu/Citizen@AvatarMenu_Mocap_ExamineArms.fbx"
+								start_frame = 1880
+								end_frame = 2110
+								framerate = 36.0
+								take = 0
+								reverse = false
+							},
+							{
+								_class = "AnimFile"
+								name = "AvatarMenu_ExamineArms_06"
+								children = 
+								[
+									{
+										_class = "AnimAlign"
+										align_tx = true
+										align_ty = true
+										align_tz = false
+										align_rx = false
+										align_ry = false
+										align_rz = false
+										align_frame_type = "Number"
+										frame = 1
+										align_to_anim = "IdlePose_Default"
+										align_to_frame_type = "Number"
+										align_to_frame = 1
+										bone = "pelvis"
+									},
+									{
+										_class = "AnimOffset"
+										translation = [ 0.0, 0.0, 0.0 ]
+										rotation_xyz = [ 0.0, 0.0, -110.0 ]
+									},
+									{
+										_class = "AnimSmoothLoop"
+										frames_from_start = 0
+										frames_from_end = 0
+									},
+									{
+										_class = "AnimAddLayer"
+										anim_name = "_CONVERT_CITIZEN_ANIMS"
+									},
+								]
+								activity_name = ""
+								activity_weight = 1
+								weight_list_name = ""
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = false
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = true
+								disable_compression = false
+								disable_interpolation = false
+								enable_scale = false
+								source_filename = "models/citizen/animations/menu/Citizen@AvatarMenu_Mocap_ExamineArms.fbx"
+								start_frame = 2450
+								end_frame = 2580
+								framerate = -1.0
+								take = 0
+								reverse = false
+							},
+						]
+					},
+					{
+						_class = "Folder"
+						name = "AvatarMenu_ExamineBody"
+						children = 
+						[
+							{
+								_class = "AnimFile"
+								name = "AvatarMenu_ExamineBody_01"
+								children = 
+								[
+									{
+										_class = "AnimAlign"
+										align_tx = true
+										align_ty = true
+										align_tz = false
+										align_rx = false
+										align_ry = false
+										align_rz = false
+										align_frame_type = "Number"
+										frame = 1
+										align_to_anim = "IdlePose_Default"
+										align_to_frame_type = "Number"
+										align_to_frame = 1
+										bone = "pelvis"
+									},
+									{
+										_class = "AnimOffset"
+										translation = [ 0.0, 0.0, 0.0 ]
+										rotation_xyz = [ 0.0, 0.0, -100.0 ]
+									},
+									{
+										_class = "AnimAddLayer"
+										anim_name = "_CONVERT_CITIZEN_ANIMS"
+									},
+								]
+								activity_name = ""
+								activity_weight = 1
+								weight_list_name = ""
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = false
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = true
+								disable_compression = false
+								disable_interpolation = false
+								enable_scale = false
+								source_filename = "models/citizen/animations/menu/Citizen@AvatarMenu_Mocap_ExamineBody.fbx"
+								start_frame = 50
+								end_frame = 255
+								framerate = 40.0
+								take = 0
+								reverse = false
+							},
+							{
+								_class = "AnimFile"
+								name = "AvatarMenu_ExamineBody_02"
+								children = 
+								[
+									{
+										_class = "AnimAlign"
+										align_tx = true
+										align_ty = true
+										align_tz = false
+										align_rx = false
+										align_ry = false
+										align_rz = false
+										align_frame_type = "Number"
+										frame = 1
+										align_to_anim = "IdlePose_Default"
+										align_to_frame_type = "Number"
+										align_to_frame = 1
+										bone = "pelvis"
+									},
+									{
+										_class = "AnimOffset"
+										translation = [ 0.0, 0.0, 0.0 ]
+										rotation_xyz = [ 0.0, 0.0, -100.0 ]
+									},
+									{
+										_class = "AnimSmoothLoop"
+										frames_from_start = 0
+										frames_from_end = 0
+									},
+									{
+										_class = "AnimAddLayer"
+										anim_name = "_CONVERT_CITIZEN_ANIMS"
+									},
+								]
+								activity_name = ""
+								activity_weight = 1
+								weight_list_name = ""
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = false
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = true
+								disable_compression = false
+								disable_interpolation = false
+								enable_scale = false
+								source_filename = "models/citizen/animations/menu/Citizen@AvatarMenu_Mocap_ExamineBody.fbx"
+								start_frame = 330
+								end_frame = 445
+								framerate = 40.0
+								take = 0
+								reverse = false
+							},
+							{
+								_class = "AnimFile"
+								name = "AvatarMenu_ExamineBody_03"
+								children = 
+								[
+									{
+										_class = "AnimAlign"
+										align_tx = true
+										align_ty = true
+										align_tz = false
+										align_rx = false
+										align_ry = false
+										align_rz = false
+										align_frame_type = "Number"
+										frame = 1
+										align_to_anim = "IdlePose_Default"
+										align_to_frame_type = "Number"
+										align_to_frame = 1
+										bone = "pelvis"
+									},
+									{
+										_class = "AnimOffset"
+										translation = [ 0.0, 0.0, 0.0 ]
+										rotation_xyz = [ 0.0, 0.0, -100.0 ]
+									},
+									{
+										_class = "AnimSmoothLoop"
+										frames_from_start = 0
+										frames_from_end = 0
+									},
+									{
+										_class = "AnimAddLayer"
+										anim_name = "_CONVERT_CITIZEN_ANIMS"
+									},
+								]
+								activity_name = ""
+								activity_weight = 1
+								weight_list_name = ""
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = false
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = true
+								disable_compression = false
+								disable_interpolation = false
+								enable_scale = false
+								source_filename = "models/citizen/animations/menu/Citizen@AvatarMenu_Mocap_ExamineBody.fbx"
+								start_frame = 485
+								end_frame = 590
+								framerate = 40.0
+								take = 0
+								reverse = false
+							},
+							{
+								_class = "AnimFile"
+								name = "AvatarMenu_ExamineBody_04"
+								children = 
+								[
+									{
+										_class = "AnimAlign"
+										align_tx = true
+										align_ty = true
+										align_tz = false
+										align_rx = false
+										align_ry = false
+										align_rz = false
+										align_frame_type = "Number"
+										frame = 1
+										align_to_anim = "IdlePose_Default"
+										align_to_frame_type = "Number"
+										align_to_frame = 1
+										bone = "pelvis"
+									},
+									{
+										_class = "AnimOffset"
+										translation = [ 0.0, 0.0, 0.0 ]
+										rotation_xyz = [ 0.0, 0.0, -100.0 ]
+									},
+									{
+										_class = "AnimSmoothLoop"
+										frames_from_start = 0
+										frames_from_end = 0
+									},
+									{
+										_class = "AnimAddLayer"
+										anim_name = "_CONVERT_CITIZEN_ANIMS"
+									},
+								]
+								activity_name = ""
+								activity_weight = 1
+								weight_list_name = ""
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = false
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = true
+								disable_compression = false
+								disable_interpolation = false
+								enable_scale = false
+								source_filename = "models/citizen/animations/menu/Citizen@AvatarMenu_Mocap_ExamineBody.fbx"
+								start_frame = 670
+								end_frame = 820
+								framerate = 35.0
+								take = 0
+								reverse = false
+							},
+						]
+					},
+					{
+						_class = "Folder"
+						name = "AvatarMenu_ExamineHead"
+						children = 
+						[
+							{
+								_class = "AnimFile"
+								name = "AvatarMenu_ExamineHead_01"
+								children = 
+								[
+									{
+										_class = "AnimAlign"
+										align_tx = true
+										align_ty = true
+										align_tz = false
+										align_rx = false
+										align_ry = false
+										align_rz = false
+										align_frame_type = "Number"
+										frame = 2
+										align_to_anim = "IdlePose_Default"
+										align_to_frame_type = "Number"
+										align_to_frame = 2
+										bone = "pelvis"
+									},
+									{
+										_class = "AnimOffset"
+										translation = [ 0.0, 0.0, 0.0 ]
+										rotation_xyz = [ 0.0, 0.0, -105.0 ]
+									},
+									{
+										_class = "AnimAddLayer"
+										anim_name = "_CONVERT_CITIZEN_ANIMS"
+									},
+								]
+								activity_name = ""
+								activity_weight = 1
+								weight_list_name = ""
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = false
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = true
+								disable_compression = false
+								disable_interpolation = false
+								enable_scale = false
+								source_filename = "models/citizen/animations/menu/Citizen@AvatarMenu_Mocap_ExamineHead.fbx"
+								start_frame = 390
+								end_frame = 510
+								framerate = 33.0
+								take = 0
+								reverse = false
+							},
+							{
+								_class = "AnimFile"
+								name = "AvatarMenu_ExamineHead_02"
+								children = 
+								[
+									{
+										_class = "AnimAlign"
+										align_tx = true
+										align_ty = true
+										align_tz = false
+										align_rx = false
+										align_ry = false
+										align_rz = false
+										align_frame_type = "Number"
+										frame = 2
+										align_to_anim = "IdlePose_Default"
+										align_to_frame_type = "Number"
+										align_to_frame = 2
+										bone = "pelvis"
+									},
+									{
+										_class = "AnimOffset"
+										translation = [ 0.0, 0.0, 0.0 ]
+										rotation_xyz = [ 0.0, 0.0, -105.0 ]
+									},
+									{
+										_class = "AnimAddLayer"
+										anim_name = "_CONVERT_CITIZEN_ANIMS"
+									},
+								]
+								activity_name = ""
+								activity_weight = 1
+								weight_list_name = ""
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = false
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = true
+								disable_compression = false
+								disable_interpolation = false
+								enable_scale = false
+								source_filename = "models/citizen/animations/menu/Citizen@AvatarMenu_Mocap_ExamineHead.fbx"
+								start_frame = 640
+								end_frame = 865
+								framerate = 33.0
+								take = 0
+								reverse = false
+							},
+							{
+								_class = "AnimFile"
+								name = "AvatarMenu_ExamineHead_03"
+								children = 
+								[
+									{
+										_class = "AnimAlign"
+										align_tx = true
+										align_ty = true
+										align_tz = false
+										align_rx = false
+										align_ry = false
+										align_rz = false
+										align_frame_type = "Number"
+										frame = 2
+										align_to_anim = "IdlePose_Default"
+										align_to_frame_type = "Number"
+										align_to_frame = 2
+										bone = "pelvis"
+									},
+									{
+										_class = "AnimOffset"
+										translation = [ 0.0, 0.0, 0.0 ]
+										rotation_xyz = [ 0.0, 0.0, -105.0 ]
+									},
+									{
+										_class = "AnimAddLayer"
+										anim_name = "_CONVERT_CITIZEN_ANIMS"
+									},
+								]
+								activity_name = ""
+								activity_weight = 1
+								weight_list_name = ""
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = false
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = true
+								disable_compression = false
+								disable_interpolation = false
+								enable_scale = false
+								source_filename = "models/citizen/animations/menu/Citizen@AvatarMenu_Mocap_ExamineHead.fbx"
+								start_frame = 865
+								end_frame = 1000
+								framerate = 33.0
+								take = 0
+								reverse = false
+							},
+							{
+								_class = "AnimFile"
+								name = "AvatarMenu_ExamineHead_04"
+								children = 
+								[
+									{
+										_class = "AnimAlign"
+										align_tx = true
+										align_ty = true
+										align_tz = false
+										align_rx = false
+										align_ry = false
+										align_rz = false
+										align_frame_type = "Number"
+										frame = 2
+										align_to_anim = "IdlePose_Default"
+										align_to_frame_type = "Number"
+										align_to_frame = 2
+										bone = "pelvis"
+									},
+									{
+										_class = "AnimOffset"
+										translation = [ 0.0, 0.0, 0.0 ]
+										rotation_xyz = [ 0.0, 0.0, -105.0 ]
+									},
+									{
+										_class = "AnimAddLayer"
+										anim_name = "_CONVERT_CITIZEN_ANIMS"
+									},
+								]
+								activity_name = ""
+								activity_weight = 1
+								weight_list_name = ""
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = false
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = true
+								disable_compression = false
+								disable_interpolation = false
+								enable_scale = false
+								source_filename = "models/citizen/animations/menu/Citizen@AvatarMenu_Mocap_ExamineHead.fbx"
+								start_frame = 1090
+								end_frame = 1250
+								framerate = 33.0
+								take = 0
+								reverse = false
+							},
+							{
+								_class = "AnimFile"
+								name = "AvatarMenu_ExamineHead_05"
+								children = 
+								[
+									{
+										_class = "AnimAlign"
+										align_tx = true
+										align_ty = true
+										align_tz = false
+										align_rx = false
+										align_ry = false
+										align_rz = false
+										align_frame_type = "Number"
+										frame = 2
+										align_to_anim = "IdlePose_Default"
+										align_to_frame_type = "Number"
+										align_to_frame = 2
+										bone = "pelvis"
+									},
+									{
+										_class = "AnimOffset"
+										translation = [ 0.0, 0.0, 0.0 ]
+										rotation_xyz = [ 0.0, 0.0, -105.0 ]
+									},
+									{
+										_class = "AnimAddLayer"
+										anim_name = "_CONVERT_CITIZEN_ANIMS"
+									},
+								]
+								activity_name = ""
+								activity_weight = 1
+								weight_list_name = ""
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = false
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = true
+								disable_compression = false
+								disable_interpolation = false
+								enable_scale = false
+								source_filename = "models/citizen/animations/menu/Citizen@AvatarMenu_Mocap_ExamineHead.fbx"
+								start_frame = 1350
+								end_frame = 1530
+								framerate = 33.0
+								take = 0
+								reverse = false
+							},
+						]
+					},
+					{
+						_class = "Folder"
+						name = "AvatarMenu_ExamineLegs"
+						children = 
+						[
+							{
+								_class = "AnimFile"
+								name = "AvatarMenu_ExamineLegs_01"
+								children = 
+								[
+									{
+										_class = "AnimAlign"
+										align_tx = true
+										align_ty = true
+										align_tz = false
+										align_rx = false
+										align_ry = false
+										align_rz = false
+										align_frame_type = "Number"
+										frame = 160
+										align_to_anim = "IdlePose_Default"
+										align_to_frame_type = "Number"
+										align_to_frame = 2
+										bone = "pelvis"
+									},
+									{
+										_class = "AnimOffset"
+										translation = [ 0.0, 0.0, 0.0 ]
+										rotation_xyz = [ 0.0, 0.0, -120.0 ]
+									},
+									{
+										_class = "AnimSmoothLoop"
+										frames_from_start = 0
+										frames_from_end = 0
+									},
+									{
+										_class = "AnimAddLayer"
+										anim_name = "_CONVERT_CITIZEN_ANIMS"
+									},
+								]
+								activity_name = ""
+								activity_weight = 1
+								weight_list_name = ""
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = false
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = true
+								disable_compression = false
+								disable_interpolation = false
+								enable_scale = false
+								source_filename = "models/citizen/animations/menu/Citizen@AvatarMenu_Mocap_ExamineLegs.fbx"
+								start_frame = 240
+								end_frame = 400
+								framerate = 40.0
+								take = 0
+								reverse = false
+							},
+							{
+								_class = "AnimFile"
+								name = "AvatarMenu_ExamineLegs_02"
+								children = 
+								[
+									{
+										_class = "AnimAlign"
+										align_tx = true
+										align_ty = true
+										align_tz = false
+										align_rx = false
+										align_ry = false
+										align_rz = false
+										align_frame_type = "Number"
+										frame = 265
+										align_to_anim = "IdlePose_Default"
+										align_to_frame_type = "Number"
+										align_to_frame = 2
+										bone = "pelvis"
+									},
+									{
+										_class = "AnimOffset"
+										translation = [ 0.0, 0.0, 0.0 ]
+										rotation_xyz = [ 0.0, 0.0, -120.0 ]
+									},
+									{
+										_class = "AnimSmoothLoop"
+										disabled = true
+										frames_from_start = 60
+										frames_from_end = 60
+									},
+									{
+										_class = "AnimAddLayer"
+										anim_name = "_CONVERT_CITIZEN_ANIMS"
+									},
+								]
+								activity_name = ""
+								activity_weight = 1
+								weight_list_name = ""
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = false
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = true
+								disable_compression = false
+								disable_interpolation = false
+								enable_scale = false
+								source_filename = "models/citizen/animations/menu/Citizen@AvatarMenu_Mocap_ExamineLegs.fbx"
+								start_frame = 725
+								end_frame = 990
+								framerate = 40.0
+								take = 0
+								reverse = false
+							},
+							{
+								_class = "AnimFile"
+								name = "AvatarMenu_ExamineLegs_03"
+								children = 
+								[
+									{
+										_class = "AnimAlign"
+										align_tx = true
+										align_ty = true
+										align_tz = false
+										align_rx = false
+										align_ry = false
+										align_rz = false
+										align_frame_type = "Number"
+										frame = 810
+										align_to_anim = "IdlePose_Default"
+										align_to_frame_type = "Number"
+										align_to_frame = 2
+										bone = "pelvis"
+									},
+									{
+										_class = "AnimOffset"
+										translation = [ 0.0, 0.0, 0.0 ]
+										rotation_xyz = [ 0.0, 0.0, -105.0 ]
+									},
+									{
+										_class = "AnimAddLayer"
+										anim_name = "_CONVERT_CITIZEN_ANIMS"
+									},
+								]
+								activity_name = ""
+								activity_weight = 1
+								weight_list_name = ""
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = false
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = true
+								disable_compression = false
+								disable_interpolation = false
+								enable_scale = false
+								source_filename = "models/citizen/animations/menu/Citizen@AvatarMenu_Mocap_ExamineLegs.fbx"
+								start_frame = 1000
+								end_frame = 1815
+								framerate = 34.0
+								take = 0
+								reverse = false
+							},
+							{
+								_class = "AnimFile"
+								name = "AvatarMenu_ExamineLegs_04"
+								children = 
+								[
+									{
+										_class = "AnimAlign"
+										align_tx = true
+										align_ty = true
+										align_tz = false
+										align_rx = false
+										align_ry = false
+										align_rz = false
+										align_frame_type = "Number"
+										frame = 225
+										align_to_anim = "IdlePose_Default"
+										align_to_frame_type = "Number"
+										align_to_frame = 2
+										bone = "pelvis"
+									},
+									{
+										_class = "AnimOffset"
+										translation = [ 0.0, 0.0, 0.0 ]
+										rotation_xyz = [ 0.0, 0.0, -110.0 ]
+									},
+									{
+										_class = "AnimAddLayer"
+										anim_name = "_CONVERT_CITIZEN_ANIMS"
+									},
+								]
+								activity_name = ""
+								activity_weight = 1
+								weight_list_name = ""
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = false
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = true
+								disable_compression = false
+								disable_interpolation = false
+								enable_scale = false
+								source_filename = "models/citizen/animations/menu/Citizen@AvatarMenu_Mocap_ExamineLegs.fbx"
+								start_frame = 1990
+								end_frame = 2210
+								framerate = 36.0
+								take = 0
+								reverse = false
+							},
+							{
+								_class = "AnimFile"
+								name = "AvatarMenu_ExamineLegs_05"
+								children = 
+								[
+									{
+										_class = "AnimAlign"
+										align_tx = true
+										align_ty = true
+										align_tz = false
+										align_rx = false
+										align_ry = false
+										align_rz = false
+										align_frame_type = "Number"
+										frame = 225
+										align_to_anim = "IdlePose_Default"
+										align_to_frame_type = "Number"
+										align_to_frame = 2
+										bone = "pelvis"
+									},
+									{
+										_class = "AnimOffset"
+										translation = [ 0.0, 0.0, 0.0 ]
+										rotation_xyz = [ 0.0, 0.0, -110.0 ]
+									},
+									{
+										_class = "AnimAddLayer"
+										anim_name = "_CONVERT_CITIZEN_ANIMS"
+									},
+								]
+								activity_name = ""
+								activity_weight = 1
+								weight_list_name = ""
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = false
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = true
+								disable_compression = false
+								disable_interpolation = false
+								enable_scale = false
+								source_filename = "models/citizen/animations/menu/Citizen@AvatarMenu_Mocap_ExamineLegs.fbx"
+								start_frame = 3870
+								end_frame = 4000
+								framerate = 36.0
+								take = 0
+								reverse = false
+							},
+							{
+								_class = "AnimFile"
+								name = "AvatarMenu_ExamineLegs_06"
+								children = 
+								[
+									{
+										_class = "AnimAlign"
+										align_tx = true
+										align_ty = true
+										align_tz = false
+										align_rx = false
+										align_ry = false
+										align_rz = false
+										align_frame_type = "Number"
+										frame = 225
+										align_to_anim = "IdlePose_Default"
+										align_to_frame_type = "Number"
+										align_to_frame = 2
+										bone = "pelvis"
+									},
+									{
+										_class = "AnimOffset"
+										translation = [ 0.0, 0.0, 0.0 ]
+										rotation_xyz = [ 0.0, 0.0, -110.0 ]
+									},
+									{
+										_class = "AnimAddLayer"
+										anim_name = "_CONVERT_CITIZEN_ANIMS"
+									},
+								]
+								activity_name = ""
+								activity_weight = 1
+								weight_list_name = ""
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = false
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = true
+								disable_compression = false
+								disable_interpolation = false
+								enable_scale = false
+								source_filename = "models/citizen/animations/menu/Citizen@AvatarMenu_Mocap_ExamineLegs.fbx"
+								start_frame = 4105
+								end_frame = 4315
+								framerate = 36.0
+								take = 0
+								reverse = false
+							},
+							{
+								_class = "AnimFile"
+								name = "AvatarMenu_ExamineLegs_07"
+								children = 
+								[
+									{
+										_class = "AnimAlign"
+										align_tx = true
+										align_ty = true
+										align_tz = false
+										align_rx = false
+										align_ry = false
+										align_rz = false
+										align_frame_type = "Number"
+										frame = 9999
+										align_to_anim = "IdlePose_Default"
+										align_to_frame_type = "Number"
+										align_to_frame = 2
+										bone = "pelvis"
+									},
+									{
+										_class = "AnimOffset"
+										translation = [ 0.0, 0.0, 0.0 ]
+										rotation_xyz = [ 0.0, 0.0, -110.0 ]
+									},
+									{
+										_class = "AnimAddLayer"
+										anim_name = "_CONVERT_CITIZEN_ANIMS"
+									},
+								]
+								activity_name = ""
+								activity_weight = 1
+								weight_list_name = ""
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = false
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = true
+								disable_compression = false
+								disable_interpolation = false
+								enable_scale = false
+								source_filename = "models/citizen/animations/menu/Citizen@AvatarMenu_Mocap_ExamineLegs.fbx"
+								start_frame = 4385
+								end_frame = 4625
+								framerate = 36.0
+								take = 0
+								reverse = false
+							},
+							{
+								_class = "AnimFile"
+								name = "AvatarMenu_ExamineLegs_08"
+								children = 
+								[
+									{
+										_class = "AnimAlign"
+										align_tx = true
+										align_ty = true
+										align_tz = false
+										align_rx = false
+										align_ry = false
+										align_rz = false
+										align_frame_type = "Number"
+										frame = 9999
+										align_to_anim = "IdlePose_Default"
+										align_to_frame_type = "Number"
+										align_to_frame = 2
+										bone = "pelvis"
+									},
+									{
+										_class = "AnimOffset"
+										translation = [ 0.0, 0.0, 0.0 ]
+										rotation_xyz = [ 0.0, 0.0, -105.0 ]
+									},
+									{
+										_class = "AnimAddLayer"
+										anim_name = "_CONVERT_CITIZEN_ANIMS"
+									},
+								]
+								activity_name = ""
+								activity_weight = 1
+								weight_list_name = ""
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = false
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = true
+								disable_compression = false
+								disable_interpolation = false
+								enable_scale = false
+								source_filename = "models/citizen/animations/menu/Citizen@AvatarMenu_Mocap_ExamineLegs.fbx"
+								start_frame = 4725
+								end_frame = 4795
+								framerate = 36.0
+								take = 0
+								reverse = false
+							},
+							{
+								_class = "AnimFile"
+								name = "AvatarMenu_ExamineLegs_09"
+								children = 
+								[
+									{
+										_class = "AnimAlign"
+										align_tx = true
+										align_ty = true
+										align_tz = false
+										align_rx = false
+										align_ry = false
+										align_rz = false
+										align_frame_type = "Number"
+										frame = 9999
+										align_to_anim = "IdlePose_Default"
+										align_to_frame_type = "Number"
+										align_to_frame = 2
+										bone = "pelvis"
+									},
+									{
+										_class = "AnimOffset"
+										translation = [ 0.0, 0.0, 0.0 ]
+										rotation_xyz = [ 0.0, 0.0, -105.0 ]
+									},
+									{
+										_class = "AnimAddLayer"
+										anim_name = "_CONVERT_CITIZEN_ANIMS"
+									},
+								]
+								activity_name = ""
+								activity_weight = 1
+								weight_list_name = ""
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = false
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = true
+								disable_compression = false
+								disable_interpolation = false
+								enable_scale = false
+								source_filename = "models/citizen/animations/menu/Citizen@AvatarMenu_Mocap_ExamineLegs.fbx"
+								start_frame = 4800
+								end_frame = 4955
+								framerate = 36.0
+								take = 0
+								reverse = false
+							},
+							{
+								_class = "AnimFile"
+								name = "AvatarMenu_ExamineLegs_10"
+								children = 
+								[
+									{
+										_class = "AnimAlign"
+										align_tx = true
+										align_ty = true
+										align_tz = false
+										align_rx = false
+										align_ry = false
+										align_rz = false
+										align_frame_type = "Number"
+										frame = 9999
+										align_to_anim = "IdlePose_Default"
+										align_to_frame_type = "Number"
+										align_to_frame = 2
+										bone = "pelvis"
+									},
+									{
+										_class = "AnimOffset"
+										translation = [ 0.0, 0.0, 0.0 ]
+										rotation_xyz = [ 0.0, 0.0, -120.0 ]
+									},
+									{
+										_class = "AnimAddLayer"
+										anim_name = "_CONVERT_CITIZEN_ANIMS"
+									},
+								]
+								activity_name = ""
+								activity_weight = 1
+								weight_list_name = ""
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = false
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = true
+								disable_compression = false
+								disable_interpolation = false
+								enable_scale = false
+								source_filename = "models/citizen/animations/menu/Citizen@AvatarMenu_Mocap_ExamineLegs.fbx"
+								start_frame = 4970
+								end_frame = 5060
+								framerate = 36.0
+								take = 0
+								reverse = false
+							},
+							{
+								_class = "AnimFile"
+								name = "AvatarMenu_ExamineLegs_11"
+								children = 
+								[
+									{
+										_class = "AnimAlign"
+										align_tx = true
+										align_ty = true
+										align_tz = false
+										align_rx = false
+										align_ry = false
+										align_rz = false
+										align_frame_type = "Number"
+										frame = 2
+										align_to_anim = "IdlePose_Default"
+										align_to_frame_type = "Number"
+										align_to_frame = 2
+										bone = "pelvis"
+									},
+									{
+										_class = "AnimOffset"
+										translation = [ 0.0, 0.0, 0.0 ]
+										rotation_xyz = [ 0.0, 0.0, -120.0 ]
+									},
+									{
+										_class = "AnimAddLayer"
+										anim_name = "_CONVERT_CITIZEN_ANIMS"
+									},
+								]
+								activity_name = ""
+								activity_weight = 1
+								weight_list_name = ""
+								fade_in_time = 0.2
+								fade_out_time = 0.2
+								looping = false
+								delta = false
+								worldSpace = false
+								hidden = false
+								anim_markup_ordered = true
+								disable_compression = false
+								disable_interpolation = false
+								enable_scale = false
+								source_filename = "models/citizen/animations/menu/Citizen@AvatarMenu_Mocap_ExamineLegs.fbx"
+								start_frame = 5410
+								end_frame = 6040
+								framerate = 36.0
+								take = 0
+								reverse = false
+							},
+						]
+					},
+					{
+						_class = "AnimFile"
+						name = "AvatarMenu_IdlePose_01"
+						children = 
+						[
+							{
+								_class = "AnimAddLayer"
+								anim_name = "_CONVERT_CITIZEN_ANIMS"
+							},
+						]
+						activity_name = ""
+						activity_weight = 1
+						weight_list_name = ""
+						fade_in_time = 0.2
+						fade_out_time = 0.2
+						looping = true
+						delta = false
+						worldSpace = false
+						hidden = false
+						anim_markup_ordered = false
+						disable_compression = false
+						disable_interpolation = false
+						enable_scale = false
+						source_filename = "models/citizen/animations/menu/Citizen@AvatarMenu_IdlePose_01.fbx"
+						start_frame = -1
+						end_frame = 0
+						framerate = -1.0
+						take = 0
+						reverse = false
+						anim_hold_list = 
+						[
+							{
+								frame = 0
+								frame_count = 30
+							},
+						]
+					},
+					{
+						_class = "AnimFile"
+						name = "AvatarMenu_Idle_01"
+						children = 
+						[
+							{
+								_class = "AnimAlign"
+								align_tx = true
+								align_ty = true
+								align_tz = false
+								align_rx = false
+								align_ry = false
+								align_rz = false
+								align_frame_type = "Number"
+								frame = 2
+								align_to_anim = "IdlePose_Default"
+								align_to_frame_type = "Number"
+								align_to_frame = 2
+								bone = "pelvis"
+							},
+							{
+								_class = "AnimOffset"
+								translation = [ 0.0, 0.0, 0.0 ]
+								rotation_xyz = [ 0.0, 0.0, -70.0 ]
+							},
+							{
+								_class = "AnimSmoothLoop"
+								frames_from_start = 60
+								frames_from_end = 60
+							},
+							{
+								_class = "AnimAddLayer"
+								anim_name = "_CONVERT_CITIZEN_ANIMS"
+							},
+						]
+						activity_name = ""
+						activity_weight = 1
+						weight_list_name = ""
+						fade_in_time = 0.2
+						fade_out_time = 0.2
+						looping = true
+						delta = false
+						worldSpace = false
+						hidden = false
+						anim_markup_ordered = false
+						disable_compression = false
+						disable_interpolation = false
+						enable_scale = false
+						source_filename = "models/citizen/animations/menu/Citizen@AvatarMenu_Mocap_Entries.fbx"
+						start_frame = 255
+						end_frame = 360
+						framerate = -1.0
+						take = 0
+						reverse = false
+					},
+					{
+						_class = "AnimFile"
+						name = "AvatarMenu_Idle_02"
+						children = 
+						[
+							{
+								_class = "AnimAlign"
+								align_tx = true
+								align_ty = true
+								align_tz = false
+								align_rx = false
+								align_ry = false
+								align_rz = false
+								align_frame_type = "Number"
+								frame = 2
+								align_to_anim = "IdlePose_Default"
+								align_to_frame_type = "Number"
+								align_to_frame = 2
+								bone = "pelvis"
+							},
+							{
+								_class = "AnimOffset"
+								translation = [ 0.0, 0.0, 0.0 ]
+								rotation_xyz = [ 0.0, 0.0, -95.0 ]
+							},
+							{
+								_class = "AnimSmoothLoop"
+								frames_from_start = 60
+								frames_from_end = 60
+							},
+							{
+								_class = "AnimAddLayer"
+								anim_name = "_CONVERT_CITIZEN_ANIMS"
+							},
+						]
+						activity_name = ""
+						activity_weight = 1
+						weight_list_name = ""
+						fade_in_time = 0.2
+						fade_out_time = 0.2
+						looping = true
+						delta = false
+						worldSpace = false
+						hidden = false
+						anim_markup_ordered = false
+						disable_compression = false
+						disable_interpolation = false
+						enable_scale = false
+						source_filename = "models/citizen/animations/menu/Citizen@AvatarMenu_Mocap_Fidgets_02.fbx"
+						start_frame = 3290
+						end_frame = 3430
+						framerate = -1.0
+						take = 0
+						reverse = false
+					},
+					{
+						_class = "AnimFile"
+						name = "AvatarMenu_Mocap_PoseAdj"
+						activity_name = ""
+						activity_weight = 1
+						weight_list_name = ""
+						fade_in_time = 0.2
+						fade_out_time = 0.2
+						looping = false
+						delta = false
+						worldSpace = false
+						hidden = false
+						anim_markup_ordered = false
+						disable_compression = false
+						disable_interpolation = false
+						enable_scale = false
+						source_filename = "models/citizen/animations/menu/Citizen@AvatarMenu_Mocap_PoseAdj.fbx"
+						start_frame = -1
+						end_frame = -1
+						framerate = 3.0
+						take = 0
+						reverse = false
+					},
+				]
+				default_root_bone_name = ""
+			},
+		]
+		model_archetype = ""
+		primary_associated_entity = ""
+		anim_graph_name = ""
+		base_model_name = ""
+	}
+}

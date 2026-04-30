@@ -1,0 +1,17 @@
+// THIS FILE IS AUTO-GENERATED
+
+Layer0
+{
+	shader "water.shader"
+
+	AmbientOcclusion "materials/default/default_color.tga"
+	Color "[0.000000 0.647059 1.000000 1.000000]"
+	Normal "materials/default/default_color.tga"
+	Roughness "materials/default/default_color.tga"
+
+	//---- Fog ----
+	g_bFogEnabled "0"
+
+	//---- Translucent ----
+	g_flOpacityScale "1.000"
+}

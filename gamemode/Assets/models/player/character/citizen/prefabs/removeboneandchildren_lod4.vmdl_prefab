@@ -1,0 +1,48 @@
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:modeldoc29:version{3cec427c-1b0e-4d48-a90a-0436f33a6041} -->
+{
+	rootNode = 
+	{
+		_class = "RootNode"
+		children = 
+		[
+			{
+				_class = "RemoveBoneAndChildren"
+				bone_names = 
+				[
+					"arm_lower_L_twist",
+					"arm_lower_R_twist",
+					"leg_lower_L_twist",
+					"leg_lower_R_twist",
+					"leg_upper_L_twist",
+					"leg_upper_R_twist",
+					"ball_L",
+					"ball_R",
+					"finger_thumb_0_L",
+					"finger_thumb_0_R",
+					"finger_index_meta_L",
+					"finger_index_meta_R",
+					"finger_middle_meta_L",
+					"finger_middle_meta_R",
+					"finger_ring_meta_L",
+					"finger_ring_meta_R",
+					"arm_elbow_helper_L",
+					"arm_elbow_helper_R",
+					"leg_knee_helper_L",
+					"leg_knee_helper_R",
+					"eye_L",
+					"eye_R",
+					"face_lid_lower_L",
+					"face_lid_lower_R",
+					"face_lid_upper_L",
+					"face_lid_upper_R",
+					"neck_clothing",
+					"",
+				]
+			},
+		]
+		model_archetype = ""
+		primary_associated_entity = ""
+		anim_graph_name = ""
+		base_model_name = ""
+	}
+}

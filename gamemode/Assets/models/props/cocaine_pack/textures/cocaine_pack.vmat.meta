@@ -1,0 +1,21 @@
+{
+  "publish": {
+    "Enabled": false,
+    "ProjectConfig": {
+      "Title": "Cocaine Pack",
+      "Type": "material",
+      "Org": "local",
+      "Ident": "cocainepack",
+      "Schema": 0,
+      "IncludeSourceFiles": false,
+      "Resources": null,
+      "PackageReferences": null,
+      "EditorReferences": [],
+      "Mounts": null,
+      "IsStandaloneOnly": false,
+      "Metadata": {
+        "SingleAssetSource": "models/props/cocaine_pack/textures/cocaine_pack.vmat"
+      }
+    }
+  }
+}

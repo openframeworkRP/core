@@ -1,0 +1,917 @@
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:modeldoc29:version{3cec427c-1b0e-4d48-a90a-0436f33a6041} -->
+{
+	rootNode = 
+	{
+		_class = "RootNode"
+		children = 
+		[
+			{
+				_class = "AnimConstraintList"
+				children = 
+				[
+					{
+						_class = "Folder"
+						name = "Constraint_Arms"
+						children = 
+						[
+							{
+								_class = "Folder"
+								name = "Constraint_UpperArms"
+								children = 
+								[
+									{
+										_class = "AnimConstraintTiltTwist"
+										name = "ShoulderToBicep_R_rotation"
+										children = 
+										[
+											{
+												_class = "AnimConstraintBoneInput"
+												parent_bone = "arm_upper_R"
+												relative_origin = [ 0.0, 0.0, 0.0 ]
+												relative_angles = [ 0.0, 0.0, 16.0 ]
+												weight = 1.0
+											},
+											{
+												_class = "AnimConstraintSlave"
+												parent_bone = "arm_upper_R_twist0"
+												relative_origin = [ 0.0, 0.0, 0.0 ]
+												relative_angles = [ 0.0, 0.0, 0.0 ]
+												weight = -0.5
+											},
+										]
+										input_axis = 0
+										slave_axis = 0
+									},
+									{
+										_class = "AnimConstraintParent"
+										name = "Bicep_R_position"
+										children = 
+										[
+											{
+												_class = "AnimConstraintAttachmentInput"
+												parent_attachment = "driver_arm_upper_R_twist1"
+												relative_origin = [ 0.0, 0.0, 0.0 ]
+												relative_angles = [ 0.0, 0.0, 0.0 ]
+												weight = 1.0
+											},
+											{
+												_class = "AnimConstraintSlave"
+												parent_bone = "arm_upper_R_twist1"
+												relative_origin = [ 0.0, 0.0, 0.0 ]
+												relative_angles = [ 0.0, 0.0, 0.0 ]
+												weight = 1.0
+											},
+										]
+										constrained_bone = "arm_upper_R_twist1"
+										weight = 1.75
+										translation_offset = [ 0.0, 0.0, 0.0 ]
+										rotation_offset_xyz = [ 0.0, 0.0, 0.0 ]
+									},
+									{
+										_class = "AnimConstraintTiltTwist"
+										name = "Bicep_R_rotation"
+										note = "Made necessary by the addition of the position constraint, which completely screws the orientation up"
+										children = 
+										[
+											{
+												_class = "AnimConstraintBoneInput"
+												parent_bone = "arm_upper_R"
+												relative_origin = [ 0.0, 0.0, 0.0 ]
+												relative_angles = [ 0.0, 0.0, 0.0 ]
+												weight = 1.0
+											},
+											{
+												_class = "AnimConstraintSlave"
+												parent_bone = "arm_upper_R_twist1"
+												relative_origin = [ 0.0, 0.0, 0.0 ]
+												relative_angles = [ 0.0, 0.0, 0.0 ]
+												weight = -0.1
+											},
+										]
+										input_axis = 0
+										slave_axis = 0
+									},
+									{
+										_class = "AnimConstraintTiltTwist"
+										name = "Bicep_R_rotation_bulge"
+										children = 
+										[
+											{
+												_class = "AnimConstraintBoneInput"
+												parent_bone = "arm_lower_R"
+												relative_origin = [ 0.0, 0.0, 0.0 ]
+												relative_angles = [ 0.0, 0.0, 0.0 ]
+												weight = 1.0
+											},
+											{
+												_class = "AnimConstraintSlave"
+												parent_bone = "arm_upper_R_twist1"
+												relative_origin = [ 0.0, 0.0, 0.0 ]
+												relative_angles = [ 0.0, 0.0, 0.0 ]
+												weight = -0.05
+											},
+										]
+										input_axis = 2
+										slave_axis = 2
+									},
+									{
+										_class = "AnimConstraintTiltTwist"
+										name = "ShoulderToBicep_L_rotation"
+										children = 
+										[
+											{
+												_class = "AnimConstraintBoneInput"
+												parent_bone = "arm_upper_L"
+												relative_origin = [ 0.0, 0.0, 0.0 ]
+												relative_angles = [ 0.0, 0.0, -16.0 ]
+												weight = 1.0
+											},
+											{
+												_class = "AnimConstraintSlave"
+												parent_bone = "arm_upper_L_twist0"
+												relative_origin = [ 0.0, 0.0, 0.0 ]
+												relative_angles = [ 0.0, 0.0, 0.0 ]
+												weight = -0.5
+											},
+										]
+										input_axis = 0
+										slave_axis = 0
+									},
+									{
+										_class = "AnimConstraintParent"
+										name = "Bicep_L_position"
+										children = 
+										[
+											{
+												_class = "AnimConstraintAttachmentInput"
+												parent_attachment = "driver_arm_upper_L_twist1"
+												relative_origin = [ 0.0, 0.0, 0.0 ]
+												relative_angles = [ 0.0, 0.0, 0.0 ]
+												weight = 1.0
+											},
+											{
+												_class = "AnimConstraintSlave"
+												parent_bone = "arm_upper_L_twist1"
+												relative_origin = [ 0.0, 0.0, 0.0 ]
+												relative_angles = [ 0.0, 0.0, 0.0 ]
+												weight = 1.0
+											},
+										]
+										constrained_bone = "arm_upper_L_twist1"
+										weight = 1.75
+										translation_offset = [ 0.0, 0.0, 0.0 ]
+										rotation_offset_xyz = [ 0.0, 0.0, 0.0 ]
+									},
+									{
+										_class = "AnimConstraintTiltTwist"
+										name = "Bicep_L_rotation"
+										note = "Made necessary by the addition of the position constraint, which completely screws the orientation up\n"
+										children = 
+										[
+											{
+												_class = "AnimConstraintBoneInput"
+												parent_bone = "arm_upper_L"
+												relative_origin = [ 0.0, 0.0, 0.0 ]
+												relative_angles = [ 0.0, 0.0, 0.0 ]
+												weight = 1.0
+											},
+											{
+												_class = "AnimConstraintSlave"
+												parent_bone = "arm_upper_L_twist1"
+												relative_origin = [ 0.0, 0.0, 0.0 ]
+												relative_angles = [ 0.0, 0.0, 0.0 ]
+												weight = -0.1
+											},
+										]
+										input_axis = 0
+										slave_axis = 0
+									},
+									{
+										_class = "AnimConstraintTiltTwist"
+										name = "Bicep_L_rotation_bulge"
+										children = 
+										[
+											{
+												_class = "AnimConstraintBoneInput"
+												parent_bone = "arm_lower_L"
+												relative_origin = [ 0.0, 0.0, 0.0 ]
+												relative_angles = [ 0.0, 0.0, 0.0 ]
+												weight = 1.0
+											},
+											{
+												_class = "AnimConstraintSlave"
+												parent_bone = "arm_upper_L_twist1"
+												relative_origin = [ 0.0, 0.0, 0.0 ]
+												relative_angles = [ 0.0, 0.0, 0.0 ]
+												weight = -0.05
+											},
+										]
+										input_axis = 2
+										slave_axis = 2
+									},
+								]
+							},
+							{
+								_class = "Folder"
+								name = "Constraint_Elbows"
+								children = 
+								[
+									{
+										_class = "AnimConstraintParent"
+										name = "Elbow_R_position"
+										note = "Poor man\'s RBF: pushes the elbow out as the arm bends"
+										children = 
+										[
+											{
+												_class = "AnimConstraintAttachmentInput"
+												parent_attachment = "driver_elbow_R_position"
+												relative_origin = [ 0.0, 0.0, 0.0 ]
+												relative_angles = [ 0.0, 0.0, 0.0 ]
+												weight = 1.0
+											},
+											{
+												_class = "AnimConstraintSlave"
+												parent_bone = "arm_elbow_helper_R"
+												relative_origin = [ 0.0, 0.0, 0.0 ]
+												relative_angles = [ 0.0, 0.0, 0.0 ]
+												weight = 1.0
+											},
+										]
+										constrained_bone = "arm_elbow_helper_R"
+										weight = 0.25
+										translation_offset = [ 0.0, 0.0, 0.0 ]
+										rotation_offset_xyz = [ 0.0, 0.0, 0.0 ]
+									},
+									{
+										_class = "AnimConstraintOrient"
+										name = "Elbow_R_rotation"
+										children = 
+										[
+											{
+												_class = "AnimConstraintBoneInput"
+												parent_bone = "arm_upper_R"
+												relative_origin = [ 0.0, 0.0, 0.0 ]
+												relative_angles = [ 0.0, -81.464996, 0.0 ]
+												weight = -0.5
+											},
+											{
+												_class = "AnimConstraintSlave"
+												parent_bone = "arm_elbow_helper_R"
+												relative_origin = [ 0.0, 0.0, 0.0 ]
+												relative_angles = [ 0.0, 0.0, 0.0 ]
+												weight = -1.0
+											},
+										]
+									},
+									{
+										_class = "AnimConstraintParent"
+										name = "Elbow_L_position"
+										note = "Poor man\'s RBF: pushes the elbow out as the arm bends"
+										children = 
+										[
+											{
+												_class = "AnimConstraintAttachmentInput"
+												parent_attachment = "driver_elbow_L_position"
+												relative_origin = [ 0.0, 0.0, 0.0 ]
+												relative_angles = [ 0.0, 0.0, 0.0 ]
+												weight = 1.0
+											},
+											{
+												_class = "AnimConstraintSlave"
+												parent_bone = "arm_elbow_helper_R"
+												relative_origin = [ 0.0, 0.0, 0.0 ]
+												relative_angles = [ 0.0, 0.0, 0.0 ]
+												weight = 1.0
+											},
+										]
+										constrained_bone = "arm_elbow_helper_L"
+										weight = 0.25
+										translation_offset = [ 0.0, 0.0, 0.0 ]
+										rotation_offset_xyz = [ 0.0, 0.0, 0.0 ]
+									},
+									{
+										_class = "AnimConstraintOrient"
+										name = "Elbow_L_rotation"
+										children = 
+										[
+											{
+												_class = "AnimConstraintBoneInput"
+												parent_bone = "arm_upper_L"
+												relative_origin = [ 0.0, 0.0, 0.0 ]
+												relative_angles = [ 0.0, -81.464996, 0.0 ]
+												weight = -0.5
+											},
+											{
+												_class = "AnimConstraintSlave"
+												parent_bone = "arm_elbow_helper_L"
+												relative_origin = [ 0.0, 0.0, 0.0 ]
+												relative_angles = [ 0.0, 0.0, 0.0 ]
+												weight = -1.0
+											},
+										]
+									},
+								]
+							},
+							{
+								_class = "Folder"
+								name = "Constraint_LowerArms"
+								children = 
+								[
+									{
+										_class = "AnimConstraintParent"
+										name = "Ulna_R_position"
+										children = 
+										[
+											{
+												_class = "AnimConstraintAttachmentInput"
+												parent_attachment = "driver_arm_lower_R_twist1"
+												relative_origin = [ 0.0, 0.0, 0.0 ]
+												relative_angles = [ 0.0, 0.0, 0.0 ]
+												weight = 1.0
+											},
+											{
+												_class = "AnimConstraintSlave"
+												parent_bone = "arm_lower_R_twist1"
+												relative_origin = [ 0.0, 0.0, 0.0 ]
+												relative_angles = [ 0.0, 0.0, 0.0 ]
+												weight = 1.0
+											},
+										]
+										constrained_bone = "arm_lower_R_twist1"
+										weight = 1.75
+										translation_offset = [ 0.0, 0.0, 0.0 ]
+										rotation_offset_xyz = [ 0.0, 0.0, 0.0 ]
+									},
+									{
+										_class = "AnimConstraintTiltTwist"
+										name = "Ulna_R_rotation"
+										note = "Made necessary by the addition of the position constraint, which completely screws the orientation up"
+										children = 
+										[
+											{
+												_class = "AnimConstraintBoneInput"
+												parent_bone = "hand_R"
+												relative_origin = [ 0.0, 0.0, 0.0 ]
+												relative_angles = [ 0.0, 0.0, -4.0 ]
+												weight = 1.0
+											},
+											{
+												_class = "AnimConstraintSlave"
+												parent_bone = "arm_lower_R_twist1"
+												relative_origin = [ 0.0, 0.0, 0.0 ]
+												relative_angles = [ 0.0, 0.0, 0.0 ]
+												weight = 0.65
+											},
+										]
+										input_axis = 0
+										slave_axis = 0
+									},
+									{
+										_class = "AnimConstraintParent"
+										name = "Ulna_L_position"
+										children = 
+										[
+											{
+												_class = "AnimConstraintAttachmentInput"
+												parent_attachment = "driver_arm_lower_L_twist1"
+												relative_origin = [ 0.0, 0.0, 0.0 ]
+												relative_angles = [ 0.0, 0.0, 0.0 ]
+												weight = 1.0
+											},
+											{
+												_class = "AnimConstraintSlave"
+												parent_bone = "arm_lower_L_twist1"
+												relative_origin = [ 0.0, 0.0, 0.0 ]
+												relative_angles = [ 0.0, 0.0, 0.0 ]
+												weight = 1.0
+											},
+										]
+										constrained_bone = "arm_lower_L_twist1"
+										weight = 1.75
+										translation_offset = [ 0.0, 0.0, 0.0 ]
+										rotation_offset_xyz = [ 0.0, 0.0, 0.0 ]
+									},
+									{
+										_class = "AnimConstraintTiltTwist"
+										name = "Ulna_L_rotation"
+										note = "Made necessary by the addition of the position constraint, which completely screws the orientation up\n"
+										children = 
+										[
+											{
+												_class = "AnimConstraintBoneInput"
+												parent_bone = "hand_L"
+												relative_origin = [ 0.0, 0.0, 0.0 ]
+												relative_angles = [ 0.0, 0.0, 4.0 ]
+												weight = 1.0
+											},
+											{
+												_class = "AnimConstraintSlave"
+												parent_bone = "arm_lower_L_twist1"
+												relative_origin = [ 0.0, 0.0, 0.0 ]
+												relative_angles = [ 0.0, 0.0, 0.0 ]
+												weight = 0.65
+											},
+										]
+										input_axis = 0
+										slave_axis = 0
+									},
+								]
+							},
+						]
+					},
+					{
+						_class = "Folder"
+						name = "Constraint_Legs"
+						children = 
+						[
+							{
+								_class = "Folder"
+								name = "Constraint_UpperLegs"
+								children = 
+								[
+									{
+										_class = "AnimConstraintTiltTwist"
+										name = "PelvisToThigh_R"
+										children = 
+										[
+											{
+												_class = "AnimConstraintBoneInput"
+												parent_bone = "leg_upper_R"
+												relative_origin = [ 0.0, 0.0, 0.0 ]
+												relative_angles = [ 0.0, 180.0, 185.0 ]
+												weight = 1.0
+											},
+											{
+												_class = "AnimConstraintSlave"
+												parent_bone = "leg_upper_R_twist0"
+												relative_origin = [ 0.0, 0.0, 0.0 ]
+												relative_angles = [ 0.0, 0.0, 0.0 ]
+												weight = -0.65
+											},
+										]
+										input_axis = 0
+										slave_axis = 0
+									},
+									{
+										_class = "AnimConstraintParent"
+										name = "Thigh_R_position"
+										children = 
+										[
+											{
+												_class = "AnimConstraintAttachmentInput"
+												parent_attachment = "driver_leg_upper_R_twist1"
+												relative_origin = [ 0.0, 0.0, 0.0 ]
+												relative_angles = [ 0.0, 0.0, 0.0 ]
+												weight = 1.0
+											},
+											{
+												_class = "AnimConstraintSlave"
+												parent_bone = "leg_upper_R_twist1"
+												relative_origin = [ 0.0, 0.0, 0.0 ]
+												relative_angles = [ 0.0, 0.0, 0.0 ]
+												weight = 1.0
+											},
+										]
+										constrained_bone = "leg_upper_R_twist1"
+										weight = 1.75
+										translation_offset = [ 0.0, 0.0, 0.0 ]
+										rotation_offset_xyz = [ 0.0, 0.0, 0.0 ]
+									},
+									{
+										_class = "AnimConstraintTiltTwist"
+										name = "Thigh_R_rotation"
+										note = "Made necessary by the addition of the position constraint, which completely screws the orientation up"
+										children = 
+										[
+											{
+												_class = "AnimConstraintBoneInput"
+												parent_bone = "leg_upper_R"
+												relative_origin = [ 0.0, 0.0, 0.0 ]
+												relative_angles = [ 0.0, 180.0, 180.0 ]
+												weight = 1.0
+											},
+											{
+												_class = "AnimConstraintSlave"
+												parent_bone = "leg_upper_R_twist1"
+												relative_origin = [ 0.0, 0.0, 0.0 ]
+												relative_angles = [ 0.0, 0.0, 0.0 ]
+												weight = -0.1
+											},
+										]
+										input_axis = 0
+										slave_axis = 0
+									},
+									{
+										_class = "AnimConstraintTiltTwist"
+										name = "Thigh_R_rotation_bulge"
+										children = 
+										[
+											{
+												_class = "AnimConstraintBoneInput"
+												parent_bone = "leg_lower_R"
+												relative_origin = [ 0.0, 0.0, 0.0 ]
+												relative_angles = [ 0.0, 0.0, 0.0 ]
+												weight = 1.0
+											},
+											{
+												_class = "AnimConstraintSlave"
+												parent_bone = "leg_upper_R_twist1"
+												relative_origin = [ 0.0, 0.0, 0.0 ]
+												relative_angles = [ 0.0, 0.0, 0.0 ]
+												weight = -0.06
+											},
+										]
+										input_axis = 2
+										slave_axis = 2
+									},
+									{
+										_class = "AnimConstraintTiltTwist"
+										name = "PelvisToThigh_L"
+										children = 
+										[
+											{
+												_class = "AnimConstraintBoneInput"
+												parent_bone = "leg_upper_L"
+												relative_origin = [ 0.0, 0.0, 0.0 ]
+												relative_angles = [ 0.0, 180.0, 175.0 ]
+												weight = 1.0
+											},
+											{
+												_class = "AnimConstraintSlave"
+												parent_bone = "leg_upper_L_twist0"
+												relative_origin = [ 0.0, 0.0, 0.0 ]
+												relative_angles = [ 0.0, 0.0, 0.0 ]
+												weight = -0.65
+											},
+										]
+										input_axis = 0
+										slave_axis = 0
+									},
+									{
+										_class = "AnimConstraintParent"
+										name = "Thigh_L_position"
+										children = 
+										[
+											{
+												_class = "AnimConstraintAttachmentInput"
+												parent_attachment = "driver_leg_upper_L_twist1"
+												relative_origin = [ 0.0, 0.0, 0.0 ]
+												relative_angles = [ 0.0, 0.0, 0.0 ]
+												weight = 1.0
+											},
+											{
+												_class = "AnimConstraintSlave"
+												parent_bone = "leg_upper_L_twist1"
+												relative_origin = [ 0.0, 0.0, 0.0 ]
+												relative_angles = [ 0.0, 0.0, 0.0 ]
+												weight = 1.0
+											},
+										]
+										constrained_bone = "leg_upper_L_twist1"
+										weight = 1.75
+										translation_offset = [ 0.0, 0.0, 0.0 ]
+										rotation_offset_xyz = [ 0.0, 0.0, 0.0 ]
+									},
+									{
+										_class = "AnimConstraintTiltTwist"
+										name = "Thigh_L_rotation"
+										note = "Made necessary by the addition of the position constraint, which completely screws the orientation up\n"
+										children = 
+										[
+											{
+												_class = "AnimConstraintBoneInput"
+												parent_bone = "leg_upper_L"
+												relative_origin = [ 0.0, 0.0, 0.0 ]
+												relative_angles = [ 0.0, 180.0, 180.0 ]
+												weight = 1.0
+											},
+											{
+												_class = "AnimConstraintSlave"
+												parent_bone = "leg_upper_L_twist1"
+												relative_origin = [ 0.0, 0.0, 0.0 ]
+												relative_angles = [ 0.0, 0.0, 0.0 ]
+												weight = -0.1
+											},
+										]
+										input_axis = 0
+										slave_axis = 0
+									},
+									{
+										_class = "AnimConstraintTiltTwist"
+										name = "Thigh_L_rotation_bulge"
+										children = 
+										[
+											{
+												_class = "AnimConstraintBoneInput"
+												parent_bone = "leg_lower_L"
+												relative_origin = [ 0.0, 0.0, 0.0 ]
+												relative_angles = [ 0.0, 0.0, 0.0 ]
+												weight = 1.0
+											},
+											{
+												_class = "AnimConstraintSlave"
+												parent_bone = "leg_upper_L_twist1"
+												relative_origin = [ 0.0, 0.0, 0.0 ]
+												relative_angles = [ 0.0, 0.0, 0.0 ]
+												weight = -0.06
+											},
+										]
+										input_axis = 2
+										slave_axis = 2
+									},
+								]
+							},
+							{
+								_class = "Folder"
+								name = "Constraint_Kneecaps"
+								children = 
+								[
+									{
+										_class = "AnimConstraintParent"
+										name = "Kneecap_R_position"
+										note = "Poor man\'s RBF: pushes the kneecap out as the leg bends"
+										children = 
+										[
+											{
+												_class = "AnimConstraintAttachmentInput"
+												parent_attachment = "driver_kneecap_R_position"
+												relative_origin = [ 0.0, 0.0, 0.0 ]
+												relative_angles = [ 0.0, 0.0, 0.0 ]
+												weight = 1.0
+											},
+											{
+												_class = "AnimConstraintSlave"
+												parent_bone = "leg_knee_helper_R"
+												relative_origin = [ 0.0, 0.0, 0.0 ]
+												relative_angles = [ 0.0, 0.0, 0.0 ]
+												weight = 1.0
+											},
+										]
+										constrained_bone = "leg_knee_helper_R"
+										weight = 0.2
+										translation_offset = [ 0.0, 0.0, 0.0 ]
+										rotation_offset_xyz = [ 0.0, 0.0, 0.0 ]
+									},
+									{
+										_class = "AnimConstraintOrient"
+										name = "Kneecap_R_rotation"
+										children = 
+										[
+											{
+												_class = "AnimConstraintBoneInput"
+												parent_bone = "leg_upper_R"
+												relative_origin = [ 0.0, 0.0, 0.0 ]
+												relative_angles = [ 0.0, 88.949997, 0.0 ]
+												weight = -0.5
+											},
+											{
+												_class = "AnimConstraintSlave"
+												parent_bone = "leg_knee_helper_R"
+												relative_origin = [ 0.0, 0.0, 0.0 ]
+												relative_angles = [ 0.0, 0.0, 0.0 ]
+												weight = -1.0
+											},
+										]
+									},
+									{
+										_class = "AnimConstraintParent"
+										name = "Kneecap_L_position"
+										note = "Poor man\'s RBF: pushes the kneecap out as the leg bends"
+										children = 
+										[
+											{
+												_class = "AnimConstraintAttachmentInput"
+												parent_attachment = "driver_kneecap_L_position"
+												relative_origin = [ 0.0, 0.0, 0.0 ]
+												relative_angles = [ 0.0, 0.0, 0.0 ]
+												weight = 1.0
+											},
+											{
+												_class = "AnimConstraintSlave"
+												parent_bone = "leg_knee_helper_L"
+												relative_origin = [ 0.0, 0.0, 0.0 ]
+												relative_angles = [ 0.0, 0.0, 0.0 ]
+												weight = 1.0
+											},
+										]
+										constrained_bone = "leg_knee_helper_L"
+										weight = 0.2
+										translation_offset = [ 0.0, 0.0, 0.0 ]
+										rotation_offset_xyz = [ 0.0, 0.0, 0.0 ]
+									},
+									{
+										_class = "AnimConstraintOrient"
+										name = "Kneecap_L_rotation"
+										children = 
+										[
+											{
+												_class = "AnimConstraintBoneInput"
+												parent_bone = "leg_upper_L"
+												relative_origin = [ 0.0, 0.0, 0.0 ]
+												relative_angles = [ 0.0, 88.949997, 0.0 ]
+												weight = -0.5
+											},
+											{
+												_class = "AnimConstraintSlave"
+												parent_bone = "leg_knee_helper_L"
+												relative_origin = [ 0.0, 0.0, 0.0 ]
+												relative_angles = [ 0.0, 0.0, 0.0 ]
+												weight = -1.0
+											},
+										]
+									},
+								]
+							},
+							{
+								_class = "Folder"
+								name = "Constraint_LowerLegs"
+								children = 
+								[
+									{
+										_class = "AnimConstraintParent"
+										name = "CalfToFoot_R_position"
+										children = 
+										[
+											{
+												_class = "AnimConstraintAttachmentInput"
+												parent_attachment = "driver_leg_lower_R_twist1"
+												relative_origin = [ 0.0, 0.0, 0.0 ]
+												relative_angles = [ 0.0, 0.0, 0.0 ]
+												weight = 1.0
+											},
+											{
+												_class = "AnimConstraintSlave"
+												parent_bone = "leg_lower_R_twist1"
+												relative_origin = [ 0.0, 0.0, 0.0 ]
+												relative_angles = [ 0.0, 0.0, 0.0 ]
+												weight = 1.0
+											},
+										]
+										constrained_bone = "leg_lower_R_twist1"
+										weight = 1.75
+										translation_offset = [ 0.0, 0.0, 0.0 ]
+										rotation_offset_xyz = [ 0.0, 0.0, 0.0 ]
+									},
+									{
+										_class = "AnimConstraintTiltTwist"
+										name = "CalfToFoot_R_rotation"
+										note = "Made necessary by the addition of the position constraint, which completely screws the orientation up"
+										children = 
+										[
+											{
+												_class = "AnimConstraintBoneInput"
+												parent_bone = "ankle_R"
+												relative_origin = [ 0.0, 0.0, 0.0 ]
+												relative_angles = [ 0.0, 0.0, 0.0 ]
+												weight = 1.0
+											},
+											{
+												_class = "AnimConstraintSlave"
+												parent_bone = "leg_lower_R_twist1"
+												relative_origin = [ 0.0, 0.0, 0.0 ]
+												relative_angles = [ 0.0, 0.0, 0.0 ]
+												weight = 0.6
+											},
+										]
+										input_axis = 0
+										slave_axis = 0
+									},
+									{
+										_class = "AnimConstraintParent"
+										name = "CalfToFoot_L_position"
+										children = 
+										[
+											{
+												_class = "AnimConstraintAttachmentInput"
+												parent_attachment = "driver_leg_lower_L_twist1"
+												relative_origin = [ 0.0, 0.0, 0.0 ]
+												relative_angles = [ 0.0, 0.0, 0.0 ]
+												weight = 1.0
+											},
+											{
+												_class = "AnimConstraintSlave"
+												parent_bone = "leg_lower_L_twist1"
+												relative_origin = [ 0.0, 0.0, 0.0 ]
+												relative_angles = [ 0.0, 0.0, 0.0 ]
+												weight = 1.0
+											},
+										]
+										constrained_bone = "leg_lower_L_twist1"
+										weight = 1.75
+										translation_offset = [ 0.0, 0.0, 0.0 ]
+										rotation_offset_xyz = [ 0.0, 0.0, 0.0 ]
+									},
+									{
+										_class = "AnimConstraintTiltTwist"
+										name = "CalfToFoot_L_rotation"
+										note = "Made necessary by the addition of the position constraint, which completely screws the orientation up"
+										children = 
+										[
+											{
+												_class = "AnimConstraintBoneInput"
+												parent_bone = "ankle_L"
+												relative_origin = [ 0.0, 0.0, 0.0 ]
+												relative_angles = [ 0.0, 0.0, 0.0 ]
+												weight = 1.0
+											},
+											{
+												_class = "AnimConstraintSlave"
+												parent_bone = "leg_lower_L_twist1"
+												relative_origin = [ 0.0, 0.0, 0.0 ]
+												relative_angles = [ 0.0, 0.0, 0.0 ]
+												weight = 0.6
+											},
+										]
+										input_axis = 0
+										slave_axis = 0
+									},
+								]
+							},
+						]
+					},
+					{
+						_class = "Folder"
+						name = "Constraint_NeckClothing"
+						children = 
+						[
+							{
+								_class = "AnimConstraintParent"
+								note = "Before we do anything, make neck_clothing follow neck_0, in case it moves (height scaling, exaggerated pose that moves the bone). It\'s set to 75\n percent so that a bit more neck shows when tall, and less when short. If we don\'t do this, the two constraints can become messy and flip upside-down."
+								children = 
+								[
+									{
+										_class = "AnimConstraintBoneInput"
+										parent_bone = "neck_0"
+										relative_origin = [ 0.0, 0.0, 0.0 ]
+										relative_angles = [ 0.0, 0.0, 0.0 ]
+										weight = 1.0
+									},
+									{
+										_class = "AnimConstraintSlave"
+										parent_bone = "neck_clothing"
+										relative_origin = [ 0.0, 0.0, 0.0 ]
+										relative_angles = [ 0.0, 0.0, 0.0 ]
+										weight = 1.0
+									},
+								]
+								constrained_bone = "neck_clothing"
+								weight = 0.75
+								translation_offset = [ 0.0, 0.0, 0.0 ]
+								rotation_offset_xyz = [ 0.0, 0.0, 0.0 ]
+							},
+							{
+								_class = "AnimConstraintAim"
+								note = "The first constraint removes the \"twist\" component of the neck bone by \"aiming\" at the head."
+								children = 
+								[
+									{
+										_class = "AnimConstraintBoneInput"
+										parent_bone = "head"
+										relative_origin = [ 0.0, 0.0, 0.0 ]
+										relative_angles = [ 0.0, 0.0, 0.0 ]
+										weight = 1.0
+									},
+									{
+										_class = "AnimConstraintSlave"
+										parent_bone = "neck_clothing"
+										relative_origin = [ 0.0, 0.0, 0.0 ]
+										relative_angles = [ 0.0, 0.0, 0.0 ]
+										weight = 1.0
+									},
+								]
+								aim_offset = [ 0.0, 90.0, 0.0 ]
+								up_type = 3
+								up_vector = [ 0.0, 0.0, 1.0 ]
+							},
+							{
+								_class = "AnimConstraintOrient"
+								note = "The second constraint then lets a bit of the head rotation back in. (Not the neck, the head. This works better.)"
+								children = 
+								[
+									{
+										_class = "AnimConstraintBoneInput"
+										parent_bone = "head"
+										relative_origin = [ 0.0, 0.0, 0.0 ]
+										relative_angles = [ 0.0, 0.0, 0.0 ]
+										weight = 1.0
+									},
+									{
+										_class = "AnimConstraintSlave"
+										parent_bone = "neck_clothing"
+										relative_origin = [ 0.0, 0.0, 0.0 ]
+										relative_angles = [ 0.0, 0.0, 0.0 ]
+										weight = 0.35
+									},
+								]
+							},
+						]
+					},
+				]
+			},
+		]
+		model_archetype = ""
+		primary_associated_entity = ""
+		anim_graph_name = ""
+		base_model_name = ""
+	}
+}

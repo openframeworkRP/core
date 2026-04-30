@@ -1,0 +1,174 @@
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:modeldoc29:version{3cec427c-1b0e-4d48-a90a-0436f33a6041} -->
+{
+	rootNode = 
+	{
+		_class = "RootNode"
+		children = 
+		[
+			{
+				_class = "ModelModifierList"
+				children = 
+				[
+					{
+						_class = "RenameBone"
+						name = "__README_COMMENT_ABOUT_RENAME_PREFAB"
+						note = "YOU MUST FLATTEN THIS PREFAB TO SORT THE NODES INTO THE RIGHT CATEGORIES, *AND* YOU MUST REMOVE ANY NODES THAT CORRESPOND TO BONES NOT PRESENT IN YOUR VMDL, otherwise you might get a compile error!! (And you should also remove any irrelevant constraints) ---- Now for an explanation of these: for the lower part of limbs, compared to the old skeleton, the old twist bones correspond exactly to the new twist1 bones, so we can rename them as-is and stay in sync with what citizen.vmdl does. arm_lower_* & leg_lower_* can also be renamed to twist0 (insofar as they perform the skinning), although that\'s a much less important thing."
+						disabled = true
+						original_bone_name = "dont_enable_me"
+						new_bone_name = "really_dont_enable_me"
+					},
+					{
+						_class = "RenameBone"
+						name = "RENAME_arm_lower_R_twist"
+						original_bone_name = "arm_lower_R_twist"
+						new_bone_name = "arm_lower_R_twist1"
+					},
+					{
+						_class = "RenameBone"
+						name = "RENAME_arm_lower_L_twist"
+						original_bone_name = "arm_lower_L_twist"
+						new_bone_name = "arm_lower_L_twist1"
+					},
+					{
+						_class = "RenameBone"
+						name = "RENAME_leg_lower_R_twist"
+						original_bone_name = "leg_lower_R_twist"
+						new_bone_name = "leg_lower_R_twist1"
+					},
+					{
+						_class = "RenameBone"
+						name = "RENAME_leg_lower_L_twist"
+						original_bone_name = "leg_lower_L_twist"
+						new_bone_name = "leg_lower_L_twist1"
+					},
+					{
+						_class = "RenameBone"
+						name = "RENAME_arm_lower_R"
+						original_bone_name = "arm_lower_R"
+						new_bone_name = "arm_lower_R_twist0"
+					},
+					{
+						_class = "RenameBone"
+						name = "RENAME_arm_lower_L"
+						original_bone_name = "arm_lower_L"
+						new_bone_name = "arm_lower_L_twist0"
+					},
+					{
+						_class = "RenameBone"
+						name = "RENAME_leg_lower_R"
+						original_bone_name = "leg_lower_R"
+						new_bone_name = "leg_lower_R_twist0"
+					},
+					{
+						_class = "RenameBone"
+						name = "RENAME_leg_lower_L"
+						original_bone_name = "leg_lower_L"
+						new_bone_name = "leg_lower_L_twist0"
+					},
+				]
+			},
+			{
+				_class = "AnimConstraintList"
+				children = 
+				[
+					{
+						_class = "AnimConstraintTiltTwist"
+						name = "OLD_ShoulderToBicep_R_rotation"
+						children = 
+						[
+							{
+								_class = "AnimConstraintBoneInput"
+								parent_bone = "arm_upper_R"
+								relative_origin = [ 0.0, 0.0, 0.0 ]
+								relative_angles = [ 0.0, 0.0, 0.0 ]
+								weight = 1.0
+							},
+							{
+								_class = "AnimConstraintSlave"
+								parent_bone = "arm_upper_R_twist"
+								relative_origin = [ 0.0, 0.0, 0.0 ]
+								relative_angles = [ 0.0, 0.0, 0.0 ]
+								weight = -0.6
+							},
+						]
+						input_axis = 0
+						slave_axis = 0
+					},
+					{
+						_class = "AnimConstraintTiltTwist"
+						name = "OLD_ShoulderToBicep_L_rotation"
+						children = 
+						[
+							{
+								_class = "AnimConstraintBoneInput"
+								parent_bone = "arm_upper_L"
+								relative_origin = [ 0.0, 0.0, 0.0 ]
+								relative_angles = [ 0.0, 0.0, 0.0 ]
+								weight = 1.0
+							},
+							{
+								_class = "AnimConstraintSlave"
+								parent_bone = "arm_upper_L_twist"
+								relative_origin = [ 0.0, 0.0, 0.0 ]
+								relative_angles = [ 0.0, 0.0, 0.0 ]
+								weight = -0.6
+							},
+						]
+						input_axis = 0
+						slave_axis = 0
+					},
+					{
+						_class = "AnimConstraintTiltTwist"
+						name = "OLD_PelvisToThigh_R_rotation"
+						children = 
+						[
+							{
+								_class = "AnimConstraintBoneInput"
+								parent_bone = "leg_upper_R"
+								relative_origin = [ 0.0, 0.0, 0.0 ]
+								relative_angles = [ 0.0, 180.0, 180.0 ]
+								weight = 1.0
+							},
+							{
+								_class = "AnimConstraintSlave"
+								parent_bone = "leg_upper_R_twist"
+								relative_origin = [ 0.0, 0.0, 0.0 ]
+								relative_angles = [ 0.0, 0.0, 0.0 ]
+								weight = -0.5
+							},
+						]
+						input_axis = 0
+						slave_axis = 0
+					},
+					{
+						_class = "AnimConstraintTiltTwist"
+						name = "OLD_PelvisToThigh_L_rotation"
+						children = 
+						[
+							{
+								_class = "AnimConstraintBoneInput"
+								parent_bone = "leg_upper_L"
+								relative_origin = [ 0.0, 0.0, 0.0 ]
+								relative_angles = [ 0.0, 180.0, 180.0 ]
+								weight = 1.0
+							},
+							{
+								_class = "AnimConstraintSlave"
+								parent_bone = "leg_upper_L_twist"
+								relative_origin = [ 0.0, 0.0, 0.0 ]
+								relative_angles = [ 0.0, 0.0, 0.0 ]
+								weight = -0.5
+							},
+						]
+						input_axis = 0
+						slave_axis = 0
+					},
+				]
+			},
+		]
+		model_archetype = ""
+		primary_associated_entity = ""
+		anim_graph_name = ""
+		base_model_name = ""
+	}
+}

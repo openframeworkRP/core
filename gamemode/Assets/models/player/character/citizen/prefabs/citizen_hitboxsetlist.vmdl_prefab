@@ -1,0 +1,247 @@
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:modeldoc29:version{3cec427c-1b0e-4d48-a90a-0436f33a6041} -->
+{
+	rootNode = 
+	{
+		_class = "RootNode"
+		children = 
+		[
+			{
+				_class = "HitboxSetList"
+				children = 
+				[
+					{
+						_class = "HitboxSet"
+						name = "Hitboxes"
+						children = 
+						[
+							{
+								_class = "HitboxCapsule"
+								name = "HB_pelvis"
+								parent_bone = "pelvis"
+								surface_property = "flesh"
+								translation_only = false
+								tags = "stomach pelvis"
+								radius = 11.0
+								point0 = [ 1.2, 0.0, -6.0 ]
+								point1 = [ 1.2, 0.0, 6.0 ]
+							},
+							{
+								_class = "HitboxCapsule"
+								name = "HB_spine_0"
+								parent_bone = "spine_0"
+								surface_property = "flesh"
+								translation_only = false
+								tags = "spine chest"
+								radius = 18.0
+								point0 = [ 0.0, 0.0, 0.0 ]
+								point1 = [ 0.0, 0.0, 0.0 ]
+							},
+							{
+								_class = "HitboxCapsule"
+								name = "HB_spine_1"
+								parent_bone = "spine_1"
+								surface_property = "flesh"
+								translation_only = false
+								tags = "spine chest"
+								radius = 18.0
+								point0 = [ 0.0, 0.0, 0.0 ]
+								point1 = [ 0.0, 0.0, 0.0 ]
+							},
+							{
+								_class = "HitboxCapsule"
+								name = "HB_spine_2"
+								parent_bone = "spine_2"
+								surface_property = "flesh"
+								translation_only = false
+								tags = "spine chest"
+								radius = 18.0
+								point0 = [ -2.4, 0.0, 0.0 ]
+								point1 = [ 2.4, 0.0, 0.0 ]
+							},
+							{
+								_class = "HitboxCapsule"
+								name = "HB_neck_0"
+								parent_bone = "neck_0"
+								surface_property = "flesh"
+								translation_only = false
+								tags = "neck head"
+								radius = 14.0
+								point0 = [ -1.0, 1.5, -4.0 ]
+								point1 = [ -1.0, 1.5, 4.0 ]
+							},
+							{
+								_class = "HitboxCapsule"
+								name = "HB_head"
+								parent_bone = "head"
+								surface_property = "flesh"
+								translation_only = false
+								tags = "head"
+								radius = 16.0
+								point0 = [ 6.0, 2.0, 0.0 ]
+								point1 = [ 23.0, 1.0, 0.0 ]
+							},
+							{
+								_class = "HitboxCapsule"
+								name = "HB_clavicle_R"
+								parent_bone = "clavicle_R"
+								surface_property = "flesh"
+								translation_only = false
+								tags = "arm right clavicle"
+								radius = 7.0
+								point0 = [ 0.0, 0.0, 0.0 ]
+								point1 = [ 10.0, 0.0, 0.0 ]
+							},
+							{
+								_class = "HitboxCapsule"
+								name = "HB_arm_upper_R"
+								parent_bone = "arm_upper_R"
+								surface_property = "flesh"
+								translation_only = false
+								tags = "arm right upper"
+								radius = 6.0
+								point0 = [ 0.0, 0.0, 0.0 ]
+								point1 = [ 24.0, 0.0, 0.0 ]
+							},
+							{
+								_class = "HitboxCapsule"
+								name = "HB_arm_lower_R"
+								parent_bone = "arm_lower_R"
+								surface_property = "flesh"
+								translation_only = false
+								tags = "arm right lower"
+								radius = 5.3
+								point0 = [ 0.0, 0.0, 0.0 ]
+								point1 = [ 21.6, -1.2, -1.2 ]
+							},
+							{
+								_class = "HitboxCapsule"
+								name = "HB_hand_R"
+								parent_bone = "hand_R"
+								surface_property = "flesh"
+								translation_only = false
+								tags = "right hand"
+								radius = 5.0
+								point0 = [ 0.0, 0.0, 0.0 ]
+								point1 = [ 10.0, 0.0, -1.2 ]
+							},
+							{
+								_class = "HitboxCapsule"
+								name = "HB_clavicle_L"
+								parent_bone = "clavicle_L"
+								surface_property = "flesh"
+								translation_only = false
+								tags = "arm left clavicle"
+								radius = 7.0
+								point0 = [ 0.0, 0.0, 0.0 ]
+								point1 = [ 10.0, 0.0, 0.0 ]
+							},
+							{
+								_class = "HitboxCapsule"
+								name = "HB_arm_upper_L"
+								parent_bone = "arm_upper_L"
+								surface_property = "flesh"
+								translation_only = false
+								tags = "arm left upper"
+								radius = 6.0
+								point0 = [ 0.0, 0.0, 0.0 ]
+								point1 = [ 24.0, 0.0, 0.0 ]
+							},
+							{
+								_class = "HitboxCapsule"
+								name = "HB_arm_lower_L"
+								parent_bone = "arm_lower_L"
+								surface_property = "flesh"
+								translation_only = false
+								tags = "arm left lower"
+								radius = 5.3
+								point0 = [ 0.0, 0.0, 0.0 ]
+								point1 = [ 21.6, -1.2, 1.2 ]
+							},
+							{
+								_class = "HitboxCapsule"
+								name = "HB_hand_L"
+								parent_bone = "hand_L"
+								surface_property = "flesh"
+								translation_only = false
+								tags = "left hand"
+								radius = 5.0
+								point0 = [ 0.0, 0.0, 0.0 ]
+								point1 = [ 10.0, 0.0, 1.2 ]
+							},
+							{
+								_class = "HitboxCapsule"
+								name = "HB_leg_upper_R"
+								parent_bone = "leg_upper_R"
+								surface_property = "flesh"
+								translation_only = false
+								tags = "leg right upper"
+								radius = 7.5
+								point0 = [ 2.0, 0.0, 0.0 ]
+								point1 = [ 32.0, 0.0, 0.0 ]
+							},
+							{
+								_class = "HitboxCapsule"
+								name = "HB_leg_lower_R"
+								parent_bone = "leg_lower_R"
+								surface_property = "flesh"
+								translation_only = false
+								tags = "leg right lower"
+								radius = 5.8
+								point0 = [ 0.0, 0.0, 0.0 ]
+								point1 = [ 32.0, 0.0, 0.0 ]
+							},
+							{
+								_class = "HitboxCapsule"
+								name = "HB_ankle_R"
+								parent_bone = "ankle_R"
+								surface_property = "flesh"
+								translation_only = false
+								tags = "leg right ankle"
+								radius = 6.0
+								point0 = [ 4.8, -3.9, 0.0 ]
+								point1 = [ 11.0, 2.1, 0.0 ]
+							},
+							{
+								_class = "HitboxCapsule"
+								name = "HB_leg_upper_L"
+								parent_bone = "leg_upper_L"
+								surface_property = "flesh"
+								translation_only = false
+								tags = "leg left upper"
+								radius = 7.5
+								point0 = [ 2.0, 0.0, 0.0 ]
+								point1 = [ 32.0, 0.0, 0.0 ]
+							},
+							{
+								_class = "HitboxCapsule"
+								name = "HB_leg_lower_L"
+								parent_bone = "leg_lower_L"
+								surface_property = "flesh"
+								translation_only = false
+								tags = "leg left lower"
+								radius = 5.8
+								point0 = [ 0.0, 0.0, 0.0 ]
+								point1 = [ 32.0, 0.0, 0.0 ]
+							},
+							{
+								_class = "HitboxCapsule"
+								name = "HB_ankle_L"
+								parent_bone = "ankle_L"
+								surface_property = "flesh"
+								translation_only = false
+								tags = "leg left ankle"
+								radius = 6.0
+								point0 = [ 4.8, -3.9, 0.0 ]
+								point1 = [ 11.0, 2.1, 0.0 ]
+							},
+						]
+					},
+				]
+			},
+		]
+		model_archetype = ""
+		primary_associated_entity = ""
+		anim_graph_name = ""
+		base_model_name = ""
+	}
+}

@@ -1,0 +1,467 @@
+{
+  "visemes": {
+    "B": {
+      "LipSidewaysL": 0.17,
+      "LipSidewaysR": 0.089,
+      "lippuckerer": 0.138,
+      "lowerLipFunneler": 0.113,
+      "lowerLipsTowardAndPart": 0.934,
+      "upperLipFunneler": 0.195,
+      "upperLipsTowardAndPart": 0.211
+    },
+    "M": {
+      "LipSidewaysL": 0.2,
+      "LipSidewaysR": 0.2,
+      "LowerLipDepressor": 0.008,
+      "jawsuck": 0.17,
+      "lippuckerer": 0.065,
+      "lowerLipsTowardAndPart": 0.593,
+      "upperLipsTowardAndPart": 0.032,
+      "upperlipraiserL": 0.097,
+      "upperlipraiserR": 0.113
+    },
+    "P": {
+      "LipSidewaysL": 0.211,
+      "LipSidewaysR": 0.235,
+      "cheekinflateL": 0.024,
+      "cheekinflateR": 0.032,
+      "lipcornerpullerL": 0.154,
+      "lipcornerpullerR": 0.065,
+      "lippuckerer": 0.162,
+      "lowerLipsTowardAndPart": 0.804,
+      "upperLipsTowardAndPart": 0.552
+    },
+    "F": {
+      "ChinRaiser": 0.162,
+      "LipSidewaysL": 0.186,
+      "LipSidewaysR": 0.178,
+      "jawsuck": 0.235,
+      "lipcornerpullerL": 0.089,
+      "lipcornerpullerR": 0.227,
+      "lippuckerer": 0.073,
+      "lowerLipsTowardAndPart": 0.528,
+      "openjawL": 0.065,
+      "openjawR": 0.097,
+      "upperLipFunneler": 0.528,
+      "upperLipsTowardAndPart": 0.154,
+      "upperlipraiserL": 0.341,
+      "upperlipraiserR": 0.121
+    },
+    "V": {
+      "ChinRaiser": 0.162,
+      "LipSidewaysL": 0.3,
+      "LipSidewaysR": 0.3,
+      "jawsuck": 0.203,
+      "lipcornerpullerL": 0.089,
+      "lipcornerpullerR": 0.089,
+      "lippuckerer": 0.056,
+      "lowerLipsTowardAndPart": 0.829,
+      "openjawL": 0.178,
+      "openjawR": 0.211,
+      "upperLipFunneler": 0.3
+    },
+    "TH": {
+      "ChinRaiser": 0.162,
+      "LipSidewaysL": 0.3,
+      "LipSidewaysR": 0.3,
+      "jawsuck": 0.081,
+      "lipcornerpullerL": 0.089,
+      "lipcornerpullerR": 0.089,
+      "lippuckerer": 0.056,
+      "lowerLipsTowardAndPart": 0.528,
+      "openjawL": 0.154,
+      "openjawR": 0.178,
+      "upperLipFunneler": 0.308,
+      "upperLipsTowardAndPart": 0.487
+    },
+    "DH": {
+      "ChinRaiser": 0.162,
+      "LipSidewaysL": 0.3,
+      "LipSidewaysR": 0.3,
+      "jawsuck": 0.203,
+      "lipcornerpullerL": 0.089,
+      "lipcornerpullerR": 0.089,
+      "lippuckerer": 0.056,
+      "lowerLipsTowardAndPart": 0.829,
+      "openjawL": 0.178,
+      "openjawR": 0.211,
+      "upperLipFunneler": 0.3
+    },
+    "SH": {
+      "lippuckerer": 0.203,
+      "lowerLipFunneler": 0.186,
+      "openmouthL": 0.154,
+      "openmouthR": 0.138,
+      "upperLipsTowardAndPart": 0.13,
+      "upperlipraiserL": 0.105,
+      "upperlipraiserR": 0.243
+    },
+    "D": {
+      "LipSidewaysL": 0.097,
+      "LipSidewaysR": 0.113,
+      "LowerLipDrepressor": 0.235,
+      "lipcornerpullerL": 0.162,
+      "lipcornerpullerR": 0.146,
+      "upperLipsTowardAndPart": 0.211
+    },
+    "T": {
+      "LowerLipDrepressor": 0.284,
+      "openmouthL": 0.284,
+      "openmouthR": 0.308
+    },
+    "K": {
+      "LowerLipDrepressor": 0.227,
+      "jawsuck": 0.146,
+      "openmouthL": 0.26,
+      "openmouthR": 0.26,
+      "upperLipsTowardAndPart": 0.113
+    },
+    "G": {
+      "LowerLipDrepressor": 0.219,
+      "jawsuck": 0.146,
+      "lippuckerer": 0.073,
+      "openmouthL": 0.162,
+      "openmouthR": 0.154,
+      "upperLipsTowardAndPart": 0.113
+    },
+    "S": {
+      "LipSidewaysL": 0.219,
+      "LipSidewaysR": 0.268,
+      "LowerLipDrepressor": 0.511,
+      "lipcornerdepressorL": 0.3,
+      "lipcornerdepressorR": 0.195,
+      "lipcornerpullerL": 0.268,
+      "lipcornerpullerR": 0.219,
+      "lowerLipFunneler": 0.146,
+      "upperLipFunneler": 0.048,
+      "upperlipraiserL": 0.008
+    },
+    "Z": {
+      "LipSidewaysL": 0.219,
+      "LipSidewaysR": 0.268,
+      "LowerLipDrepressor": 0.268,
+      "jawthrust": 0.398,
+      "lipcornerdepressorL": 0.235,
+      "lipcornerdepressorR": 0.26,
+      "lipcornerpullerL": 0.13,
+      "lipcornerpullerR": 0.113,
+      "lippuckerer": 0.081,
+      "lowerLipFunneler": 0.178,
+      "upperLipFunneler": 0.211,
+      "upperlipraiserL": 0.138,
+      "upperlipraiserR": 0.113
+    },
+    "ER": {
+      "LipSidewaysL": 0.252,
+      "LipSidewaysR": 0.227,
+      "lippuckerer": 0.227,
+      "openjawL": 0.219,
+      "openjawR": 0.195,
+      "openmouthL": 0.373,
+      "openmouthR": 0.39
+    },
+    "R": {
+      "LipSidewaysL": 0.252,
+      "LipSidewaysR": 0.227,
+      "openjawL": 0.081,
+      "openjawR": 0.089,
+      "openmouthL": 0.373,
+      "openmouthR": 0.39
+    },
+    "AA": {
+      "lipcornerdepressorR": 0.008,
+      "lowerLipFunneler": 0.04,
+      "openjawL": 0.317,
+      "openjawR": 0.308,
+      "openmouthL": 0.065,
+      "openmouthR": 0.032,
+      "upperLipsTowardAndPart": 0.235
+    },
+    "AE": {
+      "lipcornerdepressorL": 0.105,
+      "lipcornerdepressorR": 0.097,
+      "openjawL": 0.317,
+      "openjawR": 0.308
+    },
+    "AH": {
+      "LipSidewaysL": 0.121,
+      "LipSidewaysR": 0.121,
+      "jawsuck": 0.121,
+      "lippuckerer": 0.089,
+      "lowerLipFunneler": 0.26,
+      "openjawL": 0.3,
+      "openjawR": 0.3,
+      "openmouthL": 0.089,
+      "openmouthR": 0.04
+    },
+    "AO": {
+      "LipSidewaysL": 0.284,
+      "LipSidewaysR": 0.292,
+      "lippuckerer": 0.186,
+      "openjawL": 0.203,
+      "openjawR": 0.195,
+      "openmouthL": 0.268,
+      "openmouthR": 0.243,
+      "upperlipraiserL": 0.317,
+      "upperlipraiserR": 0.39
+    },
+    "EH": {
+      "lipcornerpullerL": 0.17,
+      "lipcornerpullerR": 0.154,
+      "openjawL": 0.097,
+      "openjawR": 0.113,
+      "openmouthL": 0.439,
+      "openmouthR": 0.406
+    },
+    "IY": {
+      "LowerLipDrepressor": 0.186,
+      "lipcornerdepressorL": 0.073,
+      "lipcornerdepressorR": 0.097,
+      "lipcornerpullerL": 0.284,
+      "lipcornerpullerR": 0.349,
+      "openjawL": 0.105,
+      "openjawR": 0.113,
+      "openmouthL": 0.186,
+      "openmouthR": 0.195,
+      "upperLipsTowardAndPart": 0.105
+    },
+    "OW": {
+      "LipSidewaysL": 0.406,
+      "LipSidewaysR": 0.39,
+      "cheekinflateL": 0.024,
+      "cheekinflateR": 0.048,
+      "lipcornerpullerL": 0.048,
+      "lipcornerpullerR": 0.048,
+      "lippuckerer": 0.186,
+      "openjawL": 0.203,
+      "openjawR": 0.195,
+      "openmouthL": 0.268,
+      "openmouthR": 0.243,
+      "upperlipraiserL": 0.317,
+      "upperlipraiserR": 0.39
+    },
+    "UW": {
+      "LipSidewaysL": 0.211,
+      "LipSidewaysR": 0.227,
+      "jawsuck": 0.162,
+      "lippuckerer": 0.325,
+      "openjawL": 0.17,
+      "openjawR": 0.17,
+      "openmouthL": 0.089,
+      "openmouthR": 0.048,
+      "upperLipsTowardAndPart": 0.43
+    },
+    "W": {
+      "ChinRaiser": 0.089,
+      "LipSidewaysL": 0.487,
+      "LipSidewaysR": 0.512,
+      "lippuckerer": 0.243,
+      "lowerLipsTowardAndPart": 0.284,
+      "openjawL": 0.195,
+      "openjawR": 0.186,
+      "openmouthL": 0.268,
+      "openmouthR": 0.26,
+      "upperLipFunneler": 0.073,
+      "upperLipsTowardAndPart": 0.138
+    },
+    "Y": {
+      "LipSidewaysL": 0.52,
+      "LipSidewaysR": 0.512,
+      "openjawL": 0.065,
+      "openjawR": 0.056,
+      "openmouthL": 0.162,
+      "openmouthR": 0.235,
+      "upperLipFunneler": 0.292
+    }
+  },
+  "phonemes": [
+    {
+      "phoneme": 98,
+      "viseme": "B"
+    },
+    {
+      "phoneme": 109,
+      "viseme": "M"
+    },
+    {
+      "phoneme": 112,
+      "viseme": "P"
+    },
+    {
+      "phoneme": 119,
+      "viseme": "W"
+    },
+    {
+      "phoneme": 102,
+      "viseme": "F"
+    },
+    {
+      "phoneme": 118,
+      "viseme": "V"
+    },
+    {
+      "phoneme": 633,
+      "viseme": "R"
+    },
+    {
+      "phoneme": 114,
+      "viseme": "R"
+    },
+    {
+      "phoneme": 635,
+      "viseme": "R"
+    },
+    {
+      "phoneme": 602,
+      "viseme": "ER"
+    },
+    {
+      "phoneme": 605,
+      "viseme": "ER"
+    },
+    {
+      "phoneme": 240,
+      "viseme": "DH"
+    },
+    {
+      "phoneme": 952,
+      "viseme": "TH"
+    },
+    {
+      "phoneme": 643,
+      "viseme": "SH"
+    },
+    {
+      "phoneme": 676,
+      "viseme": "SH"
+    },
+    {
+      "phoneme": 679,
+      "viseme": "SH"
+    },
+    {
+      "phoneme": 115,
+      "viseme": "S"
+    },
+    {
+      "phoneme": 122,
+      "viseme": "Z"
+    },
+    {
+      "phoneme": 100,
+      "viseme": "D"
+    },
+    {
+      "phoneme": 638,
+      "viseme": "D"
+    },
+    {
+      "phoneme": 108,
+      "viseme": "D"
+    },
+    {
+      "phoneme": 619,
+      "viseme": "D"
+    },
+    {
+      "phoneme": 110,
+      "viseme": "D"
+    },
+    {
+      "phoneme": 116,
+      "viseme": "T"
+    },
+    {
+      "phoneme": 111,
+      "viseme": "OW"
+    },
+    {
+      "phoneme": 117,
+      "viseme": "UW"
+    },
+    {
+      "phoneme": 101,
+      "viseme": "AH"
+    },
+    {
+      "phoneme": 230,
+      "viseme": "AE"
+    },
+    {
+      "phoneme": 593,
+      "viseme": "AA"
+    },
+    {
+      "phoneme": 97,
+      "viseme": "AA"
+    },
+    {
+      "phoneme": 105,
+      "viseme": "IY"
+    },
+    {
+      "phoneme": 106,
+      "viseme": "Y"
+    },
+    {
+      "phoneme": 652,
+      "viseme": "AH"
+    },
+    {
+      "phoneme": 596,
+      "viseme": "AA"
+    },
+    {
+      "phoneme": 601,
+      "viseme": "AH"
+    },
+    {
+      "phoneme": 604,
+      "viseme": "AH"
+    },
+    {
+      "phoneme": 603,
+      "viseme": "EH"
+    },
+    {
+      "phoneme": 618,
+      "viseme": "IY"
+    },
+    {
+      "phoneme": 616,
+      "viseme": "IY"
+    },
+    {
+      "phoneme": 650,
+      "viseme": "UW"
+    },
+    {
+      "phoneme": 103,
+      "viseme": "K"
+    },
+    {
+      "phoneme": 609,
+      "viseme": "K"
+    },
+    {
+      "phoneme": 104,
+      "viseme": "HH"
+    },
+    {
+      "phoneme": 614,
+      "viseme": "HH"
+    },
+    {
+      "phoneme": 107,
+      "viseme": "K"
+    },
+    {
+      "phoneme": 331,
+      "viseme": "M"
+    },
+    {
+      "phoneme": 658,
+      "viseme": "SH"
+    }
+  ]
+}

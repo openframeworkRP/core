@@ -1,0 +1,596 @@
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:modeldoc29:version{3cec427c-1b0e-4d48-a90a-0436f33a6041} -->
+{
+	rootNode = 
+	{
+		_class = "RootNode"
+		children = 
+		[
+			{
+				_class = "AttachmentList"
+				children = 
+				[
+					{
+						_class = "Folder"
+						name = "Attachment_Bones"
+						children = 
+						[
+							{
+								_class = "Attachment"
+								name = "aim_matrix_01"
+								parent_bone = "aim_matrix_01"
+								relative_origin = [ 0.0, 0.0, 0.0 ]
+								relative_angles = [ 0.0, 0.0, 0.0 ]
+								weight = 1.0
+								ignore_rotation = false
+							},
+							{
+								_class = "Attachment"
+								name = "aim_matrix_02a"
+								parent_bone = "aim_matrix_02a"
+								relative_origin = [ 0.0, 0.0, 0.0 ]
+								relative_angles = [ 0.0, 0.0, 0.0 ]
+								weight = 1.0
+								ignore_rotation = false
+							},
+							{
+								_class = "Attachment"
+								name = "aim_matrix_02b"
+								parent_bone = "aim_matrix_02b"
+								relative_origin = [ 0.0, 0.0, 0.0 ]
+								relative_angles = [ 0.0, 0.0, 0.0 ]
+								weight = 1.0
+								ignore_rotation = false
+							},
+							{
+								_class = "Attachment"
+								name = "ankle_R"
+								parent_bone = "ankle_R"
+								relative_origin = [ 0.0, 0.0, 0.0 ]
+								relative_angles = [ 0.0, 0.0, 0.0 ]
+								weight = 1.0
+								ignore_rotation = false
+							},
+							{
+								_class = "Attachment"
+								name = "ankle_L"
+								parent_bone = "ankle_L"
+								relative_origin = [ 0.0, 0.0, 0.0 ]
+								relative_angles = [ 0.0, 0.0, 0.0 ]
+								weight = 1.0
+								ignore_rotation = false
+							},
+							{
+								_class = "Attachment"
+								name = "arm_lower_R"
+								parent_bone = "arm_lower_R"
+								relative_origin = [ 0.0, 0.0, 0.0 ]
+								relative_angles = [ 0.0, 0.0, 0.0 ]
+								weight = 1.0
+								ignore_rotation = false
+							},
+							{
+								_class = "Attachment"
+								name = "arm_lower_L"
+								parent_bone = "arm_lower_L"
+								relative_origin = [ 0.0, 0.0, 0.0 ]
+								relative_angles = [ 0.0, 0.0, 0.0 ]
+								weight = 1.0
+								ignore_rotation = false
+							},
+							{
+								_class = "Attachment"
+								name = "hand_R"
+								parent_bone = "hand_R"
+								relative_origin = [ 0.0, 0.0, 0.0 ]
+								relative_angles = [ 0.0, 0.0, 0.0 ]
+								weight = 1.0
+								ignore_rotation = false
+							},
+							{
+								_class = "Attachment"
+								name = "hand_L"
+								parent_bone = "hand_L"
+								relative_origin = [ 0.0, 0.0, 0.0 ]
+								relative_angles = [ 0.0, 0.0, 0.0 ]
+								weight = 1.0
+								ignore_rotation = false
+							},
+							{
+								_class = "Attachment"
+								name = "hold_R"
+								parent_bone = "hold_R"
+								relative_origin = [ 0.0, 0.0, 0.0 ]
+								relative_angles = [ 0.0, 0.0, 0.0 ]
+								weight = 1.0
+								ignore_rotation = false
+							},
+							{
+								_class = "Attachment"
+								name = "hold_L"
+								parent_bone = "hold_L"
+								relative_origin = [ 0.0, 0.0, 0.0 ]
+								relative_angles = [ 0.0, 0.0, 0.0 ]
+								weight = 1.0
+								ignore_rotation = false
+							},
+							{
+								_class = "Attachment"
+								name = "IK_right_hand"
+								parent_bone = "hand_R_IK_target"
+								relative_origin = [ 0.0, 0.0, 0.0 ]
+								relative_angles = [ 0.0, 0.0, 0.0 ]
+								weight = 1.0
+								ignore_rotation = false
+							},
+							{
+								_class = "Attachment"
+								name = "IK_left_hand"
+								parent_bone = "hand_L_IK_target"
+								relative_origin = [ 0.0, 0.0, 0.0 ]
+								relative_angles = [ 0.0, 0.0, 0.0 ]
+								weight = 1.0
+								ignore_rotation = false
+							},
+							{
+								_class = "Attachment"
+								name = "leg_lower_R"
+								parent_bone = "leg_lower_R"
+								relative_origin = [ 0.0, 0.0, 0.0 ]
+								relative_angles = [ 0.0, 0.0, 0.0 ]
+								weight = 1.0
+								ignore_rotation = false
+							},
+							{
+								_class = "Attachment"
+								name = "leg_lower_L"
+								parent_bone = "leg_lower_L"
+								relative_origin = [ 0.0, 0.0, 0.0 ]
+								relative_angles = [ 0.0, 0.0, 0.0 ]
+								weight = 1.0
+								ignore_rotation = false
+							},
+						]
+					},
+					{
+						_class = "Folder"
+						name = "AnimConstraint_Drivers"
+						children = 
+						[
+							{
+								_class = "Attachment"
+								name = "driver_arm_upper_R_twist1"
+								children = 
+								[
+									{
+										_class = "AttachmentInfluence"
+										parent_bone = "arm_upper_R"
+										relative_origin = [ 0.0, 0.0, 0.0 ]
+										relative_angles = [ 0.0, 0.0, 0.0 ]
+										weight = 1.0
+									},
+									{
+										_class = "AttachmentInfluence"
+										parent_bone = "arm_lower_R"
+										relative_origin = [ 0.0, 0.0, 0.0 ]
+										relative_angles = [ 0.0, 0.0, 0.0 ]
+										weight = 2.0
+									},
+								]
+								parent_bone = "arm_upper_R"
+								relative_origin = [ 0.0, 0.0, 0.0 ]
+								relative_angles = [ 0.0, 0.0, 0.0 ]
+								weight = 1.0
+								ignore_rotation = true
+							},
+							{
+								_class = "Attachment"
+								name = "driver_arm_lower_R_twist1"
+								children = 
+								[
+									{
+										_class = "AttachmentInfluence"
+										parent_bone = "arm_lower_R"
+										relative_origin = [ 0.0, 0.0, 0.0 ]
+										relative_angles = [ 0.0, 0.0, 0.0 ]
+										weight = 1.0
+									},
+									{
+										_class = "AttachmentInfluence"
+										parent_bone = "hand_R"
+										relative_origin = [ 0.0, 0.0, 0.0 ]
+										relative_angles = [ 0.0, 0.0, 0.0 ]
+										weight = 2.0
+									},
+								]
+								parent_bone = "arm_lower_R"
+								relative_origin = [ 0.0, 0.0, 0.0 ]
+								relative_angles = [ 0.0, 0.0, 0.0 ]
+								weight = 1.0
+								ignore_rotation = true
+							},
+							{
+								_class = "Attachment"
+								name = "driver_elbow_R_position"
+								note = "Drives the constraint that pushes the elbow out as the arm bends. The offsets are hand-tweaked... nothing scientific about this, unfortunately"
+								children = 
+								[
+									{
+										_class = "AttachmentInfluence"
+										parent_bone = "arm_upper_R_twist1"
+										relative_origin = [ 18.5, 0.0, 0.0 ]
+										relative_angles = [ 0.0, -95.25, 0.0 ]
+										weight = 1.0
+									},
+									{
+										_class = "AttachmentInfluence"
+										parent_bone = "arm_lower_R_twist0"
+										relative_origin = [ -5.0, 1.5, 0.0 ]
+										relative_angles = [ 0.0, -90.0, 0.0 ]
+										weight = 1.0
+									},
+								]
+								parent_bone = "arm_lower_R"
+								relative_origin = [ 0.0, 0.0, 0.0 ]
+								relative_angles = [ 0.0, 0.0, 0.0 ]
+								weight = 0.0
+								ignore_rotation = false
+							},
+							{
+								_class = "Attachment"
+								name = "driver_elbow_L_position"
+								note = "Drives the constraint that pushes the elbow out as the arm bends. The offsets are hand-tweaked... nothing scientific about this, unfortunately"
+								children = 
+								[
+									{
+										_class = "AttachmentInfluence"
+										parent_bone = "arm_upper_L_twist1"
+										relative_origin = [ 18.5, 0.0, 0.0 ]
+										relative_angles = [ 0.0, -95.25, 0.0 ]
+										weight = 1.0
+									},
+									{
+										_class = "AttachmentInfluence"
+										parent_bone = "arm_lower_L_twist0"
+										relative_origin = [ -5.0, 1.5, 0.0 ]
+										relative_angles = [ 0.0, -90.0, 0.0 ]
+										weight = 1.0
+									},
+								]
+								parent_bone = "arm_lower_L"
+								relative_origin = [ 0.0, 0.0, 0.0 ]
+								relative_angles = [ 0.0, 0.0, 0.0 ]
+								weight = 0.0
+								ignore_rotation = false
+							},
+							{
+								_class = "Attachment"
+								name = "driver_arm_upper_L_twist1"
+								children = 
+								[
+									{
+										_class = "AttachmentInfluence"
+										parent_bone = "arm_upper_L"
+										relative_origin = [ 0.0, 0.0, 0.0 ]
+										relative_angles = [ 0.0, 0.0, 0.0 ]
+										weight = 1.0
+									},
+									{
+										_class = "AttachmentInfluence"
+										parent_bone = "arm_lower_L"
+										relative_origin = [ 0.0, 0.0, 0.0 ]
+										relative_angles = [ 0.0, 0.0, 0.0 ]
+										weight = 2.0
+									},
+								]
+								parent_bone = "arm_upper_L"
+								relative_origin = [ 0.0, 0.0, 0.0 ]
+								relative_angles = [ 0.0, 0.0, 0.0 ]
+								weight = 1.0
+								ignore_rotation = true
+							},
+							{
+								_class = "Attachment"
+								name = "driver_arm_lower_L_twist1"
+								children = 
+								[
+									{
+										_class = "AttachmentInfluence"
+										parent_bone = "arm_lower_L"
+										relative_origin = [ 0.0, 0.0, 0.0 ]
+										relative_angles = [ 0.0, 0.0, 0.0 ]
+										weight = 1.0
+									},
+									{
+										_class = "AttachmentInfluence"
+										parent_bone = "hand_L"
+										relative_origin = [ 0.0, 0.0, 0.0 ]
+										relative_angles = [ 0.0, 0.0, 0.0 ]
+										weight = 2.0
+									},
+								]
+								parent_bone = "arm_lower_L"
+								relative_origin = [ 0.0, 0.0, 0.0 ]
+								relative_angles = [ 0.0, 0.0, 0.0 ]
+								weight = 1.0
+								ignore_rotation = true
+							},
+							{
+								_class = "Attachment"
+								name = "middle_of_both_hands"
+								note = "Inputs are rotated so that +X is forward and +Z is up relative to the ground when the arms are pointing forwards"
+								children = 
+								[
+									{
+										_class = "AttachmentInfluence"
+										parent_bone = "hand_L"
+										relative_origin = [ 13.0, 0.0, 0.0 ]
+										relative_angles = [ 0.0, 0.0, -90.0 ]
+										weight = 1.0
+									},
+									{
+										_class = "AttachmentInfluence"
+										parent_bone = "hand_R"
+										relative_origin = [ 13.0, 0.0, 0.0 ]
+										relative_angles = [ 0.0, 0.0, -90.0 ]
+										weight = 1.0
+									},
+								]
+								parent_bone = "spine_1"
+								relative_origin = [ 0.0, 0.0, 0.0 ]
+								relative_angles = [ 0.0, 0.0, 0.0 ]
+								weight = 0.0
+								ignore_rotation = false
+							},
+							{
+								_class = "Attachment"
+								name = "driver_leg_upper_R_twist1"
+								children = 
+								[
+									{
+										_class = "AttachmentInfluence"
+										parent_bone = "leg_upper_R"
+										relative_origin = [ 0.0, 0.0, 0.0 ]
+										relative_angles = [ 0.0, 0.0, 0.0 ]
+										weight = 1.0
+									},
+									{
+										_class = "AttachmentInfluence"
+										parent_bone = "leg_lower_R"
+										relative_origin = [ 0.0, 0.0, 0.0 ]
+										relative_angles = [ 0.0, 0.0, 0.0 ]
+										weight = 2.1
+									},
+								]
+								parent_bone = "leg_upper_R"
+								relative_origin = [ 0.0, 0.0, 0.0 ]
+								relative_angles = [ 0.0, 0.0, 0.0 ]
+								weight = 1.0
+								ignore_rotation = true
+							},
+							{
+								_class = "Attachment"
+								name = "driver_leg_upper_L_twist1"
+								children = 
+								[
+									{
+										_class = "AttachmentInfluence"
+										parent_bone = "leg_upper_L"
+										relative_origin = [ 0.0, 0.0, 0.0 ]
+										relative_angles = [ 0.0, 0.0, 0.0 ]
+										weight = 1.0
+									},
+									{
+										_class = "AttachmentInfluence"
+										parent_bone = "leg_lower_L"
+										relative_origin = [ 0.0, 0.0, 0.0 ]
+										relative_angles = [ 0.0, 0.0, 0.0 ]
+										weight = 2.1
+									},
+								]
+								parent_bone = "leg_upper_L"
+								relative_origin = [ 0.0, 0.0, 0.0 ]
+								relative_angles = [ 0.0, 0.0, 0.0 ]
+								weight = 1.0
+								ignore_rotation = true
+							},
+							{
+								_class = "Attachment"
+								name = "driver_kneecap_R_position"
+								note = "Drives the constraint that pushes the kneecap out as the leg bends. The offsets are hand-tweaked... nothing scientific about this, unfortunately"
+								children = 
+								[
+									{
+										_class = "AttachmentInfluence"
+										parent_bone = "leg_upper_R_twist1"
+										relative_origin = [ 25.0, 0.0, 0.0 ]
+										relative_angles = [ 0.0, 90.0, 0.0 ]
+										weight = 1.0
+									},
+									{
+										_class = "AttachmentInfluence"
+										parent_bone = "leg_lower_R_twist0"
+										relative_origin = [ -5.0, 0.0, 0.0 ]
+										relative_angles = [ 0.0, 90.0, 0.0 ]
+										weight = 1.0
+									},
+								]
+								parent_bone = "leg_lower_R"
+								relative_origin = [ 0.0, 0.0, 0.0 ]
+								relative_angles = [ 0.0, 0.0, 0.0 ]
+								weight = 0.0
+								ignore_rotation = false
+							},
+							{
+								_class = "Attachment"
+								name = "driver_kneecap_L_position"
+								note = "Drives the constraint that pushes the kneecap out as the leg bends. The offsets are hand-tweaked... nothing scientific about this, unfortunately"
+								children = 
+								[
+									{
+										_class = "AttachmentInfluence"
+										parent_bone = "leg_upper_L_twist1"
+										relative_origin = [ 25.0, 0.0, 0.0 ]
+										relative_angles = [ 0.0, 90.0, 0.0 ]
+										weight = 1.0
+									},
+									{
+										_class = "AttachmentInfluence"
+										parent_bone = "leg_lower_L_twist0"
+										relative_origin = [ -5.0, 0.0, 0.0 ]
+										relative_angles = [ 0.0, 90.0, 0.0 ]
+										weight = 1.0
+									},
+								]
+								parent_bone = "leg_lower_L"
+								relative_origin = [ 0.0, 0.0, 0.0 ]
+								relative_angles = [ 0.0, 0.0, 0.0 ]
+								weight = 0.0
+								ignore_rotation = false
+							},
+							{
+								_class = "Attachment"
+								name = "driver_leg_lower_R_twist1"
+								children = 
+								[
+									{
+										_class = "AttachmentInfluence"
+										parent_bone = "leg_lower_R"
+										relative_origin = [ 0.0, 0.0, 0.0 ]
+										relative_angles = [ 0.0, 0.0, 0.0 ]
+										weight = 1.0
+									},
+									{
+										_class = "AttachmentInfluence"
+										parent_bone = "ankle_R"
+										relative_origin = [ 0.0, 0.0, 0.0 ]
+										relative_angles = [ 0.0, 0.0, 0.0 ]
+										weight = 2.0
+									},
+								]
+								parent_bone = "leg_lower_R"
+								relative_origin = [ 0.0, 0.0, 0.0 ]
+								relative_angles = [ 0.0, 0.0, 0.0 ]
+								weight = 1.0
+								ignore_rotation = true
+							},
+							{
+								_class = "Attachment"
+								name = "driver_leg_lower_L_twist1"
+								children = 
+								[
+									{
+										_class = "AttachmentInfluence"
+										parent_bone = "leg_lower_L"
+										relative_origin = [ 0.0, 0.0, 0.0 ]
+										relative_angles = [ 0.0, 0.0, 0.0 ]
+										weight = 1.0
+									},
+									{
+										_class = "AttachmentInfluence"
+										parent_bone = "ankle_L"
+										relative_origin = [ 0.0, 0.0, 0.0 ]
+										relative_angles = [ 0.0, 0.0, 0.0 ]
+										weight = 2.0
+									},
+								]
+								parent_bone = "leg_lower_L"
+								relative_origin = [ 0.0, 0.0, 0.0 ]
+								relative_angles = [ 0.0, 0.0, 0.0 ]
+								weight = 1.0
+								ignore_rotation = true
+							},
+						]
+					},
+					{
+						_class = "Attachment"
+						name = "forward_reference_modelspace"
+						children = 
+						[
+							{
+								_class = "AttachmentInfluence"
+								parent_bone = "head"
+								relative_origin = [ 0.0, -3.0, 0.0 ]
+								relative_angles = [ 0.0, 90.0, 90.0 ]
+								weight = 1.0
+							},
+						]
+						parent_bone = "pelvis"
+						relative_origin = [ 0.0, -3.0, 0.0 ]
+						relative_angles = [ 0.0, 90.0, 90.0 ]
+						weight = 1.0
+						ignore_rotation = true
+					},
+					{
+						_class = "Attachment"
+						name = "eyes"
+						parent_bone = "head"
+						relative_origin = [ 10.25, 7.6, 0.0 ]
+						relative_angles = [ -0.0, 90.0, 90.0 ]
+						weight = 1.0
+						ignore_rotation = false
+					},
+					{
+						_class = "Attachment"
+						name = "eye_R_forward"
+						parent_bone = "head"
+						relative_origin = [ 10.25, 9.6, -3.6 ]
+						relative_angles = [ 0.0, 90.0, 90.0 ]
+						weight = 1.0
+						ignore_rotation = false
+					},
+					{
+						_class = "Attachment"
+						name = "eye_L_forward"
+						parent_bone = "head"
+						relative_origin = [ 10.25, 9.6, 3.6 ]
+						relative_angles = [ -0.0, 90.0, 90.0 ]
+						weight = 1.0
+						ignore_rotation = false
+					},
+					{
+						_class = "Attachment"
+						name = "forward_reference"
+						parent_bone = "head"
+						relative_origin = [ 0.0, 0.0, 0.0 ]
+						relative_angles = [ 0.0, 90.0, 90.0 ]
+						weight = 1.0
+						ignore_rotation = false
+					},
+					{
+						_class = "Attachment"
+						name = "foot_R"
+						note = "Used by the GameData category"
+						parent_bone = "ball_R"
+						relative_origin = [ -3.65, -1.1, 0.65 ]
+						relative_angles = [ 0.0, 0.0, -90.0 ]
+						weight = 1.0
+						ignore_rotation = false
+					},
+					{
+						_class = "Attachment"
+						name = "foot_L"
+						note = "Used by the GameData category"
+						parent_bone = "ball_L"
+						relative_origin = [ -3.65, 1.1, -0.65 ]
+						relative_angles = [ -0.0, 180.0, -89.999992 ]
+						weight = 1.0
+						ignore_rotation = false
+					},
+					{
+						_class = "Attachment"
+						name = "hat"
+						parent_bone = "head"
+						relative_origin = [ 21.5, 1.0, 0.0 ]
+						relative_angles = [ 0.0, 90.0, 90.0 ]
+						weight = 1.0
+						ignore_rotation = false
+					},
+				]
+			},
+		]
+		model_archetype = ""
+		primary_associated_entity = ""
+		anim_graph_name = ""
+		base_model_name = ""
+	}
+}

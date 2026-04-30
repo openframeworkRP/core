@@ -1,0 +1,10 @@
+-- GEAR STICK
+
+-8 - X 
+
+-10 - Z
+
+
+-- AXLE ROTATION
+
+-22 & 22 Angles (LEFT - RIGHT)

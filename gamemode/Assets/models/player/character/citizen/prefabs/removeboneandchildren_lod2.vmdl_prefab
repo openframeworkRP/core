@@ -1,0 +1,29 @@
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:modeldoc29:version{3cec427c-1b0e-4d48-a90a-0436f33a6041} -->
+{
+	rootNode = 
+	{
+		_class = "RootNode"
+		children = 
+		[
+			{
+				_class = "RemoveBoneAndChildren"
+				note = "Previously, *_lower_* helpers were included in the cull list. However, the bone constraints still get computed under the hood, and the influence of those helpers crosses a boundary between different body regions, which could cause a problem: a bonemerged item that includes its own copy of the body meshes (for culling reasons) would still get the constraint applied, but the rest of the original body wouldn\'t (by virtue of the helper influence having been culled), creating a very ugly and noticeable seam."
+				bone_names = 
+				[
+					"finger_thumb_1_L",
+					"finger_thumb_1_R",
+					"finger_index_2_L",
+					"finger_index_2_R",
+					"finger_middle_2_L",
+					"finger_middle_2_R",
+					"finger_ring_2_L",
+					"finger_ring_2_R",
+				]
+			},
+		]
+		model_archetype = ""
+		primary_associated_entity = ""
+		anim_graph_name = ""
+		base_model_name = ""
+	}
+}
