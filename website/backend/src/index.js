@@ -34,6 +34,7 @@ import assetsRouter         from './routes/assets.js'
 import gameAdminRouter      from './routes/gameadmin.js'
 import tokensRouter         from './routes/tokens.js'
 import permissionsRouter    from './routes/permissions.js'
+import setupRouter          from './routes/setup.js'
 
 // Init des tables roles/pages/role_permissions + seed initial.
 // Doit tourner avant que les routers ne soient utilisés.
@@ -89,6 +90,11 @@ app.use('/uploads', express.static(join(__dirname, '../uploads')))
 
 // ── Routes auth Steam ──────────────────────────────────────────────────────
 app.use('/auth', authRouter)
+
+// ── Wizard de setup (PUBLIC : aucun user n'existe encore au 1er run) ─────
+// Doit etre monte AVANT les autres routes pour que /api/setup/status
+// ne soit pas intercepte par d'eventuels middlewares.
+app.use('/api/setup', setupRouter)
 
 // ── API (requireAuth appliqué par méthode dans chaque router) ─────────────
 app.get('/api/health', (_req, res) => res.json({ ok: true, time: new Date() }))
