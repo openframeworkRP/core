@@ -17,23 +17,37 @@ Tout est containerisé sauf le serveur s&box dédié lui-même (qui doit tourner
 
 ## Quickstart (5 min)
 
+### Option 1 — Setup guidé (recommandé)
+
+Le script vérifie tes prérequis (Docker, Docker Compose), te guide vers leur install si besoin, génère un `.env` avec des secrets aléatoires, te demande tes valeurs Steam (clé API + SteamID admin), puis lance `docker compose up -d`.
+
+**Linux / macOS / WSL / Git Bash sur Windows :**
 ```bash
-# 1. Cloner
 git clone https://github.com/openframeworkRP/core.git
 cd core
-
-# 2. Configurer
-cp .env.example .env
-# Edite .env et remplis MSSQL_SA_PASSWORD, JWT_KEY, SERVER_SECRET, STEAM_API_KEY, ALLOWED_STEAM_IDS
-
-# 3. Lancer l'API + DB + website
-docker compose up -d
-
-# 4. Publier le gamemode (option a) ou monter en local (option b)
-# Voir docs/SETUP.md pour les details
+bash scripts/setup.sh
 ```
 
-Plus de détails dans **[docs/SETUP.md](docs/SETUP.md)**.
+**Windows (PowerShell) :**
+```powershell
+git clone https://github.com/openframeworkRP/core.git
+cd core
+.\scripts\setup.ps1
+```
+
+### Option 2 — Manuel
+
+```bash
+git clone https://github.com/openframeworkRP/core.git
+cd core
+cp .env.example .env
+# Edite .env et remplis MSSQL_SA_PASSWORD, JWT_KEY, SERVER_SECRET, STEAM_API_KEY, ALLOWED_STEAM_IDS
+docker compose up -d
+```
+
+### Ensuite
+
+Publie le gamemode sur s&box ou monte-le en local — voir **[docs/SETUP.md](docs/SETUP.md)** pour les détails.
 
 ## Structure
 
