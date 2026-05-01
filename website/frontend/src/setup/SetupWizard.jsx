@@ -216,6 +216,15 @@ export default function SetupWizard() {
               Verifie les logs : <code>docker logs core-api</code>
             </p>
           )}
+          {applyResult.postSetupCommand && (
+            <div className="setup-error" style={{ background: '#1d2a1d', borderColor: '#3a5a3a', color: '#a5d6a7' }}>
+              <strong>Derniere etape — a faire manuellement :</strong>
+              <pre style={{ margin: '8px 0', padding: '8px', background: '#0e1410', borderRadius: 4 }}>
+                {applyResult.postSetupCommand}
+              </pre>
+              <small>{applyResult.postSetupHint}</small>
+            </div>
+          )}
           <p>Redirection vers le panel admin dans 5 secondes…</p>
           <a href="/admin" className="setup-btn">Acceder au panel admin maintenant →</a>
         </div>

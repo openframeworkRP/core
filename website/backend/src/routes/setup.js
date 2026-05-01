@@ -194,14 +194,37 @@ router.post('/apply', async (req, res) => {
     // pas critique : la config est ecrite, juste le flag qui rate
   }
 
+  // ── Reponse au browser AVANT de se suicider ─────────────────────────
+  // website-api doit etre recree pour relire les env vars du .env (sinon
+  // STEAM_API_KEY etc. restent les valeurs du boot, et passport-steam
+  // 403 a la 1ere connexion). On ne peut pas faire `compose up
+  // --force-recreate` depuis l'API Docker brute, mais un restart classique
+  // SUFFIT si docker-compose v2.x a charge le nouveau .env (ce qui est le
+  // cas car compose re-evalue ${VAR:-default} au prochain demarrage de
+  // service).
+  // En pratique : restart != recreate, le restart ne re-lit PAS .env.
+  // Donc on demande au user de faire le force-recreate manuellement,
+  // mais on planifie quand meme un restart simple en backup.
   res.json({
     ok: true,
     apiReady: ready,
     restarts: restartResults,
+    websiteRestartScheduled: true,
     nextStep: ready
       ? '/admin'
       : 'L\'API n\'a pas repondu apres 60s. Verifie docker logs core-api.',
+    postSetupCommand: 'docker compose up -d --force-recreate',
+    postSetupHint: 'Pour que website.api recharge STEAM_API_KEY et les autres secrets, lance la commande ci-dessus (le wizard ne peut pas le faire automatiquement sans se suicider).',
   })
+
+  // Dans 2s, on lance quand meme un restart de website.api : meme si ca
+  // ne re-lit pas .env (vs. recreate), au moins le user qui ne lit pas
+  // postSetupHint aura un container fresh — et avec docker-compose 2.30+
+  // un restart peut suffir si la spec hash a change.
+  setTimeout(() => {
+    dockerRequest('/containers/core-website-api/restart?t=5', 'POST')
+      .catch(() => { /* on est en train de mourir, normal que ca rate */ })
+  }, 2000)
 })
 
 export default router
