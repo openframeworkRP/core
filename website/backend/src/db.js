@@ -589,13 +589,9 @@ const upsertUser = db.prepare(`
   INSERT INTO users (steam_id, display_name, role)
   VALUES (?, ?, ?)
   ON CONFLICT(steam_id) DO UPDATE SET
-    role = CASE
-      -- Si le user est deja owner, on ne degrade pas
-      WHEN users.role = 'owner' THEN 'owner'
-      -- Sinon on applique le role de la seed (utile si on remonte
-      -- quelqu'un en owner via .env)
-      ELSE excluded.role
-    END
+    -- Force toujours le role owner pour les SteamIDs dans
+    -- ALLOWED_STEAM_IDS — c'est la source de verite.
+    role = excluded.role
 `)
 
 for (const [steamId, displayName, role] of DEFAULT_USERS) {
@@ -604,6 +600,25 @@ for (const [steamId, displayName, role] of DEFAULT_USERS) {
 
 if (DEFAULT_USERS.length > 0) {
   console.log(`✅  Seed users : ${DEFAULT_USERS.length} owner(s) depuis ALLOWED_STEAM_IDS`)
+}
+
+// ── Purge des owners residuels qui ne sont plus dans ALLOWED_STEAM_IDS ──
+// ALLOWED_STEAM_IDS est la source de verite. Tout user qui est encore
+// 'owner' en DB mais pas liste est demote 'viewer' (on ne le supprime pas
+// pour preserver d'eventuelles relations — devblog posts, members, etc.).
+//
+// Pour les nouveaux deploiements c'est inutile. Pour les installs
+// existantes (cas du fork OpenFramework depuis l'ancien repo small_life),
+// ca purge automatiquement les anciens owners hardcodes au prochain boot.
+if (ALLOWED_STEAM_IDS.length > 0) {
+  const placeholders = ALLOWED_STEAM_IDS.map(() => '?').join(',')
+  const result = db.prepare(`
+    UPDATE users SET role = 'viewer'
+    WHERE role = 'owner' AND steam_id NOT IN (${placeholders})
+  `).run(...ALLOWED_STEAM_IDS)
+  if (result.changes > 0) {
+    console.log(`🧹 Purge owners : ${result.changes} ancien(s) owner(s) demote(s) en viewer (pas dans ALLOWED_STEAM_IDS)`)
+  }
 }
 
 // ── Seed : devlogs par défaut (désactivé — décommenter pour re-seeder) ─────

@@ -31,6 +31,13 @@ import ControlPanel from './ControlPanel.jsx'
 import BrandingPanel from './BrandingPanel.jsx'
 
 // ── Rôles ─────────────────────────────────────────────────────────────────
+// ── Feature flags ─────────────────────────────────────────────────────────
+// Multi-projet (Hub avec dashboard/tasks/idees pour N projets) et multi-jeu
+// (panels 'Jeux', 'Admin Jeu') sont desactives pour le MVP. A reactiver
+// plus tard quand le framework supportera plusieurs serveurs/jeux par
+// instance. Pour reactiver : passe ce flag a true.
+const MULTI_PROJECT_GAME_ENABLED = false
+
 const ROLE_COLORS = { owner: '#f59e0b', admin: '#a78bfa', editor: '#34d399', rules_editor: 'var(--brand-primary, #e07b39)', viewer: '#71717a' }
 const ROLE_FALLBACK_COLOR = '#6366f1'   // pour les rôles personnalisés
 const colorForRole = (role) => ROLE_COLORS[role] || ROLE_FALLBACK_COLOR
@@ -170,8 +177,8 @@ export default function AdminApp() {
 
       {/* ── Header ── */}
       <header className="adm__header">
-        {/* Project filter dropdown */}
-        {(() => {
+        {/* Project filter dropdown — desactive en mono-projet (cf. flag) */}
+        {MULTI_PROJECT_GAME_ENABLED && (() => {
           const current = HUB_PROJECTS.find(p => p.id === projectFilter) || HUB_PROJECTS[0]
           const isOpen = openDropdown === 'proj-filter'
           return (
@@ -229,7 +236,7 @@ export default function AdminApp() {
       {/* ── Sidebar ── */}
       <aside className="adm__sidebar">
         <span className="adm__sidebar-label">Admin</span>
-        {can('admin:games') && (
+        {MULTI_PROJECT_GAME_ENABLED && can('admin:games') && (
           <button className={`adm__sidebar-btn${panel === 'games' ? ' adm__sidebar-btn--active' : ''}`} onClick={() => goTo('admin:games')}>
             <Gamepad2 size={15} /> Jeux
           </button>
@@ -254,7 +261,7 @@ export default function AdminApp() {
             <Users size={15} /> Équipe
           </button>
         )}
-        {can('admin:gameadmin') && (
+        {MULTI_PROJECT_GAME_ENABLED && can('admin:gameadmin') && (
           <button className={`adm__sidebar-btn${panel === 'gameadmin' ? ' adm__sidebar-btn--active' : ''}`} onClick={() => goTo('admin:gameadmin')}>
             <Gamepad2 size={15} /> Admin Jeu
           </button>
@@ -265,47 +272,52 @@ export default function AdminApp() {
           </button>
         )}
 
-        <div className="adm__sidebar-divider" />
-        <span className="adm__sidebar-label">Hub</span>
-        {can('hub:dashboard') && (
-          <button className={`adm__sidebar-btn${hubView === 'dashboard' ? ' adm__sidebar-btn--active' : ''}`} onClick={() => goTo('hub:dashboard')}>
-            <BarChart3 size={15} /> Dashboard
-          </button>
-        )}
-        {can('hub:tasks') && (
-          <button className={`adm__sidebar-btn${hubView === 'tasks' ? ' adm__sidebar-btn--active' : ''}`} onClick={() => goTo('hub:tasks')}>
-            <SquareCheck size={15} /> Tâches
-          </button>
-        )}
-        {can('hub:roadmap') && (
-          <button className={`adm__sidebar-btn${hubView === 'roadmap' ? ' adm__sidebar-btn--active' : ''}`} onClick={() => goTo('hub:roadmap')}>
-            <Route size={15} /> Roadmap
-          </button>
-        )}
-        {can('hub:whiteboard') && (
-          <button className={`adm__sidebar-btn${hubView === 'whiteboard' ? ' adm__sidebar-btn--active' : ''}`} onClick={() => goTo('hub:whiteboard')}>
-            <Lightbulb size={15} /> Idées
-          </button>
-        )}
-        {can('hub:mapview') && (
-          <button className={`adm__sidebar-btn${hubView === 'mapview' ? ' adm__sidebar-btn--active' : ''}`} onClick={() => goTo('hub:mapview')}>
-            <MapPin size={15} /> Map
-          </button>
-        )}
-        {can('hub:fab') && (
-          <button className={`adm__sidebar-btn${hubView === 'fab' ? ' adm__sidebar-btn--active' : ''}`} onClick={() => goTo('hub:fab')}>
-            <ShoppingBag size={15} /> Assets Fab
-          </button>
-        )}
-        {can('hub:catalogue') && (
-          <button className={`adm__sidebar-btn${hubView === 'catalogue' ? ' adm__sidebar-btn--active' : ''}`} onClick={() => goTo('hub:catalogue')}>
-            <Database size={15} /> Catalogue
-          </button>
-        )}
-        {can('hub:activity') && (
-          <button className={`adm__sidebar-btn${hubView === 'activity' ? ' adm__sidebar-btn--active' : ''}`} onClick={() => goTo('hub:activity')}>
-            <Activity size={15} /> Activité
-          </button>
+        {/* Hub multi-projets : desactive en MVP (cf. flag MULTI_PROJECT_GAME_ENABLED) */}
+        {MULTI_PROJECT_GAME_ENABLED && (
+          <>
+            <div className="adm__sidebar-divider" />
+            <span className="adm__sidebar-label">Hub</span>
+            {can('hub:dashboard') && (
+              <button className={`adm__sidebar-btn${hubView === 'dashboard' ? ' adm__sidebar-btn--active' : ''}`} onClick={() => goTo('hub:dashboard')}>
+                <BarChart3 size={15} /> Dashboard
+              </button>
+            )}
+            {can('hub:tasks') && (
+              <button className={`adm__sidebar-btn${hubView === 'tasks' ? ' adm__sidebar-btn--active' : ''}`} onClick={() => goTo('hub:tasks')}>
+                <SquareCheck size={15} /> Tâches
+              </button>
+            )}
+            {can('hub:roadmap') && (
+              <button className={`adm__sidebar-btn${hubView === 'roadmap' ? ' adm__sidebar-btn--active' : ''}`} onClick={() => goTo('hub:roadmap')}>
+                <Route size={15} /> Roadmap
+              </button>
+            )}
+            {can('hub:whiteboard') && (
+              <button className={`adm__sidebar-btn${hubView === 'whiteboard' ? ' adm__sidebar-btn--active' : ''}`} onClick={() => goTo('hub:whiteboard')}>
+                <Lightbulb size={15} /> Idées
+              </button>
+            )}
+            {can('hub:mapview') && (
+              <button className={`adm__sidebar-btn${hubView === 'mapview' ? ' adm__sidebar-btn--active' : ''}`} onClick={() => goTo('hub:mapview')}>
+                <MapPin size={15} /> Map
+              </button>
+            )}
+            {can('hub:fab') && (
+              <button className={`adm__sidebar-btn${hubView === 'fab' ? ' adm__sidebar-btn--active' : ''}`} onClick={() => goTo('hub:fab')}>
+                <ShoppingBag size={15} /> Assets Fab
+              </button>
+            )}
+            {can('hub:catalogue') && (
+              <button className={`adm__sidebar-btn${hubView === 'catalogue' ? ' adm__sidebar-btn--active' : ''}`} onClick={() => goTo('hub:catalogue')}>
+                <Database size={15} /> Catalogue
+              </button>
+            )}
+            {can('hub:activity') && (
+              <button className={`adm__sidebar-btn${hubView === 'activity' ? ' adm__sidebar-btn--active' : ''}`} onClick={() => goTo('hub:activity')}>
+                <Activity size={15} /> Activité
+              </button>
+            )}
+          </>
         )}
 
         <div className="adm__sidebar-divider" />
@@ -748,7 +760,7 @@ function UsersPanel({ onClose, currentUser }) {
             <div className="adm__jobs-form-grid">
               {!editId && (
                 <input
-                  placeholder="SteamID64 (ex: 76561198314922998)" value={form.steam_id}
+                  placeholder="SteamID64 (17 chiffres)" value={form.steam_id}
                   onChange={e => f('steam_id', e.target.value)} required
                   className="adm__jobs-form-full"
                 />
