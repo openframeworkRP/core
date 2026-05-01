@@ -35,6 +35,7 @@ import gameAdminRouter      from './routes/gameadmin.js'
 import tokensRouter         from './routes/tokens.js'
 import permissionsRouter    from './routes/permissions.js'
 import setupRouter          from './routes/setup.js'
+import controlRouter        from './routes/control.js'
 
 // Init des tables roles/pages/role_permissions + seed initial.
 // Doit tourner avant que les routers ne soient utilisés.
@@ -122,6 +123,7 @@ app.use('/api/assets',     assetsRouter)
 app.use('/api/gameadmin',  gameAdminRouter)
 app.use('/api/tokens',     tokensRouter)
 app.use('/api/permissions', permissionsRouter)
+app.use('/api/control',     controlRouter)
 
 httpServer.listen(PORT, () => {
   console.log(`✅  DevBlog API running on http://localhost:${PORT}`)

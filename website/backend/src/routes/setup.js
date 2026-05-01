@@ -10,8 +10,8 @@
 
 import { Router } from 'express'
 import fs from 'fs/promises'
-import http from 'http'
 import crypto from 'crypto'
+import { dockerRequest } from '../docker.js'
 
 const router = Router()
 
@@ -28,29 +28,6 @@ const CORE_API_BASE = process.env.CORE_API_INTERNAL_URL || 'http://core-api:8443
 
 async function fileExists(p) {
   try { await fs.access(p); return true } catch { return false }
-}
-
-/**
- * Requete au daemon Docker via le socket Unix (monte par docker-compose).
- * Pas de dependance externe : on utilise le module http natif de Node.
- */
-function dockerRequest(path, method = 'GET', body = null) {
-  return new Promise((resolve, reject) => {
-    const options = {
-      socketPath: '/var/run/docker.sock',
-      path,
-      method,
-      headers: { 'Content-Type': 'application/json' },
-    }
-    const req = http.request(options, (res) => {
-      let data = ''
-      res.on('data', (chunk) => (data += chunk))
-      res.on('end', () => resolve({ status: res.statusCode, body: data }))
-    })
-    req.on('error', reject)
-    if (body) req.write(JSON.stringify(body))
-    req.end()
-  })
 }
 
 async function checkApiHealth() {

@@ -1,0 +1,211 @@
+/* ============================================================
+   ControlPanel — styling cohérent avec le wizard (dark theme)
+   ============================================================ */
+
+.ctrl-page {
+  padding: 24px 32px;
+  max-width: 1200px;
+  margin: 0 auto;
+  color: #e8e8e8;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.ctrl-header {
+  margin-bottom: 24px;
+  border-bottom: 1px solid #2a2f3e;
+  padding-bottom: 16px;
+}
+
+.ctrl-header h1 {
+  margin: 0 0 4px;
+  font-size: 22px;
+  font-weight: 500;
+  color: #fff;
+}
+
+.ctrl-subtitle {
+  margin: 0;
+  color: #8089a0;
+  font-size: 13px;
+}
+
+.ctrl-error {
+  background: #2d1a1a;
+  border: 1px solid #553030;
+  border-radius: 6px;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+  color: #ff8a80;
+}
+
+.ctrl-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: #1a1d28;
+  border: 1px solid #2a2f3e;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.ctrl-table th {
+  text-align: left;
+  padding: 12px 16px;
+  background: #14171f;
+  color: #8089a0;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border-bottom: 1px solid #2a2f3e;
+}
+
+.ctrl-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid #2a2f3e;
+  font-size: 14px;
+  vertical-align: middle;
+}
+
+.ctrl-table tr:last-child td {
+  border-bottom: 0;
+}
+
+.ctrl-table tr:hover td {
+  background: #1f2330;
+}
+
+.ctrl-svc-name {
+  font-weight: 500;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.ctrl-svc-meta {
+  font-size: 12px;
+  color: #6c7385;
+  font-family: 'JetBrains Mono', Consolas, monospace;
+  margin-top: 2px;
+}
+
+.ctrl-tag {
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 3px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+}
+.ctrl-tag.critical {
+  background: #4a1d1d;
+  color: #ff8a80;
+}
+.ctrl-tag.self {
+  background: #1d2d4a;
+  color: #82b1ff;
+}
+
+.ctrl-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: lowercase;
+}
+.badge-running  { background: #1d3a1d; color: #4caf50; }
+.badge-warning  { background: #3a2d1d; color: #ffa726; }
+.badge-stopped  { background: #2d2d2d; color: #9e9e9e; }
+.badge-error    { background: #3a1d1d; color: #ff8a80; }
+.badge-unknown  { background: #2d2d2d; color: #666; }
+
+.ctrl-actions {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.ctrl-btn {
+  padding: 6px 12px;
+  border-radius: 4px;
+  border: 0;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: inherit;
+  background: #2a2f3e;
+  color: #e8e8e8;
+  transition: background 120ms;
+}
+.ctrl-btn:hover:not(:disabled) {
+  background: #353b4d;
+}
+.ctrl-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.ctrl-btn-start    { background: #1d3a1d; color: #81c784; }
+.ctrl-btn-start:hover:not(:disabled)    { background: #2d4a2d; }
+.ctrl-btn-restart  { background: #3a2d1d; color: #ffb74d; }
+.ctrl-btn-restart:hover:not(:disabled)  { background: #4a3d2d; }
+.ctrl-btn-stop     { background: #3a1d1d; color: #e57373; }
+.ctrl-btn-stop:hover:not(:disabled)     { background: #4a2d2d; }
+.ctrl-btn-logs     { background: #1d2d3a; color: #82b1ff; }
+.ctrl-btn-logs:hover:not(:disabled)     { background: #2d3d4a; }
+
+/* ── Modal logs ─────────────────────────────────────────────────────── */
+.ctrl-logs-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.ctrl-logs-modal {
+  background: #1a1d28;
+  border: 1px solid #2a2f3e;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 1100px;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.ctrl-logs-modal header {
+  padding: 16px 24px;
+  border-bottom: 1px solid #2a2f3e;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.ctrl-logs-modal header h2 {
+  margin: 0;
+  font-size: 16px;
+  flex: 1;
+  color: #fff;
+  font-family: 'JetBrains Mono', Consolas, monospace;
+}
+
+.ctrl-logs-modal pre {
+  flex: 1;
+  overflow: auto;
+  margin: 0;
+  padding: 16px 24px;
+  background: #0e1014;
+  color: #c8c8c8;
+  font-family: 'JetBrains Mono', Consolas, monospace;
+  font-size: 12px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
