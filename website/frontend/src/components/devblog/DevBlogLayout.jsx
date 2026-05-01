@@ -2,7 +2,6 @@ import { Outlet, Link, useMatch } from 'react-router-dom'
 import { useLang } from '../../context/LanguageContext'
 import { usePostTitle } from '../../context/PostTitleContext'
 import { useBranding } from '../../context/BrandingContext.jsx'
-import defaultLogo from '../../assets/logo.png'
 import './DevBlogLayout.css'
 
 export default function DevBlogLayout() {
@@ -11,7 +10,6 @@ export default function DevBlogLayout() {
   const { branding } = useBranding()
   const postMatch = useMatch('/devblog/:slug')
   const slug = postMatch?.params?.slug ?? null
-  const logoSrc = branding.logo_url || defaultLogo
   const siteName = branding.site_name || 'OpenFramework'
 
   return (
@@ -20,7 +18,10 @@ export default function DevBlogLayout() {
       <header className="dblayout__header">
         <div className="dblayout__left">
           <Link to="/" className="dblayout__logo">
-            <img src={logoSrc} alt={siteName} />
+            {branding.logo_url
+              ? <img src={branding.logo_url} alt={siteName} />
+              : <span className="dblayout__sitename">{siteName}</span>
+            }
           </Link>
 
           <nav className="dblayout__nav">

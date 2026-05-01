@@ -28,6 +28,15 @@
   display: block;
 }
 
+.dblayout__sitename {
+  display: inline-block;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #fff;
+  text-decoration: none;
+}
+
 .dblayout__left {
   display: flex;
   align-items: center;

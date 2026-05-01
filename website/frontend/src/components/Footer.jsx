@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom'
 import { Github, MessageCircle, Gamepad2 } from 'lucide-react'
-import defaultLogo from '../assets/logo.png'
 import { useLang } from '../context/LanguageContext'
 import { useBranding } from '../context/BrandingContext.jsx'
 import './Footer.css'
@@ -9,7 +8,6 @@ export default function Footer() {
   const { t } = useLang()
   const { branding } = useBranding()
   const year = new Date().getFullYear()
-  const logoSrc = branding.logo_url || defaultLogo
   const siteName = branding.site_name || 'OpenFramework'
 
   // Liens lus dynamiquement depuis le branding — masques si vides.
@@ -22,9 +20,13 @@ export default function Footer() {
   return (
     <footer className="footer">
       <div className="footer__inner">
-        {/* Logo + baseline */}
+        {/* Logo (si fourni) ou nom en texte + baseline */}
         <div className="footer__brand">
-          <img src={logoSrc} alt={siteName} className="footer__logo" />
+          {branding.logo_url ? (
+            <img src={branding.logo_url} alt={siteName} className="footer__logo" />
+          ) : (
+            <span className="footer__sitename">{siteName}</span>
+          )}
           <p className="footer__tagline">{branding.description || t('hero.tagline')}</p>
         </div>
 
@@ -34,7 +36,7 @@ export default function Footer() {
           <a href="#contact">contact</a>
           <Link to="/devblog">{t('nav.devblog')}</Link>
           <Link to="/members">{t('nav.members')}</Link>
-          <Link to="/team">{t('nav.jobs')}</Link>
+          <Link to="/team">{t('nav.team')}</Link>
         </nav>
 
         <div className="footer__divider" />
