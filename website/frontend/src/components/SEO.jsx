@@ -1,6 +1,6 @@
 import { Helmet } from 'react-helmet-async'
 
-const SITE_NAME = 'Small Box Studio'
+const SITE_NAME = 'OpenFramework'
 const BASE_URL  = 'https://openframework.fr'
 const DEFAULT_IMAGE = `${BASE_URL}/banner_site.png`
 
@@ -8,7 +8,7 @@ const DEFAULT_IMAGE = `${BASE_URL}/banner_site.png`
  * Composant SEO réutilisable.
  *
  * Props :
- *   title       - titre de la page (sera suffixé par "| Small Box Studio")
+ *   title       - titre de la page (sera suffixé par "| OpenFramework")
  *   description - meta description (160 car. max recommandé)
  *   image       - URL absolue de l'image Open Graph
  *   url         - URL canonique de la page (ex: "/devblog/mon-article")
@@ -17,7 +17,7 @@ const DEFAULT_IMAGE = `${BASE_URL}/banner_site.png`
  *   noIndex     - true pour pages admin/privées
  *   jsonLd      - objet JSON-LD à injecter (optionnel)
  */
-const DEFAULT_KEYWORDS = 'S&Box, DarkRP, Roleplay, RP, France, français, serveur RP français, OpenFramework, DarkRP français, Roleplay S&Box, S&Box France, Small Box Studio'
+const DEFAULT_KEYWORDS = 'S&Box, DarkRP, Roleplay, RP, France, français, serveur RP français, OpenFramework, DarkRP français, Roleplay S&Box, S&Box France, OpenFramework'
 
 export default function SEO({
   title,

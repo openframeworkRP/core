@@ -19,7 +19,7 @@ export default function Footer() {
       <div className="footer__inner">
         {/* Logo + baseline */}
         <div className="footer__brand">
-          <img src={logo} alt="Small Box Studio" className="footer__logo" />
+          <img src={logo} alt="OpenFramework" className="footer__logo" />
           <p className="footer__tagline">{t('hero.tagline')}</p>
         </div>
 

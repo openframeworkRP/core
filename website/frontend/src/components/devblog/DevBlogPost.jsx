@@ -104,7 +104,7 @@ export default function DevBlogPost() {
           description: excerpt || title,
           image: cover || undefined,
           author: { '@type': 'Person', name: post.author },
-          publisher: { '@type': 'Organization', name: 'Small Box Studio' },
+          publisher: { '@type': 'Organization', name: 'OpenFramework' },
           datePublished: post.month,
           url: `https://openframework.fr/devblog/${post.slug}`,
         }}

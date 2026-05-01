@@ -68,7 +68,7 @@ router.post('/', requireAuth, (req, res) => {
     const result = db.prepare(`
       INSERT INTO posts (slug, month, title_fr, title_en, excerpt_fr, excerpt_en, cover, author, read_time, published)
       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `).run(slug, month, title_fr, title_en, excerpt_fr ?? '', excerpt_en ?? '', cover ?? null, author ?? 'Small Box Studio', read_time ?? 5, published ? 1 : 0)
+    `).run(slug, month, title_fr, title_en, excerpt_fr ?? '', excerpt_en ?? '', cover ?? null, author ?? 'OpenFramework', read_time ?? 5, published ? 1 : 0)
 
     const postId = result.lastInsertRowid
     syncGames(postId, games)

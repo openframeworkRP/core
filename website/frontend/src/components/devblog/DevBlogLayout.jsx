@@ -16,7 +16,7 @@ export default function DevBlogLayout() {
       <header className="dblayout__header">
         <div className="dblayout__left">
           <Link to="/" className="dblayout__logo">
-            <img src={logo} alt="Small Box Studio" />
+            <img src={logo} alt="OpenFramework" />
           </Link>
 
           <nav className="dblayout__nav">

@@ -77,7 +77,7 @@ export default function GamePage() {
   const seoTitle = t(game.titleKey)
   const seoDesc  = t(game.descKey)
   const seoKeywords = slug === 'small-life'
-    ? 'OpenFramework, DarkRP, Roleplay, RP, S&Box, France, français, serveur DarkRP français, Roleplay S&Box, RP France, S&Box France, DarkRP français, Small Box Studio'
+    ? 'OpenFramework, DarkRP, Roleplay, RP, S&Box, France, français, serveur DarkRP français, Roleplay S&Box, RP France, S&Box France, DarkRP français, OpenFramework'
     : `${seoTitle}, S&Box, DarkRP, Roleplay, France, français`
 
   return (
@@ -97,7 +97,7 @@ export default function GamePage() {
           genre: [t(game.genreKey), 'Roleplay', 'RP', 'DarkRP'],
           inLanguage: 'fr',
           url: `https://openframework.com/game/${slug}`,
-          publisher: { '@type': 'Organization', name: 'Small Box Studio', foundingLocation: { '@type': 'Country', name: 'France' } },
+          publisher: { '@type': 'Organization', name: 'OpenFramework', foundingLocation: { '@type': 'Country', name: 'France' } },
           applicationCategory: 'Game',
         }}
       />
@@ -105,7 +105,7 @@ export default function GamePage() {
       <header className="gp__header">
         <div className="gp__header-left">
           <Link to="/" className="gp__logo">
-            <img src={logo} alt="Small Box Studio" />
+            <img src={logo} alt="OpenFramework" />
           </Link>
           <nav className="gp__breadcrumb">
             <Link to="/" className="gp__breadcrumb-link">

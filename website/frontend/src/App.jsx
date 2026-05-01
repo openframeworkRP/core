@@ -13,8 +13,8 @@ function App() {
     <>
       <SEO
         title="Serveur Roleplay français sur S&Box"
-        description="Small Box Studio est le premier studio français de jeux RP sur S&Box. Rejoignez OpenFramework, notre serveur DarkRP & Roleplay immersif en français. Communauté active, mises à jour régulières."
-        keywords="S&Box, DarkRP, Roleplay, RP, France, français, serveur RP français, OpenFramework, DarkRP français, Roleplay S&Box, S&Box France, Small Box Studio, jeux RP français"
+        description="OpenFramework est le premier studio français de jeux RP sur S&Box. Rejoignez OpenFramework, notre serveur DarkRP & Roleplay immersif en français. Communauté active, mises à jour régulières."
+        keywords="S&Box, DarkRP, Roleplay, RP, France, français, serveur RP français, OpenFramework, DarkRP français, Roleplay S&Box, S&Box France, OpenFramework, jeux RP français"
         url="/"
         lang="fr"
       />

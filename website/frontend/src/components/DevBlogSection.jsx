@@ -24,7 +24,7 @@ export const BLOG_POSTS = [
     excerptEn: 'We lay the groundwork for the Roleplay server: job system, economy, and initial map. A look back at an intense month of prototyping.',
     contentFr: `## Premières fondations\n\nCe mois-ci nous avons posé les bases techniques de OpenFramework. La priorité était de définir une architecture solide avant d'ajouter du contenu.\n\n## Système de jobs\n\nNous avons implémenté un système de jobs dynamiques. Les joueurs peuvent choisir leur rôle en temps réel : citoyen, policier, criminel… Chaque job dispose de permissions et d'outils uniques.\n\n## Économie\n\nUn système d'économie persistante a été intégré. L'argent est sauvegardé entre les sessions et circuler dans l'économie de la ville est maintenant cohérent.\n\n## Prochaine étape\n\nLe mois prochain, on attaque la map et les bâtiments interactifs. Stay tuned !`,
     contentEn: `## First Foundations\n\nThis month we laid the technical groundwork for OpenFramework. The priority was to define a solid architecture before adding content.\n\n## Job System\n\nWe implemented a dynamic job system. Players can choose their role in real time: citizen, police officer, criminal… Each job has unique permissions and tools.\n\n## Economy\n\nA persistent economy system has been integrated. Money is saved between sessions and circulating in the city's economy is now coherent.\n\n## Next Step\n\nNext month we'll tackle the map and interactive buildings. Stay tuned!`,
-    author: 'Small Box Studio',
+    author: 'OpenFramework',
     tags: ['Roleplay', 'Gamemode', 'Economy'],
   },
   {
@@ -37,7 +37,7 @@ export const BLOG_POSTS = [
     excerptEn: 'This month we worked intensively on the map: residential areas, business district, and the first interactive NPC.',
     contentFr: `## La carte prend vie\n\nFévrier a été un mois très visuel. On a commencé à peupler la map avec des bâtiments authentiques et des zones distinctes.\n\n## Zones résidentielles\n\nLes appartements sont maintenant achetables. Les joueurs peuvent décorer leur intérieur et inviter d'autres joueurs.\n\n## Quartier d'affaires\n\nLe quartier business dispose de boutiques louables. Monter son entreprise devient une vraie mécanique de jeu.\n\n## PNJ interactif\n\nLe premier PNJ — le banquier — est en place. Il permet de déposer de l'argent et de contracter des prêts.`,
     contentEn: `## The Map Comes Alive\n\nFebruary was a very visual month. We started populating the map with authentic buildings and distinct zones.\n\n## Residential Areas\n\nApartments are now purchasable. Players can decorate their interiors and invite other players.\n\n## Business District\n\nThe business district has rentable shops. Building your company is now a real game mechanic.\n\n## Interactive NPC\n\nThe first NPC — the banker — is in place. He allows depositing money and taking out loans.`,
-    author: 'Small Box Studio',
+    author: 'OpenFramework',
     tags: ['Map', 'NPC', 'Housing'],
   },
 ]

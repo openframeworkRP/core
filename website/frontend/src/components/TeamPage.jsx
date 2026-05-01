@@ -73,8 +73,8 @@ export default function TeamPage() {
       <SEO
         title={lang === 'fr' ? 'Rejoindre l’équipe' : 'Join the team'}
         description={lang === 'fr'
-          ? 'Small Box Studio recrute des passionnés. Découvrez les postes ouverts et rejoignez notre équipe de développeurs et créateurs.'
-          : 'Small Box Studio is hiring passionate people. Browse open positions and join our team of developers and creators.'}
+          ? 'OpenFramework recrute des passionnés. Découvrez les postes ouverts et rejoignez notre équipe de développeurs et créateurs.'
+          : 'OpenFramework is hiring passionate people. Browse open positions and join our team of developers and creators.'}
         url="/team"
         lang={lang}
       />
@@ -82,7 +82,7 @@ export default function TeamPage() {
       <header className="tp__header">
         <div className="tp__header-left">
           <Link to="/" className="tp__logo">
-            <img src={logo} alt="Small Box Studio" />
+            <img src={logo} alt="OpenFramework" />
           </Link>
           <nav className="tp__nav">
             <Link to="/" className="tp__nav-link">

@@ -20,7 +20,7 @@ const __dirname  = dirname(fileURLToPath(import.meta.url))
 const PORT       = process.env.PORT || 4173
 const API_BASE   = process.env.API_INTERNAL_URL || 'http://api:3001'
 const SITE_URL   = process.env.FRONTEND_URL || 'https://openframework.fr'
-const SITE_NAME  = 'Small Box Studio'
+const SITE_NAME  = 'OpenFramework'
 const DEFAULT_IMG = `${SITE_URL}/banner_site.png`
 
 // ── Détection bots sociaux ──────────────────────────────────────────────────

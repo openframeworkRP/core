@@ -54,7 +54,7 @@ export default function ImagePage() {
                 {image.title || 'Sans titre'}
               </div>
               <div style={{ color: '#555', fontSize: '0.75rem', marginTop: 2 }}>
-                Small Box Studio · {new Date(image.created_at).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}
+                OpenFramework · {new Date(image.created_at).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}
                 {image.width > 0 && image.height > 0 && ` · ${image.width}×${image.height}`}
               </div>
             </div>
@@ -89,7 +89,7 @@ export default function ImagePage() {
           {/* Branding */}
           <div style={{ textAlign: 'center', marginTop: 8 }}>
             <a href="/" style={{ color: '#333', fontSize: '0.72rem', textDecoration: 'none' }}>
-              Small Box Studio
+              OpenFramework
             </a>
           </div>
         </div>

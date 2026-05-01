@@ -46,7 +46,7 @@ export const BLOG_POSTS = [
     excerptFr: 'Premier devlog mensuel du studio. Au programme : les fondations de OpenFramework et les grandes décisions d\'architecture.',
     excerptEn: 'First monthly devlog from the studio. On the agenda: OpenFramework foundations and key architecture decisions.',
     cover: null, // '/blog/mars-2026/cover.jpg'
-    author: 'Small Box Studio',
+    author: 'OpenFramework',
     readTime: 5,
 
     blocksFr: [
@@ -184,7 +184,7 @@ export const BLOG_POSTS = [
     excerptFr: 'La map de OpenFramework prend forme : zones résidentielles, quartier d\'affaires et premier PNJ interactif.',
     excerptEn: 'OpenFramework\'s map takes shape: residential areas, business district and the first interactive NPC.',
     cover: null,
-    author: 'Small Box Studio',
+    author: 'OpenFramework',
     readTime: 4,
 
     blocksFr: [

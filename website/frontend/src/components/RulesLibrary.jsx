@@ -37,7 +37,7 @@ export default function RulesLibrary() {
       <header className="rl__header">
         <div className="rl__header-left">
           <Link to="/game/small-life" className="rl__logo">
-            <img src={logo} alt="Small Box Studio" />
+            <img src={logo} alt="OpenFramework" />
           </Link>
           <nav className="rl__breadcrumb">
             <Link to="/" className="rl__breadcrumb-link">Accueil</Link>

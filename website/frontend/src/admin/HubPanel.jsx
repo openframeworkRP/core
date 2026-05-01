@@ -131,7 +131,7 @@ async function sendDiscordNotif(type, data) {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        username: "SmallBox Hub",
+        username: "OpenFramework Hub",
         avatar_url: "https://sbox.game/favicon.ico",
         embeds: [embed],
       }),
@@ -171,16 +171,16 @@ function queueDiscordNotif(type, data) {
     });
     const embed = {
       color: 0x5865f2,
-      author: { name: "SmallBox Hub  ·  Activité groupée", icon_url: HUB_ICON },
+      author: { name: "OpenFramework Hub  ·  Activité groupée", icon_url: HUB_ICON },
       description: lines.join("\n"),
-      footer: { text: `${batch.length} modifications  ·  SmallBox Hub` },
+      footer: { text: `${batch.length} modifications  ·  OpenFramework Hub` },
       timestamp: new Date().toISOString(),
     };
     try {
       await fetch(DISCORD_WEBHOOK, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username: "SmallBox Hub", avatar_url: HUB_ICON, embeds: [embed] }),
+        body: JSON.stringify({ username: "OpenFramework Hub", avatar_url: HUB_ICON, embeds: [embed] }),
       });
     } catch (e) {
       console.log("[Discord] Batch webhook blocked:", e.message);
@@ -220,7 +220,7 @@ function buildEmbed(type, data) {
           ...(task.priority ? [{ name: "Priorité", value: PRIO_CONFIG[task.priority]?.label || task.priority, inline: true }] : []),
           ...(task.category ? [{ name: "Catégorie", value: task.category, inline: true }] : []),
         ],
-        footer: { text: "SmallBox Hub", icon_url: HUB_ICON },
+        footer: { text: "OpenFramework Hub", icon_url: HUB_ICON },
         timestamp: ts,
       };
     }
@@ -235,7 +235,7 @@ function buildEmbed(type, data) {
           ...(task.category ? [{ name: "Catégorie", value: task.category, inline: true }] : []),
           ...(task.notes ? [{ name: "Notes", value: task.notes.substring(0, 300) }] : []),
         ],
-        footer: { text: "SmallBox Hub", icon_url: HUB_ICON },
+        footer: { text: "OpenFramework Hub", icon_url: HUB_ICON },
         timestamp: ts,
       };
     case "task_deleted":
@@ -246,7 +246,7 @@ function buildEmbed(type, data) {
         fields: [
           { name: "Assigné", value: memberNames(task.assignees), inline: true },
         ],
-        footer: { text: "SmallBox Hub", icon_url: HUB_ICON },
+        footer: { text: "OpenFramework Hub", icon_url: HUB_ICON },
         timestamp: ts,
       };
     case "new_idea":
@@ -254,7 +254,7 @@ function buildEmbed(type, data) {
         color: NOTIF_COLORS.new_idea,
         author: { name: `${projectName(idea.projectId)}  ·  Nouvelle idée`, icon_url: HUB_ICON },
         title: idea.text,
-        footer: { text: "SmallBox Hub", icon_url: HUB_ICON },
+        footer: { text: "OpenFramework Hub", icon_url: HUB_ICON },
         timestamp: ts,
       };
     case "idea_converted":
@@ -262,7 +262,7 @@ function buildEmbed(type, data) {
         color: NOTIF_COLORS.idea_converted,
         author: { name: `${projectName(idea.projectId)}  ·  Idée convertie en tâche`, icon_url: HUB_ICON },
         title: idea.text,
-        footer: { text: "SmallBox Hub", icon_url: HUB_ICON },
+        footer: { text: "OpenFramework Hub", icon_url: HUB_ICON },
         timestamp: ts,
       };
     case "task_edited": {
@@ -282,7 +282,7 @@ function buildEmbed(type, data) {
           })),
           ...(notesChange ? [{ name: "Notes", value: notesChange.to.substring(0, 300) || "_(vide)_" }] : []),
         ],
-        footer: { text: "SmallBox Hub", icon_url: HUB_ICON },
+        footer: { text: "OpenFramework Hub", icon_url: HUB_ICON },
         timestamp: ts,
       };
     }
@@ -1063,7 +1063,7 @@ function DashboardView({ tasks, projects, members, projectFilter }) {
       {/* Header row */}
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: 32, flexWrap: "wrap", gap: 16 }}>
         <div>
-          <div style={{ fontSize: "0.68rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.12em", color: currentProject?.color || "#e07b39", marginBottom: 6 }}>Small Box Studio</div>
+          <div style={{ fontSize: "0.68rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.12em", color: currentProject?.color || "#e07b39", marginBottom: 6 }}>OpenFramework</div>
           <h2 style={{ fontSize: "1.8rem", fontWeight: 800, color: "#ffffff", letterSpacing: "-0.02em" }}>
             <span style={{ color: currentProject?.color || "#e07b39" }}>{currentProject?.name || "Projet"}</span> {"— Dashboard"}
           </h2>

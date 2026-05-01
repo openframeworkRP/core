@@ -235,7 +235,7 @@ router.post('/import', requireAuth, memUpload.single('archive'), async (req, res
       p.excerpt_fr ?? '',
       p.excerpt_en ?? p.excerpt_fr ?? '',
       cover,
-      p.author     ?? 'Small Box Studio',
+      p.author     ?? 'OpenFramework',
       p.read_time  ?? 5,
     )
 

@@ -5,7 +5,7 @@ const router = Router()
 
 const BASE_URL    = process.env.FRONTEND_URL || 'https://openframework.fr'
 const SERVICE_URL = process.env.SERVICE_URL  || process.env.API_URL || 'http://localhost:3001'
-const SITE_NAME   = 'Small Box Studio'
+const SITE_NAME   = 'OpenFramework'
 const DEFAULT_IMAGE = `${BASE_URL}/banner_site.png`
 
 function absImage(img) {

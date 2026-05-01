@@ -67,14 +67,14 @@ export default function MembersPage() {
       <SEO
         title={lang === 'fr' ? "L'équipe" : 'The team'}
         description={lang === 'fr'
-          ? "Rencontrez l'équipe de Small Box Studio : développeurs, mappeurs et créateurs passionnés qui construisent des expériences multijoueur uniques sur S&Box."
-          : "Meet the Small Box Studio team: developers, mappers and passionate creators building unique multiplayer experiences on S&Box."}
+          ? "Rencontrez l'équipe de OpenFramework : développeurs, mappeurs et créateurs passionnés qui construisent des expériences multijoueur uniques sur S&Box."
+          : "Meet the OpenFramework team: developers, mappers and passionate creators building unique multiplayer experiences on S&Box."}
         url="/members"
         lang={lang}
         jsonLd={{
           '@context': 'https://schema.org',
           '@type': 'AboutPage',
-          name: lang === 'fr' ? "L'équipe Small Box Studio" : 'Small Box Studio Team',
+          name: lang === 'fr' ? "L'équipe OpenFramework" : 'OpenFramework Team',
           url: 'https://openframework.com/members',
         }}
       />
@@ -83,7 +83,7 @@ export default function MembersPage() {
       <header className="mp__header">
         <div className="mp__header-left">
           <Link to="/" className="mp__logo">
-            <img src={logo} alt="Small Box Studio" />
+            <img src={logo} alt="OpenFramework" />
           </Link>
           <nav className="mp__nav">
             <Link to="/" className="mp__nav-link">
@@ -110,7 +110,7 @@ export default function MembersPage() {
         <div className="mp__hero-content">
           <span className="mp__hero-eyebrow">
             <Users size={16} />
-            {lang === 'fr' ? 'Small Box Studio' : 'Small Box Studio'}
+            {lang === 'fr' ? 'OpenFramework' : 'OpenFramework'}
           </span>
           <h1 className="mp__hero-title">
             {lang === 'fr' ? 'L\'équipe' : 'The team'}

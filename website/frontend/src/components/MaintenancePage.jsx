@@ -13,7 +13,7 @@ export default function MaintenancePage() {
           Le site sera de retour très prochainement. Merci de votre patience !
         </p>
         <div className="maintenance-footer">
-          <span>Small Box Studio</span>
+          <span>OpenFramework</span>
         </div>
       </div>
     </div>

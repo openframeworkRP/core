@@ -83,8 +83,8 @@ export default function DevBlogList() {
       <SEO
         title={lang === 'fr' ? 'DevBlog' : 'DevBlog'}
         description={lang === 'fr'
-          ? 'Suivez le développement de Small Box Studio. Chaque mois, des articles sur nos jeux S&Box, nos avancées et nos galères.'
-          : 'Follow Small Box Studio development. Monthly articles about our S&Box games, progress and challenges.'}
+          ? 'Suivez le développement de OpenFramework. Chaque mois, des articles sur nos jeux S&Box, nos avancées et nos galères.'
+          : 'Follow OpenFramework development. Monthly articles about our S&Box games, progress and challenges.'}
         url="/devblog"
         lang={lang}
       />

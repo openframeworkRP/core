@@ -47,7 +47,7 @@ export default function Header() {
         </nav>
 
         <div className="header__logo">
-          <img src={logo} alt="Small Box Studio" />
+          <img src={logo} alt="OpenFramework" />
         </div>
 
         <nav className="header__nav header__nav--right">
@@ -59,7 +59,7 @@ export default function Header() {
         {/* ── Mobile : logo gauche + burger droite ── */}
         <div className="header__mobile">
           <div className="header__logo-mobile">
-            <img src={logo} alt="Small Box Studio" />
+            <img src={logo} alt="OpenFramework" />
           </div>
 
           <div className="header__mobile-right">

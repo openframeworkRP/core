@@ -94,7 +94,7 @@ export default function VideoPage() {
                 {video.title || 'Sans titre'}
               </div>
               <div style={{ color: '#555', fontSize: '0.75rem', marginTop: 2 }}>
-                Small Box Studio · {new Date(video.created_at).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}
+                OpenFramework · {new Date(video.created_at).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}
               </div>
             </div>
 
@@ -121,7 +121,7 @@ export default function VideoPage() {
           {/* Branding */}
           <div style={{ textAlign: 'center', marginTop: 8 }}>
             <a href="/" style={{ color: '#333', fontSize: '0.72rem', textDecoration: 'none' }}>
-              Small Box Studio
+              OpenFramework
             </a>
           </div>
         </div>

@@ -122,8 +122,8 @@ export default function RoadmapPage() {
       <SEO
         title={lang === 'fr' ? 'Roadmap publique' : 'Public roadmap'}
         description={lang === 'fr'
-          ? 'Découvrez la roadmap publique de Small Box Studio : milestones, fonctionnalités prévues et avancement en temps réel.'
-          : 'Discover Small Box Studio public roadmap: milestones, planned features and live progress.'}
+          ? 'Découvrez la roadmap publique de OpenFramework : milestones, fonctionnalités prévues et avancement en temps réel.'
+          : 'Discover OpenFramework public roadmap: milestones, planned features and live progress.'}
         url="/roadmap"
         lang={lang}
       />
@@ -131,7 +131,7 @@ export default function RoadmapPage() {
       <header className="rm__header">
         <div className="rm__header-left">
           <Link to="/" className="rm__logo">
-            <img src={logo} alt="Small Box Studio" />
+            <img src={logo} alt="OpenFramework" />
           </Link>
           <nav className="rm__nav">
             <Link to="/" className="rm__nav-link">

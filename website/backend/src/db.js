@@ -34,7 +34,7 @@ db.exec(`
     excerpt_fr TEXT,
     excerpt_en TEXT,
     cover      TEXT,
-    author     TEXT    DEFAULT 'Small Box Studio',
+    author     TEXT    DEFAULT 'OpenFramework',
     read_time  INTEGER DEFAULT 5,
     published  INTEGER DEFAULT 0,
     views      INTEGER DEFAULT 0,
@@ -46,6 +46,15 @@ db.exec(`
     post_id  INTEGER NOT NULL REFERENCES posts(id)  ON DELETE CASCADE,
     game_id  INTEGER NOT NULL REFERENCES games(id)  ON DELETE CASCADE,
     PRIMARY KEY (post_id, game_id)
+  );
+
+  -- Branding configurable (logo, couleurs, nom du site).
+  -- Stockage key-value pour rester flexible : on peut ajouter de nouvelles
+  -- cles sans migrations. Lu publiquement par le frontend au boot, ecrit
+  -- uniquement par les owners via /api/branding.
+  CREATE TABLE IF NOT EXISTS branding (
+    key   TEXT PRIMARY KEY,
+    value TEXT
   );
 
   CREATE TABLE IF NOT EXISTS post_views (
@@ -383,6 +392,18 @@ db.exec(`
     reviewed_at    TEXT,
     created_at     TEXT NOT NULL DEFAULT (datetime('now'))
   );
+
+  -- Seed des cles branding par defaut. INSERT OR IGNORE = ne touche pas
+  -- les valeurs deja presentes (preserve la config de l'hebergeur).
+  INSERT OR IGNORE INTO branding (key, value) VALUES
+    ('site_name',       'OpenFramework'),
+    ('site_short_name', 'OpenFramework'),
+    ('default_author',  'OpenFramework'),
+    ('description',     'Framework de roleplay open source pour s&box'),
+    ('primary_color',   '#e07b39'),
+    ('accent_color',    '#ffa726'),
+    ('logo_url',        ''),
+    ('favicon_url',     '');
 `)
 
 // ── Migration : retire le CHECK constraint sur users.role ─────────────────
@@ -594,7 +615,7 @@ const SEED_POSTS = [
     title_en: 'Devlog #1 — March 2026',
     excerpt_fr: "Premier devlog mensuel du studio. Au programme : les fondations de OpenFramework et les grandes décisions d'architecture.",
     excerpt_en: 'First monthly devlog from the studio. On the agenda: OpenFramework foundations and key architecture decisions.',
-    author: 'Small Box Studio',
+    author: 'OpenFramework',
     read_time: 5,
     published: 1,
     games: ['core'],
@@ -630,7 +651,7 @@ const SEED_POSTS = [
     title_en: 'Devlog #2 — February 2026',
     excerpt_fr: "La map de OpenFramework prend forme : zones résidentielles, quartier d'affaires et premier PNJ interactif.",
     excerpt_en: "OpenFramework's map takes shape: residential areas, business district and the first interactive NPC.",
-    author: 'Small Box Studio',
+    author: 'OpenFramework',
     read_time: 4,
     published: 1,
     games: ['core'],

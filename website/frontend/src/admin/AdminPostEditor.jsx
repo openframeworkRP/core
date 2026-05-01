@@ -37,7 +37,7 @@ export default function AdminPostEditor({ postId, games, users = [], onSave, onB
   const [meta,        setMeta]        = useState({
     title_fr: '', title_en: '', excerpt_fr: '', excerpt_en: '',
     cover: '',
-    month: '', author: 'Small Box Studio', read_time: 5, games: [],
+    month: '', author: 'OpenFramework', read_time: 5, games: [],
   })
   const [blocksFr,    setBlocksFr]    = useState([])
   const [blocksEn,    setBlocksEn]    = useState([])
@@ -59,7 +59,7 @@ export default function AdminPostEditor({ postId, games, users = [], onSave, onB
         excerpt_en: p.excerpt_en ?? '',
         cover:      p.cover      ?? '',
         month:      p.month      ?? '',
-        author:     p.author     ?? 'Small Box Studio',
+        author:     p.author     ?? 'OpenFramework',
         read_time:  p.read_time  ?? 5,
         games:      (p.games ?? []).map(g => g.slug),
       })

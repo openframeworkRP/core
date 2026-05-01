@@ -374,7 +374,7 @@ export default function RulesBook() {
       <header className="rb__header">
         <div className="rb__header-left">
           <Link to="/game/small-life" className="rb__logo">
-            <img src={logo} alt="Small Box Studio" />
+            <img src={logo} alt="OpenFramework" />
           </Link>
           <nav className="rb__breadcrumb">
             <Link to="/" className="rb__breadcrumb-link">Accueil</Link>
