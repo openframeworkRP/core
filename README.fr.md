@@ -28,6 +28,16 @@ Tout est containerisé sauf le serveur s&box dédié lui-même (qui doit tourner
 
 ## Screenshots
 
+### Gamemode
+
+<div align="center">
+  <img src=".github/assets/gamemode/choosecharacterui.png" width="49%" alt="Sélection de personnage">
+  <img src=".github/assets/gamemode/setupcharacterui.png" width="49%" alt="Création de personnage">
+  <img src=".github/assets/gamemode/inventoryui.png" width="49%" alt="Inventaire">
+  <img src=".github/assets/gamemode/shopuiclothing.png" width="49%" alt="Boutique vêtements">
+  <img src=".github/assets/gamemode/rulesvaldiationui.png" width="99%" alt="Validation des règles">
+</div>
+
 ### Site web — Panel d'administration
 
 <div align="center">
