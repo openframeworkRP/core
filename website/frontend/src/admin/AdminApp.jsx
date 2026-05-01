@@ -13,7 +13,7 @@ import {
   BarChart2, TrendingUp, Activity, AlertCircle, Briefcase as BriefcaseIcon,
   Download, Upload as UploadIcon,
   BarChart3, Columns3, List, Route, Lightbulb, MapPin, ShoppingBag, User, Search, Store, Film, Image as ImageIcon, SquareCheck, ScrollText, Layout,
-  HardDrive, Database, BookOpen, BookMarked, Car,
+  HardDrive, Database, BookOpen, BookMarked, Car, Server,
 } from 'lucide-react'
 import HubPanel, { SearchOverlay as HubSearchOverlay, DEFAULT_PROJECTS as HUB_PROJECTS, loadHubData } from './HubPanel.jsx'
 import VideoPanel from './VideoPanel.jsx'
@@ -26,6 +26,7 @@ import UIPanel from './UIPanel.jsx'
 import VehiclePanel from './VehiclePanel.jsx'
 import GameAdminPanel from './GameAdminPanel.jsx'
 import PermissionsPanel from './PermissionsPanel.jsx'
+import ControlPanel from './ControlPanel.jsx'
 
 // ── Rôles ─────────────────────────────────────────────────────────────────
 const ROLE_COLORS = { owner: '#f59e0b', admin: '#a78bfa', editor: '#34d399', rules_editor: '#e07b39', viewer: '#71717a' }
@@ -343,6 +344,17 @@ export default function AdminApp() {
           </button>
         )}
 
+        {/* Control Center : reserve aux owners (gestion infrastructure) */}
+        {user?.role === 'owner' && (
+          <>
+            <div className="adm__sidebar-divider" />
+            <span className="adm__sidebar-label">Infrastructure</span>
+            <button className={`adm__sidebar-btn${panel === 'control' ? ' adm__sidebar-btn--active' : ''}`} onClick={() => goTo('admin:control')}>
+              <Server size={15} /> Control Center
+            </button>
+          </>
+        )}
+
         <div className="adm__sidebar-divider" />
         <span className="adm__sidebar-label">DevBlog</span>
         {can('devblog:list') && (
@@ -384,6 +396,7 @@ export default function AdminApp() {
           {panel === 'vehicles'  && <VehiclePanel />}
           {panel === 'gameadmin'   && <GameAdminPanel />}
           {panel === 'permissions' && <PermissionsPanel />}
+          {panel === 'control'     && <ControlPanel />}
         </div>
       ) : isHub ? (
         <HubPanel

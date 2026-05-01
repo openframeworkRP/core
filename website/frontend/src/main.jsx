@@ -12,7 +12,6 @@ import AdminApp from './admin/AdminApp.jsx'
 import AdminLogin from './admin/AdminLogin.jsx'
 import AdminGuard from './admin/AdminGuard.jsx'
 import AdminPostEditorRoute from './admin/AdminPostEditorRoute.jsx'
-import ControlPanel from './admin/ControlPanel.jsx'
 import GamePage from './components/GamePage.jsx'
 import RulesLibrary from './components/RulesLibrary.jsx'
 import RulesBook from './components/RulesBook.jsx'
@@ -57,7 +56,6 @@ function renderApp() {
               <Route path="hub/:hubView/:taskId" element={<AdminApp />} />
               <Route path="new" element={<AdminPostEditorRoute />} />
               <Route path="edit/:id" element={<AdminPostEditorRoute />} />
-              <Route path="control" element={<ControlPanel />} />
             </Route>
 
             {IS_MAINTENANCE ? (

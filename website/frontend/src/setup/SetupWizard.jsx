@@ -82,8 +82,9 @@ export default function SetupWizard() {
       }
       setApplyResult(data)
       setApplying(false)
-      // Auto-redirection vers /admin apres 5 secondes
-      setTimeout(() => { window.location.href = '/admin' }, 5000)
+      // Auto-redirection vers /admin apres 20 secondes (le temps que les
+      // services website soient recrees — environ 10-15s).
+      setTimeout(() => { window.location.href = '/admin' }, 20000)
     } catch (e) {
       setApplyError(e.message)
       setApplying(false)
@@ -206,27 +207,24 @@ export default function SetupWizard() {
         <div className="setup-success">
           <h2>✓ Configuration appliquee</h2>
           <p>
-            L'API .NET{' '}
+            L'API du jeu{' '}
             {applyResult.apiReady
               ? <strong style={{ color: '#4caf50' }}>repond correctement</strong>
               : <strong style={{ color: '#ffa726' }}>n'a pas (encore) repondu apres 60s</strong>}.
           </p>
-          {!applyResult.apiReady && (
-            <p className="setup-hint">
-              Verifie les logs : <code>docker logs core-api</code>
-            </p>
-          )}
-          {applyResult.postSetupCommand && (
+          {applyResult.postSetupHint && (
             <div className="setup-error" style={{ background: '#1d2a1d', borderColor: '#3a5a3a', color: '#a5d6a7' }}>
-              <strong>Derniere etape — a faire manuellement :</strong>
-              <pre style={{ margin: '8px 0', padding: '8px', background: '#0e1410', borderRadius: 4 }}>
-                {applyResult.postSetupCommand}
-              </pre>
-              <small>{applyResult.postSetupHint}</small>
+              <strong>⏳ Reconnexion en cours</strong>
+              <p style={{ margin: '8px 0 0' }}>{applyResult.postSetupHint}</p>
             </div>
           )}
-          <p>Redirection vers le panel admin dans 5 secondes…</p>
-          <a href="/admin" className="setup-btn">Acceder au panel admin maintenant →</a>
+          <p style={{ marginTop: 24 }}>
+            <span className="setup-spinner" style={{ width: 16, height: 16, display: 'inline-block', verticalAlign: 'middle', marginRight: 8 }} />
+            Patiente que les services soient prets — redirection vers le panel admin dans 20 secondes…
+          </p>
+          <a href="/admin" className="setup-btn" style={{ marginTop: 12 }}>
+            J'attends pas, va sur /admin maintenant →
+          </a>
         </div>
       ) : (
         <>

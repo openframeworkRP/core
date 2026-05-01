@@ -11,7 +11,7 @@
 import { Router } from 'express'
 import fs from 'fs/promises'
 import crypto from 'crypto'
-import { dockerRequest } from '../docker.js'
+import { dockerRequest, composeRecreate } from '../docker.js'
 
 const router = Router()
 
@@ -140,15 +140,22 @@ router.post('/apply', async (req, res) => {
     return res.status(500).json({ error: 'env-write-failed', detail: e.message })
   }
 
-  // ── Restart core-api pour qu'il recharge la config ──────────────────
-  // SQL Server n'a pas besoin d'etre restart : son mdp SA reste celui
-  // du 1er boot, qu'on a remis dans le .env.
+  // ── Force-recreate de core.api pour qu'il prenne les nouvelles env vars ──
+  // Un simple 'docker restart' garde les vars du create initial, donc on
+  // utilise 'docker compose up -d --force-recreate' qui recree le container
+  // depuis le compose.yml (qui re-evalue les ${VAR} du nouveau .env).
+  // SQL Server : pas recree car son mdp SA est dans son volume persistent.
   const restartResults = []
   try {
-    const r = await dockerRequest('/containers/core-api/restart?t=10', 'POST')
-    restartResults.push({ name: 'core-api', status: r.status, ok: r.status === 204 })
+    const r = await composeRecreate(['core.api'])
+    restartResults.push({
+      name: 'core.api',
+      ok: r.code === 0,
+      code: r.code,
+      stderr: r.stderr.split('\n').slice(-5).join('\n'),
+    })
   } catch (e) {
-    restartResults.push({ name: 'core-api', ok: false, error: e.message })
+    restartResults.push({ name: 'core.api', ok: false, error: e.message })
   }
 
   // ── Polling /health/ready (max 60s) ─────────────────────────────────
@@ -172,16 +179,10 @@ router.post('/apply', async (req, res) => {
   }
 
   // ── Reponse au browser AVANT de se suicider ─────────────────────────
-  // website-api doit etre recree pour relire les env vars du .env (sinon
-  // STEAM_API_KEY etc. restent les valeurs du boot, et passport-steam
-  // 403 a la 1ere connexion). On ne peut pas faire `compose up
-  // --force-recreate` depuis l'API Docker brute, mais un restart classique
-  // SUFFIT si docker-compose v2.x a charge le nouveau .env (ce qui est le
-  // cas car compose re-evalue ${VAR:-default} au prochain demarrage de
-  // service).
-  // En pratique : restart != recreate, le restart ne re-lit PAS .env.
-  // Donc on demande au user de faire le force-recreate manuellement,
-  // mais on planifie quand meme un restart simple en backup.
+  // On va aussi recreate website.api / website.frontend / website.scraper
+  // pour qu'ils prennent STEAM_API_KEY, ALLOWED_STEAM_IDS, SESSION_SECRET
+  // etc. du nouveau .env. Mais website.api c'est NOUS — recreate kills la
+  // requete en cours. Donc on repond d'abord, puis on schedule.
   res.json({
     ok: true,
     apiReady: ready,
@@ -189,18 +190,17 @@ router.post('/apply', async (req, res) => {
     websiteRestartScheduled: true,
     nextStep: ready
       ? '/admin'
-      : 'L\'API n\'a pas repondu apres 60s. Verifie docker logs core-api.',
-    postSetupCommand: 'docker compose up -d --force-recreate',
-    postSetupHint: 'Pour que website.api recharge STEAM_API_KEY et les autres secrets, lance la commande ci-dessus (le wizard ne peut pas le faire automatiquement sans se suicider).',
+      : 'L\'API du jeu n\'a pas repondu apres 60s. Verifie les logs de core.api dans le panel control.',
+    postSetupHint: 'Le wizard va recreer les services website pour appliquer les secrets. La page va se reconnecter automatiquement dans ~15s.',
   })
 
-  // Dans 2s, on lance quand meme un restart de website.api : meme si ca
-  // ne re-lit pas .env (vs. recreate), au moins le user qui ne lit pas
-  // postSetupHint aura un container fresh — et avec docker-compose 2.30+
-  // un restart peut suffir si la spec hash a change.
+  // Dans 2s, on demande a docker compose de recreate les services website.
+  // Cette commande va tuer notre propre container (suicide), donc le code
+  // apres setTimeout n'a pas le temps de s'executer. Mais c'est OK : la
+  // reponse a deja ete envoyee.
   setTimeout(() => {
-    dockerRequest('/containers/core-website-api/restart?t=5', 'POST')
-      .catch(() => { /* on est en train de mourir, normal que ca rate */ })
+    composeRecreate(['website.api', 'website.frontend', 'website.scraper'])
+      .catch(() => { /* on meurt, normal */ })
   }, 2000)
 })
 

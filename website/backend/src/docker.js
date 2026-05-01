@@ -5,8 +5,34 @@
 // ============================================================
 
 import http from 'http'
+import { spawn } from 'child_process'
 
 const SOCKET = '/var/run/docker.sock'
+const COMPOSE_PROJECT_DIR = process.env.REPO_ROOT || '/app/host-repo'
+
+/**
+ * Lance 'docker compose -f .../docker-compose.yml up -d --force-recreate <services>'
+ * via le binaire docker installe dans l'image (cf. Dockerfile). Necessaire pour
+ * que les containers re-lisent les env vars du .env apres reconfig — un simple
+ * 'docker container restart' garde les vars du create initial.
+ *
+ * Resolves avec { code, stdout, stderr }. Reject seulement si spawn echoue.
+ */
+export function composeRecreate(services = []) {
+  return new Promise((resolve, reject) => {
+    const args = ['compose', 'up', '-d', '--force-recreate', ...services]
+    const proc = spawn('docker', args, {
+      cwd: COMPOSE_PROJECT_DIR,
+      env: process.env,
+    })
+    let stdout = ''
+    let stderr = ''
+    proc.stdout.on('data', (d) => { stdout += d.toString() })
+    proc.stderr.on('data', (d) => { stderr += d.toString() })
+    proc.on('error', reject)
+    proc.on('close', (code) => resolve({ code, stdout, stderr }))
+  })
+}
 
 export function dockerRequest(path, method = 'GET', body = null) {
   return new Promise((resolve, reject) => {

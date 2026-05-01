@@ -171,10 +171,22 @@ export default function ControlPanel() {
                         className="ctrl-btn ctrl-btn-restart"
                         disabled={isBusy}
                         onClick={() => action('restart', svc.id)}
+                        title="Restart le container (garde les env vars du create)"
                       >
                         {busy[svc.id] === 'restart' ? '...' : 'Restart'}
                       </button>
                     )}
+                    <button
+                      className="ctrl-btn ctrl-btn-recreate"
+                      disabled={isBusy}
+                      onClick={() => {
+                        if (!confirm(`Recreer ${svc.label} ?\n\nLe container sera detruit et recree depuis docker-compose.yml. A faire apres avoir modifie .env. Coupure courte (~10s).`)) return
+                        action('recreate', svc.id)
+                      }}
+                      title="Recree le container depuis docker-compose.yml (recharge les env vars du .env)"
+                    >
+                      {busy[svc.id] === 'recreate' ? '...' : 'Recreate'}
+                    </button>
                     {svc.running && !svc.self && (
                       <button
                         className="ctrl-btn ctrl-btn-stop"

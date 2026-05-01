@@ -152,6 +152,8 @@
 .ctrl-btn-start:hover:not(:disabled)    { background: #2d4a2d; }
 .ctrl-btn-restart  { background: #3a2d1d; color: #ffb74d; }
 .ctrl-btn-restart:hover:not(:disabled)  { background: #4a3d2d; }
+.ctrl-btn-recreate { background: #3a1d3a; color: #ce93d8; }
+.ctrl-btn-recreate:hover:not(:disabled) { background: #4a2d4a; }
 .ctrl-btn-stop     { background: #3a1d1d; color: #e57373; }
 .ctrl-btn-stop:hover:not(:disabled)     { background: #4a2d2d; }
 .ctrl-btn-logs     { background: #1d2d3a; color: #82b1ff; }

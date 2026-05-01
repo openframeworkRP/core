@@ -13,6 +13,7 @@ import {
   startContainer,
   stopContainer,
   containerLogs,
+  composeRecreate,
 } from '../docker.js'
 
 const router = Router()
@@ -106,6 +107,41 @@ router.post('/stop/:service', async (req, res) => {
     res.json({ ok: r.status === 204 || r.status === 304, status: r.status })
   } catch (e) {
     res.status(500).json({ error: 'stop-failed', detail: e.message })
+  }
+})
+
+// ── POST /api/control/recreate/:service ─────────────────────────────────
+// Plus puissant que restart : recree le container depuis docker-compose.yml
+// pour qu'il prenne les nouvelles env vars du .env. Utile apres reconfig.
+router.post('/recreate/:service', async (req, res) => {
+  const svc = findService(req.params.service)
+  if (!svc) return res.status(404).json({ error: 'unknown-service' })
+
+  if (svc.self) {
+    res.json({
+      ok: true,
+      scheduled: true,
+      hint: 'Recreate programme dans 1s — la connexion sera coupee, refresh la page apres ~15s.',
+    })
+    setTimeout(() => {
+      composeRecreate([svc.id]).catch(() => { /* on est en train de mourir */ })
+    }, 1000)
+    return
+  }
+
+  try {
+    const r = await composeRecreate([svc.id])
+    if (r.code === 0) {
+      res.json({ ok: true, code: r.code })
+    } else {
+      res.status(500).json({
+        error: 'recreate-failed',
+        code: r.code,
+        stderr: r.stderr.split('\n').slice(-10).join('\n'),
+      })
+    }
+  } catch (e) {
+    res.status(500).json({ error: 'recreate-failed', detail: e.message })
   }
 })
 
