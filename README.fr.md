@@ -353,4 +353,4 @@ Les contributions sont les bienvenues. Ouvrir une issue avant toute PR de fond.
 ---
 
 > Ce projet est indépendant de Facepunch Studios. s&box est une marque déposée de Facepunch Studios Ltd.  
-> Fork de l'ancien gamemode `small_life`, passé open source en 2026 pour devenir un framework communautaire.
+> Fork de l'ancien gamemode [`small_life`](https://sbox.game/smallboxstudio), passé open source en 2026 pour devenir un framework communautaire.
