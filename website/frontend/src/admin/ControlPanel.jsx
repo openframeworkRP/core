@@ -83,7 +83,8 @@ export default function ControlPanel() {
       })
       const data = await r.json().catch(() => ({}))
       if (!r.ok) {
-        setError(`${verb} ${serviceId} : ${data.error || r.status}`)
+        const detail = data.stderr || data.detail || ''
+        setError(`${verb} ${serviceId} : ${data.error || r.status}${detail ? '\n\n' + detail : ''}`)
       } else if (data.scheduled) {
         // Suicide pattern (website.api) — on previent
         setError(null)
@@ -123,7 +124,7 @@ export default function ControlPanel() {
         </p>
       </header>
 
-      {error && <div className="ctrl-error">⚠ {error}</div>}
+      {error && <pre className="ctrl-error">⚠ {error}</pre>}
 
       {!services && !error && <p>Chargement…</p>}
 

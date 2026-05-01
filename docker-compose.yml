@@ -97,6 +97,10 @@ services:
       - SETUP_COMPLETE_FLAG=/app/host-repo/data/config/setup-complete.flag
       # URL pour atteindre core.api depuis website.api (inter-container)
       - CORE_API_INTERNAL_URL=http://core-api:8443
+      # Project name pour que 'docker compose' depuis le container matche
+      # le project deja en place sur le host (sinon il cree un nouveau
+      # project 'host-repo' et ne voit aucun container existant).
+      - COMPOSE_PROJECT_NAME=core
     restart: unless-stopped
 
   website.scraper:

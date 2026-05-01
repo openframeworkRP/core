@@ -8,7 +8,12 @@ import http from 'http'
 import { spawn } from 'child_process'
 
 const SOCKET = '/var/run/docker.sock'
-const COMPOSE_PROJECT_DIR = process.env.REPO_ROOT || '/app/host-repo'
+const COMPOSE_PROJECT_DIR  = process.env.REPO_ROOT             || '/app/host-repo'
+// Le project name doit matcher celui utilise par 'docker compose up' cote
+// host (par defaut = nom du dossier, donc 'core' pour notre repo). Sans ca,
+// 'docker compose' depuis le container voit /app/host-repo et utilise
+// 'host-repo' comme project name -> ne reconnait aucun container existant.
+const COMPOSE_PROJECT_NAME = process.env.COMPOSE_PROJECT_NAME  || 'core'
 
 /**
  * Lance 'docker compose -f .../docker-compose.yml up -d --force-recreate <services>'
@@ -20,10 +25,13 @@ const COMPOSE_PROJECT_DIR = process.env.REPO_ROOT || '/app/host-repo'
  */
 export function composeRecreate(services = []) {
   return new Promise((resolve, reject) => {
-    const args = ['compose', 'up', '-d', '--force-recreate', ...services]
+    // -p force le project name pour matcher celui du host (sinon docker
+    // compose depuis le container utilise 'host-repo' au lieu de 'core'
+    // et ne voit aucun container existant -> 'no such service').
+    const args = ['compose', '-p', COMPOSE_PROJECT_NAME, 'up', '-d', '--force-recreate', ...services]
     const proc = spawn('docker', args, {
       cwd: COMPOSE_PROJECT_DIR,
-      env: process.env,
+      env: { ...process.env, COMPOSE_PROJECT_NAME },
     })
     let stdout = ''
     let stderr = ''
