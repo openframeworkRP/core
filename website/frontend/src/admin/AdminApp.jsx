@@ -241,7 +241,9 @@ export default function AdminApp() {
             <Gamepad2 size={15} /> Jeux
           </button>
         )}
-        {can('admin:jobs') && (
+        {/* Emplois : retire pour le MVP open source (pertinent uniquement
+            si l'instance est aussi un site de recrutement). */}
+        {false && can('admin:jobs') && (
           <button className={`adm__sidebar-btn${panel === 'jobs' ? ' adm__sidebar-btn--active' : ''}`} onClick={() => goTo('admin:jobs')}>
             <Briefcase size={15} /> Emplois
           </button>
@@ -261,7 +263,7 @@ export default function AdminApp() {
             <Users size={15} /> Équipe
           </button>
         )}
-        {MULTI_PROJECT_GAME_ENABLED && can('admin:gameadmin') && (
+        {can('admin:gameadmin') && (
           <button className={`adm__sidebar-btn${panel === 'gameadmin' ? ' adm__sidebar-btn--active' : ''}`} onClick={() => goTo('admin:gameadmin')}>
             <Gamepad2 size={15} /> Admin Jeu
           </button>
