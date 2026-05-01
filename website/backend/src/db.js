@@ -549,21 +549,39 @@ if (gamesCount === 0) {
 }
 
 // ── Seed : users par défaut ───────────────────────────────────────────────
-// Format : [steamId, displayName, role]
-// Vide par defaut : chaque hebergeur seed son propre owner via ALLOWED_STEAM_IDS
-// (cf. .env) ou en ajoutant manuellement une entree ici avant le 1er run.
-const DEFAULT_USERS = []
+// Source de verite : variable d'env ALLOWED_STEAM_IDS (CSV) — chaque
+// SteamID listé devient automatiquement 'owner'. Ca permet au wizard
+// d'installation d'enregistrer le 1er admin sans intervention manuelle
+// dans la DB.
+//
+// Pour ajouter un admin a la volee : edite ALLOWED_STEAM_IDS dans .env
+// puis 'docker compose up -d --force-recreate website.api'.
+const ALLOWED_STEAM_IDS = (process.env.ALLOWED_STEAM_IDS || '')
+  .split(',')
+  .map(s => s.trim())
+  .filter(Boolean)
+
+const DEFAULT_USERS = ALLOWED_STEAM_IDS.map(steamId => [steamId, 'Owner', 'owner'])
 
 const upsertUser = db.prepare(`
   INSERT INTO users (steam_id, display_name, role)
   VALUES (?, ?, ?)
   ON CONFLICT(steam_id) DO UPDATE SET
-    display_name = excluded.display_name,
-    role = CASE WHEN role = 'owner' THEN 'owner' ELSE excluded.role END
+    role = CASE
+      -- Si le user est deja owner, on ne degrade pas
+      WHEN users.role = 'owner' THEN 'owner'
+      -- Sinon on applique le role de la seed (utile si on remonte
+      -- quelqu'un en owner via .env)
+      ELSE excluded.role
+    END
 `)
 
 for (const [steamId, displayName, role] of DEFAULT_USERS) {
   upsertUser.run(steamId, displayName, role)
+}
+
+if (DEFAULT_USERS.length > 0) {
+  console.log(`✅  Seed users : ${DEFAULT_USERS.length} owner(s) depuis ALLOWED_STEAM_IDS`)
 }
 
 // ── Seed : devlogs par défaut (désactivé — décommenter pour re-seeder) ─────
