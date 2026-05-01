@@ -10,7 +10,9 @@
       "IncludeSourceFiles": false,
       "Resources": null,
       "PackageReferences": null,
-      "EditorReferences": [],
+      "EditorReferences": [
+        "facepunch.concretetrim02paintblend#111185"
+      ],
       "Mounts": null,
       "IsStandaloneOnly": false,
       "Metadata": {

@@ -33,7 +33,6 @@ export default function RoadmapSection() {
   }, [])
 
   if (loading) return null
-  if (milestones.length === 0) return null
 
   return (
     <div className="roadmap">
@@ -42,6 +41,17 @@ export default function RoadmapSection() {
           <h2>Roadmap</h2>
           <p>Les prochaines etapes du framework et leur avancement.</p>
         </header>
+
+        {milestones.length === 0 ? (
+          <div className="roadmap__empty">
+            <p>Aucun milestone publie pour l'instant.</p>
+            <p className="roadmap__empty-hint">
+              Les admins peuvent publier des milestones depuis{' '}
+              <code>/admin → Workspace → Roadmap / Milestones</code>{' '}
+              en cochant le toggle <strong>public</strong>.
+            </p>
+          </div>
+        ) : (
 
         <div className="roadmap__milestones">
           {milestones.map(m => {
@@ -90,6 +100,8 @@ export default function RoadmapSection() {
             )
           })}
         </div>
+
+        )}
       </div>
     </div>
   )

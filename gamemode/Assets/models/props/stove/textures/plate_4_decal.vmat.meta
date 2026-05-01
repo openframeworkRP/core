@@ -10,7 +10,10 @@
       "IncludeSourceFiles": false,
       "Resources": null,
       "PackageReferences": null,
-      "EditorReferences": [],
+      "EditorReferences": [
+        "facepunch.concretetrim02paintblend#111185",
+        "stakan.beafsteak2#118402"
+      ],
       "Mounts": null,
       "IsStandaloneOnly": false,
       "Metadata": {
