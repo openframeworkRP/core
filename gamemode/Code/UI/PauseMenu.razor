@@ -275,7 +275,11 @@
                             {
                                 <span class="feedback-status @(FeedbackSent ? "success" : "")">@FeedbackStatus</span>
                             }
-                            <button class="feedback-send" @onclick=@SendFeedback disabled=@FeedbackSending>
+                            @if (string.IsNullOrWhiteSpace(FeedbackWebhookUrl))
+                            {
+                                <span class="feedback-status">Feedback non configuré sur ce serveur.</span>
+                            }
+                            <button class="feedback-send" @onclick=@SendFeedback disabled=@(FeedbackSending || string.IsNullOrWhiteSpace(FeedbackWebhookUrl))>
                                 @(FeedbackSending ? "Envoi..." : "Envoyer")
                             </button>
                         </div>
@@ -467,6 +471,9 @@
 
 @code {
     enum Tab { Players, Wiki, Map, Feedback, Admin }
+
+    [ConVar( "core-feedback_webhook_url", Help = "URL du webhook Discord pour les feedbacks joueurs (vide = onglet désactivé)" )]
+    public static string FeedbackWebhookUrl { get; set; } = "";
 
     // Cache : avant, ces 2 properties scannaient la scene a chaque acces. Avec un
     // BuildRenderTree appele a chaque rebuild + plusieurs accesseurs dans le tree, ca
@@ -770,6 +777,12 @@
 
     async void SendFeedback()
     {
+        if (string.IsNullOrWhiteSpace(FeedbackWebhookUrl))
+        {
+            FeedbackStatus = "Feedback non configuré sur ce serveur.";
+            return;
+        }
+
         var title = FeedbackTitleEntry?.Text?.Trim();
         var message = FeedbackEntry?.Text?.Trim();
         if (string.IsNullOrEmpty(title) || string.IsNullOrEmpty(message)) return;
@@ -802,11 +815,7 @@
             };
 
             var content = Http.CreateJsonContent(payload);
-            var response = await Http.RequestAsync(
-                "https://discord.com/api/webhooks/1488196286757863436/Gjbwk1WC_lCm7ILmIDfo_kuxf8ZuMuBCuVgUL-ZhV2c7awBHXynW0os4hIhXGRpkF2UP",
-                "POST",
-                content
-            );
+            var response = await Http.RequestAsync(FeedbackWebhookUrl, "POST", content);
 
             if (response.IsSuccessStatusCode)
             {
