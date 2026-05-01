@@ -31,15 +31,14 @@ Everything is containerised except the s&box dedicated server itself (which must
 ### Website — Admin Panel
 
 <div align="center">
-  <img src=".github/assets/website-dashboard.png" width="49%" alt="Dashboard">
-  <img src=".github/assets/website-tasks.png" width="49%" alt="Task manager">
-  <img src=".github/assets/website-roadmap.png" width="49%" alt="Roadmap & Milestones">
-  <img src=".github/assets/website-ideas.png" width="49%" alt="Ideas board">
-  <img src=".github/assets/website-control-center.png" width="49%" alt="Control Center — Docker services">
-  <img src=".github/assets/website-branding.png" width="49%" alt="Branding configuration">
+  <img src=".github/assets/website/website-presentation.png" width="99%" alt="Website presentation">
+  <img src=".github/assets/website/website-dashboard.png" width="49%" alt="Dashboard">
+  <img src=".github/assets/website/website-tasks.png" width="49%" alt="Task manager">
+  <img src=".github/assets/website/website-ideas.png" width="49%" alt="Ideas board">
+  <img src=".github/assets/website/website-control-center.png" width="49%" alt="Control Center — Docker services">
 </div>
 
-> *Screenshots of the built-in admin panel: task management, roadmap, ideas board, Docker service control, and branding configuration.*
+> *Screenshots of the built-in admin panel: dashboard, task management, ideas board, and Docker service control.*
 
 ---
 
