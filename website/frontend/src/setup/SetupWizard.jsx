@@ -46,6 +46,12 @@ export default function SetupWizard() {
   const [steamApiKey, setSteamApiKey] = useState('')
   const [allowedSteamIds, setAllowedSteamIds] = useState('')
 
+  // Champs Branding (optionnels)
+  const [siteName,      setSiteName]      = useState('')
+  const [primaryColor,  setPrimaryColor]  = useState('#e07b39')
+  const [accentColor,   setAccentColor]   = useState('#ffa726')
+  const [logoUrl,       setLogoUrl]       = useState('')
+
   // Etat de l'application
   const [applying, setApplying]       = useState(false)
   const [applyResult, setApplyResult] = useState(null)
@@ -63,6 +69,13 @@ export default function SetupWizard() {
     setApplying(true)
     setApplyError(null)
     try {
+      const branding = {}
+      if (siteName.trim())      branding.site_name      = siteName.trim()
+      if (siteName.trim())      branding.site_short_name = siteName.trim()
+      if (primaryColor)         branding.primary_color  = primaryColor
+      if (accentColor)          branding.accent_color   = accentColor
+      if (logoUrl.trim())       branding.logo_url       = logoUrl.trim()
+
       const res = await fetch('/api/setup/apply', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -72,6 +85,7 @@ export default function SetupWizard() {
           sessionSecret:   secrets.sessionSecret,
           steamApiKey:     steamApiKey.trim(),
           allowedSteamIds: allowedSteamIds.trim(),
+          branding:        Object.keys(branding).length > 0 ? branding : null,
         }),
       })
       const data = await res.json()
@@ -190,6 +204,86 @@ export default function SetupWizard() {
               placeholder="ex: 76561198xxxxxxxxx"
               autoComplete="off"
               spellCheck="false"
+            />
+          </div>
+        </>
+      ),
+    },
+    {
+      title: 'Personnalisation',
+      content: (
+        <>
+          <h2>Personnalisation (optionnelle)</h2>
+          <p>
+            Configure le nom et le theme de ton instance. Tout est modifiable
+            plus tard via <code>/admin/panel/branding</code>.
+          </p>
+
+          <div className="setup-field">
+            <label htmlFor="brand-site-name">Nom du site</label>
+            <p className="setup-hint">
+              Affiche dans le header, le title du browser et le SEO. Laisse vide pour 'OpenFramework' par defaut.
+            </p>
+            <input
+              id="brand-site-name"
+              type="text"
+              value={siteName}
+              onChange={e => setSiteName(e.target.value)}
+              placeholder="ex: Mon Serveur RP"
+              autoComplete="off"
+            />
+          </div>
+
+          <div className="setup-field">
+            <label htmlFor="brand-primary">Couleur principale</label>
+            <p className="setup-hint">Boutons, liens, accents. Format hex (#RRGGBB).</p>
+            <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
+              <input
+                id="brand-primary"
+                type="color"
+                value={primaryColor}
+                onChange={e => setPrimaryColor(e.target.value)}
+                style={{ width: 60, height: 38, padding: 0, background: 'transparent', border: '1px solid #2a2f3e', borderRadius: 6, cursor: 'pointer' }}
+              />
+              <input
+                type="text"
+                value={primaryColor}
+                onChange={e => setPrimaryColor(e.target.value)}
+                style={{ flex: 1 }}
+              />
+            </div>
+          </div>
+
+          <div className="setup-field">
+            <label htmlFor="brand-accent">Couleur accent</label>
+            <p className="setup-hint">Hover, highlights, badges.</p>
+            <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
+              <input
+                id="brand-accent"
+                type="color"
+                value={accentColor}
+                onChange={e => setAccentColor(e.target.value)}
+                style={{ width: 60, height: 38, padding: 0, background: 'transparent', border: '1px solid #2a2f3e', borderRadius: 6, cursor: 'pointer' }}
+              />
+              <input
+                type="text"
+                value={accentColor}
+                onChange={e => setAccentColor(e.target.value)}
+                style={{ flex: 1 }}
+              />
+            </div>
+          </div>
+
+          <div className="setup-field">
+            <label htmlFor="brand-logo">URL du logo (optionnel)</label>
+            <p className="setup-hint">URL absolue (https://...) ou relative (/img/logo.png). Laisse vide si pas de logo.</p>
+            <input
+              id="brand-logo"
+              type="text"
+              value={logoUrl}
+              onChange={e => setLogoUrl(e.target.value)}
+              placeholder="https://exemple.com/logo.png"
+              autoComplete="off"
             />
           </div>
         </>

@@ -12,6 +12,7 @@ import { Router } from 'express'
 import fs from 'fs/promises'
 import crypto from 'crypto'
 import { dockerRequest, composeRecreate } from '../docker.js'
+import db from '../db.js'
 
 const router = Router()
 
@@ -100,6 +101,8 @@ router.post('/apply', async (req, res) => {
     allowedSteamIds = '',
     apiPort = 8443,
     dbName = 'OpenFrameworkDb',
+    // Branding optionnel — passe des valeurs pour pre-configurer le theme
+    branding = null,
   } = req.body || {}
 
   // ── Validation des inputs ──────────────────────────────────────────
@@ -138,6 +141,22 @@ router.post('/apply', async (req, res) => {
     await fs.writeFile(REPO_ENV_PATH, envContent, { encoding: 'utf-8', mode: 0o600 })
   } catch (e) {
     return res.status(500).json({ error: 'env-write-failed', detail: e.message })
+  }
+
+  // ── Branding initial (optionnel) ───────────────────────────────────
+  // Le wizard est la seule voie publique d'ecriture sur la table
+  // branding (apres ca, c'est PUT /api/branding restreint aux owners).
+  if (branding && typeof branding === 'object') {
+    const ALLOWED = ['site_name', 'site_short_name', 'description', 'primary_color', 'accent_color', 'logo_url', 'favicon_url', 'default_author']
+    const upsert = db.prepare(`
+      INSERT INTO branding (key, value) VALUES (?, ?)
+      ON CONFLICT(key) DO UPDATE SET value = excluded.value
+    `)
+    for (const [key, rawValue] of Object.entries(branding)) {
+      if (!ALLOWED.includes(key)) continue
+      const value = String(rawValue ?? '').trim().slice(0, 1024)
+      upsert.run(key, value)
+    }
   }
 
   // ── Force-recreate de core.api pour qu'il prenne les nouvelles env vars ──
