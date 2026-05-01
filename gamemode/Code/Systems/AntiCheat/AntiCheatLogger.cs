@@ -7,16 +7,16 @@ using System.Threading.Tasks;
 namespace OpenFramework.Systems.AntiCheat;
 
 /// <summary>
-/// Track la session de chaque joueur (durée, argent gagné/perdu)
-/// et envoie un résumé Discord à la déconnexion pour repérer les duplicateurs.
+/// Tracks each player's session (duration, money earned/lost)
+/// and sends a Discord summary on disconnect to detect money duplicators.
 /// HOST only.
 /// </summary>
 public static class AntiCheatLogger
 {
-	private const string WebhookUrl =
-		"https://discord.com/api/webhooks/1488196286757863436/Gjbwk1WC_lCm7ILmIDfo_kuxf8ZuMuBCuVgUL-ZhV2c7awBHXynW0os4hIhXGRpkF2UP";
+	[ConVar( "core-anticheat_webhook_url", Help = "Discord webhook URL for anti-cheat session summaries (empty = disabled)" )]
+	public static string WebhookUrl { get; set; } = "";
 
-	// Seuils pour flag "suspect" — argent gagné/min sur la session
+	// Thresholds for "suspect" flag — money earned per minute over the session
 	private const int SuspectEarnPerMinute = 5_000;
 	private const int CriticalEarnPerMinute = 20_000;
 
@@ -83,6 +83,8 @@ public static class AntiCheatLogger
 
 	private static async Task SendSummaryAsync( SessionData s, int finalCash )
 	{
+		if ( string.IsNullOrEmpty( WebhookUrl ) ) return;
+
 		try
 		{
 			var duration = DateTime.UtcNow - s.StartUtc;
@@ -90,12 +92,12 @@ public static class AntiCheatLogger
 			var earnPerMin = (int)(s.Earned / minutes);
 			var delta = s.Earned - s.Lost;
 
-			// Couleur Discord : vert / orange / rouge selon suspicion
-			int color = 3066993; // vert
+			// Discord color: green / orange / red based on suspicion level
+			int color = 3066993; // green
 			string flag = "OK";
 			if ( earnPerMin >= CriticalEarnPerMinute )
 			{
-				color = 15158332; // rouge
+				color = 15158332; // red
 				flag = "CRITIQUE";
 			}
 			else if ( earnPerMin >= SuspectEarnPerMinute )
@@ -130,12 +132,12 @@ public static class AntiCheatLogger
 			if ( !response.IsSuccessStatusCode )
 			{
 				var body = await response.Content.ReadAsStringAsync();
-				Log.Warning( $"[AntiCheat] Webhook echoue : {response.StatusCode} — {body}" );
+				Log.Warning( $"[AntiCheat] Webhook failed: {response.StatusCode} — {body}" );
 			}
 		}
 		catch ( Exception e )
 		{
-			Log.Warning( $"[AntiCheat] Erreur envoi webhook : {e.Message}" );
+			Log.Warning( $"[AntiCheat] Error sending webhook: {e.Message}" );
 		}
 	}
 
