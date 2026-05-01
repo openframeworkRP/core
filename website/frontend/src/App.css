@@ -3,3 +3,15 @@
   padding: 0;
   width: 100%;
 }
+
+/* ── Sections one-page : offset pour le header sticky ────────────────── */
+.page-section {
+  scroll-margin-top: 72px;       /* compense la hauteur du sticky header */
+  background: var(--bg-base, #0a0e18);
+  position: relative;
+}
+
+/* Soft separator between sections (no harsh borders) */
+.page-section + .page-section {
+  border-top: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.06));
+}

@@ -1,17 +1,17 @@
 // ============================================================
-// App — homepage minimaliste, style sbox.game
+// App — homepage one-page scrollable, style sbox.game
 // ============================================================
-// Layout sober : Header + Hero + Footer. Les sections gameplay-RP
-// (parallax, cloud layers, AboutSection narrative) ont ete retirees
-// pour matcher l'esthetique dev-tool de la plateforme s&box.
-//
-// Le branding (logo, couleurs, nom) est lu depuis BrandingProvider
-// donc tout est customisable via /admin/panel/branding.
+// Layout : Header sticky + Hero + sections (About, Games, Contact)
+// + Footer. Tout sur une page, scroll smooth via les ancres
+// (#about, #games, #contact) — pareil que sbox.game.
 // ============================================================
 
 import './App.css'
 import SimpleHeader from './components/SimpleHeader'
 import SimpleHero from './components/SimpleHero'
+import AboutSection from './components/AboutSection'
+import GamesSection from './components/GamesSection'
+import ContactSection from './components/ContactSection'
 import Footer from './components/Footer'
 import SEO from './components/SEO'
 import { useBranding } from './context/BrandingContext.jsx'
@@ -32,7 +32,23 @@ function App() {
       />
 
       <SimpleHeader />
-      <SimpleHero />
+
+      <main>
+        <SimpleHero />
+
+        <section id="about" className="page-section">
+          <AboutSection />
+        </section>
+
+        <section id="games" className="page-section">
+          <GamesSection />
+        </section>
+
+        <section id="contact" className="page-section">
+          <ContactSection />
+        </section>
+      </main>
+
       <Footer />
     </>
   )
