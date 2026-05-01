@@ -17,31 +17,39 @@ Tout est containerisé sauf le serveur s&box dédié lui-même (qui doit tourner
 
 ## Quickstart (5 min)
 
-### Option 1 — Setup guidé (recommandé)
+### Option 1 — Wizard browser ⭐ recommandé
 
-Le script vérifie tes prérequis (Docker, Docker Compose), te guide vers leur install si besoin, génère un `.env` avec des secrets aléatoires, te demande tes valeurs Steam (clé API + SteamID admin), puis lance `docker compose up -d`.
+Lance les services et ouvre automatiquement le wizard de configuration dans ton browser. Tu n'as rien à éditer manuellement — le wizard génère les secrets, te demande ta clé Steam et ton SteamID admin, applique tout.
 
 **Linux / macOS / WSL / Git Bash sur Windows :**
 ```bash
 git clone https://github.com/openframeworkRP/core.git
 cd core
-bash scripts/setup.sh
+bash scripts/first-run.sh
 ```
 
 **Windows (PowerShell) :**
 ```powershell
 git clone https://github.com/openframeworkRP/core.git
 cd core
-.\scripts\setup.ps1
+.\scripts\first-run.ps1
 ```
 
-### Option 2 — Manuel
+### Option 2 — Direct
 
 ```bash
 git clone https://github.com/openframeworkRP/core.git
 cd core
-cp .env.example .env
-# Edite .env et remplis MSSQL_SA_PASSWORD, JWT_KEY, SERVER_SECRET, STEAM_API_KEY, ALLOWED_STEAM_IDS
+docker compose up -d
+# Ouvre http://localhost:4173 → le wizard s'affiche au 1er run
+```
+
+### Option 3 — Setup CLI (sans browser)
+
+Si tu préfères tout configurer en ligne de commande, le script `setup.sh` / `setup.ps1` génère le `.env` et te pose les questions dans le terminal.
+
+```bash
+bash scripts/setup.sh         # ou .\scripts\setup.ps1
 docker compose up -d
 ```
 
