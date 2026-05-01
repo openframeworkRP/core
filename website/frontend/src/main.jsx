@@ -23,6 +23,7 @@ import RoadmapPage from './components/RoadmapPage.jsx'
 import { LanguageProvider } from './context/LanguageContext.jsx'
 import { AuthProvider } from './context/AuthContext.jsx'
 import { PostTitleProvider } from './context/PostTitleContext.jsx'
+import { BrandingProvider } from './context/BrandingContext.jsx'
 import MaintenancePage from './components/MaintenancePage.jsx'
 import SetupGate from './setup/SetupGate.jsx'
 
@@ -38,6 +39,7 @@ function renderApp() {
   createRoot(document.getElementById('root')).render(
   <StrictMode>
     <HelmetProvider>
+      <BrandingProvider>
       <LanguageProvider>
         <AuthProvider>
         <SetupGate>
@@ -102,6 +104,7 @@ function renderApp() {
         </SetupGate>
       </AuthProvider>
     </LanguageProvider>
+    </BrandingProvider>
     </HelmetProvider>
   </StrictMode>,
   )

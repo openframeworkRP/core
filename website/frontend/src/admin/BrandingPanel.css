@@ -1,0 +1,172 @@
+/* ============================================================
+   BrandingPanel — dark theme
+   ============================================================ */
+
+.brand-page {
+  padding: 24px 32px;
+  max-width: 800px;
+  margin: 0 auto;
+  color: #e8e8e8;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.brand-header {
+  margin-bottom: 24px;
+  border-bottom: 1px solid #2a2f3e;
+  padding-bottom: 16px;
+}
+
+.brand-header h1 {
+  margin: 0 0 4px;
+  font-size: 22px;
+  font-weight: 500;
+  color: #fff;
+}
+
+.brand-subtitle {
+  margin: 0;
+  color: #8089a0;
+  font-size: 13px;
+}
+
+.brand-error {
+  background: #2d1a1a;
+  border: 1px solid #553030;
+  border-radius: 6px;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+  color: #ff8a80;
+}
+
+.brand-success {
+  background: #1a2d1a;
+  border: 1px solid #305530;
+  border-radius: 6px;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+  color: #80ff8a;
+}
+
+.brand-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.brand-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.brand-field label {
+  font-size: 14px;
+  color: #fff;
+  font-weight: 500;
+}
+
+.brand-hint {
+  margin: 0 0 6px;
+  font-size: 12px;
+  color: #8089a0;
+}
+
+.brand-field input[type="text"],
+.brand-field textarea {
+  background: #14171f;
+  border: 1px solid #2a2f3e;
+  border-radius: 6px;
+  color: #fff;
+  font-size: 14px;
+  font-family: inherit;
+  padding: 10px 12px;
+  width: 100%;
+  box-sizing: border-box;
+  resize: vertical;
+}
+
+.brand-field input[type="text"]:focus,
+.brand-field textarea:focus {
+  outline: 0;
+  border-color: var(--brand-primary, #e07b39);
+}
+
+.brand-color-row {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.brand-color-row input[type="color"] {
+  width: 60px;
+  height: 40px;
+  border: 1px solid #2a2f3e;
+  border-radius: 6px;
+  background: #14171f;
+  cursor: pointer;
+  padding: 0;
+}
+
+.brand-color-text {
+  flex: 1;
+  font-family: 'JetBrains Mono', Consolas, monospace !important;
+}
+
+.brand-preview {
+  margin-top: 24px;
+  padding: 16px;
+  background: #14171f;
+  border: 1px solid #2a2f3e;
+  border-radius: 6px;
+}
+
+.brand-preview h3 {
+  margin: 0 0 12px;
+  font-size: 14px;
+  color: #8089a0;
+  font-weight: 500;
+}
+
+.brand-preview img {
+  max-width: 200px;
+  max-height: 80px;
+  background: #fff;
+  padding: 8px;
+  border-radius: 4px;
+}
+
+.brand-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid #2a2f3e;
+}
+
+.brand-btn {
+  padding: 10px 20px;
+  border-radius: 6px;
+  border: 0;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: inherit;
+  background: #2a2f3e;
+  color: #e8e8e8;
+  transition: background 120ms;
+}
+.brand-btn:hover:not(:disabled) {
+  background: #353b4d;
+}
+.brand-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.brand-btn-primary {
+  background: var(--brand-primary, #e07b39);
+  color: #fff;
+}
+.brand-btn-primary:hover:not(:disabled) {
+  filter: brightness(1.1);
+}
