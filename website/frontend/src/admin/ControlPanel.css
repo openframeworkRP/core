@@ -97,23 +97,6 @@
   margin-top: 2px;
 }
 
-.ctrl-tag {
-  font-size: 10px;
-  padding: 2px 6px;
-  border-radius: 3px;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  font-weight: 600;
-}
-.ctrl-tag.critical {
-  background: #4a1d1d;
-  color: #ff8a80;
-}
-.ctrl-tag.self {
-  background: #1d2d4a;
-  color: #82b1ff;
-}
-
 .ctrl-badge {
   display: inline-block;
   padding: 4px 10px;

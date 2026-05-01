@@ -145,11 +145,7 @@ export default function ControlPanel() {
               return (
                 <tr key={svc.id}>
                   <td>
-                    <div className="ctrl-svc-name">
-                      {svc.label}
-                      {svc.critical && <span className="ctrl-tag critical">critique</span>}
-                      {svc.self && <span className="ctrl-tag self">moi</span>}
-                    </div>
+                    <div className="ctrl-svc-name">{svc.label}</div>
                     <div className="ctrl-svc-meta">{svc.container}</div>
                   </td>
                   <td>
