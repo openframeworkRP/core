@@ -26,6 +26,23 @@ Everything is containerised except the s&box dedicated server itself (which must
 
 ---
 
+## Screenshots
+
+### Website — Admin Panel
+
+<div align="center">
+  <img src=".github/assets/website-dashboard.png" width="49%" alt="Dashboard">
+  <img src=".github/assets/website-tasks.png" width="49%" alt="Task manager">
+  <img src=".github/assets/website-roadmap.png" width="49%" alt="Roadmap & Milestones">
+  <img src=".github/assets/website-ideas.png" width="49%" alt="Ideas board">
+  <img src=".github/assets/website-control-center.png" width="49%" alt="Control Center — Docker services">
+  <img src=".github/assets/website-branding.png" width="49%" alt="Branding configuration">
+</div>
+
+> *Screenshots of the built-in admin panel: task management, roadmap, ideas board, Docker service control, and branding configuration.*
+
+---
+
 ## Global Architecture
 
 ```mermaid

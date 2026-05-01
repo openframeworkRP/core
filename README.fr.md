@@ -26,6 +26,23 @@ Tout est containerisé sauf le serveur s&box dédié lui-même (qui doit tourner
 
 ---
 
+## Screenshots
+
+### Site web — Panel d'administration
+
+<div align="center">
+  <img src=".github/assets/website-dashboard.png" width="49%" alt="Dashboard">
+  <img src=".github/assets/website-tasks.png" width="49%" alt="Gestionnaire de tâches">
+  <img src=".github/assets/website-roadmap.png" width="49%" alt="Roadmap & Milestones">
+  <img src=".github/assets/website-ideas.png" width="49%" alt="Tableau d'idées">
+  <img src=".github/assets/website-control-center.png" width="49%" alt="Control Center — services Docker">
+  <img src=".github/assets/website-branding.png" width="49%" alt="Configuration branding">
+</div>
+
+> *Captures du panel admin intégré : gestion des tâches, roadmap, tableau d'idées, contrôle des services Docker, et configuration du branding.*
+
+---
+
 ## Architecture globale
 
 ```mermaid
