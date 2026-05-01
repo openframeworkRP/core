@@ -12,9 +12,9 @@ const DEFAULT_BRANDING = {
   site_name:       'OpenFramework',
   site_short_name: 'OpenFramework',
   default_author:  'OpenFramework',
-  description:     'Framework de roleplay open source pour s&box',
-  primary_color:   '#e07b39',
-  accent_color:    '#ffa726',
+  description:     'Framework open source pour s&box — clone, configure, joue.',
+  primary_color:   '#3cadd9',
+  accent_color:    '#88e1ff',
   logo_url:        '',
   favicon_url:     '',
 }
