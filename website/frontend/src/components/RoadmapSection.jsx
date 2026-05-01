@@ -1,74 +1,94 @@
 // ============================================================
-// RoadmapSection — items de roadmap publique sur la home
+// RoadmapSection — milestones publics sur la home
 // ============================================================
-// Lit /api/roadmap (only is_public=1) et affiche les items en
-// liste minimaliste regroupes par status.
+// Lit /api/hub/roadmap (deja existant) qui retourne uniquement les
+// milestones marques 'public: true' depuis le panel Hub > Roadmap.
+// Si rien n'est publie, la section ne s'affiche pas du tout.
 // ============================================================
 
 import { useEffect, useState } from 'react'
-import { Circle, CircleDot, CheckCircle2, Rocket } from 'lucide-react'
+import { Calendar, CheckCircle2, Circle } from 'lucide-react'
 import './RoadmapSection.css'
 
-const STATUS_META = {
-  planned:     { label: 'Prevu',     icon: <Circle      size={16} /> },
-  in_progress: { label: 'En cours',  icon: <CircleDot   size={16} /> },
-  done:        { label: 'Fini',      icon: <CheckCircle2 size={16} /> },
-  shipped:     { label: 'Live',      icon: <Rocket      size={16} /> },
+function formatDate(iso) {
+  if (!iso) return ''
+  try {
+    const d = new Date(iso)
+    return d.toLocaleDateString('fr-FR', { year: 'numeric', month: 'long' })
+  } catch { return iso }
 }
 
-const STATUS_ORDER = ['in_progress', 'planned', 'done', 'shipped']
-
 export default function RoadmapSection() {
-  const [items, setItems] = useState([])
+  const [milestones, setMilestones] = useState([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    fetch('/api/roadmap')
+    fetch('/api/hub/roadmap')
       .then(r => r.json())
       .then(data => {
-        setItems(Array.isArray(data) ? data : [])
+        setMilestones(Array.isArray(data?.milestones) ? data.milestones : [])
         setLoading(false)
       })
       .catch(() => setLoading(false))
   }, [])
 
   if (loading) return null
-  if (items.length === 0) return null
-
-  // Group par status, dans l'ordre defini
-  const grouped = STATUS_ORDER
-    .map(status => ({
-      status,
-      items: items.filter(i => i.status === status),
-    }))
-    .filter(g => g.items.length > 0)
+  if (milestones.length === 0) return null
 
   return (
     <div className="roadmap">
       <div className="roadmap__inner">
         <header className="roadmap__header">
           <h2>Roadmap</h2>
-          <p>Ce qui est en cours, ce qui arrive, ce qui est deja en place.</p>
+          <p>Les prochaines etapes du framework et leur avancement.</p>
         </header>
 
-        <div className="roadmap__groups">
-          {grouped.map(group => (
-            <div key={group.status} className={`roadmap__group roadmap__group--${group.status}`}>
-              <div className="roadmap__group-header">
-                {STATUS_META[group.status].icon}
-                <span>{STATUS_META[group.status].label}</span>
-                <span className="roadmap__group-count">{group.items.length}</span>
+        <div className="roadmap__milestones">
+          {milestones.map(m => {
+            const total = m.tasks?.length || 0
+            const done  = m.tasks?.filter(t => t.status === 'done').length || 0
+            const pct   = total > 0 ? Math.round((done / total) * 100) : 0
+            const color = m.color || 'var(--brand-primary, #3cadd9)'
+
+            return (
+              <div key={m.id} className="roadmap__milestone" style={{ '--milestone-color': color }}>
+                <div className="roadmap__milestone-head">
+                  <h3>{m.name}</h3>
+                  {m.date && (
+                    <span className="roadmap__milestone-date">
+                      <Calendar size={13} /> {formatDate(m.date)}
+                    </span>
+                  )}
+                </div>
+
+                {m.description && (
+                  <p className="roadmap__milestone-desc">{m.description}</p>
+                )}
+
+                {total > 0 && (
+                  <div className="roadmap__milestone-progress">
+                    <div className="roadmap__milestone-bar">
+                      <div className="roadmap__milestone-bar-fill" style={{ width: `${pct}%` }} />
+                    </div>
+                    <span>{done}/{total}</span>
+                  </div>
+                )}
+
+                {m.tasks && m.tasks.length > 0 && (
+                  <ul className="roadmap__milestone-tasks">
+                    {m.tasks.map(t => (
+                      <li key={t.id} className={`roadmap__task roadmap__task--${t.status}`}>
+                        {t.status === 'done'
+                          ? <CheckCircle2 size={14} />
+                          : <Circle size={14} />}
+                        <span>{t.text}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </div>
-              <ul className="roadmap__items">
-                {group.items.map(item => (
-                  <li key={item.id} className="roadmap__item">
-                    <h3>{item.title}</h3>
-                    {item.description && <p>{item.description}</p>}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+            )
+          })}
         </div>
       </div>
     </div>

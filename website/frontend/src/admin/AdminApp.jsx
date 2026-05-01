@@ -29,7 +29,6 @@ import GameAdminPanel from './GameAdminPanel.jsx'
 import PermissionsPanel from './PermissionsPanel.jsx'
 import ControlPanel from './ControlPanel.jsx'
 import BrandingPanel from './BrandingPanel.jsx'
-import RoadmapAdminPanel from './RoadmapAdminPanel.jsx'
 
 // ── Rôles ─────────────────────────────────────────────────────────────────
 // ── Feature flags ─────────────────────────────────────────────────────────
@@ -294,6 +293,11 @@ export default function AdminApp() {
             <SquareCheck size={15} /> Tâches
           </button>
         )}
+        {can('hub:roadmap') && (
+          <button className={`adm__sidebar-btn${hubView === 'roadmap' ? ' adm__sidebar-btn--active' : ''}`} onClick={() => goTo('hub:roadmap')}>
+            <Route size={15} /> Roadmap / Milestones
+          </button>
+        )}
         {can('hub:whiteboard') && (
           <button className={`adm__sidebar-btn${hubView === 'whiteboard' ? ' adm__sidebar-btn--active' : ''}`} onClick={() => goTo('hub:whiteboard')}>
             <Lightbulb size={15} /> Idées
@@ -304,9 +308,6 @@ export default function AdminApp() {
             <Activity size={15} /> Activité
           </button>
         )}
-        <button className={`adm__sidebar-btn${panel === 'roadmap' ? ' adm__sidebar-btn--active' : ''}`} onClick={() => goTo('admin:roadmap')}>
-          <Route size={15} /> Roadmap publique
-        </button>
 
         {/* Multi-projet : Map / Fab / Catalogue : desactives car couples
             au concept de projet. A reactiver avec MULTI_PROJECT_GAME_ENABLED. */}
@@ -435,7 +436,6 @@ export default function AdminApp() {
           {panel === 'permissions' && <PermissionsPanel />}
           {panel === 'control'     && <ControlPanel />}
           {panel === 'branding'    && <BrandingPanel />}
-          {panel === 'roadmap'     && <RoadmapAdminPanel />}
         </div>
       ) : isHub ? (
         <HubPanel

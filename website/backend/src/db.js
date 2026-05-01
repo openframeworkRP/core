@@ -57,20 +57,6 @@ db.exec(`
     value TEXT
   );
 
-  -- Roadmap publique : items affiches sur la home si is_public=1.
-  -- Edites depuis le panel admin.
-  CREATE TABLE IF NOT EXISTS roadmap_items (
-    id          INTEGER PRIMARY KEY AUTOINCREMENT,
-    title       TEXT    NOT NULL,
-    description TEXT    NOT NULL DEFAULT '',
-    status      TEXT    NOT NULL DEFAULT 'planned'
-                        CHECK(status IN ('planned','in_progress','done','shipped')),
-    is_public   INTEGER NOT NULL DEFAULT 0,
-    position    INTEGER NOT NULL DEFAULT 0,
-    created_at  TEXT    NOT NULL DEFAULT (datetime('now')),
-    updated_at  TEXT    NOT NULL DEFAULT (datetime('now'))
-  );
-
   CREATE TABLE IF NOT EXISTS post_views (
     post_id    INTEGER NOT NULL REFERENCES posts(id) ON DELETE CASCADE,
     ip         TEXT    NOT NULL,
