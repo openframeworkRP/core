@@ -21,14 +21,20 @@ export default function SimpleHeader() {
         )}
       </Link>
       <nav className="sh__nav">
-        <a href="#about">about</a>
-        <a href="#games">games</a>
+        <a href="#features">features</a>
         <a href="#contact">contact</a>
         <Link to="/devblog">blog</Link>
         <Link to="/roadmap">roadmap</Link>
         <Link to="/team">team</Link>
-        <a href="https://sbox.game/openframework" target="_blank" rel="noopener noreferrer">s&amp;box</a>
-        <a href="https://github.com/openframeworkRP" target="_blank" rel="noopener noreferrer">github</a>
+        {branding.link_sbox && (
+          <a href={branding.link_sbox} target="_blank" rel="noopener noreferrer">s&amp;box</a>
+        )}
+        {branding.link_github && (
+          <a href={branding.link_github} target="_blank" rel="noopener noreferrer">github</a>
+        )}
+        {branding.link_discord && (
+          <a href={branding.link_discord} target="_blank" rel="noopener noreferrer">discord</a>
+        )}
       </nav>
     </header>
   )

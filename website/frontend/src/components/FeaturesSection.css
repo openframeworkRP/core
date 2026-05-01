@@ -1,0 +1,83 @@
+/* ============================================================
+   FeaturesSection — style sbox.game (cards minimalistes)
+   ============================================================ */
+
+.features {
+  padding: 96px 32px;
+  background: var(--bg-base, #0a0e18);
+}
+
+.features__inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.features__header {
+  margin-bottom: 64px;
+  max-width: 720px;
+}
+
+.features__header h2 {
+  margin: 0 0 16px;
+  font-size: clamp(28px, 4vw, 40px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #fff;
+}
+
+.features__header p {
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--text-secondary, #b8bcc8);
+}
+
+.features__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+.features__card {
+  padding: 24px;
+  background: var(--bg-card, #161a26);
+  border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.06));
+  border-radius: 12px;
+  transition: border-color 150ms, transform 150ms;
+}
+.features__card:hover {
+  border-color: rgba(60, 173, 217, 0.3);
+  transform: translateY(-2px);
+}
+
+.features__icon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+  border-radius: 8px;
+  background: rgba(60, 173, 217, 0.12);
+  color: var(--brand-primary, #3cadd9);
+}
+
+.features__card h3 {
+  margin: 0 0 8px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: -0.01em;
+}
+
+.features__card p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-secondary, #b8bcc8);
+}
+
+@media (max-width: 768px) {
+  .features { padding: 64px 16px; }
+  .features__header { margin-bottom: 40px; }
+}

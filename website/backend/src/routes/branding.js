@@ -21,6 +21,10 @@ const ALLOWED_KEYS = new Set([
   'accent_color',
   'logo_url',
   'favicon_url',
+  'link_github',
+  'link_sbox',
+  'link_discord',
+  'link_steam',
 ])
 
 // ── GET /api/branding (public) ──────────────────────────────────────────
@@ -59,6 +63,11 @@ router.put('/', requireAuth, requireRole('owner'), (req, res) => {
     }
     if ((key === 'logo_url' || key === 'favicon_url') && invalidUrl(value)) {
       skipped.push({ key, reason: 'invalid-url', hint: 'URL absolue (http(s)://) ou relative (/...)' })
+      continue
+    }
+    // Pour les liens externes : doivent etre des URLs absolues (ou vide)
+    if (key.startsWith('link_') && value && !/^https?:\/\//.test(value)) {
+      skipped.push({ key, reason: 'invalid-link', hint: 'URL absolue obligatoire (https://...)' })
       continue
     }
 

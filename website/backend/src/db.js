@@ -404,7 +404,12 @@ db.exec(`
     ('primary_color',   '#3cadd9'),
     ('accent_color',    '#88e1ff'),
     ('logo_url',        ''),
-    ('favicon_url',     '');
+    ('favicon_url',     ''),
+    -- Liens externes (header / footer) — laisse vide pour les masquer
+    ('link_github',     'https://github.com/openframeworkRP/core'),
+    ('link_sbox',       'https://sbox.game/openframework'),
+    ('link_discord',    ''),
+    ('link_steam',      '');
 `)
 
 // ── Migration : retire le CHECK constraint sur users.role ─────────────────

@@ -17,6 +17,10 @@ const DEFAULT_BRANDING = {
   accent_color:    '#88e1ff',
   logo_url:        '',
   favicon_url:     '',
+  link_github:     'https://github.com/openframeworkRP/core',
+  link_sbox:       'https://sbox.game/openframework',
+  link_discord:    '',
+  link_steam:      '',
 }
 
 const BrandingContext = createContext({

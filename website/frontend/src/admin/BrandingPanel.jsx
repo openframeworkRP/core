@@ -11,14 +11,21 @@ import { useBranding } from '../context/BrandingContext.jsx'
 import './BrandingPanel.css'
 
 const FIELDS = [
-  { key: 'site_name',       label: 'Nom du site',          type: 'text',  hint: 'Affiche dans le header, le title du browser et le SEO.' },
-  { key: 'site_short_name', label: 'Nom court',            type: 'text',  hint: 'Pour les espaces compacts (mobile, etc.). Souvent identique au nom du site.' },
-  { key: 'default_author',  label: 'Auteur par defaut',    type: 'text',  hint: 'Auteur affiche sur les nouveaux devlogs si non precise.' },
-  { key: 'description',     label: 'Description',          type: 'textarea', hint: 'Meta description pour le SEO. ~150 caracteres ideal.' },
-  { key: 'primary_color',   label: 'Couleur principale',   type: 'color', hint: 'Boutons, liens, accents. Hex (#RRGGBB).' },
-  { key: 'accent_color',    label: 'Couleur accent',       type: 'color', hint: 'Hover, highlights, badges. Hex (#RRGGBB).' },
-  { key: 'logo_url',        label: 'URL du logo',          type: 'text',  hint: 'URL absolue (https://...) ou relative (/img/logo.png). Laisse vide pour pas de logo.' },
-  { key: 'favicon_url',     label: 'URL du favicon',       type: 'text',  hint: 'Idem. Format recommande : ICO/PNG 32x32.' },
+  { key: 'site_name',       label: 'Nom du site',          type: 'text',  hint: 'Affiche dans le header, le title du browser et le SEO.', section: 'Identite' },
+  { key: 'site_short_name', label: 'Nom court',            type: 'text',  hint: 'Pour les espaces compacts (mobile, etc.). Souvent identique au nom du site.', section: 'Identite' },
+  { key: 'default_author',  label: 'Auteur par defaut',    type: 'text',  hint: 'Auteur affiche sur les nouveaux devlogs si non precise.', section: 'Identite' },
+  { key: 'description',     label: 'Description',          type: 'textarea', hint: 'Meta description pour le SEO. ~150 caracteres ideal.', section: 'Identite' },
+
+  { key: 'primary_color',   label: 'Couleur principale',   type: 'color', hint: 'Boutons, liens, accents. Hex (#RRGGBB).', section: 'Theme' },
+  { key: 'accent_color',    label: 'Couleur accent',       type: 'color', hint: 'Hover, highlights, badges. Hex (#RRGGBB).', section: 'Theme' },
+
+  { key: 'logo_url',        label: 'URL du logo',          type: 'text',  hint: 'URL absolue (https://...) ou relative (/img/logo.png). Laisse vide pour pas de logo.', section: 'Assets' },
+  { key: 'favicon_url',     label: 'URL du favicon',       type: 'text',  hint: 'Idem. Format recommande : ICO/PNG 32x32.', section: 'Assets' },
+
+  { key: 'link_github',     label: 'Lien GitHub',          type: 'text',  hint: 'URL du repo (https://github.com/...). Affiche dans le header et le footer. Laisse vide pour masquer.', section: 'Liens' },
+  { key: 'link_sbox',       label: 'Lien s&box',           type: 'text',  hint: 'URL du gamemode publie (https://sbox.game/...). Laisse vide pour masquer.', section: 'Liens' },
+  { key: 'link_discord',    label: 'Lien Discord',         type: 'text',  hint: 'URL d\'invitation (https://discord.gg/...). Laisse vide pour masquer.', section: 'Liens' },
+  { key: 'link_steam',      label: 'Lien Steam',           type: 'text',  hint: 'URL du groupe Steam ou page de jeu. Laisse vide pour masquer.', section: 'Liens' },
 ]
 
 export default function BrandingPanel() {
@@ -75,44 +82,51 @@ export default function BrandingPanel() {
       {error && <div className="brand-error">⚠ {error}</div>}
       {success && <div className="brand-success">✓ Branding sauvegarde — recharge la page pour voir tous les effets.</div>}
 
-      <div className="brand-form">
-        {FIELDS.map(field => (
-          <div key={field.key} className="brand-field">
-            <label htmlFor={`brand-${field.key}`}>{field.label}</label>
-            <p className="brand-hint">{field.hint}</p>
-            {field.type === 'textarea' ? (
-              <textarea
-                id={`brand-${field.key}`}
-                value={form[field.key] || ''}
-                onChange={e => update(field.key, e.target.value)}
-                rows={3}
-              />
-            ) : field.type === 'color' ? (
-              <div className="brand-color-row">
-                <input
-                  type="color"
-                  value={form[field.key] || '#000000'}
-                  onChange={e => update(field.key, e.target.value)}
-                />
-                <input
-                  type="text"
-                  value={form[field.key] || ''}
-                  onChange={e => update(field.key, e.target.value)}
-                  placeholder="#RRGGBB"
-                  className="brand-color-text"
-                />
+      {/* Group fields by section */}
+      {Array.from(new Set(FIELDS.map(f => f.section))).map(section => (
+        <div key={section} className="brand-section">
+          <h2 className="brand-section-title">{section}</h2>
+          <div className="brand-form">
+            {FIELDS.filter(f => f.section === section).map(field => (
+              <div key={field.key} className="brand-field">
+                <label htmlFor={`brand-${field.key}`}>{field.label}</label>
+                <p className="brand-hint">{field.hint}</p>
+                {field.type === 'textarea' ? (
+                  <textarea
+                    id={`brand-${field.key}`}
+                    value={form[field.key] || ''}
+                    onChange={e => update(field.key, e.target.value)}
+                    rows={3}
+                  />
+                ) : field.type === 'color' ? (
+                  <div className="brand-color-row">
+                    <input
+                      type="color"
+                      value={form[field.key] || '#000000'}
+                      onChange={e => update(field.key, e.target.value)}
+                    />
+                    <input
+                      type="text"
+                      value={form[field.key] || ''}
+                      onChange={e => update(field.key, e.target.value)}
+                      placeholder="#RRGGBB"
+                      className="brand-color-text"
+                    />
+                  </div>
+                ) : (
+                  <input
+                    id={`brand-${field.key}`}
+                    type="text"
+                    value={form[field.key] || ''}
+                    onChange={e => update(field.key, e.target.value)}
+                    placeholder={field.key.startsWith('link_') ? 'https://...' : ''}
+                  />
+                )}
               </div>
-            ) : (
-              <input
-                id={`brand-${field.key}`}
-                type="text"
-                value={form[field.key] || ''}
-                onChange={e => update(field.key, e.target.value)}
-              />
-            )}
+            ))}
           </div>
-        ))}
-      </div>
+        </div>
+      ))}
 
       {/* Preview live du logo */}
       {form.logo_url && (

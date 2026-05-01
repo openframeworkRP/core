@@ -47,6 +47,24 @@
   color: #80ff8a;
 }
 
+.brand-section {
+  margin-bottom: 32px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid #2a2f3e;
+}
+.brand-section:last-of-type {
+  border-bottom: none;
+}
+
+.brand-section-title {
+  margin: 0 0 16px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #8089a0;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
 .brand-form {
   display: flex;
   flex-direction: column;

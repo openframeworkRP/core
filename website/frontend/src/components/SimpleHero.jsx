@@ -30,23 +30,27 @@ export default function SimpleHero() {
         </p>
 
         <div className="hero__cta">
-          <a
-            href="https://sbox.game/openframework"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hero__btn hero__btn--primary"
-          >
-            <ExternalLink size={16} /> s&amp;box
-          </a>
-          <a
-            href="https://github.com/openframeworkRP"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hero__btn"
-          >
-            <Github size={16} /> github
-          </a>
-          <a href="#about" className="hero__link">
+          {branding.link_sbox && (
+            <a
+              href={branding.link_sbox}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hero__btn hero__btn--primary"
+            >
+              <ExternalLink size={16} /> s&amp;box
+            </a>
+          )}
+          {branding.link_github && (
+            <a
+              href={branding.link_github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hero__btn"
+            >
+              <Github size={16} /> github
+            </a>
+          )}
+          <a href="#features" className="hero__link">
             learn more →
           </a>
         </div>
