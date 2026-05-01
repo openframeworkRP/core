@@ -40,8 +40,11 @@ function logAction(req, action, targetSteamId, reason = '', extra = null) {
 }
 
 // ── Configuration ─────────────────────────────────────────────────────────
-const GAME_API_URL     = process.env.GAME_API_URL     || 'http://localhost:8443'
-const GAME_SERVER_SECRET = process.env.GAME_SERVER_SECRET || 'coucou'
+// Default sur le DNS inter-container (compose) au lieu de localhost — depuis
+// le container website-api, 'localhost:8443' pointe sur LUI-MEME, pas sur
+// l'hote. core-api est le hostname Docker du container core.api.
+const GAME_API_URL     = process.env.GAME_API_URL     || 'http://core-api:8443'
+const GAME_SERVER_SECRET = process.env.GAME_SERVER_SECRET || ''
 const STEAM_API_KEY    = process.env.STEAM_API_KEY || ''
 
 // ── Cache des profils Steam (name + avatar) pour éviter de taper l'API Steam à chaque appel
