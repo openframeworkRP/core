@@ -275,9 +275,9 @@ function MdToolbar({ textareaRef, value, onChange }) {
   )
 
   return (
-    <div style={{ border: '1px solid #2e2e2e', borderRadius: 8, overflow: 'hidden' }}>
+    <div style={{ border: '1px solid #2e3344', borderRadius: 8, overflow: 'hidden' }}>
       {/* Toolbar */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: 2, padding: '4px 6px', background: '#111', borderBottom: '1px solid #2e2e2e', flexWrap: 'wrap' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 2, padding: '4px 6px', background: '#11151f', borderBottom: '1px solid #2e3344', flexWrap: 'wrap' }}>
         {tb('bold',   Bold,         'Gras')}
         {tb('italic', Italic,       'Italique')}
         {tb('strike', Strikethrough,'Barré')}
@@ -305,7 +305,7 @@ function MdToolbar({ textareaRef, value, onChange }) {
             ?
           </button>
           {cheatOpen && (
-            <div style={{ position: 'absolute', right: 0, top: '110%', zIndex: 50, background: '#1a1a1a', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 8, padding: '10px 14px', minWidth: 310, boxShadow: '0 8px 32px rgba(0,0,0,0.5)' }}>
+            <div style={{ position: 'absolute', right: 0, top: '110%', zIndex: 50, background: '#161a26', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 8, padding: '10px 14px', minWidth: 310, boxShadow: '0 8px 32px rgba(0,0,0,0.5)' }}>
               <div style={{ fontSize: '0.68rem', fontWeight: 800, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#555', marginBottom: 8 }}>Syntaxe</div>
               <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.76rem' }}>
                 <tbody>
@@ -325,9 +325,9 @@ function MdToolbar({ textareaRef, value, onChange }) {
           onClick={() => setPreviewMode(p => !p)}
           style={{
             ...BTN, padding: '3px 9px', fontSize: '0.73rem', gap: 4,
-            background: previewMode ? 'rgba(224,123,57,0.15)' : 'transparent',
+            background: previewMode ? 'rgba(60, 173, 217,0.15)' : 'transparent',
             color: previewMode ? 'var(--brand-primary, #e07b39)' : '#555',
-            border: `1px solid ${previewMode ? 'rgba(224,123,57,0.3)' : 'transparent'}`,
+            border: `1px solid ${previewMode ? 'rgba(60, 173, 217,0.3)' : 'transparent'}`,
           }}
         >
           {previewMode ? <FileText size={11} /> : <Eye size={11} />}
@@ -337,7 +337,7 @@ function MdToolbar({ textareaRef, value, onChange }) {
 
       {/* Editor / Preview */}
       {previewMode ? (
-        <div style={{ padding: '12px 20px', minHeight: 120, background: '#0d0d0d' }}>
+        <div style={{ padding: '12px 20px', minHeight: 120, background: '#0a0e18' }}>
           <MdPreview value={value} />
         </div>
       ) : (
@@ -355,7 +355,7 @@ function MdToolbar({ textareaRef, value, onChange }) {
           placeholder="Écris en Markdown…&#10;&#10;**gras**, *italique*, ## Titre, - liste, > citation, `code`…"
           rows={6}
           style={{
-            display: 'block', width: '100%', background: '#0d0d0d', border: 'none',
+            display: 'block', width: '100%', background: '#0a0e18', border: 'none',
             padding: '10px 12px', color: '#b8b8b8', fontFamily: "'Consolas','Monaco',monospace",
             fontSize: '0.81rem', lineHeight: 1.7, resize: 'none', boxSizing: 'border-box',
             overflow: 'hidden', outline: 'none',
@@ -406,7 +406,7 @@ function HistoryModal({ ruleId, ruleTitle, onClose }) {
       style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.72)', zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24 }}
       onClick={e => e.target === e.currentTarget && onClose()}
     >
-      <div style={{ background: '#1a1a1a', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 14, width: '100%', maxWidth: 640, maxHeight: '78vh', display: 'flex', flexDirection: 'column' }}>
+      <div style={{ background: '#161a26', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 14, width: '100%', maxWidth: 640, maxHeight: '78vh', display: 'flex', flexDirection: 'column' }}>
         <div style={{ padding: '16px 22px', borderBottom: '1px solid rgba(255,255,255,0.07)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <div>
             <div style={{ color: '#e8e8e8', fontWeight: 700, fontSize: '0.92rem' }}>Historique</div>
@@ -429,7 +429,7 @@ function HistoryModal({ ruleId, ruleTitle, onClose }) {
                 const color = h.action === 'created' ? '#3e9041' : h.action === 'deleted' ? '#d13b1a' : 'var(--brand-primary, #e07b39)'
                 const label = h.action === 'created' ? 'Créée' : h.action === 'deleted' ? 'Supprimée' : 'Modifiée'
                 return (
-                  <div key={h.id} style={{ padding: '10px 14px', background: '#111', borderRadius: 8, border: '1px solid rgba(255,255,255,0.05)' }}>
+                  <div key={h.id} style={{ padding: '10px 14px', background: '#11151f', borderRadius: 8, border: '1px solid rgba(255,255,255,0.05)' }}>
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: h.action === 'updated' ? 7 : 0 }}>
                       <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                         <span style={{ fontWeight: 700, fontSize: '0.79rem', color }}>{label}</span>
@@ -502,7 +502,7 @@ function RuleRow({ rule, onUpdate, onDelete }) {
             autoFocus
             onKeyDown={e => { if (e.key === 'Escape') { setEditing(false); setTitle(rule.title); setContent(rule.content) } }}
             style={{
-              width: '100%', background: '#111', border: '1px solid #3a3a3a', borderRadius: 6,
+              width: '100%', background: '#11151f', border: '1px solid #3a3a3a', borderRadius: 6,
               padding: '7px 10px', color: '#e8e8e8', fontFamily: 'inherit', fontSize: '0.9rem',
               fontWeight: 700, marginBottom: 10, boxSizing: 'border-box', outline: 'none',
             }}
@@ -569,7 +569,7 @@ function NewRuleForm({ onSubmit, onCancel }) {
         autoFocus
         onKeyDown={e => { if (e.key === 'Escape') onCancel() }}
         style={{
-          width: '100%', background: '#111', border: '1px solid #3a3a3a', borderRadius: 6,
+          width: '100%', background: '#11151f', border: '1px solid #3a3a3a', borderRadius: 6,
           padding: '7px 10px', color: '#e8e8e8', fontFamily: 'inherit', fontSize: '0.9rem',
           fontWeight: 700, marginBottom: 10, boxSizing: 'border-box', outline: 'none',
         }}
@@ -620,7 +620,7 @@ function CategorySection({ cat, onUpdateCat, onDeleteCat, onCreateRule, onUpdate
             autoFocus
             onKeyDown={e => { if (e.key === 'Enter') saveCat(); if (e.key === 'Escape') { setEditingCat(false); setCatName(cat.name); setCatColor(cat.color) } }}
             style={{
-              background: '#111', border: '1px solid #3a3a3a', borderRadius: 6,
+              background: '#11151f', border: '1px solid #3a3a3a', borderRadius: 6,
               padding: '6px 10px', color: '#e8e8e8', fontFamily: 'inherit',
               fontSize: '1rem', fontWeight: 700, outline: 'none', minWidth: 160,
             }}
@@ -662,7 +662,7 @@ function CategorySection({ cat, onUpdateCat, onDeleteCat, onCreateRule, onUpdate
 
       {/* Rules */}
       {(cat.rules || []).length === 0 && !addingRule && (
-        <div style={{ color: '#383838', fontSize: '0.8rem', fontStyle: 'italic', marginBottom: 12, paddingLeft: 16 }}>Aucune règle dans cette catégorie.</div>
+        <div style={{ color: '#383d4d', fontSize: '0.8rem', fontStyle: 'italic', marginBottom: 12, paddingLeft: 16 }}>Aucune règle dans cette catégorie.</div>
       )}
       {(cat.rules || []).map(rule => (
         <RuleRow
@@ -804,7 +804,7 @@ export default function RulesPanel() {
       )}
 
       {/* Type tabs */}
-      <div style={{ display: 'flex', gap: 4, marginBottom: 32, background: '#1a1a1a', padding: 4, borderRadius: 10, border: '1px solid rgba(255,255,255,0.06)', width: 'fit-content' }}>
+      <div style={{ display: 'flex', gap: 4, marginBottom: 32, background: '#161a26', padding: 4, borderRadius: 10, border: '1px solid rgba(255,255,255,0.06)', width: 'fit-content' }}>
         {Object.entries(TYPE_LABELS).map(([type, label]) => (
           <button
             key={type}
@@ -841,7 +841,7 @@ export default function RulesPanel() {
 
           {/* Add category */}
           {addingCat ? (
-            <div style={{ background: '#1a1a1a', border: '1px solid rgba(255,255,255,0.09)', borderRadius: 10, padding: '16px 18px', marginTop: 8 }}>
+            <div style={{ background: '#161a26', border: '1px solid rgba(255,255,255,0.09)', borderRadius: 10, padding: '16px 18px', marginTop: 8 }}>
               <div style={{ color: '#888', fontSize: '0.78rem', fontWeight: 600, marginBottom: 10, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Nouvelle catégorie</div>
               <input
                 value={newCatName}
@@ -850,7 +850,7 @@ export default function RulesPanel() {
                 autoFocus
                 onKeyDown={e => { if (e.key === 'Enter') createCategory(); if (e.key === 'Escape') { setAddingCat(false); setNewCatName('') } }}
                 style={{
-                  width: '100%', background: '#111', border: '1px solid #3a3a3a', borderRadius: 6,
+                  width: '100%', background: '#11151f', border: '1px solid #3a3a3a', borderRadius: 6,
                   padding: '8px 10px', color: '#e8e8e8', fontFamily: 'inherit', fontSize: '0.92rem',
                   fontWeight: 700, marginBottom: 12, boxSizing: 'border-box', outline: 'none',
                 }}

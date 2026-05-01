@@ -142,7 +142,7 @@ function RenderSlBlocks({ blocks }) {
   return <>
     {blocks.map((b, i) => {
       if (b.type === 'rule') return (
-        <div key={i} style={{ background: 'rgba(224,123,57,0.06)', border: '1px solid rgba(224,123,57,0.2)', borderRadius: 8, padding: '12px 16px', marginBottom: 12 }}>
+        <div key={i} style={{ background: 'rgba(60, 173, 217,0.06)', border: '1px solid rgba(60, 173, 217,0.2)', borderRadius: 8, padding: '12px 16px', marginBottom: 12 }}>
           <div style={{ display: 'flex', alignItems: 'baseline', gap: 10, marginBottom: 4 }}>
             <span style={{ color: 'var(--brand-primary, #e07b39)', fontWeight: 800, fontSize: '0.82rem', fontFamily: 'Georgia, serif' }}>Art. {b.number}</span>
             <strong style={{ color: '#ddd', fontSize: '0.9rem', fontFamily: 'Georgia, serif' }}>{renderInline(b.title)}</strong>
@@ -261,19 +261,19 @@ function MdToolbar({ taRef, value, onChange, onPreviewToggle, previewMode }) {
   )
 
   return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: 0, padding: '4px 8px', background: '#0d0d0d', borderBottom: '1px solid #2a2a2a', flexWrap: 'wrap' }}>
+    <div style={{ display: 'flex', alignItems: 'center', gap: 0, padding: '4px 8px', background: '#0a0e18', borderBottom: '1px solid #2a2f3e', flexWrap: 'wrap' }}>
       {iconBtn(Bold,     'Gras',         () => insert('**', '**'))}
       {iconBtn(Italic,   'Italique',     () => insert('*', '*'))}
-      <div style={{ width: 1, height: 14, background: '#2a2a2a', margin: '0 3px' }} />
+      <div style={{ width: 1, height: 14, background: '#2a2f3e', margin: '0 3px' }} />
       {iconBtn(Heading2, 'Titre ##',     () => insertLine('## '))}
       {iconBtn(List,     'Liste',        () => insertLine('- '))}
-      <div style={{ width: 1, height: 14, background: '#2a2a2a', margin: '0 3px' }} />
+      <div style={{ width: 1, height: 14, background: '#2a2f3e', margin: '0 3px' }} />
       {/* Snippets custom */}
       {textBtn('Art.',  'Insérer un article',    () => insertSnippet(':::art 1 Titre de la règle\nTexte de la règle\n:::'), 'var(--brand-primary, #e07b39)')}
       {textBtn('Note',  'Insérer une note',      () => insertSnippet(':::note\nTexte de la note\n:::'), '#f59e0b')}
       <div style={{ flex: 1 }} />
       <button onClick={onPreviewToggle}
-        style={{ ...BTN, padding: '3px 10px', fontSize: '0.72rem', gap: 4, background: previewMode ? 'rgba(224,123,57,0.15)' : 'transparent', color: previewMode ? 'var(--brand-primary, #e07b39)' : '#555', border: `1px solid ${previewMode ? 'rgba(224,123,57,0.3)' : 'transparent'}` }}>
+        style={{ ...BTN, padding: '3px 10px', fontSize: '0.72rem', gap: 4, background: previewMode ? 'rgba(60, 173, 217,0.15)' : 'transparent', color: previewMode ? 'var(--brand-primary, #e07b39)' : '#555', border: `1px solid ${previewMode ? 'rgba(60, 173, 217,0.3)' : 'transparent'}` }}>
         {previewMode ? <FileText size={11} /> : <Eye size={11} />}
         {previewMode ? 'Éditer' : 'Aperçu'}
       </button>
@@ -318,7 +318,7 @@ function SlashMenu({ pos, filter, onSelect, onClose }) {
   return (
     <div style={{
       position: 'fixed', left: pos.x, top: pos.y, zIndex: 9999,
-      background: '#1a1a1a', border: '1px solid rgba(255,255,255,0.12)',
+      background: '#161a26', border: '1px solid rgba(255,255,255,0.12)',
       borderRadius: 10, boxShadow: '0 8px 32px rgba(0,0,0,0.6)',
       minWidth: 220, overflow: 'hidden',
     }}>
@@ -503,7 +503,7 @@ function ChapterEditor({ chapter, bookId, onDelete, onRefresh }) {
           <div style={{ display: 'flex', flex: 1, gap: 8, alignItems: 'center' }} onClick={e => e.stopPropagation()}>
             <input value={title} onChange={e => setTitle(e.target.value)} autoFocus
               onKeyDown={e => { if (e.key === 'Enter') saveTitle(); if (e.key === 'Escape') { setEditingTitle(false); setTitle(chapter.title) } }}
-              style={{ flex: 1, background: '#111', border: '1px solid #3a3a3a', borderRadius: 6, padding: '5px 9px', color: '#e8e8e8', fontFamily: 'inherit', fontSize: '0.9rem', fontWeight: 700, outline: 'none' }} />
+              style={{ flex: 1, background: '#11151f', border: '1px solid #3a3a3a', borderRadius: 6, padding: '5px 9px', color: '#e8e8e8', fontFamily: 'inherit', fontSize: '0.9rem', fontWeight: 700, outline: 'none' }} />
             <button onClick={saveTitle} style={{ ...BTN, padding: '4px 9px', background: '#3e9041', color: '#fff' }}><Check size={12} /></button>
             <button onClick={() => { setEditingTitle(false); setTitle(chapter.title) }}
               style={{ ...BTN, padding: '4px 9px', background: 'transparent', color: '#666', border: '1px solid rgba(255,255,255,0.1)' }}><X size={12} /></button>
@@ -533,7 +533,7 @@ function ChapterEditor({ chapter, bookId, onDelete, onRefresh }) {
           <MdToolbar taRef={taRef} value={contentRef.current} onChange={handleChange} previewMode={preview} onPreviewToggle={() => { setPreviewContent(contentRef.current); setPreview(p => !p) }} />
 
           {preview ? (
-            <div style={{ padding: '16px 20px', minHeight: 120, background: '#0d0d0d' }}>
+            <div style={{ padding: '16px 20px', minHeight: 120, background: '#0a0e18' }}>
               <MdPreview raw={previewContent} />
             </div>
           ) : (
@@ -579,7 +579,7 @@ Valeur A  | Valeur B  | Valeur C
 - Élément de liste
 - Autre élément`}
                 style={{
-                  display: 'block', width: '100%', background: '#0d0d0d', border: 'none',
+                  display: 'block', width: '100%', background: '#0a0e18', border: 'none',
                   padding: '12px 16px', color: '#b8b8b8', fontFamily: "'Consolas','Monaco',monospace",
                   fontSize: '0.82rem', lineHeight: 1.75, resize: 'none', boxSizing: 'border-box',
                   outline: 'none', minHeight: 160, overflow: 'hidden',
@@ -672,11 +672,11 @@ export default function OpenFrameworkRulesPanel() {
     <div style={{ display: 'flex', height: '100%', overflow: 'hidden' }}>
 
       {/* ── Sidebar livres ── */}
-      <aside style={{ width: 190, background: '#0f0f0f', borderRight: '1px solid rgba(255,255,255,0.07)', display: 'flex', flexDirection: 'column', flexShrink: 0, overflowY: 'auto' }}>
+      <aside style={{ width: 190, background: '#0a0e18', borderRight: '1px solid rgba(255,255,255,0.07)', display: 'flex', flexDirection: 'column', flexShrink: 0, overflowY: 'auto' }}>
         <div style={{ padding: '16px 14px 8px', color: '#444', fontSize: '0.68rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em' }}>Livres</div>
         {books.map(b => (
           <button key={b.book_id} onClick={() => setActiveBookId(b.book_id)}
-            style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 14px', background: activeBookId === b.book_id ? 'rgba(224,123,57,0.1)' : 'transparent', border: 'none', borderLeft: `2px solid ${activeBookId === b.book_id ? 'var(--brand-primary, #e07b39)' : 'transparent'}`, cursor: 'pointer', textAlign: 'left', width: '100%' }}>
+            style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 14px', background: activeBookId === b.book_id ? 'rgba(60, 173, 217,0.1)' : 'transparent', border: 'none', borderLeft: `2px solid ${activeBookId === b.book_id ? 'var(--brand-primary, #e07b39)' : 'transparent'}`, cursor: 'pointer', textAlign: 'left', width: '100%' }}>
             <span style={{ fontSize: '1rem' }}>{b.icon}</span>
             <span style={{ color: activeBookId === b.book_id ? 'var(--brand-primary, #e07b39)' : '#999', fontSize: '0.82rem', fontWeight: 600, lineHeight: 1.3 }}>{b.title}</span>
           </button>
@@ -697,9 +697,9 @@ export default function OpenFrameworkRulesPanel() {
               {editingBook ? (
                 <div style={{ flex: 1, display: 'flex', gap: 10, flexWrap: 'wrap', alignItems: 'center' }}>
                   <input value={bookForm.title || ''} onChange={e => setBookForm(f => ({ ...f, title: e.target.value }))} placeholder="Titre"
-                    style={{ background: '#111', border: '1px solid #3a3a3a', borderRadius: 6, padding: '5px 10px', color: '#e8e8e8', fontFamily: 'inherit', fontSize: '1rem', fontWeight: 700, outline: 'none', minWidth: 160 }} autoFocus />
+                    style={{ background: '#11151f', border: '1px solid #3a3a3a', borderRadius: 6, padding: '5px 10px', color: '#e8e8e8', fontFamily: 'inherit', fontSize: '1rem', fontWeight: 700, outline: 'none', minWidth: 160 }} autoFocus />
                   <input value={bookForm.icon || ''} onChange={e => setBookForm(f => ({ ...f, icon: e.target.value }))} placeholder="📖"
-                    style={{ background: '#111', border: '1px solid #3a3a3a', borderRadius: 6, padding: '5px 9px', color: '#e8e8e8', fontFamily: 'inherit', fontSize: '1rem', outline: 'none', width: 62 }} />
+                    style={{ background: '#11151f', border: '1px solid #3a3a3a', borderRadius: 6, padding: '5px 9px', color: '#e8e8e8', fontFamily: 'inherit', fontSize: '1rem', outline: 'none', width: 62 }} />
                   <label style={{ color: '#555', fontSize: '0.73rem', display: 'flex', alignItems: 'center', gap: 5 }}>
                     Couv. <input type="color" value={bookForm.cover_color || '#1a0a00'} onChange={e => setBookForm(f => ({ ...f, cover_color: e.target.value }))} style={{ width: 24, height: 24, border: 'none', borderRadius: 3, cursor: 'pointer' }} />
                   </label>
@@ -764,13 +764,13 @@ export default function OpenFrameworkRulesPanel() {
 
               {/* Ajouter chapitre */}
               {addingChapter ? (
-                <div style={{ background: '#1a1a1a', border: '1px solid rgba(255,255,255,0.09)', borderRadius: 10, padding: '14px 18px', marginTop: 8 }}>
+                <div style={{ background: '#161a26', border: '1px solid rgba(255,255,255,0.09)', borderRadius: 10, padding: '14px 18px', marginTop: 8 }}>
                   <div style={{ color: '#666', fontSize: '0.74rem', fontWeight: 700, marginBottom: 10, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Nouveau chapitre</div>
                   <input value={newChTitle} onChange={e => setNewChTitle(e.target.value)} placeholder="Titre du chapitre…" autoFocus
                     onKeyDown={e => { if (e.key === 'Enter') createChapter(); if (e.key === 'Escape') { setAddingChapter(false); setNewChTitle(''); setNewChId('') } }}
-                    style={{ width: '100%', background: '#111', border: '1px solid #3a3a3a', borderRadius: 6, padding: '8px 10px', color: '#e8e8e8', fontFamily: 'inherit', fontSize: '0.9rem', fontWeight: 700, marginBottom: 8, boxSizing: 'border-box', outline: 'none' }} />
+                    style={{ width: '100%', background: '#11151f', border: '1px solid #3a3a3a', borderRadius: 6, padding: '8px 10px', color: '#e8e8e8', fontFamily: 'inherit', fontSize: '0.9rem', fontWeight: 700, marginBottom: 8, boxSizing: 'border-box', outline: 'none' }} />
                   <input value={newChId} onChange={e => setNewChId(e.target.value)} placeholder="ID (auto si vide)"
-                    style={{ width: '100%', background: '#111', border: '1px solid #222', borderRadius: 6, padding: '5px 10px', color: '#666', fontFamily: 'monospace', fontSize: '0.77rem', marginBottom: 12, boxSizing: 'border-box', outline: 'none' }} />
+                    style={{ width: '100%', background: '#11151f', border: '1px solid #1f2330', borderRadius: 6, padding: '5px 10px', color: '#666', fontFamily: 'monospace', fontSize: '0.77rem', marginBottom: 12, boxSizing: 'border-box', outline: 'none' }} />
                   <div style={{ display: 'flex', gap: 8 }}>
                     <button onClick={createChapter} style={{ ...BTN, background: '#3e9041', color: '#fff' }}><Check size={13} /> Créer</button>
                     <button onClick={() => { setAddingChapter(false); setNewChTitle(''); setNewChId('') }}

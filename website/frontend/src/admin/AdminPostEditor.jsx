@@ -633,11 +633,11 @@ function PreviewColumn({ lang, meta, blocks, games }) {
       </div>
       <div className="adm__preview-col-body">
         {monthLabel && (
-          <p style={{ color: '#4a4540', fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.12em', margin: '0 0 8px' }}>
+          <p style={{ color: '#4a5168', fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.12em', margin: '0 0 8px' }}>
             {monthLabel}
           </p>
         )}
-        <h1 className="adm__preview-post-title">{title || <em style={{color:'#4a4540'}}>Titre non renseigné</em>}</h1>
+        <h1 className="adm__preview-post-title">{title || <em style={{color:'#4a5168'}}>Titre non renseigné</em>}</h1>
         <div className="adm__preview-post-meta">
           {meta.author && <span>Par <strong>{meta.author}</strong></span>}
           {meta.read_time > 0 && <span><Clock size={13} /> {meta.read_time} min</span>}
@@ -650,7 +650,7 @@ function PreviewColumn({ lang, meta, blocks, games }) {
         {excerpt && <p className="adm__preview-excerpt">{excerpt}</p>}
         <hr className="adm__preview-divider" />
         {flat.length === 0
-          ? <p style={{color:'#4a4540',textAlign:'center',padding:'40px 0'}}>Aucun bloc.</p>
+          ? <p style={{color:'#4a5168',textAlign:'center',padding:'40px 0'}}>Aucun bloc.</p>
           : flat.map((block, i) => <Block key={block.id ?? i} block={block} />)
         }
       </div>

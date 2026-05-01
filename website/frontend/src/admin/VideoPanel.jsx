@@ -25,7 +25,7 @@ function CopyButton({ slug, filename }) {
     setTimeout(() => setCopied(false), 2000)
   }
   return (
-    <button onClick={copy} title="Copier le lien" style={{ ...btnStyle, background: copied ? '#3e9041' : '#2a2a2a', color: copied ? '#fff' : '#ccc', border: '1px solid rgba(255,255,255,0.08)' }}>
+    <button onClick={copy} title="Copier le lien" style={{ ...btnStyle, background: copied ? '#3e9041' : '#2a2f3e', color: copied ? '#fff' : '#ccc', border: '1px solid rgba(255,255,255,0.08)' }}>
       {copied ? <Check size={14} /> : <Copy size={14} />}
       {copied ? 'Copié !' : 'Lien Discord'}
     </button>
@@ -146,7 +146,7 @@ export default function VideoPanel() {
           padding: '36px 24px',
           textAlign: 'center',
           cursor: uploading ? 'default' : 'pointer',
-          background: dragOver ? 'rgba(224,123,57,0.06)' : 'rgba(255,255,255,0.02)',
+          background: dragOver ? 'rgba(60, 173, 217,0.06)' : 'rgba(255,255,255,0.02)',
           transition: 'border-color 0.2s, background 0.2s',
           marginBottom: 28,
         }}
@@ -155,7 +155,7 @@ export default function VideoPanel() {
         {uploading ? (
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12 }}>
             <div style={{ color: '#888', fontSize: '0.85rem' }}>Upload en cours… {progress}%</div>
-            <div style={{ width: '100%', maxWidth: 300, height: 6, background: '#2a2a2a', borderRadius: 3, overflow: 'hidden' }}>
+            <div style={{ width: '100%', maxWidth: 300, height: 6, background: '#2a2f3e', borderRadius: 3, overflow: 'hidden' }}>
               <div style={{ height: '100%', width: `${progress}%`, background: 'var(--brand-primary, #e07b39)', borderRadius: 3, transition: 'width 0.15s' }} />
             </div>
           </div>
@@ -177,7 +177,7 @@ export default function VideoPanel() {
         <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           {videos.map(v => (
             <div key={v.slug} style={{
-              background: '#1e1e1e',
+              background: '#1a1f2c',
               border: '1px solid rgba(255,255,255,0.07)',
               borderRadius: 10,
               padding: '14px 16px',
@@ -186,7 +186,7 @@ export default function VideoPanel() {
               gap: 14,
             }}>
               {/* Thumbnail preview */}
-              <div style={{ flexShrink: 0, width: 80, height: 48, background: '#111', borderRadius: 6, overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <div style={{ flexShrink: 0, width: 80, height: 48, background: '#11151f', borderRadius: 6, overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 {v.status === 'processing' ? (
                   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4, padding: '6px 8px', width: '100%' }}>
                     <span style={{ fontSize: '0.6rem', color: 'var(--brand-primary, #e07b39)', fontWeight: 700 }}>
@@ -217,7 +217,7 @@ export default function VideoPanel() {
                       onChange={e => setEditTitle(e.target.value)}
                       onKeyDown={e => { if (e.key === 'Enter') saveRename(v.slug); if (e.key === 'Escape') setEditingId(null) }}
                       autoFocus
-                      style={{ flex: 1, background: '#111', border: '1px solid #444', borderRadius: 6, padding: '5px 10px', color: '#e8e8e8', fontFamily: 'inherit', fontSize: '0.85rem' }}
+                      style={{ flex: 1, background: '#11151f', border: '1px solid #444', borderRadius: 6, padding: '5px 10px', color: '#e8e8e8', fontFamily: 'inherit', fontSize: '0.85rem' }}
                     />
                     <button onClick={() => saveRename(v.slug)} style={{ ...btnStyle, background: '#3e9041', color: '#fff', padding: '5px 12px' }}><Check size={13} /></button>
                     <button onClick={() => setEditingId(null)} style={{ ...btnStyle, background: 'transparent', color: '#888', border: '1px solid rgba(255,255,255,0.1)', padding: '5px 10px' }}><X size={13} /></button>

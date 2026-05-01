@@ -87,7 +87,7 @@ function Header() {
         width: 36, height: 36, borderRadius: 10,
         background: 'linear-gradient(135deg, var(--brand-primary, #e07b39) 0%, #a84820 100%)',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
-        boxShadow: '0 4px 12px rgba(224,123,57,0.3)',
+        boxShadow: '0 4px 12px rgba(60, 173, 217,0.3)',
       }}>
         <Gamepad2 size={18} color="#fff" />
       </span>
@@ -147,7 +147,7 @@ function DashboardTab({ onOpenView }) {
             <Tag key={k.label}
               onClick={clickable ? () => onOpenView(k.view) : undefined}
               style={{
-                background: '#1e1e1e', border: '1px solid rgba(255,255,255,0.06)',
+                background: '#1a1f2c', border: '1px solid rgba(255,255,255,0.06)',
                 borderRadius: 10, padding: '14px 16px',
                 display: 'flex', alignItems: 'center', gap: 12,
                 cursor: clickable ? 'pointer' : 'default',
@@ -227,7 +227,7 @@ function PlayersTab({ onOpen }) {
       <div style={{ display: 'flex', gap: 8, marginBottom: 14, alignItems: 'center' }}>
         <div style={{
           flex: 1, display: 'flex', alignItems: 'center', gap: 8,
-          background: '#1a1a1a', border: '1px solid rgba(255,255,255,0.08)',
+          background: '#161a26', border: '1px solid rgba(255,255,255,0.08)',
           borderRadius: 8, padding: '7px 12px',
         }}>
           <Search size={14} style={{ color: '#52525b' }} />
@@ -255,17 +255,17 @@ function PlayersTab({ onOpen }) {
         <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
           {filtered.map(u => (
             <button key={u.steamId} onClick={() => onOpen(u.steamId)} style={{
-              background: '#1a1a1a', border: '1px solid rgba(255,255,255,0.06)',
+              background: '#161a26', border: '1px solid rgba(255,255,255,0.06)',
               borderRadius: 10, padding: '12px 14px', cursor: 'pointer',
               display: 'flex', alignItems: 'center', gap: 12, textAlign: 'left',
               transition: 'border-color 0.15s',
-            }} onMouseEnter={e => e.currentTarget.style.borderColor = 'rgba(224,123,57,0.35)'}
+            }} onMouseEnter={e => e.currentTarget.style.borderColor = 'rgba(60, 173, 217,0.35)'}
                onMouseLeave={e => e.currentTarget.style.borderColor = 'rgba(255,255,255,0.06)'}>
               {u.avatar ? (
                 <img src={u.avatar} alt="" style={{ width: 34, height: 34, borderRadius: '50%', objectFit: 'cover', border: '1px solid rgba(255,255,255,0.1)' }} />
               ) : (
                 <span style={{
-                  width: 34, height: 34, borderRadius: '50%', background: '#2a2a2a',
+                  width: 34, height: 34, borderRadius: '50%', background: '#2a2f3e',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                   color: '#71717a',
                 }}>
@@ -467,7 +467,7 @@ function CommandModal({ action, steamId, onClose, onResult }) {
         ))}
       </div>
       {trackPhase && submitting && (
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '8px 12px', marginBottom: 12, background: '#111', borderRadius: 8, border: '1px solid rgba(255,255,255,0.06)' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '8px 12px', marginBottom: 12, background: '#11151f', borderRadius: 8, border: '1px solid rgba(255,255,255,0.06)' }}>
           <span style={{ fontSize: '0.78rem', color: '#a1a1aa' }}>Statut :</span>
           <StatusBadge phase={trackPhase} />
         </div>
@@ -475,7 +475,7 @@ function CommandModal({ action, steamId, onClose, onResult }) {
       <div style={{ display: 'flex', gap: 8, justifyContent: 'flex-end' }}>
         <button onClick={onClose} disabled={submitting} style={{ ...inputStyle(), cursor: submitting ? 'not-allowed' : 'pointer', opacity: submitting ? 0.5 : 1 }}>Annuler</button>
         <button onClick={submit} disabled={submitting} style={{
-          background: action.color, color: '#0f0f0f', border: 'none',
+          background: action.color, color: '#0a0e18', border: 'none',
           borderRadius: 6, padding: '8px 16px', fontWeight: 700, cursor: 'pointer',
           fontFamily: 'inherit', opacity: submitting ? 0.5 : 1,
         }}>{submitting ? 'Envoi…' : 'Confirmer'}</button>
@@ -525,7 +525,7 @@ function PlayerDetail({ steamId, onBack, onOpenCharacter }) {
             <div style={{ display: 'flex', flexDirection: 'column', gap: 6, marginBottom: 20 }}>
               {data.characters.map(c => (
                 <button key={c.id} onClick={() => onOpenCharacter(c.id)} style={{
-                  background: '#1a1a1a', border: '1px solid rgba(255,255,255,0.06)',
+                  background: '#161a26', border: '1px solid rgba(255,255,255,0.06)',
                   borderRadius: 10, padding: '11px 14px', cursor: 'pointer',
                   display: 'flex', alignItems: 'center', gap: 12, textAlign: 'left',
                 }}>
@@ -639,8 +639,8 @@ function CharacterDetail({ id, onBack }) {
         <>
           {/* Identité */}
           <div style={{
-            background: 'linear-gradient(135deg, rgba(224,123,57,0.08), rgba(224,123,57,0.02))',
-            border: '1px solid rgba(224,123,57,0.2)', borderRadius: 12,
+            background: 'linear-gradient(135deg, rgba(60, 173, 217,0.08), rgba(60, 173, 217,0.02))',
+            border: '1px solid rgba(60, 173, 217,0.2)', borderRadius: 12,
             padding: '16px 20px', marginBottom: 18,
           }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
@@ -746,7 +746,7 @@ function CharacterDetail({ id, onBack }) {
                               textAlign: 'left', width: '100%', fontFamily: 'inherit',
                             }} onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.03)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.06)' }}
                                onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.borderColor = 'transparent' }}>
-                              <span style={{ fontSize: '0.65rem', padding: '2px 6px', borderRadius: 4, background: '#2a2a2a', color: '#71717a', minWidth: 80, textAlign: 'center' }}>
+                              <span style={{ fontSize: '0.65rem', padding: '2px 6px', borderRadius: 4, background: '#2a2f3e', color: '#71717a', minWidth: 80, textAlign: 'center' }}>
                                 {txTypeLabel(t.type)}
                               </span>
                               <span style={{ flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{t.comment || '—'}</span>
@@ -791,11 +791,11 @@ function CharacterDetail({ id, onBack }) {
                 <button key={it.id} onClick={() => setOpenItem(it)} style={{
                   ...cardStyle(), cursor: 'pointer', textAlign: 'left', width: '100%',
                   fontFamily: 'inherit', color: 'inherit', transition: 'border-color 0.15s',
-                }} onMouseEnter={e => e.currentTarget.style.borderColor = 'rgba(224,123,57,0.35)'}
+                }} onMouseEnter={e => e.currentTarget.style.borderColor = 'rgba(60, 173, 217,0.35)'}
                    onMouseLeave={e => e.currentTarget.style.borderColor = 'rgba(255,255,255,0.06)'}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
                     <span style={{
-                      width: 30, height: 30, borderRadius: 6, background: '#2a2a2a',
+                      width: 30, height: 30, borderRadius: 6, background: '#2a2f3e',
                       display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#71717a',
                     }}>
                       <Package size={14} />
@@ -942,7 +942,7 @@ function CharacterRpDetails({ character: c }) {
           </summary>
           <div style={{
             marginTop: 10, fontFamily: 'monospace', fontSize: '0.74rem',
-            color: '#a1a1aa', background: '#111', border: '1px solid rgba(255,255,255,0.05)',
+            color: '#a1a1aa', background: '#11151f', border: '1px solid rgba(255,255,255,0.05)',
             borderRadius: 6, padding: '10px 12px', whiteSpace: 'pre-wrap', wordBreak: 'break-word',
           }}>
             {extras.map(([k, v]) => (
@@ -1034,7 +1034,7 @@ function CharacterOutfit({ items }) {
       }}>
         {Array.from(bySlot.entries()).map(([slot, list]) => (
           <div key={slot} style={{
-            background: '#111', border: '1px solid rgba(255,255,255,0.05)',
+            background: '#11151f', border: '1px solid rgba(255,255,255,0.05)',
             borderRadius: 8, padding: '10px 12px',
           }}>
             <div style={{
@@ -1130,7 +1130,7 @@ function RenameCharacterModal({ character, onClose, onDone }) {
           </div>
         </div>
         {trackPhase && busy && (
-          <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '8px 12px', background: '#111', borderRadius: 8, border: '1px solid rgba(255,255,255,0.06)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '8px 12px', background: '#11151f', borderRadius: 8, border: '1px solid rgba(255,255,255,0.06)' }}>
             <span style={{ fontSize: '0.78rem', color: '#a1a1aa' }}>Statut gamemode :</span>
             <StatusBadge phase={trackPhase} />
           </div>
@@ -1231,7 +1231,7 @@ function DeleteCharacterModal({ character, onClose, onDone }) {
         </div>
 
         {trackPhase && busy && (
-          <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '8px 12px', background: '#111', borderRadius: 8, border: '1px solid rgba(255,255,255,0.06)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '8px 12px', background: '#11151f', borderRadius: 8, border: '1px solid rgba(255,255,255,0.06)' }}>
             <span style={{ fontSize: '0.78rem', color: '#a1a1aa' }}>Statut gamemode :</span>
             <StatusBadge phase={trackPhase} />
           </div>
@@ -1392,7 +1392,7 @@ function Modal({ title, onClose, children }) {
       display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 20,
     }}>
       <div onClick={e => e.stopPropagation()} style={{
-        background: '#1a1a1a', border: '1px solid rgba(255,255,255,0.1)',
+        background: '#161a26', border: '1px solid rgba(255,255,255,0.1)',
         borderRadius: 12, padding: 22, width: 540, maxWidth: '100%',
         maxHeight: '90vh', overflow: 'auto',
       }}>
@@ -1479,7 +1479,7 @@ function ItemModal({ item, owner, onClose, onChanged }) {
           <div style={{ fontSize: '0.75rem', color: '#71717a', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 600, marginBottom: 6 }}>
             Metadata ({metaEntries.length})
           </div>
-          <div style={{ background: '#111', border: '1px solid rgba(255,255,255,0.06)', borderRadius: 8, padding: 10, fontFamily: 'monospace', fontSize: '0.76rem', color: '#a1a1aa' }}>
+          <div style={{ background: '#11151f', border: '1px solid rgba(255,255,255,0.06)', borderRadius: 8, padding: 10, fontFamily: 'monospace', fontSize: '0.76rem', color: '#a1a1aa' }}>
             {metaEntries.map(([k, v]) => (
               <div key={k} style={{ display: 'flex', gap: 10, padding: '3px 0' }}>
                 <span style={{ color: '#60a5fa', minWidth: 120 }}>{k}</span>
@@ -1725,7 +1725,7 @@ function AllItemsView({ onBack }) {
       <div style={{ display: 'flex', gap: 8, marginBottom: 14 }}>
         <div style={{
           flex: 1, display: 'flex', alignItems: 'center', gap: 8,
-          background: '#1a1a1a', border: '1px solid rgba(255,255,255,0.08)',
+          background: '#161a26', border: '1px solid rgba(255,255,255,0.08)',
           borderRadius: 8, padding: '7px 12px',
         }}>
           <Search size={14} style={{ color: '#52525b' }} />
@@ -1751,7 +1751,7 @@ function AllItemsView({ onBack }) {
                onMouseLeave={e => e.currentTarget.style.borderColor = 'rgba(255,255,255,0.06)'}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
                 <span style={{
-                  width: 30, height: 30, borderRadius: 6, background: '#2a2a2a',
+                  width: 30, height: 30, borderRadius: 6, background: '#2a2f3e',
                   display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#f472b6',
                 }}>
                   <Package size={14} />
@@ -1825,7 +1825,7 @@ function AllTxView({ onBack }) {
       <div style={{ display: 'flex', gap: 8, marginBottom: 14 }}>
         <div style={{
           flex: 1, display: 'flex', alignItems: 'center', gap: 8,
-          background: '#1a1a1a', border: '1px solid rgba(255,255,255,0.08)',
+          background: '#161a26', border: '1px solid rgba(255,255,255,0.08)',
           borderRadius: 8, padding: '7px 12px',
         }}>
           <Search size={14} style={{ color: '#52525b' }} />
@@ -1849,7 +1849,7 @@ function AllTxView({ onBack }) {
               transition: 'border-color 0.15s',
             }} onMouseEnter={e => e.currentTarget.style.borderColor = 'rgba(251,191,36,0.35)'}
                onMouseLeave={e => e.currentTarget.style.borderColor = 'rgba(255,255,255,0.06)'}>
-              <span style={{ fontSize: '0.65rem', padding: '3px 8px', borderRadius: 4, background: '#2a2a2a', color: '#fbbf24', minWidth: 80, textAlign: 'center', fontWeight: 700 }}>
+              <span style={{ fontSize: '0.65rem', padding: '3px 8px', borderRadius: 4, background: '#2a2f3e', color: '#fbbf24', minWidth: 80, textAlign: 'center', fontWeight: 700 }}>
                 {txTypeLabel(t.type)}
               </span>
               <span style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: 2, overflow: 'hidden' }}>
@@ -1940,7 +1940,7 @@ function MapTab() {
         <Empty msg="Aucune position enregistrée." />
       ) : (
         <div style={{
-          position: 'relative', background: '#0f0f0f',
+          position: 'relative', background: '#0a0e18',
           border: '1px solid rgba(255,255,255,0.08)', borderRadius: 12,
           padding: 0, overflow: 'hidden',
         }}>
@@ -1979,7 +1979,7 @@ function MapTab() {
                     </circle>
                   )}
                   <circle cx={px} cy={py} r={hover?.characterId === p.characterId ? 8 : 6}
-                          fill={color} stroke="#0f0f0f" strokeWidth={2}
+                          fill={color} stroke="#0a0e18" strokeWidth={2}
                           style={{ transition: 'r 0.15s' }} />
                 </g>
               )
@@ -1990,7 +1990,7 @@ function MapTab() {
           {hover && (
             <div style={{
               position: 'absolute', top: 12, left: 12,
-              background: 'rgba(26,26,26,0.95)', border: '1px solid rgba(224,123,57,0.3)',
+              background: 'rgba(26,26,26,0.95)', border: '1px solid rgba(60, 173, 217,0.3)',
               borderRadius: 8, padding: '10px 14px', pointerEvents: 'none',
               boxShadow: '0 4px 12px rgba(0,0,0,0.4)',
             }}>
@@ -2381,7 +2381,7 @@ function LiveMap({ positions, sessionBySteamId, hover, setHover, onOpenPlayer })
 
   return (
     <div style={{
-      position: 'relative', background: '#0f0f0f',
+      position: 'relative', background: '#0a0e18',
       border: '1px solid rgba(74,222,128,0.15)', borderRadius: 12,
       marginBottom: 16, overflow: 'hidden',
     }}>
@@ -2411,7 +2411,7 @@ function LiveMap({ positions, sessionBySteamId, hover, setHover, onOpenPlayer })
                 <animate attributeName="opacity" values="0.18;0;0.18" dur="2s" repeatCount="indefinite" />
               </circle>
               <circle cx={px} cy={py} r={hover?.characterId === p.characterId ? 8 : 6}
-                      fill="#4ade80" stroke="#0f0f0f" strokeWidth={2}
+                      fill="#4ade80" stroke="#0a0e18" strokeWidth={2}
                       style={{ transition: 'r 0.15s' }} />
               <text x={px} y={py - 12} fill="#e8e8e8" fontSize="9" textAnchor="middle"
                     style={{ pointerEvents: 'none', userSelect: 'none' }}>
@@ -2479,7 +2479,7 @@ function LogsTab() {
               display: 'flex', alignItems: 'center', gap: 6,
               padding: '6px 12px', borderRadius: 6, border: 'none', cursor: 'pointer',
               fontSize: '0.78rem', fontFamily: 'inherit', fontWeight: 600,
-              background: sub === t.id ? 'rgba(224,123,57,0.18)' : 'transparent',
+              background: sub === t.id ? 'rgba(60, 173, 217,0.18)' : 'transparent',
               color:      sub === t.id ? 'var(--brand-primary, #e07b39)' : '#a1a1aa',
             }}
           >
@@ -2830,7 +2830,7 @@ function FiltersRow({ children, onRefresh }) {
 }
 function inputStyle(extra = {}) {
   return {
-    background: '#1a1a1a', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 6,
+    background: '#161a26', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 6,
     padding: '6px 10px', color: '#e8e8e8', fontSize: '0.8rem', fontFamily: 'inherit', outline: 'none',
     ...extra,
   }
@@ -2884,7 +2884,7 @@ function BackBar({ onBack, label, onRefresh, live, livePaused, onToggleLive, las
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 16 }}>
       <button onClick={onBack} style={{
-        background: '#1a1a1a', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 8,
+        background: '#161a26', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 8,
         padding: '7px 12px', cursor: 'pointer', color: '#a1a1aa', fontSize: '0.8rem',
         display: 'flex', alignItems: 'center', gap: 6,
       }}>
@@ -2897,7 +2897,7 @@ function BackBar({ onBack, label, onRefresh, live, livePaused, onToggleLive, las
           title={dotTitle}
           style={{
             display: 'flex', alignItems: 'center', gap: 6,
-            background: '#1a1a1a', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 8,
+            background: '#161a26', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 8,
             padding: '6px 10px', cursor: 'pointer', color: '#a1a1aa', fontSize: '0.72rem',
             fontFamily: 'inherit',
           }}
@@ -2943,14 +2943,14 @@ function Pill({ color, label, big }) {
 
 function cardStyle(extra = {}) {
   return {
-    background: '#1a1a1a', border: '1px solid rgba(255,255,255,0.06)',
+    background: '#161a26', border: '1px solid rgba(255,255,255,0.06)',
     borderRadius: 10, padding: '11px 14px', ...extra,
   }
 }
 
 function iconBtn() {
   return {
-    background: '#1a1a1a', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 8,
+    background: '#161a26', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 8,
     padding: '7px 9px', cursor: 'pointer', color: '#a1a1aa',
     display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
   }

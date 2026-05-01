@@ -1,13 +1,16 @@
 import { Wrench, Zap } from 'lucide-react'
 import './AdminLogin.css'
 import SEO from '../components/SEO.jsx'
+import { useBranding } from '../context/BrandingContext.jsx'
 
 const IS_DEV = import.meta.env.DEV
 const API_BASE = import.meta.env.VITE_API_URL || ''
 
 export default function AdminLogin() {
+  const { branding } = useBranding()
   const params = new URLSearchParams(window.location.search)
   const error = params.get('error')
+  const siteName = branding.site_name || 'OpenFramework'
 
   const handleSteamLogin = () => {
     window.location.href = `${API_BASE}/auth/steam`
@@ -19,13 +22,15 @@ export default function AdminLogin() {
 
   return (
     <>
-    <SEO title="Admin Login" noIndex />
+    <SEO title={`Admin Login — ${siteName}`} noIndex />
     <div className="adm-login">
       <div className="adm-login__card">
         <div className="adm-login__logo">
-          <Wrench size={48} />
+          {branding.logo_url
+            ? <img src={branding.logo_url} alt={siteName} style={{ width: 48, height: 48, objectFit: 'contain' }} />
+            : <Wrench size={48} />}
         </div>
-        <h1 className="adm-login__title">S&amp;Box Studio Admin</h1>
+        <h1 className="adm-login__title">{siteName} Admin</h1>
         <p className="adm-login__sub">
           Connecte-toi avec ton compte Steam pour accéder au panel d'administration.
         </p>

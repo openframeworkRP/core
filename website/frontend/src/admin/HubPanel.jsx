@@ -323,7 +323,7 @@ function MemberAvatar({ member, size = 22, style = {} }) {
           onError={e => {
             e.target.style.display = "none";
             e.target.parentElement.style.background = member.color;
-            e.target.insertAdjacentHTML("afterend", `<span style="font-size:${Math.round(size*0.45)}px;font-weight:700;color:#111">${member.name[0]}</span>`);
+            e.target.insertAdjacentHTML("afterend", `<span style="font-size:${Math.round(size*0.45)}px;font-weight:700;color:#11151f">${member.name[0]}</span>`);
           }}
         />
       </span>
@@ -331,7 +331,7 @@ function MemberAvatar({ member, size = 22, style = {} }) {
   }
   return (
     <span title={member.name} style={s}>
-      <span style={{ fontSize: Math.round(size * 0.45), fontWeight: 700, color: "#111", lineHeight: 1 }}>{member.name[0]}</span>
+      <span style={{ fontSize: Math.round(size * 0.45), fontWeight: 700, color: "#11151f", lineHeight: 1 }}>{member.name[0]}</span>
     </span>
   );
 }
@@ -498,7 +498,7 @@ function ImportModal({ onImport, onClose, projects }) {
 
   return (
     <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.75)", zIndex: 1100, display: "flex", alignItems: "center", justifyContent: "center" }}>
-      <div style={{ background: "#1e1e1e", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 16, padding: 28, width: "100%", maxWidth: 560, maxHeight: "85vh", overflow: "auto" }}>
+      <div style={{ background: "#1a1f2c", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 16, padding: 28, width: "100%", maxWidth: 560, maxHeight: "85vh", overflow: "auto" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
           <h3 style={{ fontWeight: 700, fontSize: "1rem", color: "#fff", margin: 0 }}><IC icon={FileUp} style={{ marginRight: 8, color: "var(--brand-primary, #e07b39)" }} />Importer un fichier .md</h3>
           <button onClick={onClose} style={{ background: "none", border: "none", color: "#888", cursor: "pointer", padding: 4 }}><IC icon={X} size={16} /></button>
@@ -510,10 +510,10 @@ function ImportModal({ onImport, onClose, projects }) {
             onDragLeave={() => setDragging(false)}
             onDrop={onDrop}
             onClick={() => fileRef.current?.click()}
-            style={{ border: `2px dashed ${dragging ? "var(--brand-primary, #e07b39)" : "rgba(255,255,255,0.15)"}`, borderRadius: 12, padding: "40px 20px", textAlign: "center", cursor: "pointer", transition: "border-color 0.15s", background: dragging ? "rgba(224,123,57,0.05)" : "transparent" }}
+            style={{ border: `2px dashed ${dragging ? "var(--brand-primary, #e07b39)" : "rgba(255,255,255,0.15)"}`, borderRadius: 12, padding: "40px 20px", textAlign: "center", cursor: "pointer", transition: "border-color 0.15s", background: dragging ? "rgba(60, 173, 217,0.05)" : "transparent" }}
           >
             <IC icon={FileUp} size={28} style={{ color: "var(--brand-primary, #e07b39)", marginBottom: 10, display: "block", margin: "0 auto 10px" }} />
-            <div style={{ color: "#e8e0d0", fontWeight: 600, marginBottom: 6 }}>Glisse un fichier .md ici</div>
+            <div style={{ color: "#e8eaed", fontWeight: 600, marginBottom: 6 }}>Glisse un fichier .md ici</div>
             <div style={{ color: "#666", fontSize: "0.78rem" }}>ou clique pour sélectionner</div>
             <input ref={fileRef} type="file" accept=".md,text/markdown,text/plain" style={{ display: "none" }} onChange={e => onFile(e.target.files[0])} />
           </div>
@@ -533,7 +533,7 @@ function ImportModal({ onImport, onClose, projects }) {
                 <div key={i} style={{ display: "flex", gap: 10, alignItems: "flex-start", padding: "8px 10px", borderRadius: 8, background: "rgba(255,255,255,0.03)", marginBottom: 4 }}>
                   <IC icon={SquareCheck} size={13} style={{ color: "var(--brand-primary, #e07b39)", flexShrink: 0, marginTop: 2 }} />
                   <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ fontSize: "0.83rem", color: "#e8e0d0", fontWeight: 600, marginBottom: 2 }}>{t.text}</div>
+                    <div style={{ fontSize: "0.83rem", color: "#e8eaed", fontWeight: 600, marginBottom: 2 }}>{t.text}</div>
                     <div style={{ fontSize: "0.7rem", color: "#666" }}>{projectName(t.projectId)}{t.category ? ` · ${t.category}` : ""} · {PRIO_CONFIG[t.priority]?.label || "Non priorisée"}</div>
                   </div>
                 </div>
@@ -542,7 +542,7 @@ function ImportModal({ onImport, onClose, projects }) {
                 <div key={i} style={{ display: "flex", gap: 10, alignItems: "flex-start", padding: "8px 10px", borderRadius: 8, background: "rgba(255,255,255,0.03)", marginBottom: 4 }}>
                   <IC icon={Lightbulb} size={13} style={{ color: "#5865f2", flexShrink: 0, marginTop: 2 }} />
                   <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ fontSize: "0.83rem", color: "#e8e0d0", fontWeight: 600, marginBottom: 2 }}>{id.text}</div>
+                    <div style={{ fontSize: "0.83rem", color: "#e8eaed", fontWeight: 600, marginBottom: 2 }}>{id.text}</div>
                     {id.description && (
                       <div style={{ fontSize: "0.75rem", color: "#999", lineHeight: 1.4, marginBottom: 2, whiteSpace: "pre-wrap", maxHeight: 60, overflow: "hidden" }}>{id.description}</div>
                     )}
@@ -560,7 +560,7 @@ function ImportModal({ onImport, onClose, projects }) {
               <button
                 onClick={() => { onImport(result.tasks, result.ideas); onClose(); }}
                 disabled={result.tasks.length === 0 && result.ideas.length === 0}
-                style={{ padding: "8px 18px", background: result.tasks.length + result.ideas.length ? "var(--brand-primary, #e07b39)" : "#555", color: "#1a1a1a", border: "none", borderRadius: 8, cursor: result.tasks.length + result.ideas.length ? "pointer" : "default", fontWeight: 700, fontFamily: "inherit", fontSize: "0.82rem" }}
+                style={{ padding: "8px 18px", background: result.tasks.length + result.ideas.length ? "var(--brand-primary, #e07b39)" : "#555", color: "#161a26", border: "none", borderRadius: 8, cursor: result.tasks.length + result.ideas.length ? "pointer" : "default", fontWeight: 700, fontFamily: "inherit", fontSize: "0.82rem" }}
               >
                 Importer {result.tasks.length + result.ideas.length} élément{result.tasks.length + result.ideas.length !== 1 ? "s" : ""}
               </button>
@@ -641,7 +641,7 @@ function TaskModal({ task, members, tasks, milestones, onSave, onClose, onDelete
       display: "flex", alignItems: "center", justifyContent: "center", padding: 20,
     }} onClick={onClose}>
       <div onClick={e => e.stopPropagation()} style={{
-        background: "#2a2a2a", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 14,
+        background: "#2a2f3e", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 14,
         padding: 28, width: "100%", maxWidth: 600, maxHeight: "90vh", overflow: "auto",
       }}>
         <h3 style={{ fontWeight: 700, fontSize: "1.1rem", marginBottom: task.id ? 6 : 20, color: "#ffffff" }}>
@@ -727,10 +727,10 @@ function TaskModal({ task, members, tasks, milestones, onSave, onClose, onDelete
                 <span style={{ position: "absolute", right: 10, top: "50%", transform: "translateY(-50%)", color: "#555", pointerEvents: "none", fontSize: "0.7rem" }}>▾</span>
               </div>
               {showCatDropdown && (filtered.length > 0 || (q && !exactMatch)) && (
-                <div style={{ position: "absolute", top: "calc(100% + 2px)", left: 0, right: 0, background: "#222", border: "1px solid rgba(255,255,255,0.12)", borderRadius: 8, zIndex: 200, maxHeight: 220, overflowY: "auto", boxShadow: "0 8px 24px rgba(0,0,0,0.5)" }}>
+                <div style={{ position: "absolute", top: "calc(100% + 2px)", left: 0, right: 0, background: "#1f2330", border: "1px solid rgba(255,255,255,0.12)", borderRadius: 8, zIndex: 200, maxHeight: 220, overflowY: "auto", boxShadow: "0 8px 24px rgba(0,0,0,0.5)" }}>
                   {filtered.map(cat => (
                     <div key={cat} onMouseDown={() => { update("category", cat); setShowCatDropdown(false); }}
-                      style={{ padding: "8px 14px", fontSize: "0.84rem", color: cat === form.category ? "var(--brand-primary, #e07b39)" : "#e8e0d0", cursor: "pointer", background: cat === form.category ? "rgba(224,123,57,0.1)" : "transparent", borderLeft: cat === form.category ? "2px solid var(--brand-primary, #e07b39)" : "2px solid transparent" }}
+                      style={{ padding: "8px 14px", fontSize: "0.84rem", color: cat === form.category ? "var(--brand-primary, #e07b39)" : "#e8eaed", cursor: "pointer", background: cat === form.category ? "rgba(60, 173, 217,0.1)" : "transparent", borderLeft: cat === form.category ? "2px solid var(--brand-primary, #e07b39)" : "2px solid transparent" }}
                       onMouseEnter={e => { if (cat !== form.category) e.currentTarget.style.background = "rgba(255,255,255,0.05)"; }}
                       onMouseLeave={e => { if (cat !== form.category) e.currentTarget.style.background = "transparent"; }}>
                       {cat}
@@ -802,7 +802,7 @@ function TaskModal({ task, members, tasks, milestones, onSave, onClose, onDelete
           {showAssigneeDropdown && (
             <>
             <div onClick={() => setShowAssigneeDropdown(false)} style={{ position: "fixed", inset: 0, zIndex: 199 }} />
-            <div style={{ position: "absolute", top: "calc(100% + 2px)", left: 0, right: 0, zIndex: 200, background: "#2a2a2a", border: "1px solid rgba(255,255,255,0.12)", borderRadius: 8, overflow: "hidden", boxShadow: "0 8px 24px rgba(0,0,0,0.4)" }}>
+            <div style={{ position: "absolute", top: "calc(100% + 2px)", left: 0, right: 0, zIndex: 200, background: "#2a2f3e", border: "1px solid rgba(255,255,255,0.12)", borderRadius: 8, overflow: "hidden", boxShadow: "0 8px 24px rgba(0,0,0,0.4)" }}>
               {members.length === 0 && <div style={{ padding: "12px 14px", fontSize: "0.78rem", color: "#555" }}>Aucun membre configuré</div>}
               {members.map(m => {
                 const sel = (form.assignees || []).includes(m.id);
@@ -814,7 +814,7 @@ function TaskModal({ task, members, tasks, milestones, onSave, onClose, onDelete
                       {sel && <IC icon={Check} size={9} style={{ color: "#fff" }} />}
                     </div>
                     <MemberAvatar member={m} size={22} />
-                    <span style={{ fontSize: "0.83rem", color: sel ? m.color : "#e8e0d0", fontWeight: sel ? 700 : 400 }}>{m.name}</span>
+                    <span style={{ fontSize: "0.83rem", color: sel ? m.color : "#e8eaed", fontWeight: sel ? 700 : 400 }}>{m.name}</span>
                   </div>
                 );
               })}
@@ -884,14 +884,14 @@ function TaskModal({ task, members, tasks, milestones, onSave, onClose, onDelete
           />
           <button
             onClick={() => { if (imageInput.trim()) { update("images", [...(form.images || []), imageInput.trim()]); setImageInput(""); } }}
-            style={{ padding: "0 12px", background: "var(--brand-primary, #e07b39)", border: "none", borderRadius: 8, cursor: "pointer", color: "#1a1a1a", fontWeight: 700, fontSize: "1rem", flexShrink: 0 }}
+            style={{ padding: "0 12px", background: "var(--brand-primary, #e07b39)", border: "none", borderRadius: 8, cursor: "pointer", color: "#161a26", fontWeight: 700, fontSize: "1rem", flexShrink: 0 }}
             title="Ajouter l'image"
           >+</button>
         </div>
         {(form.images || []).length > 0 && (
           <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 8 }}>
             {(form.images || []).map((url, i) => (
-              <div key={i} style={{ position: "relative", borderRadius: 8, overflow: "hidden", border: "1px solid rgba(255,255,255,0.1)", background: "#1a1a1a", flexShrink: 0 }}>
+              <div key={i} style={{ position: "relative", borderRadius: 8, overflow: "hidden", border: "1px solid rgba(255,255,255,0.1)", background: "#161a26", flexShrink: 0 }}>
                 <img src={url} alt="" style={{ display: "block", width: 120, height: 80, objectFit: "cover", cursor: "zoom-in" }}
                   onClick={() => setLightbox(url)}
                   onError={e => { e.target.style.opacity = "0.3"; e.target.alt = "⚠"; }} />
@@ -922,14 +922,14 @@ function TaskModal({ task, members, tasks, milestones, onSave, onClose, onDelete
           />
           <button
             onClick={() => { if (videoInput.trim()) { update("videos", [...(form.videos || []), videoInput.trim()]); setVideoInput(""); } }}
-            style={{ padding: "0 12px", background: "var(--brand-primary, #e07b39)", border: "none", borderRadius: 8, cursor: "pointer", color: "#1a1a1a", fontWeight: 700, fontSize: "1rem", flexShrink: 0 }}
+            style={{ padding: "0 12px", background: "var(--brand-primary, #e07b39)", border: "none", borderRadius: 8, cursor: "pointer", color: "#161a26", fontWeight: 700, fontSize: "1rem", flexShrink: 0 }}
             title="Ajouter la vidéo"
           >+</button>
         </div>
         {(form.videos || []).length > 0 && (
           <div style={{ display: "flex", flexDirection: "column", gap: 6, marginBottom: 8 }}>
             {(form.videos || []).map((url, i) => (
-              <div key={i} style={{ display: "flex", alignItems: "center", gap: 6, background: "#1a1a1a", borderRadius: 8, padding: "6px 10px", border: "1px solid rgba(255,255,255,0.08)" }}>
+              <div key={i} style={{ display: "flex", alignItems: "center", gap: 6, background: "#161a26", borderRadius: 8, padding: "6px 10px", border: "1px solid rgba(255,255,255,0.08)" }}>
                 <IC icon={ExternalLink} size={13} style={{ color: "var(--brand-primary, #e07b39)", flexShrink: 0 }} />
                 <a href={url} target="_blank" rel="noopener noreferrer" style={{ flex: 1, fontSize: "0.78rem", color: "#06b6d4", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", textDecoration: "none" }}>{url}</a>
                 <button onClick={() => update("videos", (form.videos || []).filter((_, j) => j !== i))}
@@ -960,7 +960,7 @@ function TaskModal({ task, members, tasks, milestones, onSave, onClose, onDelete
             if (existing.find(r => r.type === relType && r.targetId === relTarget)) return;
             update("relations", [...existing, { type: relType, targetId: relTarget }]);
             setRelTarget("");
-          }} style={{ padding: "0 12px", background: "var(--brand-primary, #e07b39)", border: "none", borderRadius: 8, cursor: "pointer", color: "#1a1a1a", fontWeight: 700, fontSize: "1rem", flexShrink: 0 }}>+</button>
+          }} style={{ padding: "0 12px", background: "var(--brand-primary, #e07b39)", border: "none", borderRadius: 8, cursor: "pointer", color: "#161a26", fontWeight: 700, fontSize: "1rem", flexShrink: 0 }}>+</button>
         </div>
         {(form.relations || []).length > 0 && (
           <div style={{ display: "flex", flexDirection: "column", gap: 4, marginBottom: 10 }}>
@@ -969,9 +969,9 @@ function TaskModal({ task, members, tasks, milestones, onSave, onClose, onDelete
               const LABELS = { blocks: "Bloque", "depends-on": "Dépend de", related: "Liée à", duplicate: "Doublon de" };
               const COLORS = { blocks: "#d13b1a", "depends-on": "var(--brand-primary, #e07b39)", related: "#5865f2", duplicate: "#888" };
               return (
-                <div key={i} style={{ display: "flex", alignItems: "center", gap: 6, background: "#2a2a2a", borderRadius: 6, padding: "5px 8px" }}>
+                <div key={i} style={{ display: "flex", alignItems: "center", gap: 6, background: "#2a2f3e", borderRadius: 6, padding: "5px 8px" }}>
                   <span style={{ fontSize: "0.68rem", fontWeight: 700, color: COLORS[r.type], background: COLORS[r.type] + "22", borderRadius: 4, padding: "2px 6px", flexShrink: 0 }}>{LABELS[r.type]}</span>
-                  <span style={{ fontSize: "0.78rem", color: "#e8e0d0", flex: 1, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{target?.text || r.targetId}</span>
+                  <span style={{ fontSize: "0.78rem", color: "#e8eaed", flex: 1, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{target?.text || r.targetId}</span>
                   <button onClick={() => update("relations", (form.relations || []).filter((_, j) => j !== i))} style={{ background: "transparent", border: "none", color: "#555", cursor: "pointer", padding: 2 }}><IC icon={X} size={12} /></button>
                 </div>
               );
@@ -989,15 +989,15 @@ function TaskModal({ task, members, tasks, milestones, onSave, onClose, onDelete
             if (!attrKey.trim() || !attrValue.trim()) return;
             update("attrs", [...(form.attrs || []), { key: attrKey.trim(), value: attrValue.trim() }]);
             setAttrKey(""); setAttrValue("");
-          }} style={{ padding: "0 12px", background: "var(--brand-primary, #e07b39)", border: "none", borderRadius: 8, cursor: "pointer", color: "#1a1a1a", fontWeight: 700, fontSize: "1rem", flexShrink: 0 }}>+</button>
+          }} style={{ padding: "0 12px", background: "var(--brand-primary, #e07b39)", border: "none", borderRadius: 8, cursor: "pointer", color: "#161a26", fontWeight: 700, fontSize: "1rem", flexShrink: 0 }}>+</button>
         </div>
         {(form.attrs || []).length > 0 && (
           <div style={{ display: "flex", flexDirection: "column", gap: 4, marginBottom: 10 }}>
             {(form.attrs || []).map((a, i) => (
-              <div key={i} style={{ display: "flex", alignItems: "center", gap: 6, background: "#2a2a2a", borderRadius: 6, padding: "5px 8px" }}>
+              <div key={i} style={{ display: "flex", alignItems: "center", gap: 6, background: "#2a2f3e", borderRadius: 6, padding: "5px 8px" }}>
                 <span style={{ fontSize: "0.72rem", fontWeight: 700, color: "#888", flexShrink: 0 }}>{a.key}</span>
                 <span style={{ fontSize: "0.72rem", color: "#555", flexShrink: 0 }}>→</span>
-                <span style={{ fontSize: "0.78rem", color: "#e8e0d0", flex: 1 }}>{a.value}</span>
+                <span style={{ fontSize: "0.78rem", color: "#e8eaed", flex: 1 }}>{a.value}</span>
                 <button onClick={() => update("attrs", (form.attrs || []).filter((_, j) => j !== i))} style={{ background: "transparent", border: "none", color: "#555", cursor: "pointer", padding: 2 }}><IC icon={X} size={12} /></button>
               </div>
             ))}
@@ -1015,7 +1015,7 @@ function TaskModal({ task, members, tasks, milestones, onSave, onClose, onDelete
             // manière atomique (évite la race entre POST tasks et PUT misc).
             onSave({ ...finalForm, _milestoneId: selectedMs, _previousMilestoneId: currentMsId });
             onClose();
-          }} style={{ ...btnStyle, background: "var(--brand-primary, #e07b39)", color: "#1a1a1a", border: "none", fontWeight: 700 }}><IC icon={Save} style={{ marginRight: 6 }} />Sauvegarder</button>
+          }} style={{ ...btnStyle, background: "var(--brand-primary, #e07b39)", color: "#161a26", border: "none", fontWeight: 700 }}><IC icon={Save} style={{ marginRight: 6 }} />Sauvegarder</button>
         </div>
       </div>
       {lightbox && <ImageLightbox url={lightbox} onClose={() => setLightbox(null)} />}
@@ -1076,7 +1076,7 @@ function DashboardView({ tasks, projects, members, projectFilter }) {
       </div>
 
       {/* Hero: Total + progress */}
-      <div style={{ background: "#2a2a2a", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 16, padding: "28px 32px", marginBottom: 24 }}>
+      <div style={{ background: "#2a2f3e", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 16, padding: "28px 32px", marginBottom: 24 }}>
         <div style={{ display: "flex", alignItems: "center", gap: 24, marginBottom: 20, flexWrap: "wrap" }}>
           <div>
             <div style={{ fontFamily: "monospace", fontSize: "3.2rem", fontWeight: 800, color: "#ffffff", lineHeight: 1 }}>{v1s.total}</div>
@@ -1114,7 +1114,7 @@ function DashboardView({ tasks, projects, members, projectFilter }) {
       {/* Two columns: Categories + V2 */}
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginBottom: 32 }}>
         {/* Categories overview */}
-        <div style={{ background: "#2a2a2a", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 14, padding: "22px 24px" }}>
+        <div style={{ background: "#2a2f3e", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 14, padding: "22px 24px" }}>
           <div style={{ fontSize: "0.78rem", fontWeight: 700, color: "#ffffff", marginBottom: 16, textTransform: "uppercase", letterSpacing: "0.04em" }}><IC icon={Folder} style={{ marginRight: 8, color: "var(--brand-primary, #e07b39)" }} />{"Cat\u00e9gories"}</div>
           <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
             {topCats.map(([cat, data]) => {
@@ -1122,7 +1122,7 @@ function DashboardView({ tasks, projects, members, projectFilter }) {
               return (
                 <div key={cat}>
                   <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 3 }}>
-                    <span style={{ fontSize: "0.78rem", color: "#e8e0d0" }}>{cat}</span>
+                    <span style={{ fontSize: "0.78rem", color: "#e8eaed" }}>{cat}</span>
                     <span style={{ fontFamily: "monospace", fontSize: "0.72rem", color: "#888888" }}>{data.done}/{data.total}</span>
                   </div>
                   <div style={{ background: "rgba(255,255,255,0.04)", borderRadius: 3, height: 3, overflow: "hidden" }}>
@@ -1135,7 +1135,7 @@ function DashboardView({ tasks, projects, members, projectFilter }) {
         </div>
 
         {/* Backlog reporté */}
-        <div style={{ background: "#2a2a2a", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 14, padding: "22px 24px" }}>
+        <div style={{ background: "#2a2f3e", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 14, padding: "22px 24px" }}>
           <div style={{ fontSize: "0.78rem", fontWeight: 700, color: "#ffffff", marginBottom: 16, textTransform: "uppercase", letterSpacing: "0.04em" }}><IC icon={Layers} style={{ marginRight: 8, color: "#525066" }} />{"Backlog report\u00e9"}</div>
           <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 16 }}>
             <div style={{ fontFamily: "monospace", fontSize: "2.2rem", fontWeight: 700, color: "#525066" }}>{v1s.v2}</div>
@@ -1165,7 +1165,7 @@ function DashboardView({ tasks, projects, members, projectFilter }) {
           const myTodo = myTasks.filter(t => t.status === "todo" || t.status === "in_progress").length;
           const myPct = myTasks.length ? Math.round((myDone / myTasks.length) * 100) : 0;
           return (
-            <div key={m.id} style={{ background: "#2a2a2a", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 14, padding: "18px 20px" }}>
+            <div key={m.id} style={{ background: "#2a2f3e", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 14, padding: "18px 20px" }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
                   <div style={{ width: 10, height: 10, borderRadius: "50%", background: m.color }} />
@@ -1294,14 +1294,14 @@ function BoardView({ tasks, members, projectFilter, onEditTask, onUpdateStatus }
                   onDragEnd={handleDragEnd}
                   onClick={() => onEditTask(t)}
                   style={{
-                    background: dragId === t.id ? "#333333" : "#2a2a2a",
+                    background: dragId === t.id ? "#333333" : "#2a2f3e",
                     border: "1px solid rgba(255,255,255,0.08)", borderRadius: 10,
                     padding: "10px 12px", cursor: "grab", transition: "all 0.15s",
                     userSelect: "none",
                   }}
-                  onMouseEnter={e => { if (!dragId) e.currentTarget.style.borderColor = "rgba(224,123,57,0.35)"; }}
+                  onMouseEnter={e => { if (!dragId) e.currentTarget.style.borderColor = "rgba(60, 173, 217,0.35)"; }}
                   onMouseLeave={e => e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)"}>
-                  <div style={{ fontSize: "0.8rem", color: "#e8e0d0", lineHeight: 1.45, marginBottom: 6 }}>{t.text}</div>
+                  <div style={{ fontSize: "0.8rem", color: "#e8eaed", lineHeight: 1.45, marginBottom: 6 }}>{t.text}</div>
                   {(t.images || []).length > 0 && (
                     <div style={{ display: "flex", gap: 4, marginBottom: 6 }}>
                       {(t.images || []).slice(0, 3).map((url, i) => (
@@ -1415,7 +1415,7 @@ function ListView({ tasks, members, projectFilter, personFilter, milestones, onE
               <button key={key} onClick={() => { setStatusView(key); setSelected(new Set()); }} style={{
                 ...btnStyle, padding: "5px 14px", fontSize: "0.78rem",
                 background: active ? "var(--brand-primary, #e07b39)" : "transparent",
-                color: active ? "#1a1a1a" : "#888",
+                color: active ? "#161a26" : "#888",
                 border: "none", fontWeight: active ? 700 : 400,
                 borderRadius: 7, display: "flex", alignItems: "center", gap: 5,
               }}>
@@ -1456,8 +1456,8 @@ function ListView({ tasks, members, projectFilter, personFilter, milestones, onE
               { key: "priority", label: "Priorité" },
             ].map(({ key, label }) => (
               <button key={key} onClick={() => setSortBy(s => s === key ? null : key)} style={{
-                ...btnStyle, background: sortBy === key ? "rgba(224,123,57,0.15)" : "transparent",
-                border: `1px solid ${sortBy === key ? "rgba(224,123,57,0.6)" : "rgba(255,255,255,0.1)"}`,
+                ...btnStyle, background: sortBy === key ? "rgba(60, 173, 217,0.15)" : "transparent",
+                border: `1px solid ${sortBy === key ? "rgba(60, 173, 217,0.6)" : "rgba(255,255,255,0.1)"}`,
                 color: sortBy === key ? "var(--brand-primary, #e07b39)" : "#888888", fontSize: "0.75rem", padding: "5px 11px",
               }}>
                 <IC icon={sortBy === key ? ArrowUp : Minus} size={11} style={{ marginRight: 5 }} />{label}
@@ -1470,7 +1470,7 @@ function ListView({ tasks, members, projectFilter, personFilter, milestones, onE
           <>
             <span style={{ fontSize: "0.78rem", color: "var(--brand-primary, #e07b39)", fontWeight: 600 }}>{selected.size} sélectionnée{selected.size > 1 ? "s" : ""}</span>
             <button onClick={() => setShowBulkEdit(!showBulkEdit)} style={{
-              ...btnStyle, background: "var(--brand-primary, #e07b39)", color: "#1a1a1a", border: "none", fontWeight: 700,
+              ...btnStyle, background: "var(--brand-primary, #e07b39)", color: "#161a26", border: "none", fontWeight: 700,
               fontSize: "0.78rem", padding: "6px 14px",
             }}><IC icon={Pen} style={{ marginRight: 6 }} />{"Modifier la s\u00e9lection"}</button>
             <button onClick={() => setSelected(new Set())} style={{
@@ -1484,7 +1484,7 @@ function ListView({ tasks, members, projectFilter, personFilter, milestones, onE
       {/* Bulk edit panel */}
       {showBulkEdit && selected.size > 0 && (
         <div style={{
-          background: "#2a2a2a", border: "1px solid rgba(224,123,57,0.3)", borderRadius: 12,
+          background: "#2a2f3e", border: "1px solid rgba(60, 173, 217,0.3)", borderRadius: 12,
           padding: 18, marginBottom: 18, display: "flex", gap: 12, alignItems: "flex-end", flexWrap: "wrap",
         }}>
           <div>
@@ -1543,14 +1543,14 @@ function ListView({ tasks, members, projectFilter, personFilter, milestones, onE
         <div key={cat}>
           <div style={{ fontWeight: 700, fontSize: "0.95rem", margin: "24px 0 10px", display: "flex", alignItems: "center", gap: 10, color: "#ffffff" }}>
             {cat}
-            <span style={{ fontFamily: "monospace", fontSize: "0.7rem", background: "#2a2a2a", padding: "2px 8px", borderRadius: 12, color: "#888888", border: "1px solid rgba(255,255,255,0.08)" }}>{catTasks.length}</span>
+            <span style={{ fontFamily: "monospace", fontSize: "0.7rem", background: "#2a2f3e", padding: "2px 8px", borderRadius: 12, color: "#888888", border: "1px solid rgba(255,255,255,0.08)" }}>{catTasks.length}</span>
             {onAddInCategory && (
               <button
                 onClick={() => onAddInCategory(cat)}
                 title={`Ajouter une tâche dans "${cat}"`}
-                style={{ background: "none", border: "1px solid rgba(224,123,57,0.4)", borderRadius: 6, color: "var(--brand-primary, #e07b39)", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", width: 20, height: 20, padding: 0, fontSize: "1rem", lineHeight: 1, flexShrink: 0 }}
-                onMouseEnter={e => { e.currentTarget.style.background = "rgba(224,123,57,0.15)"; e.currentTarget.style.borderColor = "var(--brand-primary, #e07b39)"; }}
-                onMouseLeave={e => { e.currentTarget.style.background = "none"; e.currentTarget.style.borderColor = "rgba(224,123,57,0.4)"; }}
+                style={{ background: "none", border: "1px solid rgba(60, 173, 217,0.4)", borderRadius: 6, color: "var(--brand-primary, #e07b39)", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", width: 20, height: 20, padding: 0, fontSize: "1rem", lineHeight: 1, flexShrink: 0 }}
+                onMouseEnter={e => { e.currentTarget.style.background = "rgba(60, 173, 217,0.15)"; e.currentTarget.style.borderColor = "var(--brand-primary, #e07b39)"; }}
+                onMouseLeave={e => { e.currentTarget.style.background = "none"; e.currentTarget.style.borderColor = "rgba(60, 173, 217,0.4)"; }}
               >+</button>
             )}
           </div>
@@ -1578,24 +1578,24 @@ function ListView({ tasks, members, projectFilter, personFilter, milestones, onE
                   <div style={{
                     display: "grid", gridTemplateColumns: "28px 10px 1fr 150px 90px 80px 28px",
                     gap: 12, alignItems: "center",
-                    background: isExpanded ? "rgba(224,123,57,0.06)" : isSelected ? "rgba(224,123,57,0.08)" : "#2a2a2a",
-                    border: isExpanded ? "1px solid rgba(224,123,57,0.4)" : isSelected ? "1px solid rgba(224,123,57,0.4)" : "1px solid rgba(255,255,255,0.08)",
+                    background: isExpanded ? "rgba(60, 173, 217,0.06)" : isSelected ? "rgba(60, 173, 217,0.08)" : "#2a2f3e",
+                    border: isExpanded ? "1px solid rgba(60, 173, 217,0.4)" : isSelected ? "1px solid rgba(60, 173, 217,0.4)" : "1px solid rgba(255,255,255,0.08)",
                     borderRadius: isExpanded ? "8px 8px 0 0" : 8,
                     borderBottom: isExpanded ? "none" : undefined,
                     padding: "10px 14px", cursor: "pointer", transition: "all 0.15s",
                   }}
                     onClick={() => setExpandedId(isExpanded ? null : t.id)}
-                    onMouseEnter={e => { if (!isSelected && !isExpanded) e.currentTarget.style.borderColor = "rgba(224,123,57,0.35)"; }}
+                    onMouseEnter={e => { if (!isSelected && !isExpanded) e.currentTarget.style.borderColor = "rgba(60, 173, 217,0.35)"; }}
                     onMouseLeave={e => { if (!isSelected && !isExpanded) e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)"; }}>
                     <div onClick={e => toggleSelect(t.id, e)} style={{
                       width: 18, height: 18, borderRadius: 4, border: isSelected ? "2px solid var(--brand-primary, #e07b39)" : "2px solid rgba(255,255,255,0.2)",
                       background: isSelected ? "var(--brand-primary, #e07b39)" : "transparent", display: "flex", alignItems: "center", justifyContent: "center",
                       cursor: "pointer", flexShrink: 0,
                     }}>
-                      {isSelected && <IC icon={Check} style={{ color: "#1a1a1a", fontSize: "0.6rem" }} />}
+                      {isSelected && <IC icon={Check} style={{ color: "#161a26", fontSize: "0.6rem" }} />}
                     </div>
                     <span style={{ width: 10, height: 10, borderRadius: "50%", background: STATUS_CONFIG[t.status]?.color, flexShrink: 0 }} />
-                    <span style={{ fontSize: "0.84rem", color: "#e8e0d0", display: "flex", alignItems: "center", gap: 6, minWidth: 0 }}>
+                    <span style={{ fontSize: "0.84rem", color: "#e8eaed", display: "flex", alignItems: "center", gap: 6, minWidth: 0 }}>
                       <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{t.text}</span>
                       {(t.images || []).length > 0 && <span style={{ fontSize: "0.65rem", color: "#888888", flexShrink: 0 }}><IC icon={Image} style={{ marginRight: 3 }} />{t.images.length}</span>}
                       {(t.subtasks || []).length > 0 && <span style={{ fontSize: "0.65rem", color: (t.subtasks || []).every(s => s.done) ? "#3e9041" : "#888888", flexShrink: 0 }}><IC icon={Check} size={11} style={{ marginRight: 2 }} />{(t.subtasks || []).filter(s => s.done).length}/{(t.subtasks || []).length}</span>}
@@ -1611,7 +1611,7 @@ function ListView({ tasks, members, projectFilter, personFilter, milestones, onE
                   {/* Expanded detail panel */}
                   {isExpanded && (
                     <div style={{
-                      background: "#222", border: "1px solid rgba(224,123,57,0.4)", borderTop: "none",
+                      background: "#1f2330", border: "1px solid rgba(60, 173, 217,0.4)", borderTop: "none",
                       borderRadius: "0 0 8px 8px", padding: "16px 18px",
                     }}>
                       <div style={{ display: "flex", gap: 24, flexWrap: "wrap", marginBottom: t.description || t.notes || (t.subtasks || []).length > 0 ? 14 : 0 }}>
@@ -1637,7 +1637,7 @@ function ListView({ tasks, members, projectFilter, personFilter, milestones, onE
                         {t.deadline && (
                           <div>
                             <div style={{ fontSize: "0.65rem", color: "#666", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: 6 }}>Deadline</div>
-                            <span style={{ fontSize: "0.78rem", color: "#e8e0d0" }}>{t.deadline}</span>
+                            <span style={{ fontSize: "0.78rem", color: "#e8eaed" }}>{t.deadline}</span>
                           </div>
                         )}
                         {/* Milestone */}
@@ -1794,7 +1794,7 @@ function WhiteboardView({ ideas, projects, members, onAddIdea, onDeleteIdea, onC
                 <IC icon={Trash2} />
               </button>
             </div>
-            <div style={{ fontSize: "0.78rem", color: "#e8e0d0", lineHeight: 1.45 }}>{c.text}</div>
+            <div style={{ fontSize: "0.78rem", color: "#e8eaed", lineHeight: 1.45 }}>{c.text}</div>
           </div>
           {renderThread(ideaId, comments, c.id)}
         </div>
@@ -1876,11 +1876,11 @@ Génère maintenant des idées sur le thème suivant : [DÉCRIS TON THÈME ICI]`
               if (e.key === "Enter" && newText.trim()) { setShowNewForm(true); }
             }} />
           <button onClick={() => setShowNewForm(true)}
-            style={{ ...btnStyle, background: "var(--brand-primary, #e07b39)", color: "#1a1a1a", border: "none", fontWeight: 700, whiteSpace: "nowrap" }}><IC icon={Plus} style={{ marginRight: 6 }} />{"Nouvelle id\u00e9e"}</button>
+            style={{ ...btnStyle, background: "var(--brand-primary, #e07b39)", color: "#161a26", border: "none", fontWeight: 700, whiteSpace: "nowrap" }}><IC icon={Plus} style={{ marginRight: 6 }} />{"Nouvelle id\u00e9e"}</button>
         </div>
       ) : (
         <div style={{
-          background: "#2a2a2a", border: "1px solid rgba(224,123,57,0.3)",
+          background: "#2a2f3e", border: "1px solid rgba(60, 173, 217,0.3)",
           borderRadius: 12, padding: 16, marginBottom: 24, display: "flex", flexDirection: "column", gap: 10,
         }}>
           <div style={{ fontSize: "0.82rem", fontWeight: 700, color: "var(--brand-primary, #e07b39)" }}>
@@ -1908,7 +1908,7 @@ Génère maintenant des idées sur le thème suivant : [DÉCRIS TON THÈME ICI]`
               }
             }}
               disabled={!newText.trim()}
-              style={{ ...btnStyle, background: newText.trim() ? "var(--brand-primary, #e07b39)" : "#555", color: "#1a1a1a", border: "none", fontWeight: 700, opacity: newText.trim() ? 1 : 0.5 }}>
+              style={{ ...btnStyle, background: newText.trim() ? "var(--brand-primary, #e07b39)" : "#555", color: "#161a26", border: "none", fontWeight: 700, opacity: newText.trim() ? 1 : 0.5 }}>
               <IC icon={Plus} style={{ marginRight: 6 }} />{"Poster l\u2019id\u00e9e"}
             </button>
           </div>
@@ -1968,8 +1968,8 @@ Génère maintenant des idées sur le thème suivant : [DÉCRIS TON THÈME ICI]`
 
           return (
             <div key={idea.id} style={{
-              background: "#2a2a2a",
-              border: isOpen ? "1px solid rgba(224,123,57,0.3)" : isDownvoting ? "1px solid rgba(209,59,26,0.3)" : "1px solid rgba(255,255,255,0.08)",
+              background: "#2a2f3e",
+              border: isOpen ? "1px solid rgba(60, 173, 217,0.3)" : isDownvoting ? "1px solid rgba(209,59,26,0.3)" : "1px solid rgba(255,255,255,0.08)",
               borderRadius: 12, overflow: "hidden", display: "flex",
             }}>
               {/* Vote column */}
@@ -1996,7 +1996,7 @@ Génère maintenant des idées sur le thème suivant : [DÉCRIS TON THÈME ICI]`
               {/* Idea header */}
               <div style={{ padding: "16px 20px", cursor: "pointer" }}
                 onClick={() => { if (!isDownvoting) { setOpenThread(isOpen ? null : idea.id); setReplyTo(null); setCommentText(""); } }}>
-                <div style={{ fontSize: "0.88rem", color: "#e8e0d0", lineHeight: 1.5, fontWeight: 600, marginBottom: 4 }}>{idea.text}</div>
+                <div style={{ fontSize: "0.88rem", color: "#e8eaed", lineHeight: 1.5, fontWeight: 600, marginBottom: 4 }}>{idea.text}</div>
                 {/* Preview description (tronquée quand fermé) */}
                 {!isOpen && idea.description && (
                   <div style={{
@@ -2028,7 +2028,7 @@ Génère maintenant des idées sur le thème suivant : [DÉCRIS TON THÈME ICI]`
                   )}
                   <span style={{ flex: 1 }} />
                   <button onClick={e => { e.stopPropagation(); setEditingIdea(idea.id); setEditText(idea.text); setEditDesc(idea.description || ""); }}
-                    style={{ fontSize: "0.68rem", padding: "3px 8px", borderRadius: 5, border: "1px solid rgba(224,123,57,0.3)", background: "rgba(224,123,57,0.12)", color: "var(--brand-primary, #e07b39)", cursor: "pointer" }}>
+                    style={{ fontSize: "0.68rem", padding: "3px 8px", borderRadius: 5, border: "1px solid rgba(60, 173, 217,0.3)", background: "rgba(60, 173, 217,0.12)", color: "var(--brand-primary, #e07b39)", cursor: "pointer" }}>
                     <IC icon={Pen} style={{ marginRight: 4 }} />{"Modifier"}
                   </button>
                   <button onClick={e => { e.stopPropagation(); onConvertIdea(idea); }}
@@ -2071,8 +2071,8 @@ Génère maintenant des idées sur le thème suivant : [DÉCRIS TON THÈME ICI]`
               {/* Edit form (inline) */}
               {editingIdea === idea.id && (
                 <div onClick={e => e.stopPropagation()} style={{
-                  borderTop: "1px solid rgba(224,123,57,0.2)", padding: "14px 20px",
-                  background: "rgba(224,123,57,0.05)", display: "flex", flexDirection: "column", gap: 10,
+                  borderTop: "1px solid rgba(60, 173, 217,0.2)", padding: "14px 20px",
+                  background: "rgba(60, 173, 217,0.05)", display: "flex", flexDirection: "column", gap: 10,
                 }}>
                   <div style={{ fontSize: "0.78rem", fontWeight: 700, color: "var(--brand-primary, #e07b39)" }}>
                     <IC icon={Pen} style={{ marginRight: 6 }} />{"Modifier l\u2019id\u00e9e"}
@@ -2094,7 +2094,7 @@ Génère maintenant des idées sur le thème suivant : [DÉCRIS TON THÈME ICI]`
                         setEditingIdea(null);
                       }
                     }}
-                      style={{ ...btnStyle, background: "var(--brand-primary, #e07b39)", color: "#1a1a1a", border: "none", fontWeight: 700, fontSize: "0.75rem" }}>
+                      style={{ ...btnStyle, background: "var(--brand-primary, #e07b39)", color: "#161a26", border: "none", fontWeight: 700, fontSize: "0.75rem" }}>
                       {"Enregistrer"}
                     </button>
                   </div>
@@ -2116,7 +2116,7 @@ Génère maintenant des idées sur le thème suivant : [DÉCRIS TON THÈME ICI]`
                         textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: 6,
                       }}>{"Description"}</div>
                       <div style={{
-                        fontSize: "0.82rem", color: "#e8e0d0", lineHeight: 1.7,
+                        fontSize: "0.82rem", color: "#e8eaed", lineHeight: 1.7,
                         whiteSpace: "pre-wrap", wordBreak: "break-word",
                       }}>{idea.description}</div>
                     </div>
@@ -2154,7 +2154,7 @@ Génère maintenant des idées sur le thème suivant : [DÉCRIS TON THÈME ICI]`
                       style={{ ...inputStyle, flex: 1, marginBottom: 0, fontSize: "0.78rem" }}
                       onKeyDown={e => { if (e.key === "Enter") addComment(idea.id); }} />
                     <button onClick={() => addComment(idea.id)}
-                      style={{ ...btnStyle, background: "var(--brand-primary, #e07b39)", color: "#1a1a1a", border: "none", fontWeight: 700, padding: "7px 14px", fontSize: "0.75rem" }}>
+                      style={{ ...btnStyle, background: "var(--brand-primary, #e07b39)", color: "#161a26", border: "none", fontWeight: 700, padding: "7px 14px", fontSize: "0.75rem" }}>
                       <IC icon={SendHorizontal} style={{ marginRight: 6 }} />{"Envoyer"}
                     </button>
                   </div>
@@ -2245,7 +2245,7 @@ function ActivityLogView({ log, members, onNavigate }) {
               <div key={entry.id} style={{ display: "flex", gap: 14, marginBottom: 6, position: "relative" }}>
                 {/* Dot on timeline */}
                 <div style={{
-                  width: 20, height: 20, borderRadius: "50%", background: "#2a2a2a",
+                  width: 20, height: 20, borderRadius: "50%", background: "#2a2f3e",
                   border: `2px solid ${color}`, display: "flex", alignItems: "center", justifyContent: "center",
                   position: "absolute", left: -24, zIndex: 1,
                 }}>
@@ -2254,7 +2254,7 @@ function ActivityLogView({ log, members, onNavigate }) {
 
                 {/* Content */}
                 <div style={{
-                  flex: 1, background: "#2a2a2a", border: "1px solid rgba(255,255,255,0.06)",
+                  flex: 1, background: "#2a2f3e", border: "1px solid rgba(255,255,255,0.06)",
                   borderRadius: 8, padding: "10px 14px",
                 }}>
                   <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 3 }}>
@@ -2271,7 +2271,7 @@ function ActivityLogView({ log, members, onNavigate }) {
                       </button>
                     )}
                   </div>
-                  <div style={{ fontSize: "0.8rem", color: "#e8e0d0", lineHeight: 1.4 }}>{entry.detail}</div>
+                  <div style={{ fontSize: "0.8rem", color: "#e8eaed", lineHeight: 1.4 }}>{entry.detail}</div>
                 </div>
               </div>
             );
@@ -2358,15 +2358,15 @@ function MyBoardView({ tasks, members, myId, onEditTask, onUpdateStatus }) {
                       onDragEnd={() => { setDraggedId(null); setDragOverCol(null); }}
                       onClick={() => onEditTask(t)}
                       style={{
-                        background: "#2a2a2a", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 10,
+                        background: "#2a2f3e", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 10,
                         padding: "10px 12px", cursor: "grab", transition: "border-color 0.15s, opacity 0.15s",
                         opacity: isDragging ? 0.4 : 1,
                         userSelect: "none",
                       }}
-                      onMouseEnter={e => { if (!draggedId) e.currentTarget.style.borderColor = "rgba(224,123,57,0.35)"; }}
+                      onMouseEnter={e => { if (!draggedId) e.currentTarget.style.borderColor = "rgba(60, 173, 217,0.35)"; }}
                       onMouseLeave={e => e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)"}
                     >
-                      <div style={{ fontSize: "0.8rem", color: "#e8e0d0", lineHeight: 1.45, marginBottom: 6 }}>{t.text}</div>
+                      <div style={{ fontSize: "0.8rem", color: "#e8eaed", lineHeight: 1.45, marginBottom: 6 }}>{t.text}</div>
                       {stTotal > 0 && (
                         <div style={{ marginBottom: 6 }}>
                           <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 2 }}>
@@ -2611,7 +2611,7 @@ function RoadmapView({ milestones, setMilestones, tasks, members, onEditTask }) 
                 <button key={key} onClick={() => setArchiveView(key)} style={{
                   ...btnStyle, padding: "3px 10px", fontSize: "0.72rem",
                   background: active ? "var(--brand-primary, #e07b39)" : "transparent",
-                  color: active ? "#1a1a1a" : "#888",
+                  color: active ? "#161a26" : "#888",
                   border: "none", fontWeight: active ? 700 : 500,
                   borderRadius: 6, display: "flex", alignItems: "center", gap: 4,
                 }}>
@@ -2629,7 +2629,7 @@ function RoadmapView({ milestones, setMilestones, tasks, members, onEditTask }) 
             value={filterStatus}
             onChange={e => setFilterStatus(e.target.value)}
             style={{
-              background: "#1e1e1e", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 8,
+              background: "#1a1f2c", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 8,
               color: "#aaaaaa", fontSize: "0.78rem", padding: "6px 10px", cursor: "pointer",
               fontFamily: "inherit", outline: "none",
             }}>
@@ -2658,12 +2658,12 @@ function RoadmapView({ milestones, setMilestones, tasks, members, onEditTask }) 
 
       {/* ── Global progress bar ───────────────────────────────────── */}
       {allMsTasks.length > 0 && (
-        <div style={{ marginBottom: 24, background: "#1e1e1e", borderRadius: 12, padding: "14px 18px", border: "1px solid rgba(255,255,255,0.06)" }}>
+        <div style={{ marginBottom: 24, background: "#1a1f2c", borderRadius: 12, padding: "14px 18px", border: "1px solid rgba(255,255,255,0.06)" }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10, flexWrap: "wrap", gap: 8 }}>
             <div style={{ display: "flex", gap: 20 }}>
               <div style={{ display: "flex", flexDirection: "column" }}>
                 <span style={{ fontSize: "0.65rem", color: "#888888", textTransform: "uppercase", letterSpacing: "0.06em" }}>Progression globale</span>
-                <span style={{ fontSize: "1.1rem", fontWeight: 800, color: "#e8e0d0" }}>
+                <span style={{ fontSize: "1.1rem", fontWeight: 800, color: "#e8eaed" }}>
                   {globalPct}<span style={{ fontSize: "0.7rem", color: "#888888" }}>%</span>
                   <span style={{ fontSize: "0.72rem", color: "#888888", fontWeight: 400, marginLeft: 8 }}>{totalDone}/{allMsTasks.length} tâches</span>
                 </span>
@@ -2692,7 +2692,7 @@ function RoadmapView({ milestones, setMilestones, tasks, members, onEditTask }) 
       {/* ── Add milestone form ────────────────────────────────────── */}
       {showAddMs && (
         <div style={{
-          background: "#1e1e1e", border: "1px solid rgba(224,123,57,0.25)", borderRadius: 14,
+          background: "#1a1f2c", border: "1px solid rgba(60, 173, 217,0.25)", borderRadius: 14,
           padding: "20px 22px", marginBottom: 24,
           boxShadow: "0 4px 24px rgba(0,0,0,0.3)",
         }}>
@@ -2748,7 +2748,7 @@ function RoadmapView({ milestones, setMilestones, tasks, members, onEditTask }) 
       {/* ── Timeline ─────────────────────────────────────────────── */}
       <div style={{ position: "relative", paddingLeft: 32 }}>
         {/* Vertical spine */}
-        <div style={{ position: "absolute", left: 14, top: 8, bottom: 8, width: 2, background: "linear-gradient(180deg, rgba(224,123,57,0.5) 0%, rgba(255,255,255,0.05) 100%)", borderRadius: 2 }} />
+        <div style={{ position: "absolute", left: 14, top: 8, bottom: 8, width: 2, background: "linear-gradient(180deg, rgba(60, 173, 217,0.5) 0%, rgba(255,255,255,0.05) 100%)", borderRadius: 2 }} />
 
         {sorted.map((ms, i) => {
           const msTasks = (ms.taskIds || []).map(id => tasks.find(t => t.id === id)).filter(Boolean);
@@ -2783,14 +2783,14 @@ function RoadmapView({ milestones, setMilestones, tasks, members, onEditTask }) 
                 position: "absolute", left: -24, top: 18,
                 width: 16, height: 16, borderRadius: "50%",
                 background: dotBg,
-                border: `3px solid #141414`,
+                border: `3px solid #11151f`,
                 boxShadow: `0 0 0 2px ${dotBg}40`,
                 zIndex: 2, transition: "all 0.2s",
               }} />
 
               {/* Milestone card */}
               <div style={{
-                background: isOver ? `${ms.color}10` : "#1a1a1a",
+                background: isOver ? `${ms.color}10` : "#161a26",
                 border: isOver
                   ? `2px dashed ${ms.color}70`
                   : ms.archived
@@ -3001,7 +3001,7 @@ function RoadmapView({ milestones, setMilestones, tasks, members, onEditTask }) 
                             {/* Status dot */}
                             <span style={{ width: 8, height: 8, borderRadius: "50%", background: STATUS_CONFIG[t.status]?.color, flexShrink: 0, boxShadow: `0 0 5px ${STATUS_CONFIG[t.status]?.color}60` }} />
                             {/* Task text */}
-                            <span style={{ fontSize: "0.8rem", color: "#e8e0d0", flex: 1, cursor: "pointer", lineHeight: 1.4 }} onClick={() => onEditTask(t)}>{t.text}</span>
+                            <span style={{ fontSize: "0.8rem", color: "#e8eaed", flex: 1, cursor: "pointer", lineHeight: 1.4 }} onClick={() => onEditTask(t)}>{t.text}</span>
                             {/* Category */}
                             {t.category && (
                               <span style={{ fontSize: "0.62rem", color: "#888888", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.06)", borderRadius: 4, padding: "1px 6px" }}>{t.category}</span>
@@ -3012,10 +3012,10 @@ function RoadmapView({ milestones, setMilestones, tasks, members, onEditTask }) 
                             <div style={{ display: "flex", gap: 3 }}>
                               {(t.assignees || []).slice(0, 3).map(a => {
                                 const m = members.find(x => x.id === a);
-                                return m ? <MemberAvatar key={a} member={m} size={20} style={{ border: `2px solid #1a1a1a` }} /> : null;
+                                return m ? <MemberAvatar key={a} member={m} size={20} style={{ border: `2px solid #161a26` }} /> : null;
                               })}
                               {(t.assignees || []).length > 3 && (
-                                <span style={{ width: 20, height: 20, borderRadius: "50%", background: "rgba(255,255,255,0.1)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.55rem", color: "#888", border: "2px solid #1a1a1a", flexShrink: 0 }}>+{(t.assignees || []).length - 3}</span>
+                                <span style={{ width: 20, height: 20, borderRadius: "50%", background: "rgba(255,255,255,0.1)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.55rem", color: "#888", border: "2px solid #161a26", flexShrink: 0 }}>+{(t.assignees || []).length - 3}</span>
                               )}
                             </div>
                             {/* Remove button */}
@@ -3079,7 +3079,7 @@ function RoadmapView({ milestones, setMilestones, tasks, members, onEditTask }) 
           <div style={{
             textAlign: "center", padding: "56px 24px",
             color: "#555555", fontSize: "0.85rem",
-            background: "#1a1a1a", border: "1px dashed rgba(255,255,255,0.06)",
+            background: "#161a26", border: "1px dashed rgba(255,255,255,0.06)",
             borderRadius: 14,
           }}>
             <IC icon={archiveView === "archived" ? Archive : Route} size={32} style={{ marginBottom: 12, color: "var(--brand-primary, #e07b39)", opacity: 0.4, display: "block", margin: "0 auto 14px" }} />
@@ -3092,7 +3092,7 @@ function RoadmapView({ milestones, setMilestones, tasks, members, onEditTask }) 
                 : "Créez votre premier milestone pour structurer la roadmap."}
             </div>
             {archiveView !== "archived" && (
-              <button onClick={() => setShowAddMs(true)} style={{ ...btnStyle, marginTop: 16, background: "var(--brand-primary, #e07b39)", color: "#111", border: "none", fontWeight: 700, display: "inline-flex", alignItems: "center", gap: 6 }}>
+              <button onClick={() => setShowAddMs(true)} style={{ ...btnStyle, marginTop: 16, background: "var(--brand-primary, #e07b39)", color: "#11151f", border: "none", fontWeight: 700, display: "inline-flex", alignItems: "center", gap: 6 }}>
                 <IC icon={Plus} size={13} />Créer un milestone
               </button>
             )}
@@ -3102,9 +3102,9 @@ function RoadmapView({ milestones, setMilestones, tasks, members, onEditTask }) 
 
       {/* ── Unassigned tasks drawer ───────────────────────────────── */}
       {showUnassigned && (
-        <div style={{ marginTop: 28, background: "#1a1a1a", border: "1px solid rgba(255,255,255,0.06)", borderRadius: 14, padding: "18px 20px" }}>
+        <div style={{ marginTop: 28, background: "#161a26", border: "1px solid rgba(255,255,255,0.06)", borderRadius: 14, padding: "18px 20px" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 14 }}>
-            <h3 style={{ fontWeight: 700, fontSize: "0.9rem", color: "#e8e0d0", margin: 0, display: "flex", alignItems: "center", gap: 8 }}>
+            <h3 style={{ fontWeight: 700, fontSize: "0.9rem", color: "#e8eaed", margin: 0, display: "flex", alignItems: "center", gap: 8 }}>
               <IC icon={Inbox} size={15} style={{ color: "#ed9121" }} />
               Tâches non assignées à un milestone
             </h3>
@@ -3123,9 +3123,9 @@ function RoadmapView({ milestones, setMilestones, tasks, members, onEditTask }) 
                   style={{
                     display: "flex", alignItems: "center", gap: 8, padding: "8px 10px",
                     background: "#222222", border: "1px solid rgba(255,255,255,0.06)", borderRadius: 8,
-                    cursor: "grab", fontSize: "0.78rem", color: "#e8e0d0", transition: "all 0.12s",
+                    cursor: "grab", fontSize: "0.78rem", color: "#e8eaed", transition: "all 0.12s",
                   }}
-                  onMouseEnter={e => { e.currentTarget.style.borderColor = "rgba(224,123,57,0.3)"; e.currentTarget.style.background = "#262626"; }}
+                  onMouseEnter={e => { e.currentTarget.style.borderColor = "rgba(60, 173, 217,0.3)"; e.currentTarget.style.background = "#262626"; }}
                   onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.06)"; e.currentTarget.style.background = "#222222"; }}>
                   <span style={{ width: 7, height: 7, borderRadius: "50%", background: STATUS_CONFIG[t.status]?.color, flexShrink: 0 }} />
                   <span style={{ flex: 1, lineHeight: 1.4, cursor: "pointer" }} onClick={() => onEditTask(t)}>{t.text}</span>
@@ -3369,7 +3369,7 @@ function MapCanvasView({ projects, members, annotations, setAnnotations, logActi
     const isSelected = item.id === selectedId;
     const memberColor = authorMember(item.author)?.color || "var(--brand-primary, #e07b39)";
     const color = item.color || memberColor;
-    const textColor = item.textColor || "#e8e0d0";
+    const textColor = item.textColor || "#e8eaed";
     const baseStyle = { position: "absolute", cursor: "pointer" };
 
     const handleClick = (e) => { e.stopPropagation(); setSelectedId(item.id); };
@@ -3377,8 +3377,8 @@ function MapCanvasView({ projects, members, annotations, setAnnotations, logActi
     if (item.type === "pin") {
       return (
         <div key={item.id} onClick={handleClick} style={{ ...baseStyle, left: item.x - 12, top: item.y - 28, zIndex: isSelected ? 50 : 10 }}>
-          <MapPin size={24} fill={color} color="#1a1a1a" strokeWidth={1.5} />
-          {item.label && <div style={{ position: "absolute", top: -20, left: "50%", transform: "translateX(-50%)", background: "#2a2a2a", border: `1px solid ${color}50`, borderRadius: 5, padding: "2px 8px", fontSize: "0.68rem", color: textColor, whiteSpace: "nowrap", fontWeight: 600 }}>{item.label}</div>}
+          <MapPin size={24} fill={color} color="#161a26" strokeWidth={1.5} />
+          {item.label && <div style={{ position: "absolute", top: -20, left: "50%", transform: "translateX(-50%)", background: "#2a2f3e", border: `1px solid ${color}50`, borderRadius: 5, padding: "2px 8px", fontSize: "0.68rem", color: textColor, whiteSpace: "nowrap", fontWeight: 600 }}>{item.label}</div>}
           {isSelected && <div style={{ position: "absolute", top: -4, left: -4, width: 32, height: 36, border: `2px solid ${color}`, borderRadius: 6 }} />}
         </div>
       );
@@ -3446,7 +3446,7 @@ function MapCanvasView({ projects, members, annotations, setAnnotations, logActi
       {/* Toolbar */}
       <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12, flexWrap: "wrap", flexShrink: 0 }}>
         {toolBtns.map(t => (
-          <button key={t.id} onClick={() => setTool(t.id)} title={t.label} style={{ padding: "6px 10px", background: tool === t.id ? "var(--brand-primary, #e07b39)" : "#333", border: "1px solid " + (tool === t.id ? "var(--brand-primary, #e07b39)" : "rgba(255,255,255,0.1)"), borderRadius: 8, color: tool === t.id ? "#1a1a1a" : "#888", cursor: "pointer", fontFamily: "inherit", display: "flex", alignItems: "center", gap: 4, fontSize: "0.75rem", fontWeight: tool === t.id ? 700 : 400 }}>
+          <button key={t.id} onClick={() => setTool(t.id)} title={t.label} style={{ padding: "6px 10px", background: tool === t.id ? "var(--brand-primary, #e07b39)" : "#333", border: "1px solid " + (tool === t.id ? "var(--brand-primary, #e07b39)" : "rgba(255,255,255,0.1)"), borderRadius: 8, color: tool === t.id ? "#161a26" : "#888", cursor: "pointer", fontFamily: "inherit", display: "flex", alignItems: "center", gap: 4, fontSize: "0.75rem", fontWeight: tool === t.id ? 700 : 400 }}>
             <IC icon={t.icon} size={14} />{t.label}
           </button>
         ))}
@@ -3467,21 +3467,21 @@ function MapCanvasView({ projects, members, annotations, setAnnotations, logActi
 
         <span style={{ flex: 1 }} />
 
-        <span style={{ fontSize: "0.68rem", color: "#666", background: "#2a2a2a", padding: "4px 8px", borderRadius: 6 }}>{Math.round(camera.zoom * 100)}%</span>
+        <span style={{ fontSize: "0.68rem", color: "#666", background: "#2a2f3e", padding: "4px 8px", borderRadius: 6 }}>{Math.round(camera.zoom * 100)}%</span>
       </div>
 
       {/* Image URL input */}
       {showImageInput && (
         <div style={{ display: "flex", gap: 8, marginBottom: 12, alignItems: "center", flexShrink: 0 }}>
-          <input value={imageUrl} onChange={e => setImageUrl(e.target.value)} placeholder="URL image vue de haut (ex: https://...)" style={{ flex: 1, background: "#333", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 8, padding: "8px 12px", color: "#e8e0d0", fontSize: "0.82rem", fontFamily: "inherit" }} />
-          <button onClick={setBgImage} style={{ padding: "8px 16px", background: "var(--brand-primary, #e07b39)", color: "#1a1a1a", border: "none", borderRadius: 8, cursor: "pointer", fontWeight: 700, fontSize: "0.82rem", fontFamily: "inherit" }}>Appliquer</button>
+          <input value={imageUrl} onChange={e => setImageUrl(e.target.value)} placeholder="URL image vue de haut (ex: https://...)" style={{ flex: 1, background: "#333", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 8, padding: "8px 12px", color: "#e8eaed", fontSize: "0.82rem", fontFamily: "inherit" }} />
+          <button onClick={setBgImage} style={{ padding: "8px 16px", background: "var(--brand-primary, #e07b39)", color: "#161a26", border: "none", borderRadius: 8, cursor: "pointer", fontWeight: 700, fontSize: "0.82rem", fontFamily: "inherit" }}>Appliquer</button>
           {bgImage && <button onClick={() => { updateProjectAnnotations(prev => ({ ...prev, imageUrl: "" })); setShowImageInput(false); }} style={{ padding: "8px 12px", background: "#d13b1a", color: "#fff", border: "none", borderRadius: 8, cursor: "pointer", fontSize: "0.78rem", fontFamily: "inherit" }}>Retirer</button>}
         </div>
       )}
 
       <div style={{ display: "flex", gap: 16, flex: 1, minHeight: 0 }}>
         {/* Canvas area */}
-        <div ref={containerRef} style={{ flex: 1, position: "relative", background: "#222", borderRadius: 12, border: "1px solid rgba(255,255,255,0.08)", overflow: "hidden", cursor: isPanning ? "grabbing" : (tool === "select" ? "default" : "crosshair") }}
+        <div ref={containerRef} style={{ flex: 1, position: "relative", background: "#1f2330", borderRadius: 12, border: "1px solid rgba(255,255,255,0.08)", overflow: "hidden", cursor: isPanning ? "grabbing" : (tool === "select" ? "default" : "crosshair") }}
           onMouseDown={handleMouseDown} onMouseMove={handleMouseMove} onMouseUp={handleMouseUp} onMouseLeave={() => { setIsPanning(false); if (drawing) handleMouseUp(); }}
           onWheel={handleWheel}>
 
@@ -3517,7 +3517,7 @@ function MapCanvasView({ projects, members, annotations, setAnnotations, logActi
         {/* Side panel — selected item details + comments */}
         <div style={{ width: 280, flexShrink: 0, overflowY: "auto" }}>
           {selectedItem ? (
-            <div style={{ background: "#2a2a2a", borderRadius: 12, border: "1px solid rgba(255,255,255,0.08)", padding: 16 }}>
+            <div style={{ background: "#2a2f3e", borderRadius: 12, border: "1px solid rgba(255,255,255,0.08)", padding: 16 }}>
               <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 12 }}>
                 <span style={{ fontSize: "0.82rem", fontWeight: 700, color: "#fff" }}>
                   {selectedItem.type === "pin" ? "Marqueur" : selectedItem.type === "rect" ? "Rectangle" : selectedItem.type === "circle" ? "Cercle" : "Dessin"}
@@ -3536,7 +3536,7 @@ function MapCanvasView({ projects, members, annotations, setAnnotations, logActi
               <label style={{ fontSize: "0.68rem", fontWeight: 600, color: "#888", textTransform: "uppercase", letterSpacing: "0.04em" }}>Label</label>
               <input value={selectedItem.label || ""} onChange={e => {
                 updateProjectAnnotations(prev => ({ ...prev, items: (prev.items || []).map(i => i.id === selectedItem.id ? { ...i, label: e.target.value } : i) }));
-              }} style={{ width: "100%", background: "#333", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 6, padding: "6px 10px", color: "#e8e0d0", fontSize: "0.82rem", fontFamily: "inherit", marginTop: 4, marginBottom: 12, outline: "none", boxSizing: "border-box" }} />
+              }} style={{ width: "100%", background: "#333", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 6, padding: "6px 10px", color: "#e8eaed", fontSize: "0.82rem", fontFamily: "inherit", marginTop: 4, marginBottom: 12, outline: "none", boxSizing: "border-box" }} />
 
               {/* Color pickers */}
               <div style={{ display: "flex", gap: 10, marginBottom: 12 }}>
@@ -3553,10 +3553,10 @@ function MapCanvasView({ projects, members, annotations, setAnnotations, logActi
                 <div style={{ flex: 1 }}>
                   <label style={{ fontSize: "0.68rem", fontWeight: 600, color: "#888", textTransform: "uppercase", letterSpacing: "0.04em", display: "block", marginBottom: 4 }}>Texte</label>
                   <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                    <input type="color" value={selectedItem.textColor || "#e8e0d0"} onChange={e => {
+                    <input type="color" value={selectedItem.textColor || "#e8eaed"} onChange={e => {
                       updateProjectAnnotations(prev => ({ ...prev, items: (prev.items || []).map(i => i.id === selectedItem.id ? { ...i, textColor: e.target.value } : i) }));
                     }} style={{ width: 32, height: 28, padding: 2, border: "1px solid rgba(255,255,255,0.15)", borderRadius: 6, background: "#333", cursor: "pointer" }} />
-                    <span style={{ fontSize: "0.72rem", color: "#666", fontFamily: "monospace" }}>{selectedItem.textColor || "#e8e0d0"}</span>
+                    <span style={{ fontSize: "0.72rem", color: "#666", fontFamily: "monospace" }}>{selectedItem.textColor || "#e8eaed"}</span>
                     {selectedItem.textColor && <button onClick={() => updateProjectAnnotations(prev => ({ ...prev, items: (prev.items || []).map(i => i.id === selectedItem.id ? { ...i, textColor: undefined } : i) }))} title="Réinitialiser" style={{ background: "none", border: "none", color: "#555", cursor: "pointer", padding: 0, fontSize: "0.7rem" }}>↺</button>}
                   </div>
                 </div>
@@ -3582,7 +3582,7 @@ function MapCanvasView({ projects, members, annotations, setAnnotations, logActi
                         <span style={{ fontSize: "0.6rem", color: "#666" }}>{new Date(c.createdAt).toLocaleString("fr-FR", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" })}</span>
                         <button onClick={() => deleteComment(selectedItem.id, c.id)} style={{ marginLeft: "auto", background: "transparent", border: "none", color: "#555", cursor: "pointer", padding: "0 2px", lineHeight: 1 }} title="Supprimer"><IC icon={X} size={11} /></button>
                       </div>
-                      {c.text && <div style={{ color: "#e8e0d0", marginBottom: (c.images || []).length ? 6 : 0 }}>{c.text}</div>}
+                      {c.text && <div style={{ color: "#e8eaed", marginBottom: (c.images || []).length ? 6 : 0 }}>{c.text}</div>}
                       {(c.images || []).length > 0 && (
                         <div style={{ display: "flex", flexWrap: "wrap", gap: 4 }}>
                           {c.images.map((img, i) => (
@@ -3599,12 +3599,12 @@ function MapCanvasView({ projects, members, annotations, setAnnotations, logActi
               {/* Comment input */}
               <div style={{ marginTop: 6 }}>
                 <div style={{ display: "flex", gap: 4 }}>
-                  <input value={commentText} onChange={e => setCommentText(e.target.value)} onKeyDown={e => e.key === "Enter" && !e.shiftKey && addComment(selectedItem.id)} placeholder="Ajouter un commentaire..." style={{ flex: 1, background: "#333", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 6, padding: "6px 8px", color: "#e8e0d0", fontSize: "0.78rem", fontFamily: "inherit", outline: "none" }} />
-                  <button onClick={() => setShowCommentImageInput(v => !v)} title="Ajouter une image" style={{ background: showCommentImageInput ? "var(--brand-primary, #e07b39)" : "#333", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 6, padding: "6px 8px", cursor: "pointer", color: showCommentImageInput ? "#1a1a1a" : "#aaa" }}><IC icon={Image} size={14} /></button>
-                  <button onClick={() => addComment(selectedItem.id)} style={{ background: "var(--brand-primary, #e07b39)", border: "none", borderRadius: 6, padding: "6px 8px", cursor: "pointer", color: "#1a1a1a" }}><IC icon={SendHorizontal} size={14} /></button>
+                  <input value={commentText} onChange={e => setCommentText(e.target.value)} onKeyDown={e => e.key === "Enter" && !e.shiftKey && addComment(selectedItem.id)} placeholder="Ajouter un commentaire..." style={{ flex: 1, background: "#333", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 6, padding: "6px 8px", color: "#e8eaed", fontSize: "0.78rem", fontFamily: "inherit", outline: "none" }} />
+                  <button onClick={() => setShowCommentImageInput(v => !v)} title="Ajouter une image" style={{ background: showCommentImageInput ? "var(--brand-primary, #e07b39)" : "#333", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 6, padding: "6px 8px", cursor: "pointer", color: showCommentImageInput ? "#161a26" : "#aaa" }}><IC icon={Image} size={14} /></button>
+                  <button onClick={() => addComment(selectedItem.id)} style={{ background: "var(--brand-primary, #e07b39)", border: "none", borderRadius: 6, padding: "6px 8px", cursor: "pointer", color: "#161a26" }}><IC icon={SendHorizontal} size={14} /></button>
                 </div>
                 {showCommentImageInput && (
-                  <input value={commentImageUrl} onChange={e => setCommentImageUrl(e.target.value)} placeholder="URL de l'image de référence…" style={{ width: "100%", marginTop: 4, background: "#333", border: "1px solid rgba(224,123,57,0.4)", borderRadius: 6, padding: "6px 8px", color: "#e8e0d0", fontSize: "0.75rem", fontFamily: "inherit", outline: "none", boxSizing: "border-box" }} />
+                  <input value={commentImageUrl} onChange={e => setCommentImageUrl(e.target.value)} placeholder="URL de l'image de référence…" style={{ width: "100%", marginTop: 4, background: "#333", border: "1px solid rgba(60, 173, 217,0.4)", borderRadius: 6, padding: "6px 8px", color: "#e8eaed", fontSize: "0.75rem", fontFamily: "inherit", outline: "none", boxSizing: "border-box" }} />
                 )}
               </div>
 
@@ -3617,7 +3617,7 @@ function MapCanvasView({ projects, members, annotations, setAnnotations, logActi
                     return (
                       <div style={{ marginTop: 6, background: "#333", borderRadius: 6, padding: "6px 10px", display: "flex", alignItems: "center", gap: 6 }}>
                         <span style={{ width: 8, height: 8, borderRadius: "50%", background: STATUS_CONFIG[linkedTask.status]?.color, flexShrink: 0 }} />
-                        <span style={{ fontSize: "0.78rem", color: "#e8e0d0", flex: 1, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{linkedTask.text}</span>
+                        <span style={{ fontSize: "0.78rem", color: "#e8eaed", flex: 1, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{linkedTask.text}</span>
                         <button onClick={() => onEditTask(linkedTask)} title="Ouvrir la tâche" style={{ background: "transparent", border: "none", color: "var(--brand-primary, #e07b39)", cursor: "pointer", padding: 2 }}><IC icon={ExternalLink} size={13} /></button>
                         <button onClick={() => linkTask(selectedItem.id, null)} title="Délier" style={{ background: "transparent", border: "none", color: "#666", cursor: "pointer", padding: 2 }}><IC icon={X} size={13} /></button>
                       </div>
@@ -3631,7 +3631,7 @@ function MapCanvasView({ projects, members, annotations, setAnnotations, logActi
                           <option key={t.id} value={t.id}>{t.text.substring(0, 50)}</option>
                         ))}
                       </select>
-                      <button onClick={() => createTaskFromPoint(selectedItem)} style={{ background: "transparent", border: "1px dashed rgba(224,123,57,0.4)", borderRadius: 6, padding: "6px 10px", color: "var(--brand-primary, #e07b39)", fontSize: "0.75rem", cursor: "pointer", fontFamily: "inherit", textAlign: "left" }}>
+                      <button onClick={() => createTaskFromPoint(selectedItem)} style={{ background: "transparent", border: "1px dashed rgba(60, 173, 217,0.4)", borderRadius: 6, padding: "6px 10px", color: "var(--brand-primary, #e07b39)", fontSize: "0.75rem", cursor: "pointer", fontFamily: "inherit", textAlign: "left" }}>
                         <IC icon={Plus} size={13} style={{ marginRight: 6 }} />Créer une tâche depuis ce point
                       </button>
                     </div>
@@ -3640,7 +3640,7 @@ function MapCanvasView({ projects, members, annotations, setAnnotations, logActi
               </div>
             </div>
           ) : (
-            <div style={{ background: "#2a2a2a", borderRadius: 12, border: "1px solid rgba(255,255,255,0.08)", padding: 16 }}>
+            <div style={{ background: "#2a2f3e", borderRadius: 12, border: "1px solid rgba(255,255,255,0.08)", padding: 16 }}>
               <div style={{ fontSize: "0.82rem", fontWeight: 700, color: "#fff", marginBottom: 8 }}>Annotations</div>
               <div style={{ fontSize: "0.75rem", color: "#888", marginBottom: 12 }}>{items.length} annotation{items.length !== 1 ? "s" : ""} sur cette map</div>
 
@@ -3653,7 +3653,7 @@ function MapCanvasView({ projects, members, annotations, setAnnotations, logActi
                       onMouseEnter={e => e.currentTarget.style.background = "#333"}
                       onMouseLeave={e => e.currentTarget.style.background = "transparent"}>
                       <IC icon={item.type === "pin" ? MapPin : item.type === "rect" ? RectangleHorizontal : item.type === "circle" ? Circle : Pencil} size={12} style={{ color: am?.color || "var(--brand-primary, #e07b39)", flexShrink: 0 }} />
-                      <span style={{ fontSize: "0.75rem", color: "#e8e0d0", flex: 1, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{item.label || (item.type === "pin" ? "Marqueur" : item.type === "rect" ? "Rectangle" : item.type === "circle" ? "Cercle" : "Dessin")}</span>
+                      <span style={{ fontSize: "0.75rem", color: "#e8eaed", flex: 1, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{item.label || (item.type === "pin" ? "Marqueur" : item.type === "rect" ? "Rectangle" : item.type === "circle" ? "Cercle" : "Dessin")}</span>
                       <span style={{ fontSize: "0.6rem", color: am?.color || "#888" }}>{am?.name}</span>
                       {(item.comments || []).length > 0 && <span style={{ fontSize: "0.6rem", color: "#666" }}><IC icon={MessageCircle} size={10} /> {item.comments.length}</span>}
                     </div>
@@ -3783,36 +3783,36 @@ function FabAssetsView({ assets, setAssets, projects, members, logActivity, defa
         <span style={{ fontSize: "0.75rem", color: "#666" }}>{assets.length} asset{assets.length !== 1 ? "s" : ""}</span>
         <span style={{ flex: 1 }} />
 
-<select value={sortBy} onChange={e => setSortBy(e.target.value)} style={{ background: "#333", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 8, padding: "6px 10px", color: "#e8e0d0", fontSize: "0.78rem", fontFamily: "inherit" }}>
+<select value={sortBy} onChange={e => setSortBy(e.target.value)} style={{ background: "#333", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 8, padding: "6px 10px", color: "#e8eaed", fontSize: "0.78rem", fontFamily: "inherit" }}>
           <option value="recent">Plus récent</option>
           <option value="votes">Plus voté</option>
           <option value="price">Prix croissant</option>
         </select>
 
-        <button onClick={() => setShowForm(!showForm)} style={{ padding: "7px 14px", background: "var(--brand-primary, #e07b39)", color: "#1a1a1a", border: "none", borderRadius: 8, cursor: "pointer", fontWeight: 700, fontSize: "0.82rem", fontFamily: "inherit", display: "flex", alignItems: "center", gap: 6 }}>
+        <button onClick={() => setShowForm(!showForm)} style={{ padding: "7px 14px", background: "var(--brand-primary, #e07b39)", color: "#161a26", border: "none", borderRadius: 8, cursor: "pointer", fontWeight: 700, fontSize: "0.82rem", fontFamily: "inherit", display: "flex", alignItems: "center", gap: 6 }}>
           <IC icon={Plus} size={14} />Asset
         </button>
       </div>
 
       {/* Add form */}
       {showForm && (
-        <div style={{ background: "#2a2a2a", border: "1px solid rgba(224,123,57,0.3)", borderRadius: 12, padding: 20, marginBottom: 16 }}>
+        <div style={{ background: "#2a2f3e", border: "1px solid rgba(60, 173, 217,0.3)", borderRadius: 12, padding: 20, marginBottom: 16 }}>
           <div style={{ marginBottom: 16 }}>
             <label style={{ display: "block", fontSize: "0.7rem", fontWeight: 600, color: "#888", textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: 4 }}>
               Lien Fab.com *{fetching && <IC icon={Loader2} size={12} style={{ marginLeft: 6, color: "var(--brand-primary, #e07b39)", animation: "adm-spin 0.7s linear infinite" }} />}
             </label>
-            <input value={url} onChange={e => handleUrlChange(e.target.value)} placeholder="https://www.fab.com/fr/listings/..." style={{ width: "100%", background: "#333", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 8, padding: "8px 12px", color: "#e8e0d0", fontSize: "0.82rem", fontFamily: "inherit", outline: "none", boxSizing: "border-box" }} />
+            <input value={url} onChange={e => handleUrlChange(e.target.value)} placeholder="https://www.fab.com/fr/listings/..." style={{ width: "100%", background: "#333", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 8, padding: "8px 12px", color: "#e8eaed", fontSize: "0.82rem", fontFamily: "inherit", outline: "none", boxSizing: "border-box" }} />
             {fetchError && <div style={{ marginTop: 8, fontSize: "0.75rem", color: "#e74c3c" }}>{fetchError}</div>}
           </div>
 
           {fetchedData && (
-            <div style={{ background: "#1a1a1a", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 8, padding: 16, marginBottom: 16 }}>
+            <div style={{ background: "#161a26", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 8, padding: 16, marginBottom: 16 }}>
               <div style={{ display: "flex", gap: 16 }}>
                 {fetchedData.imageUrl && (
                   <img src={fetchedData.imageUrl} alt={fetchedData.name} style={{ width: 120, height: 120, objectFit: "cover", borderRadius: 8, flexShrink: 0 }} />
                 )}
                 <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: "0.9rem", fontWeight: 700, color: "#e8e0d0", marginBottom: 8 }}>{fetchedData.name}</div>
+                  <div style={{ fontSize: "0.9rem", fontWeight: 700, color: "#e8eaed", marginBottom: 8 }}>{fetchedData.name}</div>
                   <div style={{ fontSize: "0.8rem", color: "var(--brand-primary, #e07b39)", fontWeight: 600 }}>{fetchedData.price}</div>
                 </div>
               </div>
@@ -3821,7 +3821,7 @@ function FabAssetsView({ assets, setAssets, projects, members, logActivity, defa
 
           <div style={{ marginBottom: 12 }}>
             <label style={{ display: "block", fontSize: "0.7rem", fontWeight: 600, color: "#888", textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: 4 }}>Projet</label>
-            <select value={assetProject} onChange={e => setAssetProject(e.target.value)} style={{ width: "100%", background: "#333", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 8, padding: "8px 12px", color: "#e8e0d0", fontSize: "0.82rem", fontFamily: "inherit", outline: "none" }}>
+            <select value={assetProject} onChange={e => setAssetProject(e.target.value)} style={{ width: "100%", background: "#333", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 8, padding: "8px 12px", color: "#e8eaed", fontSize: "0.82rem", fontFamily: "inherit", outline: "none" }}>
               {projects.map(p => <option key={p.id} value={p.id}>{p.name}</option>)}
             </select>
           </div>
@@ -3829,7 +3829,7 @@ function FabAssetsView({ assets, setAssets, projects, members, logActivity, defa
           <div style={{ display: "flex", alignItems: "center", gap: 12, marginTop: 12 }}>
             <span style={{ flex: 1 }} />
             <button onClick={() => setShowForm(false)} style={{ padding: "7px 14px", background: "transparent", color: "#888", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 8, cursor: "pointer", fontSize: "0.78rem", fontFamily: "inherit" }}>Annuler</button>
-            <button onClick={addAsset} disabled={!fetchedData || !url.trim()} style={{ padding: "7px 18px", background: (!fetchedData || !url.trim()) ? "#555" : "var(--brand-primary, #e07b39)", color: "#1a1a1a", border: "none", borderRadius: 8, cursor: (!fetchedData || !url.trim()) ? "not-allowed" : "pointer", fontWeight: 700, fontSize: "0.82rem", fontFamily: "inherit" }}>Ajouter</button>
+            <button onClick={addAsset} disabled={!fetchedData || !url.trim()} style={{ padding: "7px 18px", background: (!fetchedData || !url.trim()) ? "#555" : "var(--brand-primary, #e07b39)", color: "#161a26", border: "none", borderRadius: 8, cursor: (!fetchedData || !url.trim()) ? "not-allowed" : "pointer", fontWeight: 700, fontSize: "0.82rem", fontFamily: "inherit" }}>Ajouter</button>
           </div>
         </div>
       )}
@@ -3883,7 +3883,7 @@ function FabAssetsView({ assets, setAssets, projects, members, logActivity, defa
           };
 
           return (
-            <div key={asset.id} style={{ background: "#2a2a2a", border: isOpen ? "1px solid rgba(224,123,57,0.3)" : isDownvoting ? "1px solid rgba(209,59,26,0.3)" : "1px solid rgba(255,255,255,0.08)", borderRadius: 12, overflow: "hidden", display: "flex" }}>
+            <div key={asset.id} style={{ background: "#2a2f3e", border: isOpen ? "1px solid rgba(60, 173, 217,0.3)" : isDownvoting ? "1px solid rgba(209,59,26,0.3)" : "1px solid rgba(255,255,255,0.08)", borderRadius: 12, overflow: "hidden", display: "flex" }}>
 
               {/* Vote column */}
               <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "12px 6px", gap: 2, minWidth: 44, borderRight: "1px solid rgba(255,255,255,0.06)" }}>
@@ -3907,9 +3907,9 @@ function FabAssetsView({ assets, setAssets, projects, members, logActivity, defa
                   {/* Info */}
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
-                      <span style={{ fontSize: "0.92rem", fontWeight: 700, color: "#e8e0d0" }}>{asset.name}</span>
+                      <span style={{ fontSize: "0.92rem", fontWeight: 700, color: "#e8eaed" }}>{asset.name}</span>
                       {asset.price && (
-                        <span style={{ fontSize: "0.78rem", fontWeight: 700, color: "var(--brand-primary, #e07b39)", background: "rgba(224,123,57,0.12)", padding: "2px 8px", borderRadius: 5 }}>
+                        <span style={{ fontSize: "0.78rem", fontWeight: 700, color: "var(--brand-primary, #e07b39)", background: "rgba(60, 173, 217,0.12)", padding: "2px 8px", borderRadius: 5 }}>
                           <IC icon={DollarSign} size={11} style={{ marginRight: 2 }} />{asset.price}
                         </span>
                       )}
@@ -3943,7 +3943,7 @@ function FabAssetsView({ assets, setAssets, projects, members, logActivity, defa
                     <div style={{ fontSize: "0.75rem", color: "#d13b1a", fontWeight: 600, marginBottom: 8, marginTop: 10 }}>Pourquoi voter contre ?</div>
                     <div style={{ display: "flex", gap: 8 }}>
                       <input value={downvoteText} onChange={e => setDownvoteText(e.target.value)} placeholder="Justification (facultatif)..." autoFocus
-                        style={{ flex: 1, background: "#333", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 8, padding: "8px 12px", color: "#e8e0d0", fontSize: "0.78rem", fontFamily: "inherit", outline: "none" }}
+                        style={{ flex: 1, background: "#333", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 8, padding: "8px 12px", color: "#e8eaed", fontSize: "0.78rem", fontFamily: "inherit", outline: "none" }}
                         onKeyDown={e => { if (e.key === "Enter") confirmDownvote(e); if (e.key === "Escape") { setDownvoteTarget(null); setDownvoteText(""); } }} />
                       <button onClick={confirmDownvote} style={{ padding: "7px 14px", background: "#d13b1a", color: "#fff", border: "none", borderRadius: 8, cursor: "pointer", fontWeight: 700, fontSize: "0.75rem", fontFamily: "inherit" }}>
                         <IC icon={ThumbsDown} size={12} style={{ marginRight: 4 }} />Voter
@@ -3971,7 +3971,7 @@ function FabAssetsView({ assets, setAssets, projects, members, logActivity, defa
                                   <span style={{ color: "#555", marginLeft: 8, fontSize: "0.65rem" }}>{new Date(c.createdAt).toLocaleString("fr-FR", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" })}</span>
                                   <button onClick={() => removeComment(c.id)} style={{ marginLeft: "auto", background: "transparent", border: "none", color: "#555", cursor: "pointer", padding: "0 2px", lineHeight: 1 }} title="Supprimer"><IC icon={X} size={11} /></button>
                                 </div>
-                                <div style={{ fontSize: "0.78rem", color: "#e8e0d0" }}>{c.text}</div>
+                                <div style={{ fontSize: "0.78rem", color: "#e8eaed" }}>{c.text}</div>
                               </div>
                             </div>
                           );
@@ -3984,9 +3984,9 @@ function FabAssetsView({ assets, setAssets, projects, members, logActivity, defa
                     )}
                     <div style={{ display: "flex", gap: 8 }}>
                       <input value={commentText} onChange={e => setCommentText(e.target.value)} placeholder="Ajouter un commentaire..."
-                        style={{ flex: 1, background: "#333", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 8, padding: "8px 12px", color: "#e8e0d0", fontSize: "0.78rem", fontFamily: "inherit", outline: "none" }}
+                        style={{ flex: 1, background: "#333", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 8, padding: "8px 12px", color: "#e8eaed", fontSize: "0.78rem", fontFamily: "inherit", outline: "none" }}
                         onKeyDown={e => { if (e.key === "Enter") addComment(); }} />
-                      <button onClick={addComment} style={{ padding: "7px 14px", background: "var(--brand-primary, #e07b39)", color: "#1a1a1a", border: "none", borderRadius: 8, cursor: "pointer", fontWeight: 700, fontSize: "0.75rem", fontFamily: "inherit" }}>
+                      <button onClick={addComment} style={{ padding: "7px 14px", background: "var(--brand-primary, #e07b39)", color: "#161a26", border: "none", borderRadius: 8, cursor: "pointer", fontWeight: 700, fontSize: "0.75rem", fontFamily: "inherit" }}>
                         <IC icon={SendHorizontal} size={12} style={{ marginRight: 4 }} />Envoyer
                       </button>
                     </div>
@@ -4331,7 +4331,7 @@ function AssetCatalogueView({ assets: assetsProp, setAssets: setAssetsProp, curr
     !q || a.name.toLowerCase().includes(q) || (a.vendor || "").toLowerCase().includes(q) || (a.description || "").toLowerCase().includes(q)
   );
 
-  const inS = { width: "100%", background: "#1e1e1e", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 8, padding: "8px 12px", color: "#e8e0d0", fontSize: "0.82rem", fontFamily: "inherit", boxSizing: "border-box", outline: "none" };
+  const inS = { width: "100%", background: "#1a1f2c", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 8, padding: "8px 12px", color: "#e8eaed", fontSize: "0.82rem", fontFamily: "inherit", boxSizing: "border-box", outline: "none" };
   const lbS = { display: "block", fontSize: "0.7rem", fontWeight: 600, color: "#888", textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: 4, marginTop: 12 };
 
   return (
@@ -4347,11 +4347,11 @@ function AssetCatalogueView({ assets: assetsProp, setAssets: setAssetsProp, curr
           <IC icon={Search} size={13} style={{ position: "absolute", left: 10, top: "50%", transform: "translateY(-50%)", color: "#555", pointerEvents: "none" }} />
           <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Rechercher…" style={{ ...inS, width: 200, paddingLeft: 30 }} />
         </div>
-        <button onClick={() => setShowScanner(v => !v)} style={{ padding: "7px 14px", background: showScanner ? "rgba(224,123,57,0.15)" : "#2a2a2a", color: showScanner ? "var(--brand-primary, #e07b39)" : "#aaa", border: `1px solid ${showScanner ? "rgba(224,123,57,0.5)" : "rgba(255,255,255,0.1)"}`, borderRadius: 8, cursor: "pointer", fontWeight: 600, fontSize: "0.82rem", fontFamily: "inherit", display: "flex", alignItems: "center", gap: 6 }}>
+        <button onClick={() => setShowScanner(v => !v)} style={{ padding: "7px 14px", background: showScanner ? "rgba(60, 173, 217,0.15)" : "#2a2f3e", color: showScanner ? "var(--brand-primary, #e07b39)" : "#aaa", border: `1px solid ${showScanner ? "rgba(60, 173, 217,0.5)" : "rgba(255,255,255,0.1)"}`, borderRadius: 8, cursor: "pointer", fontWeight: 600, fontSize: "0.82rem", fontFamily: "inherit", display: "flex", alignItems: "center", gap: 6 }}>
           <IC icon={FolderSearch} size={14} />Scanner Unreal
         </button>
         {/* View mode toggle */}
-        <div style={{ display: 'flex', background: '#1a1a1a', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 8, overflow: 'hidden' }}>
+        <div style={{ display: 'flex', background: '#161a26', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 8, overflow: 'hidden' }}>
           {[['gallery', LayoutGrid, 'Galerie'], ['list', Rows3, 'Liste'], ['vendor', Building2, 'Studio']].map(([mode, Icon, label]) => (
             <button key={mode} onClick={() => { setViewMode(mode); localStorage.setItem('catalogue_viewMode', mode); }}
               title={label}
@@ -4374,18 +4374,18 @@ function AssetCatalogueView({ assets: assetsProp, setAssets: setAssetsProp, curr
             <IC icon={Inbox} size={14} />
             Demandes de téléchargement
             {pendingCount > 0 && (
-              <span style={{ background: "#facc15", color: "#1a1a1a", borderRadius: 99, padding: "1px 7px", fontSize: "0.7rem", fontWeight: 800 }}>{pendingCount}</span>
+              <span style={{ background: "#facc15", color: "#161a26", borderRadius: 99, padding: "1px 7px", fontSize: "0.7rem", fontWeight: 800 }}>{pendingCount}</span>
             )}
             <IC icon={showReqPanel ? ChevronDown : ChevronRight} size={12} style={{ marginLeft: "auto" }} />
           </button>
           {showReqPanel && (
-            <div style={{ marginTop: 6, background: "#1e1e1e", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 10, overflow: "hidden" }}>
+            <div style={{ marginTop: 6, background: "#1a1f2c", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 10, overflow: "hidden" }}>
               {allRequests.length === 0 ? (
                 <div style={{ padding: "20px", textAlign: "center", color: "#555", fontSize: "0.82rem" }}>Aucune demande.</div>
               ) : allRequests.map((r, idx) => (
                 <div key={r.id} style={{ display: "flex", alignItems: "center", gap: 10, padding: "10px 14px", borderBottom: idx < allRequests.length - 1 ? "1px solid rgba(255,255,255,0.05)" : "none", flexWrap: "wrap" }}>
                   <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ fontSize: "0.82rem", color: "#e8e0d0", fontWeight: 600, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{r.file_name}</div>
+                    <div style={{ fontSize: "0.82rem", color: "#e8eaed", fontWeight: 600, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{r.file_name}</div>
                     <div style={{ fontSize: "0.7rem", color: "#666", marginTop: 2 }}>
                       par <span style={{ color: "#a1a1aa" }}>{r.requester_name || r.requester_id}</span>
                       {" · "}{new Date(r.created_at).toLocaleDateString("fr-FR", { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" })}
@@ -4415,12 +4415,12 @@ function AssetCatalogueView({ assets: assetsProp, setAssets: setAssetsProp, curr
 
       {/* Scanner Nextcloud */}
       {showScanner && (
-        <div style={{ background: "#2a2a2a", border: "1px solid rgba(224,123,57,0.3)", borderRadius: 12, padding: 20, marginBottom: 24 }}>
+        <div style={{ background: "#2a2f3e", border: "1px solid rgba(60, 173, 217,0.3)", borderRadius: 12, padding: 20, marginBottom: 24 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 14 }}>
             <div style={{ fontWeight: 700, fontSize: "0.92rem", color: "var(--brand-primary, #e07b39)", display: "flex", alignItems: "center", gap: 8 }}>
               <IC icon={FolderSearch} size={16} />Scanner Nextcloud <span style={{ fontFamily: "monospace", fontSize: "0.78rem", color: "#666" }}>/unreal_asset</span>
             </div>
-            <button onClick={doScan} disabled={scanning} style={{ marginLeft: "auto", padding: "7px 16px", background: "var(--brand-primary, #e07b39)", color: "#1a1a1a", border: "none", borderRadius: 8, cursor: "pointer", fontWeight: 700, fontSize: "0.82rem", fontFamily: "inherit", display: "flex", alignItems: "center", gap: 6, opacity: scanning ? 0.6 : 1 }}>
+            <button onClick={doScan} disabled={scanning} style={{ marginLeft: "auto", padding: "7px 16px", background: "var(--brand-primary, #e07b39)", color: "#161a26", border: "none", borderRadius: 8, cursor: "pointer", fontWeight: 700, fontSize: "0.82rem", fontFamily: "inherit", display: "flex", alignItems: "center", gap: 6, opacity: scanning ? 0.6 : 1 }}>
               {scanning ? <IC icon={Loader2} size={14} style={{ animation: "adm-spin 0.7s linear infinite" }} /> : <IC icon={FolderSearch} size={14} />}
               {scanning ? "Scan en cours…" : "Scanner"}
             </button>
@@ -4432,7 +4432,7 @@ function AssetCatalogueView({ assets: assetsProp, setAssets: setAssetsProp, curr
               {/* Barre d'actions */}
               <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12, flexWrap: "wrap" }}>
                 <span style={{ fontSize: "0.78rem", color: "#888" }}>
-                  <strong style={{ color: "#e8e0d0" }}>{scanPacks.length}</strong> pack{scanPacks.length > 1 ? "s" : ""} trouvé{scanPacks.length > 1 ? "s" : ""}
+                  <strong style={{ color: "#e8eaed" }}>{scanPacks.length}</strong> pack{scanPacks.length > 1 ? "s" : ""} trouvé{scanPacks.length > 1 ? "s" : ""}
                 </span>
 {(() => { const cnt = scanPacks.filter(p => !!getLinkedAsset(p)).length; return cnt > 0 ? (
                   <span style={{ fontSize: "0.72rem", color: "#3e9041", background: "rgba(62,144,65,0.1)", padding: "2px 8px", borderRadius: 8, border: "1px solid rgba(62,144,65,0.25)" }}>
@@ -4468,12 +4468,12 @@ function AssetCatalogueView({ assets: assetsProp, setAssets: setAssetsProp, curr
                           const alreadyInCatalogue = !!linkedAsset;
 
                           return (
-                            <div key={key} style={{ background: "#222", borderRadius: 8, border: `1px solid ${alreadyInCatalogue ? "rgba(62,144,65,0.3)" : ps.selected ? "rgba(88,101,242,0.4)" : "rgba(255,255,255,0.06)"}`, padding: "8px 12px" }}>
+                            <div key={key} style={{ background: "#1f2330", borderRadius: 8, border: `1px solid ${alreadyInCatalogue ? "rgba(62,144,65,0.3)" : ps.selected ? "rgba(88,101,242,0.4)" : "rgba(255,255,255,0.06)"}`, padding: "8px 12px" }}>
                               {/* Ligne principale — toujours visible */}
                               <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                                 {/* Nom du ZIP */}
                                 <div style={{ flex: 1, minWidth: 0 }}>
-                                  <span style={{ fontFamily: "monospace", fontSize: "0.8rem", color: alreadyInCatalogue ? "#3e9041" : "#e8e0d0", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", display: "block" }}>
+                                  <span style={{ fontFamily: "monospace", fontSize: "0.8rem", color: alreadyInCatalogue ? "#3e9041" : "#e8eaed", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", display: "block" }}>
                                     {pack.name}<span style={{ color: "#444" }}>.zip</span>
                                   </span>
                                   {pack.size > 0 && <span style={{ fontSize: "0.6rem", color: "#555" }}>{(pack.size / 1024 / 1024).toFixed(0)} Mo</span>}
@@ -4522,7 +4522,7 @@ function AssetCatalogueView({ assets: assetsProp, setAssets: setAssetsProp, curr
                                       onChange={e => setPS(key, { query: e.target.value })}
                                       onKeyDown={e => e.key === 'Enter' && searchFabForPack(pack)}
                                       placeholder="Terme de recherche Fab…"
-                                      style={{ flex: 1, background: '#1a1a1a', border: '1px solid rgba(255,255,255,0.12)', borderRadius: 5, color: '#e8e0d0', padding: '5px 9px', fontSize: '0.75rem', fontFamily: 'inherit', outline: 'none' }}
+                                      style={{ flex: 1, background: '#161a26', border: '1px solid rgba(255,255,255,0.12)', borderRadius: 5, color: '#e8eaed', padding: '5px 9px', fontSize: '0.75rem', fontFamily: 'inherit', outline: 'none' }}
                                     />
                                     <button
                                       onClick={() => searchFabForPack(pack)}
@@ -4544,7 +4544,7 @@ function AssetCatalogueView({ assets: assetsProp, setAssets: setAssetsProp, curr
                                     <div style={{ marginTop: 6, display: 'flex', gap: 8, alignItems: 'center', background: 'rgba(88,101,242,0.08)', borderRadius: 6, padding: '6px 8px', border: '1px solid rgba(88,101,242,0.3)' }}>
                                       {ps.selected.thumbnail && <img src={ps.selected.thumbnail} alt="" style={{ width: 56, height: 38, objectFit: 'cover', borderRadius: 3, flexShrink: 0 }} onError={e => e.target.style.display='none'} />}
                                       <div style={{ flex: 1, minWidth: 0 }}>
-                                        <div style={{ fontSize: '0.76rem', fontWeight: 700, color: '#e8e0d0', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{ps.selected.title || ps.selected.name}</div>
+                                        <div style={{ fontSize: '0.76rem', fontWeight: 700, color: '#e8eaed', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{ps.selected.title || ps.selected.name}</div>
                                         <div style={{ fontSize: '0.63rem', color: '#7b8ef5', marginTop: 1 }}>{ps.selected.seller || ''}{ps.selected.price ? ` · ${ps.selected.price}` : ''}</div>
                                       </div>
                                       <IC icon={CheckCircle} size={13} style={{ color: '#5865f2', flexShrink: 0 }} />
@@ -4569,7 +4569,7 @@ function AssetCatalogueView({ assets: assetsProp, setAssets: setAssetsProp, curr
                                           <button
                                             key={r.id || r.url || i}
                                             onClick={() => setPS(key, { selected: isSel ? null : r })}
-                                            style={{ display: 'flex', gap: 7, alignItems: 'center', background: isSel ? 'rgba(88,101,242,0.12)' : '#1a1a1a', border: `1px solid ${isSel ? 'rgba(88,101,242,0.5)' : 'rgba(255,255,255,0.06)'}`, borderRadius: 5, padding: '5px 7px', cursor: 'pointer', textAlign: 'left', width: '100%' }}
+                                            style={{ display: 'flex', gap: 7, alignItems: 'center', background: isSel ? 'rgba(88,101,242,0.12)' : '#161a26', border: `1px solid ${isSel ? 'rgba(88,101,242,0.5)' : 'rgba(255,255,255,0.06)'}`, borderRadius: 5, padding: '5px 7px', cursor: 'pointer', textAlign: 'left', width: '100%' }}
                                             onMouseEnter={e => { if (!isSel) e.currentTarget.style.borderColor = 'rgba(88,101,242,0.35)' }}
                                             onMouseLeave={e => { if (!isSel) e.currentTarget.style.borderColor = 'rgba(255,255,255,0.06)' }}
                                           >
@@ -4577,7 +4577,7 @@ function AssetCatalogueView({ assets: assetsProp, setAssets: setAssetsProp, curr
                                               ? <img src={r.thumbnail} alt="" style={{ width: 54, height: 36, objectFit: 'cover', borderRadius: 3, flexShrink: 0 }} onError={e => e.target.style.display='none'} />
                                               : <div style={{ width: 54, height: 36, background: '#333', borderRadius: 3, flexShrink: 0 }} />}
                                             <div style={{ flex: 1, minWidth: 0 }}>
-                                              <div style={{ fontSize: '0.74rem', fontWeight: 600, color: '#e8e0d0', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{r.title || r.name}</div>
+                                              <div style={{ fontSize: '0.74rem', fontWeight: 600, color: '#e8eaed', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{r.title || r.name}</div>
                                               <div style={{ fontSize: '0.62rem', color: '#666', marginTop: 1 }}>{r.seller || r.vendor || ''}{r.price ? ` · ${r.price}` : ''}</div>
                                             </div>
                                             {isSel ? <IC icon={CheckCircle} size={12} style={{ color: '#5865f2', flexShrink: 0 }} /> : <IC icon={ChevronRight} size={12} style={{ color: '#444', flexShrink: 0 }} />}
@@ -4603,8 +4603,8 @@ function AssetCatalogueView({ assets: assetsProp, setAssets: setAssetsProp, curr
 
       {/* Form */}
       {showForm && (
-        <div style={{ background: "#2a2a2a", border: "1px solid rgba(88,101,242,0.35)", borderRadius: 12, padding: 20, marginBottom: 24 }}>
-          <div style={{ fontWeight: 700, fontSize: "0.9rem", color: "#e8e0d0", marginBottom: 12 }}>{editId ? "Modifier l'asset" : "Nouvel asset"}</div>
+        <div style={{ background: "#2a2f3e", border: "1px solid rgba(88,101,242,0.35)", borderRadius: 12, padding: 20, marginBottom: 24 }}>
+          <div style={{ fontWeight: 700, fontSize: "0.9rem", color: "#e8eaed", marginBottom: 12 }}>{editId ? "Modifier l'asset" : "Nouvel asset"}</div>
           {!editId && (
             <div style={{ marginBottom: 16, paddingBottom: 16, borderBottom: "1px solid rgba(255,255,255,0.07)" }}>
               <label style={{ ...lbS, marginBottom: 4, display: "block" }}>Lien Fab.com {fabFetching && <IC icon={Loader2} size={11} style={{ marginLeft: 5, color: "var(--brand-primary, #e07b39)", animation: "adm-spin 0.7s linear infinite" }} />}</label>
@@ -4616,10 +4616,10 @@ function AssetCatalogueView({ assets: assetsProp, setAssets: setAssetsProp, curr
               />
               {fabFetchErr && <div style={{ fontSize: "0.68rem", color: "#e74c3c", marginTop: 4 }}>{fabFetchErr}</div>}
               {form.thumbnail && !fabFetching && (
-                <div style={{ marginTop: 10, display: "flex", gap: 12, alignItems: "center", background: "#1a1a1a", borderRadius: 8, padding: "8px 12px", border: "1px solid rgba(62,144,65,0.25)" }}>
+                <div style={{ marginTop: 10, display: "flex", gap: 12, alignItems: "center", background: "#161a26", borderRadius: 8, padding: "8px 12px", border: "1px solid rgba(62,144,65,0.25)" }}>
                   <img src={form.thumbnail} alt="" style={{ width: 80, height: 56, objectFit: "cover", borderRadius: 5, flexShrink: 0 }} onError={e => e.target.style.display='none'} />
                   <div>
-                    <div style={{ fontSize: "0.82rem", fontWeight: 700, color: "#e8e0d0" }}>{form.name}</div>
+                    <div style={{ fontSize: "0.82rem", fontWeight: 700, color: "#e8eaed" }}>{form.name}</div>
                     {form.price && <div style={{ fontSize: "0.72rem", color: "#5865f2", fontWeight: 700, marginTop: 2 }}>{form.price}</div>}
                   </div>
                 </div>
@@ -4682,12 +4682,12 @@ function AssetCatalogueView({ assets: assetsProp, setAssets: setAssetsProp, curr
         /* ── GALERIE ── */
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gap: 12 }}>
           {filtered.map(a => (
-            <div key={a.id} style={{ background: "#2a2a2a", borderRadius: 10, border: "1px solid rgba(255,255,255,0.07)", overflow: "hidden", display: "flex", flexDirection: "column" }}>
+            <div key={a.id} style={{ background: "#2a2f3e", borderRadius: 10, border: "1px solid rgba(255,255,255,0.07)", overflow: "hidden", display: "flex", flexDirection: "column" }}>
               {a.thumbnail
                 ? <img src={a.thumbnail} alt={a.name} style={{ width: "100%", height: 118, objectFit: "cover" }} onError={e => e.target.style.display = "none"} />
-                : <div style={{ height: 60, background: "#1e1e1e", display: "flex", alignItems: "center", justifyContent: "center" }}><IC icon={Package} size={22} style={{ color: "#333" }} /></div>}
+                : <div style={{ height: 60, background: "#1a1f2c", display: "flex", alignItems: "center", justifyContent: "center" }}><IC icon={Package} size={22} style={{ color: "#333" }} /></div>}
               <div style={{ padding: "9px 11px", flex: 1, display: "flex", flexDirection: "column", gap: 2 }}>
-                <div style={{ fontWeight: 700, fontSize: "0.82rem", color: "#e8e0d0", lineHeight: 1.3, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }} title={a.name}>{a.name}</div>
+                <div style={{ fontWeight: 700, fontSize: "0.82rem", color: "#e8eaed", lineHeight: 1.3, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }} title={a.name}>{a.name}</div>
                 {a.vendor && <div style={{ fontSize: "0.67rem", color: "#666" }}>{a.vendor}</div>}
                 {a.price && <div style={{ fontSize: "0.7rem", color: "#5865f2", fontWeight: 700 }}>{a.price}</div>}
                 <div style={{ flex: 1 }} />
@@ -4714,14 +4714,14 @@ function AssetCatalogueView({ assets: assetsProp, setAssets: setAssetsProp, curr
             <span/><span>Nom</span><span>Studio</span><span>Prix</span><span style={{ textAlign: 'center' }}>Liens</span><span style={{ textAlign: 'right' }}>Actions</span>
           </div>
           {filtered.map(a => (
-            <div key={a.id} style={{ display: "grid", gridTemplateColumns: "56px 1fr 140px 90px 76px 66px", gap: 8, alignItems: "center", padding: "5px 10px", background: "#1e1e1e", borderRadius: 6, border: "1px solid rgba(255,255,255,0.04)" }}
+            <div key={a.id} style={{ display: "grid", gridTemplateColumns: "56px 1fr 140px 90px 76px 66px", gap: 8, alignItems: "center", padding: "5px 10px", background: "#1a1f2c", borderRadius: 6, border: "1px solid rgba(255,255,255,0.04)" }}
               onMouseEnter={e => e.currentTarget.style.borderColor = 'rgba(255,255,255,0.09)'}
               onMouseLeave={e => e.currentTarget.style.borderColor = 'rgba(255,255,255,0.04)'}>
               {a.thumbnail
                 ? <img src={a.thumbnail} alt="" style={{ width: 54, height: 36, objectFit: "cover", borderRadius: 4 }} onError={e => e.target.style.display = "none"} />
-                : <div style={{ width: 54, height: 36, background: "#2a2a2a", borderRadius: 4, display: "flex", alignItems: "center", justifyContent: "center" }}><IC icon={Package} size={13} style={{ color: "#333" }} /></div>}
+                : <div style={{ width: 54, height: 36, background: "#2a2f3e", borderRadius: 4, display: "flex", alignItems: "center", justifyContent: "center" }}><IC icon={Package} size={13} style={{ color: "#333" }} /></div>}
               <div style={{ minWidth: 0 }}>
-                <div style={{ fontSize: "0.81rem", fontWeight: 600, color: "#e8e0d0", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{a.name}</div>
+                <div style={{ fontSize: "0.81rem", fontWeight: 600, color: "#e8eaed", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{a.name}</div>
                 {a.description && <div style={{ fontSize: "0.61rem", color: "#555", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{a.description}</div>}
               </div>
               <div style={{ fontSize: "0.72rem", color: "#777", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{a.vendor || <span style={{ color: "#333" }}>—</span>}</div>
@@ -4757,17 +4757,17 @@ function AssetCatalogueView({ assets: assetsProp, setAssets: setAssetsProp, curr
                 <div key={vendor}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 10, paddingBottom: 6, borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
                     <IC icon={Building2} size={13} style={{ color: '#5865f2' }} />
-                    <span style={{ fontSize: '0.82rem', fontWeight: 700, color: '#e8e0d0' }}>{vendor}</span>
-                    <span style={{ fontSize: '0.66rem', color: '#444', background: '#1e1e1e', padding: '1px 7px', borderRadius: 8 }}>{list.length}</span>
+                    <span style={{ fontSize: '0.82rem', fontWeight: 700, color: '#e8eaed' }}>{vendor}</span>
+                    <span style={{ fontSize: '0.66rem', color: '#444', background: '#1a1f2c', padding: '1px 7px', borderRadius: 8 }}>{list.length}</span>
                   </div>
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(190px, 1fr))', gap: 10 }}>
                     {list.map(a => (
-                      <div key={a.id} style={{ background: '#222', borderRadius: 8, border: '1px solid rgba(255,255,255,0.06)', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+                      <div key={a.id} style={{ background: '#1f2330', borderRadius: 8, border: '1px solid rgba(255,255,255,0.06)', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
                         {a.thumbnail
                           ? <img src={a.thumbnail} alt={a.name} style={{ width: '100%', height: 100, objectFit: 'cover' }} onError={e => e.target.style.display = 'none'} />
-                          : <div style={{ height: 50, background: '#1e1e1e', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><IC icon={Package} size={18} style={{ color: '#2a2a2a' }} /></div>}
+                          : <div style={{ height: 50, background: '#1a1f2c', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><IC icon={Package} size={18} style={{ color: '#2a2f3e' }} /></div>}
                         <div style={{ padding: '7px 9px', flex: 1, display: 'flex', flexDirection: 'column', gap: 2 }}>
-                          <div style={{ fontSize: '0.78rem', fontWeight: 700, color: '#e8e0d0', lineHeight: 1.3, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }} title={a.name}>{a.name}</div>
+                          <div style={{ fontSize: '0.78rem', fontWeight: 700, color: '#e8eaed', lineHeight: 1.3, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }} title={a.name}>{a.name}</div>
                           {a.price && <div style={{ fontSize: '0.66rem', color: '#5865f2', fontWeight: 700 }}>{a.price}</div>}
                           <div style={{ flex: 1 }} />
                           <div style={{ display: 'flex', gap: 4, marginTop: 5, alignItems: 'center' }}>
@@ -4899,7 +4899,7 @@ function NextcloudView() {
             <span key={i} style={{ display: "flex", alignItems: "center", gap: 4 }}>
               <IC icon={ChevronRight} size={11} style={{ color: "#444" }} />
               {isLast ? (
-                <span style={{ color: "#e8e0d0" }}>{seg}</span>
+                <span style={{ color: "#e8eaed" }}>{seg}</span>
               ) : (
                 <button onClick={() => {
                   const newHist = [...history.slice(0, history.indexOf(currentRoot.path) + 1), targetPath];
@@ -4915,7 +4915,7 @@ function NextcloudView() {
 
       {/* Back button */}
       {path !== currentRoot.path && (
-        <button onClick={goBack} style={{ display: "flex", alignItems: "center", gap: 6, padding: "7px 12px", background: "#2a2a2a", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 8, cursor: "pointer", color: "#888", fontFamily: "inherit", fontSize: "0.8rem", marginBottom: 12 }}>
+        <button onClick={goBack} style={{ display: "flex", alignItems: "center", gap: 6, padding: "7px 12px", background: "#2a2f3e", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 8, cursor: "pointer", color: "#888", fontFamily: "inherit", fontSize: "0.8rem", marginBottom: 12 }}>
           ← Retour
         </button>
       )}
@@ -4936,7 +4936,7 @@ function NextcloudView() {
           <div>Dossier vide</div>
         </div>
       ) : (
-        <div style={{ background: "#2a2a2a", borderRadius: 12, border: "1px solid rgba(255,255,255,0.07)", overflow: "hidden" }}>
+        <div style={{ background: "#2a2f3e", borderRadius: 12, border: "1px solid rgba(255,255,255,0.07)", overflow: "hidden" }}>
           {entries.map((entry, idx) => (
             <div key={entry.path} style={{ display: "flex", alignItems: "center", gap: 10, padding: "10px 16px", borderBottom: idx < entries.length - 1 ? "1px solid rgba(255,255,255,0.05)" : "none", transition: "background 0.1s" }}
               onMouseEnter={e => e.currentTarget.style.background = "#333"}
@@ -4948,11 +4948,11 @@ function NextcloudView() {
               <div style={{ flex: 1, minWidth: 0 }}>
                 {entry.isDir ? (
                   <button onClick={() => navigate(entry)}
-                    style={{ background: "none", border: "none", color: "#e8e0d0", cursor: "pointer", fontFamily: "inherit", fontSize: "0.85rem", fontWeight: 600, padding: 0, textAlign: "left" }}>
+                    style={{ background: "none", border: "none", color: "#e8eaed", cursor: "pointer", fontFamily: "inherit", fontSize: "0.85rem", fontWeight: 600, padding: 0, textAlign: "left" }}>
                     {entry.name}/
                   </button>
                 ) : (
-                  <span style={{ color: "#e8e0d0", fontSize: "0.85rem" }}>{entry.name}</span>
+                  <span style={{ color: "#e8eaed", fontSize: "0.85rem" }}>{entry.name}</span>
                 )}
                 {entry.modified && (
                   <div style={{ fontSize: "0.65rem", color: "#555", marginTop: 1 }}>
@@ -5040,12 +5040,12 @@ export function SearchOverlay({ tasks, ideas, milestones, fabAssets, catalogueAs
 
   return (
     <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.65)", zIndex: 2000, display: "flex", alignItems: "flex-start", justifyContent: "center", paddingTop: 80 }} onClick={onClose}>
-      <div onClick={e => e.stopPropagation()} style={{ background: "#2a2a2a", border: "1px solid rgba(255,255,255,0.12)", borderRadius: 16, width: "100%", maxWidth: 640, maxHeight: "70vh", display: "flex", flexDirection: "column", overflow: "hidden", boxShadow: "0 20px 60px rgba(0,0,0,0.5)" }}>
+      <div onClick={e => e.stopPropagation()} style={{ background: "#2a2f3e", border: "1px solid rgba(255,255,255,0.12)", borderRadius: 16, width: "100%", maxWidth: 640, maxHeight: "70vh", display: "flex", flexDirection: "column", overflow: "hidden", boxShadow: "0 20px 60px rgba(0,0,0,0.5)" }}>
 
         {/* Search input */}
         <div style={{ display: "flex", alignItems: "center", gap: 10, padding: "14px 18px", borderBottom: "1px solid rgba(255,255,255,0.08)" }}>
           <IC icon={Search} size={18} style={{ color: "#888", flexShrink: 0 }} />
-          <input ref={inputRef} value={query} onChange={e => setQuery(e.target.value)} placeholder="Rechercher tâches, idées, milestones…" style={{ flex: 1, background: "transparent", border: "none", color: "#e8e0d0", fontSize: "0.95rem", fontFamily: "inherit", outline: "none" }} />
+          <input ref={inputRef} value={query} onChange={e => setQuery(e.target.value)} placeholder="Rechercher tâches, idées, milestones…" style={{ flex: 1, background: "transparent", border: "none", color: "#e8eaed", fontSize: "0.95rem", fontFamily: "inherit", outline: "none" }} />
           <kbd style={{ fontSize: "0.65rem", color: "#666", background: "#333", padding: "2px 6px", borderRadius: 4, border: "1px solid rgba(255,255,255,0.08)" }}>ESC</kbd>
         </div>
 
@@ -5075,7 +5075,7 @@ export function SearchOverlay({ tasks, ideas, milestones, fabAssets, catalogueAs
                   onMouseLeave={e => e.currentTarget.style.background = "transparent"}>
                   <span style={{ width: 7, height: 7, borderRadius: "50%", background: STATUS_CONFIG[t.status]?.color, flexShrink: 0 }} />
                   <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ fontSize: "0.82rem", color: "#e8e0d0", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{highlight(t.text, 70)}</div>
+                    <div style={{ fontSize: "0.82rem", color: "#e8eaed", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{highlight(t.text, 70)}</div>
                     <div style={{ fontSize: "0.68rem", color: "#666", display: "flex", gap: 8, marginTop: 2 }}>
                       <span>{projectName(t.projectId)}</span>
                       {t.category && <span>· {t.category}</span>}
@@ -5098,7 +5098,7 @@ export function SearchOverlay({ tasks, ideas, milestones, fabAssets, catalogueAs
                   onMouseLeave={e => e.currentTarget.style.background = "transparent"}>
                   <IC icon={Lightbulb} size={14} style={{ color: "#ed9121", flexShrink: 0 }} />
                   <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ fontSize: "0.82rem", color: "#e8e0d0", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{highlight(i.text, 70)}</div>
+                    <div style={{ fontSize: "0.82rem", color: "#e8eaed", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{highlight(i.text, 70)}</div>
                     <div style={{ fontSize: "0.68rem", color: "#666" }}>{projectName(i.projectId)}</div>
                   </div>
                 </div>
@@ -5116,7 +5116,7 @@ export function SearchOverlay({ tasks, ideas, milestones, fabAssets, catalogueAs
                   onMouseLeave={e => e.currentTarget.style.background = "transparent"}>
                   <IC icon={Route} size={14} style={{ color: m.color || "var(--brand-primary, #e07b39)", flexShrink: 0 }} />
                   <div style={{ flex: 1 }}>
-                    <div style={{ fontSize: "0.82rem", color: "#e8e0d0" }}>{highlight(m.name, 60)}</div>
+                    <div style={{ fontSize: "0.82rem", color: "#e8eaed" }}>{highlight(m.name, 60)}</div>
                     <div style={{ fontSize: "0.68rem", color: "#666" }}>{m.date}</div>
                   </div>
                 </div>
@@ -5134,7 +5134,7 @@ export function SearchOverlay({ tasks, ideas, milestones, fabAssets, catalogueAs
                   onMouseLeave={e => e.currentTarget.style.background = "transparent"}>
                   <IC icon={ShoppingBag} size={14} style={{ color: "var(--brand-primary, #e07b39)", flexShrink: 0 }} />
                   <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ fontSize: "0.82rem", color: "#e8e0d0", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{highlight(a.name, 60)}</div>
+                    <div style={{ fontSize: "0.82rem", color: "#e8eaed", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{highlight(a.name, 60)}</div>
                     <div style={{ fontSize: "0.68rem", color: "#666", display: "flex", gap: 8 }}>
                       <span>{projectName(a.projectId)}</span>
                       {a.price && <span style={{ color: "var(--brand-primary, #e07b39)" }}>{a.price}</span>}
@@ -5155,7 +5155,7 @@ export function SearchOverlay({ tasks, ideas, milestones, fabAssets, catalogueAs
                   onMouseLeave={e => e.currentTarget.style.background = "transparent"}>
                   <IC icon={Database} size={14} style={{ color: "#5865f2", flexShrink: 0 }} />
                   <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ fontSize: "0.82rem", color: "#e8e0d0", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{highlight(a.name, 60)}</div>
+                    <div style={{ fontSize: "0.82rem", color: "#e8eaed", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{highlight(a.name, 60)}</div>
                     <div style={{ fontSize: "0.68rem", color: "#666", display: "flex", gap: 8 }}>
                       {a.vendor && <span>{a.vendor}</span>}
                       {a.price && <span style={{ color: "#5865f2" }}>{a.price}</span>}
@@ -5184,14 +5184,14 @@ const DEFAULT_MILESTONES = [];
 
 // --- STYLES ---
 const labelStyle = { display: "block", fontSize: "0.72rem", fontWeight: 600, color: "#888888", marginBottom: 4, marginTop: 12, textTransform: "uppercase", letterSpacing: "0.04em" };
-const inputStyle = { width: "100%", background: "#333333", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 8, padding: "8px 12px", color: "#e8e0d0", fontSize: "0.85rem", fontFamily: "inherit", marginBottom: 4, outline: "none" };
+const inputStyle = { width: "100%", background: "#333333", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 8, padding: "8px 12px", color: "#e8eaed", fontSize: "0.85rem", fontFamily: "inherit", marginBottom: 4, outline: "none" };
 const btnStyle = { padding: "8px 18px", borderRadius: 8, cursor: "pointer", fontSize: "0.82rem", fontFamily: "inherit" };
 
 // ============================================================
 // STUDIO TRACKER VIEW — Follow studios on Fab.com
 // ============================================================
 const labelStyleST = { display: "block", fontSize: "0.7rem", fontWeight: 600, color: "#888", textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: 4 };
-const inputStyleST = { width: "100%", background: "#1e1e1e", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 8, padding: "8px 12px", color: "#e8e0d0", fontSize: "0.82rem", fontFamily: "inherit", boxSizing: "border-box" };
+const inputStyleST = { width: "100%", background: "#1a1f2c", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 8, padding: "8px 12px", color: "#e8eaed", fontSize: "0.82rem", fontFamily: "inherit", boxSizing: "border-box" };
 
 function StudioTrackerView({ studios, setStudios, logActivity, defaultAuthor }) {
   const [showForm, setShowForm]     = useState(false);
@@ -5253,14 +5253,14 @@ function StudioTrackerView({ studios, setStudios, logActivity, defaultAuthor }) 
         </h2>
         <span style={{ fontSize: "0.75rem", color: "#666" }}>{studios.length} studio{studios.length !== 1 ? "s" : ""}</span>
         <span style={{ flex: 1 }} />
-        <button onClick={() => setShowForm(v => !v)} style={{ padding: "7px 14px", background: "var(--brand-primary, #e07b39)", color: "#1a1a1a", border: "none", borderRadius: 8, cursor: "pointer", fontWeight: 700, fontSize: "0.82rem", fontFamily: "inherit", display: "flex", alignItems: "center", gap: 6 }}>
+        <button onClick={() => setShowForm(v => !v)} style={{ padding: "7px 14px", background: "var(--brand-primary, #e07b39)", color: "#161a26", border: "none", borderRadius: 8, cursor: "pointer", fontWeight: 700, fontSize: "0.82rem", fontFamily: "inherit", display: "flex", alignItems: "center", gap: 6 }}>
           <IC icon={Plus} size={14} />Studio
         </button>
       </div>
 
       {/* Add form */}
       {showForm && (
-        <div style={{ background: "#2a2a2a", border: "1px solid rgba(224,123,57,0.3)", borderRadius: 12, padding: 20, marginBottom: 20 }}>
+        <div style={{ background: "#2a2f3e", border: "1px solid rgba(60, 173, 217,0.3)", borderRadius: 12, padding: 20, marginBottom: 20 }}>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr auto", gap: 12, alignItems: "end" }}>
             <div>
               <label style={labelStyleST}>Nom du studio *</label>
@@ -5275,7 +5275,7 @@ function StudioTrackerView({ studios, setStudios, logActivity, defaultAuthor }) 
             </div>
             <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
               <input type="color" value={color} onChange={e => setColor(e.target.value)} style={{ width: 36, height: 36, borderRadius: 6, border: "none", cursor: "pointer", padding: 2, background: "transparent" }} />
-              <button onClick={addStudio} disabled={!name.trim() || !fabUsername.trim()} style={{ padding: "8px 16px", background: "var(--brand-primary, #e07b39)", color: "#1a1a1a", border: "none", borderRadius: 8, cursor: "pointer", fontWeight: 700, fontFamily: "inherit", opacity: (!name.trim() || !fabUsername.trim()) ? 0.5 : 1 }}>Ajouter</button>
+              <button onClick={addStudio} disabled={!name.trim() || !fabUsername.trim()} style={{ padding: "8px 16px", background: "var(--brand-primary, #e07b39)", color: "#161a26", border: "none", borderRadius: 8, cursor: "pointer", fontWeight: 700, fontFamily: "inherit", opacity: (!name.trim() || !fabUsername.trim()) ? 0.5 : 1 }}>Ajouter</button>
               <button onClick={() => setShowForm(false)} style={{ padding: "8px 10px", background: "#333", color: "#888", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 8, cursor: "pointer", fontFamily: "inherit" }}><IC icon={X} size={14} /></button>
             </div>
           </div>
@@ -5285,7 +5285,7 @@ function StudioTrackerView({ studios, setStudios, logActivity, defaultAuthor }) 
       {/* Studios list */}
       {studios.length === 0 ? (
         <div style={{ color: "#555", textAlign: "center", padding: "60px 0", fontSize: "0.85rem" }}>
-          <IC icon={Store} size={36} style={{ color: "#2a2a2a", display: "block", margin: "0 auto 12px" }} />
+          <IC icon={Store} size={36} style={{ color: "#2a2f3e", display: "block", margin: "0 auto 12px" }} />
           Aucun studio suivi.<br />
           <span style={{ color: "#444" }}>Ajoutez un studio Fab pour suivre leurs nouvelles publications.</span>
         </div>
@@ -5297,11 +5297,11 @@ function StudioTrackerView({ studios, setStudios, logActivity, defaultAuthor }) 
             const newCount = newAssets.length;
 
             return (
-              <div key={studio.id} style={{ background: "#2a2a2a", borderRadius: 12, border: "1px solid rgba(255,255,255,0.08)", borderLeft: `3px solid ${studio.color}` }}>
+              <div key={studio.id} style={{ background: "#2a2f3e", borderRadius: 12, border: "1px solid rgba(255,255,255,0.08)", borderLeft: `3px solid ${studio.color}` }}>
                 {/* Studio header */}
                 <div style={{ display: "flex", alignItems: "center", gap: 10, padding: "14px 16px", flexWrap: "wrap" }}>
                   <span style={{ width: 10, height: 10, borderRadius: "50%", background: studio.color, flexShrink: 0, display: "inline-block" }} />
-                  <span style={{ fontWeight: 700, color: "#e8e0d0", fontSize: "0.92rem" }}>{studio.name}</span>
+                  <span style={{ fontWeight: 700, color: "#e8eaed", fontSize: "0.92rem" }}>{studio.name}</span>
                   <a href={`https://www.fab.com/sellers/${studio.fabUsername}`} target="_blank" rel="noreferrer"
                     style={{ fontSize: "0.68rem", color: "#555", textDecoration: "none", display: "flex", alignItems: "center", gap: 3 }}>
                     <IC icon={ExternalLink} size={10} />fab.com/sellers/{studio.fabUsername}
@@ -5344,7 +5344,7 @@ function StudioTrackerView({ studios, setStudios, logActivity, defaultAuthor }) 
                     {result.assets.map(asset => {
                       const isNew = !(studio.seenIds || []).includes(asset.id);
                       return (
-                        <a key={asset.id} href={asset.url} target="_blank" rel="noreferrer" style={{ textDecoration: "none", display: "flex", flexDirection: "column", background: "#1c1c1c", borderRadius: 8, overflow: "hidden", border: isNew ? `1px solid ${studio.color}55` : "1px solid rgba(255,255,255,0.05)", transition: "border-color 0.15s" }}>
+                        <a key={asset.id} href={asset.url} target="_blank" rel="noreferrer" style={{ textDecoration: "none", display: "flex", flexDirection: "column", background: "#1a1f2c", borderRadius: 8, overflow: "hidden", border: isNew ? `1px solid ${studio.color}55` : "1px solid rgba(255,255,255,0.05)", transition: "border-color 0.15s" }}>
                           {asset.thumbnail ? (
                             <img src={asset.thumbnail} alt={asset.title} style={{ width: "100%", height: 110, objectFit: "cover", flexShrink: 0 }} onError={e => { e.target.style.display = "none"; }} />
                           ) : (
@@ -5356,7 +5356,7 @@ function StudioTrackerView({ studios, setStudios, logActivity, defaultAuthor }) 
                             {isNew && (
                               <span style={{ fontSize: "0.6rem", fontWeight: 800, color: studio.color, background: `${studio.color}20`, padding: "1px 6px", borderRadius: 4, marginBottom: 4, display: "inline-block", letterSpacing: "0.04em" }}>NOUVEAU</span>
                             )}
-                            <div style={{ fontSize: "0.76rem", fontWeight: 600, color: "#e8e0d0", lineHeight: 1.3, marginBottom: 4, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{asset.title}</div>
+                            <div style={{ fontSize: "0.76rem", fontWeight: 600, color: "#e8eaed", lineHeight: 1.3, marginBottom: 4, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{asset.title}</div>
                             <div style={{ fontSize: "0.7rem", color: "#888", fontWeight: 600 }}>{asset.price}</div>
                             {asset.publishedAt && (
                               <div style={{ fontSize: "0.62rem", color: "#555", marginTop: 3 }}>
@@ -5791,7 +5791,7 @@ export default function HubPanel({ view: externalView, onChangeView, currentUser
     }
   };
 
-  if (!loaded) return <div style={{ background: "#1a1a1a", color: "#e8e0d0", minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center" }}>Chargement...</div>;
+  if (!loaded) return <div style={{ background: "#161a26", color: "#e8eaed", minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center" }}>Chargement...</div>;
 
   const navItems = [
     { id: "dashboard", label: "Dashboard", icon: BarChart3 },
@@ -5805,17 +5805,17 @@ export default function HubPanel({ view: externalView, onChangeView, currentUser
   ];
 
   return (
-    <div style={{ background: "#1a1a1a", color: "#e8e0d0", ...(view === "mapview" ? { height: "calc(100vh - 50px)", overflow: "hidden" } : { minHeight: "100vh" }), fontFamily: "'Inter', system-ui, sans-serif" }}>
+    <div style={{ background: "#161a26", color: "#e8eaed", ...(view === "mapview" ? { height: "calc(100vh - 50px)", overflow: "hidden" } : { minHeight: "100vh" }), fontFamily: "'Inter', system-ui, sans-serif" }}>
       <style>{`
-        select, select option { background: #333333; color: #e8e0d0; }
-        select option:checked { background: var(--brand-primary, #e07b39); color: #1a1a1a; }
+        select, select option { background: #333333; color: #e8eaed; }
+        select option:checked { background: var(--brand-primary, #e07b39); color: #161a26; }
         select option:hover { background: #3a3a3a; }
       `}</style>
 
       {/* Bouton flottant + Tâche */}
       <button
         onClick={() => setShowNewTask(true)}
-        style={{ position: "fixed", bottom: 28, right: 28, zIndex: 300, display: "flex", alignItems: "center", gap: 8, background: "var(--brand-primary, #e07b39)", color: "#1a1a1a", border: "none", borderRadius: 12, padding: "12px 20px", fontWeight: 800, fontSize: "0.85rem", cursor: "pointer", boxShadow: "0 4px 20px rgba(224,123,57,0.4)", fontFamily: "'Inter', system-ui, sans-serif" }}
+        style={{ position: "fixed", bottom: 28, right: 28, zIndex: 300, display: "flex", alignItems: "center", gap: 8, background: "var(--brand-primary, #e07b39)", color: "#161a26", border: "none", borderRadius: 12, padding: "12px 20px", fontWeight: 800, fontSize: "0.85rem", cursor: "pointer", boxShadow: "0 4px 20px rgba(60, 173, 217,0.4)", fontFamily: "'Inter', system-ui, sans-serif" }}
       >
         <IC icon={Plus} size={16} /> Tâche
       </button>
@@ -5852,7 +5852,7 @@ export default function HubPanel({ view: externalView, onChangeView, currentUser
                     <button key={sv.id} onClick={() => setTaskSubView(sv.id)} style={{
                       ...btnStyle, padding: "6px 14px", fontSize: "0.78rem",
                       background: taskSubView === sv.id ? "var(--brand-primary, #e07b39)" : "transparent",
-                      color: taskSubView === sv.id ? "#1a1a1a" : "#888",
+                      color: taskSubView === sv.id ? "#161a26" : "#888",
                       border: "none", fontWeight: taskSubView === sv.id ? 700 : 400,
                       borderRadius: 7,
                     }}>
@@ -5876,9 +5876,9 @@ export default function HubPanel({ view: externalView, onChangeView, currentUser
                 {/* Filtre personne (Liste) */}
                 {taskSubView === "list" && (
                   <div style={{ display: "flex", gap: 6, alignItems: "center", flexWrap: "wrap" }}>
-                    <button onClick={() => setPersonFilter("all")} style={{ ...btnStyle, padding: "5px 12px", fontSize: "0.75rem", background: personFilter === "all" ? "var(--brand-primary, #e07b39)" : "transparent", color: personFilter === "all" ? "#1a1a1a" : "#999", border: "1px solid rgba(255,255,255,0.1)", fontWeight: personFilter === "all" ? 700 : 400 }}>Tous</button>
+                    <button onClick={() => setPersonFilter("all")} style={{ ...btnStyle, padding: "5px 12px", fontSize: "0.75rem", background: personFilter === "all" ? "var(--brand-primary, #e07b39)" : "transparent", color: personFilter === "all" ? "#161a26" : "#999", border: "1px solid rgba(255,255,255,0.1)", fontWeight: personFilter === "all" ? 700 : 400 }}>Tous</button>
                     {listFilterMembers.map(m => (
-                      <button key={m.id} onClick={() => setPersonFilter(m.id)} style={{ ...btnStyle, padding: "5px 12px", fontSize: "0.75rem", background: personFilter === m.id ? m.color : "transparent", color: personFilter === m.id ? "#1a1a1a" : m.color, border: `1px solid ${m.color}55`, fontWeight: personFilter === m.id ? 700 : 400 }}>{m.name}</button>
+                      <button key={m.id} onClick={() => setPersonFilter(m.id)} style={{ ...btnStyle, padding: "5px 12px", fontSize: "0.75rem", background: personFilter === m.id ? m.color : "transparent", color: personFilter === m.id ? "#161a26" : m.color, border: `1px solid ${m.color}55`, fontWeight: personFilter === m.id ? 700 : 400 }}>{m.name}</button>
                     ))}
                   </div>
                 )}

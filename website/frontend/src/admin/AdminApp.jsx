@@ -3,6 +3,7 @@ import { useNavigate, useParams, useLocation } from 'react-router-dom'
 import { api, API_BASE } from './api.js'
 import { useAdminSocket } from './useAdminSocket.js'
 import { useAuth } from '../context/AuthContext.jsx'
+import { useBranding } from '../context/BrandingContext.jsx'
 import SEO from '../components/SEO.jsx'
 import './Admin.css'
 import {
@@ -50,6 +51,7 @@ export default function AdminApp() {
   const dropdownTimerRef = useRef(null)
   const importRef = useRef(null)
   const { user, logout, can } = useAuth()
+  const { branding } = useBranding()
 
   // ── Navigation URL-driven ──
   const routerNavigate = useNavigate()
@@ -196,9 +198,13 @@ export default function AdminApp() {
           )
         })()}
         <a href="/" target="_blank" className="adm__header-brand" style={{ textDecoration: 'none', color: 'inherit' }}>
-          <span className="adm__header-icon"><Wrench size={16} /></span>
+          <span className="adm__header-icon">
+            {branding.logo_url
+              ? <img src={branding.logo_url} alt={branding.site_name} style={{ width: 18, height: 18, objectFit: 'contain' }} />
+              : <Wrench size={16} />}
+          </span>
           <div>
-            <div className="adm__header-title">S&amp;Box Studio</div>
+            <div className="adm__header-title">{branding.site_name || 'OpenFramework'}</div>
             <div className="adm__header-sub">Admin</div>
           </div>
         </a>
@@ -816,14 +822,14 @@ function UsersPanel({ onClose, currentUser }) {
                 )}
               </div>
               {repairId === u.id && (
-                <form onSubmit={handleRepair} style={{ marginTop: 8, padding: '10px 12px', background: 'rgba(224,123,57,0.08)', borderRadius: 8, border: '1px solid rgba(224,123,57,0.3)', display: 'flex', flexDirection: 'column', gap: 6 }}>
+                <form onSubmit={handleRepair} style={{ marginTop: 8, padding: '10px 12px', background: 'rgba(60, 173, 217,0.08)', borderRadius: 8, border: '1px solid rgba(60, 173, 217,0.3)', display: 'flex', flexDirection: 'column', gap: 6 }}>
                   <span style={{ fontSize: '0.75rem', color: 'var(--brand-primary, #e07b39)', fontWeight: 600 }}>Réparer les assignations</span>
                   <span style={{ fontSize: '0.7rem', color: '#999' }}>
                     Hub ID actuel : <code style={{ background: '#333', padding: '1px 5px', borderRadius: 3 }}>{slugify(u.display_name)}</code>
                   </span>
                   <div style={{ display: 'flex', gap: 6 }}>
                     <input value={repairOld} onChange={e => setRepairOld(e.target.value)} placeholder="Ancien ID (ex: ben_10)" required
-                      style={{ flex: 1, background: '#2a2a2a', border: '1px solid rgba(255,255,255,0.15)', borderRadius: 6, padding: '5px 8px', color: '#e8e0d0', fontSize: '0.78rem', fontFamily: 'inherit', outline: 'none' }} />
+                      style={{ flex: 1, background: '#2a2f3e', border: '1px solid rgba(255,255,255,0.15)', borderRadius: 6, padding: '5px 8px', color: '#e8eaed', fontSize: '0.78rem', fontFamily: 'inherit', outline: 'none' }} />
                     <button type="submit" className="adm__btn adm__btn--primary" style={{ padding: '5px 12px', fontSize: '0.78rem' }}>Migrer</button>
                     <button type="button" className="adm__btn adm__btn--ghost" style={{ padding: '5px 10px', fontSize: '0.78rem' }} onClick={() => { setRepairId(null); setRepairMsg('') }}>✕</button>
                   </div>
@@ -1058,7 +1064,7 @@ function BugsPanel({ onClose }) {
                 return (
                   <li key={bug.id} style={{
                     flexDirection: 'column', alignItems: 'stretch', padding: 0,
-                    background: '#1a1a1a', borderRadius: 10,
+                    background: '#161a26', borderRadius: 10,
                     border: '1px solid rgba(255,255,255,0.07)',
                   }} className="adm__jobs-item">
                     <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 14px' }}>
@@ -1076,7 +1082,7 @@ function BugsPanel({ onClose }) {
                           value={bug.status}
                           onChange={e => patch(bug.id, { status: e.target.value })}
                           style={{
-                            background: '#111', border: '1px solid rgba(255,255,255,0.12)',
+                            background: '#11151f', border: '1px solid rgba(255,255,255,0.12)',
                             borderRadius: 6, color: BUG_STATUS_COLORS[bug.status],
                             fontSize: '0.75rem', padding: '3px 6px', cursor: 'pointer',
                           }}
@@ -1147,9 +1153,9 @@ function BugsPanel({ onClose }) {
                             onKeyDown={e => e.key === 'Enter' && addComment(bug)}
                             placeholder="Ajouter un commentaire (patch note, précision…)"
                             style={{
-                              flex: 1, background: '#111',
+                              flex: 1, background: '#11151f',
                               border: '1px solid rgba(255,255,255,0.1)', borderRadius: 6,
-                              color: '#f0ead6', fontSize: '0.83rem', padding: '7px 10px',
+                              color: '#ffffff', fontSize: '0.83rem', padding: '7px 10px',
                             }}
                           />
                           <button

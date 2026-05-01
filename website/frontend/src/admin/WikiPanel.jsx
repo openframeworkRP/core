@@ -81,8 +81,8 @@ function MdToolbar({ textareaRef, value, onChange }) {
     </button>
   )
   return (
-    <div style={{ border: '1px solid #2e2e2e', borderRadius: 8, overflow: 'hidden' }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 0, padding: '4px 6px', background: '#111', borderBottom: '1px solid #2e2e2e', flexWrap: 'wrap' }}>
+    <div style={{ border: '1px solid #2e3344', borderRadius: 8, overflow: 'hidden' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 0, padding: '4px 6px', background: '#11151f', borderBottom: '1px solid #2e3344', flexWrap: 'wrap' }}>
         {tb('bold', Bold, 'Gras')}{tb('italic', Italic, 'Italique')}{tb('strike', Strikethrough, 'Barré')}
         <div style={{ width: 1, height: 14, background: '#333', margin: '0 4px' }} />
         {tb('h2', Heading2, 'H2')}{tb('h3', Heading3, 'H3')}
@@ -100,13 +100,13 @@ function MdToolbar({ textareaRef, value, onChange }) {
         </button>
       </div>
       {preview ? (
-        <div className="wiki-md" style={{ padding: '12px 14px', minHeight: 120, background: '#0d0d0d' }}
+        <div className="wiki-md" style={{ padding: '12px 14px', minHeight: 120, background: '#0a0e18' }}
           dangerouslySetInnerHTML={{ __html: value?.trim() ? marked.parse(value) : '<span style="color:#444;font-style:italic">Rien à afficher.</span>' }} />
       ) : (
         <textarea ref={textareaRef} value={value} onChange={e => {
           e.target.style.height = 'auto'; e.target.style.height = e.target.scrollHeight + 'px'; onChange(e.target.value)
         }} placeholder="Écris en Markdown…" rows={6} style={{
-          display: 'block', width: '100%', background: '#0d0d0d', border: 'none',
+          display: 'block', width: '100%', background: '#0a0e18', border: 'none',
           padding: '10px 12px', color: '#b8b8b8', fontFamily: "'Consolas','Monaco',monospace",
           fontSize: '0.81rem', lineHeight: 1.7, resize: 'none', boxSizing: 'border-box', overflow: 'hidden', outline: 'none',
         }} />
@@ -150,7 +150,7 @@ function HistoryModal({ articleId, articleTitle, onClose }) {
   return (
     <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.72)', zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24 }}
       onClick={e => e.target === e.currentTarget && onClose()}>
-      <div style={{ background: '#1a1a1a', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 14, width: '100%', maxWidth: 640, maxHeight: '78vh', display: 'flex', flexDirection: 'column' }}>
+      <div style={{ background: '#161a26', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 14, width: '100%', maxWidth: 640, maxHeight: '78vh', display: 'flex', flexDirection: 'column' }}>
         <div style={{ padding: '16px 22px', borderBottom: '1px solid rgba(255,255,255,0.07)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <div>
             <div style={{ color: '#e8e8e8', fontWeight: 700, fontSize: '0.92rem' }}>Historique</div>
@@ -171,7 +171,7 @@ function HistoryModal({ articleId, articleTitle, onClose }) {
                 const color = h.action === 'created' ? '#3e9041' : h.action === 'deleted' ? '#d13b1a' : 'var(--brand-primary, #e07b39)'
                 const label = h.action === 'created' ? 'Créé' : h.action === 'deleted' ? 'Supprimé' : 'Modifié'
                 return (
-                  <div key={h.id} style={{ padding: '10px 14px', background: '#111', borderRadius: 8, border: '1px solid rgba(255,255,255,0.05)' }}>
+                  <div key={h.id} style={{ padding: '10px 14px', background: '#11151f', borderRadius: 8, border: '1px solid rgba(255,255,255,0.05)' }}>
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: h.action === 'updated' ? 7 : 0 }}>
                       <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                         <span style={{ fontWeight: 700, fontSize: '0.79rem', color }}>{label}</span>
@@ -396,7 +396,7 @@ function ImportModal({ activeType, existingCategories, onCreateCategory, onCreat
   return (
     <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.72)', zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24 }}
       onClick={e => e.target === e.currentTarget && onClose()}>
-      <div style={{ background: '#1a1a1a', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 14, width: '100%', maxWidth: 520, display: 'flex', flexDirection: 'column' }}>
+      <div style={{ background: '#161a26', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 14, width: '100%', maxWidth: 520, display: 'flex', flexDirection: 'column' }}>
         <div style={{ padding: '16px 22px', borderBottom: '1px solid rgba(255,255,255,0.07)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <div style={{ color: '#e8e8e8', fontWeight: 700, fontSize: '0.92rem' }}>Importer .md</div>
           <button onClick={onClose} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#666', display: 'flex', padding: 4 }}><X size={17} /></button>
@@ -430,7 +430,7 @@ function ImportModal({ activeType, existingCategories, onCreateCategory, onCreat
               {parsed.categories.map((cat, i) => {
                 const exists = existingCategories.some(c => c.name.toLowerCase() === cat.name.toLowerCase())
                 return (
-                  <div key={i} style={{ background: '#111', borderRadius: 8, padding: '10px 14px', border: '1px solid rgba(255,255,255,0.05)' }}>
+                  <div key={i} style={{ background: '#11151f', borderRadius: 8, padding: '10px 14px', border: '1px solid rgba(255,255,255,0.05)' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: cat.articles.length ? 6 : 0 }}>
                       <span style={{ color: '#d0d0d0', fontWeight: 700, fontSize: '0.83rem' }}>{cat.name}</span>
                       <span style={{
@@ -502,7 +502,7 @@ function ArticleRow({ article, onUpdate, onToggle, onDelete, expanded, onToggleE
         <div>
           <input value={title} onChange={e => setTitle(e.target.value)} placeholder="Titre de l'article" autoFocus
             onKeyDown={e => { if (e.key === 'Escape') { setEditing(false); setTitle(article.title); setContent(article.content) } }}
-            style={{ width: '100%', background: '#111', border: '1px solid #3a3a3a', borderRadius: 6, padding: '7px 10px', color: '#e8e8e8', fontFamily: 'inherit', fontSize: '0.9rem', fontWeight: 700, marginBottom: 10, boxSizing: 'border-box', outline: 'none' }} />
+            style={{ width: '100%', background: '#11151f', border: '1px solid #3a3a3a', borderRadius: 6, padding: '7px 10px', color: '#e8e8e8', fontFamily: 'inherit', fontSize: '0.9rem', fontWeight: 700, marginBottom: 10, boxSizing: 'border-box', outline: 'none' }} />
           <MdToolbar textareaRef={textareaRef} value={content} onChange={setContent} />
           <div style={{ display: 'flex', gap: 8, marginTop: 10 }}>
             <button onClick={save} disabled={saving} style={{ ...BTN, background: '#3e9041', color: '#fff', opacity: saving ? 0.6 : 1 }}>
@@ -574,7 +574,7 @@ function NewArticleForm({ onSubmit, onCancel }) {
     <div style={{ borderLeft: '2px dashed rgba(88,101,242,0.3)', paddingLeft: 16, marginBottom: 16 }}>
       <input value={title} onChange={e => setTitle(e.target.value)} placeholder="Titre de l'article" autoFocus
         onKeyDown={e => { if (e.key === 'Escape') onCancel() }}
-        style={{ width: '100%', background: '#111', border: '1px solid #3a3a3a', borderRadius: 6, padding: '7px 10px', color: '#e8e8e8', fontFamily: 'inherit', fontSize: '0.9rem', fontWeight: 700, marginBottom: 10, boxSizing: 'border-box', outline: 'none' }} />
+        style={{ width: '100%', background: '#11151f', border: '1px solid #3a3a3a', borderRadius: 6, padding: '7px 10px', color: '#e8e8e8', fontFamily: 'inherit', fontSize: '0.9rem', fontWeight: 700, marginBottom: 10, boxSizing: 'border-box', outline: 'none' }} />
       <MdToolbar textareaRef={textareaRef} value={content} onChange={setContent} />
       <div style={{ display: 'flex', gap: 8, marginTop: 10 }}>
         <button onClick={() => { if (title.trim() || content.trim()) onSubmit({ title: title.trim(), content: content.trim() }) }}
@@ -609,7 +609,7 @@ function CategorySection({ cat, onUpdateCat, onDeleteCat, onCreateArticle, onUpd
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 16, flexWrap: 'wrap' }}>
           <input value={catName} onChange={e => setCatName(e.target.value)} autoFocus
             onKeyDown={e => { if (e.key === 'Enter') saveCat(); if (e.key === 'Escape') { setEditingCat(false); setCatName(cat.name); setCatColor(cat.color) } }}
-            style={{ background: '#111', border: '1px solid #3a3a3a', borderRadius: 6, padding: '6px 10px', color: '#e8e8e8', fontFamily: 'inherit', fontSize: '1rem', fontWeight: 700, outline: 'none', minWidth: 160 }} />
+            style={{ background: '#11151f', border: '1px solid #3a3a3a', borderRadius: 6, padding: '6px 10px', color: '#e8e8e8', fontFamily: 'inherit', fontSize: '1rem', fontWeight: 700, outline: 'none', minWidth: 160 }} />
           <div style={{ display: 'flex', gap: 5 }}>
             {CAT_COLORS.map(c => (
               <button key={c} onClick={() => setCatColor(c)} style={{ width: 18, height: 18, borderRadius: '50%', background: c, padding: 0, cursor: 'pointer', border: catColor === c ? '2px solid #fff' : '2px solid transparent' }} />
@@ -651,7 +651,7 @@ function CategorySection({ cat, onUpdateCat, onDeleteCat, onCreateArticle, onUpd
           <div style={{ height: 1, background: `linear-gradient(90deg, ${cat.color}44 0%, rgba(255,255,255,0.04) 100%)`, marginBottom: 16 }} />
 
           {total === 0 && !adding && (
-            <div style={{ color: '#383838', fontSize: '0.8rem', fontStyle: 'italic', marginBottom: 12, paddingLeft: 16 }}>Aucun article dans cette catégorie.</div>
+            <div style={{ color: '#383d4d', fontSize: '0.8rem', fontStyle: 'italic', marginBottom: 12, paddingLeft: 16 }}>Aucun article dans cette catégorie.</div>
           )}
           {(cat.articles || []).map(a => (
             <ArticleRow key={a.id} article={a} onUpdate={onUpdateArticle} onToggle={onToggleArticle} onDelete={onDeleteArticle}
@@ -846,7 +846,7 @@ export default function WikiPanel() {
 
       {/* Tabs — masqués tant qu'il n'y a qu'un type (dev sorti dans DocsPanel) */}
       {Object.keys(TYPE_LABELS).length > 1 && (
-        <div style={{ display: 'flex', gap: 4, marginBottom: 32, background: '#1a1a1a', padding: 4, borderRadius: 10, border: '1px solid rgba(255,255,255,0.06)', width: 'fit-content' }}>
+        <div style={{ display: 'flex', gap: 4, marginBottom: 32, background: '#161a26', padding: 4, borderRadius: 10, border: '1px solid rgba(255,255,255,0.06)', width: 'fit-content' }}>
           {Object.entries(TYPE_LABELS).map(([type, label]) => {
             const Icon = TYPE_ICONS[type]
             return (
@@ -917,11 +917,11 @@ export default function WikiPanel() {
           ))}
 
           {addingCat ? (
-            <div style={{ background: '#1a1a1a', border: '1px solid rgba(255,255,255,0.09)', borderRadius: 10, padding: '16px 18px', marginTop: 8 }}>
+            <div style={{ background: '#161a26', border: '1px solid rgba(255,255,255,0.09)', borderRadius: 10, padding: '16px 18px', marginTop: 8 }}>
               <div style={{ color: '#888', fontSize: '0.78rem', fontWeight: 600, marginBottom: 10, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Nouvelle catégorie</div>
               <input value={newCatName} onChange={e => setNewCatName(e.target.value)} placeholder="Nom de la catégorie…" autoFocus
                 onKeyDown={e => { if (e.key === 'Enter') createCategory(); if (e.key === 'Escape') { setAddingCat(false); setNewCatName('') } }}
-                style={{ width: '100%', background: '#111', border: '1px solid #3a3a3a', borderRadius: 6, padding: '8px 10px', color: '#e8e8e8', fontFamily: 'inherit', fontSize: '0.92rem', fontWeight: 700, marginBottom: 12, boxSizing: 'border-box', outline: 'none' }} />
+                style={{ width: '100%', background: '#11151f', border: '1px solid #3a3a3a', borderRadius: 6, padding: '8px 10px', color: '#e8e8e8', fontFamily: 'inherit', fontSize: '0.92rem', fontWeight: 700, marginBottom: 12, boxSizing: 'border-box', outline: 'none' }} />
               <div style={{ display: 'flex', gap: 6, marginBottom: 14 }}>
                 {CAT_COLORS.map(c => (
                   <button key={c} onClick={() => setNewCatColor(c)} style={{

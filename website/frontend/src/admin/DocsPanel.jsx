@@ -69,8 +69,8 @@ function MdToolbar({ textareaRef, value, onChange }) {
     </button>
   )
   return (
-    <div style={{ border: '1px solid #2e2e2e', borderRadius: 8, overflow: 'hidden', display: 'flex', flexDirection: 'column', flex: 1, minHeight: 0 }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 0, padding: '4px 6px', background: '#111', borderBottom: '1px solid #2e2e2e', flexWrap: 'wrap', flexShrink: 0 }}>
+    <div style={{ border: '1px solid #2e3344', borderRadius: 8, overflow: 'hidden', display: 'flex', flexDirection: 'column', flex: 1, minHeight: 0 }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 0, padding: '4px 6px', background: '#11151f', borderBottom: '1px solid #2e3344', flexWrap: 'wrap', flexShrink: 0 }}>
         {tb('bold', Bold, 'Gras')}{tb('italic', Italic, 'Italique')}{tb('strike', Strikethrough, 'Barré')}
         <div style={{ width: 1, height: 14, background: '#333', margin: '0 4px' }} />
         {tb('h2', Heading2, 'H2')}{tb('h3', Heading3, 'H3')}
@@ -88,12 +88,12 @@ function MdToolbar({ textareaRef, value, onChange }) {
         </button>
       </div>
       {preview ? (
-        <div className="wiki-md" style={{ padding: '16px 18px', flex: 1, overflow: 'auto', background: '#0d0d0d' }}
+        <div className="wiki-md" style={{ padding: '16px 18px', flex: 1, overflow: 'auto', background: '#0a0e18' }}
           dangerouslySetInnerHTML={{ __html: value?.trim() ? marked.parse(value) : '<span style="color:#444;font-style:italic">Rien à afficher.</span>' }} />
       ) : (
         <textarea ref={textareaRef} value={value} onChange={e => onChange(e.target.value)}
           placeholder="Écris la documentation en Markdown…" style={{
-            display: 'block', width: '100%', flex: 1, background: '#0d0d0d', border: 'none',
+            display: 'block', width: '100%', flex: 1, background: '#0a0e18', border: 'none',
             padding: '14px 18px', color: '#c8c8c8', fontFamily: "'Consolas','Monaco',monospace",
             fontSize: '0.84rem', lineHeight: 1.7, resize: 'none', boxSizing: 'border-box', outline: 'none',
           }} />
@@ -200,7 +200,7 @@ function MoveModal({ page, tree, onClose, onMove }) {
   return (
     <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.7)', zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24 }}
       onClick={e => e.target === e.currentTarget && onClose()}>
-      <div style={{ background: '#1a1a1a', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 14, width: '100%', maxWidth: 480, maxHeight: '70vh', display: 'flex', flexDirection: 'column' }}>
+      <div style={{ background: '#161a26', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 14, width: '100%', maxWidth: 480, maxHeight: '70vh', display: 'flex', flexDirection: 'column' }}>
         <div style={{ padding: '14px 20px', borderBottom: '1px solid rgba(255,255,255,0.07)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <div>
             <div style={{ color: '#e8e8e8', fontWeight: 700, fontSize: '0.9rem' }}>Déplacer « {page.title || 'Sans titre'} »</div>
@@ -261,7 +261,7 @@ function ImportModal({ parent, onClose, onImport }) {
   return (
     <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.7)', zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24 }}
       onClick={e => e.target === e.currentTarget && onClose()}>
-      <div style={{ background: '#1a1a1a', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 14, width: '100%', maxWidth: 680, maxHeight: '85vh', display: 'flex', flexDirection: 'column' }}>
+      <div style={{ background: '#161a26', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 14, width: '100%', maxWidth: 680, maxHeight: '85vh', display: 'flex', flexDirection: 'column' }}>
         <div style={{ padding: '14px 20px', borderBottom: '1px solid rgba(255,255,255,0.07)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <div>
             <div style={{ color: '#e8e8e8', fontWeight: 700, fontSize: '0.9rem' }}>Importer du markdown</div>
@@ -290,7 +290,7 @@ function ImportModal({ parent, onClose, onImport }) {
           </div>
           <textarea value={markdown} onChange={e => setMarkdown(e.target.value)}
             placeholder="# Ma section&#10;&#10;## Sous-page&#10;Contenu…"
-            style={{ width: '100%', minHeight: 260, background: '#0d0d0d', border: '1px solid #2e2e2e', borderRadius: 8, padding: '12px 14px', color: '#c8c8c8', fontFamily: "'Consolas','Monaco',monospace", fontSize: '0.82rem', lineHeight: 1.6, resize: 'vertical', boxSizing: 'border-box', outline: 'none' }} />
+            style={{ width: '100%', minHeight: 260, background: '#0a0e18', border: '1px solid #2e3344', borderRadius: 8, padding: '12px 14px', color: '#c8c8c8', fontFamily: "'Consolas','Monaco',monospace", fontSize: '0.82rem', lineHeight: 1.6, resize: 'vertical', boxSizing: 'border-box', outline: 'none' }} />
           {err && <div style={{ fontSize: '0.8rem', padding: '8px 12px', borderRadius: 6, background: 'rgba(209,59,26,0.1)', color: '#d13b1a' }}>{err}</div>}
           {result && (
             <div style={{ fontSize: '0.8rem', padding: '8px 12px', borderRadius: 6, background: 'rgba(62,144,65,0.1)', color: '#3e9041' }}>
@@ -465,7 +465,7 @@ export default function DocsPanel() {
           <div style={{ position: 'relative' }}>
             <Search size={12} style={{ position: 'absolute', left: 9, top: '50%', transform: 'translateY(-50%)', color: '#555' }} />
             <input value={searchQ} onChange={e => setSearchQ(e.target.value)} placeholder="Rechercher…"
-              style={{ width: '100%', background: '#111', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 6, padding: '6px 10px 6px 26px', color: '#d0d0d0', fontSize: '0.8rem', outline: 'none', boxSizing: 'border-box' }} />
+              style={{ width: '100%', background: '#11151f', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 6, padding: '6px 10px 6px 26px', color: '#d0d0d0', fontSize: '0.8rem', outline: 'none', boxSizing: 'border-box' }} />
             {searchQ && (
               <button onClick={() => setSearchQ('')} style={{ position: 'absolute', right: 4, top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer', color: '#555', padding: 4, display: 'flex' }}>
                 <X size={11} />
@@ -580,7 +580,7 @@ export default function DocsPanel() {
             <div style={{ padding: '16px 18px 6px', display: 'flex', alignItems: 'center', gap: 10 }}>
               <input value={draftIcon} onChange={e => { setDraftIcon(e.target.value); setDirty(true) }}
                 placeholder="📄" maxLength={4}
-                style={{ width: 40, height: 40, textAlign: 'center', fontSize: '1.2rem', background: '#111', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 6, color: '#e8e8e8', outline: 'none' }} />
+                style={{ width: 40, height: 40, textAlign: 'center', fontSize: '1.2rem', background: '#11151f', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 6, color: '#e8e8e8', outline: 'none' }} />
               <input value={draftTitle} onChange={e => { setDraftTitle(e.target.value); setDirty(true) }}
                 placeholder="Titre de la page"
                 style={{ flex: 1, background: 'transparent', border: 'none', color: '#f0f0f0', fontSize: '1.5rem', fontWeight: 700, outline: 'none', fontFamily: 'inherit' }} />
