@@ -1,0 +1,232 @@
+/* ============================================================
+   DatabasePanel — browser SQL Server
+   ============================================================ */
+
+.db-page {
+  padding: 24px 32px;
+  max-width: 1400px;
+  margin: 0 auto;
+  color: #e8eaed;
+  font-family: inherit;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  height: calc(100vh - 80px);
+}
+
+.db-header {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  flex-wrap: wrap;
+  border-bottom: 1px solid #2a2f3e;
+  padding-bottom: 14px;
+}
+.db-header h1 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 500;
+  color: #fff;
+}
+.db-subtitle {
+  flex: 1;
+  margin: 0;
+  font-size: 13px;
+  color: #8089a0;
+}
+
+.db-error {
+  background: #2d1a1a;
+  border: 1px solid #553030;
+  border-radius: 6px;
+  padding: 12px 16px;
+  color: #ff8a80;
+}
+
+.db-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid #2a2f3e;
+  background: #161a26;
+  color: #e8eaed;
+  font-size: 12px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 120ms;
+}
+.db-btn:hover:not(:disabled) {
+  background: #1f2330;
+  border-color: var(--brand-primary, #3cadd9);
+}
+.db-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.db-layout {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 16px;
+  min-height: 0;
+}
+
+/* ── Tables list ── */
+.db-tables {
+  background: #161a26;
+  border: 1px solid #2a2f3e;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+.db-tables-title {
+  padding: 12px 16px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #8089a0;
+  border-bottom: 1px solid #2a2f3e;
+}
+.db-tables-title span { font-weight: 400; opacity: 0.6; }
+
+.db-tables ul {
+  flex: 1;
+  overflow-y: auto;
+  list-style: none;
+  margin: 0;
+  padding: 4px;
+}
+.db-table-item {
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  color: #b8bcc8;
+  transition: background 100ms;
+}
+.db-table-item:hover { background: #1f2330; color: #fff; }
+.db-table-item--active {
+  background: rgba(60, 173, 217, 0.12);
+  color: var(--brand-primary, #3cadd9);
+}
+.db-table-name {
+  font-family: 'JetBrains Mono', Consolas, monospace;
+  font-size: 12px;
+}
+.db-table-count {
+  font-size: 11px;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 2px 8px;
+  border-radius: 10px;
+  color: #8089a0;
+}
+.db-empty {
+  padding: 16px;
+  color: #8089a0;
+  font-size: 13px;
+  font-style: italic;
+}
+
+/* ── Viewer ── */
+.db-viewer {
+  background: #161a26;
+  border: 1px solid #2a2f3e;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.db-viewer-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 20px;
+  border-bottom: 1px solid #2a2f3e;
+}
+.db-viewer-header h2 {
+  margin: 0;
+  font-size: 16px;
+  font-family: 'JetBrains Mono', Consolas, monospace;
+  color: var(--brand-primary, #3cadd9);
+}
+.db-viewer-count {
+  font-size: 12px;
+  color: #8089a0;
+  flex: 1;
+}
+
+.db-pager {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: #b8bcc8;
+}
+
+.db-placeholder {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: #6c7385;
+}
+.db-placeholder p { margin: 0; font-size: 14px; }
+
+.db-table-wrap {
+  flex: 1;
+  overflow: auto;
+  min-height: 0;
+}
+
+.db-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+  font-family: 'JetBrains Mono', Consolas, monospace;
+}
+.db-table th {
+  position: sticky;
+  top: 0;
+  background: #11151f;
+  border-bottom: 1px solid #2a2f3e;
+  text-align: left;
+  padding: 10px 14px;
+  color: #8089a0;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  z-index: 1;
+}
+.db-table td {
+  padding: 8px 14px;
+  border-bottom: 1px solid rgba(42, 47, 62, 0.4);
+  color: #c8c8c8;
+  vertical-align: top;
+  max-width: 400px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.db-table tr:hover td { background: rgba(60, 173, 217, 0.04); }
+
+.db-null {
+  color: #6c7385;
+  font-style: italic;
+}
+
+.db-empty-row {
+  text-align: center !important;
+  padding: 32px !important;
+  color: #6c7385 !important;
+  font-style: italic;
+}

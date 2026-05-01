@@ -101,6 +101,12 @@ services:
       # le project deja en place sur le host (sinon il cree un nouveau
       # project 'host-repo' et ne voit aucun container existant).
       - COMPOSE_PROJECT_NAME=core
+      # Connexion read-only au SQL Server du jeu (panel admin DB browser)
+      - GAME_DB_HOST=sqlserver
+      - GAME_DB_PORT=1433
+      - GAME_DB_NAME=${DB_NAME:-OpenFrameworkDb}
+      - GAME_DB_USER=sa
+      - GAME_DB_PASSWORD=${MSSQL_SA_PASSWORD:-OpenFwBootstrap_Pa55!}
     restart: unless-stopped
 
   website.scraper:

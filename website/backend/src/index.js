@@ -37,6 +37,7 @@ import permissionsRouter    from './routes/permissions.js'
 import setupRouter          from './routes/setup.js'
 import controlRouter        from './routes/control.js'
 import brandingRouter       from './routes/branding.js'
+import dbRouter             from './routes/db.js'
 
 // Init des tables roles/pages/role_permissions + seed initial.
 // Doit tourner avant que les routers ne soient utilisés.
@@ -126,6 +127,7 @@ app.use('/api/tokens',     tokensRouter)
 app.use('/api/permissions', permissionsRouter)
 app.use('/api/control',     controlRouter)
 app.use('/api/branding',    brandingRouter)
+app.use('/api/db',          dbRouter)
 
 httpServer.listen(PORT, () => {
   console.log(`✅  DevBlog API running on http://localhost:${PORT}`)

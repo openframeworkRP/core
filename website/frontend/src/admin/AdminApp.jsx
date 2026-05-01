@@ -29,6 +29,7 @@ import GameAdminPanel from './GameAdminPanel.jsx'
 import PermissionsPanel from './PermissionsPanel.jsx'
 import ControlPanel from './ControlPanel.jsx'
 import BrandingPanel from './BrandingPanel.jsx'
+import DatabasePanel from './DatabasePanel.jsx'
 
 // ── Rôles ─────────────────────────────────────────────────────────────────
 // ── Feature flags ─────────────────────────────────────────────────────────
@@ -385,6 +386,9 @@ export default function AdminApp() {
             <button className={`adm__sidebar-btn${panel === 'branding' ? ' adm__sidebar-btn--active' : ''}`} onClick={() => goTo('admin:branding')}>
               <Palette size={15} /> Branding
             </button>
+            <button className={`adm__sidebar-btn${panel === 'database' ? ' adm__sidebar-btn--active' : ''}`} onClick={() => goTo('admin:database')}>
+              <Database size={15} /> Database
+            </button>
           </>
         )}
 
@@ -436,6 +440,7 @@ export default function AdminApp() {
           {panel === 'permissions' && <PermissionsPanel />}
           {panel === 'control'     && <ControlPanel />}
           {panel === 'branding'    && <BrandingPanel />}
+          {panel === 'database'    && <DatabasePanel />}
         </div>
       ) : isHub ? (
         <HubPanel
