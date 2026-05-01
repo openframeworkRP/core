@@ -112,9 +112,14 @@ function buildDevblogOgHtml(post) {
 const app = express()
 
 // ── Proxy routes backend ────────────────────────────────────────────────────
+// pathRewrite preserve l'URL originale (req.originalUrl) — sinon Express
+// strip le prefixe lors du `app.use('/api', proxy)` et le backend recoit
+// `/setup/status` au lieu de `/api/setup/status`, ce qui casse toutes les
+// routes API.
 const backendProxy = createProxyMiddleware({
   target: API_BASE,
   changeOrigin: true,
+  pathRewrite: (_path, req) => req.originalUrl,
   on: {
     proxyReq: (proxyReq) => {
       proxyReq.setHeader('X-Forwarded-Proto', 'https')
@@ -126,6 +131,7 @@ const backendProxy = createProxyMiddleware({
 const socketProxy = createProxyMiddleware({
   target: API_BASE,
   changeOrigin: true,
+  pathRewrite: (_path, req) => req.originalUrl,
   on: {
     proxyReq: (proxyReq) => {
       proxyReq.setHeader('X-Forwarded-Proto', 'https')
