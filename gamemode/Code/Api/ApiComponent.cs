@@ -18,6 +18,16 @@ public class ApiComponent : Component
 
     [Property] public string BaseUrl { get; set; } = "http://localhost:8443/api";
 
+    /// <summary>
+    /// URL de repli utilisée quand s&box bloque l'URL principale (ex: URL prod depuis l'éditeur).
+    /// </summary>
+    [Property] public string LocalFallbackUrl { get; set; } = "http://localhost:8443/api";
+
+    /// <summary>
+    /// Désactive tous les appels API. Peut être forcé manuellement ; jamais basculé automatiquement.
+    /// </summary>
+    [Property] public bool OfflineMode { get; set; } = false;
+
     // JWT joueurs
     private readonly Dictionary<ulong, string> _playerTokens = new();
 
@@ -53,7 +63,13 @@ public class ApiComponent : Component
         if ( !Networking.IsHost ) return;
         Instance = this;
 
-        // Auth serveur au démarrage — une seule fois
+        if ( OfflineMode )
+        {
+            Log.Warning( "[API] OfflineMode forcé — aucun appel API ne sera effectué." );
+            return;
+        }
+
+        // Auth serveur au démarrage — bascule automatiquement en OfflineMode si s&box bloque l'URL
         _ = AuthenticateServerAsync();
     }
 
@@ -63,14 +79,15 @@ public class ApiComponent : Component
 
     private async Task AuthenticateServerAsync()
     {
-        // Retry avec backoff exponentiel si le backend n'est pas encore joignable
-        // (erreur de connexion TCP au demarrage). Tentatives: immediate, 1s, 2s, 4s, 8s.
+        // Retry avec backoff exponentiel si le backend n'est pas encore joignable.
+        // Si s&box bloque l'URL (ex: prod depuis l'éditeur), on bascule sur LocalFallbackUrl
+        // et on repart depuis le début — pas besoin d'OfflineMode.
         var delays = new[] { 1f, 2f, 4f, 8f };
         for ( int attempt = 0; attempt <= delays.Length; attempt++ )
         {
             try
             {
-                Log.Info( $"[API] Auth serveur... (tentative {attempt + 1}/{delays.Length + 1})" );
+                Log.Info( $"[API] Auth serveur... (tentative {attempt + 1}/{delays.Length + 1}, url: {BaseUrl})" );
 
                 var body     = new { ServerSecret = ServerSecret };
                 var response = await Http.RequestAsync(
@@ -87,21 +104,29 @@ public class ApiComponent : Component
                     new JsonSerializerOptions { PropertyNameCaseInsensitive = true } );
 
                 _serverToken = data?.AccessToken;
-                Log.Info( "[API] Serveur authentifié ✓" );
+                Log.Info( $"[API] Serveur authentifié ✓ ({BaseUrl})" );
 
-                // Le gamemode et l'API sont dissociés : si on démarre, c'est qu'un crash
-                // précédent a possiblement laissé des sessions "ouvertes" en base. On les
-                // ferme toutes — sinon le panel admin verrait des joueurs fantômes.
                 _ = CloseAllStaleSessions();
-
-                // Re-trigger l'auth joueur pour tous les clients deja connectes mais non authentifies.
-                // Utile quand on fait sl--connect_server apres coup: sinon les joueurs restent sans characters
-                // et il faudrait redemarrer la simulation.
                 RetriggerPlayerAuthForConnectedClients();
                 return;
             }
             catch ( Exception e )
             {
+                // s&box bloque l'URL (non-whitelistée) → basculer sur localhost et recommencer
+                if ( e.Message.Contains( "is not allowed" ) )
+                {
+                    if ( BaseUrl != LocalFallbackUrl )
+                    {
+                        Log.Warning( $"[API] URL bloquée par s&box ({BaseUrl}) — basculement sur {LocalFallbackUrl}" );
+                        BaseUrl = LocalFallbackUrl;
+                        attempt = -1; // repart à 0 après l'incrément du for
+                        continue;
+                    }
+                    // LocalFallbackUrl aussi bloquée — abandon
+                    Log.Error( $"[API] {LocalFallbackUrl} aussi bloquée — auth abandonnée." );
+                    return;
+                }
+
                 if ( attempt < delays.Length )
                 {
                     Log.Warning( $"[API] Auth serveur indisponible ({e.Message}), retry dans {delays[attempt]}s..." );
@@ -109,7 +134,7 @@ public class ApiComponent : Component
                 }
                 else
                 {
-                    Log.Error( $"[API] Auth serveur abandonnee apres {delays.Length + 1} tentatives : {e.Message}" );
+                    Log.Error( $"[API] Auth serveur abandonnée après {delays.Length + 1} tentatives." );
                 }
             }
         }

@@ -21,9 +21,9 @@ public sealed class DiscordBridge : Component
 {
 	public static DiscordBridge Instance { get; private set; }
 
-	private const string WebhookUrl = "https://discord.com/api/webhooks/1494057674826977381/jZ14ruSCMtLRsmSNuIsbj5dnDn4pRfoNxHSTfsydO7OSSsK07IYpPrBzF8lqXZLpVm8C";
-	private const string BotToken = "MTQ5Mzg5NTE1MzgyNjUzMzQ1Nw.GTsvOp.ld40Rhvqi0UuRT7zc4dcYtRIzw3iCoG3lAbB48";
-	private const string ChannelId = "1494057270764376157";
+	[Property] public string WebhookUrl { get; set; } = "";
+	[Property] public string BotToken   { get; set; } = "";
+	[Property] public string ChannelId  { get; set; } = "";
 
 	[ConVar( "core-discord_debug", Help = "Activer les logs de debug du bridge Discord" )]
 	public static bool DebugMode { get; set; } = false;

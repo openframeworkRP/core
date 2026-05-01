@@ -1,6 +1,6 @@
 @import "ui/Styles/Theme.scss";
 
-$main-color: #ff8000;
+$main-color: #22d3ee;
 $green-money: #5BFF8C;
 
 InventorySlot {
@@ -258,7 +258,7 @@ InventorySlot {
         height: 44px;
         border-radius: 50%;
         position: absolute;
-        box-shadow: 0 0 14px rgba(0, 170, 255, 0.45);
+        box-shadow: 0 0 14px rgba(34, 211, 238, 0.45);
     }
 
     .equip-ring-mask {
@@ -282,8 +282,8 @@ InventorySlot {
 
         .equip-progress-fill {
             height: 100%;
-            background-color: rgba(0, 170, 255, 0.95);
-            box-shadow: 0 0 6px rgba(0, 170, 255, 0.6);
+            background-color: rgba(34, 211, 238, 0.95);
+            box-shadow: 0 0 6px rgba(34, 211, 238, 0.6);
             transition: width 0.05s linear;
         }
     }
