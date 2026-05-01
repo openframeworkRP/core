@@ -19,7 +19,10 @@ const REPO_ENV_PATH         = process.env.REPO_ENV_PATH         || '/app/host-re
 const REPO_ENV_EXAMPLE_PATH = process.env.REPO_ENV_EXAMPLE_PATH || '/app/host-repo/.env.example'
 const SETUP_COMPLETE_FLAG   = process.env.SETUP_COMPLETE_FLAG   || '/app/host-repo/data/config/setup-complete.flag'
 
-const CORE_API_BASE = 'http://localhost:8443'  // host network mode → port mappe
+// En reseau bridge : on cible le service core-api via son nom DNS docker.
+// En reseau host (Linux natif) : on cible localhost:8443.
+// Override via env var CORE_API_INTERNAL_URL si besoin.
+const CORE_API_BASE = process.env.CORE_API_INTERNAL_URL || 'http://core-api:8443'
 
 // ── Helpers ──────────────────────────────────────────────────────────────
 

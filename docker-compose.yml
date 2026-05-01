@@ -56,10 +56,14 @@ services:
     restart: unless-stopped
 
   # ── Website (devblog + admin + wizard de configuration) ────
+  # NB : on n'utilise PAS network_mode: host car ca ne fonctionne pas
+  # sur Docker Desktop (Windows/Mac). On utilise le reseau bridge par
+  # defaut + port mappings explicites + DNS inter-containers.
   website.api:
     build: ./website/backend
     container_name: core-website-api
-    network_mode: host
+    ports:
+      - "3001:3001"
     volumes:
       - ./website/data:/app/data
       - ./website/uploads:/app/uploads
@@ -83,20 +87,21 @@ services:
       - NEXTCLOUD_TOKEN=${NEXTCLOUD_TOKEN:-}
       - NEXTCLOUD_ROOT=${NEXTCLOUD_ROOT:-/unreal_asset}
       - NEXTCLOUD_ASSET_ROOT=${NEXTCLOUD_ASSET_ROOT:-/unreal_asset}
-      - FAB_SCRAPER_URL=${FAB_SCRAPER_URL:-http://localhost:8000}
-      - GAME_API_URL=${GAME_API_URL:-http://localhost:8443}
+      - FAB_SCRAPER_URL=${FAB_SCRAPER_URL:-http://core-website-scraper:8000}
+      - GAME_API_URL=${GAME_API_URL:-http://core-api:8443}
       - GAME_SERVER_SECRET=${GAME_SERVER_SECRET:-}
       # Chemins exposes au backend Node pour le wizard
       - REPO_ROOT=/app/host-repo
       - REPO_ENV_PATH=/app/host-repo/.env
       - REPO_ENV_EXAMPLE_PATH=/app/host-repo/.env.example
       - SETUP_COMPLETE_FLAG=/app/host-repo/data/config/setup-complete.flag
+      # URL pour atteindre core.api depuis website.api (inter-container)
+      - CORE_API_INTERNAL_URL=http://core-api:8443
     restart: unless-stopped
 
   website.scraper:
     build: ./website/backend/scraper
     container_name: core-website-scraper
-    network_mode: host
     environment:
       - CAMOUFOX_NO_SANDBOX=1
     restart: unless-stopped
@@ -108,9 +113,11 @@ services:
         - VITE_API_URL=${VITE_API_URL:-}
         - VITE_MAINTENANCE=${VITE_MAINTENANCE:-false}
     container_name: core-website-frontend
-    network_mode: host
+    ports:
+      - "4173:4173"
     environment:
-      - API_INTERNAL_URL=http://localhost:3001
+      # En reseau bridge, le frontend tape l'API website via le DNS du container
+      - API_INTERNAL_URL=http://core-website-api:3001
       - FRONTEND_URL=${FRONTEND_URL:-http://localhost:4173}
     depends_on:
       - website.api
