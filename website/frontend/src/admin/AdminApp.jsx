@@ -29,6 +29,7 @@ import GameAdminPanel from './GameAdminPanel.jsx'
 import PermissionsPanel from './PermissionsPanel.jsx'
 import ControlPanel from './ControlPanel.jsx'
 import BrandingPanel from './BrandingPanel.jsx'
+import RoadmapAdminPanel from './RoadmapAdminPanel.jsx'
 
 // ── Rôles ─────────────────────────────────────────────────────────────────
 // ── Feature flags ─────────────────────────────────────────────────────────
@@ -37,6 +38,10 @@ import BrandingPanel from './BrandingPanel.jsx'
 // plus tard quand le framework supportera plusieurs serveurs/jeux par
 // instance. Pour reactiver : passe ce flag a true.
 const MULTI_PROJECT_GAME_ENABLED = false
+
+// DevBlog (posts, blocks, editeur, archive .devblog) — retire pour le MVP
+// open source. Le code et les tables SQL restent intacts pour reactivation.
+const DEVBLOG_ENABLED = false
 
 const ROLE_COLORS = { owner: '#f59e0b', admin: '#a78bfa', editor: '#34d399', rules_editor: 'var(--brand-primary, #e07b39)', viewer: '#71717a' }
 const ROLE_FALLBACK_COLOR = '#6366f1'   // pour les rôles personnalisés
@@ -274,31 +279,39 @@ export default function AdminApp() {
           </button>
         )}
 
-        {/* Hub multi-projets : desactive en MVP (cf. flag MULTI_PROJECT_GAME_ENABLED) */}
+        {/* Hub : workspace pour le suivi du dev (taches, idees, etc.).
+            Le filtre multi-projet du header reste cache (1 seul projet
+            pour le MVP) mais les pages elles-memes sont accessibles. */}
+        <div className="adm__sidebar-divider" />
+        <span className="adm__sidebar-label">Workspace</span>
+        {can('hub:dashboard') && (
+          <button className={`adm__sidebar-btn${hubView === 'dashboard' ? ' adm__sidebar-btn--active' : ''}`} onClick={() => goTo('hub:dashboard')}>
+            <BarChart3 size={15} /> Dashboard
+          </button>
+        )}
+        {can('hub:tasks') && (
+          <button className={`adm__sidebar-btn${hubView === 'tasks' ? ' adm__sidebar-btn--active' : ''}`} onClick={() => goTo('hub:tasks')}>
+            <SquareCheck size={15} /> Tâches
+          </button>
+        )}
+        {can('hub:whiteboard') && (
+          <button className={`adm__sidebar-btn${hubView === 'whiteboard' ? ' adm__sidebar-btn--active' : ''}`} onClick={() => goTo('hub:whiteboard')}>
+            <Lightbulb size={15} /> Idées
+          </button>
+        )}
+        {can('hub:activity') && (
+          <button className={`adm__sidebar-btn${hubView === 'activity' ? ' adm__sidebar-btn--active' : ''}`} onClick={() => goTo('hub:activity')}>
+            <Activity size={15} /> Activité
+          </button>
+        )}
+        <button className={`adm__sidebar-btn${panel === 'roadmap' ? ' adm__sidebar-btn--active' : ''}`} onClick={() => goTo('admin:roadmap')}>
+          <Route size={15} /> Roadmap publique
+        </button>
+
+        {/* Multi-projet : Map / Fab / Catalogue : desactives car couples
+            au concept de projet. A reactiver avec MULTI_PROJECT_GAME_ENABLED. */}
         {MULTI_PROJECT_GAME_ENABLED && (
           <>
-            <div className="adm__sidebar-divider" />
-            <span className="adm__sidebar-label">Hub</span>
-            {can('hub:dashboard') && (
-              <button className={`adm__sidebar-btn${hubView === 'dashboard' ? ' adm__sidebar-btn--active' : ''}`} onClick={() => goTo('hub:dashboard')}>
-                <BarChart3 size={15} /> Dashboard
-              </button>
-            )}
-            {can('hub:tasks') && (
-              <button className={`adm__sidebar-btn${hubView === 'tasks' ? ' adm__sidebar-btn--active' : ''}`} onClick={() => goTo('hub:tasks')}>
-                <SquareCheck size={15} /> Tâches
-              </button>
-            )}
-            {can('hub:roadmap') && (
-              <button className={`adm__sidebar-btn${hubView === 'roadmap' ? ' adm__sidebar-btn--active' : ''}`} onClick={() => goTo('hub:roadmap')}>
-                <Route size={15} /> Roadmap
-              </button>
-            )}
-            {can('hub:whiteboard') && (
-              <button className={`adm__sidebar-btn${hubView === 'whiteboard' ? ' adm__sidebar-btn--active' : ''}`} onClick={() => goTo('hub:whiteboard')}>
-                <Lightbulb size={15} /> Idées
-              </button>
-            )}
             {can('hub:mapview') && (
               <button className={`adm__sidebar-btn${hubView === 'mapview' ? ' adm__sidebar-btn--active' : ''}`} onClick={() => goTo('hub:mapview')}>
                 <MapPin size={15} /> Map
@@ -312,11 +325,6 @@ export default function AdminApp() {
             {can('hub:catalogue') && (
               <button className={`adm__sidebar-btn${hubView === 'catalogue' ? ' adm__sidebar-btn--active' : ''}`} onClick={() => goTo('hub:catalogue')}>
                 <Database size={15} /> Catalogue
-              </button>
-            )}
-            {can('hub:activity') && (
-              <button className={`adm__sidebar-btn${hubView === 'activity' ? ' adm__sidebar-btn--active' : ''}`} onClick={() => goTo('hub:activity')}>
-                <Activity size={15} /> Activité
               </button>
             )}
           </>
@@ -379,27 +387,32 @@ export default function AdminApp() {
           </>
         )}
 
-        <div className="adm__sidebar-divider" />
-        <span className="adm__sidebar-label">DevBlog</span>
-        {can('devblog:list') && (
-          <button className={`adm__sidebar-btn${currentView === 'devblog' ? ' adm__sidebar-btn--active' : ''}`} onClick={() => goTo('devblog')}>
-            <FileText size={15} /> Devlogs
-          </button>
+        {/* DevBlog : desactive pour le MVP (cf. flag DEVBLOG_ENABLED) */}
+        {DEVBLOG_ENABLED && (
+          <>
+            <div className="adm__sidebar-divider" />
+            <span className="adm__sidebar-label">DevBlog</span>
+            {can('devblog:list') && (
+              <button className={`adm__sidebar-btn${currentView === 'devblog' ? ' adm__sidebar-btn--active' : ''}`} onClick={() => goTo('devblog')}>
+                <FileText size={15} /> Devlogs
+              </button>
+            )}
+            <a href="/devblog" target="_blank" className="adm__sidebar-btn">
+              <Newspaper size={15} /> Voir le devblog
+            </a>
+            {can('devblog:edit') && (
+              <button className="adm__sidebar-btn adm__sidebar-btn--primary" onClick={() => goTo('devblog:new')}>
+                <Plus size={15} /> Nouveau devlog
+              </button>
+            )}
+            {can('devblog:edit') && (
+              <button className="adm__sidebar-btn" onClick={() => importRef.current?.click()} disabled={importing}>
+                <UploadIcon size={15} /> {importing ? 'Import…' : 'Importer .devblog'}
+              </button>
+            )}
+            <input ref={importRef} type="file" accept=".devblog" style={{ display: 'none' }} onChange={handleImport} />
+          </>
         )}
-        <a href="/devblog" target="_blank" className="adm__sidebar-btn">
-          <Newspaper size={15} /> Voir le devblog
-        </a>
-        {can('devblog:edit') && (
-          <button className="adm__sidebar-btn adm__sidebar-btn--primary" onClick={() => goTo('devblog:new')}>
-            <Plus size={15} /> Nouveau devlog
-          </button>
-        )}
-        {can('devblog:edit') && (
-          <button className="adm__sidebar-btn" onClick={() => importRef.current?.click()} disabled={importing}>
-            <UploadIcon size={15} /> {importing ? 'Import…' : 'Importer .devblog'}
-          </button>
-        )}
-        <input ref={importRef} type="file" accept=".devblog" style={{ display: 'none' }} onChange={handleImport} />
       </aside>
 
       <div className="adm__body">
@@ -422,6 +435,7 @@ export default function AdminApp() {
           {panel === 'permissions' && <PermissionsPanel />}
           {panel === 'control'     && <ControlPanel />}
           {panel === 'branding'    && <BrandingPanel />}
+          {panel === 'roadmap'     && <RoadmapAdminPanel />}
         </div>
       ) : isHub ? (
         <HubPanel

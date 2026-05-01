@@ -1,0 +1,109 @@
+/* ============================================================
+   RoadmapSection — style sbox.game
+   ============================================================ */
+
+.roadmap {
+  padding: 96px 32px;
+  background: var(--bg-elevated, #11151f);
+  border-top: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.06));
+  border-bottom: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.06));
+}
+
+.roadmap__inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.roadmap__header {
+  margin-bottom: 48px;
+  max-width: 720px;
+}
+
+.roadmap__header h2 {
+  margin: 0 0 12px;
+  font-size: clamp(28px, 4vw, 40px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #fff;
+}
+
+.roadmap__header p {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--text-secondary, #b8bcc8);
+}
+
+.roadmap__groups {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.roadmap__group {
+  background: var(--bg-card, #161a26);
+  border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.06));
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.roadmap__group-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.06));
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted, #8089a0);
+}
+
+.roadmap__group--in_progress .roadmap__group-header { color: var(--brand-primary, #3cadd9); }
+.roadmap__group--done        .roadmap__group-header { color: #81c784; }
+.roadmap__group--shipped     .roadmap__group-header { color: #ce93d8; }
+
+.roadmap__group-count {
+  margin-left: auto;
+  font-size: 11px;
+  background: rgba(255, 255, 255, 0.06);
+  padding: 2px 8px;
+  border-radius: 10px;
+  color: var(--text-muted, #8089a0);
+}
+
+.roadmap__items {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.roadmap__item {
+  padding: 12px;
+  background: var(--bg-base, #0a0e18);
+  border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.04));
+  border-radius: 8px;
+}
+
+.roadmap__item h3 {
+  margin: 0 0 4px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.roadmap__item p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-secondary, #b8bcc8);
+}
+
+@media (max-width: 768px) {
+  .roadmap { padding: 64px 16px; }
+}

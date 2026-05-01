@@ -22,10 +22,8 @@ export default function SimpleHeader() {
       </Link>
       <nav className="sh__nav">
         <a href="#features">features</a>
+        <a href="#roadmap">roadmap</a>
         <a href="#contact">contact</a>
-        <Link to="/devblog">blog</Link>
-        <Link to="/roadmap">roadmap</Link>
-        <Link to="/team">team</Link>
         {branding.link_sbox && (
           <a href={branding.link_sbox} target="_blank" rel="noopener noreferrer">s&amp;box</a>
         )}

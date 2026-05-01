@@ -68,25 +68,25 @@ function renderApp() {
             {/* ── Page principale ── */}
             <Route path="/" element={<App />} />
 
-            {/* ── Pages DevBlog ── */}
+            {/* ── Pages DevBlog ── retire pour le MVP, code conserve pour reactivation
             <Route path="/devblog" element={<DevBlogLayout />}>
               <Route index element={<DevBlogList />} />
               <Route path=":slug" element={<DevBlogPost />} />
             </Route>
+            */}
 
-            {/* ── Pages Jeux ── */}
+            {/* ── Pages Jeux ── retire (multi-jeu desactive)
             <Route path="/game/:slug" element={<GamePage />} />
-
-            {/* ── Règlements OpenFramework ── */}
             <Route path="/game/small-life/rules" element={<RulesLibrary />} />
             <Route path="/game/small-life/rules/:bookId" element={<RulesBook />} />
             <Route path="/game/small-life/rules/:bookId/:chapterId" element={<RulesBook />} />
+            */}
 
-            {/* ── Roadmap publique ── */}
-            <Route path="/roadmap" element={<RoadmapPage />} />
+            {/* ── Roadmap publique : maintenant inclus en section sur la home, plus en route dediee ── */}
 
-            {/* ── Page équipe ── */}
+            {/* ── Page equipe ── retire pour le MVP, code conserve
             <Route path="/team" element={<TeamPage />} />
+            */}
 
             {/* ── Page membres ── */}
             <Route path="/members" element={<MembersPage />} />

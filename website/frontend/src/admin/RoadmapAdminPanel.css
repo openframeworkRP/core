@@ -1,0 +1,206 @@
+/* ============================================================
+   RoadmapAdminPanel — dark theme cohérent
+   ============================================================ */
+
+.rmadm-page {
+  padding: 24px 32px;
+  max-width: 900px;
+  margin: 0 auto;
+  color: #e8eaed;
+  font-family: inherit;
+}
+
+.rmadm-header {
+  margin-bottom: 24px;
+  border-bottom: 1px solid #2a2f3e;
+  padding-bottom: 16px;
+}
+
+.rmadm-header h1 {
+  margin: 0 0 4px;
+  font-size: 22px;
+  font-weight: 500;
+  color: #fff;
+}
+
+.rmadm-subtitle {
+  margin: 0;
+  color: #8089a0;
+  font-size: 13px;
+}
+
+.rmadm-error {
+  background: #2d1a1a;
+  border: 1px solid #553030;
+  border-radius: 6px;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+  color: #ff8a80;
+}
+
+.rmadm-empty {
+  color: #8089a0;
+  font-style: italic;
+  padding: 32px 0;
+  text-align: center;
+}
+
+.rmadm-btn {
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: 0;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: inherit;
+  background: #2a2f3e;
+  color: #e8eaed;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: background 120ms;
+}
+.rmadm-btn:hover:not(:disabled) {
+  background: #353b4d;
+}
+.rmadm-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.rmadm-btn-primary {
+  background: var(--brand-primary, #3cadd9);
+  color: #fff;
+}
+.rmadm-btn-primary:hover:not(:disabled) {
+  filter: brightness(1.1);
+}
+
+.rmadm-btn-add {
+  margin-bottom: 16px;
+}
+
+.rmadm-create {
+  background: #161a26;
+  border: 1px solid #2a2f3e;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.rmadm-create input,
+.rmadm-create textarea,
+.rmadm-create select,
+.rmadm-item-title,
+.rmadm-item-desc,
+.rmadm-item-status {
+  background: #11151f;
+  border: 1px solid #2a2f3e;
+  border-radius: 6px;
+  color: #fff;
+  font-size: 14px;
+  font-family: inherit;
+  padding: 8px 10px;
+  outline: 0;
+}
+
+.rmadm-create input:focus,
+.rmadm-create textarea:focus,
+.rmadm-create select:focus,
+.rmadm-item-title:focus,
+.rmadm-item-desc:focus,
+.rmadm-item-status:focus {
+  border-color: var(--brand-primary, #3cadd9);
+}
+
+.rmadm-create-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.rmadm-checkbox {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: #b8bcc8;
+  cursor: pointer;
+}
+
+.rmadm-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.rmadm-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 12px;
+  background: #161a26;
+  border: 1px solid #2a2f3e;
+  border-radius: 8px;
+}
+.rmadm-item--draft {
+  opacity: 0.55;
+  border-style: dashed;
+}
+
+.rmadm-item-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.rmadm-item-title {
+  font-size: 14px;
+  font-weight: 500;
+  width: 100%;
+}
+.rmadm-item-desc {
+  font-size: 13px;
+  color: #b8bcc8;
+  width: 100%;
+  resize: vertical;
+  min-height: 36px;
+}
+
+.rmadm-item-status {
+  width: 110px;
+  flex-shrink: 0;
+}
+
+.rmadm-icon-btn {
+  background: transparent;
+  border: 1px solid #2a2f3e;
+  color: #8089a0;
+  border-radius: 6px;
+  width: 34px;
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all 120ms;
+}
+.rmadm-icon-btn:hover {
+  border-color: var(--brand-primary, #3cadd9);
+  color: var(--brand-primary, #3cadd9);
+}
+.rmadm-icon-btn-danger:hover {
+  border-color: #f47070;
+  color: #f47070;
+}
+
+/* Couleurs de statut sur la barre laterale gauche */
+.rmadm-item--planned     { border-left: 3px solid #6c7385; }
+.rmadm-item--in_progress { border-left: 3px solid var(--brand-primary, #3cadd9); }
+.rmadm-item--done        { border-left: 3px solid #4caf50; }
+.rmadm-item--shipped     { border-left: 3px solid #ce93d8; }

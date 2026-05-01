@@ -33,10 +33,9 @@ export default function Footer() {
         {/* Liens de navigation */}
         <nav className="footer__nav">
           <a href="#features">features</a>
+          <a href="#roadmap">roadmap</a>
           <a href="#contact">contact</a>
-          <Link to="/devblog">{t('nav.devblog')}</Link>
           <Link to="/members">{t('nav.members')}</Link>
-          <Link to="/team">{t('nav.team')}</Link>
         </nav>
 
         <div className="footer__divider" />

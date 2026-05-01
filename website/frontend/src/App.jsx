@@ -13,6 +13,7 @@ import './App.css'
 import SimpleHeader from './components/SimpleHeader'
 import SimpleHero from './components/SimpleHero'
 import FeaturesSection from './components/FeaturesSection'
+import RoadmapSection from './components/RoadmapSection'
 import ContactSection from './components/ContactSection'
 import Footer from './components/Footer'
 import SEO from './components/SEO'
@@ -40,6 +41,10 @@ function App() {
 
         <section id="features" className="page-section">
           <FeaturesSection />
+        </section>
+
+        <section id="roadmap" className="page-section">
+          <RoadmapSection />
         </section>
 
         <section id="contact" className="page-section">
