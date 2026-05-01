@@ -505,8 +505,8 @@
         }
     }
 
-    private string MinimapImage;
     private string MinimapPath => Renderer?.CurrentMinimapPath ?? "";
+    private string MinimapImage => !string.IsNullOrWhiteSpace(Map.MapImageUrl) ? Map.MapImageUrl : MinimapPath;
     bool IsOpen = false;
     Tab CurrentTab = Tab.Players;
 
@@ -852,11 +852,6 @@
         if (Renderer == null) return "";
         var pos = Renderer.FromWorld(worldPos);
         return $"left: {Length.Fraction(pos.x)}; top: {Length.Fraction(pos.y)};";
-    }
-
-    protected override void OnAwake()
-    {
-        MinimapImage = Scene.GetComponentInChildren<MinimapRenderer>()?.CurrentMinimapPath ?? "ui/maps/union_city.png";
     }
 
     protected override void OnStart()

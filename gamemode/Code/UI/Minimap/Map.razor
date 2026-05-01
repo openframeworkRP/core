@@ -86,6 +86,9 @@
     private readonly List<PlayerPawn> _cachedPawns = new();
     private TimeSince _cacheRefreshTimer = 999f;
 
+    [ConVar( "core-map_image_url", Help = "Chemin de l'image de fond de la carte (vide = MinimapRenderer)" )]
+    public static string MapImageUrl { get; set; } = "";
+
     public MinimapRenderer Renderer
     {
         get
@@ -95,7 +98,7 @@
             return _cachedRenderer;
         }
     }
-    private string MinimapPath => Renderer?.CurrentMinimapPath ?? "";
+    private string MinimapPath => !string.IsNullOrWhiteSpace(MapImageUrl) ? MapImageUrl : (Renderer?.CurrentMinimapPath ?? "");
 
     public override void Tick()
     {
