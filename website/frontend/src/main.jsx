@@ -24,6 +24,7 @@ import { LanguageProvider } from './context/LanguageContext.jsx'
 import { AuthProvider } from './context/AuthContext.jsx'
 import { PostTitleProvider } from './context/PostTitleContext.jsx'
 import MaintenancePage from './components/MaintenancePage.jsx'
+import SetupGate from './setup/SetupGate.jsx'
 
 const IS_MAINTENANCE = import.meta.env.VITE_MAINTENANCE === 'true'
 
@@ -39,6 +40,7 @@ function renderApp() {
     <HelmetProvider>
       <LanguageProvider>
         <AuthProvider>
+        <SetupGate>
         <BrowserRouter>
           <ScrollToTop />
           <PostTitleProvider>
@@ -97,6 +99,7 @@ function renderApp() {
           </Routes>
           </PostTitleProvider>
         </BrowserRouter>
+        </SetupGate>
       </AuthProvider>
     </LanguageProvider>
     </HelmetProvider>
