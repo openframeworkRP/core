@@ -24,7 +24,10 @@
 {
     <div class="topbar">
         <div class="server">
-            <img src="ui/core_opacity.png"/>
+            @if (!string.IsNullOrWhiteSpace(ServerLogoUrl))
+            {
+                <img src="@ServerLogoUrl"/>
+            }
             <div>
                 <span>OpenFramework</span>
                 <span>Pause Menu</span>
@@ -55,7 +58,6 @@
     <div class="content">
         <div class="actions">
             <div class="action" @onclick=@(() => { IsOpen = !IsOpen; })>
-                <div class="background" style="background-image:url('ui/maps/union_city.png');" />
                 <button>Resume</button>
             </div>
             <div class="action @(CurrentTab == Tab.Players ? "active" : "")" @onclick=@(() => CurrentTab = Tab.Players)>
@@ -474,6 +476,9 @@
 
     [ConVar( "core-feedback_webhook_url", Help = "URL du webhook Discord pour les feedbacks joueurs (vide = onglet désactivé)" )]
     public static string FeedbackWebhookUrl { get; set; } = "";
+
+    [ConVar( "core-pausemenu_logo_url", Help = "Chemin vers le logo affiché en haut à gauche du pause menu (vide = pas de logo)" )]
+    public static string ServerLogoUrl { get; set; } = "";
 
     // Cache : avant, ces 2 properties scannaient la scene a chaque acces. Avec un
     // BuildRenderTree appele a chaque rebuild + plusieurs accesseurs dans le tree, ca
