@@ -104,7 +104,7 @@ export default function ImagePanel() {
   return (
     <div style={{ padding: '28px 32px', maxWidth: 900, margin: '0 auto' }}>
       <h2 style={{ color: '#e8e8e8', fontSize: '1.15rem', fontWeight: 700, marginBottom: 24, display: 'flex', alignItems: 'center', gap: 10 }}>
-        <ImageIcon size={18} style={{ color: '#e07b39' }} />
+        <ImageIcon size={18} style={{ color: 'var(--brand-primary, #e07b39)' }} />
         Images
       </h2>
 
@@ -121,7 +121,7 @@ export default function ImagePanel() {
         onDragLeave={() => setDragOver(false)}
         onDrop={onDrop}
         style={{
-          border: `2px dashed ${dragOver ? '#e07b39' : uploading ? '#555' : 'rgba(255,255,255,0.12)'}`,
+          border: `2px dashed ${dragOver ? 'var(--brand-primary, #e07b39)' : uploading ? '#555' : 'rgba(255,255,255,0.12)'}`,
           borderRadius: 12,
           padding: '36px 24px',
           textAlign: 'center',
@@ -136,7 +136,7 @@ export default function ImagePanel() {
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12 }}>
             <div style={{ color: '#888', fontSize: '0.85rem' }}>Upload en cours… {progress}%</div>
             <div style={{ width: '100%', maxWidth: 300, height: 6, background: '#2a2a2a', borderRadius: 3, overflow: 'hidden' }}>
-              <div style={{ height: '100%', width: `${progress}%`, background: '#e07b39', borderRadius: 3, transition: 'width 0.15s' }} />
+              <div style={{ height: '100%', width: `${progress}%`, background: 'var(--brand-primary, #e07b39)', borderRadius: 3, transition: 'width 0.15s' }} />
             </div>
           </div>
         ) : (

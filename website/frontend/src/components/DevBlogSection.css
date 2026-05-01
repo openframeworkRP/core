@@ -55,7 +55,7 @@
   font-weight: 700;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: #e07b39;
+  color: var(--brand-primary, #e07b39);
 }
 
 .devblog__title {
@@ -69,7 +69,7 @@
 .devblog__divider {
   width: 60px;
   height: 4px;
-  background: #e07b39;
+  background: var(--brand-primary, #e07b39);
   border-radius: 2px;
   margin-top: 4px;
 }
@@ -105,13 +105,13 @@
 }
 
 .devblog__filter-btn:hover {
-  border-color: #e07b39;
+  border-color: var(--brand-primary, #e07b39);
   color: #f0ead6;
 }
 
 .devblog__filter-btn--active {
-  background: #e07b39;
-  border-color: #e07b39;
+  background: var(--brand-primary, #e07b39);
+  border-color: var(--brand-primary, #e07b39);
   color: #fff;
 }
 
@@ -138,7 +138,7 @@
 .devblog__card:hover {
   transform: translateY(-6px);
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
-  border-color: #e07b39;
+  border-color: var(--brand-primary, #e07b39);
 }
 
 /* Bande colorée en tête de carte (selon le jeu) */
@@ -155,7 +155,7 @@
 
 /* Couleur par jeu */
 .devblog__card-header--core {
-  background: linear-gradient(90deg, #b0440a 0%, #e07b39 100%);
+  background: linear-gradient(90deg, #b0440a 0%, var(--brand-primary, #e07b39) 100%);
   color: #fff;
 }
 
@@ -216,14 +216,14 @@
   padding: 3px 10px;
   border-radius: 999px;
   background: #2a2a2a;
-  color: #e07b39;
+  color: var(--brand-primary, #e07b39);
   font-size: 0.7rem;
   font-weight: 700;
   letter-spacing: 0.05em;
 }
 
 .devblog__card-read {
-  color: #e07b39;
+  color: var(--brand-primary, #e07b39);
   font-size: 0.8rem;
   font-weight: 700;
   white-space: nowrap;
@@ -300,7 +300,7 @@
 }
 
 .devblog__modal-close:hover {
-  background: #e07b39;
+  background: var(--brand-primary, #e07b39);
 }
 
 .devblog__modal-banner {
@@ -353,9 +353,9 @@
 .devblog__post-h3 {
   font-size: 1.1rem;
   font-weight: 800;
-  color: #e07b39;
+  color: var(--brand-primary, #e07b39);
   margin: 8px 0 0;
-  border-left: 3px solid #e07b39;
+  border-left: 3px solid var(--brand-primary, #e07b39);
   padding-left: 12px;
 }
 

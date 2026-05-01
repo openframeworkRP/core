@@ -42,7 +42,7 @@
   font-weight: 700;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: #e07b39;
+  color: var(--brand-primary, #e07b39);
 }
 
 .dbl__hero-title {
@@ -96,13 +96,13 @@
 }
 
 .dbl__filter-btn:hover {
-  border-color: #e07b39;
+  border-color: var(--brand-primary, #e07b39);
   color: #f0ead6;
 }
 
 .dbl__filter-btn--active {
-  background: #e07b39;
-  border-color: #e07b39;
+  background: var(--brand-primary, #e07b39);
+  border-color: var(--brand-primary, #e07b39);
   color: #fff;
 }
 
@@ -144,7 +144,7 @@
 .dbl__card:hover {
   transform: translateY(-7px);
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55);
-  border-color: #e07b39;
+  border-color: var(--brand-primary, #e07b39);
 }
 
 /* Cover */
@@ -231,7 +231,7 @@
   color: #fff;
 }
 
-.dbl__game-pill--core { background: #e07b39; }
+.dbl__game-pill--core { background: var(--brand-primary, #e07b39); }
 /* Ajoute d'autres jeux ici */
 
 .dbl__card-body {
@@ -279,7 +279,7 @@
   padding: 3px 10px;
   border-radius: 999px;
   background: #2a2a2a;
-  color: #e07b39;
+  color: var(--brand-primary, #e07b39);
   font-size: 0.68rem;
   font-weight: 700;
   letter-spacing: 0.05em;

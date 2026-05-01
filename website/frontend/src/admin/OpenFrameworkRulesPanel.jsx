@@ -144,7 +144,7 @@ function RenderSlBlocks({ blocks }) {
       if (b.type === 'rule') return (
         <div key={i} style={{ background: 'rgba(224,123,57,0.06)', border: '1px solid rgba(224,123,57,0.2)', borderRadius: 8, padding: '12px 16px', marginBottom: 12 }}>
           <div style={{ display: 'flex', alignItems: 'baseline', gap: 10, marginBottom: 4 }}>
-            <span style={{ color: '#e07b39', fontWeight: 800, fontSize: '0.82rem', fontFamily: 'Georgia, serif' }}>Art. {b.number}</span>
+            <span style={{ color: 'var(--brand-primary, #e07b39)', fontWeight: 800, fontSize: '0.82rem', fontFamily: 'Georgia, serif' }}>Art. {b.number}</span>
             <strong style={{ color: '#ddd', fontSize: '0.9rem', fontFamily: 'Georgia, serif' }}>{renderInline(b.title)}</strong>
           </div>
           <RenderSlBlocks blocks={parseCustomMd(b.text)} />
@@ -269,11 +269,11 @@ function MdToolbar({ taRef, value, onChange, onPreviewToggle, previewMode }) {
       {iconBtn(List,     'Liste',        () => insertLine('- '))}
       <div style={{ width: 1, height: 14, background: '#2a2a2a', margin: '0 3px' }} />
       {/* Snippets custom */}
-      {textBtn('Art.',  'Insérer un article',    () => insertSnippet(':::art 1 Titre de la règle\nTexte de la règle\n:::'), '#e07b39')}
+      {textBtn('Art.',  'Insérer un article',    () => insertSnippet(':::art 1 Titre de la règle\nTexte de la règle\n:::'), 'var(--brand-primary, #e07b39)')}
       {textBtn('Note',  'Insérer une note',      () => insertSnippet(':::note\nTexte de la note\n:::'), '#f59e0b')}
       <div style={{ flex: 1 }} />
       <button onClick={onPreviewToggle}
-        style={{ ...BTN, padding: '3px 10px', fontSize: '0.72rem', gap: 4, background: previewMode ? 'rgba(224,123,57,0.15)' : 'transparent', color: previewMode ? '#e07b39' : '#555', border: `1px solid ${previewMode ? 'rgba(224,123,57,0.3)' : 'transparent'}` }}>
+        style={{ ...BTN, padding: '3px 10px', fontSize: '0.72rem', gap: 4, background: previewMode ? 'rgba(224,123,57,0.15)' : 'transparent', color: previewMode ? 'var(--brand-primary, #e07b39)' : '#555', border: `1px solid ${previewMode ? 'rgba(224,123,57,0.3)' : 'transparent'}` }}>
         {previewMode ? <FileText size={11} /> : <Eye size={11} />}
         {previewMode ? 'Éditer' : 'Aperçu'}
       </button>
@@ -284,7 +284,7 @@ function MdToolbar({ taRef, value, onChange, onPreviewToggle, previewMode }) {
 // ── Menu slash ────────────────────────────────────────────────────────────
 
 const SLASH_ITEMS = [
-  { id: 'art',       label: 'Article',          hint: ':::art N Titre',  icon: '§',  accent: '#e07b39', snippet: `:::art 1 Titre de la règle\nTexte de la règle\n:::` },
+  { id: 'art',       label: 'Article',          hint: ':::art N Titre',  icon: '§',  accent: 'var(--brand-primary, #e07b39)', snippet: `:::art 1 Titre de la règle\nTexte de la règle\n:::` },
   { id: 'note',      label: 'Note',             hint: ':::note',         icon: '📌', accent: '#f59e0b', snippet: `:::note\nTexte de la note\n:::` },
   { id: 'table',     label: 'Tableau',          hint: ':::table',        icon: '⊞',  accent: '#38bdf8', snippet: `:::table\nColonne 1 | Colonne 2 | Colonne 3\n---\nValeur A  | Valeur B  | Valeur C\nValeur D  | Valeur E  | Valeur F\n:::` },
   { id: 'heading',   label: 'Titre de section', hint: '## Titre',        icon: '#',  accent: '#a78bfa', snippet: `## Titre de section` },
@@ -512,7 +512,7 @@ function ChapterEditor({ chapter, bookId, onDelete, onRefresh }) {
           <>
             <span style={{ flex: 1, color: '#d0d0d0', fontWeight: 700, fontSize: '0.9rem' }}>{chapter.title}</span>
             <span style={{ color: '#444', fontSize: '0.7rem', flexShrink: 0 }}>{blockCount} élément{blockCount !== 1 ? 's' : ''}</span>
-            {dirty && <span style={{ color: '#e07b39', fontSize: '0.68rem', fontWeight: 700, flexShrink: 0 }}>●</span>}
+            {dirty && <span style={{ color: 'var(--brand-primary, #e07b39)', fontSize: '0.68rem', fontWeight: 700, flexShrink: 0 }}>●</span>}
             <div style={{ display: 'flex', gap: 2, flexShrink: 0 }} onClick={e => e.stopPropagation()}>
               <button onClick={() => { setEditingTitle(true); setExpanded(true) }}
                 style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#555', padding: 4, display: 'flex', borderRadius: 4 }}>
@@ -676,9 +676,9 @@ export default function OpenFrameworkRulesPanel() {
         <div style={{ padding: '16px 14px 8px', color: '#444', fontSize: '0.68rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em' }}>Livres</div>
         {books.map(b => (
           <button key={b.book_id} onClick={() => setActiveBookId(b.book_id)}
-            style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 14px', background: activeBookId === b.book_id ? 'rgba(224,123,57,0.1)' : 'transparent', border: 'none', borderLeft: `2px solid ${activeBookId === b.book_id ? '#e07b39' : 'transparent'}`, cursor: 'pointer', textAlign: 'left', width: '100%' }}>
+            style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 14px', background: activeBookId === b.book_id ? 'rgba(224,123,57,0.1)' : 'transparent', border: 'none', borderLeft: `2px solid ${activeBookId === b.book_id ? 'var(--brand-primary, #e07b39)' : 'transparent'}`, cursor: 'pointer', textAlign: 'left', width: '100%' }}>
             <span style={{ fontSize: '1rem' }}>{b.icon}</span>
-            <span style={{ color: activeBookId === b.book_id ? '#e07b39' : '#999', fontSize: '0.82rem', fontWeight: 600, lineHeight: 1.3 }}>{b.title}</span>
+            <span style={{ color: activeBookId === b.book_id ? 'var(--brand-primary, #e07b39)' : '#999', fontSize: '0.82rem', fontWeight: 600, lineHeight: 1.3 }}>{b.title}</span>
           </button>
         ))}
       </aside>
@@ -738,7 +738,7 @@ export default function OpenFrameworkRulesPanel() {
                 <div style={{ color: '#444', fontSize: '0.7rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 8 }}>Syntaxe</div>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px 20px', fontSize: '0.75rem', fontFamily: 'monospace', color: '#555' }}>
                   <span><span style={{ color: '#a78bfa' }}>## Titre</span> — section</span>
-                  <span><span style={{ color: '#e07b39' }}>:::art 1 Nom</span><br /><span style={{ color: '#888' }}>Texte</span><br /><span style={{ color: '#e07b39' }}>:::</span> — article</span>
+                  <span><span style={{ color: 'var(--brand-primary, #e07b39)' }}>:::art 1 Nom</span><br /><span style={{ color: '#888' }}>Texte</span><br /><span style={{ color: 'var(--brand-primary, #e07b39)' }}>:::</span> — article</span>
                   <span><span style={{ color: '#f59e0b' }}>:::note</span><br /><span style={{ color: '#888' }}>Texte</span><br /><span style={{ color: '#f59e0b' }}>:::</span> — note</span>
                   <span><span style={{ color: '#38bdf8' }}>:::table</span><br /><span style={{ color: '#888' }}>A | B</span><br /><span style={{ color: '#888' }}>---</span><br /><span style={{ color: '#888' }}>1 | 2</span><br /><span style={{ color: '#38bdf8' }}>:::</span> — tableau</span>
                   <span><span style={{ color: '#34d399' }}>- item</span> — liste</span>

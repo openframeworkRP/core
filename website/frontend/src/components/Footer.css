@@ -72,7 +72,7 @@
 }
 
 .footer__nav a:hover {
-  color: #e07b39;
+  color: var(--brand-primary, #e07b39);
 }
 
 /* ── Divider ── */
@@ -120,7 +120,7 @@
 .footer__social-btn:hover {
   background: rgba(224, 123, 57, 0.12);
   border-color: rgba(224, 123, 57, 0.35);
-  color: #e07b39;
+  color: var(--brand-primary, #e07b39);
 }
 
 /* ── Responsive ── */

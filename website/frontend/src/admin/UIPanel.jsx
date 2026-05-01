@@ -90,7 +90,7 @@ export default function UIPanel() {
                 Annuler
               </button>}
               <button onClick={save}
-                style={{ padding: '6px 14px', borderRadius: 6, border: 'none', background: '#e07b39', color: '#fff', cursor: 'pointer', fontSize: 13, fontWeight: 600 }}>
+                style={{ padding: '6px 14px', borderRadius: 6, border: 'none', background: 'var(--brand-primary, #e07b39)', color: '#fff', cursor: 'pointer', fontSize: 13, fontWeight: 600 }}>
                 Enregistrer
               </button>
             </div>

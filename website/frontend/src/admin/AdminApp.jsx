@@ -30,7 +30,7 @@ import ControlPanel from './ControlPanel.jsx'
 import BrandingPanel from './BrandingPanel.jsx'
 
 // ── Rôles ─────────────────────────────────────────────────────────────────
-const ROLE_COLORS = { owner: '#f59e0b', admin: '#a78bfa', editor: '#34d399', rules_editor: '#e07b39', viewer: '#71717a' }
+const ROLE_COLORS = { owner: '#f59e0b', admin: '#a78bfa', editor: '#34d399', rules_editor: 'var(--brand-primary, #e07b39)', viewer: '#71717a' }
 const ROLE_FALLBACK_COLOR = '#6366f1'   // pour les rôles personnalisés
 const colorForRole = (role) => ROLE_COLORS[role] || ROLE_FALLBACK_COLOR
 
@@ -571,7 +571,7 @@ function PostCard({ post, onEdit, onPublish, onDelete }) {
 
 /* ── Panel jeux ─────────────────────────────────────────────────────────── */
 function GamesPanel({ games, onClose, onRefresh }) {
-  const [form, setForm] = useState({ label_fr: '', label_en: '', color: '#e07b39' })
+  const [form, setForm] = useState({ label_fr: '', label_en: '', color: 'var(--brand-primary, #e07b39)' })
   const [err,  setErr]  = useState('')
 
   async function handleCreate(e) {
@@ -579,7 +579,7 @@ function GamesPanel({ games, onClose, onRefresh }) {
     setErr('')
     try {
       await api.createGame(form)
-      setForm({ label_fr: '', label_en: '', color: '#e07b39' })
+      setForm({ label_fr: '', label_en: '', color: 'var(--brand-primary, #e07b39)' })
       onRefresh()
     } catch (e) { setErr(e.message) }
   }
@@ -817,7 +817,7 @@ function UsersPanel({ onClose, currentUser }) {
               </div>
               {repairId === u.id && (
                 <form onSubmit={handleRepair} style={{ marginTop: 8, padding: '10px 12px', background: 'rgba(224,123,57,0.08)', borderRadius: 8, border: '1px solid rgba(224,123,57,0.3)', display: 'flex', flexDirection: 'column', gap: 6 }}>
-                  <span style={{ fontSize: '0.75rem', color: '#e07b39', fontWeight: 600 }}>Réparer les assignations</span>
+                  <span style={{ fontSize: '0.75rem', color: 'var(--brand-primary, #e07b39)', fontWeight: 600 }}>Réparer les assignations</span>
                   <span style={{ fontSize: '0.7rem', color: '#999' }}>
                     Hub ID actuel : <code style={{ background: '#333', padding: '1px 5px', borderRadius: 3 }}>{slugify(u.display_name)}</code>
                   </span>
@@ -1270,7 +1270,7 @@ function StatsPanel({ onClose, posts }) {
                 </div>
               </div>
               <div className="adm__stats-kpi">
-                <span className="adm__stats-kpi-icon" style={{ background: '#e07b3922', color: '#e07b39' }}><Gamepad2 size={18} /></span>
+                <span className="adm__stats-kpi-icon" style={{ background: 'var(--brand-primary, #e07b39)22', color: 'var(--brand-primary, #e07b39)' }}><Gamepad2 size={18} /></span>
                 <div>
                   <div className="adm__stats-kpi-num">{data.totals.games}</div>
                   <div className="adm__stats-kpi-label">Jeux</div>

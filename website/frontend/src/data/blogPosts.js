@@ -26,7 +26,7 @@
 
 export const GAMES = [
   { slug: 'all',        labelFr: 'Tout voir',  labelEn: 'All',        color: null },
-  { slug: 'core', labelFr: 'OpenFramework', labelEn: 'OpenFramework', color: '#e07b39' },
+  { slug: 'core', labelFr: 'OpenFramework', labelEn: 'OpenFramework', color: 'var(--brand-primary, #e07b39)' },
   // Ajoute tes futurs jeux ici, ex :
   // { slug: 'mon_jeu', labelFr: 'Mon Jeu', labelEn: 'My Game', color: '#4a80c8' },
 ]

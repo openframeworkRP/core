@@ -24,7 +24,7 @@ const GAMES = {
     genreKey:  'games.core.genre',
     descKey:   'games.core.desc',
     tags:      ['games.core.tag_rp', 'games.core.tag_multi'],
-    color:     '#e07b39',
+    color:     'var(--brand-primary, #e07b39)',
     video:     openFrameworkAnim,
     sboxUrl:   'https://sbox.game/openframework/core',
   },

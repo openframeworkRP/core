@@ -5,16 +5,21 @@ import GamesSection from './components/GamesSection'
 import ContactSection from './components/ContactSection'
 import Footer from './components/Footer'
 import SEO from './components/SEO'
+import { useBranding } from './context/BrandingContext.jsx'
 import layerTransition from './assets/layers/layer_transition_sombre_3.webp'
 import layerTransitionBatiment from './assets/layers/transitionbatiment.webp'
 
 function App() {
+  const { branding } = useBranding()
+  const siteName = branding.site_name || 'OpenFramework'
+  const description = branding.description || 'Framework de roleplay open source pour s&box'
+
   return (
     <>
       <SEO
-        title="Serveur Roleplay français sur S&Box"
-        description="OpenFramework est le premier studio français de jeux RP sur S&Box. Rejoignez OpenFramework, notre serveur DarkRP & Roleplay immersif en français. Communauté active, mises à jour régulières."
-        keywords="S&Box, DarkRP, Roleplay, RP, France, français, serveur RP français, OpenFramework, DarkRP français, Roleplay S&Box, S&Box France, OpenFramework, jeux RP français"
+        title={`${siteName} — Serveur Roleplay sur s&box`}
+        description={description}
+        keywords="s&box, DarkRP, Roleplay, RP, OpenFramework, framework, open source"
         url="/"
         lang="fr"
       />

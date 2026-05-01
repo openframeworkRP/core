@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom'
 import { Github, MessageCircle, Gamepad2 } from 'lucide-react'
-import logo from '../assets/logo.png'
+import defaultLogo from '../assets/logo.png'
 import { useLang } from '../context/LanguageContext'
+import { useBranding } from '../context/BrandingContext.jsx'
 import './Footer.css'
 
 const SOCIALS = [
@@ -12,14 +13,17 @@ const SOCIALS = [
 
 export default function Footer() {
   const { t } = useLang()
+  const { branding } = useBranding()
   const year = new Date().getFullYear()
+  const logoSrc = branding.logo_url || defaultLogo
+  const siteName = branding.site_name || 'OpenFramework'
 
   return (
     <footer className="footer">
       <div className="footer__inner">
         {/* Logo + baseline */}
         <div className="footer__brand">
-          <img src={logo} alt="OpenFramework" className="footer__logo" />
+          <img src={logoSrc} alt={siteName} className="footer__logo" />
           <p className="footer__tagline">{t('hero.tagline')}</p>
         </div>
 
@@ -38,7 +42,7 @@ export default function Footer() {
         {/* Bas de footer */}
         <div className="footer__bottom">
           <span className="footer__copy">
-            © {year} S&amp;Box Studio — {t('footer.rights')}
+            © {year} {siteName} — {t('footer.rights')}
           </span>
           <div className="footer__socials">
             {SOCIALS.map(s => (

@@ -58,7 +58,7 @@
 
 .dblayout__nav-link:hover,
 .dblayout__nav-link--active {
-  color: #e07b39;
+  color: var(--brand-primary, #e07b39);
 }
 
 .dblayout__nav-current {

@@ -30,7 +30,7 @@ const STORAGE_KEY = "openframework-hub-data";
 // Les membres du hub sont les users admin (/api/users)
 // Palette de couleurs attribuée par index
 const MEMBER_COLORS = [
-  "#5865f2", "#ed9121", "#e07b39", "#3e9041", "#9b59b6",
+  "#5865f2", "#ed9121", "var(--brand-primary, #e07b39)", "#3e9041", "#9b59b6",
   "#e74c3c", "#e67e22", "#2ecc71", "#ae2121", "#00b5d8",
   "#f39c12", "#1abc9c", "#8e44ad", "#d35400", "#27ae60",
 ];
@@ -50,7 +50,7 @@ function dbUserToHub(u, idx) {
 export const DEFAULT_MEMBERS = []; // plus utilisé, conservé pour compatibilité import
 
 export const DEFAULT_PROJECTS = [
-  { id: "sl-v1", name: "OpenFramework", icon: Gamepad2, color: "#e07b39", deadline: null },
+  { id: "sl-v1", name: "OpenFramework", icon: Gamepad2, color: "var(--brand-primary, #e07b39)", deadline: null },
   { id: "sw-rp", name: "Star Wars RP", icon: Rocket, color: "#2ecc71", deadline: null },
   { id: "ph", name: "PropHunt", icon: Gamepad2, color: "#9b59b6", deadline: null },
 ];
@@ -500,7 +500,7 @@ function ImportModal({ onImport, onClose, projects }) {
     <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.75)", zIndex: 1100, display: "flex", alignItems: "center", justifyContent: "center" }}>
       <div style={{ background: "#1e1e1e", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 16, padding: 28, width: "100%", maxWidth: 560, maxHeight: "85vh", overflow: "auto" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
-          <h3 style={{ fontWeight: 700, fontSize: "1rem", color: "#fff", margin: 0 }}><IC icon={FileUp} style={{ marginRight: 8, color: "#e07b39" }} />Importer un fichier .md</h3>
+          <h3 style={{ fontWeight: 700, fontSize: "1rem", color: "#fff", margin: 0 }}><IC icon={FileUp} style={{ marginRight: 8, color: "var(--brand-primary, #e07b39)" }} />Importer un fichier .md</h3>
           <button onClick={onClose} style={{ background: "none", border: "none", color: "#888", cursor: "pointer", padding: 4 }}><IC icon={X} size={16} /></button>
         </div>
 
@@ -510,9 +510,9 @@ function ImportModal({ onImport, onClose, projects }) {
             onDragLeave={() => setDragging(false)}
             onDrop={onDrop}
             onClick={() => fileRef.current?.click()}
-            style={{ border: `2px dashed ${dragging ? "#e07b39" : "rgba(255,255,255,0.15)"}`, borderRadius: 12, padding: "40px 20px", textAlign: "center", cursor: "pointer", transition: "border-color 0.15s", background: dragging ? "rgba(224,123,57,0.05)" : "transparent" }}
+            style={{ border: `2px dashed ${dragging ? "var(--brand-primary, #e07b39)" : "rgba(255,255,255,0.15)"}`, borderRadius: 12, padding: "40px 20px", textAlign: "center", cursor: "pointer", transition: "border-color 0.15s", background: dragging ? "rgba(224,123,57,0.05)" : "transparent" }}
           >
-            <IC icon={FileUp} size={28} style={{ color: "#e07b39", marginBottom: 10, display: "block", margin: "0 auto 10px" }} />
+            <IC icon={FileUp} size={28} style={{ color: "var(--brand-primary, #e07b39)", marginBottom: 10, display: "block", margin: "0 auto 10px" }} />
             <div style={{ color: "#e8e0d0", fontWeight: 600, marginBottom: 6 }}>Glisse un fichier .md ici</div>
             <div style={{ color: "#666", fontSize: "0.78rem" }}>ou clique pour sélectionner</div>
             <input ref={fileRef} type="file" accept=".md,text/markdown,text/plain" style={{ display: "none" }} onChange={e => onFile(e.target.files[0])} />
@@ -531,7 +531,7 @@ function ImportModal({ onImport, onClose, projects }) {
               </div>
               {result.tasks.map((t, i) => (
                 <div key={i} style={{ display: "flex", gap: 10, alignItems: "flex-start", padding: "8px 10px", borderRadius: 8, background: "rgba(255,255,255,0.03)", marginBottom: 4 }}>
-                  <IC icon={SquareCheck} size={13} style={{ color: "#e07b39", flexShrink: 0, marginTop: 2 }} />
+                  <IC icon={SquareCheck} size={13} style={{ color: "var(--brand-primary, #e07b39)", flexShrink: 0, marginTop: 2 }} />
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <div style={{ fontSize: "0.83rem", color: "#e8e0d0", fontWeight: 600, marginBottom: 2 }}>{t.text}</div>
                     <div style={{ fontSize: "0.7rem", color: "#666" }}>{projectName(t.projectId)}{t.category ? ` · ${t.category}` : ""} · {PRIO_CONFIG[t.priority]?.label || "Non priorisée"}</div>
@@ -560,7 +560,7 @@ function ImportModal({ onImport, onClose, projects }) {
               <button
                 onClick={() => { onImport(result.tasks, result.ideas); onClose(); }}
                 disabled={result.tasks.length === 0 && result.ideas.length === 0}
-                style={{ padding: "8px 18px", background: result.tasks.length + result.ideas.length ? "#e07b39" : "#555", color: "#1a1a1a", border: "none", borderRadius: 8, cursor: result.tasks.length + result.ideas.length ? "pointer" : "default", fontWeight: 700, fontFamily: "inherit", fontSize: "0.82rem" }}
+                style={{ padding: "8px 18px", background: result.tasks.length + result.ideas.length ? "var(--brand-primary, #e07b39)" : "#555", color: "#1a1a1a", border: "none", borderRadius: 8, cursor: result.tasks.length + result.ideas.length ? "pointer" : "default", fontWeight: 700, fontFamily: "inherit", fontSize: "0.82rem" }}
               >
                 Importer {result.tasks.length + result.ideas.length} élément{result.tasks.length + result.ideas.length !== 1 ? "s" : ""}
               </button>
@@ -654,7 +654,7 @@ function TaskModal({ task, members, tasks, milestones, onSave, onClose, onDelete
               <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
                 <span style={{ color: "#666" }}>Créée le</span>
                 {task.createdAt && <span style={{ color: "#bbb" }}>{new Date(task.createdAt).toLocaleString("fr-FR", { day: "2-digit", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit" })}</span>}
-                {task.createdBy && <><span style={{ color: "#666" }}>par</span><span style={{ color: "#e07b39", fontWeight: 600 }}>{task.createdBy}</span></>}
+                {task.createdBy && <><span style={{ color: "#666" }}>par</span><span style={{ color: "var(--brand-primary, #e07b39)", fontWeight: 600 }}>{task.createdBy}</span></>}
               </div>
             )}
             {(task.updatedAt && task.updatedAt !== task.createdAt) && (
@@ -682,12 +682,12 @@ function TaskModal({ task, members, tasks, milestones, onSave, onClose, onDelete
                 {history.map(h => {
                   const member = members.find(m => m.id === h.author);
                   const when = h.created_at ? new Date(h.created_at).toLocaleString("fr-FR", { day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit" }) : "";
-                  const actionColor = { create: "#3e9041", edit: "#5865f2", status: "#e07b39", delete: "#d13b1a" }[h.action] || "#888";
+                  const actionColor = { create: "#3e9041", edit: "#5865f2", status: "var(--brand-primary, #e07b39)", delete: "#d13b1a" }[h.action] || "#888";
                   return (
                     <div key={h.id} style={{ fontSize: "0.7rem", color: "#bbb", display: "flex", alignItems: "flex-start", gap: 8, padding: "6px 8px", background: "rgba(0,0,0,0.2)", borderRadius: 5, borderLeft: `2px solid ${actionColor}` }}>
                       <div style={{ flex: 1, minWidth: 0 }}>
                         <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 2 }}>
-                          <span style={{ color: member?.color || "#e07b39", fontWeight: 700, fontSize: "0.68rem" }}>{member?.name || h.author || "system"}</span>
+                          <span style={{ color: member?.color || "var(--brand-primary, #e07b39)", fontWeight: 700, fontSize: "0.68rem" }}>{member?.name || h.author || "system"}</span>
                           <span style={{ color: "#555", fontSize: "0.62rem" }}>{when}</span>
                         </div>
                         <div style={{ color: "#ccc", fontSize: "0.72rem", lineHeight: 1.3, wordBreak: "break-word" }}>{h.detail}</div>
@@ -730,7 +730,7 @@ function TaskModal({ task, members, tasks, milestones, onSave, onClose, onDelete
                 <div style={{ position: "absolute", top: "calc(100% + 2px)", left: 0, right: 0, background: "#222", border: "1px solid rgba(255,255,255,0.12)", borderRadius: 8, zIndex: 200, maxHeight: 220, overflowY: "auto", boxShadow: "0 8px 24px rgba(0,0,0,0.5)" }}>
                   {filtered.map(cat => (
                     <div key={cat} onMouseDown={() => { update("category", cat); setShowCatDropdown(false); }}
-                      style={{ padding: "8px 14px", fontSize: "0.84rem", color: cat === form.category ? "#e07b39" : "#e8e0d0", cursor: "pointer", background: cat === form.category ? "rgba(224,123,57,0.1)" : "transparent", borderLeft: cat === form.category ? "2px solid #e07b39" : "2px solid transparent" }}
+                      style={{ padding: "8px 14px", fontSize: "0.84rem", color: cat === form.category ? "var(--brand-primary, #e07b39)" : "#e8e0d0", cursor: "pointer", background: cat === form.category ? "rgba(224,123,57,0.1)" : "transparent", borderLeft: cat === form.category ? "2px solid var(--brand-primary, #e07b39)" : "2px solid transparent" }}
                       onMouseEnter={e => { if (cat !== form.category) e.currentTarget.style.background = "rgba(255,255,255,0.05)"; }}
                       onMouseLeave={e => { if (cat !== form.category) e.currentTarget.style.background = "transparent"; }}>
                       {cat}
@@ -884,7 +884,7 @@ function TaskModal({ task, members, tasks, milestones, onSave, onClose, onDelete
           />
           <button
             onClick={() => { if (imageInput.trim()) { update("images", [...(form.images || []), imageInput.trim()]); setImageInput(""); } }}
-            style={{ padding: "0 12px", background: "#e07b39", border: "none", borderRadius: 8, cursor: "pointer", color: "#1a1a1a", fontWeight: 700, fontSize: "1rem", flexShrink: 0 }}
+            style={{ padding: "0 12px", background: "var(--brand-primary, #e07b39)", border: "none", borderRadius: 8, cursor: "pointer", color: "#1a1a1a", fontWeight: 700, fontSize: "1rem", flexShrink: 0 }}
             title="Ajouter l'image"
           >+</button>
         </div>
@@ -922,7 +922,7 @@ function TaskModal({ task, members, tasks, milestones, onSave, onClose, onDelete
           />
           <button
             onClick={() => { if (videoInput.trim()) { update("videos", [...(form.videos || []), videoInput.trim()]); setVideoInput(""); } }}
-            style={{ padding: "0 12px", background: "#e07b39", border: "none", borderRadius: 8, cursor: "pointer", color: "#1a1a1a", fontWeight: 700, fontSize: "1rem", flexShrink: 0 }}
+            style={{ padding: "0 12px", background: "var(--brand-primary, #e07b39)", border: "none", borderRadius: 8, cursor: "pointer", color: "#1a1a1a", fontWeight: 700, fontSize: "1rem", flexShrink: 0 }}
             title="Ajouter la vidéo"
           >+</button>
         </div>
@@ -930,7 +930,7 @@ function TaskModal({ task, members, tasks, milestones, onSave, onClose, onDelete
           <div style={{ display: "flex", flexDirection: "column", gap: 6, marginBottom: 8 }}>
             {(form.videos || []).map((url, i) => (
               <div key={i} style={{ display: "flex", alignItems: "center", gap: 6, background: "#1a1a1a", borderRadius: 8, padding: "6px 10px", border: "1px solid rgba(255,255,255,0.08)" }}>
-                <IC icon={ExternalLink} size={13} style={{ color: "#e07b39", flexShrink: 0 }} />
+                <IC icon={ExternalLink} size={13} style={{ color: "var(--brand-primary, #e07b39)", flexShrink: 0 }} />
                 <a href={url} target="_blank" rel="noopener noreferrer" style={{ flex: 1, fontSize: "0.78rem", color: "#06b6d4", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", textDecoration: "none" }}>{url}</a>
                 <button onClick={() => update("videos", (form.videos || []).filter((_, j) => j !== i))}
                   style={{ background: "transparent", border: "none", color: "#555", cursor: "pointer", padding: 2 }}><IC icon={X} size={12} /></button>
@@ -960,14 +960,14 @@ function TaskModal({ task, members, tasks, milestones, onSave, onClose, onDelete
             if (existing.find(r => r.type === relType && r.targetId === relTarget)) return;
             update("relations", [...existing, { type: relType, targetId: relTarget }]);
             setRelTarget("");
-          }} style={{ padding: "0 12px", background: "#e07b39", border: "none", borderRadius: 8, cursor: "pointer", color: "#1a1a1a", fontWeight: 700, fontSize: "1rem", flexShrink: 0 }}>+</button>
+          }} style={{ padding: "0 12px", background: "var(--brand-primary, #e07b39)", border: "none", borderRadius: 8, cursor: "pointer", color: "#1a1a1a", fontWeight: 700, fontSize: "1rem", flexShrink: 0 }}>+</button>
         </div>
         {(form.relations || []).length > 0 && (
           <div style={{ display: "flex", flexDirection: "column", gap: 4, marginBottom: 10 }}>
             {(form.relations || []).map((r, i) => {
               const target = (tasks || []).find(t => t.id === r.targetId);
               const LABELS = { blocks: "Bloque", "depends-on": "Dépend de", related: "Liée à", duplicate: "Doublon de" };
-              const COLORS = { blocks: "#d13b1a", "depends-on": "#e07b39", related: "#5865f2", duplicate: "#888" };
+              const COLORS = { blocks: "#d13b1a", "depends-on": "var(--brand-primary, #e07b39)", related: "#5865f2", duplicate: "#888" };
               return (
                 <div key={i} style={{ display: "flex", alignItems: "center", gap: 6, background: "#2a2a2a", borderRadius: 6, padding: "5px 8px" }}>
                   <span style={{ fontSize: "0.68rem", fontWeight: 700, color: COLORS[r.type], background: COLORS[r.type] + "22", borderRadius: 4, padding: "2px 6px", flexShrink: 0 }}>{LABELS[r.type]}</span>
@@ -989,7 +989,7 @@ function TaskModal({ task, members, tasks, milestones, onSave, onClose, onDelete
             if (!attrKey.trim() || !attrValue.trim()) return;
             update("attrs", [...(form.attrs || []), { key: attrKey.trim(), value: attrValue.trim() }]);
             setAttrKey(""); setAttrValue("");
-          }} style={{ padding: "0 12px", background: "#e07b39", border: "none", borderRadius: 8, cursor: "pointer", color: "#1a1a1a", fontWeight: 700, fontSize: "1rem", flexShrink: 0 }}>+</button>
+          }} style={{ padding: "0 12px", background: "var(--brand-primary, #e07b39)", border: "none", borderRadius: 8, cursor: "pointer", color: "#1a1a1a", fontWeight: 700, fontSize: "1rem", flexShrink: 0 }}>+</button>
         </div>
         {(form.attrs || []).length > 0 && (
           <div style={{ display: "flex", flexDirection: "column", gap: 4, marginBottom: 10 }}>
@@ -1015,7 +1015,7 @@ function TaskModal({ task, members, tasks, milestones, onSave, onClose, onDelete
             // manière atomique (évite la race entre POST tasks et PUT misc).
             onSave({ ...finalForm, _milestoneId: selectedMs, _previousMilestoneId: currentMsId });
             onClose();
-          }} style={{ ...btnStyle, background: "#e07b39", color: "#1a1a1a", border: "none", fontWeight: 700 }}><IC icon={Save} style={{ marginRight: 6 }} />Sauvegarder</button>
+          }} style={{ ...btnStyle, background: "var(--brand-primary, #e07b39)", color: "#1a1a1a", border: "none", fontWeight: 700 }}><IC icon={Save} style={{ marginRight: 6 }} />Sauvegarder</button>
         </div>
       </div>
       {lightbox && <ImageLightbox url={lightbox} onClose={() => setLightbox(null)} />}
@@ -1063,9 +1063,9 @@ function DashboardView({ tasks, projects, members, projectFilter }) {
       {/* Header row */}
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: 32, flexWrap: "wrap", gap: 16 }}>
         <div>
-          <div style={{ fontSize: "0.68rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.12em", color: currentProject?.color || "#e07b39", marginBottom: 6 }}>OpenFramework</div>
+          <div style={{ fontSize: "0.68rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.12em", color: currentProject?.color || "var(--brand-primary, #e07b39)", marginBottom: 6 }}>OpenFramework</div>
           <h2 style={{ fontSize: "1.8rem", fontWeight: 800, color: "#ffffff", letterSpacing: "-0.02em" }}>
-            <span style={{ color: currentProject?.color || "#e07b39" }}>{currentProject?.name || "Projet"}</span> {"— Dashboard"}
+            <span style={{ color: currentProject?.color || "var(--brand-primary, #e07b39)" }}>{currentProject?.name || "Projet"}</span> {"— Dashboard"}
           </h2>
         </div>
         <div style={{ background: "rgba(209,59,26,0.1)", border: "1px solid rgba(209,59,26,0.25)", borderRadius: 14, padding: "14px 24px", textAlign: "right" }}>
@@ -1115,7 +1115,7 @@ function DashboardView({ tasks, projects, members, projectFilter }) {
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginBottom: 32 }}>
         {/* Categories overview */}
         <div style={{ background: "#2a2a2a", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 14, padding: "22px 24px" }}>
-          <div style={{ fontSize: "0.78rem", fontWeight: 700, color: "#ffffff", marginBottom: 16, textTransform: "uppercase", letterSpacing: "0.04em" }}><IC icon={Folder} style={{ marginRight: 8, color: "#e07b39" }} />{"Cat\u00e9gories"}</div>
+          <div style={{ fontSize: "0.78rem", fontWeight: 700, color: "#ffffff", marginBottom: 16, textTransform: "uppercase", letterSpacing: "0.04em" }}><IC icon={Folder} style={{ marginRight: 8, color: "var(--brand-primary, #e07b39)" }} />{"Cat\u00e9gories"}</div>
           <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
             {topCats.map(([cat, data]) => {
               const catPct = data.total ? Math.round((data.done / data.total) * 100) : 0;
@@ -1126,7 +1126,7 @@ function DashboardView({ tasks, projects, members, projectFilter }) {
                     <span style={{ fontFamily: "monospace", fontSize: "0.72rem", color: "#888888" }}>{data.done}/{data.total}</span>
                   </div>
                   <div style={{ background: "rgba(255,255,255,0.04)", borderRadius: 3, height: 3, overflow: "hidden" }}>
-                    <div style={{ height: "100%", width: `${catPct}%`, background: catPct === 100 ? "#3e9041" : "#e07b39", borderRadius: 3, transition: "width 0.4s" }} />
+                    <div style={{ height: "100%", width: `${catPct}%`, background: catPct === 100 ? "#3e9041" : "var(--brand-primary, #e07b39)", borderRadius: 3, transition: "width 0.4s" }} />
                   </div>
                 </div>
               );
@@ -1156,7 +1156,7 @@ function DashboardView({ tasks, projects, members, projectFilter }) {
       </div>
 
       {/* Charge par personne */}
-      <div style={{ fontSize: "0.78rem", fontWeight: 700, color: "#ffffff", marginBottom: 16, textTransform: "uppercase", letterSpacing: "0.04em" }}><IC icon={Users} style={{ marginRight: 8, color: "#e07b39" }} />{"Charge par personne"}</div>
+      <div style={{ fontSize: "0.78rem", fontWeight: 700, color: "#ffffff", marginBottom: 16, textTransform: "uppercase", letterSpacing: "0.04em" }}><IC icon={Users} style={{ marginRight: 8, color: "var(--brand-primary, #e07b39)" }} />{"Charge par personne"}</div>
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 12 }}>
         {members.filter(m => m.id !== "equipe" && m.id !== "map").map(m => {
           const myTasks = tasks.filter(t => (t.assignees || []).includes(m.id));
@@ -1414,7 +1414,7 @@ function ListView({ tasks, members, projectFilter, personFilter, milestones, onE
             return (
               <button key={key} onClick={() => { setStatusView(key); setSelected(new Set()); }} style={{
                 ...btnStyle, padding: "5px 14px", fontSize: "0.78rem",
-                background: active ? "#e07b39" : "transparent",
+                background: active ? "var(--brand-primary, #e07b39)" : "transparent",
                 color: active ? "#1a1a1a" : "#888",
                 border: "none", fontWeight: active ? 700 : 400,
                 borderRadius: 7, display: "flex", alignItems: "center", gap: 5,
@@ -1440,7 +1440,7 @@ function ListView({ tasks, members, projectFilter, personFilter, milestones, onE
       <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 14, flexWrap: "wrap" }}>
         <button onClick={selectAll} style={{
           ...btnStyle, background: "transparent", border: "1px solid rgba(255,255,255,0.1)",
-          color: selected.size === filtered.length && filtered.length > 0 ? "#e07b39" : "#888888",
+          color: selected.size === filtered.length && filtered.length > 0 ? "var(--brand-primary, #e07b39)" : "#888888",
           fontSize: "0.78rem", padding: "6px 12px",
         }}>
           {selected.size === filtered.length && filtered.length > 0
@@ -1458,7 +1458,7 @@ function ListView({ tasks, members, projectFilter, personFilter, milestones, onE
               <button key={key} onClick={() => setSortBy(s => s === key ? null : key)} style={{
                 ...btnStyle, background: sortBy === key ? "rgba(224,123,57,0.15)" : "transparent",
                 border: `1px solid ${sortBy === key ? "rgba(224,123,57,0.6)" : "rgba(255,255,255,0.1)"}`,
-                color: sortBy === key ? "#e07b39" : "#888888", fontSize: "0.75rem", padding: "5px 11px",
+                color: sortBy === key ? "var(--brand-primary, #e07b39)" : "#888888", fontSize: "0.75rem", padding: "5px 11px",
               }}>
                 <IC icon={sortBy === key ? ArrowUp : Minus} size={11} style={{ marginRight: 5 }} />{label}
               </button>
@@ -1468,9 +1468,9 @@ function ListView({ tasks, members, projectFilter, personFilter, milestones, onE
 
         {selected.size > 0 && (
           <>
-            <span style={{ fontSize: "0.78rem", color: "#e07b39", fontWeight: 600 }}>{selected.size} sélectionnée{selected.size > 1 ? "s" : ""}</span>
+            <span style={{ fontSize: "0.78rem", color: "var(--brand-primary, #e07b39)", fontWeight: 600 }}>{selected.size} sélectionnée{selected.size > 1 ? "s" : ""}</span>
             <button onClick={() => setShowBulkEdit(!showBulkEdit)} style={{
-              ...btnStyle, background: "#e07b39", color: "#1a1a1a", border: "none", fontWeight: 700,
+              ...btnStyle, background: "var(--brand-primary, #e07b39)", color: "#1a1a1a", border: "none", fontWeight: 700,
               fontSize: "0.78rem", padding: "6px 14px",
             }}><IC icon={Pen} style={{ marginRight: 6 }} />{"Modifier la s\u00e9lection"}</button>
             <button onClick={() => setSelected(new Set())} style={{
@@ -1548,8 +1548,8 @@ function ListView({ tasks, members, projectFilter, personFilter, milestones, onE
               <button
                 onClick={() => onAddInCategory(cat)}
                 title={`Ajouter une tâche dans "${cat}"`}
-                style={{ background: "none", border: "1px solid rgba(224,123,57,0.4)", borderRadius: 6, color: "#e07b39", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", width: 20, height: 20, padding: 0, fontSize: "1rem", lineHeight: 1, flexShrink: 0 }}
-                onMouseEnter={e => { e.currentTarget.style.background = "rgba(224,123,57,0.15)"; e.currentTarget.style.borderColor = "#e07b39"; }}
+                style={{ background: "none", border: "1px solid rgba(224,123,57,0.4)", borderRadius: 6, color: "var(--brand-primary, #e07b39)", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", width: 20, height: 20, padding: 0, fontSize: "1rem", lineHeight: 1, flexShrink: 0 }}
+                onMouseEnter={e => { e.currentTarget.style.background = "rgba(224,123,57,0.15)"; e.currentTarget.style.borderColor = "var(--brand-primary, #e07b39)"; }}
                 onMouseLeave={e => { e.currentTarget.style.background = "none"; e.currentTarget.style.borderColor = "rgba(224,123,57,0.4)"; }}
               >+</button>
             )}
@@ -1588,8 +1588,8 @@ function ListView({ tasks, members, projectFilter, personFilter, milestones, onE
                     onMouseEnter={e => { if (!isSelected && !isExpanded) e.currentTarget.style.borderColor = "rgba(224,123,57,0.35)"; }}
                     onMouseLeave={e => { if (!isSelected && !isExpanded) e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)"; }}>
                     <div onClick={e => toggleSelect(t.id, e)} style={{
-                      width: 18, height: 18, borderRadius: 4, border: isSelected ? "2px solid #e07b39" : "2px solid rgba(255,255,255,0.2)",
-                      background: isSelected ? "#e07b39" : "transparent", display: "flex", alignItems: "center", justifyContent: "center",
+                      width: 18, height: 18, borderRadius: 4, border: isSelected ? "2px solid var(--brand-primary, #e07b39)" : "2px solid rgba(255,255,255,0.2)",
+                      background: isSelected ? "var(--brand-primary, #e07b39)" : "transparent", display: "flex", alignItems: "center", justifyContent: "center",
                       cursor: "pointer", flexShrink: 0,
                     }}>
                       {isSelected && <IC icon={Check} style={{ color: "#1a1a1a", fontSize: "0.6rem" }} />}
@@ -1605,7 +1605,7 @@ function ListView({ tasks, members, projectFilter, personFilter, milestones, onE
                     </div>
                     <StatusBadge status={t.status} />
                     <PrioBadge priority={t.priority} />
-                    <IC icon={isExpanded ? ChevronUp : ChevronDown} size={14} style={{ color: isExpanded ? "#e07b39" : "#555", flexShrink: 0 }} />
+                    <IC icon={isExpanded ? ChevronUp : ChevronDown} size={14} style={{ color: isExpanded ? "var(--brand-primary, #e07b39)" : "#555", flexShrink: 0 }} />
                   </div>
 
                   {/* Expanded detail panel */}
@@ -1644,7 +1644,7 @@ function ListView({ tasks, members, projectFilter, personFilter, milestones, onE
                         {milestoneName && (
                           <div>
                             <div style={{ fontSize: "0.65rem", color: "#666", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: 6 }}>Milestone</div>
-                            <span style={{ fontSize: "0.78rem", color: "#e07b39" }}>{milestoneName}</span>
+                            <span style={{ fontSize: "0.78rem", color: "var(--brand-primary, #e07b39)" }}>{milestoneName}</span>
                           </div>
                         )}
                       </div>
@@ -1804,7 +1804,7 @@ function WhiteboardView({ ideas, projects, members, onAddIdea, onDeleteIdea, onC
 
   return (
     <div>
-      <h3 style={{ fontWeight: 700, fontSize: "1rem", marginBottom: 6, color: "#ffffff" }}><IC icon={Lightbulb} style={{ marginRight: 8, color: "#e07b39" }} />{"Tableau d\u2019id\u00e9es"}</h3>
+      <h3 style={{ fontWeight: 700, fontSize: "1rem", marginBottom: 6, color: "#ffffff" }}><IC icon={Lightbulb} style={{ marginRight: 8, color: "var(--brand-primary, #e07b39)" }} />{"Tableau d\u2019id\u00e9es"}</h3>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 18 }}>
         <p style={{ fontSize: "0.8rem", color: "#888888", margin: 0 }}>{"Notez vos id\u00e9es ici. Cliquez sur une id\u00e9e pour ouvrir le fil de discussion."}</p>
         <button onClick={() => {
@@ -1876,14 +1876,14 @@ Génère maintenant des idées sur le thème suivant : [DÉCRIS TON THÈME ICI]`
               if (e.key === "Enter" && newText.trim()) { setShowNewForm(true); }
             }} />
           <button onClick={() => setShowNewForm(true)}
-            style={{ ...btnStyle, background: "#e07b39", color: "#1a1a1a", border: "none", fontWeight: 700, whiteSpace: "nowrap" }}><IC icon={Plus} style={{ marginRight: 6 }} />{"Nouvelle id\u00e9e"}</button>
+            style={{ ...btnStyle, background: "var(--brand-primary, #e07b39)", color: "#1a1a1a", border: "none", fontWeight: 700, whiteSpace: "nowrap" }}><IC icon={Plus} style={{ marginRight: 6 }} />{"Nouvelle id\u00e9e"}</button>
         </div>
       ) : (
         <div style={{
           background: "#2a2a2a", border: "1px solid rgba(224,123,57,0.3)",
           borderRadius: 12, padding: 16, marginBottom: 24, display: "flex", flexDirection: "column", gap: 10,
         }}>
-          <div style={{ fontSize: "0.82rem", fontWeight: 700, color: "#e07b39" }}>
+          <div style={{ fontSize: "0.82rem", fontWeight: 700, color: "var(--brand-primary, #e07b39)" }}>
             <IC icon={Lightbulb} style={{ marginRight: 6 }} />{"Proposer une id\u00e9e"}
           </div>
           <input value={newText} onChange={e => setNewText(e.target.value)} placeholder="Titre de l'idée…"
@@ -1908,7 +1908,7 @@ Génère maintenant des idées sur le thème suivant : [DÉCRIS TON THÈME ICI]`
               }
             }}
               disabled={!newText.trim()}
-              style={{ ...btnStyle, background: newText.trim() ? "#e07b39" : "#555", color: "#1a1a1a", border: "none", fontWeight: 700, opacity: newText.trim() ? 1 : 0.5 }}>
+              style={{ ...btnStyle, background: newText.trim() ? "var(--brand-primary, #e07b39)" : "#555", color: "#1a1a1a", border: "none", fontWeight: 700, opacity: newText.trim() ? 1 : 0.5 }}>
               <IC icon={Plus} style={{ marginRight: 6 }} />{"Poster l\u2019id\u00e9e"}
             </button>
           </div>
@@ -2028,7 +2028,7 @@ Génère maintenant des idées sur le thème suivant : [DÉCRIS TON THÈME ICI]`
                   )}
                   <span style={{ flex: 1 }} />
                   <button onClick={e => { e.stopPropagation(); setEditingIdea(idea.id); setEditText(idea.text); setEditDesc(idea.description || ""); }}
-                    style={{ fontSize: "0.68rem", padding: "3px 8px", borderRadius: 5, border: "1px solid rgba(224,123,57,0.3)", background: "rgba(224,123,57,0.12)", color: "#e07b39", cursor: "pointer" }}>
+                    style={{ fontSize: "0.68rem", padding: "3px 8px", borderRadius: 5, border: "1px solid rgba(224,123,57,0.3)", background: "rgba(224,123,57,0.12)", color: "var(--brand-primary, #e07b39)", cursor: "pointer" }}>
                     <IC icon={Pen} style={{ marginRight: 4 }} />{"Modifier"}
                   </button>
                   <button onClick={e => { e.stopPropagation(); onConvertIdea(idea); }}
@@ -2074,7 +2074,7 @@ Génère maintenant des idées sur le thème suivant : [DÉCRIS TON THÈME ICI]`
                   borderTop: "1px solid rgba(224,123,57,0.2)", padding: "14px 20px",
                   background: "rgba(224,123,57,0.05)", display: "flex", flexDirection: "column", gap: 10,
                 }}>
-                  <div style={{ fontSize: "0.78rem", fontWeight: 700, color: "#e07b39" }}>
+                  <div style={{ fontSize: "0.78rem", fontWeight: 700, color: "var(--brand-primary, #e07b39)" }}>
                     <IC icon={Pen} style={{ marginRight: 6 }} />{"Modifier l\u2019id\u00e9e"}
                   </div>
                   <input value={editText} onChange={e => setEditText(e.target.value)}
@@ -2094,7 +2094,7 @@ Génère maintenant des idées sur le thème suivant : [DÉCRIS TON THÈME ICI]`
                         setEditingIdea(null);
                       }
                     }}
-                      style={{ ...btnStyle, background: "#e07b39", color: "#1a1a1a", border: "none", fontWeight: 700, fontSize: "0.75rem" }}>
+                      style={{ ...btnStyle, background: "var(--brand-primary, #e07b39)", color: "#1a1a1a", border: "none", fontWeight: 700, fontSize: "0.75rem" }}>
                       {"Enregistrer"}
                     </button>
                   </div>
@@ -2109,7 +2109,7 @@ Génère maintenant des idées sur le thème suivant : [DÉCRIS TON THÈME ICI]`
                     <div style={{
                       background: "rgba(255,255,255,0.03)", borderRadius: 8,
                       padding: "12px 14px", marginBottom: 14,
-                      borderLeft: "3px solid #e07b39",
+                      borderLeft: "3px solid var(--brand-primary, #e07b39)",
                     }}>
                       <div style={{
                         fontSize: "0.68rem", fontWeight: 700, color: "#888888",
@@ -2135,7 +2135,7 @@ Génère maintenant des idées sur le thème suivant : [DÉCRIS TON THÈME ICI]`
 
                   {/* Reply indicator */}
                   {replyTo && (
-                    <div style={{ fontSize: "0.7rem", color: "#e07b39", marginBottom: 6, display: "flex", alignItems: "center", gap: 6 }}>
+                    <div style={{ fontSize: "0.7rem", color: "var(--brand-primary, #e07b39)", marginBottom: 6, display: "flex", alignItems: "center", gap: 6 }}>
                       <IC icon={Reply} style={{ marginRight: 4 }} />{"En r\u00e9ponse \u00e0"} {members.find(m => m.id === (idea.comments || []).find(c => c.id === replyTo)?.author)?.name || "..."}
                       <button onClick={() => setReplyTo(null)} style={{ background: "none", border: "none", color: "#888888", cursor: "pointer", fontSize: "0.65rem" }}><IC icon={X} style={{ marginRight: 3 }} />{"annuler"}</button>
                     </div>
@@ -2154,7 +2154,7 @@ Génère maintenant des idées sur le thème suivant : [DÉCRIS TON THÈME ICI]`
                       style={{ ...inputStyle, flex: 1, marginBottom: 0, fontSize: "0.78rem" }}
                       onKeyDown={e => { if (e.key === "Enter") addComment(idea.id); }} />
                     <button onClick={() => addComment(idea.id)}
-                      style={{ ...btnStyle, background: "#e07b39", color: "#1a1a1a", border: "none", fontWeight: 700, padding: "7px 14px", fontSize: "0.75rem" }}>
+                      style={{ ...btnStyle, background: "var(--brand-primary, #e07b39)", color: "#1a1a1a", border: "none", fontWeight: 700, padding: "7px 14px", fontSize: "0.75rem" }}>
                       <IC icon={SendHorizontal} style={{ marginRight: 6 }} />{"Envoyer"}
                     </button>
                   </div>
@@ -2182,7 +2182,7 @@ const LOG_ICONS = {
 };
 const LOG_COLORS = {
   create: "#3e9041",
-  edit: "#e07b39",
+  edit: "var(--brand-primary, #e07b39)",
   delete: "#d13b1a",
   status: "#5865f2",
   idea: "#ed9121",
@@ -2221,7 +2221,7 @@ function ActivityLogView({ log, members, onNavigate }) {
     <div>
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 20 }}>
         <h2 style={{ fontSize: "1.3rem", fontWeight: 800, color: "#ffffff" }}>
-          <IC icon={Activity} size={18} style={{ marginRight: 10, color: "#e07b39" }} />
+          <IC icon={Activity} size={18} style={{ marginRight: 10, color: "var(--brand-primary, #e07b39)" }} />
           {"Activit\u00e9 r\u00e9cente"}
         </h2>
         <select value={filter} onChange={e => setFilter(e.target.value)} style={{ ...inputStyle, width: 140, marginBottom: 0, fontSize: "0.78rem", padding: "6px 10px" }}>
@@ -2373,7 +2373,7 @@ function MyBoardView({ tasks, members, myId, onEditTask, onUpdateStatus }) {
                             <span style={{ fontSize: "0.62rem", color: "#888888" }}><IC icon={Check} size={10} style={{ marginRight: 2 }} />{stDone}/{stTotal}</span>
                           </div>
                           <div style={{ background: "rgba(255,255,255,0.05)", borderRadius: 3, height: 3, overflow: "hidden" }}>
-                            <div style={{ height: "100%", width: `${stTotal ? (stDone / stTotal) * 100 : 0}%`, background: stDone === stTotal ? "#3e9041" : "#e07b39", borderRadius: 3 }} />
+                            <div style={{ height: "100%", width: `${stTotal ? (stDone / stTotal) * 100 : 0}%`, background: stDone === stTotal ? "#3e9041" : "var(--brand-primary, #e07b39)", borderRadius: 3 }} />
                           </div>
                         </div>
                       )}
@@ -2406,9 +2406,9 @@ function MyBoardView({ tasks, members, myId, onEditTask, onUpdateStatus }) {
 // --- ROADMAP TIMELINE ---
 function RoadmapView({ milestones, setMilestones, tasks, members, onEditTask }) {
   const [editingMs, setEditingMs] = useState(null);
-  const [editMsValues, setEditMsValues] = useState({ name: "", date: "", color: "#e07b39", description: "" });
+  const [editMsValues, setEditMsValues] = useState({ name: "", date: "", color: "var(--brand-primary, #e07b39)", description: "" });
   const [showAddMs, setShowAddMs] = useState(false);
-  const [newMs, setNewMs] = useState({ name: "", date: "", color: "#e07b39", description: "" });
+  const [newMs, setNewMs] = useState({ name: "", date: "", color: "var(--brand-primary, #e07b39)", description: "" });
   const [dragTaskId, setDragTaskId] = useState(null);
   const [overMs, setOverMs] = useState(null);
   const [dragOverTaskId, setDragOverTaskId] = useState(null); // task id we're hovering over
@@ -2444,7 +2444,7 @@ function RoadmapView({ milestones, setMilestones, tasks, members, onEditTask }) 
   const addMilestone = () => {
     if (!newMs.name || !newMs.date) return;
     setMilestones(prev => [...prev, { ...newMs, id: `ms_${Date.now()}`, taskIds: [] }]);
-    setNewMs({ name: "", date: "", color: "#e07b39", description: "" });
+    setNewMs({ name: "", date: "", color: "var(--brand-primary, #e07b39)", description: "" });
     setShowAddMs(false);
   };
 
@@ -2551,7 +2551,7 @@ function RoadmapView({ milestones, setMilestones, tasks, members, onEditTask }) 
     setDragOverPos(null);
   };
 
-  const msColors = ["#e07b39", "#5865f2", "#ed9121", "#3e9041", "#d13b1a", "#9b59b6", "#525066", "#e74c3c", "#00b5d8", "#f39c12"];
+  const msColors = ["var(--brand-primary, #e07b39)", "#5865f2", "#ed9121", "#3e9041", "#d13b1a", "#9b59b6", "#525066", "#e74c3c", "#00b5d8", "#f39c12"];
 
   // Days until milestone
   function daysUntil(dateStr) {
@@ -2593,8 +2593,8 @@ function RoadmapView({ milestones, setMilestones, tasks, members, onEditTask }) 
       }}>
         <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
           <h2 style={{ fontSize: "1.25rem", fontWeight: 800, color: "#ffffff", margin: 0 }}>
-            <IC icon={Route} style={{ marginRight: 8, color: "#e07b39" }} />
-            <span style={{ color: "#e07b39" }}>Roadmap</span>
+            <IC icon={Route} style={{ marginRight: 8, color: "var(--brand-primary, #e07b39)" }} />
+            <span style={{ color: "var(--brand-primary, #e07b39)" }}>Roadmap</span>
           </h2>
           <span style={{ fontSize: "0.72rem", color: "#888888", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 20, padding: "3px 10px" }}>
             {sorted.length} milestone{sorted.length !== 1 ? "s" : ""}
@@ -2610,7 +2610,7 @@ function RoadmapView({ milestones, setMilestones, tasks, members, onEditTask }) 
               return (
                 <button key={key} onClick={() => setArchiveView(key)} style={{
                   ...btnStyle, padding: "3px 10px", fontSize: "0.72rem",
-                  background: active ? "#e07b39" : "transparent",
+                  background: active ? "var(--brand-primary, #e07b39)" : "transparent",
                   color: active ? "#1a1a1a" : "#888",
                   border: "none", fontWeight: active ? 700 : 500,
                   borderRadius: 6, display: "flex", alignItems: "center", gap: 4,
@@ -2650,7 +2650,7 @@ function RoadmapView({ milestones, setMilestones, tasks, members, onEditTask }) 
           </button>
           <button
             onClick={() => setShowAddMs(true)}
-            style={{ ...btnStyle, background: "#e07b39", color: "#111111", border: "none", fontWeight: 700, fontSize: "0.78rem", padding: "6px 16px", display: "flex", alignItems: "center", gap: 6 }}>
+            style={{ ...btnStyle, background: "var(--brand-primary, #e07b39)", color: "#111111", border: "none", fontWeight: 700, fontSize: "0.78rem", padding: "6px 16px", display: "flex", alignItems: "center", gap: 6 }}>
             <IC icon={Plus} size={14} />Milestone
           </button>
         </div>
@@ -2684,7 +2684,7 @@ function RoadmapView({ milestones, setMilestones, tasks, members, onEditTask }) 
           </div>
           {/* Track bar */}
           <div style={{ background: "rgba(255,255,255,0.05)", borderRadius: 8, height: 8, overflow: "hidden", position: "relative" }}>
-            <div style={{ height: "100%", width: `${globalPct}%`, background: "linear-gradient(90deg, #e07b39, #ed9121)", borderRadius: 8, transition: "width 0.5s ease" }} />
+            <div style={{ height: "100%", width: `${globalPct}%`, background: "linear-gradient(90deg, var(--brand-primary, #e07b39), #ed9121)", borderRadius: 8, transition: "width 0.5s ease" }} />
           </div>
         </div>
       )}
@@ -2696,7 +2696,7 @@ function RoadmapView({ milestones, setMilestones, tasks, members, onEditTask }) 
           padding: "20px 22px", marginBottom: 24,
           boxShadow: "0 4px 24px rgba(0,0,0,0.3)",
         }}>
-          <div style={{ fontWeight: 700, fontSize: "0.8rem", color: "#e07b39", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 16, display: "flex", alignItems: "center", gap: 8 }}>
+          <div style={{ fontWeight: 700, fontSize: "0.8rem", color: "var(--brand-primary, #e07b39)", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 16, display: "flex", alignItems: "center", gap: 8 }}>
             <IC icon={Plus} size={13} /> Nouveau milestone
           </div>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 180px", gap: 12 }}>
@@ -2737,7 +2737,7 @@ function RoadmapView({ milestones, setMilestones, tasks, members, onEditTask }) 
             <button onClick={addMilestone} style={{ ...btnStyle, background: "#3e9041", color: "#fff", border: "none", fontWeight: 700, display: "flex", alignItems: "center", gap: 6 }}>
               <IC icon={Check} size={14} />Créer le milestone
             </button>
-            <button onClick={() => { setShowAddMs(false); setNewMs({ name: "", date: "", color: "#e07b39", description: "" }); }}
+            <button onClick={() => { setShowAddMs(false); setNewMs({ name: "", date: "", color: "var(--brand-primary, #e07b39)", description: "" }); }}
               style={{ ...btnStyle, background: "transparent", color: "#888888", border: "1px solid rgba(255,255,255,0.1)", display: "flex", alignItems: "center", gap: 6 }}>
               <IC icon={X} size={14} />Annuler
             </button>
@@ -3082,7 +3082,7 @@ function RoadmapView({ milestones, setMilestones, tasks, members, onEditTask }) 
             background: "#1a1a1a", border: "1px dashed rgba(255,255,255,0.06)",
             borderRadius: 14,
           }}>
-            <IC icon={archiveView === "archived" ? Archive : Route} size={32} style={{ marginBottom: 12, color: "#e07b39", opacity: 0.4, display: "block", margin: "0 auto 14px" }} />
+            <IC icon={archiveView === "archived" ? Archive : Route} size={32} style={{ marginBottom: 12, color: "var(--brand-primary, #e07b39)", opacity: 0.4, display: "block", margin: "0 auto 14px" }} />
             <div style={{ fontWeight: 700, color: "#888888", marginBottom: 6 }}>
               {archiveView === "archived" ? "Aucun milestone archivé" : archiveView === "active" && archivedCount > 0 ? "Aucun milestone actif" : "Aucun milestone"}
             </div>
@@ -3092,7 +3092,7 @@ function RoadmapView({ milestones, setMilestones, tasks, members, onEditTask }) 
                 : "Créez votre premier milestone pour structurer la roadmap."}
             </div>
             {archiveView !== "archived" && (
-              <button onClick={() => setShowAddMs(true)} style={{ ...btnStyle, marginTop: 16, background: "#e07b39", color: "#111", border: "none", fontWeight: 700, display: "inline-flex", alignItems: "center", gap: 6 }}>
+              <button onClick={() => setShowAddMs(true)} style={{ ...btnStyle, marginTop: 16, background: "var(--brand-primary, #e07b39)", color: "#111", border: "none", fontWeight: 700, display: "inline-flex", alignItems: "center", gap: 6 }}>
                 <IC icon={Plus} size={13} />Créer un milestone
               </button>
             )}
@@ -3367,7 +3367,7 @@ function MapCanvasView({ projects, members, annotations, setAnnotations, logActi
 
   const renderItem = (item) => {
     const isSelected = item.id === selectedId;
-    const memberColor = authorMember(item.author)?.color || "#e07b39";
+    const memberColor = authorMember(item.author)?.color || "var(--brand-primary, #e07b39)";
     const color = item.color || memberColor;
     const textColor = item.textColor || "#e8e0d0";
     const baseStyle = { position: "absolute", cursor: "pointer" };
@@ -3420,7 +3420,7 @@ function MapCanvasView({ projects, members, annotations, setAnnotations, logActi
   // Preview shapes
   const renderPreview = () => {
     if (previewShape) {
-      const color = authorMember(currentAuthor)?.color || "#e07b39";
+      const color = authorMember(currentAuthor)?.color || "var(--brand-primary, #e07b39)";
       if (previewShape.type === "rect") {
         return <div style={{ position: "absolute", left: previewShape.x, top: previewShape.y, width: previewShape.w, height: previewShape.h, border: `2px dashed ${color}`, borderRadius: 4, background: `${color}10`, pointerEvents: "none" }} />;
       }
@@ -3429,7 +3429,7 @@ function MapCanvasView({ projects, members, annotations, setAnnotations, logActi
       }
     }
     if (currentPath.length > 1) {
-      const color = authorMember(currentAuthor)?.color || "#e07b39";
+      const color = authorMember(currentAuthor)?.color || "var(--brand-primary, #e07b39)";
       const pts = currentPath;
       const minX = Math.min(...pts.map(p => p.x)) - 4;
       const minY = Math.min(...pts.map(p => p.y)) - 4;
@@ -3446,7 +3446,7 @@ function MapCanvasView({ projects, members, annotations, setAnnotations, logActi
       {/* Toolbar */}
       <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12, flexWrap: "wrap", flexShrink: 0 }}>
         {toolBtns.map(t => (
-          <button key={t.id} onClick={() => setTool(t.id)} title={t.label} style={{ padding: "6px 10px", background: tool === t.id ? "#e07b39" : "#333", border: "1px solid " + (tool === t.id ? "#e07b39" : "rgba(255,255,255,0.1)"), borderRadius: 8, color: tool === t.id ? "#1a1a1a" : "#888", cursor: "pointer", fontFamily: "inherit", display: "flex", alignItems: "center", gap: 4, fontSize: "0.75rem", fontWeight: tool === t.id ? 700 : 400 }}>
+          <button key={t.id} onClick={() => setTool(t.id)} title={t.label} style={{ padding: "6px 10px", background: tool === t.id ? "var(--brand-primary, #e07b39)" : "#333", border: "1px solid " + (tool === t.id ? "var(--brand-primary, #e07b39)" : "rgba(255,255,255,0.1)"), borderRadius: 8, color: tool === t.id ? "#1a1a1a" : "#888", cursor: "pointer", fontFamily: "inherit", display: "flex", alignItems: "center", gap: 4, fontSize: "0.75rem", fontWeight: tool === t.id ? 700 : 400 }}>
             <IC icon={t.icon} size={14} />{t.label}
           </button>
         ))}
@@ -3474,7 +3474,7 @@ function MapCanvasView({ projects, members, annotations, setAnnotations, logActi
       {showImageInput && (
         <div style={{ display: "flex", gap: 8, marginBottom: 12, alignItems: "center", flexShrink: 0 }}>
           <input value={imageUrl} onChange={e => setImageUrl(e.target.value)} placeholder="URL image vue de haut (ex: https://...)" style={{ flex: 1, background: "#333", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 8, padding: "8px 12px", color: "#e8e0d0", fontSize: "0.82rem", fontFamily: "inherit" }} />
-          <button onClick={setBgImage} style={{ padding: "8px 16px", background: "#e07b39", color: "#1a1a1a", border: "none", borderRadius: 8, cursor: "pointer", fontWeight: 700, fontSize: "0.82rem", fontFamily: "inherit" }}>Appliquer</button>
+          <button onClick={setBgImage} style={{ padding: "8px 16px", background: "var(--brand-primary, #e07b39)", color: "#1a1a1a", border: "none", borderRadius: 8, cursor: "pointer", fontWeight: 700, fontSize: "0.82rem", fontFamily: "inherit" }}>Appliquer</button>
           {bgImage && <button onClick={() => { updateProjectAnnotations(prev => ({ ...prev, imageUrl: "" })); setShowImageInput(false); }} style={{ padding: "8px 12px", background: "#d13b1a", color: "#fff", border: "none", borderRadius: 8, cursor: "pointer", fontSize: "0.78rem", fontFamily: "inherit" }}>Retirer</button>}
         </div>
       )}
@@ -3543,10 +3543,10 @@ function MapCanvasView({ projects, members, annotations, setAnnotations, logActi
                 <div style={{ flex: 1 }}>
                   <label style={{ fontSize: "0.68rem", fontWeight: 600, color: "#888", textTransform: "uppercase", letterSpacing: "0.04em", display: "block", marginBottom: 4 }}>Couleur</label>
                   <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                    <input type="color" value={selectedItem.color || authorMember(selectedItem.author)?.color || "#e07b39"} onChange={e => {
+                    <input type="color" value={selectedItem.color || authorMember(selectedItem.author)?.color || "var(--brand-primary, #e07b39)"} onChange={e => {
                       updateProjectAnnotations(prev => ({ ...prev, items: (prev.items || []).map(i => i.id === selectedItem.id ? { ...i, color: e.target.value } : i) }));
                     }} style={{ width: 32, height: 28, padding: 2, border: "1px solid rgba(255,255,255,0.15)", borderRadius: 6, background: "#333", cursor: "pointer" }} />
-                    <span style={{ fontSize: "0.72rem", color: "#666", fontFamily: "monospace" }}>{selectedItem.color || authorMember(selectedItem.author)?.color || "#e07b39"}</span>
+                    <span style={{ fontSize: "0.72rem", color: "#666", fontFamily: "monospace" }}>{selectedItem.color || authorMember(selectedItem.author)?.color || "var(--brand-primary, #e07b39)"}</span>
                     {selectedItem.color && <button onClick={() => updateProjectAnnotations(prev => ({ ...prev, items: (prev.items || []).map(i => i.id === selectedItem.id ? { ...i, color: undefined } : i) }))} title="Réinitialiser" style={{ background: "none", border: "none", color: "#555", cursor: "pointer", padding: 0, fontSize: "0.7rem" }}>↺</button>}
                   </div>
                 </div>
@@ -3578,7 +3578,7 @@ function MapCanvasView({ projects, members, annotations, setAnnotations, logActi
                   return (
                     <div key={c.id} style={{ background: "#333", borderRadius: 6, padding: "6px 8px", marginBottom: 4, fontSize: "0.75rem" }}>
                       <div style={{ display: "flex", alignItems: "center", gap: 4, marginBottom: 2 }}>
-                        <span style={{ fontWeight: 700, color: cm?.color || "#e07b39", fontSize: "0.7rem" }}>{cm?.name || c.author}</span>
+                        <span style={{ fontWeight: 700, color: cm?.color || "var(--brand-primary, #e07b39)", fontSize: "0.7rem" }}>{cm?.name || c.author}</span>
                         <span style={{ fontSize: "0.6rem", color: "#666" }}>{new Date(c.createdAt).toLocaleString("fr-FR", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" })}</span>
                         <button onClick={() => deleteComment(selectedItem.id, c.id)} style={{ marginLeft: "auto", background: "transparent", border: "none", color: "#555", cursor: "pointer", padding: "0 2px", lineHeight: 1 }} title="Supprimer"><IC icon={X} size={11} /></button>
                       </div>
@@ -3600,8 +3600,8 @@ function MapCanvasView({ projects, members, annotations, setAnnotations, logActi
               <div style={{ marginTop: 6 }}>
                 <div style={{ display: "flex", gap: 4 }}>
                   <input value={commentText} onChange={e => setCommentText(e.target.value)} onKeyDown={e => e.key === "Enter" && !e.shiftKey && addComment(selectedItem.id)} placeholder="Ajouter un commentaire..." style={{ flex: 1, background: "#333", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 6, padding: "6px 8px", color: "#e8e0d0", fontSize: "0.78rem", fontFamily: "inherit", outline: "none" }} />
-                  <button onClick={() => setShowCommentImageInput(v => !v)} title="Ajouter une image" style={{ background: showCommentImageInput ? "#e07b39" : "#333", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 6, padding: "6px 8px", cursor: "pointer", color: showCommentImageInput ? "#1a1a1a" : "#aaa" }}><IC icon={Image} size={14} /></button>
-                  <button onClick={() => addComment(selectedItem.id)} style={{ background: "#e07b39", border: "none", borderRadius: 6, padding: "6px 8px", cursor: "pointer", color: "#1a1a1a" }}><IC icon={SendHorizontal} size={14} /></button>
+                  <button onClick={() => setShowCommentImageInput(v => !v)} title="Ajouter une image" style={{ background: showCommentImageInput ? "var(--brand-primary, #e07b39)" : "#333", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 6, padding: "6px 8px", cursor: "pointer", color: showCommentImageInput ? "#1a1a1a" : "#aaa" }}><IC icon={Image} size={14} /></button>
+                  <button onClick={() => addComment(selectedItem.id)} style={{ background: "var(--brand-primary, #e07b39)", border: "none", borderRadius: 6, padding: "6px 8px", cursor: "pointer", color: "#1a1a1a" }}><IC icon={SendHorizontal} size={14} /></button>
                 </div>
                 {showCommentImageInput && (
                   <input value={commentImageUrl} onChange={e => setCommentImageUrl(e.target.value)} placeholder="URL de l'image de référence…" style={{ width: "100%", marginTop: 4, background: "#333", border: "1px solid rgba(224,123,57,0.4)", borderRadius: 6, padding: "6px 8px", color: "#e8e0d0", fontSize: "0.75rem", fontFamily: "inherit", outline: "none", boxSizing: "border-box" }} />
@@ -3618,7 +3618,7 @@ function MapCanvasView({ projects, members, annotations, setAnnotations, logActi
                       <div style={{ marginTop: 6, background: "#333", borderRadius: 6, padding: "6px 10px", display: "flex", alignItems: "center", gap: 6 }}>
                         <span style={{ width: 8, height: 8, borderRadius: "50%", background: STATUS_CONFIG[linkedTask.status]?.color, flexShrink: 0 }} />
                         <span style={{ fontSize: "0.78rem", color: "#e8e0d0", flex: 1, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{linkedTask.text}</span>
-                        <button onClick={() => onEditTask(linkedTask)} title="Ouvrir la tâche" style={{ background: "transparent", border: "none", color: "#e07b39", cursor: "pointer", padding: 2 }}><IC icon={ExternalLink} size={13} /></button>
+                        <button onClick={() => onEditTask(linkedTask)} title="Ouvrir la tâche" style={{ background: "transparent", border: "none", color: "var(--brand-primary, #e07b39)", cursor: "pointer", padding: 2 }}><IC icon={ExternalLink} size={13} /></button>
                         <button onClick={() => linkTask(selectedItem.id, null)} title="Délier" style={{ background: "transparent", border: "none", color: "#666", cursor: "pointer", padding: 2 }}><IC icon={X} size={13} /></button>
                       </div>
                     );
@@ -3631,7 +3631,7 @@ function MapCanvasView({ projects, members, annotations, setAnnotations, logActi
                           <option key={t.id} value={t.id}>{t.text.substring(0, 50)}</option>
                         ))}
                       </select>
-                      <button onClick={() => createTaskFromPoint(selectedItem)} style={{ background: "transparent", border: "1px dashed rgba(224,123,57,0.4)", borderRadius: 6, padding: "6px 10px", color: "#e07b39", fontSize: "0.75rem", cursor: "pointer", fontFamily: "inherit", textAlign: "left" }}>
+                      <button onClick={() => createTaskFromPoint(selectedItem)} style={{ background: "transparent", border: "1px dashed rgba(224,123,57,0.4)", borderRadius: 6, padding: "6px 10px", color: "var(--brand-primary, #e07b39)", fontSize: "0.75rem", cursor: "pointer", fontFamily: "inherit", textAlign: "left" }}>
                         <IC icon={Plus} size={13} style={{ marginRight: 6 }} />Créer une tâche depuis ce point
                       </button>
                     </div>
@@ -3652,7 +3652,7 @@ function MapCanvasView({ projects, members, annotations, setAnnotations, logActi
                     <div key={item.id} onClick={() => setSelectedId(item.id)} style={{ display: "flex", alignItems: "center", gap: 6, padding: "6px 8px", borderRadius: 6, cursor: "pointer", marginBottom: 2, background: "transparent", transition: "background 0.1s" }}
                       onMouseEnter={e => e.currentTarget.style.background = "#333"}
                       onMouseLeave={e => e.currentTarget.style.background = "transparent"}>
-                      <IC icon={item.type === "pin" ? MapPin : item.type === "rect" ? RectangleHorizontal : item.type === "circle" ? Circle : Pencil} size={12} style={{ color: am?.color || "#e07b39", flexShrink: 0 }} />
+                      <IC icon={item.type === "pin" ? MapPin : item.type === "rect" ? RectangleHorizontal : item.type === "circle" ? Circle : Pencil} size={12} style={{ color: am?.color || "var(--brand-primary, #e07b39)", flexShrink: 0 }} />
                       <span style={{ fontSize: "0.75rem", color: "#e8e0d0", flex: 1, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{item.label || (item.type === "pin" ? "Marqueur" : item.type === "rect" ? "Rectangle" : item.type === "circle" ? "Cercle" : "Dessin")}</span>
                       <span style={{ fontSize: "0.6rem", color: am?.color || "#888" }}>{am?.name}</span>
                       {(item.comments || []).length > 0 && <span style={{ fontSize: "0.6rem", color: "#666" }}><IC icon={MessageCircle} size={10} /> {item.comments.length}</span>}
@@ -3789,7 +3789,7 @@ function FabAssetsView({ assets, setAssets, projects, members, logActivity, defa
           <option value="price">Prix croissant</option>
         </select>
 
-        <button onClick={() => setShowForm(!showForm)} style={{ padding: "7px 14px", background: "#e07b39", color: "#1a1a1a", border: "none", borderRadius: 8, cursor: "pointer", fontWeight: 700, fontSize: "0.82rem", fontFamily: "inherit", display: "flex", alignItems: "center", gap: 6 }}>
+        <button onClick={() => setShowForm(!showForm)} style={{ padding: "7px 14px", background: "var(--brand-primary, #e07b39)", color: "#1a1a1a", border: "none", borderRadius: 8, cursor: "pointer", fontWeight: 700, fontSize: "0.82rem", fontFamily: "inherit", display: "flex", alignItems: "center", gap: 6 }}>
           <IC icon={Plus} size={14} />Asset
         </button>
       </div>
@@ -3799,7 +3799,7 @@ function FabAssetsView({ assets, setAssets, projects, members, logActivity, defa
         <div style={{ background: "#2a2a2a", border: "1px solid rgba(224,123,57,0.3)", borderRadius: 12, padding: 20, marginBottom: 16 }}>
           <div style={{ marginBottom: 16 }}>
             <label style={{ display: "block", fontSize: "0.7rem", fontWeight: 600, color: "#888", textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: 4 }}>
-              Lien Fab.com *{fetching && <IC icon={Loader2} size={12} style={{ marginLeft: 6, color: "#e07b39", animation: "adm-spin 0.7s linear infinite" }} />}
+              Lien Fab.com *{fetching && <IC icon={Loader2} size={12} style={{ marginLeft: 6, color: "var(--brand-primary, #e07b39)", animation: "adm-spin 0.7s linear infinite" }} />}
             </label>
             <input value={url} onChange={e => handleUrlChange(e.target.value)} placeholder="https://www.fab.com/fr/listings/..." style={{ width: "100%", background: "#333", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 8, padding: "8px 12px", color: "#e8e0d0", fontSize: "0.82rem", fontFamily: "inherit", outline: "none", boxSizing: "border-box" }} />
             {fetchError && <div style={{ marginTop: 8, fontSize: "0.75rem", color: "#e74c3c" }}>{fetchError}</div>}
@@ -3813,7 +3813,7 @@ function FabAssetsView({ assets, setAssets, projects, members, logActivity, defa
                 )}
                 <div style={{ flex: 1 }}>
                   <div style={{ fontSize: "0.9rem", fontWeight: 700, color: "#e8e0d0", marginBottom: 8 }}>{fetchedData.name}</div>
-                  <div style={{ fontSize: "0.8rem", color: "#e07b39", fontWeight: 600 }}>{fetchedData.price}</div>
+                  <div style={{ fontSize: "0.8rem", color: "var(--brand-primary, #e07b39)", fontWeight: 600 }}>{fetchedData.price}</div>
                 </div>
               </div>
             </div>
@@ -3829,7 +3829,7 @@ function FabAssetsView({ assets, setAssets, projects, members, logActivity, defa
           <div style={{ display: "flex", alignItems: "center", gap: 12, marginTop: 12 }}>
             <span style={{ flex: 1 }} />
             <button onClick={() => setShowForm(false)} style={{ padding: "7px 14px", background: "transparent", color: "#888", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 8, cursor: "pointer", fontSize: "0.78rem", fontFamily: "inherit" }}>Annuler</button>
-            <button onClick={addAsset} disabled={!fetchedData || !url.trim()} style={{ padding: "7px 18px", background: (!fetchedData || !url.trim()) ? "#555" : "#e07b39", color: "#1a1a1a", border: "none", borderRadius: 8, cursor: (!fetchedData || !url.trim()) ? "not-allowed" : "pointer", fontWeight: 700, fontSize: "0.82rem", fontFamily: "inherit" }}>Ajouter</button>
+            <button onClick={addAsset} disabled={!fetchedData || !url.trim()} style={{ padding: "7px 18px", background: (!fetchedData || !url.trim()) ? "#555" : "var(--brand-primary, #e07b39)", color: "#1a1a1a", border: "none", borderRadius: 8, cursor: (!fetchedData || !url.trim()) ? "not-allowed" : "pointer", fontWeight: 700, fontSize: "0.82rem", fontFamily: "inherit" }}>Ajouter</button>
           </div>
         </div>
       )}
@@ -3909,7 +3909,7 @@ function FabAssetsView({ assets, setAssets, projects, members, logActivity, defa
                     <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
                       <span style={{ fontSize: "0.92rem", fontWeight: 700, color: "#e8e0d0" }}>{asset.name}</span>
                       {asset.price && (
-                        <span style={{ fontSize: "0.78rem", fontWeight: 700, color: "#e07b39", background: "rgba(224,123,57,0.12)", padding: "2px 8px", borderRadius: 5 }}>
+                        <span style={{ fontSize: "0.78rem", fontWeight: 700, color: "var(--brand-primary, #e07b39)", background: "rgba(224,123,57,0.12)", padding: "2px 8px", borderRadius: 5 }}>
                           <IC icon={DollarSign} size={11} style={{ marginRight: 2 }} />{asset.price}
                         </span>
                       )}
@@ -3986,7 +3986,7 @@ function FabAssetsView({ assets, setAssets, projects, members, logActivity, defa
                       <input value={commentText} onChange={e => setCommentText(e.target.value)} placeholder="Ajouter un commentaire..."
                         style={{ flex: 1, background: "#333", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 8, padding: "8px 12px", color: "#e8e0d0", fontSize: "0.78rem", fontFamily: "inherit", outline: "none" }}
                         onKeyDown={e => { if (e.key === "Enter") addComment(); }} />
-                      <button onClick={addComment} style={{ padding: "7px 14px", background: "#e07b39", color: "#1a1a1a", border: "none", borderRadius: 8, cursor: "pointer", fontWeight: 700, fontSize: "0.75rem", fontFamily: "inherit" }}>
+                      <button onClick={addComment} style={{ padding: "7px 14px", background: "var(--brand-primary, #e07b39)", color: "#1a1a1a", border: "none", borderRadius: 8, cursor: "pointer", fontWeight: 700, fontSize: "0.75rem", fontFamily: "inherit" }}>
                         <IC icon={SendHorizontal} size={12} style={{ marginRight: 4 }} />Envoyer
                       </button>
                     </div>
@@ -4347,7 +4347,7 @@ function AssetCatalogueView({ assets: assetsProp, setAssets: setAssetsProp, curr
           <IC icon={Search} size={13} style={{ position: "absolute", left: 10, top: "50%", transform: "translateY(-50%)", color: "#555", pointerEvents: "none" }} />
           <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Rechercher…" style={{ ...inS, width: 200, paddingLeft: 30 }} />
         </div>
-        <button onClick={() => setShowScanner(v => !v)} style={{ padding: "7px 14px", background: showScanner ? "rgba(224,123,57,0.15)" : "#2a2a2a", color: showScanner ? "#e07b39" : "#aaa", border: `1px solid ${showScanner ? "rgba(224,123,57,0.5)" : "rgba(255,255,255,0.1)"}`, borderRadius: 8, cursor: "pointer", fontWeight: 600, fontSize: "0.82rem", fontFamily: "inherit", display: "flex", alignItems: "center", gap: 6 }}>
+        <button onClick={() => setShowScanner(v => !v)} style={{ padding: "7px 14px", background: showScanner ? "rgba(224,123,57,0.15)" : "#2a2a2a", color: showScanner ? "var(--brand-primary, #e07b39)" : "#aaa", border: `1px solid ${showScanner ? "rgba(224,123,57,0.5)" : "rgba(255,255,255,0.1)"}`, borderRadius: 8, cursor: "pointer", fontWeight: 600, fontSize: "0.82rem", fontFamily: "inherit", display: "flex", alignItems: "center", gap: 6 }}>
           <IC icon={FolderSearch} size={14} />Scanner Unreal
         </button>
         {/* View mode toggle */}
@@ -4417,10 +4417,10 @@ function AssetCatalogueView({ assets: assetsProp, setAssets: setAssetsProp, curr
       {showScanner && (
         <div style={{ background: "#2a2a2a", border: "1px solid rgba(224,123,57,0.3)", borderRadius: 12, padding: 20, marginBottom: 24 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 14 }}>
-            <div style={{ fontWeight: 700, fontSize: "0.92rem", color: "#e07b39", display: "flex", alignItems: "center", gap: 8 }}>
+            <div style={{ fontWeight: 700, fontSize: "0.92rem", color: "var(--brand-primary, #e07b39)", display: "flex", alignItems: "center", gap: 8 }}>
               <IC icon={FolderSearch} size={16} />Scanner Nextcloud <span style={{ fontFamily: "monospace", fontSize: "0.78rem", color: "#666" }}>/unreal_asset</span>
             </div>
-            <button onClick={doScan} disabled={scanning} style={{ marginLeft: "auto", padding: "7px 16px", background: "#e07b39", color: "#1a1a1a", border: "none", borderRadius: 8, cursor: "pointer", fontWeight: 700, fontSize: "0.82rem", fontFamily: "inherit", display: "flex", alignItems: "center", gap: 6, opacity: scanning ? 0.6 : 1 }}>
+            <button onClick={doScan} disabled={scanning} style={{ marginLeft: "auto", padding: "7px 16px", background: "var(--brand-primary, #e07b39)", color: "#1a1a1a", border: "none", borderRadius: 8, cursor: "pointer", fontWeight: 700, fontSize: "0.82rem", fontFamily: "inherit", display: "flex", alignItems: "center", gap: 6, opacity: scanning ? 0.6 : 1 }}>
               {scanning ? <IC icon={Loader2} size={14} style={{ animation: "adm-spin 0.7s linear infinite" }} /> : <IC icon={FolderSearch} size={14} />}
               {scanning ? "Scan en cours…" : "Scanner"}
             </button>
@@ -4607,7 +4607,7 @@ function AssetCatalogueView({ assets: assetsProp, setAssets: setAssetsProp, curr
           <div style={{ fontWeight: 700, fontSize: "0.9rem", color: "#e8e0d0", marginBottom: 12 }}>{editId ? "Modifier l'asset" : "Nouvel asset"}</div>
           {!editId && (
             <div style={{ marginBottom: 16, paddingBottom: 16, borderBottom: "1px solid rgba(255,255,255,0.07)" }}>
-              <label style={{ ...lbS, marginBottom: 4, display: "block" }}>Lien Fab.com {fabFetching && <IC icon={Loader2} size={11} style={{ marginLeft: 5, color: "#e07b39", animation: "adm-spin 0.7s linear infinite" }} />}</label>
+              <label style={{ ...lbS, marginBottom: 4, display: "block" }}>Lien Fab.com {fabFetching && <IC icon={Loader2} size={11} style={{ marginLeft: 5, color: "var(--brand-primary, #e07b39)", animation: "adm-spin 0.7s linear infinite" }} />}</label>
               <input
                 value={fabFetchUrl}
                 onChange={e => handleFabUrl(e.target.value)}
@@ -5033,7 +5033,7 @@ export function SearchOverlay({ tasks, ideas, milestones, fabAssets, catalogueAs
     if (q.length < 2) return t;
     const idx = normalize(t).indexOf(q);
     if (idx === -1) return t;
-    return <>{t.substring(0, idx)}<mark style={{ background: "#e07b3940", color: "#e07b39", borderRadius: 2, padding: "0 1px" }}>{t.substring(idx, idx + query.length)}</mark>{t.substring(idx + query.length)}</>;
+    return <>{t.substring(0, idx)}<mark style={{ background: "var(--brand-primary, #e07b39)40", color: "var(--brand-primary, #e07b39)", borderRadius: 2, padding: "0 1px" }}>{t.substring(idx, idx + query.length)}</mark>{t.substring(idx + query.length)}</>;
   };
 
   const projectName = (id) => projects.find(p => p.id === id)?.name || id;
@@ -5114,7 +5114,7 @@ export function SearchOverlay({ tasks, ideas, milestones, fabAssets, catalogueAs
                 <div key={m.id} onClick={() => { onNavigate("roadmap"); onClose(); }} style={{ display: "flex", alignItems: "center", gap: 8, padding: "8px 18px", cursor: "pointer", transition: "background 0.1s" }}
                   onMouseEnter={e => e.currentTarget.style.background = "#333"}
                   onMouseLeave={e => e.currentTarget.style.background = "transparent"}>
-                  <IC icon={Route} size={14} style={{ color: m.color || "#e07b39", flexShrink: 0 }} />
+                  <IC icon={Route} size={14} style={{ color: m.color || "var(--brand-primary, #e07b39)", flexShrink: 0 }} />
                   <div style={{ flex: 1 }}>
                     <div style={{ fontSize: "0.82rem", color: "#e8e0d0" }}>{highlight(m.name, 60)}</div>
                     <div style={{ fontSize: "0.68rem", color: "#666" }}>{m.date}</div>
@@ -5132,12 +5132,12 @@ export function SearchOverlay({ tasks, ideas, milestones, fabAssets, catalogueAs
                 <div key={a.id} onClick={() => { onNavigate("fab"); onClose(); }} style={{ display: "flex", alignItems: "center", gap: 8, padding: "8px 18px", cursor: "pointer", transition: "background 0.1s" }}
                   onMouseEnter={e => e.currentTarget.style.background = "#333"}
                   onMouseLeave={e => e.currentTarget.style.background = "transparent"}>
-                  <IC icon={ShoppingBag} size={14} style={{ color: "#e07b39", flexShrink: 0 }} />
+                  <IC icon={ShoppingBag} size={14} style={{ color: "var(--brand-primary, #e07b39)", flexShrink: 0 }} />
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <div style={{ fontSize: "0.82rem", color: "#e8e0d0", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{highlight(a.name, 60)}</div>
                     <div style={{ fontSize: "0.68rem", color: "#666", display: "flex", gap: 8 }}>
                       <span>{projectName(a.projectId)}</span>
-                      {a.price && <span style={{ color: "#e07b39" }}>{a.price}</span>}
+                      {a.price && <span style={{ color: "var(--brand-primary, #e07b39)" }}>{a.price}</span>}
                     </div>
                   </div>
                 </div>
@@ -5197,7 +5197,7 @@ function StudioTrackerView({ studios, setStudios, logActivity, defaultAuthor }) 
   const [showForm, setShowForm]     = useState(false);
   const [name, setName]             = useState("");
   const [fabUsername, setFabUsername] = useState("");
-  const [color, setColor]           = useState("#e07b39");
+  const [color, setColor]           = useState("var(--brand-primary, #e07b39)");
   const [fetchResults, setFetchResults] = useState({}); // studioId → { loading, assets, error }
 
   const parseFabUsername = (input) => {
@@ -5249,11 +5249,11 @@ function StudioTrackerView({ studios, setStudios, logActivity, defaultAuthor }) 
       {/* Header */}
       <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 20, flexWrap: "wrap" }}>
         <h2 style={{ fontWeight: 800, fontSize: "1.2rem", color: "#fff", margin: 0 }}>
-          <IC icon={Store} size={18} style={{ marginRight: 8, color: "#e07b39" }} />Suivi Studios Fab
+          <IC icon={Store} size={18} style={{ marginRight: 8, color: "var(--brand-primary, #e07b39)" }} />Suivi Studios Fab
         </h2>
         <span style={{ fontSize: "0.75rem", color: "#666" }}>{studios.length} studio{studios.length !== 1 ? "s" : ""}</span>
         <span style={{ flex: 1 }} />
-        <button onClick={() => setShowForm(v => !v)} style={{ padding: "7px 14px", background: "#e07b39", color: "#1a1a1a", border: "none", borderRadius: 8, cursor: "pointer", fontWeight: 700, fontSize: "0.82rem", fontFamily: "inherit", display: "flex", alignItems: "center", gap: 6 }}>
+        <button onClick={() => setShowForm(v => !v)} style={{ padding: "7px 14px", background: "var(--brand-primary, #e07b39)", color: "#1a1a1a", border: "none", borderRadius: 8, cursor: "pointer", fontWeight: 700, fontSize: "0.82rem", fontFamily: "inherit", display: "flex", alignItems: "center", gap: 6 }}>
           <IC icon={Plus} size={14} />Studio
         </button>
       </div>
@@ -5275,7 +5275,7 @@ function StudioTrackerView({ studios, setStudios, logActivity, defaultAuthor }) 
             </div>
             <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
               <input type="color" value={color} onChange={e => setColor(e.target.value)} style={{ width: 36, height: 36, borderRadius: 6, border: "none", cursor: "pointer", padding: 2, background: "transparent" }} />
-              <button onClick={addStudio} disabled={!name.trim() || !fabUsername.trim()} style={{ padding: "8px 16px", background: "#e07b39", color: "#1a1a1a", border: "none", borderRadius: 8, cursor: "pointer", fontWeight: 700, fontFamily: "inherit", opacity: (!name.trim() || !fabUsername.trim()) ? 0.5 : 1 }}>Ajouter</button>
+              <button onClick={addStudio} disabled={!name.trim() || !fabUsername.trim()} style={{ padding: "8px 16px", background: "var(--brand-primary, #e07b39)", color: "#1a1a1a", border: "none", borderRadius: 8, cursor: "pointer", fontWeight: 700, fontFamily: "inherit", opacity: (!name.trim() || !fabUsername.trim()) ? 0.5 : 1 }}>Ajouter</button>
               <button onClick={() => setShowForm(false)} style={{ padding: "8px 10px", background: "#333", color: "#888", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 8, cursor: "pointer", fontFamily: "inherit" }}><IC icon={X} size={14} /></button>
             </div>
           </div>
@@ -5808,14 +5808,14 @@ export default function HubPanel({ view: externalView, onChangeView, currentUser
     <div style={{ background: "#1a1a1a", color: "#e8e0d0", ...(view === "mapview" ? { height: "calc(100vh - 50px)", overflow: "hidden" } : { minHeight: "100vh" }), fontFamily: "'Inter', system-ui, sans-serif" }}>
       <style>{`
         select, select option { background: #333333; color: #e8e0d0; }
-        select option:checked { background: #e07b39; color: #1a1a1a; }
+        select option:checked { background: var(--brand-primary, #e07b39); color: #1a1a1a; }
         select option:hover { background: #3a3a3a; }
       `}</style>
 
       {/* Bouton flottant + Tâche */}
       <button
         onClick={() => setShowNewTask(true)}
-        style={{ position: "fixed", bottom: 28, right: 28, zIndex: 300, display: "flex", alignItems: "center", gap: 8, background: "#e07b39", color: "#1a1a1a", border: "none", borderRadius: 12, padding: "12px 20px", fontWeight: 800, fontSize: "0.85rem", cursor: "pointer", boxShadow: "0 4px 20px rgba(224,123,57,0.4)", fontFamily: "'Inter', system-ui, sans-serif" }}
+        style={{ position: "fixed", bottom: 28, right: 28, zIndex: 300, display: "flex", alignItems: "center", gap: 8, background: "var(--brand-primary, #e07b39)", color: "#1a1a1a", border: "none", borderRadius: 12, padding: "12px 20px", fontWeight: 800, fontSize: "0.85rem", cursor: "pointer", boxShadow: "0 4px 20px rgba(224,123,57,0.4)", fontFamily: "'Inter', system-ui, sans-serif" }}
       >
         <IC icon={Plus} size={16} /> Tâche
       </button>
@@ -5851,7 +5851,7 @@ export default function HubPanel({ view: externalView, onChangeView, currentUser
                   {subViews.map(sv => (
                     <button key={sv.id} onClick={() => setTaskSubView(sv.id)} style={{
                       ...btnStyle, padding: "6px 14px", fontSize: "0.78rem",
-                      background: taskSubView === sv.id ? "#e07b39" : "transparent",
+                      background: taskSubView === sv.id ? "var(--brand-primary, #e07b39)" : "transparent",
                       color: taskSubView === sv.id ? "#1a1a1a" : "#888",
                       border: "none", fontWeight: taskSubView === sv.id ? 700 : 400,
                       borderRadius: 7,
@@ -5876,7 +5876,7 @@ export default function HubPanel({ view: externalView, onChangeView, currentUser
                 {/* Filtre personne (Liste) */}
                 {taskSubView === "list" && (
                   <div style={{ display: "flex", gap: 6, alignItems: "center", flexWrap: "wrap" }}>
-                    <button onClick={() => setPersonFilter("all")} style={{ ...btnStyle, padding: "5px 12px", fontSize: "0.75rem", background: personFilter === "all" ? "#e07b39" : "transparent", color: personFilter === "all" ? "#1a1a1a" : "#999", border: "1px solid rgba(255,255,255,0.1)", fontWeight: personFilter === "all" ? 700 : 400 }}>Tous</button>
+                    <button onClick={() => setPersonFilter("all")} style={{ ...btnStyle, padding: "5px 12px", fontSize: "0.75rem", background: personFilter === "all" ? "var(--brand-primary, #e07b39)" : "transparent", color: personFilter === "all" ? "#1a1a1a" : "#999", border: "1px solid rgba(255,255,255,0.1)", fontWeight: personFilter === "all" ? 700 : 400 }}>Tous</button>
                     {listFilterMembers.map(m => (
                       <button key={m.id} onClick={() => setPersonFilter(m.id)} style={{ ...btnStyle, padding: "5px 12px", fontSize: "0.75rem", background: personFilter === m.id ? m.color : "transparent", color: personFilter === m.id ? "#1a1a1a" : m.color, border: `1px solid ${m.color}55`, fontWeight: personFilter === m.id ? 700 : 400 }}>{m.name}</button>
                     ))}

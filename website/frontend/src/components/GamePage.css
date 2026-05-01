@@ -60,7 +60,7 @@
   letter-spacing: 0.02em;
   transition: color 0.2s;
 }
-.gp__breadcrumb-link:hover { color: #e07b39; }
+.gp__breadcrumb-link:hover { color: var(--brand-primary, #e07b39); }
 
 .gp__breadcrumb-current {
   color: rgba(255,255,255,0.85);
@@ -185,7 +185,7 @@
 .gp__btn:hover { transform: translateY(-2px); }
 
 .gp__btn--primary {
-  background: var(--game-color, #e07b39);
+  background: var(--game-color, var(--brand-primary, #e07b39));
   color: #fff;
   box-shadow: 0 4px 20px rgba(0,0,0,0.35);
 }
@@ -273,8 +273,8 @@
   margin-top: 8px;
 }
 .gp__bug-report-btn:hover {
-  background: color-mix(in srgb, var(--game-color, #e07b39) 20%, transparent);
-  border-color: var(--game-color, #e07b39);
+  background: color-mix(in srgb, var(--game-color, var(--brand-primary, #e07b39)) 20%, transparent);
+  border-color: var(--game-color, var(--brand-primary, #e07b39));
   color: #fff;
 }
 

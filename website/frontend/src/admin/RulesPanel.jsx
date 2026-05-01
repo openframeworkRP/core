@@ -10,7 +10,7 @@ import '../components/RulesBook.css'
 // ── Constants ──────────────────────────────────────────────────────────────
 
 const CAT_COLORS = [
-  '#5865f2', '#e07b39', '#3e9041', '#d13b1a', '#9b59b6',
+  '#5865f2', 'var(--brand-primary, #e07b39)', '#3e9041', '#d13b1a', '#9b59b6',
   '#00b5d8', '#f39c12', '#888888', '#e74c3c', '#1abc9c',
 ]
 
@@ -311,7 +311,7 @@ function MdToolbar({ textareaRef, value, onChange }) {
                 <tbody>
                   {SYNTAX_CHEATSHEET.map((row, i) => (
                     <tr key={i} style={{ borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
-                      <td style={{ padding: '5px 10px 5px 0', fontFamily: 'monospace', color: '#e07b39', whiteSpace: 'pre', verticalAlign: 'top' }}>{row.label}</td>
+                      <td style={{ padding: '5px 10px 5px 0', fontFamily: 'monospace', color: 'var(--brand-primary, #e07b39)', whiteSpace: 'pre', verticalAlign: 'top' }}>{row.label}</td>
                       <td style={{ padding: '5px 0', color: '#666', lineHeight: 1.4 }}>{row.desc}</td>
                     </tr>
                   ))}
@@ -326,7 +326,7 @@ function MdToolbar({ textareaRef, value, onChange }) {
           style={{
             ...BTN, padding: '3px 9px', fontSize: '0.73rem', gap: 4,
             background: previewMode ? 'rgba(224,123,57,0.15)' : 'transparent',
-            color: previewMode ? '#e07b39' : '#555',
+            color: previewMode ? 'var(--brand-primary, #e07b39)' : '#555',
             border: `1px solid ${previewMode ? 'rgba(224,123,57,0.3)' : 'transparent'}`,
           }}
         >
@@ -426,7 +426,7 @@ function HistoryModal({ ruleId, ruleTitle, onClose }) {
               {history.map(h => {
                 const old = h.old_data ? JSON.parse(h.old_data) : null
                 const nw  = h.new_data ? JSON.parse(h.new_data) : null
-                const color = h.action === 'created' ? '#3e9041' : h.action === 'deleted' ? '#d13b1a' : '#e07b39'
+                const color = h.action === 'created' ? '#3e9041' : h.action === 'deleted' ? '#d13b1a' : 'var(--brand-primary, #e07b39)'
                 const label = h.action === 'created' ? 'Créée' : h.action === 'deleted' ? 'Supprimée' : 'Modifiée'
                 return (
                   <div key={h.id} style={{ padding: '10px 14px', background: '#111', borderRadius: 8, border: '1px solid rgba(255,255,255,0.05)' }}>
@@ -785,7 +785,7 @@ export default function RulesPanel() {
       {/* Header */}
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 22 }}>
         <h2 style={{ color: '#e8e8e8', fontSize: '1.15rem', fontWeight: 700, display: 'flex', alignItems: 'center', gap: 10, margin: 0 }}>
-          <ScrollText size={18} style={{ color: '#e07b39' }} />
+          <ScrollText size={18} style={{ color: 'var(--brand-primary, #e07b39)' }} />
           Règles
         </h2>
         <button
@@ -809,7 +809,7 @@ export default function RulesPanel() {
           <button
             key={type}
             onClick={() => { setActiveType(type); setAddingCat(false); setNewCatName('') }}
-            style={{ ...BTN, background: activeType === type ? '#e07b39' : 'transparent', color: activeType === type ? '#fff' : '#888', padding: '6px 18px' }}
+            style={{ ...BTN, background: activeType === type ? 'var(--brand-primary, #e07b39)' : 'transparent', color: activeType === type ? '#fff' : '#888', padding: '6px 18px' }}
           >
             {label}
           </button>

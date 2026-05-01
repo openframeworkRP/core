@@ -14,7 +14,7 @@ marked.setOptions({ breaks: true, gfm: true })
 // ── Constants ──────────────────────────────────────────────────────────────
 
 const CAT_COLORS = [
-  '#5865f2', '#e07b39', '#3e9041', '#d13b1a', '#9b59b6',
+  '#5865f2', 'var(--brand-primary, #e07b39)', '#3e9041', '#d13b1a', '#9b59b6',
   '#00b5d8', '#f39c12', '#888888', '#e74c3c', '#1abc9c',
 ]
 
@@ -168,7 +168,7 @@ function HistoryModal({ articleId, articleTitle, onClose }) {
               {history.map(h => {
                 const old = h.old_data ? JSON.parse(h.old_data) : null
                 const nw  = h.new_data ? JSON.parse(h.new_data) : null
-                const color = h.action === 'created' ? '#3e9041' : h.action === 'deleted' ? '#d13b1a' : '#e07b39'
+                const color = h.action === 'created' ? '#3e9041' : h.action === 'deleted' ? '#d13b1a' : 'var(--brand-primary, #e07b39)'
                 const label = h.action === 'created' ? 'Créé' : h.action === 'deleted' ? 'Supprimé' : 'Modifié'
                 return (
                   <div key={h.id} style={{ padding: '10px 14px', background: '#111', borderRadius: 8, border: '1px solid rgba(255,255,255,0.05)' }}>

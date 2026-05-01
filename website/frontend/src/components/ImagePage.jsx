@@ -77,7 +77,7 @@ export default function ImagePage() {
               id="copy-btn"
               onClick={copyLink}
               style={{
-                padding: '8px 18px', background: '#e07b39', color: '#fff',
+                padding: '8px 18px', background: 'var(--brand-primary, #e07b39)', color: '#fff',
                 border: 'none', borderRadius: 8, cursor: 'pointer',
                 fontWeight: 600, fontSize: '0.82rem', fontFamily: 'inherit', flexShrink: 0,
               }}

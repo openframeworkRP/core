@@ -304,7 +304,7 @@ export default function SetupWizard() {
             L'API du jeu{' '}
             {applyResult.apiReady
               ? <strong style={{ color: '#4caf50' }}>repond correctement</strong>
-              : <strong style={{ color: '#ffa726' }}>n'a pas (encore) repondu apres 60s</strong>}.
+              : <strong style={{ color: 'var(--brand-accent, #ffa726)' }}>n'a pas (encore) repondu apres 60s</strong>}.
           </p>
           {applyResult.postSetupHint && (
             <div className="setup-error" style={{ background: '#1d2a1d', borderColor: '#3a5a3a', color: '#a5d6a7' }}>

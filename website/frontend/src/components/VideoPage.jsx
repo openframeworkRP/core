@@ -68,7 +68,7 @@ export default function VideoPage() {
                   Transcription en cours…{pct != null ? ` ${pct}%` : ''} La vidéo sera disponible dans quelques instants.
                 </div>
                 <div style={{ width: '100%', maxWidth: 300, height: 4, background: 'rgba(255,255,255,0.08)', borderRadius: 2, overflow: 'hidden', margin: '0 auto' }}>
-                  <div style={{ height: '100%', width: `${pct ?? 0}%`, background: '#e07b39', borderRadius: 2, transition: 'width 0.4s' }} />
+                  <div style={{ height: '100%', width: `${pct ?? 0}%`, background: 'var(--brand-primary, #e07b39)', borderRadius: 2, transition: 'width 0.4s' }} />
                 </div>
               </div>
             ) : video.status === 'error' ? (
@@ -103,7 +103,7 @@ export default function VideoPage() {
               onClick={copyLink}
               style={{
                 padding: '8px 18px',
-                background: '#e07b39',
+                background: 'var(--brand-primary, #e07b39)',
                 color: '#fff',
                 border: 'none',
                 borderRadius: 8,

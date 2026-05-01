@@ -23,7 +23,7 @@ const LINKS = [
     labelKey: 'contact.sbox_label',
     href: 'https://sbox.game/openframework',
     value: 'sbox.game/openframework',
-    color: '#e07b39',
+    color: 'var(--brand-primary, #e07b39)',
   },
 ]
 

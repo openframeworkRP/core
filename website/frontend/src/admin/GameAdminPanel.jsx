@@ -85,7 +85,7 @@ function Header() {
     <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 18 }}>
       <span style={{
         width: 36, height: 36, borderRadius: 10,
-        background: 'linear-gradient(135deg, #e07b39 0%, #a84820 100%)',
+        background: 'linear-gradient(135deg, var(--brand-primary, #e07b39) 0%, #a84820 100%)',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
         boxShadow: '0 4px 12px rgba(224,123,57,0.3)',
       }}>
@@ -532,7 +532,7 @@ function PlayerDetail({ steamId, onBack, onOpenCharacter }) {
                   <div style={{ flex: 1 }}>
                     <div style={{ fontWeight: 600, color: '#e8e8e8', fontSize: '0.88rem', display: 'flex', alignItems: 'center', gap: 8 }}>
                       {c.firstName} {c.lastName}
-                      {c.isSelected && <span style={{ fontSize: '0.65rem', background: '#e07b3922', color: '#e07b39', padding: '2px 7px', borderRadius: 99, fontWeight: 700 }}>ACTIF</span>}
+                      {c.isSelected && <span style={{ fontSize: '0.65rem', background: 'var(--brand-primary, #e07b39)22', color: 'var(--brand-primary, #e07b39)', padding: '2px 7px', borderRadius: 99, fontWeight: 700 }}>ACTIF</span>}
                     </div>
                     <div style={{ fontSize: '0.72rem', color: '#71717a', marginTop: 2 }}>
                       {c.age} ans · {c.gender === 0 ? 'Homme' : 'Femme'} · {c.height}cm · {c.weight}kg
@@ -644,13 +644,13 @@ function CharacterDetail({ id, onBack }) {
             padding: '16px 20px', marginBottom: 18,
           }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
-              <span style={{ width: 44, height: 44, borderRadius: '50%', background: '#e07b3922', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#e07b39' }}>
+              <span style={{ width: 44, height: 44, borderRadius: '50%', background: 'var(--brand-primary, #e07b39)22', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--brand-primary, #e07b39)' }}>
                 <UserIcon size={20} />
               </span>
               <div style={{ flex: 1 }}>
                 <div style={{ fontSize: '1.1rem', fontWeight: 700, color: '#e8e8e8' }}>
                   {data.character.firstName} {data.character.lastName}
-                  {data.character.isSelected && <span style={{ marginLeft: 10, fontSize: '0.65rem', background: '#e07b3922', color: '#e07b39', padding: '2px 8px', borderRadius: 99, fontWeight: 700 }}>ACTIF</span>}
+                  {data.character.isSelected && <span style={{ marginLeft: 10, fontSize: '0.65rem', background: 'var(--brand-primary, #e07b39)22', color: 'var(--brand-primary, #e07b39)', padding: '2px 8px', borderRadius: 99, fontWeight: 700 }}>ACTIF</span>}
                 </div>
                 <div style={{ fontSize: '0.78rem', color: '#71717a', marginTop: 3 }}>
                   {data.character.age} ans · {data.character.gender === 0 ? 'Homme' : 'Femme'} · {data.character.height}cm · {data.character.weight}kg
@@ -946,7 +946,7 @@ function CharacterRpDetails({ character: c }) {
             borderRadius: 6, padding: '10px 12px', whiteSpace: 'pre-wrap', wordBreak: 'break-word',
           }}>
             {extras.map(([k, v]) => (
-              <div key={k}><span style={{ color: '#e07b39' }}>{k}</span>: {typeof v === 'object' ? JSON.stringify(v) : String(v)}</div>
+              <div key={k}><span style={{ color: 'var(--brand-primary, #e07b39)' }}>{k}</span>: {typeof v === 'object' ? JSON.stringify(v) : String(v)}</div>
             ))}
           </div>
         </details>
@@ -1038,7 +1038,7 @@ function CharacterOutfit({ items }) {
             borderRadius: 8, padding: '10px 12px',
           }}>
             <div style={{
-              fontSize: '0.66rem', color: '#e07b39', textTransform: 'uppercase',
+              fontSize: '0.66rem', color: 'var(--brand-primary, #e07b39)', textTransform: 'uppercase',
               letterSpacing: '0.06em', fontWeight: 700, marginBottom: 6,
               display: 'flex', alignItems: 'center', gap: 6,
             }}>
@@ -1969,7 +1969,7 @@ function MapTab() {
             {/* Points */}
             {filtered.map(p => {
               const { px, py } = project(p)
-              const color = p.isSelected ? '#e07b39' : '#60a5fa'
+              const color = p.isSelected ? 'var(--brand-primary, #e07b39)' : '#60a5fa'
               return (
                 <g key={p.characterId} onMouseEnter={() => setHover(p)} onMouseLeave={() => setHover(null)} style={{ cursor: 'pointer' }}>
                   {p.isSelected && (
@@ -1996,7 +1996,7 @@ function MapTab() {
             }}>
               <div style={{ fontWeight: 700, color: '#e8e8e8', fontSize: '0.85rem' }}>
                 {hover.firstName} {hover.lastName}
-                {hover.isSelected && <span style={{ marginLeft: 8, fontSize: '0.6rem', background: '#e07b3922', color: '#e07b39', padding: '1px 6px', borderRadius: 99, fontWeight: 700 }}>ACTIF</span>}
+                {hover.isSelected && <span style={{ marginLeft: 8, fontSize: '0.6rem', background: 'var(--brand-primary, #e07b39)22', color: 'var(--brand-primary, #e07b39)', padding: '1px 6px', borderRadius: 99, fontWeight: 700 }}>ACTIF</span>}
               </div>
               <div style={{ fontSize: '0.7rem', color: '#71717a', marginTop: 3, fontFamily: 'monospace' }}>
                 SteamID : {hover.ownerId}
@@ -2014,7 +2014,7 @@ function MapTab() {
             borderRadius: 8, padding: '8px 12px', display: 'flex', flexDirection: 'column', gap: 6,
           }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: '0.72rem', color: '#a1a1aa' }}>
-              <span style={{ width: 10, height: 10, borderRadius: '50%', background: '#e07b39' }} />
+              <span style={{ width: 10, height: 10, borderRadius: '50%', background: 'var(--brand-primary, #e07b39)' }} />
               Actif
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: '0.72rem', color: '#a1a1aa' }}>
@@ -2480,7 +2480,7 @@ function LogsTab() {
               padding: '6px 12px', borderRadius: 6, border: 'none', cursor: 'pointer',
               fontSize: '0.78rem', fontFamily: 'inherit', fontWeight: 600,
               background: sub === t.id ? 'rgba(224,123,57,0.18)' : 'transparent',
-              color:      sub === t.id ? '#e07b39' : '#a1a1aa',
+              color:      sub === t.id ? 'var(--brand-primary, #e07b39)' : '#a1a1aa',
             }}
           >
             {t.icon} {t.label}
@@ -2633,7 +2633,7 @@ function PlaytimeSubTab() {
                   <PlayerCell steamId={r.steamId} profile={r.steamProfile} />
                 </div>
                 <div style={{ textAlign: 'right', minWidth: 200 }}>
-                  <div style={{ fontSize: '0.95rem', color: '#e07b39', fontWeight: 700 }}>{fmtDuration(r.totalSeconds)}</div>
+                  <div style={{ fontSize: '0.95rem', color: 'var(--brand-primary, #e07b39)', fontWeight: 700 }}>{fmtDuration(r.totalSeconds)}</div>
                   <div style={{ fontSize: '0.68rem', color: '#71717a' }}>{r.sessionCount} session(s)</div>
                 </div>
               </div>
@@ -2958,7 +2958,7 @@ function iconBtn() {
 
 function primaryBtn() {
   return {
-    background: '#e07b39', border: 'none', borderRadius: 8, padding: '8px 16px',
+    background: 'var(--brand-primary, #e07b39)', border: 'none', borderRadius: 8, padding: '8px 16px',
     cursor: 'pointer', color: '#fff', fontWeight: 600, fontSize: '0.82rem',
     display: 'inline-flex', alignItems: 'center', gap: 6, fontFamily: 'inherit',
   }

@@ -642,7 +642,7 @@ function PreviewColumn({ lang, meta, blocks, games }) {
           {meta.author && <span>Par <strong>{meta.author}</strong></span>}
           {meta.read_time > 0 && <span><Clock size={13} /> {meta.read_time} min</span>}
           {postGames.map(g => (
-            <span key={g.slug} style={{ padding:'2px 9px', borderRadius:999, fontSize:'0.65rem', fontWeight:800, background: g.color ?? '#e07b39', color:'#fff' }}>
+            <span key={g.slug} style={{ padding:'2px 9px', borderRadius:999, fontSize:'0.65rem', fontWeight:800, background: g.color ?? 'var(--brand-primary, #e07b39)', color:'#fff' }}>
               {g.label_fr}
             </span>
           ))}

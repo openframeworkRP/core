@@ -14,7 +14,7 @@ function getStatusMeta(status, lang) {
     case 'done':
       return { label: lang === 'fr' ? 'Terminé' : 'Done', icon: CheckCircle2, color: '#3e9041' }
     case 'in_progress':
-      return { label: lang === 'fr' ? 'En cours' : 'In progress', icon: Loader2, color: '#e07b39' }
+      return { label: lang === 'fr' ? 'En cours' : 'In progress', icon: Loader2, color: 'var(--brand-primary, #e07b39)' }
     case 'to_test':
       return { label: lang === 'fr' ? 'En test' : 'In testing', icon: FlaskConical, color: '#6ea8fe' }
     default:

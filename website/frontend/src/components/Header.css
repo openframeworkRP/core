@@ -201,8 +201,8 @@
     left: 0;
     width: 100%;
     background: #1a1a1a;
-    border-top: 3px solid #e07b39;
-    border-bottom: 3px solid #e07b39;
+    border-top: 3px solid var(--brand-primary, #e07b39);
+    border-bottom: 3px solid var(--brand-primary, #e07b39);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.7);
     display: flex;
     flex-direction: column;
@@ -235,8 +235,8 @@
 
   .header__menu-mobile a:hover {
     background: rgba(224, 123, 57, 0.12);
-    border-left-color: #e07b39;
-    color: #e07b39;
+    border-left-color: var(--brand-primary, #e07b39);
+    color: var(--brand-primary, #e07b39);
   }
 }
 

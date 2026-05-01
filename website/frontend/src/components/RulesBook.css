@@ -379,7 +379,7 @@
   transition: border-color 0.15s;
 }
 .rb__search-input-wrap:focus-within {
-  border-color: var(--accent, #e07b39);
+  border-color: var(--accent, var(--brand-primary, #e07b39));
 }
 .rb__search-icon {
   width: 13px;
@@ -465,7 +465,7 @@
 }
 .rb__search-mark {
   background: transparent;
-  color: var(--accent, #e07b39);
+  color: var(--accent, var(--brand-primary, #e07b39));
   font-weight: 600;
 }
 
