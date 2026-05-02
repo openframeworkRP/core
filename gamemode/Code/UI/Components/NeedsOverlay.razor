@@ -20,14 +20,11 @@
     Panel _exhaustDarkOverlay;
     Panel _sprintOverlay;
 
-    float _lastHunger   = -1f;
-    float _lastThirst   = -1f;
     bool  _lastExhausted = false;
     float _exhaustFlash  = 0f;
     float _exhaustDark   = 0f;
-    float _sprintBlur    = 0f;
-    SoundHandle _breathHandle;
-    bool _breathing = false;
+    float _sprintBlur      = 0f;
+    float _nextBreathTime  = 0f;
 
     Client Self => Client.Local;
 
@@ -53,23 +50,10 @@
     {
         if (Self == null) return;
 
-        var hunger    = Self?.Data?.Hunger ?? 100f;
-        var thirst    = Self?.Data?.Thirst ?? 100f;
         var stamina   = Self?.Data?.Stamina ?? 100f;
         var exhausted = Self?.PlayerPawn?.IsExhausted ?? false;
         bool sprinting = Input.Down("Run") && !exhausted;
 
-        // Sons par seuil faim/soif
-        if (_lastHunger >= 0f)
-        {
-            TryPlayThresholdSound( _lastHunger, hunger, 50f, "sounds/ui/hunger_warn.sound" );
-            TryPlayThresholdSound( _lastHunger, hunger, 25f, "sounds/ui/hunger_critical.sound" );
-        }
-        if (_lastThirst >= 0f)
-        {
-            TryPlayThresholdSound( _lastThirst, thirst, 50f, "sounds/ui/thirst_warn.sound" );
-            TryPlayThresholdSound( _lastThirst, thirst, 25f, "sounds/ui/thirst_critical.sound" );
-        }
 
         // Déclenchement épuisement
         if (exhausted && !_lastExhausted)
@@ -78,8 +62,6 @@
             TryPlayThresholdSound( 100f, 0f, 50f, "sounds/ui/exhaustion.sound" );
         }
 
-        _lastHunger   = hunger;
-        _lastThirst   = thirst;
         _lastExhausted = exhausted;
 
         // Flash blanc : disparaît en ~0.4s
@@ -97,8 +79,8 @@
             _exhaustDark = MathF.Max(0f, _exhaustDark - Time.Delta * 4f);
         }
 
-        // Flou latéral sprint (rampe 80%→0% stamina)
-        float sprintTarget = sprinting ? MathF.Max(0f, 1f - stamina / 80f) * 0.75f : 0f;
+        // Flou latéral sprint (rampe 60%→0% stamina)
+        float sprintTarget = sprinting ? MathF.Max(0f, 1f - stamina / 60f) * 0.75f : 0f;
         float lerpSpeed    = sprintTarget > _sprintBlur ? 5f : 3f;
         _sprintBlur = _sprintBlur + (sprintTarget - _sprintBlur) * MathF.Min(1f, Time.Delta * lerpSpeed);
 
@@ -115,28 +97,25 @@
 
     void UpdateBreathSound( float stamina, bool sprinting )
     {
-        bool shouldBreathe = sprinting && stamina < 35f;
-
-        if (shouldBreathe && !_breathing)
+        if (!sprinting || stamina >= 60f)
         {
-            var snd = ResourceLibrary.Get<SoundEvent>("sounds/runbreath.sound");
-            if (snd != null)
-            {
-                _breathHandle = Sound.Play(snd);
-                _breathing = true;
-            }
+            _nextBreathTime = 0f;
+            return;
         }
 
-        if (_breathing)
-        {
-            if (shouldBreathe)
-                _breathHandle.Volume = 1f - stamina / 35f;
-            else
-            {
-                _breathHandle.Stop();
-                _breathing = false;
-            }
-        }
+        if (Time.Now < _nextBreathTime) return;
+
+        // t : 0 à 60% stamina → 1 à 0%
+        float t = 1f - (stamina / 60f);
+
+        // Intervalle décroissant : 2.5s (60%) → 0.5s (0%)
+        float interval = MathF.Max(0.5f, 2.5f - t * 2f);
+
+        _nextBreathTime = Time.Now + interval;
+
+        var handle = Sound.Play("sounds/runbreath");
+        if (handle.IsValid)
+            handle.Volume = 0.15f + t * 0.85f;
     }
 
     static void TryPlayThresholdSound( float last, float current, float threshold, string path )

@@ -67,8 +67,12 @@ public sealed partial class PlayerPawn : Pawn, IDescription, IAreaDamageReceiver
 	/// <summary>
 	/// Sound Hundry
 	/// </summary>
-	[Property]
-	public SoundEvent HundrySound { get; set; }
+	[Property] public SoundEvent HundrySound         { get; set; }
+	[Property] public SoundEvent HungerWarnSound     { get; set; }
+	[Property] public SoundEvent HungerCriticalSound { get; set; }
+	[Property] public SoundEvent ThirstWarnSound     { get; set; }
+	[Property] public SoundEvent ThirstCriticalSound { get; set; }
+	[Property] public SoundEvent BreathSound         { get; set; }
 
 	[Property]
 	public InventoryContainer InventoryContainer
@@ -131,6 +135,9 @@ public sealed partial class PlayerPawn : Pawn, IDescription, IAreaDamageReceiver
 	public bool IsExhausted { get; set; } = false;
 
 	private RealTimeUntil _staminaRegenDelayTimer;
+	private RealTimeUntil _nextBreathTime;
+	private float _lastHungerForSound = -1f;
+	private float _lastThirstForSound = -1f;
 
 
 	Constants constants = Constants.Instance;
@@ -235,11 +242,11 @@ public sealed partial class PlayerPawn : Pawn, IDescription, IAreaDamageReceiver
 			return;
 		}
 
-		// On multiplie par Time.Delta pour que le retrait soit par seconde
 		float decayRate = Constants.Instance.HungerDecayRate * Time.Delta;
 		float runMultiplier = Input.Down( "Run" ) ? 1.5f : 1.0f;
-
 		Client.Data.Hunger = MathF.Max( 0f, Client.Data.Hunger - decayRate * runMultiplier );
+
+		PlayNeedThresholdSound( ref _lastHungerForSound, Client.Data.Hunger, HungerWarnSound, HungerCriticalSound );
 	}
 
 	public void PlayerThirst()
@@ -260,11 +267,11 @@ public sealed partial class PlayerPawn : Pawn, IDescription, IAreaDamageReceiver
 			return;
 		}
 
-		// Application du DeltaTime pour la soif également
 		float decayRate = Constants.Instance.ThirstDecayRate * Time.Delta;
 		float runMultiplier = Input.Down( "Run" ) ? 1.5f : 1.0f;
-
 		Client.Data.Thirst = MathF.Max( 0f, Client.Data.Thirst - decayRate * runMultiplier );
+
+		PlayNeedThresholdSound( ref _lastThirstForSound, Client.Data.Thirst, ThirstWarnSound, ThirstCriticalSound );
 	}
 
 
@@ -293,6 +300,14 @@ public sealed partial class PlayerPawn : Pawn, IDescription, IAreaDamageReceiver
 				Client.Data.Stamina = 0f;
 				IsExhausted = true;
 			}
+
+			// Respiration crescendo : intervalle décroissant de 2.5s (60%) à 0.5s (0%)
+			if ( Client.Data.Stamina < 60f && _nextBreathTime && BreathSound != null )
+			{
+				float t = 1f - (Client.Data.Stamina / 60f);
+				_nextBreathTime = MathF.Max(0.5f, 2.5f - t * 2f);
+				GameUtils.PlaySoundFrom( BreathSound.ResourcePath, Client.Pawn.GameObject );
+			}
 		}
 		else
 		{
@@ -304,6 +319,16 @@ public sealed partial class PlayerPawn : Pawn, IDescription, IAreaDamageReceiver
 					IsExhausted = false;
 			}
 		}
+	}
+
+	void PlayNeedThresholdSound( ref float last, float current, SoundEvent warn, SoundEvent critical )
+	{
+		if ( last < 0f ) { last = current; return; }
+		if ( warn     != null && last > 50f && current <= 50f )
+			GameUtils.PlaySoundFrom( warn.ResourcePath,     Client.Pawn.GameObject );
+		if ( critical != null && last > 25f && current <= 25f )
+			GameUtils.PlaySoundFrom( critical.ResourcePath, Client.Pawn.GameObject );
+		last = current;
 	}
 
 	[Rpc.Broadcast]
