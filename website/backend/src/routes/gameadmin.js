@@ -159,6 +159,19 @@ async function gameFetch(path, { method = 'GET', body = null } = {}) {
   return data
 }
 
+// ── Sync de la liste des admins vers core-api ────────────────────────────
+async function pushAdminListToCoreApi() {
+  try {
+    const rows = db.prepare('SELECT steam_id FROM gamemode_admins').all()
+    await gameFetch('/api/admin/game-admins/sync', {
+      method: 'POST',
+      body: { steamIds: rows.map(r => r.steam_id) },
+    })
+  } catch (e) {
+    console.warn('[gameadmin] push admin list to core-api failed:', e.message)
+  }
+}
+
 // ── Endpoint gamemode-only : liste des admins en jeu ─────────────────────
 // Pas de session requise — authentifié par X-Server-Secret (même secret que
 // le gamemode utilise pour s'authentifier sur core-api). Mis avant le
@@ -189,7 +202,7 @@ router.get('/game-admins', (_req, res) => {
   } catch (e) { res.status(500).json({ error: e.message }) }
 })
 
-router.post('/game-admins', requireRole('admin'), (req, res) => {
+router.post('/game-admins', requireRole('admin'), async (req, res) => {
   const { steam_id, label } = req.body || {}
   if (!steam_id || !/^\d{17}$/.test(steam_id.trim())) {
     return res.status(400).json({ error: 'SteamID64 invalide (17 chiffres requis)' })
@@ -198,14 +211,16 @@ router.post('/game-admins', requireRole('admin'), (req, res) => {
     db.prepare('INSERT OR REPLACE INTO gamemode_admins (steam_id, label, added_by) VALUES (?, ?, ?)')
       .run(steam_id.trim(), (label || '').trim(), req.user?.steamId || 'web-admin')
     logAction(req, 'gameadmin_add', steam_id.trim(), label || '')
+    await pushAdminListToCoreApi()
     res.status(201).json({ ok: true })
   } catch (e) { res.status(500).json({ error: e.message }) }
 })
 
-router.delete('/game-admins/:steamId', requireRole('admin'), (req, res) => {
+router.delete('/game-admins/:steamId', requireRole('admin'), async (req, res) => {
   const result = db.prepare('DELETE FROM gamemode_admins WHERE steam_id = ?').run(req.params.steamId)
   if (result.changes === 0) return res.status(404).json({ error: 'Admin introuvable' })
   logAction(req, 'gameadmin_remove', req.params.steamId)
+  await pushAdminListToCoreApi()
   res.json({ ok: true })
 })
 

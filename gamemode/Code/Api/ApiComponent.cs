@@ -550,6 +550,20 @@ public class ApiComponent : Component
         catch ( Exception e ) { Log.Warning( $"[CmdQueue] pending : {e.Message}" ); return new(); }
     }
 
+    public async Task<List<string>> FetchGameAdmins()
+    {
+        try
+        {
+            var r = await Http.RequestAsync(
+                $"{BaseUrl}/admin/game-admins", "GET", null, ServerHeaders() );
+            if ( !r.IsSuccessStatusCode ) { Log.Warning( $"[GameAdmins] GET → {r.StatusCode}" ); return null; }
+            var dto = JsonSerializer.Deserialize<GameAdminsListDto>(
+                await r.Content.ReadAsStringAsync(), Opts );
+            return dto?.SteamIds != null ? new List<string>( dto.SteamIds ) : null;
+        }
+        catch ( Exception e ) { Log.Warning( $"[GameAdmins] fetch : {e.Message}" ); return null; }
+    }
+
     public async Task ReportAdminCommandResult( Guid id, bool success, string result )
     {
         try
@@ -790,4 +804,10 @@ public class PositionDto
     public float X { get; set; }
     public float Y { get; set; }
     public float Z { get; set; }
+}
+
+internal class GameAdminsListDto
+{
+    [JsonPropertyName( "steamIds" )]
+    public string[] SteamIds { get; set; }
 }

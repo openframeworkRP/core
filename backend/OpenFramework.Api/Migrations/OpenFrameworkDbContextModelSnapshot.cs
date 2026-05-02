@@ -287,6 +287,16 @@ namespace OpenFramework.Api.Migrations
                     b.ToTable("Warns");
                 });
 
+            modelBuilder.Entity("OpenFramework.Api.Models.Administration.GameAdminSteamId", b =>
+                {
+                    b.Property<string>("SteamId")
+                        .HasColumnType("text");
+
+                    b.HasKey("SteamId");
+
+                    b.ToTable("GameAdmins");
+                });
+
             modelBuilder.Entity("OpenFramework.Api.Models.Administration.UserWhitelist", b =>
                 {
                     b.Property<string>("Id")

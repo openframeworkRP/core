@@ -3,7 +3,6 @@ using OpenFramework.Api;
 using OpenFramework.GameLoop;
 using OpenFramework.Inventory;
 using OpenFramework.Systems.Pawn;
-using System;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -26,13 +25,7 @@ public class WebAdminDispatcher : Component
     [Property] public float PollIntervalSeconds { get; set; } = 5f;
 
     /// <summary>
-    /// URL du panel web. Laisser vide pour désactiver la synchronisation
-    /// de la liste d'admins depuis le site.
-    /// </summary>
-    [Property] public string WebsiteApiUrl { get; set; } = "http://localhost:3001";
-
-    /// <summary>
-    /// Intervalle (secondes) entre deux synchronisations de la liste d'admins jeu.
+    /// Intervalle (secondes) entre deux synchronisations de la liste d'admins jeu depuis core-api.
     /// </summary>
     [Property] public float AdminSyncIntervalSeconds { get; set; } = 60f;
 
@@ -55,8 +48,8 @@ public class WebAdminDispatcher : Component
         if ( !Networking.IsHost ) return;
         if ( ApiComponent.Instance == null || !ApiComponent.Instance.IsServerAuthenticated ) return;
 
-        // Sync liste admins depuis le panel web
-        if ( !string.IsNullOrEmpty( WebsiteApiUrl ) && _timeSinceAdminSync >= AdminSyncIntervalSeconds )
+        // Sync liste admins depuis core-api
+        if ( _timeSinceAdminSync >= AdminSyncIntervalSeconds )
         {
             _timeSinceAdminSync = 0;
             _ = SyncAdminList();
@@ -203,30 +196,17 @@ public class WebAdminDispatcher : Component
         }
     }
 
-    // ── Sync liste admins depuis le panel web ────────────────────────────────
+    // ── Sync liste admins depuis core-api ────────────────────────────────────
 
     private async Task SyncAdminList()
     {
         try
         {
-            var url = WebsiteApiUrl.TrimEnd( '/' ) + "/api/gameadmin/game-admins/list"
-                      + "?secret=" + Uri.EscapeDataString( ApiComponent.ServerSecret );
-
-            var response = await Http.RequestAsync( url, "GET", null );
-            if ( !response.IsSuccessStatusCode )
-            {
-                Log.Warning( $"[WebAdmin] Sync admins échouée : HTTP {(int)response.StatusCode}" );
-                return;
-            }
-
-            var text = await response.Content.ReadAsStringAsync();
-            var data = JsonSerializer.Deserialize<AdminListDto>( text,
-                new JsonSerializerOptions { PropertyNameCaseInsensitive = true } );
-
-            if ( data?.SteamIds == null ) return;
+            var steamIds = await ApiComponent.Instance.FetchGameAdmins();
+            if ( steamIds == null ) return;
 
             Client.AdminSteamIds.Clear();
-            foreach ( var sid in data.SteamIds )
+            foreach ( var sid in steamIds )
             {
                 if ( ulong.TryParse( sid, out var id ) )
                     Client.AdminSteamIds.Add( id );
@@ -238,12 +218,6 @@ public class WebAdminDispatcher : Component
         {
             Log.Warning( $"[WebAdmin] Erreur sync admins : {e.Message}" );
         }
-    }
-
-    private class AdminListDto
-    {
-        [System.Text.Json.Serialization.JsonPropertyName( "steamIds" )]
-        public string[] SteamIds { get; set; }
     }
 
     // Helpers de parsing JSON tolérants

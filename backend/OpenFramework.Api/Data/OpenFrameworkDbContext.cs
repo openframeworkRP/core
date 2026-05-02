@@ -73,5 +73,6 @@ public class OpenFrameworkDbContext : DbContext
     public DbSet<InventoryLog> InventoryLogs { get; set; }
     public DbSet<CriminalRecord> CriminalRecords { get; set; }
     public DbSet<PendingAdminCommand> PendingAdminCommands { get; set; }
-    
+    public DbSet<GameAdminSteamId> GameAdmins { get; set; }
+
 }

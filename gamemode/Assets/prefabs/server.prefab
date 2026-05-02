@@ -35,7 +35,6 @@
         "__enabled": true,
         "Flags": 0,
         "PollIntervalSeconds": 5,
-        "WebsiteApiUrl": "http://localhost:3001",
         "AdminSyncIntervalSeconds": 60,
         "OnComponentDestroy": null,
         "OnComponentDisabled": null,
