@@ -27,8 +27,8 @@ data/config/*.lock
 .DS_Store
 Thumbs.db
 
-# ── Claude Code (specifique session) ────────────────────────
-.claude/settings.local.json
+# ── Claude Code (config locale + memoire) ───────────────────
+.claude/
 
 # ============================================================
 # gamemode/ (s&box)
