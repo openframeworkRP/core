@@ -3,9 +3,9 @@
     "__guid": "70205c94-fbc2-4e14-83b4-5d2f14324178",
     "__version": 2,
     "Flags": 0,
-    "Name": "npc-meublio",
+    "Name": "npc-furniture",
     "Position": "0,0,0",
-    "Rotation": "0,0,0,1",
+    "Rotation": "-1.84774399E-06,-4.82396263E-06,0.99999994,-1.44718879E-05",
     "Scale": "1,1,1",
     "Tags": "",
     "Enabled": true,
@@ -62,7 +62,7 @@
         "OnComponentFixedUpdate": null,
         "OnComponentStart": null,
         "OnComponentUpdate": null,
-        "PnjName": "Meublio",
+        "PnjName": "Furniture",
         "TextRenderer": null,
         "UsePanel": {
           "_type": "component",
@@ -114,7 +114,7 @@
             "__enabled": true,
             "Flags": 0,
             "AnimationGraph": null,
-            "BodyGroups": 642,
+            "BodyGroups": 130,
             "BoneMergeTarget": null,
             "CreateAttachments": false,
             "CreateBoneObjects": false,
@@ -168,9 +168,6 @@
             "Clothing": [
               {
                 "Clothing": "clothing/shoes/shoes-02.clothing"
-              },
-              {
-                "Clothing": "models/citizen_clothes/hat/hard_hat/hard_hat.clothing"
               },
               {
                 "Clothing": "models/citizen_clothes/hair/handlebar_moustache/handlebar_moustache.clothing"
@@ -260,7 +257,7 @@
         ],
         "Children": [
           {
-            "__guid": "12f5b9df-35a4-4a3b-a0a3-cd3eef381d40",
+            "__guid": "ea747a1d-a56f-4638-a3ec-0e5848da89b5",
             "__version": 2,
             "Flags": 0,
             "Name": "Clothing - shoes-02",
@@ -277,7 +274,7 @@
             "Components": [
               {
                 "__type": "Sandbox.SkinnedModelRenderer",
-                "__guid": "e952f658-c1b5-433f-ac63-c48cbaaa8890",
+                "__guid": "a8f290f1-7e05-4cf8-a2df-c1056b091932",
                 "__enabled": true,
                 "Flags": 0,
                 "AnimationGraph": null,
@@ -329,76 +326,7 @@
             "Children": []
           },
           {
-            "__guid": "1ec3d17c-ecaa-4da2-9af4-257883c78531",
-            "__version": 2,
-            "Flags": 0,
-            "Name": "Clothing - hard_hat",
-            "Position": "0,0,0",
-            "Rotation": "0,0,0,1",
-            "Scale": "1,1,1",
-            "Tags": "clothing",
-            "Enabled": true,
-            "NetworkMode": 2,
-            "NetworkFlags": 0,
-            "NetworkOrphaned": 0,
-            "NetworkTransmit": true,
-            "OwnerTransfer": 1,
-            "Components": [
-              {
-                "__type": "Sandbox.SkinnedModelRenderer",
-                "__guid": "bea86ec6-9af2-47a3-b725-0e1deb3f3b18",
-                "__enabled": true,
-                "Flags": 0,
-                "AnimationGraph": null,
-                "BodyGroups": 18446744073709551615,
-                "BoneMergeTarget": {
-                  "_type": "component",
-                  "component_id": "9f8ace8b-bbda-444a-bb02-d831bd800ab9",
-                  "go": "79154dc1-18d8-4617-af13-495bea574e85",
-                  "component_type": "SkinnedModelRenderer"
-                },
-                "CreateAttachments": false,
-                "CreateBoneObjects": false,
-                "LodOverride": null,
-                "MaterialGroup": null,
-                "MaterialOverride": null,
-                "Materials": null,
-                "Model": "models/citizen_clothes/hat/hard_hat/models/hard_hat_m_human.vmdl",
-                "Morphs": {},
-                "OnComponentDestroy": null,
-                "OnComponentDisabled": null,
-                "OnComponentEnabled": null,
-                "OnComponentFixedUpdate": null,
-                "OnComponentStart": null,
-                "OnComponentUpdate": null,
-                "Parameters": {
-                  "bools": {},
-                  "ints": {},
-                  "floats": {},
-                  "vectors": {},
-                  "rotations": {}
-                },
-                "PlaybackRate": 1,
-                "RenderOptions": {
-                  "GameLayer": true,
-                  "OverlayLayer": false,
-                  "BloomLayer": false,
-                  "AfterUILayer": false
-                },
-                "RenderType": "On",
-                "Sequence": {
-                  "Name": null,
-                  "Looping": true,
-                  "Blending": false
-                },
-                "Tint": "1,1,1,1",
-                "UseAnimGraph": true
-              }
-            ],
-            "Children": []
-          },
-          {
-            "__guid": "83ebe697-ed2e-4d26-9007-3473c1340096",
+            "__guid": "bc1fd22e-2820-4019-9ade-ee96e19c656b",
             "__version": 2,
             "Flags": 0,
             "Name": "Clothing - handlebar_moustache",
@@ -415,7 +343,7 @@
             "Components": [
               {
                 "__type": "Sandbox.SkinnedModelRenderer",
-                "__guid": "33cf0f7f-b05a-48fe-84a0-e40692388d28",
+                "__guid": "e277d4b2-c72e-4c1d-bcfc-f2718c9ca1fd",
                 "__enabled": true,
                 "Flags": 0,
                 "AnimationGraph": null,
@@ -467,7 +395,7 @@
             "Children": []
           },
           {
-            "__guid": "711d6869-15c3-4e4f-a784-f403ef7a9d2b",
+            "__guid": "7a59357f-4adc-4e0d-8c92-1808191f7e92",
             "__version": 2,
             "Flags": 0,
             "Name": "Clothing - flannel_shirt",
@@ -484,7 +412,7 @@
             "Components": [
               {
                 "__type": "Sandbox.SkinnedModelRenderer",
-                "__guid": "847beae0-8c1b-4000-84ae-6d3720bbaa33",
+                "__guid": "ba4efb27-a911-4115-a95a-b231a5f20c1d",
                 "__enabled": true,
                 "Flags": 0,
                 "AnimationGraph": null,
@@ -536,7 +464,7 @@
             "Children": []
           },
           {
-            "__guid": "62a61093-3624-41a4-b874-9e60677a407f",
+            "__guid": "16f7368c-2d08-4036-8fe2-b74bbe9e971f",
             "__version": 2,
             "Flags": 0,
             "Name": "Clothing - jeans",
@@ -553,7 +481,7 @@
             "Components": [
               {
                 "__type": "Sandbox.SkinnedModelRenderer",
-                "__guid": "97218214-82f4-4baa-9c24-dd895d92f4ec",
+                "__guid": "8958c68b-3e20-40f0-bcb3-e4e1f8795972",
                 "__enabled": true,
                 "Flags": 0,
                 "AnimationGraph": null,
@@ -646,7 +574,7 @@
             "__enabled": true,
             "Flags": 0,
             "MaxDistance": 100,
-            "MeublioCatalogue": "shop_catalogue/meublio.shopcat",
+            "MeublioCatalogue": "catalogues/shop/meublio.shopcat",
             "OnComponentDestroy": null,
             "OnComponentDisabled": null,
             "OnComponentEnabled": null,
@@ -674,6 +602,7 @@
         "AgentMaxSlope": 40,
         "ExcludedBodies": "",
         "IncludedBodies": "",
+        "DeferGeneration": false,
         "CustomBounds": false
       }
     },

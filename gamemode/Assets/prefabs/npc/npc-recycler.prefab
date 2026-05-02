@@ -199,7 +199,7 @@
                 "Clothing": "clothing/shirt/polo_shirt.clothing"
               },
               {
-                "Clothing": "models/citizen_clothes/shoes/crocs_and_socks/clogs_and_socks.clothing"
+                "Clothing": "clothing/shoes/shoes-police.clothing"
               },
               {
                 "Clothing": "models/citizen_clothes/hat/hard_hat/hard_hat.clothing"
@@ -280,7 +280,7 @@
         ],
         "Children": [
           {
-            "__guid": "1680f71f-49da-49e4-a01a-8fcc3fe78b22",
+            "__guid": "dd753086-df03-4c26-88ac-492cd464076c",
             "__version": 2,
             "Flags": 0,
             "Name": "Clothing - binman_trousers",
@@ -297,7 +297,7 @@
             "Components": [
               {
                 "__type": "Sandbox.SkinnedModelRenderer",
-                "__guid": "3456ac62-0080-454c-a163-d497cd863fa7",
+                "__guid": "ea1b1837-31d6-46e0-8069-e21aed403ea3",
                 "__enabled": true,
                 "Flags": 0,
                 "AnimationGraph": null,
@@ -349,7 +349,7 @@
             "Children": []
           },
           {
-            "__guid": "92a8c896-d89b-4711-acc4-697b0ab65d3f",
+            "__guid": "1eedf0fd-898f-489f-a398-f32a1d5e591f",
             "__version": 2,
             "Flags": 0,
             "Name": "Clothing - raincoat",
@@ -366,7 +366,7 @@
             "Components": [
               {
                 "__type": "Sandbox.SkinnedModelRenderer",
-                "__guid": "5c843753-444f-46ed-bd5a-a53b92ebce31",
+                "__guid": "68edc065-7861-40af-aebe-6f6a4d8aa635",
                 "__enabled": true,
                 "Flags": 0,
                 "AnimationGraph": null,
@@ -418,7 +418,7 @@
             "Children": []
           },
           {
-            "__guid": "0a1f6f91-85be-4776-ad9c-d856bf442268",
+            "__guid": "84c3fe34-174f-4078-ae7c-eb60204e92c4",
             "__version": 2,
             "Flags": 0,
             "Name": "Clothing - braided_long_beard",
@@ -435,7 +435,7 @@
             "Components": [
               {
                 "__type": "Sandbox.SkinnedModelRenderer",
-                "__guid": "04da273c-a6ac-43d9-842f-cbb01a301149",
+                "__guid": "109a8f97-1f78-4c31-be85-61a4b177c11e",
                 "__enabled": true,
                 "Flags": 0,
                 "AnimationGraph": null,
@@ -487,7 +487,7 @@
             "Children": []
           },
           {
-            "__guid": "ae61a803-d644-4aac-a758-01555735e302",
+            "__guid": "62593fff-6b95-4677-aaa8-d0956af1b77f",
             "__version": 2,
             "Flags": 0,
             "Name": "Clothing - polo_shirt",
@@ -504,7 +504,7 @@
             "Components": [
               {
                 "__type": "Sandbox.SkinnedModelRenderer",
-                "__guid": "34c54ca3-83fc-4aa3-81ec-a28b73a55dcb",
+                "__guid": "f5e7c845-ee83-4c1e-8fe1-27f05e1b42e0",
                 "__enabled": true,
                 "Flags": 0,
                 "AnimationGraph": null,
@@ -556,10 +556,10 @@
             "Children": []
           },
           {
-            "__guid": "8c4c20ae-127f-494b-bdfc-6a69c0fee931",
+            "__guid": "6c96d61a-5efe-4f21-8d22-6575b8ac33d9",
             "__version": 2,
             "Flags": 0,
-            "Name": "Clothing - clogs_and_socks",
+            "Name": "Clothing - shoes-police",
             "Position": "0,0,0",
             "Rotation": "0,0,0,1",
             "Scale": "1,1,1",
@@ -573,7 +573,7 @@
             "Components": [
               {
                 "__type": "Sandbox.SkinnedModelRenderer",
-                "__guid": "66ef4936-38c3-49a5-bf5e-7a58fb109e94",
+                "__guid": "59b6797c-038b-4dc8-8347-3c79a5a7f965",
                 "__enabled": true,
                 "Flags": 0,
                 "AnimationGraph": null,
@@ -590,7 +590,7 @@
                 "MaterialGroup": null,
                 "MaterialOverride": null,
                 "Materials": null,
-                "Model": "models/citizen_clothes/shoes/crocs_and_socks/models/clogs_and_socks_m_human.vmdl",
+                "Model": "models/citizen_clothes/shoes/boots/models/boots_m_human.vmdl",
                 "Morphs": {},
                 "OnComponentDestroy": null,
                 "OnComponentDisabled": null,
@@ -625,7 +625,7 @@
             "Children": []
           },
           {
-            "__guid": "55ce64f5-76d4-49e9-a6fb-e1f46c2c3055",
+            "__guid": "37d3021c-84c6-4b49-bbcc-736ca33869e4",
             "__version": 2,
             "Flags": 0,
             "Name": "Clothing - hard_hat",
@@ -642,7 +642,7 @@
             "Components": [
               {
                 "__type": "Sandbox.SkinnedModelRenderer",
-                "__guid": "02050061-7cce-4230-bba5-a1d6d15f7c41",
+                "__guid": "587dfd29-3a10-4e5e-81d7-59d989744ada",
                 "__enabled": true,
                 "Flags": 0,
                 "AnimationGraph": null,

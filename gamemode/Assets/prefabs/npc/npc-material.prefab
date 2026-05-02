@@ -3,9 +3,9 @@
     "__guid": "70205c94-fbc2-4e14-83b4-5d2f14324178",
     "__version": 2,
     "Flags": 0,
-    "Name": "npc-negociateur-matiere-premiere",
+    "Name": "npc-material",
     "Position": "0,0,0",
-    "Rotation": "0,0,0,1",
+    "Rotation": "-5.96046448E-08,0,0.99999994,0",
     "Scale": "1,1,1",
     "Tags": "",
     "Enabled": true,
@@ -23,7 +23,7 @@
         "BodyWeight": 0,
         "EyeSource": null,
         "EyesWeight": 0,
-        "HeadWeight": 0,
+        "HeadWeight": 0.21794872,
         "Height": null,
         "IkLeftFoot": null,
         "IkLeftHand": null,
@@ -62,7 +62,7 @@
         "OnComponentFixedUpdate": null,
         "OnComponentStart": null,
         "OnComponentUpdate": null,
-        "PnjName": "negociateur de matiere premiere",
+        "PnjName": "Material Shop",
         "TextRenderer": null,
         "UsePanel": {
           "_type": "component",
@@ -114,7 +114,7 @@
             "__enabled": true,
             "Flags": 0,
             "AnimationGraph": null,
-            "BodyGroups": 641,
+            "BodyGroups": 129,
             "BoneMergeTarget": null,
             "CreateAttachments": false,
             "CreateBoneObjects": false,
@@ -260,7 +260,7 @@
         ],
         "Children": [
           {
-            "__guid": "8b078204-151f-4a73-a8f1-3223c70464b9",
+            "__guid": "2856388a-65ce-4823-bd15-cd72670a1612",
             "__version": 2,
             "Flags": 0,
             "Name": "Clothing - shoes-police",
@@ -277,7 +277,7 @@
             "Components": [
               {
                 "__type": "Sandbox.SkinnedModelRenderer",
-                "__guid": "fa45ce29-c709-4ca4-ae69-f9c89d7cf6c1",
+                "__guid": "0f464171-5d0d-42b4-97ff-b128c75a7a1a",
                 "__enabled": true,
                 "Flags": 0,
                 "AnimationGraph": null,
@@ -329,7 +329,7 @@
             "Children": []
           },
           {
-            "__guid": "5b763da9-cfc6-4686-9107-2ffca3808434",
+            "__guid": "b997539e-75cc-469a-9516-9bea9a238e7a",
             "__version": 2,
             "Flags": 0,
             "Name": "Clothing - hard_hat",
@@ -346,7 +346,7 @@
             "Components": [
               {
                 "__type": "Sandbox.SkinnedModelRenderer",
-                "__guid": "4b0abb11-1551-447b-9715-1b210a3b9032",
+                "__guid": "93b99503-814b-4ea0-9513-0669601e6f5f",
                 "__enabled": true,
                 "Flags": 0,
                 "AnimationGraph": null,
@@ -398,7 +398,7 @@
             "Children": []
           },
           {
-            "__guid": "f0cacc58-21cb-458f-9a67-38da3f23733c",
+            "__guid": "1b8997dc-ce18-4d5c-914f-e7e24c857c98",
             "__version": 2,
             "Flags": 0,
             "Name": "Clothing - goatee",
@@ -415,7 +415,7 @@
             "Components": [
               {
                 "__type": "Sandbox.SkinnedModelRenderer",
-                "__guid": "46210498-6199-47d8-9620-7152f77f726b",
+                "__guid": "e46b616a-1a0a-4718-8d7c-a48c9d1e0f66",
                 "__enabled": true,
                 "Flags": 0,
                 "AnimationGraph": null,
@@ -460,14 +460,14 @@
                   "Looping": true,
                   "Blending": false
                 },
-                "Tint": "0.02457,0.01652,0.01229,1",
+                "Tint": "0.64478,0.41535,0.29468,1",
                 "UseAnimGraph": true
               }
             ],
             "Children": []
           },
           {
-            "__guid": "43562ead-d630-4c4b-a581-535d7434beb7",
+            "__guid": "d22ac992-0da0-4250-826f-67b143a6dea4",
             "__version": 2,
             "Flags": 0,
             "Name": "Clothing - flannel_shirt",
@@ -484,7 +484,7 @@
             "Components": [
               {
                 "__type": "Sandbox.SkinnedModelRenderer",
-                "__guid": "6141679d-1987-4f59-90f2-d0777fb7987d",
+                "__guid": "271b1764-5f06-4ff2-970d-95d90a35c97e",
                 "__enabled": true,
                 "Flags": 0,
                 "AnimationGraph": null,
@@ -536,7 +536,7 @@
             "Children": []
           },
           {
-            "__guid": "2b2a5985-f9f9-453d-8388-67f2837d6ee9",
+            "__guid": "b6aed626-0545-4dd9-bdd8-df820d1c1ac9",
             "__version": 2,
             "Flags": 0,
             "Name": "Clothing - binman_trousers",
@@ -553,7 +553,7 @@
             "Components": [
               {
                 "__type": "Sandbox.SkinnedModelRenderer",
-                "__guid": "31d76a4e-8e07-4543-aab5-12c4302dcaa2",
+                "__guid": "1a50d289-d436-4f01-a580-002764a9febf",
                 "__enabled": true,
                 "Flags": 0,
                 "AnimationGraph": null,
@@ -646,7 +646,7 @@
             "__enabled": true,
             "Flags": 0,
             "MaxDistance": 100,
-            "MinerCatalogue": "shop_catalogue/miner.shopcat",
+            "MinerCatalogue": "catalogues/shop/miner.shopcat",
             "OnComponentDestroy": null,
             "OnComponentDisabled": null,
             "OnComponentEnabled": null,
@@ -674,6 +674,7 @@
         "AgentMaxSlope": 40,
         "ExcludedBodies": "",
         "IncludedBodies": "",
+        "DeferGeneration": false,
         "CustomBounds": false
       }
     },

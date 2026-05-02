@@ -58,7 +58,7 @@
         "MaterialGroup": null,
         "MaterialOverride": null,
         "Materials": null,
-        "Model": "pr/locker_01.vmdl",
+        "Model": "models/sm_police_locker_02c.vmdl",
         "OnComponentDestroy": null,
         "OnComponentDisabled": null,
         "OnComponentEnabled": null,
@@ -83,7 +83,7 @@
         "Elasticity": null,
         "Friction": null,
         "IsTrigger": false,
-        "Model": "pr/locker_01.vmdl",
+        "Model": "models/sm_police_locker_02c.vmdl",
         "OnComponentDestroy": null,
         "OnComponentDisabled": null,
         "OnComponentEnabled": null,
@@ -198,7 +198,7 @@
   "MenuIcon": null,
   "DontBreakAsTemplate": false,
   "__references": [
-    "openframework.locker01#113681"
+    "openframework.smpolicelocker02c#224974"
   ],
   "__version": 2
 }

@@ -3,9 +3,9 @@
     "__guid": "2a2031ad-7747-443a-8f6c-3f736a9cb79b",
     "__version": 2,
     "Flags": 0,
-    "Name": "npc-vetementier",
+    "Name": "npc-clothing",
     "Position": "0,0,0",
-    "Rotation": "0,0,0,1",
+    "Rotation": "0,3.87990472E-15,0.99999994,1.16397142E-14",
     "Scale": "1,1,1",
     "Tags": "",
     "Enabled": true,
@@ -62,7 +62,7 @@
         "OnComponentFixedUpdate": null,
         "OnComponentStart": null,
         "OnComponentUpdate": null,
-        "PnjName": "Vetementier",
+        "PnjName": "Clothing",
         "TextRenderer": null,
         "UsePanel": {
           "_type": "component",
@@ -77,7 +77,7 @@
         "__enabled": true,
         "Flags": 0,
         "IconSize": 22,
-        "Label": "👕",
+        "Label": "\uD83D\uDC55",
         "LabelColor": "1,1,1,1",
         "OnComponentDestroy": null,
         "OnComponentDisabled": null,
@@ -114,7 +114,7 @@
             "__enabled": true,
             "Flags": 0,
             "AnimationGraph": null,
-            "BodyGroups": 642,
+            "BodyGroups": 130,
             "BoneMergeTarget": null,
             "CreateAttachments": false,
             "CreateBoneObjects": false,
@@ -254,7 +254,7 @@
         ],
         "Children": [
           {
-            "__guid": "461bf5ec-51c0-4066-8be2-9a599fc481e4",
+            "__guid": "ac3951c6-2a4d-4bca-886b-42d14f10d529",
             "__version": 2,
             "Flags": 0,
             "Name": "Clothing - shoes-02",
@@ -271,7 +271,7 @@
             "Components": [
               {
                 "__type": "Sandbox.SkinnedModelRenderer",
-                "__guid": "d7a4e0c1-ee9a-4e44-9064-e6c2e218a303",
+                "__guid": "2c7f7a95-8dda-456f-8359-9f07414d9b2f",
                 "__enabled": true,
                 "Flags": 0,
                 "AnimationGraph": null,
@@ -323,7 +323,7 @@
             "Children": []
           },
           {
-            "__guid": "387adc46-1128-46a9-bb23-765003456de8",
+            "__guid": "dbd9d9f6-20bb-4e64-bd22-8997ba656857",
             "__version": 2,
             "Flags": 0,
             "Name": "Clothing - polo_shirt_white",
@@ -340,7 +340,7 @@
             "Components": [
               {
                 "__type": "Sandbox.SkinnedModelRenderer",
-                "__guid": "98cc41c4-aef5-4428-a910-6bcbc394d5c7",
+                "__guid": "048f2e12-08e6-4dbb-a8ec-f6e7349faeb3",
                 "__enabled": true,
                 "Flags": 0,
                 "AnimationGraph": null,
@@ -392,7 +392,7 @@
             "Children": []
           },
           {
-            "__guid": "76a65a2c-b61a-49b2-be1e-d0f5b36d5698",
+            "__guid": "3ae05869-b2e2-4969-98df-cd86d2bd6bdb",
             "__version": 2,
             "Flags": 0,
             "Name": "Clothing - jeans_black",
@@ -409,7 +409,7 @@
             "Components": [
               {
                 "__type": "Sandbox.SkinnedModelRenderer",
-                "__guid": "368816fb-6708-4fd6-a6b3-3fecc4af83d7",
+                "__guid": "bf5eb9eb-29c4-4bf6-978b-f2cb42c55a73",
                 "__enabled": true,
                 "Flags": 0,
                 "AnimationGraph": null,
@@ -501,15 +501,15 @@
             "__guid": "86372b74-1482-462b-87bc-93d5a57009c7",
             "__enabled": true,
             "Flags": 0,
-            "VetementierCatalogue": "shop_catalogue/vetementier.shopcat",
             "MaxDistance": 300,
-            "RequiredJob": "None",
             "OnComponentDestroy": null,
             "OnComponentDisabled": null,
             "OnComponentEnabled": null,
             "OnComponentFixedUpdate": null,
             "OnComponentStart": null,
-            "OnComponentUpdate": null
+            "OnComponentUpdate": null,
+            "RequiredJob": "None",
+            "VetementierCatalogue": "catalogues/shop/vetementier.shopcat"
           }
         ],
         "Children": []
@@ -531,6 +531,7 @@
         "AgentMaxSlope": 40,
         "ExcludedBodies": "",
         "IncludedBodies": "",
+        "DeferGeneration": false,
         "CustomBounds": false
       }
     },
