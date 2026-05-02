@@ -99,40 +99,43 @@ public static class CharacterCreationState
 	/// </summary>
 	public static CharacterCreationDto BuildDto()
 	{
+		var morphs = new Dictionary<string, float>
+		{
+			["BrowDown"]      = (BrowDown_L + BrowDown_R) / 2f,
+			["BrowInnerUp"]   = BrowInnerUp,
+			["BrowOuterUp"]   = (BrowOuterUp_L + BrowOuterUp_R) / 2f,
+			["EyesLookDown"]  = (EyeLookDown_L + EyeLookDown_R) / 2f,
+			["EyesLookIn"]    = (EyeLookIn_L + EyeLookIn_R) / 2f,
+			["EyesLookOut"]   = (EyeLookOut_L + EyeLookOut_R) / 2f,
+			["EyesLookUp"]    = (EyeLookUp_L + EyeLookUp_R) / 2f,
+			["EyesSquint"]    = (EyeSquint_L + EyeSquint_R) / 2f,
+			["EyesWide"]      = (EyeWide_L + EyeWide_R) / 2f,
+			["CheekPuff"]     = CheekPuff,
+			["CheekSquint"]   = (CheekSquint_L + CheekSquint_R) / 2f,
+			["NoseSneer"]     = (NoseSneer_L + NoseSneer_R) / 2f,
+			["JawForward"]    = JawForward,
+			["JawLeft"]       = JawLeft,
+			["JawRight"]      = JawRight,
+			["MouthDimple"]   = (MouthDimple_L + MouthDimple_R) / 2f,
+			["MouthRollUpper"]= MouthRollUpper,
+			["MouthStretch"]  = (MouthStretch_L + MouthStretch_R) / 2f,
+		};
+
 		return new CharacterCreationDto
 		{
-			// Identité
-			FirstName = FirstName,
-			LastName = LastName,
-			Age = ComputeAge(),
+			FirstName  = FirstName,
+			LastName   = LastName,
+			Age        = ComputeAge(),
 			DateOfBirth = new DateTime( BirthYears, BirthMonth, BirthDay ),
-			Gender = IsFemale ? Gender.Female : Gender.Male,
-			CountryWhereFrom = ToApiCountry(),
-			Color = ColorBody,
-
-			// Physique (valeurs par défaut — à brancher sur CharacterManager si besoin)
-			Height = 1.75f,
-			Weight = 70f,
-
-			// Morphs — on fait la moyenne L/R pour les props symétriques de l'API
-			BrowDown = (BrowDown_L + BrowDown_R) / 2f,
-			BrowInnerUp = BrowInnerUp,
-			BrowOuterUp = (BrowOuterUp_L + BrowOuterUp_R) / 2f,
-			EyesLookDown = (EyeLookDown_L + EyeLookDown_R) / 2f,
-			EyesLookIn = (EyeLookIn_L + EyeLookIn_R) / 2f,
-			EyesLookOut = (EyeLookOut_L + EyeLookOut_R) / 2f,
-			EyesLookUp = (EyeLookUp_L + EyeLookUp_R) / 2f,
-			EyesSquint = (EyeSquint_L + EyeSquint_R) / 2f,
-			EyesWide = (EyeWide_L + EyeWide_R) / 2f,
-			CheekPuff = CheekPuff,
-			CheekSquint = (CheekSquint_L + CheekSquint_R) / 2f,
-			NoseSneer = (NoseSneer_L + NoseSneer_R) / 2f,
-			JawForward = JawForward,
-			JawLeft = JawLeft,
-			JawRight = JawRight,
-			MouthDimple = (MouthDimple_L + MouthDimple_R) / 2f,
-			MouthRollUpper = MouthRollUpper,
-			MouthStretch = (MouthStretch_L + MouthStretch_R) / 2f,
+			Origin     = ToApiCountry(),
+			Height     = 1.75f,
+			Weight     = 70f,
+			Appearance = new AppearanceBody
+			{
+				Gender   = IsFemale ? Gender.Female : Gender.Male,
+				SkinTone = ColorBody,
+				Morphs   = System.Text.Json.JsonSerializer.Serialize( morphs ),
+			},
 		};
 	}
 

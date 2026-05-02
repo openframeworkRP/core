@@ -38,6 +38,9 @@ public class ApiComponent : Component
     [ConVar( "core-api_server_secret", Help = "Secret pour l'auth serveur API" )]
     public static string ServerSecret { get; set; } = "";
 
+    [ConVar( "core-api_dev_bypass", Help = "Dev uniquement : saute la validation Facepunch si le token Steam est indisponible. Ne jamais activer en prod." )]
+    public static bool DevBypass { get; set; } = false;
+
     [ConCmd("core-connect_server", ConVarFlags.Server)]
     public static void ConnectServer()
     {
@@ -284,7 +287,7 @@ public class ApiComponent : Component
     /// Persiste la coupe/barbe + couleurs choisies chez le coiffeur.
     /// Appele cote HOST depuis Client.RPC.BroadcastHairColor (apres ecriture des Saved* synced).
     /// </summary>
-    public Task UpdateCharacterAppearance( ulong steamId, string characterId, CharacterAppearanceUpdateDto dto )
+    public Task UpdateCharacterAppearance( ulong steamId, string characterId, AppearanceBody dto )
         => PlayerPost( steamId, $"/Character/{characterId}/appearance/update", dto );
 
     public Task UpdatePosition( ulong steamId, string characterId, Vector3 pos )
@@ -699,124 +702,87 @@ public class AuthResponse
     public string AccessToken { get; set; }
 }
 
-public class CharacterApi
+public class AppearanceBody
 {
-    public string   Id               { get; set; }
-    public string   OwnerId          { get; set; }
-    public string   FirstName        { get; set; }
-    public string   LastName         { get; set; }
-    public int      Age              { get; set; }
-    public DateTime DateOfBirth      { get; set; }
-    public Country  CountryWhereFrom { get; set; }
-    public ColorBody ColorBody { get; set; }
-    public Gender   Gender           { get; set; }
-    public float    Height           { get; set; }
-    public float    Weight           { get; set; }
-
-    // Morphing facial
-    public float BrowDown { get; set; }
-    public float BrowInnerUp { get; set; }
-    public float BrowOuterUp { get; set; }
-    public float EyesLookDown { get; set; }
-    public float EyesLookIn { get; set; }
-    public float EyesLookOut { get; set; }
-    public float EyesLookUp { get; set; }
-    public float EyesSquint { get; set; }
-    public float EyesWide { get; set; }
-    public float CheekPuff { get; set; }
-    public float CheekSquint { get; set; }
-    public float NoseSneer { get; set; }
-    public float JawForward { get; set; }
-    public float JawLeft { get; set; }
-    public float JawRight { get; set; }
-    public float MouthDimple { get; set; }
-    public float MouthRollUpper { get; set; }
-    public float MouthStretch { get; set; }
-    [JsonPropertyName("actualjobident")]
-    public string ActualJob { get; set; }
-
-    // Apparence "coiffure" geree par le PNJ Coiffeur. Hex "#RRGGBB" pour les couleurs,
-    // ResourcePath du Clothing pour les styles (chaine vide = pas de cheveux/barbe).
-    public string HairColor { get; set; } = "#3a2a1c";
-    public string BeardColor { get; set; } = "#3a2a1c";
-    public string HairStyle { get; set; } = "";
-    public string BeardStyle { get; set; } = "";
+    public Gender    Gender    { get; set; }
+    public ColorBody SkinTone  { get; set; }
+    public string    Morphs    { get; set; } = "{}";
+    public string    Clothing  { get; set; } = "[]";
+    public string    HairStyle  { get; set; } = "";
+    public string    BeardStyle { get; set; } = "";
+    public string    HairColor  { get; set; } = "#3a2a1c";
+    public string    BeardColor { get; set; } = "#3a2a1c";
 }
 
-/// <summary>
-/// Payload envoye au coiffeur ET au creator pour persister l'apparence sur l'API.
-/// Doit refleter strictement le DTO cote API (CharacterAppearanceUpdateDto). Les
-/// champs nullable permettent les patchs partiels : seuls les champs non-null sont
-/// pris en compte cote serveur (le coiffeur ne touche qu'aux cheveux/barbe, le
-/// creator pousse aussi color/head/morphs).
-/// </summary>
-public class CharacterAppearanceUpdateDto
+public class CharacterApi
 {
-    public string HairStyle { get; set; } = "";
-    public string BeardStyle { get; set; } = "";
-    public string HairColor { get; set; } = "#3a2a1c";
-    public string BeardColor { get; set; } = "#3a2a1c";
+    public string   Id         { get; set; }
+    public string   OwnerId    { get; set; }
+    public string   FirstName  { get; set; }
+    public string   LastName   { get; set; }
+    public int      Age        { get; set; }
+    public DateTime DateOfBirth { get; set; }
+    public Country  Origin     { get; set; }
+    public float    Height     { get; set; }
+    public float    Weight     { get; set; }
+    public string   Occupation { get; set; }
+    public bool     IsActive   { get; set; }
+    public AppearanceBody Appearance { get; set; } = new();
 
-    // Couleur de peau et tete : null = ne pas changer (compat coiffeur).
-    public ColorBody? ColorBody { get; set; }
-    public int? HeadIndex { get; set; }
+    // ── Compat — délèguent vers Appearance pour ne pas casser l'existant ──
 
-    // Morphs faciaux : null = ne pas changer.
-    public float? BrowDown { get; set; }
-    public float? BrowInnerUp { get; set; }
-    public float? BrowOuterUp { get; set; }
-    public float? EyesLookDown { get; set; }
-    public float? EyesLookIn { get; set; }
-    public float? EyesLookOut { get; set; }
-    public float? EyesLookUp { get; set; }
-    public float? EyesSquint { get; set; }
-    public float? EyesWide { get; set; }
-    public float? CheekPuff { get; set; }
-    public float? CheekSquint { get; set; }
-    public float? NoseSneer { get; set; }
-    public float? JawForward { get; set; }
-    public float? JawLeft { get; set; }
-    public float? JawRight { get; set; }
-    public float? MouthDimple { get; set; }
-    public float? MouthRollUpper { get; set; }
-    public float? MouthStretch { get; set; }
+    [JsonIgnore] public Gender    Gender    => Appearance?.Gender    ?? Gender.Male;
+    [JsonIgnore] public ColorBody ColorBody => Appearance?.SkinTone  ?? ColorBody.Light;
+    [JsonIgnore] public string    ActualJob => Occupation             ?? "";
+    [JsonIgnore] public string    HairColor  => Appearance?.HairColor  ?? "#3a2a1c";
+    [JsonIgnore] public string    BeardColor => Appearance?.BeardColor ?? "#3a2a1c";
+    [JsonIgnore] public string    HairStyle  => Appearance?.HairStyle  ?? "";
+    [JsonIgnore] public string    BeardStyle => Appearance?.BeardStyle ?? "";
+
+    // Morphs — lus depuis le JSON dict de Appearance.Morphs
+    [JsonIgnore] public float BrowDown      => GetMorph( "BrowDown" );
+    [JsonIgnore] public float BrowInnerUp   => GetMorph( "BrowInnerUp" );
+    [JsonIgnore] public float BrowOuterUp   => GetMorph( "BrowOuterUp" );
+    [JsonIgnore] public float EyesLookDown  => GetMorph( "EyesLookDown" );
+    [JsonIgnore] public float EyesLookIn    => GetMorph( "EyesLookIn" );
+    [JsonIgnore] public float EyesLookOut   => GetMorph( "EyesLookOut" );
+    [JsonIgnore] public float EyesLookUp    => GetMorph( "EyesLookUp" );
+    [JsonIgnore] public float EyesSquint    => GetMorph( "EyesSquint" );
+    [JsonIgnore] public float EyesWide      => GetMorph( "EyesWide" );
+    [JsonIgnore] public float CheekPuff     => GetMorph( "CheekPuff" );
+    [JsonIgnore] public float CheekSquint   => GetMorph( "CheekSquint" );
+    [JsonIgnore] public float NoseSneer     => GetMorph( "NoseSneer" );
+    [JsonIgnore] public float JawForward    => GetMorph( "JawForward" );
+    [JsonIgnore] public float JawLeft       => GetMorph( "JawLeft" );
+    [JsonIgnore] public float JawRight      => GetMorph( "JawRight" );
+    [JsonIgnore] public float MouthDimple   => GetMorph( "MouthDimple" );
+    [JsonIgnore] public float MouthRollUpper => GetMorph( "MouthRollUpper" );
+    [JsonIgnore] public float MouthStretch  => GetMorph( "MouthStretch" );
+
+    private float GetMorph( string key )
+    {
+        var json = Appearance?.Morphs;
+        if ( string.IsNullOrEmpty( json ) || json == "{}" ) return 0f;
+        try
+        {
+            var d = JsonSerializer.Deserialize<Dictionary<string, float>>( json );
+            return d != null && d.TryGetValue( key, out var v ) ? v : 0f;
+        }
+        catch { return 0f; }
+    }
 }
 
 public class CharacterCreationDto
 {
-    public string   FirstName        { get; set; }
-    public string   LastName         { get; set; }
-    public int      Age              { get; set; }
-    public DateTime DateOfBirth      { get; set; }
-    public Gender   Gender           { get; set; }
-    public Country  CountryWhereFrom { get; set; }
-    public ColorBody Color { get; set; }
-    public float    Height           { get; set; } = 1.75f;
-    public float    Weight           { get; set; } = 70f;
-    // Morphing facial
-    public float BrowDown { get; set; }
-    public float BrowInnerUp { get; set; }
-    public float BrowOuterUp { get; set; }
-    public float EyesLookDown { get; set; }
-    public float EyesLookIn { get; set; }
-    public float EyesLookOut { get; set; }
-    public float EyesLookUp { get; set; }
-    public float EyesSquint { get; set; }
-    public float EyesWide { get; set; }
-
-    // Face
-    public float CheekPuff { get; set; }
-    public float CheekSquint { get; set; }
-    public float NoseSneer { get; set; }
-
-    // Mouth
-    public float JawForward { get; set; }
-    public float JawLeft { get; set; }
-    public float JawRight { get; set; }
-    public float MouthDimple { get; set; }
-    public float MouthRollUpper { get; set; }
-    public float MouthStretch { get; set; }
-    public string ActualJob { get; set; }
+    public string   FirstName  { get; set; }
+    public string   LastName   { get; set; }
+    public int      Age        { get; set; }
+    public DateTime DateOfBirth { get; set; }
+    public Country  Origin     { get; set; }
+    public float    Height     { get; set; } = 1.75f;
+    public float    Weight     { get; set; } = 70f;
+    public string   Occupation { get; set; }
+    public AppearanceBody Appearance { get; set; } = new();
 }
 
 public class PositionDto

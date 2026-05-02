@@ -201,8 +201,16 @@ public class PlayerApiBridge : Component
 
         if ( string.IsNullOrEmpty( token ) )
         {
-            Log.Error( "[Bridge] Token null apres tous les retry - abandon auth" );
-            return;
+            if ( ApiComponent.DevBypass )
+            {
+                Log.Warning( "[Bridge] Token null mais DevBypass actif — auth sans token Facepunch." );
+                token = "";
+            }
+            else
+            {
+                Log.Error( "[Bridge] Token null apres tous les retry - abandon auth" );
+                return;
+            }
         }
         Log.Info( $"[Bridge] AskClientForSteamToken → token received, sending to server" );
         SendSteamTokenToServer( token );
