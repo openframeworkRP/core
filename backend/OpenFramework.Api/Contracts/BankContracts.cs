@@ -1,15 +1,15 @@
 using OpenFramework.Api.Models;
 
-namespace OpenFramework.Api.DTOs;
+namespace OpenFramework.Api.Contracts;
 
-// ─── Bank Account ────────────────────────────────────────────────
+// ── Comptes ───────────────────────────────────────────────────────────────────
 
-public record CreateAccountDto(
+public record OpenAccountRequest(
     string AccountName,
     AccountType AccountType
 );
 
-public record AddMemberDto(
+public record AddAccountMemberRequest(
     string CharacterId,
     BankRole Role,
     bool CanWithdraw,
@@ -18,32 +18,32 @@ public record AddMemberDto(
     bool CanManageMembers
 );
 
-public record UpdateMemberPermissionsDto(
+public record MemberPermissionsRequest(
     bool CanWithdraw,
     bool CanDeposit,
     bool CanTransfer,
     bool CanManageMembers
 );
 
-public record BankAccountDto(
+public record AccountView(
     string Id,
     string AccountNumber,
     string AccountName,
     AccountType AccountType,
-    decimal Balance,       // Converti depuis centimes pour le client
+    decimal Balance,
     DateTime CreatedAt
 );
 
-// ─── Transactions ────────────────────────────────────────────────
+// ── Transactions ──────────────────────────────────────────────────────────────
 
-public record TransferDto(
+public record MoneyTransferRequest(
     string FromAccountId,
     string ToAccountId,
     decimal Amount,
     string? Comment
 );
 
-public record TransactionDto(
+public record TransactionView(
     string Id,
     string? FromAccountId,
     string? ToAccountId,
@@ -55,9 +55,9 @@ public record TransactionDto(
     DateTime CreatedAt
 );
 
-// ─── ATM / Server ────────────────────────────────────────────────
+// ── ATM ───────────────────────────────────────────────────────────────────────
 
-public record AtmDepositDto(
+public record AtmDepositRequest(
     string AtmId,
     string ToAccountId,
     string InitiatorCharId,
@@ -65,7 +65,7 @@ public record AtmDepositDto(
     string? Comment
 );
 
-public record AtmWithdrawalDto(
+public record AtmWithdrawalRequest(
     string AtmId,
     string FromAccountId,
     string InitiatorCharId,
@@ -73,7 +73,7 @@ public record AtmWithdrawalDto(
     string? Comment
 );
 
-public record AtmTransferDto(
+public record AtmTransferRequest(
     string AtmId,
     string FromAccountId,
     string ToAccountNumber,
@@ -82,26 +82,22 @@ public record AtmTransferDto(
     string? Comment
 );
 
-public record SalaryPaymentDto(
+public record SalaryPaymentRequest(
     string ToAccountId,
     decimal Amount,
     string Reason
 );
 
-public record AdminMoneyCreationDto(
+public record AdminMoneyRequest(
     string ToAccountId,
     decimal Amount,
     string Reason
 );
 
-public record RegisterAtmDto(
+public record RegisterAtmRequest(
     string GameEntityId,
     string Label,
     float PosX,
     float PosY,
     float PosZ
 );
-
-// ─── Server Auth ─────────────────────────────────────────────────
-
-public record ServerLoginDto(string ServerSecret);

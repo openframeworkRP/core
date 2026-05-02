@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using OpenFramework.Api.DToS;
+using OpenFramework.Api.Contracts;
 using OpenFramework.Api.Models;
 using OpenFramework.Api.Services;
 using System.Security.Claims;
@@ -17,19 +17,18 @@ public class CharacterController : Controller
     {
         _characterService = characterService;
     }
+
     private string? GetSteamId() => User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
     [HttpPost("create")]
     [Authorize]
-    public async Task<IActionResult> Create([FromBody] CharacterCreationDto dto)
+    public async Task<IActionResult> Create([FromBody] CreateCharacterRequest request)
     {
         var steamId = GetSteamId();
         if (string.IsNullOrEmpty(steamId)) return Unauthorized();
         try
         {
-            var newCharacter = await _characterService.CreateCharacterAsync(steamId, dto);
-            // Re-fetch en DTO aplati pour que le jeu recoive immediatement les
-            // morphs flat et ne passe pas par BrowDown=0/etc apres creation.
+            var newCharacter = await _characterService.CreateCharacterAsync(steamId, request);
             var response = await _characterService.GetByIdAsResponseAsync(newCharacter.Id);
             return CreatedAtAction(nameof(GetById), new { id = newCharacter.Id }, response);
         }
@@ -45,10 +44,10 @@ public class CharacterController : Controller
     {
         var steamId = GetSteamId();
         if (string.IsNullOrEmpty(steamId)) return Unauthorized();
-        
+
         var character = await _characterService.GetByIdAsync(id);
         if (character == null) return NotFound();
-        
+
         character.ActualJobIdent = newJobIdent;
         var success = await _characterService.UpdateCharacterAsync(steamId, id, character);
         if (!success) return NotFound("Personnage introuvable ou vous n'êtes pas le propriétaire.");
@@ -69,25 +68,18 @@ public class CharacterController : Controller
         return Ok(character);
     }
 
-    /// <summary>
-    /// PUT api/Character/{id}/appearance
-    /// Remplace integralement le bloc d'apparence (gender, color, morphs, clothing,
-    /// cheveux, barbe). Pas de patch partiel. Le createur, le coiffeur, le futur
-    /// chir esthetique et toute autre source font tous un GET puis un PUT complet.
-    /// C'est l'unique endpoint d'ecriture de l'apparence cote API.
-    /// </summary>
+    [HttpPost("{id}/appearance/update")]
     [HttpPut("{id}/appearance")]
     [Authorize]
-    public async Task<IActionResult> SetAppearance(string id, [FromBody] CharacterAppearanceDto dto)
+    public async Task<IActionResult> SetAppearance(string id, [FromBody] AppearanceBody body)
     {
         var steamId = GetSteamId();
         if (string.IsNullOrEmpty(steamId)) return Unauthorized();
-        if (dto == null) return BadRequest(new { message = "Bloc d'apparence manquant." });
+        if (body == null) return BadRequest(new { message = "Bloc d'apparence manquant." });
 
-        var success = await _characterService.SetAppearanceAsync(steamId, id, dto);
-        if (!success) return NotFound("Personnage introuvable ou vous n'etes pas le proprietaire.");
+        var success = await _characterService.SetAppearanceAsync(steamId, id, body);
+        if (!success) return NotFound("Personnage introuvable ou vous n'êtes pas le propriétaire.");
 
-        // Retourne le character a jour (forme aplatie consommee directement par le jeu).
         var refreshed = await _characterService.GetByIdAsResponseAsync(id);
         return Ok(refreshed);
     }
@@ -112,8 +104,6 @@ public class CharacterController : Controller
         var steamId = GetSteamId();
         if (string.IsNullOrEmpty(steamId)) return Unauthorized();
 
-        // Retourne CharacterResponseDto (Character + morphs aplatis) pour matcher
-        // exactement la classe CharacterApi cote jeu.
         var characters = await _characterService.GetAllByOwnerAsResponseAsync(steamId);
         return Ok(characters);
     }
@@ -124,15 +114,9 @@ public class CharacterController : Controller
     {
         var character = await _characterService.GetByIdAsResponseAsync(id);
         if (character == null) return NotFound();
-
         return Ok(character);
     }
 
-    /// <summary>
-    /// GET api/Character/selected
-    /// Retourne le personnage actuellement sélectionné par le joueur authentifié.
-    /// Retourne 404 si aucun personnage n'est sélectionné.
-    /// </summary>
     [HttpGet("selected")]
     [Authorize]
     public async Task<IActionResult> GetSelected()
@@ -142,14 +126,9 @@ public class CharacterController : Controller
 
         var character = await _characterService.GetSelectedCharacterAsResponseAsync(steamId);
         if (character == null) return NotFound(new { message = "Aucun personnage sélectionné." });
-
         return Ok(character);
     }
 
-    /// <summary>
-    /// POST api/Character/{id}/select
-    /// Définit le personnage actif du joueur. Désélectionne l'ancien au passage.
-    /// </summary>
     [HttpPost("{id}/select")]
     [Authorize]
     public async Task<IActionResult> Select(string id)
@@ -162,6 +141,4 @@ public class CharacterController : Controller
 
         return Ok(new { message = "Personnage sélectionné.", characterId = id });
     }
-    
-    
 }

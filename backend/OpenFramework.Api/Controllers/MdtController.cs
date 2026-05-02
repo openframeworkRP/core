@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using OpenFramework.Api.Contracts;
 using OpenFramework.Api.Data;
-using OpenFramework.Api.DToS;
 using OpenFramework.Api.Models.Mdt;
 
 namespace OpenFramework.Api.Controllers;
@@ -11,93 +11,42 @@ namespace OpenFramework.Api.Controllers;
 [Authorize(Roles = "GameServer")]
 public class MdtController : Controller
 {
-    
     private readonly OpenFrameworkDbContext _dbContext;
-    
+
     public MdtController(OpenFrameworkDbContext dbContext)
     {
         _dbContext = dbContext;
     }
 
-    #region Casier judiciaire
-
     [HttpGet("criminalrecord/{characterId}")]
-    public async Task<IActionResult> GetCriminalRecords(string characterId)
+    public IActionResult GetCriminalRecords(string characterId)
     {
-        var criminalsRecords = _dbContext.CriminalRecords.Where(t => t.ToWhoCharacterId == characterId).ToList();
+        var records = _dbContext.CriminalRecords.Where(t => t.ToWhoCharacterId == characterId).ToList();
 
-        if (criminalsRecords.Any())
-        {
-            return Ok(new
-            {
-                sucess = true,
-                message = "l'individue n'a pas de casier judiciaire."
-            });
-        }
+        if (!records.Any())
+            return Ok(new { success = true, message = "L'individu n'a pas de casier judiciaire." });
 
-        return Ok(new
-            {
-                sucess = true,
-                criminalsRecords
-            }
-        );
+        return Ok(new { success = true, records });
     }
-    
+
     [HttpPost("criminalrecord/{characterId}/addrecord")]
-    public async Task<IActionResult> AddRecordInCriminalRecord(string characterId, [FromBody] AddCriminalRecordDto dto)
+    public async Task<IActionResult> AddRecord(string characterId, [FromBody] NewCriminalRecordRequest request)
     {
-        var record = new CriminalRecord()
+        var record = new CriminalRecord
         {
             Id = Guid.NewGuid().ToString(),
             ToWhoCharacterId = characterId,
-            FromWhoMandatedId = dto.FromWhoMandatedId,
-            Description = dto.Description,
-            Title = dto.Title,
+            FromWhoMandatedId = request.FromWhoMandatedId,
+            Description = request.Description,
+            Title = request.Title,
         };
-        
+
         _dbContext.Add(record);
         await _dbContext.SaveChangesAsync();
-        return Ok(new
-        {
-            sucess = true,
-            record,
-        });
+        return Ok(new { success = true, record });
     }
-    
+
     [HttpPost("criminalrecord/{characterId}/removerecord")]
-    public Task<IActionResult> RemoveRecordInCriminalRecord(string characterId)
-    {
-        throw new NotImplementedException("à faire");
-    }
-    #endregion
-
-    #region Vehicule
-
-    
-
-    #endregion
-
-    #region Mandat
-
-    
-
-    #endregion
-
-    #region Garde à vue
-
-    
-
-    #endregion
-
-    #region Licence d'arme
-
-    
-
-    #endregion
-
-    #region MyRegion
-
-    
-
-    #endregion
+    public Task<IActionResult> RemoveRecord(string characterId)
+        => throw new NotImplementedException("à faire");
 }

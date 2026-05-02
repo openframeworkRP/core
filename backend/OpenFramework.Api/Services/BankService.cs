@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
+using OpenFramework.Api.Contracts;
 using OpenFramework.Api.Data;
-using OpenFramework.Api.DTOs;
 using OpenFramework.Api.Models;
 
 namespace OpenFramework.Api.Services;
@@ -21,7 +21,7 @@ public class BankService
     /// <summary>
     /// Crée un compte bancaire et donne le rôle Owner au character demandeur.
     /// </summary>
-    public async Task<BankAccount> CreateAccountAsync(string characterId, CreateAccountDto dto)
+    public async Task<BankAccount> CreateAccountAsync(string characterId, OpenAccountRequest dto)
     {
         var accountNumber = await GenerateAccountNumberAsync();
 
@@ -54,6 +54,7 @@ public class BankService
     public async Task<List<BankAccount>> GetAccountsForCharacterAsync(string characterId)
     {
         return await _context.AccountAccesses
+            .AsNoTracking()
             .Where(a => a.CharacterId == characterId)
             .Select(a => a.Account!)
             .Where(a => a.IsActive)
@@ -63,6 +64,7 @@ public class BankService
     public async Task<BankAccount?> GetAccountByIdAsync(string accountId)
     {
         return await _context.BankAccounts
+            .AsNoTracking()
             .Include(a => a.Accesses)
             .FirstOrDefaultAsync(a => a.Id == accountId && a.IsActive);
     }
@@ -76,7 +78,7 @@ public class BankService
     /// Seul un Owner ou Manager avec CanManageMembers peut le faire.
     /// </summary>
     public async Task<(bool Success, string Error)> AddMemberAsync(
-        string requesterCharacterId, string accountId, AddMemberDto dto)
+        string requesterCharacterId, string accountId, AddAccountMemberRequest dto)
     {
         var requesterAccess = await GetAccessAsync(accountId, requesterCharacterId);
         if (requesterAccess == null)
@@ -135,7 +137,7 @@ public class BankService
 
     public async Task<(bool Success, string Error)> UpdateMemberPermissionsAsync(
         string requesterCharacterId, string accountId,
-        string targetCharacterId, UpdateMemberPermissionsDto dto)
+        string targetCharacterId, MemberPermissionsRequest dto)
     {
         var requesterAccess = await GetAccessAsync(accountId, requesterCharacterId);
         if (requesterAccess == null || !CanManageMembers(requesterAccess))
@@ -163,7 +165,7 @@ public class BankService
 
     /// <summary>Virement entre deux comptes.</summary>
     public async Task<(bool Success, string Error, Transaction? Tx)> TransferAsync(
-        string initiatorCharacterId, TransferDto dto)
+        string initiatorCharacterId, MoneyTransferRequest dto)
     {
         if (dto.Amount <= 0)
             return (false, "Montant invalide.", null);
@@ -217,6 +219,7 @@ public class BankService
     public async Task<List<Transaction>> GetTransactionsAsync(string accountId, int page = 1, int pageSize = 20)
     {
         return await _context.Transactions
+            .AsNoTracking()
             .Where(t => t.FromAccountId == accountId || t.ToAccountId == accountId)
             .OrderByDescending(t => t.CreatedAt)
             .Skip((page - 1) * pageSize)

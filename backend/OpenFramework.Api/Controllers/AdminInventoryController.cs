@@ -1,9 +1,10 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using OpenFramework.Api.Contracts;
 using OpenFramework.Api.Data;
-using OpenFramework.Api.DToS;
 using OpenFramework.Api.Models;
+using OpenFramework.Api.Services;
 
 namespace OpenFramework.Api.Controllers;
 
@@ -13,23 +14,21 @@ namespace OpenFramework.Api.Controllers;
 public class AdminInventoryController : ControllerBase
 {
     private readonly OpenFrameworkDbContext _context;
+    private readonly CacheService _cache;
 
-    public AdminInventoryController(OpenFrameworkDbContext context)
+    public AdminInventoryController(OpenFrameworkDbContext context, CacheService cache)
     {
         _context = context;
+        _cache = cache;
     }
 
-    /// <summary>
-    /// Donne un item à un personnage.
-    /// Requiert un JWT GameServer (POST /api/auth/server-login avec le secret serveur).
-    /// </summary>
     [HttpPost("give")]
-    public async Task<IActionResult> GiveItem([FromBody] AdminGiveItemDto dto)
+    public async Task<IActionResult> GiveItem([FromBody] GiveItemRequest request)
     {
-        if (string.IsNullOrEmpty(dto.CharacterId) || string.IsNullOrEmpty(dto.ItemGameId))
+        if (string.IsNullOrEmpty(request.CharacterId) || string.IsNullOrEmpty(request.ItemGameId))
             return BadRequest(new { success = false, error = "CharacterId et ItemGameId sont requis." });
 
-        var inventory = await _context.Inventories.FirstOrDefaultAsync(i => i.OwnerId == dto.CharacterId);
+        var inventory = await _context.Inventories.FirstOrDefaultAsync(i => i.OwnerId == request.CharacterId);
         if (inventory == null)
             return NotFound(new { success = false, error = "Inventaire introuvable pour ce personnage." });
 
@@ -37,48 +36,44 @@ public class AdminInventoryController : ControllerBase
         {
             Id = Guid.NewGuid().ToString(),
             InventoryId = inventory.Id,
-            ItemGameId = dto.ItemGameId,
-            Mass = dto.Mass,
-            Count = dto.Count,
-            Metadata = dto.Metadata ?? new Dictionary<string, string>(),
-            Line = dto.Line,
-            Collum = dto.Collum
+            ItemGameId = request.ItemGameId,
+            Mass = request.Mass,
+            Count = request.Count,
+            Metadata = request.Metadata ?? new Dictionary<string, string>(),
+            Line = request.Line,
+            Collum = request.Collum
         };
 
         _context.Items.Add(item);
         await _context.SaveChangesAsync();
+        await _cache.RemoveAsync(CacheService.InvKey(request.CharacterId));
 
         return Ok(new { success = true, itemId = item.Id });
     }
 
-    /// <summary>
-    /// Modifie les valeurs d'un item existant (champs partiels : seuls les champs fournis sont mis à jour).
-    /// Requiert un JWT GameServer.
-    /// </summary>
     [HttpPatch("item/{itemId}")]
-    public async Task<IActionResult> ModifyItem(string itemId, [FromBody] AdminModifyItemDto dto)
+    public async Task<IActionResult> ModifyItem(string itemId, [FromBody] PatchItemRequest request)
     {
         var item = await _context.Items.FirstOrDefaultAsync(i => i.Id == itemId);
         if (item == null)
             return NotFound(new { success = false, error = "Item introuvable." });
 
-        if (dto.ItemGameId != null) item.ItemGameId = dto.ItemGameId;
-        if (dto.Mass.HasValue)      item.Mass = dto.Mass.Value;
-        if (dto.Count.HasValue)     item.Count = dto.Count.Value;
-        if (dto.Metadata != null)   item.Metadata = dto.Metadata;
-        if (dto.Line.HasValue)      item.Line = dto.Line.Value;
-        if (dto.Collum.HasValue)    item.Collum = dto.Collum.Value;
+        if (request.ItemGameId != null) item.ItemGameId = request.ItemGameId;
+        if (request.Mass.HasValue)      item.Mass = request.Mass.Value;
+        if (request.Count.HasValue)     item.Count = request.Count.Value;
+        if (request.Metadata != null)   item.Metadata = request.Metadata;
+        if (request.Line.HasValue)      item.Line = request.Line.Value;
+        if (request.Collum.HasValue)    item.Collum = request.Collum.Value;
 
         _context.Items.Update(item);
         await _context.SaveChangesAsync();
 
+        var inv = await _context.Inventories.FindAsync(item.InventoryId);
+        if (inv != null) await _cache.RemoveAsync(CacheService.InvKey(inv.OwnerId));
+
         return Ok(new { success = true, item });
     }
 
-    /// <summary>
-    /// Supprime un item de l'inventaire d'un personnage.
-    /// Requiert un JWT GameServer.
-    /// </summary>
     [HttpDelete("item/{itemId}")]
     public async Task<IActionResult> RemoveItem(string itemId)
     {
@@ -86,8 +81,12 @@ public class AdminInventoryController : ControllerBase
         if (item == null)
             return NotFound(new { success = false, error = "Item introuvable." });
 
+        var inventoryId = item.InventoryId;
         _context.Items.Remove(item);
         await _context.SaveChangesAsync();
+
+        var inv = await _context.Inventories.FindAsync(inventoryId);
+        if (inv != null) await _cache.RemoveAsync(CacheService.InvKey(inv.OwnerId));
 
         return Ok(new { success = true });
     }

@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using OpenFramework.Api.DToS;
+using OpenFramework.Api.Contracts;
 using OpenFramework.Api.Services;
 
 namespace OpenFramework.Api.Controllers;
@@ -17,20 +17,14 @@ public class AdminCharacterController : ControllerBase
         _characterService = characterService;
     }
 
-    /// <summary>
-    /// Met à jour des champs autorisés (prénom / nom) d'un personnage en
-    /// override admin (sans contrôle de propriétaire). Utilisé pour corriger
-    /// les noms RP troll depuis le panel web.
-    /// Requiert un JWT GameServer.
-    /// </summary>
     [HttpPatch("{id}")]
-    public async Task<IActionResult> UpdateCharacter(string id, [FromBody] AdminUpdateCharacterDto dto)
+    public async Task<IActionResult> UpdateCharacter(string id, [FromBody] AdminPatchCharacterRequest request)
     {
-        if (dto == null || (string.IsNullOrWhiteSpace(dto.FirstName) && string.IsNullOrWhiteSpace(dto.LastName)))
+        if (request == null || (string.IsNullOrWhiteSpace(request.FirstName) && string.IsNullOrWhiteSpace(request.LastName)))
             return BadRequest(new { success = false, error = "Au moins FirstName ou LastName doit être fourni." });
 
-        var firstName = dto.FirstName?.Trim();
-        var lastName  = dto.LastName?.Trim();
+        var firstName = request.FirstName?.Trim();
+        var lastName  = request.LastName?.Trim();
 
         if (firstName != null && (firstName.Length == 0 || firstName.Length > 64))
             return BadRequest(new { success = false, error = "FirstName doit faire 1-64 caractères." });
@@ -44,11 +38,6 @@ public class AdminCharacterController : ControllerBase
         return Ok(new { success = true, character = updated });
     }
 
-    /// <summary>
-    /// Supprime définitivement un personnage en override admin (sans contrôle
-    /// de propriétaire). Cas d'usage : nom RP troll / inapproprié signalé.
-    /// Requiert un JWT GameServer.
-    /// </summary>
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteCharacter(string id)
     {

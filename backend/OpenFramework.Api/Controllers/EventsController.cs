@@ -1,16 +1,12 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using OpenFramework.Api.Contracts;
 using OpenFramework.Api.Data;
 using OpenFramework.Api.Models.Administration.Logs;
 
 namespace OpenFramework.Api.Controllers;
 
-/// <summary>
-/// Endpoints d'écriture pour le système d'audit (sessions joueur, chat, actions admin).
-/// Tous les endpoints exigent le JWT GameServer — appelés par le gamemode s&box ou
-/// par le backend Node (panel web).
-/// </summary>
 [ApiController]
 [Route("api/events")]
 [Authorize(Roles = "GameServer")]
@@ -20,27 +16,15 @@ public class EventsController : ControllerBase
 
     public EventsController(OpenFrameworkDbContext db) { _db = db; }
 
-    // ─────────────────────────────────────────────────────────────
-    //  SESSIONS — join / leave
-    // ─────────────────────────────────────────────────────────────
+    // ── Sessions ──────────────────────────────────────────────────────────────
 
-    /// <summary>
-    /// Crée une nouvelle session (join). Renvoie l'Id pour permettre au caller de
-    /// le réutiliser au leave (utile en cas de race condition entre plusieurs sessions
-    /// successives très rapprochées d'un même joueur).
-    /// </summary>
     [HttpPost("session/join")]
-    public async Task<IActionResult> SessionJoin([FromBody] SessionJoinDto dto)
+    public async Task<IActionResult> SessionJoin([FromBody] PlayerJoinRequest request)
     {
-        if (string.IsNullOrWhiteSpace(dto.SteamId))
+        if (string.IsNullOrWhiteSpace(request.SteamId))
             return BadRequest(new { error = "SteamId requis" });
 
-        // Sécurité : si une session précédente est restée ouverte (crash gamemode, kill -9),
-        // on la ferme avant d'en ouvrir une nouvelle pour éviter l'accumulation de sessions
-        // fantômes "actives".
-        var stale = await _db.Sessions
-            .Where(s => s.SteamId == dto.SteamId && s.LeftAt == null)
-            .ToListAsync();
+        var stale = await _db.Sessions.Where(s => s.SteamId == request.SteamId && s.LeftAt == null).ToListAsync();
         var now = DateTime.UtcNow;
         foreach (var s in stale)
         {
@@ -50,9 +34,9 @@ public class EventsController : ControllerBase
 
         var session = new Session
         {
-            SteamId     = dto.SteamId,
-            DisplayName = dto.DisplayName ?? "",
-            JoinedAt    = now,
+            SteamId = request.SteamId,
+            DisplayName = request.DisplayName ?? "",
+            JoinedAt = now,
         };
         _db.Sessions.Add(session);
         await _db.SaveChangesAsync();
@@ -60,25 +44,21 @@ public class EventsController : ControllerBase
         return Ok(new { id = session.Id, joinedAt = session.JoinedAt });
     }
 
-    /// <summary>
-    /// Ferme la session ouverte du joueur. Si SessionId est fourni, ferme cette session précise ;
-    /// sinon ferme la dernière session active du SteamId.
-    /// </summary>
     [HttpPost("session/leave")]
-    public async Task<IActionResult> SessionLeave([FromBody] SessionLeaveDto dto)
+    public async Task<IActionResult> SessionLeave([FromBody] PlayerLeaveRequest request)
     {
-        if (string.IsNullOrWhiteSpace(dto.SteamId))
+        if (string.IsNullOrWhiteSpace(request.SteamId))
             return BadRequest(new { error = "SteamId requis" });
 
         Session? session;
-        if (dto.SessionId.HasValue)
+        if (request.SessionId.HasValue)
         {
-            session = await _db.Sessions.FirstOrDefaultAsync(s => s.Id == dto.SessionId.Value);
+            session = await _db.Sessions.FirstOrDefaultAsync(s => s.Id == request.SessionId.Value);
         }
         else
         {
             session = await _db.Sessions
-                .Where(s => s.SteamId == dto.SteamId && s.LeftAt == null)
+                .Where(s => s.SteamId == request.SteamId && s.LeftAt == null)
                 .OrderByDescending(s => s.JoinedAt)
                 .FirstOrDefaultAsync();
         }
@@ -94,11 +74,6 @@ public class EventsController : ControllerBase
         return Ok(new { id = session.Id, leftAt = session.LeftAt, durationSeconds = session.DurationSeconds });
     }
 
-    /// <summary>
-    /// Ferme toutes les sessions encore "ouvertes" (LeftAt = null). Appelé par le
-    /// gamemode au boot pour purger les sessions fantômes laissées par un crash.
-    /// L'API et le gamemode étant dissociés, l'API ne peut pas le faire elle-même.
-    /// </summary>
     [HttpPost("session/close-all-stale")]
     public async Task<IActionResult> CloseAllStaleSessions()
     {
@@ -113,92 +88,82 @@ public class EventsController : ControllerBase
         return Ok(new { closed = open.Count, at = now });
     }
 
-    // ─────────────────────────────────────────────────────────────
-    //  CHAT
-    // ─────────────────────────────────────────────────────────────
+    // ── Chat ──────────────────────────────────────────────────────────────────
 
     [HttpPost("chat")]
-    public async Task<IActionResult> Chat([FromBody] ChatLogDto dto)
+    public async Task<IActionResult> Chat([FromBody] ChatMessageRequest request)
     {
-        if (string.IsNullOrWhiteSpace(dto.SteamId) || dto.Message == null)
+        if (string.IsNullOrWhiteSpace(request.SteamId) || request.Message == null)
             return BadRequest(new { error = "SteamId et Message requis" });
 
         var log = new ChatLog
         {
-            SteamId    = dto.SteamId,
-            AuthorName = dto.AuthorName ?? "",
-            Channel    = dto.Channel ?? "",
-            Message    = dto.Message,
-            IsCommand  = dto.IsCommand,
+            SteamId    = request.SteamId,
+            AuthorName = request.AuthorName ?? "",
+            Channel    = request.Channel ?? "",
+            Message    = request.Message,
+            IsCommand  = request.IsCommand,
         };
         _db.ChatLogs.Add(log);
         await _db.SaveChangesAsync();
         return Ok(new { id = log.Id });
     }
 
-    // ─────────────────────────────────────────────────────────────
-    //  ADMIN ACTION
-    // ─────────────────────────────────────────────────────────────
+    // ── Admin action ──────────────────────────────────────────────────────────
 
     [HttpPost("admin-action")]
-    public async Task<IActionResult> AdminAction([FromBody] AdminActionDto dto)
+    public async Task<IActionResult> AdminAction([FromBody] AdminAuditRequest request)
     {
-        if (string.IsNullOrWhiteSpace(dto.AdminSteamId) || string.IsNullOrWhiteSpace(dto.Action))
+        if (string.IsNullOrWhiteSpace(request.AdminSteamId) || string.IsNullOrWhiteSpace(request.Action))
             return BadRequest(new { error = "AdminSteamId et Action requis" });
 
         var log = new AdminActionLog
         {
-            AdminSteamId  = dto.AdminSteamId,
-            Action        = dto.Action,
-            TargetSteamId = dto.TargetSteamId,
-            Reason        = dto.Reason,
-            PayloadJson   = dto.PayloadJson,
-            Source        = dto.Source ?? "web",
+            AdminSteamId  = request.AdminSteamId,
+            Action        = request.Action,
+            TargetSteamId = request.TargetSteamId,
+            Reason        = request.Reason,
+            PayloadJson   = request.PayloadJson,
+            Source        = request.Source ?? "web",
         };
         _db.AdminActionLogs.Add(log);
         await _db.SaveChangesAsync();
         return Ok(new { id = log.Id });
     }
 
-    // ─────────────────────────────────────────────────────────────
-    //  INVENTORY (transferts d'items pour audit anti-duplication)
-    // ─────────────────────────────────────────────────────────────
+    // ── Inventaire (audit anti-duplication) ───────────────────────────────────
 
     [HttpPost("inventory")]
-    public async Task<IActionResult> Inventory([FromBody] InventoryLogDto dto)
+    public async Task<IActionResult> Inventory([FromBody] InventoryEventRequest request)
     {
-        if (string.IsNullOrWhiteSpace(dto.ActorSteamId) || string.IsNullOrWhiteSpace(dto.Action))
+        if (string.IsNullOrWhiteSpace(request.ActorSteamId) || string.IsNullOrWhiteSpace(request.Action))
             return BadRequest(new { error = "ActorSteamId et Action requis" });
 
         var log = new InventoryLog
         {
-            ActorSteamId = dto.ActorSteamId,
-            CharacterId  = dto.CharacterId,
-            Action       = dto.Action,
-            ItemGameId   = dto.ItemGameId ?? "",
-            Count        = dto.Count,
-            SourceType   = dto.SourceType ?? "",
-            SourceId     = dto.SourceId,
-            TargetType   = dto.TargetType ?? "",
-            TargetId     = dto.TargetId,
-            MetadataJson = dto.MetadataJson,
+            ActorSteamId = request.ActorSteamId,
+            CharacterId  = request.CharacterId,
+            Action       = request.Action,
+            ItemGameId   = request.ItemGameId ?? "",
+            Count        = request.Count,
+            SourceType   = request.SourceType ?? "",
+            SourceId     = request.SourceId,
+            TargetType   = request.TargetType ?? "",
+            TargetId     = request.TargetId,
+            MetadataJson = request.MetadataJson,
         };
         _db.InventoryLogs.Add(log);
         await _db.SaveChangesAsync();
         return Ok(new { id = log.Id });
     }
 
-    /// <summary>
-    /// Endpoint bulk pour les opérations qui génèrent beaucoup d'events d'un coup
-    /// (ex: SaveSnapshot avec 30 items = 30 logs en une transaction au lieu de 30 round-trips).
-    /// </summary>
     [HttpPost("inventory/bulk")]
-    public async Task<IActionResult> InventoryBulk([FromBody] InventoryLogBulkDto dto)
+    public async Task<IActionResult> InventoryBulk([FromBody] InventoryEventBulkRequest request)
     {
-        if (dto.Logs == null || dto.Logs.Count == 0)
+        if (request.Logs == null || request.Logs.Count == 0)
             return BadRequest(new { error = "Logs[] requis" });
 
-        var entries = dto.Logs.Select(d => new InventoryLog
+        var entries = request.Logs.Select(d => new InventoryLog
         {
             ActorSteamId = d.ActorSteamId ?? "",
             CharacterId  = d.CharacterId,
@@ -216,56 +181,4 @@ public class EventsController : ControllerBase
         await _db.SaveChangesAsync();
         return Ok(new { count = entries.Count });
     }
-}
-
-// ── DTOs ─────────────────────────────────────────────────────────────────────
-
-public class SessionJoinDto
-{
-    public string SteamId { get; set; } = "";
-    public string? DisplayName { get; set; }
-}
-
-public class SessionLeaveDto
-{
-    public string SteamId { get; set; } = "";
-    public Guid? SessionId { get; set; }
-}
-
-public class ChatLogDto
-{
-    public string SteamId { get; set; } = "";
-    public string? AuthorName { get; set; }
-    public string? Channel { get; set; }
-    public string Message { get; set; } = "";
-    public bool IsCommand { get; set; }
-}
-
-public class AdminActionDto
-{
-    public string AdminSteamId { get; set; } = "";
-    public string Action { get; set; } = "";
-    public string? TargetSteamId { get; set; }
-    public string? Reason { get; set; }
-    public string? PayloadJson { get; set; }
-    public string? Source { get; set; }
-}
-
-public class InventoryLogDto
-{
-    public string ActorSteamId { get; set; } = "";
-    public string? CharacterId { get; set; }
-    public string Action { get; set; } = "";
-    public string? ItemGameId { get; set; }
-    public int Count { get; set; }
-    public string? SourceType { get; set; }
-    public string? SourceId { get; set; }
-    public string? TargetType { get; set; }
-    public string? TargetId { get; set; }
-    public string? MetadataJson { get; set; }
-}
-
-public class InventoryLogBulkDto
-{
-    public List<InventoryLogDto> Logs { get; set; } = new();
 }

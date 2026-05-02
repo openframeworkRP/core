@@ -6,7 +6,7 @@ using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using OpenFramework.Api.Data;
-using OpenFramework.Api.DToS;
+using OpenFramework.Api.Contracts;
 using OpenFramework.Api.Models;
 
 namespace OpenFramework.Api.Services;
@@ -42,6 +42,15 @@ public class AuthService
         return new JwtSecurityTokenHandler().WriteToken(token);
     }
     
+    public async Task<bool> EnsureUserExistsAsync(long steamId)
+    {
+        var id = steamId.ToString();
+        if (_db.Users.Any(u => u.Id == id)) return true;
+        _db.Users.Add(new User { Id = id });
+        await _db.SaveChangesAsync();
+        return true;
+    }
+
     public async Task<bool> ValidateTokenWithFacePunchService( long steamId, string token )
     {
         var http = new System.Net.Http.HttpClient();
@@ -55,7 +64,7 @@ public class AuthService
 
         if ( result.StatusCode != HttpStatusCode.OK ) return false;
 	
-        var response = await result.Content.ReadFromJsonAsync<ValidateAuthTokenResponse>();
+        var response = await result.Content.ReadFromJsonAsync<Contracts.TokenValidationResult>();
         if ( response is null || response.Status != "ok" ) return false;
         var userExist = _db.Users.FirstOrDefault(t => t.Id == response.SteamId.ToString());
         if (userExist is null)

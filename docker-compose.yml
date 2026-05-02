@@ -6,7 +6,7 @@
 #   Puis ouvrir http://localhost:4173/setup
 #
 # Lance seulement l'API du jeu (sans le website) :
-#   docker compose up -d core.api sqlserver adminer
+#   docker compose up -d core.api postgres adminer
 #
 # Lance seulement le website :
 #   docker compose up -d website.api website.frontend
@@ -25,25 +25,38 @@ services:
       dockerfile: OpenFramework.Api/Dockerfile
     container_name: core-api
     depends_on:
-      - sqlserver
+      - postgres
+      - redis
     environment:
-      - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=${DB_NAME:-OpenFrameworkDb};User Id=sa;Password=${MSSQL_SA_PASSWORD:-OpenFwBootstrap_Pa55!};TrustServerCertificate=True;
+      - ConnectionStrings__DefaultConnection=Host=postgres;Database=${POSTGRES_DB:-OpenFrameworkDb};Username=${POSTGRES_USER:-postgres};Password=${POSTGRES_PASSWORD:-OpenFwBootstrap_Pa55!};
       - Server__Secret=${SERVER_SECRET:-}
       - Jwt__Key=${JWT_KEY:-}
+      - Redis__ConnectionString=redis:6379
     ports:
       - "${API_PORT:-8443}:8443"
     restart: unless-stopped
 
-  sqlserver:
-    image: mcr.microsoft.com/mssql/server:2022-latest
-    container_name: core-sqlserver
+  postgres:
+    image: postgres:16-alpine
+    container_name: core-postgres
     environment:
-      ACCEPT_EULA: "Y"
-      MSSQL_SA_PASSWORD: ${MSSQL_SA_PASSWORD:-OpenFwBootstrap_Pa55!}
+      POSTGRES_DB: ${POSTGRES_DB:-OpenFrameworkDb}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-OpenFwBootstrap_Pa55!}
     ports:
-      - "1433:1433"
+      - "${POSTGRES_PORT:-5432}:5432"
     volumes:
-      - sqlserver_data:/var/opt/mssql
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    container_name: core-redis
+    command: redis-server --appendonly yes
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+    volumes:
+      - redis_data:/data
     restart: unless-stopped
 
   adminer:
@@ -52,13 +65,10 @@ services:
     ports:
       - "${ADMINER_PORT:-8080}:8080"
     depends_on:
-      - sqlserver
+      - postgres
     restart: unless-stopped
 
   # ── Website (devblog + admin + wizard de configuration) ────
-  # NB : on n'utilise PAS network_mode: host car ca ne fonctionne pas
-  # sur Docker Desktop (Windows/Mac). On utilise le reseau bridge par
-  # defaut + port mappings explicites + DNS inter-containers.
   website.api:
     build: ./website/backend
     container_name: core-website-api
@@ -67,10 +77,6 @@ services:
     volumes:
       - ./website/data:/app/data
       - ./website/uploads:/app/uploads
-      # Le wizard a besoin d'ecrire .env au repo root (RW) et de piloter
-      # docker compose pour appliquer la config. On mount la racine du
-      # repo en RW : c'est le seul moyen propre pour que le wizard puisse
-      # creer/modifier le .env sans pre-creation du fichier.
       - ./:/app/host-repo:rw
       - /var/run/docker.sock:/var/run/docker.sock
     environment:
@@ -90,23 +96,18 @@ services:
       - FAB_SCRAPER_URL=${FAB_SCRAPER_URL:-http://core-website-scraper:8000}
       - GAME_API_URL=${GAME_API_URL:-http://core-api:8443}
       - GAME_SERVER_SECRET=${GAME_SERVER_SECRET:-}
-      # Chemins exposes au backend Node pour le wizard
       - REPO_ROOT=/app/host-repo
       - REPO_ENV_PATH=/app/host-repo/.env
       - REPO_ENV_EXAMPLE_PATH=/app/host-repo/.env.example
       - SETUP_COMPLETE_FLAG=/app/host-repo/data/config/setup-complete.flag
-      # URL pour atteindre core.api depuis website.api (inter-container)
       - CORE_API_INTERNAL_URL=http://core-api:8443
-      # Project name pour que 'docker compose' depuis le container matche
-      # le project deja en place sur le host (sinon il cree un nouveau
-      # project 'host-repo' et ne voit aucun container existant).
       - COMPOSE_PROJECT_NAME=core
-      # Connexion read-only au SQL Server du jeu (panel admin DB browser)
-      - GAME_DB_HOST=sqlserver
-      - GAME_DB_PORT=1433
-      - GAME_DB_NAME=${DB_NAME:-OpenFrameworkDb}
-      - GAME_DB_USER=sa
-      - GAME_DB_PASSWORD=${MSSQL_SA_PASSWORD:-OpenFwBootstrap_Pa55!}
+      # Connexion read-only à PostgreSQL (panel admin DB browser)
+      - GAME_DB_HOST=postgres
+      - GAME_DB_PORT=5432
+      - GAME_DB_NAME=${POSTGRES_DB:-OpenFrameworkDb}
+      - GAME_DB_USER=${POSTGRES_USER:-postgres}
+      - GAME_DB_PASSWORD=${POSTGRES_PASSWORD:-OpenFwBootstrap_Pa55!}
     restart: unless-stopped
 
   website.scraper:
@@ -126,7 +127,6 @@ services:
     ports:
       - "4173:4173"
     environment:
-      # En reseau bridge, le frontend tape l'API website via le DNS du container
       - API_INTERNAL_URL=http://core-website-api:3001
       - FRONTEND_URL=${FRONTEND_URL:-http://localhost:4173}
     depends_on:
@@ -134,4 +134,5 @@ services:
     restart: unless-stopped
 
 volumes:
-  sqlserver_data:
+  postgres_data:
+  redis_data:

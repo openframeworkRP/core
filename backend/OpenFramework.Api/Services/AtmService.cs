@@ -1,6 +1,7 @@
+using System.Data;
 using Microsoft.EntityFrameworkCore;
+using OpenFramework.Api.Contracts;
 using OpenFramework.Api.Data;
-using OpenFramework.Api.DTOs;
 using OpenFramework.Api.Models;
 
 namespace OpenFramework.Api.Services;
@@ -14,19 +15,17 @@ public class AtmService
         _context = context;
     }
 
-    // ─────────────────────────────────────────────────────────────
-    //  GESTION DES ATM
-    // ─────────────────────────────────────────────────────────────
+    // ── Gestion des ATM ───────────────────────────────────────────────────────
 
-    public async Task<AtmMachine> RegisterAtmAsync(RegisterAtmDto dto)
+    public async Task<AtmMachine> RegisterAtmAsync(RegisterAtmRequest request)
     {
         var atm = new AtmMachine
         {
-            GameEntityId = dto.GameEntityId,
-            Label = dto.Label,
-            PosX = dto.PosX,
-            PosY = dto.PosY,
-            PosZ = dto.PosZ,
+            GameEntityId = request.GameEntityId,
+            Label = request.Label,
+            PosX = request.PosX,
+            PosY = request.PosY,
+            PosZ = request.PosZ,
         };
         _context.AtmMachines.Add(atm);
         await _context.SaveChangesAsync();
@@ -39,85 +38,79 @@ public class AtmService
     public async Task<List<AtmMachine>> GetAllAtmsAsync()
         => await _context.AtmMachines.Where(a => a.IsActive).ToListAsync();
 
-    // ─────────────────────────────────────────────────────────────
-    //  DÉPÔT via ATM (cash physique -> compte)
-    //  Seul le serveur peut appeler ça — le joueur remet du cash
-    //  et le serveur crédite son compte.
-    // ─────────────────────────────────────────────────────────────
+    // ── Dépôt via ATM (cash physique → compte) ────────────────────────────────
 
     public async Task<(bool Success, string Error, Transaction? Tx)> AtmDepositAsync(
-        AtmDepositDto dto, string initiatorCharacterId)
+        AtmDepositRequest request, string initiatorCharacterId)
     {
-        if (dto.Amount <= 0) return (false, "Montant invalide.", null);
+        if (request.Amount <= 0) return (false, "Montant invalide.", null);
 
-        var atm = await _context.AtmMachines.FindAsync(dto.AtmId);
+        var atm = await _context.AtmMachines.FindAsync(request.AtmId);
         if (atm == null || !atm.IsActive) return (false, "ATM introuvable ou inactif.", null);
 
         var access = await _context.AccountAccesses
-            .FirstOrDefaultAsync(a => a.AccountId == dto.ToAccountId
+            .FirstOrDefaultAsync(a => a.AccountId == request.ToAccountId
                                    && a.CharacterId == initiatorCharacterId);
         if (access == null) return (false, "Accès refusé sur ce compte.", null);
 
-        using var tx = await _context.Database.BeginTransactionAsync();
+        // RepeatableRead : PostgreSQL garantit qu'aucune mise à jour concurrente ne
+        // modifie la ligne entre le SELECT et l'UPDATE de la même transaction.
+        using var dbTx = await _context.Database.BeginTransactionAsync(IsolationLevel.RepeatableRead);
         try
         {
             var account = await _context.BankAccounts
-                .FromSqlInterpolated($"SELECT * FROM BankAccounts WITH (UPDLOCK, ROWLOCK) WHERE Id = {dto.ToAccountId}")
-                .FirstOrDefaultAsync();
-            if (account == null || !account.IsActive) return (false, "Compte introuvable.", null);
+                .FirstOrDefaultAsync(a => a.Id == request.ToAccountId && a.IsActive);
+            if (account == null) return (false, "Compte introuvable.", null);
 
-            var amountCents = BankService.ToCents(dto.Amount);
+            var amountCents = BankService.ToCents(request.Amount);
             account.BalanceCents += amountCents;
 
             var transaction = new Transaction
             {
-                FromAccountId = null,           // Vient du "cash physique" — pas de compte source
-                ToAccountId = dto.ToAccountId,
+                FromAccountId = null,
+                ToAccountId = request.ToAccountId,
                 InitiatorCharacterId = initiatorCharacterId,
-                AtmId = dto.AtmId,
+                AtmId = request.AtmId,
                 Type = TransactionType.Deposit,
                 AmountCents = amountCents,
-                Comment = dto.Comment ?? $"Dépôt ATM [{atm.Label}]",
+                Comment = request.Comment ?? $"Dépôt ATM [{atm.Label}]",
             };
 
             _context.Transactions.Add(transaction);
             await _context.SaveChangesAsync();
-            await tx.CommitAsync();
+            await dbTx.CommitAsync();
             return (true, string.Empty, transaction);
         }
         catch
         {
-            await tx.RollbackAsync();
+            await dbTx.RollbackAsync();
             throw;
         }
     }
 
-    // ─────────────────────────────────────────────────────────────
-    //  RETRAIT via ATM (compte -> cash physique)
-    // ─────────────────────────────────────────────────────────────
+    // ── Retrait via ATM (compte → cash physique) ──────────────────────────────
 
     public async Task<(bool Success, string Error, Transaction? Tx)> AtmWithdrawalAsync(
-        AtmWithdrawalDto dto, string initiatorCharacterId)
+        AtmWithdrawalRequest request, string initiatorCharacterId)
     {
-        if (dto.Amount <= 0) return (false, "Montant invalide.", null);
+        if (request.Amount <= 0) return (false, "Montant invalide.", null);
 
-        var atm = await _context.AtmMachines.FindAsync(dto.AtmId);
+        var atm = await _context.AtmMachines.FindAsync(request.AtmId);
         if (atm == null || !atm.IsActive) return (false, "ATM introuvable ou inactif.", null);
 
         var access = await _context.AccountAccesses
-            .FirstOrDefaultAsync(a => a.AccountId == dto.FromAccountId
+            .FirstOrDefaultAsync(a => a.AccountId == request.FromAccountId
                                    && a.CharacterId == initiatorCharacterId);
         if (access == null) return (false, "Accès refusé sur ce compte.", null);
 
-        using var tx = await _context.Database.BeginTransactionAsync();
+        using var dbTx = await _context.Database.BeginTransactionAsync(IsolationLevel.RepeatableRead);
         try
         {
             var account = await _context.BankAccounts
-                .FromSqlInterpolated($"SELECT * FROM BankAccounts WITH (UPDLOCK, ROWLOCK) WHERE Id = {dto.FromAccountId}")
-                .FirstOrDefaultAsync();
-            if (account == null || !account.IsActive) return (false, "Compte introuvable.", null);
+                .FirstOrDefaultAsync(a => a.Id == request.FromAccountId && a.IsActive);
+            if (account == null) return (false, "Compte introuvable.", null);
 
-            var amountCents = BankService.ToCents(dto.Amount);
+            var amountCents = BankService.ToCents(request.Amount);
             if (account.BalanceCents < amountCents)
                 return (false, "Solde insuffisant.", null);
 
@@ -125,180 +118,165 @@ public class AtmService
 
             var transaction = new Transaction
             {
-                FromAccountId = dto.FromAccountId,
-                ToAccountId = null,             // Part dans le "cash physique"
+                FromAccountId = request.FromAccountId,
+                ToAccountId = null,
                 InitiatorCharacterId = initiatorCharacterId,
-                AtmId = dto.AtmId,
+                AtmId = request.AtmId,
                 Type = TransactionType.Withdrawal,
                 AmountCents = amountCents,
-                Comment = dto.Comment ?? $"Retrait ATM [{atm.Label}]",
+                Comment = request.Comment ?? $"Retrait ATM [{atm.Label}]",
             };
 
             _context.Transactions.Add(transaction);
             await _context.SaveChangesAsync();
-            await tx.CommitAsync();
+            await dbTx.CommitAsync();
             return (true, string.Empty, transaction);
         }
         catch
         {
-            await tx.RollbackAsync();
+            await dbTx.RollbackAsync();
             throw;
         }
     }
 
-    // ─────────────────────────────────────────────────────────────
-    //  VIREMENT compte↔compte via ATM
-    // ─────────────────────────────────────────────────────────────
+    // ── Virement compte↔compte via ATM ────────────────────────────────────────
 
     public async Task<(bool Success, string Error, Transaction? Tx)> AtmTransferAsync(
-        AtmTransferDto dto, string initiatorCharacterId)
+        AtmTransferRequest request, string initiatorCharacterId)
     {
-        if (dto.Amount <= 0) return (false, "Montant invalide.", null);
+        if (request.Amount <= 0) return (false, "Montant invalide.", null);
 
-        var atm = await _context.AtmMachines.FindAsync(dto.AtmId);
+        var atm = await _context.AtmMachines.FindAsync(request.AtmId);
         if (atm == null || !atm.IsActive) return (false, "ATM introuvable ou inactif.", null);
 
         var access = await _context.AccountAccesses
-            .FirstOrDefaultAsync(a => a.AccountId == dto.FromAccountId
+            .FirstOrDefaultAsync(a => a.AccountId == request.FromAccountId
                                    && a.CharacterId == initiatorCharacterId);
         if (access == null) return (false, "Accès refusé sur ce compte.", null);
 
         var toAccountInfo = await _context.BankAccounts
-            .Where(a => a.AccountNumber == dto.ToAccountNumber && a.IsActive)
+            .Where(a => a.AccountNumber == request.ToAccountNumber && a.IsActive)
             .Select(a => new { a.Id })
             .FirstOrDefaultAsync();
         if (toAccountInfo == null) return (false, "Compte destinataire introuvable.", null);
 
-        if (toAccountInfo.Id == dto.FromAccountId)
+        if (toAccountInfo.Id == request.FromAccountId)
             return (false, "Impossible de virer sur le même compte.", null);
 
-        using var tx = await _context.Database.BeginTransactionAsync();
+        // Serializable pour le double-lock entre deux comptes : SSI PostgreSQL
+        // garantit qu'aucune transaction concurrente ne peut modifier les deux
+        // comptes simultanément sans qu'une des deux soit rejouée.
+        using var dbTx = await _context.Database.BeginTransactionAsync(IsolationLevel.Serializable);
         try
         {
-            // Lock des deux comptes — ordre stable par Id pour éviter les deadlocks
-            var ids = new[] { dto.FromAccountId, toAccountInfo.Id }
-                .OrderBy(id => id, StringComparer.Ordinal)
-                .ToArray();
+            var fromAccount = await _context.BankAccounts
+                .FirstOrDefaultAsync(a => a.Id == request.FromAccountId && a.IsActive);
+            var toAccount = await _context.BankAccounts
+                .FirstOrDefaultAsync(a => a.Id == toAccountInfo.Id && a.IsActive);
 
-            var firstLocked = await _context.BankAccounts
-                .FromSqlInterpolated($"SELECT * FROM BankAccounts WITH (UPDLOCK, ROWLOCK) WHERE Id = {ids[0]}")
-                .FirstOrDefaultAsync();
-            var secondLocked = await _context.BankAccounts
-                .FromSqlInterpolated($"SELECT * FROM BankAccounts WITH (UPDLOCK, ROWLOCK) WHERE Id = {ids[1]}")
-                .FirstOrDefaultAsync();
+            if (fromAccount == null) return (false, "Compte source introuvable.", null);
+            if (toAccount == null)   return (false, "Compte destinataire introuvable.", null);
 
-            var fromAccount = firstLocked?.Id == dto.FromAccountId ? firstLocked : secondLocked;
-            var toAccount = firstLocked?.Id == toAccountInfo.Id ? firstLocked : secondLocked;
-
-            if (fromAccount == null || !fromAccount.IsActive)
-                return (false, "Compte source introuvable.", null);
-            if (toAccount == null || !toAccount.IsActive)
-                return (false, "Compte destinataire introuvable.", null);
-
-            var amountCents = BankService.ToCents(dto.Amount);
+            var amountCents = BankService.ToCents(request.Amount);
             if (fromAccount.BalanceCents < amountCents)
                 return (false, "Solde insuffisant.", null);
 
             fromAccount.BalanceCents -= amountCents;
-            toAccount.BalanceCents += amountCents;
+            toAccount.BalanceCents   += amountCents;
 
             var transaction = new Transaction
             {
                 FromAccountId = fromAccount.Id,
                 ToAccountId = toAccount.Id,
                 InitiatorCharacterId = initiatorCharacterId,
-                AtmId = dto.AtmId,
+                AtmId = request.AtmId,
                 Type = TransactionType.Transfer,
                 AmountCents = amountCents,
-                Comment = dto.Comment ?? $"Virement ATM [{atm.Label}]",
+                Comment = request.Comment ?? $"Virement ATM [{atm.Label}]",
             };
 
             _context.Transactions.Add(transaction);
             await _context.SaveChangesAsync();
-            await tx.CommitAsync();
+            await dbTx.CommitAsync();
             return (true, string.Empty, transaction);
         }
         catch
         {
-            await tx.RollbackAsync();
+            await dbTx.RollbackAsync();
             throw;
         }
     }
 
-    // ─────────────────────────────────────────────────────────────
-    //  SALAIRE (injection automatique serveur)
-    // ─────────────────────────────────────────────────────────────
+    // ── Salaire (injection automatique serveur) ────────────────────────────────
 
-    public async Task<(bool Success, string Error, Transaction? Tx)> PaySalaryAsync(SalaryPaymentDto dto)
+    public async Task<(bool Success, string Error, Transaction? Tx)> PaySalaryAsync(SalaryPaymentRequest request)
     {
-        if (dto.Amount <= 0) return (false, "Montant invalide.", null);
+        if (request.Amount <= 0) return (false, "Montant invalide.", null);
 
-        var account = await _context.BankAccounts.FindAsync(dto.ToAccountId);
+        var account = await _context.BankAccounts.FindAsync(request.ToAccountId);
         if (account == null || !account.IsActive) return (false, "Compte introuvable.", null);
 
-        using var tx = await _context.Database.BeginTransactionAsync();
+        using var dbTx = await _context.Database.BeginTransactionAsync(IsolationLevel.RepeatableRead);
         try
         {
-            var amountCents = BankService.ToCents(dto.Amount);
+            var amountCents = BankService.ToCents(request.Amount);
             account.BalanceCents += amountCents;
 
             var transaction = new Transaction
             {
                 FromAccountId = null,
-                ToAccountId = dto.ToAccountId,
-                InitiatorCharacterId = null,    // Initié par le serveur
+                ToAccountId = request.ToAccountId,
+                InitiatorCharacterId = null,
                 Type = TransactionType.Salary,
                 AmountCents = amountCents,
-                Comment = dto.Reason,
+                Comment = request.Reason,
             };
 
             _context.Transactions.Add(transaction);
             await _context.SaveChangesAsync();
-            await tx.CommitAsync();
+            await dbTx.CommitAsync();
             return (true, string.Empty, transaction);
         }
         catch
         {
-            await tx.RollbackAsync();
+            await dbTx.RollbackAsync();
             throw;
         }
     }
 
-    // ─────────────────────────────────────────────────────────────
-    //  CRÉATION ARBITRAIRE (admin)
-    // ─────────────────────────────────────────────────────────────
+    // ── Création arbitraire (admin) ────────────────────────────────────────────
 
-    public async Task<(bool Success, string Error, Transaction? Tx)> AdminCreateMoneyAsync(AdminMoneyCreationDto dto)
+    public async Task<(bool Success, string Error, Transaction? Tx)> AdminCreateMoneyAsync(AdminMoneyRequest request)
     {
-        if (dto.Amount <= 0) return (false, "Montant invalide.", null);
+        if (request.Amount <= 0) return (false, "Montant invalide.", null);
 
-        var account = await _context.BankAccounts.FindAsync(dto.ToAccountId);
+        var account = await _context.BankAccounts.FindAsync(request.ToAccountId);
         if (account == null || !account.IsActive) return (false, "Compte introuvable.", null);
 
-        using var tx = await _context.Database.BeginTransactionAsync();
+        using var dbTx = await _context.Database.BeginTransactionAsync(IsolationLevel.RepeatableRead);
         try
         {
-            var amountCents = BankService.ToCents(dto.Amount);
+            var amountCents = BankService.ToCents(request.Amount);
             account.BalanceCents += amountCents;
 
             var transaction = new Transaction
             {
                 FromAccountId = null,
-                ToAccountId = dto.ToAccountId,
+                ToAccountId = request.ToAccountId,
                 InitiatorCharacterId = null,
                 Type = TransactionType.AdminCreation,
                 AmountCents = amountCents,
-                Comment = $"[ADMIN] {dto.Reason}",
+                Comment = $"[ADMIN] {request.Reason}",
             };
 
             _context.Transactions.Add(transaction);
             await _context.SaveChangesAsync();
-            await tx.CommitAsync();
+            await dbTx.CommitAsync();
             return (true, string.Empty, transaction);
         }
         catch
         {
-            await tx.RollbackAsync();
+            await dbTx.RollbackAsync();
             throw;
         }
     }

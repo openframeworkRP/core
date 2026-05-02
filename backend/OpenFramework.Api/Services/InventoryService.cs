@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using OpenFramework.Api.Data;
 using OpenFramework.Api.Models;
 
@@ -5,63 +6,83 @@ namespace OpenFramework.Api.Services;
 
 public class InventoryService
 {
-    private readonly OpenFrameworkDbContext _openFrameworkDb;
+    private readonly OpenFrameworkDbContext _db;
+    private readonly CacheService _cache;
 
-    public InventoryService(OpenFrameworkDbContext openFrameworkDb)
+    private static readonly TimeSpan InvTtl = TimeSpan.FromMinutes(1);
+
+    public InventoryService(OpenFrameworkDbContext db, CacheService cache)
     {
-        _openFrameworkDb = openFrameworkDb;
+        _db = db;
+        _cache = cache;
     }
 
-    public void AddItemInActualInventory(string characterId, InventoryItem item)
+    public async Task AddItemInActualInventoryAsync(string characterId, InventoryItem item)
     {
-        var inventory = _openFrameworkDb.Inventories.FirstOrDefault(t => t.OwnerId == characterId);
-        if (inventory == null)
-        {
-            return;
-        }
-        
-        // TODO: Limiter les items par le poids.
+        var inventory = await _db.Inventories.FirstOrDefaultAsync(t => t.OwnerId == characterId);
+        if (inventory == null) return;
+
         item.Id = Guid.NewGuid().ToString();
         item.InventoryId = inventory.Id;
-        _openFrameworkDb.Items.Add(item);
-        _openFrameworkDb.SaveChanges();
+        _db.Items.Add(item);
+        await _db.SaveChangesAsync();
+
+        await _cache.RemoveAsync(CacheService.InvKey(characterId));
     }
 
-    public void DeleteItemInActualInventory(string characterId, int line, int collum)
+    public async Task DeleteItemInActualInventoryAsync(string characterId, int line, int collum)
     {
-        var inventory = _openFrameworkDb.Inventories.FirstOrDefault(t => t.OwnerId == characterId);
-        var item = _openFrameworkDb.Items.FirstOrDefault(t => t.InventoryId == inventory.Id && t.Line == line && t.Collum == collum);
-        
-        _openFrameworkDb.Items.Remove(item);
-        _openFrameworkDb.SaveChanges();
+        var inventory = await _db.Inventories.FirstOrDefaultAsync(t => t.OwnerId == characterId);
+        if (inventory == null) return;
+
+        var item = await _db.Items.FirstOrDefaultAsync(t =>
+            t.InventoryId == inventory.Id && t.Line == line && t.Collum == collum);
+        if (item == null) return;
+
+        _db.Items.Remove(item);
+        await _db.SaveChangesAsync();
+
+        await _cache.RemoveAsync(CacheService.InvKey(characterId));
     }
 
-    public void UpdateItemInActualInventory(string characterId ,int line, int collum, int newLine,  int newCollum)
+    public async Task UpdateItemInActualInventoryAsync(string characterId, int line, int collum, int newLine, int newCollum)
     {
-        var inventory = _openFrameworkDb.Inventories.FirstOrDefault(t => t.OwnerId == characterId);
-        var item = _openFrameworkDb.Items.FirstOrDefault(t => t.InventoryId == inventory.Id && t.Line == line && t.Collum == collum);
+        var inventory = await _db.Inventories.FirstOrDefaultAsync(t => t.OwnerId == characterId);
+        if (inventory == null) return;
+
+        var item = await _db.Items.FirstOrDefaultAsync(t =>
+            t.InventoryId == inventory.Id && t.Line == line && t.Collum == collum);
+        if (item == null) return;
+
         item.Line = newLine;
         item.Collum = newCollum;
-        _openFrameworkDb.Items.Update(item);
-        _openFrameworkDb.SaveChanges();
+        await _db.SaveChangesAsync();
+
+        await _cache.RemoveAsync(CacheService.InvKey(characterId));
     }
 
-    public List<InventoryItem> GetAllItems(string characterId)
+    public async Task<List<InventoryItem>> GetAllItemsAsync(string characterId)
     {
-        var inventory = _openFrameworkDb.Inventories.FirstOrDefault(t => t.OwnerId == characterId);
-        var items = _openFrameworkDb.Items.Where(t => t.InventoryId == inventory.Id).ToList();
+        var cached = await _cache.GetAsync<List<InventoryItem>>(CacheService.InvKey(characterId));
+        if (cached != null) return cached;
+
+        var inventory = await _db.Inventories.AsNoTracking().FirstOrDefaultAsync(t => t.OwnerId == characterId);
+        if (inventory == null) return [];
+
+        var items = await _db.Items.AsNoTracking().Where(t => t.InventoryId == inventory.Id).ToListAsync();
+        await _cache.SetAsync(CacheService.InvKey(characterId), items, InvTtl);
         return items;
     }
 
-    public void ClearInventory(string characterId)
+    public async Task ClearInventoryAsync(string characterId)
     {
-        var inventory = _openFrameworkDb.Inventories.FirstOrDefault(t => t.OwnerId == characterId);
-        var items = _openFrameworkDb.Items.Where(t => t.InventoryId == inventory.Id).ToList();
+        var inventory = await _db.Inventories.FirstOrDefaultAsync(t => t.OwnerId == characterId);
+        if (inventory == null) return;
 
-        foreach (var item in items)
-        {
-            _openFrameworkDb.Items.Remove(item);
-        }
-        _openFrameworkDb.SaveChanges();
-    } 
+        var items = await _db.Items.Where(t => t.InventoryId == inventory.Id).ToListAsync();
+        _db.Items.RemoveRange(items);
+        await _db.SaveChangesAsync();
+
+        await _cache.RemoveAsync(CacheService.InvKey(characterId));
+    }
 }
