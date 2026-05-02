@@ -159,8 +159,55 @@ async function gameFetch(path, { method = 'GET', body = null } = {}) {
   return data
 }
 
+// ── Endpoint gamemode-only : liste des admins en jeu ─────────────────────
+// Pas de session requise — authentifié par X-Server-Secret (même secret que
+// le gamemode utilise pour s'authentifier sur core-api). Mis avant le
+// middleware requireRole pour ne pas bloquer le poller côté gamemode.
+router.get('/game-admins/list', (req, res) => {
+  const secret = req.headers['x-server-secret'] || req.query.secret
+  if (!GAME_SERVER_SECRET || secret !== GAME_SERVER_SECRET) {
+    return res.status(401).json({ error: 'Non autorisé' })
+  }
+  try {
+    const rows = db.prepare('SELECT steam_id FROM gamemode_admins').all()
+    res.json({ steamIds: rows.map(r => r.steam_id) })
+  } catch (e) {
+    res.status(500).json({ error: e.message })
+  }
+})
+
 // ── Middleware : editor+ du site (editor, admin, owner) ───────────────────
 router.use(requireRole('editor'))
+
+// ─────────────────────────────────────────────────────────────────────────
+//  ADMINS GAMEMODE — gestion de la liste des SteamIDs admin en jeu
+// ─────────────────────────────────────────────────────────────────────────
+router.get('/game-admins', (_req, res) => {
+  try {
+    const rows = db.prepare('SELECT * FROM gamemode_admins ORDER BY added_at DESC').all()
+    res.json(rows)
+  } catch (e) { res.status(500).json({ error: e.message }) }
+})
+
+router.post('/game-admins', requireRole('admin'), (req, res) => {
+  const { steam_id, label } = req.body || {}
+  if (!steam_id || !/^\d{17}$/.test(steam_id.trim())) {
+    return res.status(400).json({ error: 'SteamID64 invalide (17 chiffres requis)' })
+  }
+  try {
+    db.prepare('INSERT OR REPLACE INTO gamemode_admins (steam_id, label, added_by) VALUES (?, ?, ?)')
+      .run(steam_id.trim(), (label || '').trim(), req.user?.steamId || 'web-admin')
+    logAction(req, 'gameadmin_add', steam_id.trim(), label || '')
+    res.status(201).json({ ok: true })
+  } catch (e) { res.status(500).json({ error: e.message }) }
+})
+
+router.delete('/game-admins/:steamId', requireRole('admin'), (req, res) => {
+  const result = db.prepare('DELETE FROM gamemode_admins WHERE steam_id = ?').run(req.params.steamId)
+  if (result.changes === 0) return res.status(404).json({ error: 'Admin introuvable' })
+  logAction(req, 'gameadmin_remove', req.params.steamId)
+  res.json({ ok: true })
+})
 
 // ─────────────────────────────────────────────────────────────────────────
 //  DASHBOARD

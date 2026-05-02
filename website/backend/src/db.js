@@ -393,6 +393,15 @@ db.exec(`
     created_at     TEXT NOT NULL DEFAULT (datetime('now'))
   );
 
+  -- SteamIDs admin dans le gamemode (géré depuis le panel admin web).
+  -- Polled périodiquement par WebAdminDispatcher pour peupler Client.AdminSteamIds.
+  CREATE TABLE IF NOT EXISTS gamemode_admins (
+    steam_id  TEXT PRIMARY KEY,
+    label     TEXT NOT NULL DEFAULT '',
+    added_by  TEXT NOT NULL DEFAULT '',
+    added_at  TEXT DEFAULT (datetime('now'))
+  );
+
   -- Seed des cles branding par defaut. INSERT OR IGNORE = ne touche pas
   -- les valeurs deja presentes (preserve la config de l'hebergeur).
   -- Palette par defaut : style s&box (cyan + navy sombre).

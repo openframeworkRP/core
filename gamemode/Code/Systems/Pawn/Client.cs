@@ -477,10 +477,9 @@ public partial class Client : Component
 	public bool IsAdmin => IsSteamIdAdmin( SteamId );
 
 	/// <summary>
-	/// Liste centralisee des SteamId admin. Utilisable autant cote client (gating UI)
-	/// que cote serveur (validation d'autorite dans les RPC.Host).
-	/// TODO: charger depuis un fichier de config externe (ex: Config/admins.json) ou ConVar.
-	/// Liste vide par defaut — chaque hebergeur ajoute ses propres SteamId admin.
+	/// Liste centralisee des SteamId admin. Peuplee par WebAdminDispatcher
+	/// qui poll /api/gameadmin/game-admins/list sur le panel web toutes les 60s.
+	/// Utilisable cote client (gating UI) et cote serveur (validation RPC.Host).
 	/// </summary>
 	public static readonly HashSet<ulong> AdminSteamIds = new HashSet<ulong>();
 

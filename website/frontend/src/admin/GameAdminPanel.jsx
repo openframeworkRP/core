@@ -8,14 +8,15 @@ import {
 import { api } from './api.js'
 
 const TAB_ICON = {
-  dashboard: <Gamepad2 size={14} />,
-  live:      <Activity size={14} />,
-  players:   <Users size={14} />,
-  map:       <MapPin size={14} />,
-  bans:      <Ban size={14} />,
-  whitelist: <ShieldCheck size={14} />,
-  warns:     <AlertTriangle size={14} />,
-  logs:      <Activity size={14} />,
+  dashboard:  <Gamepad2 size={14} />,
+  live:       <Activity size={14} />,
+  players:    <Users size={14} />,
+  map:        <MapPin size={14} />,
+  bans:       <Ban size={14} />,
+  whitelist:  <ShieldCheck size={14} />,
+  warns:      <AlertTriangle size={14} />,
+  logs:       <Activity size={14} />,
+  gameadmins: <ShieldAlert size={14} />,
 }
 
 const TABS = [
@@ -27,6 +28,7 @@ const TABS = [
   { id: 'whitelist', label: 'Whitelist' },
   { id: 'warns',     label: 'Warnings' },
   { id: 'logs',      label: 'Activité' },
+  { id: 'gameadmins', label: 'Admins Jeu' },
 ]
 
 export default function GameAdminPanel() {
@@ -74,8 +76,9 @@ export default function GameAdminPanel() {
       {tab === 'map'       && <MapTab />}
       {tab === 'bans'      && <BansTab />}
       {tab === 'whitelist' && <WhitelistTab />}
-      {tab === 'warns'     && <WarnsTab />}
-      {tab === 'logs'      && <LogsTab />}
+      {tab === 'warns'      && <WarnsTab />}
+      {tab === 'logs'       && <LogsTab />}
+      {tab === 'gameadmins' && <GameAdminsTab />}
     </div>
   )
 }
@@ -2991,4 +2994,103 @@ function txStatusLabel(status) {
   const map = { 0: 'Complétée', 1: 'Échouée', 2: 'Annulée' }
   if (typeof status === 'number') return map[status] ?? status
   return String(status)
+}
+
+// ─────────────────────────────────────────────────────────────────────
+//  ADMINS JEU — SteamIDs ayant IsAdmin=true dans le gamemode
+// ─────────────────────────────────────────────────────────────────────
+function GameAdminsTab() {
+  const [list,    setList]    = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error,   setError]   = useState('')
+  const [steamId, setSteamId] = useState('')
+  const [label,   setLabel]   = useState('')
+  const [busy,    setBusy]    = useState(false)
+
+  const load = useCallback(async () => {
+    setLoading(true); setError('')
+    try { setList(await api.gameAdminGameAdmins()) }
+    catch (e) { setError(e.message) }
+    finally { setLoading(false) }
+  }, [])
+
+  useEffect(() => { load() }, [load])
+
+  async function add(e) {
+    e.preventDefault()
+    if (!steamId.trim()) return
+    setBusy(true); setError('')
+    try {
+      await api.gameAdminAddGameAdmin({ steam_id: steamId.trim(), label: label.trim() })
+      setSteamId(''); setLabel('')
+      load()
+    } catch (e) { setError(e.message) }
+    finally { setBusy(false) }
+  }
+
+  async function remove(sid) {
+    if (!confirm(`Retirer ${sid} des admins jeu ?`)) return
+    try { await api.gameAdminRemoveGameAdmin(sid); load() }
+    catch (e) { setError(e.message) }
+  }
+
+  return (
+    <>
+      <div style={{
+        background: 'rgba(248,113,113,0.08)', border: '1px solid rgba(248,113,113,0.2)',
+        borderRadius: 8, padding: '10px 14px', fontSize: '0.78rem', color: '#fca5a5', marginBottom: 14,
+      }}>
+        Ces SteamIDs ont <strong>IsAdmin = true</strong> dans le gamemode. Le serveur les synchronise toutes les 60s via le panel web. Réservé aux owners/admins du site.
+      </div>
+
+      <form onSubmit={add} style={formRowStyle()}>
+        <input
+          value={steamId}
+          onChange={e => setSteamId(e.target.value)}
+          placeholder="SteamID64 (17 chiffres)"
+          required
+          pattern="\d{17}"
+          title="SteamID64 — 17 chiffres"
+          style={{ ...inputStyle(), flex: 2 }}
+        />
+        <input
+          value={label}
+          onChange={e => setLabel(e.target.value)}
+          placeholder="Pseudo ou note (optionnel)"
+          style={{ ...inputStyle(), flex: 2 }}
+        />
+        <button type="submit" disabled={busy} style={primaryBtn()}>
+          <Plus size={13} /> Ajouter
+        </button>
+      </form>
+
+      {error && <ErrorBanner msg={error} onRetry={load} />}
+
+      {loading ? <Loader /> : list.length === 0 ? (
+        <Empty msg="Aucun admin jeu configuré." />
+      ) : (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+          {list.map(a => (
+            <div key={a.steam_id} style={cardStyle()}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                <ShieldAlert size={16} style={{ color: '#f87171' }} />
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontFamily: 'monospace', fontWeight: 600, color: '#e8e8e8', fontSize: '0.85rem' }}>
+                    {a.steam_id}
+                    {a.label && <span style={{ marginLeft: 8, fontFamily: 'inherit', fontWeight: 400, color: '#a1a1aa', fontSize: '0.8rem' }}>{a.label}</span>}
+                  </div>
+                  <div style={{ fontSize: '0.72rem', color: '#71717a', marginTop: 2 }}>
+                    Ajouté par {a.added_by || 'inconnu'} · {a.added_at ? new Date(a.added_at).toLocaleDateString('fr-FR') : ''}
+                  </div>
+                </div>
+                <button onClick={() => remove(a.steam_id)} style={dangerBtn()} title="Retirer">
+                  <Trash2 size={13} />
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </>
+  )
 }

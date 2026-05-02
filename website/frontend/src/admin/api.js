@@ -291,6 +291,9 @@ export const api = {
   gameAdminAddWhitelist:  (body)      => req('POST',   '/api/gameadmin/whitelist', body),
   gameAdminRemoveWhitelist:(steamId)  => req('DELETE', `/api/gameadmin/whitelist/${encodeURIComponent(steamId)}`),
   gameAdminWarns:         ()          => req('GET',    '/api/gameadmin/warns'),
+  gameAdminGameAdmins:        ()          => req('GET',    '/api/gameadmin/game-admins'),
+  gameAdminAddGameAdmin:      (body)      => req('POST',   '/api/gameadmin/game-admins', body),
+  gameAdminRemoveGameAdmin:   (steamId)   => req('DELETE', `/api/gameadmin/game-admins/${encodeURIComponent(steamId)}`),
   gameAdminLogs:          (limit)     => req('GET',    `/api/gameadmin/logs${limit ? `?limit=${limit}` : ''}`),
 
   // Audit centralisé (sessions, chat, actions admin) — proxie vers l'API jeu
