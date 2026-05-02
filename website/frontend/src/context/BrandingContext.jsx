@@ -50,15 +50,16 @@ function applyToDocument(branding) {
     document.title = branding.site_name
   }
 
-  // Favicon dynamique
-  if (branding.favicon_url) {
-    let link = document.querySelector('link[rel="icon"]')
+  // Favicon dynamique — override le placeholder statique de index.html
+  {
+    let link = document.querySelector('#dynamic-favicon') || document.querySelector('link[rel="icon"]')
     if (!link) {
       link = document.createElement('link')
+      link.id = 'dynamic-favicon'
       link.rel = 'icon'
       document.head.appendChild(link)
     }
-    link.href = branding.favicon_url
+    link.href = branding.favicon_url || "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E"
   }
 }
 

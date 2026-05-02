@@ -140,6 +140,19 @@ export default function BrandingPanel() {
         </div>
       )}
 
+      {/* Preview live du favicon */}
+      {form.favicon_url && (
+        <div className="brand-preview">
+          <h3>Preview du favicon</h3>
+          <img
+            src={form.favicon_url}
+            alt="favicon"
+            style={{ width: 32, height: 32, imageRendering: 'pixelated' }}
+            onError={(e) => { e.target.style.display = 'none' }}
+          />
+        </div>
+      )}
+
       <div className="brand-actions">
         <button
           type="button"
