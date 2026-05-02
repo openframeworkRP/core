@@ -1,0 +1,80 @@
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:modeldoc28:version{fb63b6ca-f435-4aa0-a2c7-c66ddc651dca} -->
+{
+	rootNode = 
+	{
+		_class = "RootNode"
+		children = 
+		[
+			{
+				_class = "BoneMarkupList"
+				children = [  ]
+				bone_cull_type = "None"
+			},
+			{
+				_class = "RenderMeshList"
+				children = 
+				[
+					{
+						_class = "RenderMeshFile"
+						name = "lod0"
+						filename = "pr/garage_door_01_lod0.dmx"
+					},
+					{
+						_class = "RenderMeshFile"
+						name = "lod1"
+						filename = "pr/garage_door_01_lod11.dmx"
+					},
+					{
+						_class = "RenderMeshFile"
+						name = "lod2"
+						filename = "pr/garage_door_01_lod22.dmx"
+					},
+					{
+						_class = "RenderMeshFile"
+						name = "lod3"
+						filename = "pr/garage_door_01_lod33.dmx"
+					},
+					{
+						_class = "RenderMeshFile"
+						name = "lod4"
+						filename = "pr/garage_door_01_lod44.dmx"
+					},
+				]
+			},
+			{
+				_class = "PhysicsShapeList"
+				children = 
+				[
+					{
+						_class = "PhysicsHullFile"
+						filename = "pr/garage_door_01_hull.dmx"
+						surface_prop = "metal"
+						collision_tags = ""
+						name = ""
+					},
+					{
+						_class = "PhysicsHullFile"
+						filename = "pr/garage_door_01_hull1.dmx"
+						surface_prop = "metal"
+						collision_tags = ""
+						name = ""
+					},
+					{
+						_class = "PhysicsHullFile"
+						filename = "pr/garage_door_01_hull2.dmx"
+						surface_prop = "metal"
+						collision_tags = ""
+						name = ""
+					},
+					{
+						_class = "PhysicsHullFile"
+						filename = "pr/garage_door_01_hull3.dmx"
+						surface_prop = "metal"
+						collision_tags = ""
+						name = ""
+					},
+				]
+			},
+		]
+	}
+}

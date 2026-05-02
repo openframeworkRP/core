@@ -1,5 +1,5 @@
 {
-  "DisplayName": "Meublio",
+  "DisplayName": "Furniture",
   "Categories": [
     {
       "Name": "Chaise",
@@ -199,18 +199,6 @@
         {
           "Item": "items/furniture/signs/shop_sign.item",
           "MinOrderQuantity": 1
-        },
-        {
-          "Item": "items/furniture/signs/shop_sign2.item",
-          "MinOrderQuantity": 1
-        },
-        {
-          "Item": "items/furniture/signs/shop_sign3.item",
-          "MinOrderQuantity": 1
-        },
-        {
-          "Item": "items/furniture/signs/shop_sign4.item",
-          "MinOrderQuantity": 1
         }
       ]
     },
@@ -331,8 +319,7 @@
         },
         {
           "Item": "items/rfs/rfs_soda_fountain.item",
-          "Price": 600,
-          "Stock": -1
+          "MinOrderQuantity": 1
         }
       ]
     }

@@ -1,118 +1,325 @@
 {
-  "DisplayName": "Vetementier",
+  "DisplayName": "Clothing",
   "Categories": [
     {
       "Name": "Chapeaux",
       "Items": [
-        { "Item": "items/clothings/hat-01.item", "MinOrderQuantity": 1 },
-        { "Item": "items/clothings/hat-02.item", "MinOrderQuantity": 1 },
-        { "Item": "items/clothings/hat-03.item", "MinOrderQuantity": 1 },
-        { "Item": "items/clothings/hat-04.item", "MinOrderQuantity": 1 },
-        { "Item": "items/clothings/hat-05.item", "MinOrderQuantity": 1 },
-        { "Item": "items/clothings/hat-06.item", "MinOrderQuantity": 1 },
-        { "Item": "items/clothings/hat-07.item", "MinOrderQuantity": 1 },
-        { "Item": "items/clothings/hat-08.item", "MinOrderQuantity": 1 },
-        { "Item": "items/clothings/hat-09.item", "MinOrderQuantity": 1 }
+        {
+          "Item": "items/clothings/hat-01.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/clothings/hat-02.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/clothings/hat-03.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/clothings/hat-04.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/clothings/hat-05.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/clothings/hat-06.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/clothings/hat-07.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/clothings/hat-08.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/clothings/hat-09.item",
+          "MinOrderQuantity": 1
+        }
       ]
     },
     {
       "Name": "Accessoires",
       "Items": [
-        { "Item": "items/clothings/glasse-01.item", "MinOrderQuantity": 1 },
-        { "Item": "items/clothings/glasse-02.item", "MinOrderQuantity": 1 },
-        { "Item": "items/clothings/watch-01.item", "MinOrderQuantity": 1 },
-        { "Item": "items/clothings/watch-01-f.item", "MinOrderQuantity": 1 },
-        { "Item": "items/clothings/gloves-01.item", "MinOrderQuantity": 1 },
-        { "Item": "items/clothings/gloves-02.item", "MinOrderQuantity": 1 },
-        { "Item": "items/clothings/gloves-03.item", "MinOrderQuantity": 1 },
-        { "Item": "items/clothings/gloves-04.item", "MinOrderQuantity": 1 },
-        { "Item": "items/clothings/gloves-05.item", "MinOrderQuantity": 1 },
-        { "Item": "items/clothings/gloves-06.item", "MinOrderQuantity": 1 },
-        { "Item": "items/clothings/gloves-07.item", "MinOrderQuantity": 1 },
-        { "Item": "items/clothings/head-bag.item", "MinOrderQuantity": 1 }
+        {
+          "Item": "items/clothings/glasse-01.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/clothings/glasse-02.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/clothings/watch-01.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/clothings/watch-01-f.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/clothings/gloves-01.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/clothings/gloves-02.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/clothings/gloves-03.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/clothings/gloves-04.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/clothings/gloves-05.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/clothings/gloves-06.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/clothings/gloves-07.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/clothings/head-bag.item",
+          "MinOrderQuantity": 1
+        }
       ]
     },
     {
       "Name": "T-Shirts & Tops",
       "Items": [
-        { "Item": "items/clothings/T-Shirt Degeulasse.item", "MinOrderQuantity": 1 },
-        { "Item": "items/clothings/T-Shirt Super Dead.item", "MinOrderQuantity": 1 },
-        { "Item": "items/clothings/football_tshirt.item", "MinOrderQuantity": 1 },
-        { "Item": "items/clothings/tanktop.item", "MinOrderQuantity": 1 },
-        { "Item": "items/clothings/loose_crop_top.item", "MinOrderQuantity": 1 },
-        { "Item": "items/clothings/loose_crop_top_pattern.item", "MinOrderQuantity": 1 },
-        { "Item": "items/clothings/loose_crop_top_purple.item", "MinOrderQuantity": 1 },
-        { "Item": "items/clothings/loose_crop_top_white.item", "MinOrderQuantity": 1 },
-        { "Item": "items/clothings/leotard.item", "MinOrderQuantity": 1 },
-        { "Item": "items/clothings/leotard_blue.item", "MinOrderQuantity": 1 }
+        {
+          "Item": "items/clothings/t-shirt degeulasse.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/clothings/t-shirt super dead.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/clothings/football_tshirt.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/clothings/tanktop.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/clothings/loose_crop_top.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/clothings/loose_crop_top_pattern.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/clothings/loose_crop_top_purple.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/clothings/loose_crop_top_white.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/clothings/leotard.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/clothings/leotard_blue.item",
+          "MinOrderQuantity": 1
+        }
       ]
     },
     {
       "Name": "Chemises",
       "Items": [
-        { "Item": "items/clothings/army_shirt.item", "MinOrderQuantity": 1 },
-        { "Item": "items/clothings/flannel_shirt.item", "MinOrderQuantity": 1 },
-        { "Item": "items/clothings/hawaiian_shirt.item", "MinOrderQuantity": 1 },
-        { "Item": "items/clothings/loose_shirt.item", "MinOrderQuantity": 1 },
-        { "Item": "items/clothings/polo_shirt.item", "MinOrderQuantity": 1 },
-        { "Item": "items/clothings/polo_shirt_white.item", "MinOrderQuantity": 1 },
-        { "Item": "items/clothings/waistcoat_and_shirt.item", "MinOrderQuantity": 1 }
+        {
+          "Item": "items/clothings/army_shirt.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/clothings/flannel_shirt.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/clothings/hawaiian_shirt.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/clothings/loose_shirt.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/clothings/polo_shirt.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/clothings/polo_shirt_white.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/clothings/waistcoat_and_shirt.item",
+          "MinOrderQuantity": 1
+        }
       ]
     },
     {
       "Name": "Pulls & Hoodies",
       "Items": [
-        { "Item": "items/clothings/Sweet Noir.item", "MinOrderQuantity": 1 },
-        { "Item": "items/clothings/Sweet Verts.item", "MinOrderQuantity": 1 },
-        { "Item": "items/clothings/hoodie.item", "MinOrderQuantity": 1 },
-        { "Item": "items/clothings/hoodie_black.item", "MinOrderQuantity": 1 }
+        {
+          "Item": "items/clothings/sweet noir.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/clothings/sweet verts.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/clothings/hoodie.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/clothings/hoodie_black.item",
+          "MinOrderQuantity": 1
+        }
       ]
     },
     {
       "Name": "Vestes & Manteaux",
       "Items": [
-        { "Item": "items/clothings/biker_jacket.item", "MinOrderQuantity": 1 },
-        { "Item": "items/clothings/black_leather_jacket.item", "MinOrderQuantity": 1 },
-        { "Item": "items/clothings/bomber_jacket.item", "MinOrderQuantity": 1 },
-        { "Item": "items/clothings/brown_leather_jacket.item", "MinOrderQuantity": 1 },
-        { "Item": "items/clothings/puffer_jacket.item", "MinOrderQuantity": 1 },
-        { "Item": "items/clothings/puffer_jacket_blue.item", "MinOrderQuantity": 1 },
-        { "Item": "items/clothings/puffer_jacket_orange.item", "MinOrderQuantity": 1 },
-        { "Item": "items/clothings/raincoat.item", "MinOrderQuantity": 1 },
-        { "Item": "items/clothings/sleeveless_jacket.item", "MinOrderQuantity": 1 },
-        { "Item": "items/clothings/wind_breaker.item", "MinOrderQuantity": 1 },
-        { "Item": "items/clothings/winter_coat.item", "MinOrderQuantity": 1 },
-        { "Item": "items/clothings/vest-01-f.item", "MinOrderQuantity": 1 }
+        {
+          "Item": "items/clothings/biker_jacket.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/clothings/black_leather_jacket.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/clothings/bomber_jacket.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/clothings/brown_leather_jacket.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/clothings/puffer_jacket.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/clothings/puffer_jacket_blue.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/clothings/puffer_jacket_orange.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/clothings/raincoat.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/clothings/sleeveless_jacket.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/clothings/wind_breaker.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/clothings/winter_coat.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/clothings/vest-01-f.item",
+          "MinOrderQuantity": 1
+        }
       ]
     },
     {
       "Name": "Pantalons",
       "Items": [
-        { "Item": "items/clothings/Pantalon Delave.item", "MinOrderQuantity": 1 },
-        { "Item": "items/clothings/Pantalon Noir.item", "MinOrderQuantity": 1 },
-        { "Item": "items/clothings/binman_trousers.item", "MinOrderQuantity": 1 },
-        { "Item": "items/clothings/brown_cargo_pants.item", "MinOrderQuantity": 1 },
-        { "Item": "items/clothings/cargo_pants_army.item", "MinOrderQuantity": 1 },
-        { "Item": "items/clothings/jeans-01.item", "MinOrderQuantity": 1 }
+        {
+          "Item": "items/clothings/pantalon delave.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/clothings/pantalon noir.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/clothings/binman_trousers.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/clothings/brown_cargo_pants.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/clothings/cargo_pants_army.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/clothings/jeans-01.item",
+          "MinOrderQuantity": 1
+        }
       ]
     },
     {
       "Name": "Shorts",
       "Items": [
-        { "Item": "items/clothings/Bermuda Marron.item", "MinOrderQuantity": 1 },
-        { "Item": "items/clothings/Bermuda Plage.item", "MinOrderQuantity": 1 },
-        { "Item": "items/clothings/boxing_shorts.item", "MinOrderQuantity": 1 },
-        { "Item": "items/clothings/boxing_shorts_blue.item", "MinOrderQuantity": 1 },
-        { "Item": "items/clothings/boxing_shorts_red.item", "MinOrderQuantity": 1 },
-        { "Item": "items/clothings/football_shorts.item", "MinOrderQuantity": 1 },
-        { "Item": "items/clothings/summer_shorts.item", "MinOrderQuantity": 1 }
+        {
+          "Item": "items/clothings/bermuda marron.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/clothings/bermuda plage.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/clothings/boxing_shorts.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/clothings/boxing_shorts_blue.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/clothings/boxing_shorts_red.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/clothings/football_shorts.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/clothings/summer_shorts.item",
+          "MinOrderQuantity": 1
+        }
       ]
     },
     {
       "Name": "Chaussures",
       "Items": [
-        { "Item": "items/clothings/shoes-01.item", "MinOrderQuantity": 1 },
-        { "Item": "items/clothings/shoes-02.item", "MinOrderQuantity": 1 }
+        {
+          "Item": "items/clothings/shoes-01.item",
+          "MinOrderQuantity": 1
+        },
+        {
+          "Item": "items/clothings/shoes-02.item",
+          "MinOrderQuantity": 1
+        }
       ]
     }
   ],
