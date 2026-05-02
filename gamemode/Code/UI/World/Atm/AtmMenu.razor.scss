@@ -1,5 +1,6 @@
-﻿@import "ui/Styles/Theme.scss";
+@import "ui/Styles/Theme.scss";
 @import "ui/Styles/MenuSystem.scss";
+
 AtmMenu {
     height: 100%;
     width: 100%;
@@ -7,25 +8,21 @@ AtmMenu {
     justify-content: center;
     position: absolute;
 
-
     * {
         font-size: 5px;
         pointer-events: all;
     }
 
-    
     .container {
         position: relative;
         height: 100%;
         width: 100%;
         align-items: center;
         justify-content: center;
-        background-color: rgba(#252422,0.98);
+        background-color: $surface-card;
         flex-direction: column;
 
-
         .navbar {
-            //background-color: blue;
             flex-direction: column;
             align-items: center;
             justify-content: center;
@@ -34,26 +31,19 @@ AtmMenu {
             right: 70px;
             top: 30px;
             position: relative;
-            //background-color:green;
-
 
             a {
-                //background-color: green;
                 color: white;
                 justify-content: center;
                 height: 30px;
                 width: 40px;
                 align-items: center;
-                transition: all 0.2s ease-in-out;
+                transition: $transition-fast;
                 border-radius: 0px 2px 2px 0px;
                 background-color: rgba(25, 25, 25, 0.7);
 
-
                 &:hover {
-                    //background-color: rgba($main-color, 0.7);
-                    sound-in: ui.button.over;
-                    //color: rgba(255, 106, 0,1);
-                    background-color: rgb(255, 106, 0,0.4);
+                    background-color: rgba($accent, 0.4);
                 }
             }
         }
@@ -64,7 +54,6 @@ AtmMenu {
             left: 10px;
             height: 60px;
             width: 100px;
-            //background-color: orange;
         }
     }
 }

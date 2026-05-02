@@ -20,23 +20,24 @@ DressingRoomMenu {
         right: 28%;
         height: 80%;
         width: 40%;
-        background-color: #1a1a1a; /* Noir tr�s sombre */
-        border: 2px solid #ff8c00; /* Bordure Orange */
+        background-color: $surface-card;
+        border: 1px solid $accent-border;
+        border-radius: $rounding-lg;
         padding: 10px;
-        box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+        box-shadow: 0 0 30px rgba(0, 0, 0, 0.6);
 
         h1 {
-            color: #ff8c00; /* Titre Orange */
+            color: $accent;
             text-align: center;
             text-transform: uppercase;
-            border-bottom: 1px solid rgba(255, 140, 0, 0.3);
+            border-bottom: 1px solid $border;
             margin-bottom: 10px;
             padding-bottom: 5px;
         }
 
         .list-temp {
-            background-color: #111111; /* Noir encore plus profond pour la liste */
-            border: 1px solid #333333;
+            background-color: $surface-dark;
+            border: 1px solid $border;
             height: 30%;
             width: 100%;
             flex-direction: column;
@@ -51,13 +52,13 @@ DressingRoomMenu {
             min-height: 35px;
             width: 100%;
             margin-bottom: 2px;
-            background-color: #222222; /* Fond de ligne gris fonc� */
+            background-color: rgba(255, 255, 255, 0.03);
             padding: 5px;
-            border-left: 3px solid #ff8c00; /* Petit rappel Orange sur le c�t� */
+            border-left: 2px solid $accent;
 
             span {
                 white-space: nowrap;
-                color: #e0e0e0; /* Texte blanc cass� pour ne pas agresser */
+                color: rgba(255, 255, 255, 0.85);
                 flex: 1;
             }
 
@@ -67,14 +68,15 @@ DressingRoomMenu {
                 button {
                     margin-left: 5px;
                     padding: 4px 12px;
-                    background-color: #333333;
-                    color: #ff8c00;
-                    border: 1px solid #ff8c00;
-                    transition: all 0.2s ease;
+                    background-color: rgba(255, 255, 255, 0.06);
+                    color: $accent;
+                    border: 1px solid $border;
+                    border-radius: $rounding-sm;
+                    transition: $transition-fast;
 
                     &:hover {
-                        background-color: #ff8c00;
-                        color: black; /* Inversion des couleurs au survol */
+                        background-color: $accent;
+                        color: rgba(0, 0, 0, 0.85);
                     }
                 }
             }
@@ -84,22 +86,16 @@ DressingRoomMenu {
             width: 10%;
             margin-top: 15px;
             padding: 15px;
-            background-color: #ff8c00; // Orange
-            color: #000; // Noir
+            background-color: $accent;
+            color: rgba(0, 0, 0, 0.85);
             font-size: 18px;
             font-weight: bold;
-            border-radius: 4px;
+            border-radius: $rounding;
             text-transform: uppercase;
-            transition: all 0.1s ease;
+            transition: $transition-fast;
 
-            &:hover {
-                background-color: #e67e00;
-                transform: scale(1.02);
-            }
-
-            &:active {
-                transform: scale(0.98);
-            }
+            &:hover { background-color: $accent-hover; }
+            &:active { transform: scale(0.98); }
         }
     }
 
@@ -107,15 +103,12 @@ DressingRoomMenu {
         position: absolute;
         bottom: 40px;
         padding: 12px 60px;
-        background-color: #ff8c00; /* Bouton Quitter Orange */
-        color: black;
-        border-radius: 4px;
+        background-color: $accent;
+        color: rgba(0, 0, 0, 0.85);
+        border-radius: $rounding;
         font-weight: bold;
-        transition: transform 0.1s ease;
+        transition: $transition-fast;
 
-        &:hover {
-            background-color: #e67e00;
-            transform: scale(1.05);
-        }
+        &:hover { background-color: $accent-hover; }
     }
 }

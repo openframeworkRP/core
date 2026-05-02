@@ -1,9 +1,9 @@
 @import "ui/Styles/Theme.scss";
 @import "ui/Styles/MenuSystem.scss";
+
 DashboardPage {
     height: 100px;
     width: 100px;
-
 
     .current {
         position: relative;
@@ -11,17 +11,15 @@ DashboardPage {
         flex-direction: row;
         height: 150px;
         width: 100px;
-        //padding: 2px;
-
 
         .value {
-            color: #f1f1f1; // Couleur normale (blanc cassé)
+            color: rgba(white, 0.9);
             transition: color 0.2s ease;
 
             &.negative {
-                color: #ff5555; // Rouge vif pour le découvert
+                color: $red;
                 font-weight: bold;
-                text-shadow: 0 0 10px rgba(255, 85, 85, 0.3);
+                text-shadow: 0 0 10px rgba($red, 0.3);
             }
         }
 
@@ -29,15 +27,13 @@ DashboardPage {
             position: relative;
             padding: 2px;
             font-size: 5px;
-            height:100%;
-            width:100%;
-            // margin: 2px;
-            //background-color: red
+            height: 100%;
+            width: 100%;
             flex-direction: row;
             color: white;
-            justify-content:center;
-            align-items:center;
-            gap:2px;
+            justify-content: center;
+            align-items: center;
+            gap: 2px;
         }
     }
 }

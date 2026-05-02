@@ -11,7 +11,7 @@ AppearancePage {
         top: 0;
         width: 28%;
         height: 100%;
-        background-color: rgba(5, 5, 7, 1);
+        background-color: $surface-card;
     }
 
     .inspector {
@@ -20,43 +20,39 @@ AppearancePage {
         display: flex;
         margin-left: 20px;
         margin-top: 20px;
-        overflow: hidden;
 
         .sidebar {
-            width: 80px;
-            background-color: rgba(0, 0, 0, 0.3);
+            width: 76px;
             flex-direction: column;
-            border-right: 1px solid $creator-glass-border;
+            border-right: 1px solid $border;
 
             .nav-btn {
-                width: 80px;
-                height: 80px;
+                width: 76px;
+                height: 76px;
                 justify-content: center;
                 align-items: center;
-                transition: all 0.1s ease;
-                border-left: 0px solid $creator-accent;
+                transition: $transition-fast;
+                box-shadow: inset 3px 0 0 0 transparent;
 
-                img {
-                    width: 100px;
-                    height: 40px;
-                    opacity: 0.6;
+                .nav-icon {
+                    width: 36px;
+                    height: 36px;
+                    background-size: contain;
+                    background-position: center;
+                    background-repeat: no-repeat;
+                    opacity: 0.55;
+                    transition: $transition-fast;
                 }
 
                 &:hover {
-                    background-color: rgba(255, 255, 255, 0.05);
-
-                    img {
-                        opacity: 1;
-                    }
+                    background-color: rgba(255, 255, 255, 0.04);
+                    .nav-icon { opacity: 0.9; }
                 }
 
                 &.active {
-                    background-color: rgba($creator-accent, 0.1);
-                    border-left: 4px solid $creator-accent;
-
-                    img {
-                        opacity: 1;
-                    }
+                    background-color: $accent-bg-subtle;
+                    box-shadow: inset 3px 0 0 0 $accent;
+                    .nav-icon { opacity: 1; }
                 }
             }
         }
@@ -64,36 +60,37 @@ AppearancePage {
         .content {
             flex: 1;
             flex-direction: column;
-            padding: 20px;
+            padding: 16px;
 
             .sub-nav {
-                height: 45px;
-                gap: 8px;
-                margin-bottom: 20px;
+                height: 40px;
+                gap: 6px;
+                margin-bottom: 16px;
                 align-items: center;
 
                 .pill {
-                    padding: 4px 16px;
+                    padding: 4px 14px;
                     background-color: rgba(255, 255, 255, 0.05);
-                    border-radius: 20px;
-                    color: rgba(255, 255, 255, 0.7);
-                    font-size: 13px;
-                    font-weight: bold;
+                    border-radius: $rounding-pill;
+                    color: rgba(255, 255, 255, 0.5);
+                    font-size: 11px;
+                    font-weight: 700;
                     text-transform: uppercase;
-                    transition: all 0.1s ease;
-                    border: 1px solid $creator-glass-border;
+                    letter-spacing: 0.5px;
+                    transition: $transition-fast;
+                    border: 1px solid $border;
                     justify-content: center;
                     align-items: center;
 
                     &:hover {
-                        background-color: rgba(255, 255, 255, 0.1);
+                        background-color: rgba(255, 255, 255, 0.08);
                         color: white;
                     }
 
                     &.active {
-                        background-color: $creator-accent;
+                        background-color: $accent;
                         color: white;
-                        border: 1px solid $creator-accent;
+                        border-color: transparent;
                     }
                 }
             }
@@ -101,15 +98,16 @@ AppearancePage {
             .grid {
                 flex: 1;
                 flex-wrap: wrap;
-                gap: 12px;
+                gap: 10px;
                 overflow-y: scroll;
 
                 .card {
-                    width: 105px;
-                    height: 105px;
-                    background-color: $creator-glass-card;
-                    border: 1px solid $creator-glass-border;
-                    transition: all 0.1s ease;
+                    width: 100px;
+                    height: 100px;
+                    background-color: rgba(255, 255, 255, 0.03);
+                    border: 1px solid $border;
+                    border-radius: $rounding;
+                    transition: $transition-fast;
                     overflow: hidden;
 
                     img {
@@ -121,38 +119,37 @@ AppearancePage {
                     .color-picker-btn {
                         position: absolute;
                         background-color: transparent;
-                        height: 32px;
-                        width: 32px;
-                        border: 1px solid rgba($creator-accent, 0.3);
+                        height: 28px;
+                        width: 28px;
+                        border: 1px solid rgba($accent, 0.3);
+                        border-radius: $rounding-sm;
 
                         &:hover {
                             background-color: rgba(255, 255, 255, 0.1);
-                            transform: scale(1.02);
-                            border: 1px solid rgba($creator-accent, 0.3);
+                            border-color: rgba($accent, 0.5);
                             cursor: pointer;
                         }
                     }
 
                     &:hover {
-                        background-color: rgba(255, 255, 255, 0.08);
-                        transform: scale(1.02);
-                        border: 1px solid rgba($creator-accent, 0.3);
+                        background-color: rgba(255, 255, 255, 0.07);
+                        border-color: rgba($accent, 0.3);
                     }
 
                     &.active {
-                        border: 2px solid $creator-accent;
-                        background-color: rgba($creator-accent, 0.05);
+                        border: 2px solid $accent;
+                        background-color: $accent-bg-subtle;
                     }
 
                     &.empty-card {
                         justify-content: center;
                         align-items: center;
-                        border: 1px solid rgba(255, 255, 255, 0.15);
+                        border: 1px solid rgba(255, 255, 255, 0.1);
 
                         svg {
-                            width: 30px;
-                            height: 30px;
-                            opacity: 0.4;
+                            width: 28px;
+                            height: 28px;
+                            opacity: 0.3;
                         }
                     }
                 }
@@ -166,54 +163,51 @@ AppearancePage {
         right: 40px;
         display: flex;
         flex-direction: column;
-        gap: 12px;
+        gap: 10px;
 
         .control-group {
             display: flex;
             flex-direction: column;
             gap: 8px;
-            background-color: $creator-glass-bg;
-            padding: 12px;
-            border-radius: 8px;
-            border: 1px solid $creator-glass-border;
-            backdrop-filter: blur(20px);
+            background-color: $surface-dark;
+            padding: 10px;
+            border-radius: $rounding-lg;
+            border: 1px solid $border;
+            backdrop-filter: $blur;
 
             label {
-                color: $creator-accent;
-                font-size: 10px;
-                letter-spacing: 1px;
+                color: $accent;
+                font-size: 9px;
+                letter-spacing: 1.5px;
                 text-transform: uppercase;
-                font-weight: 800;
-                opacity: 0.9;
+                font-weight: 700;
             }
 
-            .button-row {
-                display: flex;
-                gap: 8px;
-            }
+            .button-row { display: flex; gap: 6px; }
         }
 
         button {
-            width: 42px;
-            height: 42px;
+            width: 38px;
+            height: 38px;
             background-color: rgba(255, 255, 255, 0.05);
             color: white;
-            border-radius: 6px;
-            font-size: 18px;
+            border-radius: $rounding;
+            font-size: 16px;
             font-weight: bold;
-            border: 1px solid $creator-glass-border;
+            border: 1px solid $border;
             justify-content: center;
             align-items: center;
+            transition: $transition-fast;
 
             &:hover {
-                background-color: rgba(255, 255, 255, 0.15);
-                border: 1px solid rgba($creator-accent, 0.5);
+                background-color: rgba(255, 255, 255, 0.12);
+                border-color: rgba($accent, 0.4);
             }
 
             &:active {
-                background-color: $creator-accent;
+                background-color: $accent;
                 color: black;
-                transform: scale(0.92);
+                transform: scale(0.94);
             }
         }
     }
@@ -225,25 +219,24 @@ AppearancePage {
         z-index: 100;
 
         .confirm-btn {
-            background-color: $creator-accent;
+            background-color: $accent;
             color: white;
-            padding: 15px 40px;
-            font-size: 1.2rem;
-            font-weight: bold;
+            padding: 12px 36px;
+            font-size: 12px;
+            font-weight: 700;
             text-transform: uppercase;
-            border-radius: 8px;
+            letter-spacing: 0.5px;
+            border-radius: $rounding;
             border: none;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: $transition-fast;
 
             &:hover {
-                background-color: $creator-accent-hover;
-                transform: translateY(-2px);
+                background-color: $accent-hover;
+                color: rgba(black, 0.8);
             }
 
-            &:active {
-                transform: translateY(1px);
-            }
+            &:active { transform: scale(0.97); }
         }
     }
 
@@ -255,23 +248,25 @@ AppearancePage {
         display: flex;
         flex-direction: row;
         gap: 8px;
-        height: 45px;
+        height: 44px;
     }
 
     .back-btn {
         width: 30%;
-        background-color: rgba(255, 255, 255, 0.06);
-        color: rgba(255, 255, 255, 0.5);
-        font-size: 12px;
-        font-weight: bold;
+        background-color: rgba(255, 255, 255, 0.05);
+        color: rgba(255, 255, 255, 0.45);
+        font-size: 11px;
+        font-weight: 700;
         text-transform: uppercase;
+        letter-spacing: 0.5px;
         justify-content: center;
         align-items: center;
-        border: 1px solid $creator-glass-border;
-        border-radius: 4px;
+        border: 1px solid $border;
+        border-radius: $rounding;
+        transition: $transition-fast;
 
         &:hover {
-            background-color: rgba(255, 255, 255, 0.12);
+            background-color: rgba(255, 255, 255, 0.1);
             color: white;
             cursor: pointer;
         }
@@ -279,17 +274,21 @@ AppearancePage {
 
     .next-btn {
         width: 70%;
-        background-color: $creator-accent;
+        background-color: $accent;
         color: white;
-        font-size: 12px;
-        font-weight: bold;
+        font-size: 11px;
+        font-weight: 700;
         text-transform: uppercase;
+        letter-spacing: 0.5px;
         justify-content: center;
         align-items: center;
-        border-radius: 4px;
+        border-radius: $rounding;
+        border: 1px solid transparent;
+        transition: $transition-fast;
 
         &:hover {
-            background-color: $creator-accent-hover;
+            background-color: $accent-hover;
+            color: rgba(black, 0.8);
             cursor: pointer;
         }
     }

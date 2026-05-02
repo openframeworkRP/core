@@ -1,3 +1,5 @@
+@import "ui/Styles/Theme.scss";
+
 PersonalRadialMenu {
     position: absolute;
     left: 0;
@@ -22,8 +24,8 @@ PersonalRadialMenu {
         height: 360px;
         border-radius: 50%;
         background-color: rgba(15, 15, 20, 0.75);
-        border: 2px solid rgba(255, 255, 255, 0.06);
-        backdrop-filter: blur(16px);
+        border: 2px solid $border;
+        backdrop-filter: $blur;
         box-shadow: 0px 8px 32px rgba(0, 0, 0, 0.5);
 
         .center-dot {
@@ -45,7 +47,7 @@ PersonalRadialMenu {
             height: 32%;
             margin-left: -1px;
             transform-origin: top center;
-            background: linear-gradient(to bottom, rgba(255, 160, 40, 0.0), rgba(255, 160, 40, 0.4));
+            background: linear-gradient(to bottom, rgba($accent, 0.0), rgba($accent, 0.4));
         }
 
         .radial-subtitle {
@@ -55,7 +57,7 @@ PersonalRadialMenu {
             transform: translateX(-50%);
             font-size: 14px;
             font-weight: 800;
-            color: rgba(255, 169, 40, 0.8);
+            color: rgba($accent, 0.8);
             letter-spacing: 2px;
             text-transform: uppercase;
             white-space: nowrap;
@@ -69,13 +71,11 @@ PersonalRadialMenu {
             cursor: pointer;
             pointer-events: all;
             padding: 6px 16px;
-            border-radius: 8px;
+            border-radius: $rounding;
             background-color: rgba(255, 255, 255, 0.06);
-            transition: background-color 0.15s ease;
+            transition: $transition-fast;
 
-            &:hover {
-                background-color: rgba(255, 255, 255, 0.12);
-            }
+            &:hover { background-color: rgba(255, 255, 255, 0.12); }
 
             span {
                 font-size: 12px;
@@ -92,12 +92,12 @@ PersonalRadialMenu {
             flex-direction: column;
             align-items: center;
             gap: 8px;
-            transition: transform 0.15s ease, opacity 0.15s ease;
+            transition: $transition-fast;
             opacity: 0.7;
             pointer-events: all;
             cursor: pointer;
             padding: 10px 16px;
-            border-radius: 12px;
+            border-radius: $rounding-lg;
 
             &.disabled {
                 opacity: 0.3;
@@ -107,18 +107,15 @@ PersonalRadialMenu {
             &.hovered, &:hover {
                 opacity: 1;
                 transform: translate(-50%, -50%) scale(1.1);
-                background-color: rgba(255, 255, 255, 0.05);
 
                 .radial-icon {
-                    border-color: rgba(255, 169, 40, 0.6);
-                    background-color: rgba(255, 169, 40, 0.12);
-                    box-shadow: 0px 0px 12px rgba(255, 169, 40, 0.25);
-                    background-image-tint: #ffa928;
+                    border-color: $accent-border;
+                    background-color: $accent-bg-subtle;
+                    box-shadow: 0px 0px 12px rgba($accent, 0.25);
+                    background-image-tint: $accent;
                 }
 
-                .radial-label {
-                    color: white;
-                }
+                .radial-label { color: white; }
             }
 
             &.disabled:hover {
@@ -132,9 +129,7 @@ PersonalRadialMenu {
                     box-shadow: none;
                 }
 
-                .radial-label {
-                    color: rgba(255, 255, 255, 0.5);
-                }
+                .radial-label { color: rgba(255, 255, 255, 0.5); }
             }
 
             .radial-icon {
@@ -145,7 +140,7 @@ PersonalRadialMenu {
                 border: 2px solid rgba(255, 255, 255, 0.12);
                 padding: 12px;
                 image-rendering: auto;
-                transition: all 0.15s ease;
+                transition: $transition-fast;
             }
 
             .radial-label {

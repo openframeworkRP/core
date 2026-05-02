@@ -6,7 +6,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 8px;
+    border-radius: $rounding;
     padding: 12px 24px;
     // background-color appliquee inline (cf ShopSignUI.razor)
 }

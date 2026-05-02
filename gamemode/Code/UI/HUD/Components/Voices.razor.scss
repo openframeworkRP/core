@@ -1,3 +1,5 @@
+@import "ui/Styles/Theme.scss";
+
 Voices {
     position: absolute;
     top: 50px;
@@ -11,8 +13,8 @@ Voices {
             width: 10px;
             height: 10px;
             border-radius: 50%;
-            background-color: #4ade80;
-            box-shadow: 0 0 6px rgba(74, 222, 128, 0.8);
+            background-color: $success-color;
+            box-shadow: 0 0 6px rgba($success-color, 0.8);
         }
 
         .radio-freq {

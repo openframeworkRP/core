@@ -12,10 +12,13 @@
     <div class="bg-right"></div>
     <div class="inspector">
         <div class="sidebar">
-            @foreach (var cat in Manager.ActiveCatalog.MainCategories)
+            @foreach (var cat in Manager.ActiveCatalog.MainCategories.Where(c =>
+                !c.Name.ToLower().Contains("bijou") &&
+                !c.Name.ToLower().Contains("jewel") &&
+                !c.Name.ToLower().Contains("accessor")))
             {
                 <div class="nav-btn @(SelectedMain == cat ? "active" : "")" onclick="@(() => SelectMain(cat))">
-                    <img src="@cat.Icon" />
+                    <div class="nav-icon" style="background-image: url('@cat.Icon')"></div>
                 </div>
             }
         </div>

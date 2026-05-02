@@ -1,9 +1,10 @@
+@import "ui/Styles/Theme.scss";
+
 PoliceAdvert {
     height: 100%;
     width: 100%;
-    //background-color: blue;
     justify-content: center;
-    transition: all 0.2s ease-in-out;
+    transition: $transition-normal;
     flex-direction: column;
     align-items: center;
 
@@ -20,31 +21,18 @@ PoliceAdvert {
     }
 
     span {
-        transition: all 0.2s ease-in-out;
+        transition: $transition-normal;
         font-size: 100px;
         align-content: center;
         justify-content: center;
     }
 
     @keyframes slide {
-        0% {
-            transform: translateX(0);
-        }
-
-        33% {
-            transform: translateX(-100%);
-        }
-
-        66% {
-            transform: translateX(-200%);
-        }
-
-        100% {
-            transform: translateX(0);
-        }
+        0% { transform: translateX(0); }
+        33% { transform: translateX(-100%); }
+        66% { transform: translateX(-200%); }
+        100% { transform: translateX(0); }
     }
 
-    &:intro {
-        animation: slide 6s infinite;
-    }
+    &:intro { animation: slide 6s infinite; }
 }

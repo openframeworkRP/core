@@ -1,8 +1,9 @@
 @import "ui/Styles/Theme.scss";
+
 LoginPage {
     height: 100%;
     width: 100%;
-    background-color: palegreen;
+    background-color: transparent;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -32,7 +33,7 @@ LoginPage {
     }
 
     .cardlogo {
-        transition: all 0.2s ease-in-out;
+        transition: $transition-normal;
         bottom: 6px;
         position: relative;
         height: 15%;
@@ -49,28 +50,18 @@ LoginPage {
         align-items: center;
         height: 15px;
         width: 60px;
-        //background-color: red;
-        border-radius: 8px;
-        border: 1px solid transparent; /* <- FIX */
+        border-radius: $rounding;
+        border: 1px solid transparent;
 
         &:hover {
-            background-color: wheat;
-            border: 1px solid black;
+            background-color: rgba($accent, 0.15);
+            border: 1px solid $accent-border;
         }
     }
 }
 
 @keyframes slide {
-    0% {
-        transform: translateY(0px);
-    }
-
-    50% {
-        transform: translateY(-12px);
-    }
-
-    100% {
-        transform: translateY(0px);
-    }
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-12px); }
+    100% { transform: translateY(0px); }
 }
-

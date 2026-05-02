@@ -16,42 +16,15 @@
 
     <div class="main-layout">
 
-        <div class="side-panel">
+        @* GAUCHE : personnage + équipement *@
+        <div class="character-panel">
             <div class="header">
                 <div class="icon-title">
-                    <div class="pink-box"><svg src="ui/icons/backpack.svg" color="black" /></div>
+                    <div class="pink-box"><svg src="ui/icons/id.svg" color="white" /></div>
                     <div class="title-text">
-                        <span class="sub">MAIN</span>
-                        <span class="main">INVENTORY</span>
+                        <span class="sub">CHARACTER</span>
+                        <span class="main">CUSTOMIZATION</span>
                     </div>
-                </div>
-                <div class="weight @GetWeightColor()">
-                    <small>@Container.CurrentWeight.ToString("0.0")</small>/@(Container.MaxWeight) KG
-                </div>
-            </div>
-
-            <div class="slots-container">
-                @for (int i = 0; i < Container.Capacity; i++)
-                {
-                    var slotIndex = i;
-                    var item = Container.Items.FirstOrDefault(x => x.SlotIndex == slotIndex);
-                    // Cacher les armes actuellement équipées (elles sont dans la weapon bar)
-                    if (item != null && IsItemEquipped(item))
-                        item = null;
-                    <InventorySlot Container=@Container
-                                   SlotIndex=@slotIndex
-                                   Item=@item
-                                   IsRemote=@false />
-                }
-            </div>
-        </div>
-
-        <div class="center-panel">
-            <div class="header">
-                <div class="pink-box"><span>👤</span></div>
-                <div class="title-text">
-                    <span class="sub">CHARACTER</span>
-                    <span class="main">CUSTOMIZATION</span>
                 </div>
             </div>
 
@@ -93,99 +66,131 @@
             </div>
         </div>
 
-        @if (NearbyContainer != null)
-        {
-            var friskedPawn = FriskedPlayerPawn;
-            <div class="side-panel">
-                @if (friskedPawn != null)
-                {
-                    // === MODE FOUILLE : joueur avec mains levées ou menotté ===
-                    var friskedClothingContainer = friskedPawn.Components
-                        .Get<ClothingEquipment>(FindMode.EnabledInSelfAndChildren)?.Container;
+        @* DROITE : inventaire joueur + container proche *@
+        <div class="inventory-column">
 
-                    <div class="header">
-                        <div class="icon-title">
-                            <div class="pink-box"><span>🔍</span></div>
-                            <div class="title-text">
-                                <span class="sub">FOUILLE</span>
-                                <span class="main">@friskedPawn.DisplayName.ToUpper()</span>
-                            </div>
+            <div class="inventory-panel">
+                <div class="header">
+                    <div class="icon-title">
+                        <div class="pink-box"><svg src="ui/icons/backpack.svg" color="white" /></div>
+                        <div class="title-text">
+                            <span class="sub">MAIN</span>
+                            <span class="main">INVENTORY</span>
                         </div>
                     </div>
+                    <div class="weight @GetWeightColor()">
+                        <small>@Container.CurrentWeight.ToString("0.0")</small>/@(Container.MaxWeight) KG
+                    </div>
+                </div>
 
-                    @if (friskedClothingContainer != null)
+                <div class="slots-container">
+                    @for (int i = 0; i < Container.Capacity; i++)
                     {
-                        <div class="frisk-section-label">VÊTEMENTS</div>
-                        <div class="frisk-clothing-grid">
-                            @for (int i = 0; i < 10; i++)
+                        var slotIndex = i;
+                        var item = Container.Items.FirstOrDefault(x => x.SlotIndex == slotIndex);
+                        if (item != null && IsItemEquipped(item))
+                            item = null;
+                        <InventorySlot Container=@Container
+                                       SlotIndex=@slotIndex
+                                       Item=@item
+                                       IsRemote=@false />
+                    }
+                </div>
+            </div>
+
+            @if (NearbyContainer != null)
+            {
+                var friskedPawn = FriskedPlayerPawn;
+                <div class="nearby-panel">
+                    @if (friskedPawn != null)
+                    {
+                        var friskedClothingContainer = friskedPawn.Components
+                            .Get<ClothingEquipment>(FindMode.EnabledInSelfAndChildren)?.Container;
+
+                        <div class="header">
+                            <div class="icon-title">
+                                <div class="pink-box"><span>🔍</span></div>
+                                <div class="title-text">
+                                    <span class="sub">FOUILLE</span>
+                                    <span class="main">@friskedPawn.DisplayName.ToUpper()</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        @if (friskedClothingContainer != null)
+                        {
+                            <div class="frisk-section-label">VÊTEMENTS</div>
+                            <div class="frisk-clothing-grid">
+                                @for (int i = 0; i < 10; i++)
+                                {
+                                    var si = i;
+                                    var clothingItem = friskedClothingContainer.Items.FirstOrDefault(x => x.SlotIndex == si);
+                                    <InventorySlot Container=@friskedClothingContainer
+                                                   SlotIndex=@si
+                                                   Item=@clothingItem
+                                                   IsRemote=@true />
+                                }
+                            </div>
+                        }
+
+                        <div class="frisk-section-label">INVENTAIRE &nbsp;<small>@NearbyContainer.CurrentWeight.ToString("0.0")/@(NearbyContainer.MaxWeight) KG</small></div>
+                        <div class="slots-container">
+                            @for (int i = 0; i < NearbyContainer.Capacity; i++)
                             {
-                                var si = i;
-                                var clothingItem = friskedClothingContainer.Items.FirstOrDefault(x => x.SlotIndex == si);
-                                <InventorySlot Container=@friskedClothingContainer
-                                               SlotIndex=@si
-                                               Item=@clothingItem
+                                var slotIndex = i;
+                                var item = NearbyContainer.Items.FirstOrDefault(x => x.SlotIndex == slotIndex);
+                                <InventorySlot Container=@NearbyContainer
+                                               SlotIndex=@slotIndex
+                                               Item=@item
                                                IsRemote=@true />
                             }
                         </div>
-                    }
 
-                    <div class="frisk-section-label">INVENTAIRE &nbsp;<small>@NearbyContainer.CurrentWeight.ToString("0.0")/@(NearbyContainer.MaxWeight) KG</small></div>
-                    <div class="slots-container">
-                        @for (int i = 0; i < NearbyContainer.Capacity; i++)
-                        {
-                            var slotIndex = i;
-                            var item = NearbyContainer.Items.FirstOrDefault(x => x.SlotIndex == slotIndex);
-                            <InventorySlot Container=@NearbyContainer
-                                           SlotIndex=@slotIndex
-                                           Item=@item
-                                           IsRemote=@true />
-                        }
-                    </div>
-
-                    <div class="trade-footer">
-                        <div class="actions">
-                            <button class="btn-confirm" onclick=@TakeAll>TOUT PRENDRE ✓</button>
-                            <button class="btn-icon" onclick=@CloseNearby>✕</button>
-                        </div>
-                    </div>
-                }
-                else
-                {
-                    // === CONTAINER NORMAL (caisse, coffre, véhicule, etc.) ===
-                    <div class="header">
-                        <div class="icon-title">
-                            <div class="pink-box"><span>📦</span></div>
-                            <div class="title-text">
-                                <span class="sub">NEARBY</span>
-                                <span class="main">@NearbyContainer.Name.ToUpper()</span>
+                        <div class="trade-footer">
+                            <div class="actions">
+                                <button class="btn-confirm" onclick=@TakeAll>TOUT PRENDRE ✓</button>
+                                <button class="btn-icon" onclick=@CloseNearby>✕</button>
                             </div>
                         </div>
-                        <div class="weight">
-                            <small>@NearbyContainer.CurrentWeight.ToString("0.0")</small>/@(NearbyContainer.MaxWeight) KG
+                    }
+                    else
+                    {
+                        <div class="header">
+                            <div class="icon-title">
+                                <div class="pink-box"><span>📦</span></div>
+                                <div class="title-text">
+                                    <span class="sub">NEARBY</span>
+                                    <span class="main">@NearbyContainer.Name.ToUpper()</span>
+                                </div>
+                            </div>
+                            <div class="weight">
+                                <small>@NearbyContainer.CurrentWeight.ToString("0.0")</small>/@(NearbyContainer.MaxWeight) KG
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="slots-container">
-                        @for (int i = 0; i < NearbyContainer.Capacity; i++)
-                        {
-                            var slotIndex = i;
-                            var item = NearbyContainer.Items.FirstOrDefault(x => x.SlotIndex == slotIndex);
-                            <InventorySlot Container=@NearbyContainer
-                                           SlotIndex=@slotIndex
-                                           Item=@item
-                                           IsRemote=@true />
-                        }
-                    </div>
-
-                    <div class="trade-footer">
-                        <div class="actions">
-                            <button class="btn-confirm" onclick=@TakeAll>TOUT PRENDRE ✓</button>
-                            <button class="btn-icon" onclick=@CloseNearby>✕</button>
+                        <div class="slots-container">
+                            @for (int i = 0; i < NearbyContainer.Capacity; i++)
+                            {
+                                var slotIndex = i;
+                                var item = NearbyContainer.Items.FirstOrDefault(x => x.SlotIndex == slotIndex);
+                                <InventorySlot Container=@NearbyContainer
+                                               SlotIndex=@slotIndex
+                                               Item=@item
+                                               IsRemote=@true />
+                            }
                         </div>
-                    </div>
-                }
-            </div>
-        }
+
+                        <div class="trade-footer">
+                            <div class="actions">
+                                <button class="btn-confirm" onclick=@TakeAll>TOUT PRENDRE ✓</button>
+                                <button class="btn-icon" onclick=@CloseNearby>✕</button>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+
+        </div>
 
     </div>
 </root>

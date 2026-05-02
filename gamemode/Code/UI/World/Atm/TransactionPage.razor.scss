@@ -1,26 +1,23 @@
 @import "ui/Styles/Theme.scss";
 @import "ui/Styles/MenuSystem.scss";
+
 TransactionPage {
     flex-direction: column;
-    background-color: grey;
+    background-color: $surface-dark;
     align-items: center;
 
     button {
         width: 75px;
         justify-content: center;
         align-items: center;
-        background-color: rgba(crimson, 1);
+        background-color: rgba($red, 0.8);
         align-self: center;
 
-        &:hover {
-            background-color: rgba(crimson, 0.9);
-        }
+        &:hover { background-color: $red; }
     }
 
     h3 {
-        label {
-            font-size: 5px;
-        }
+        label { font-size: 5px; }
     }
 
     select {
@@ -29,17 +26,13 @@ TransactionPage {
         width: 100px;
         align-items: center;
 
-        &:hover {
-            background-color: transparent;
-        }
+        &:hover { background-color: transparent; }
 
-        option {
-            background-color: red;
-        }
+        option { background-color: $surface-dark; }
 
-        .result{
-            position:relative;
-            justify-content:center;
+        .result {
+            position: relative;
+            justify-content: center;
         }
     }
 }

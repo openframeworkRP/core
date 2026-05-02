@@ -10,12 +10,13 @@ MenuCreatorCharacter {
 
     .navbar {
         position: absolute;
-        top: 5%;
-        height: 120px;
-        width: 60%;
-        justify-content: center;
-        align-items: center;
+        bottom: 6px;
+        left: 1.5%;
+        width: 25%;
+        height: auto;
         flex-direction: row;
+        align-items: center;
+        justify-content: center;
         z-index: 1000;
         transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
         transform: translateY(0);
@@ -27,71 +28,34 @@ MenuCreatorCharacter {
             pointer-events: none;
         }
 
-        .step-container {
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-            transition: all 0.2s ease;
-
-            .icon-box {
-                height: 60px;
-                width: 60px;
-                background-color: rgba(20, 20, 20, 0.9);
-                border: 1px solid rgba(255, 255, 255, 0.1);
-                border-radius: 12px;
-                justify-content: center;
-                align-items: center;
-                transition: all 0.2s ease;
-
-                svg {
-                    width: 28px;
-                    height: 28px;
-                }
-            }
-
-            label {
-                color: rgba(255, 255, 255, 0.4);
-                font-size: 10px;
-                font-weight: 900;
-                text-transform: uppercase;
-                letter-spacing: 1.5px;
-                transition: all 0.2s ease;
-            }
+        .step-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            transition: $transition-fast;
+            cursor: pointer;
 
             &.active {
-                .icon-box {
-                    background-color: $creator-orange;
-                    border-color: $creator-orange;
-                    box-shadow: 0 0 20px rgba($creator-orange, 0.3);
-                    transform: scale(1.1);
-                }
-
-                label {
-                    color: $creator-orange;
-                    opacity: 1;
-                }
+                background-color: $accent;
+                border-color: $accent;
+                box-shadow: 0 0 8px rgba($accent, 0.5);
             }
 
             &:hover:not(.active) {
-                .icon-box {
-                    border-color: rgba($creator-orange, 0.5);
-                    background-color: rgba(40, 40, 40, 1);
-                }
+                background-color: rgba(255, 255, 255, 0.35);
             }
         }
 
-        .path {
-            height: 2px;
-            width: 70px;
-            background-color: rgba(255,255,255,0.05);
-            margin: 0 5px;
-            margin-bottom: 24px;
-            border-radius: 1px;
-            transition: background-color 0.6s ease;
+        .step-path {
+            width: 28px;
+            height: 1px;
+            background-color: rgba(255, 255, 255, 0.12);
+            transition: background-color 0.4s ease;
 
             &.active {
-                background-color: $creator-orange;
-                box-shadow: 0 0 10px rgba($creator-orange, 0.2);
+                background-color: $accent;
             }
         }
     }

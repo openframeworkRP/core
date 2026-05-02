@@ -11,7 +11,7 @@ RulesPage {
         top: 0;
         width: 28%;
         height: 100%;
-        background-color: rgba(5, 5, 7, 1);
+        background-color: $surface-card;
     }
 
     .rules-container {
@@ -25,43 +25,43 @@ RulesPage {
         overflow-y: scroll;
 
         h1 {
-            font-size: 20px;
-            color: $creator-accent;
-            font-weight: 900;
+            font-size: 18px;
+            color: $accent;
+            font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 2px;
             margin-bottom: 4px;
         }
 
         .subtitle {
-            color: rgba(255, 255, 255, 0.5);
+            color: rgba(255, 255, 255, 0.4);
             font-size: 11px;
-            margin-bottom: 12px;
+            margin-bottom: 14px;
         }
     }
 
     .rules-list {
         flex-direction: column;
-        gap: 8px;
+        gap: 6px;
     }
 
     .rule {
         display: flex;
         flex-direction: row;
         gap: 10px;
-        padding: 10px;
+        padding: 10px 12px;
         background-color: rgba(255, 255, 255, 0.03);
-        border: 1px solid $creator-glass-border;
-        border-radius: 6px;
+        border: 1px solid $border;
+        border-radius: $rounding;
 
         .rule-number {
-            width: 22px;
-            height: 22px;
-            min-width: 22px;
-            background-color: $creator-accent;
+            width: 20px;
+            height: 20px;
+            min-width: 20px;
+            background-color: $accent;
             color: white;
-            font-size: 11px;
-            font-weight: 900;
+            font-size: 10px;
+            font-weight: 700;
             border-radius: 50%;
             justify-content: center;
             align-items: center;
@@ -70,16 +70,16 @@ RulesPage {
         .rule-content {
             flex: 1;
             flex-direction: column;
-            gap: 2px;
+            gap: 3px;
 
             .rule-title {
-                color: $creator-accent;
-                font-size: 15px;
+                color: rgba(255, 255, 255, 0.9);
+                font-size: 13px;
                 font-weight: 700;
             }
 
             p {
-                color: rgba(255, 255, 255, 0.6);
+                color: rgba(255, 255, 255, 0.5);
                 font-size: 11px;
                 font-weight: 400;
             }
@@ -91,41 +91,40 @@ RulesPage {
         flex-direction: row;
         align-items: center;
         gap: 10px;
-        margin-top: 12px;
-        padding: 10px;
+        margin-top: 14px;
+        padding: 10px 12px;
         background-color: rgba(255, 255, 255, 0.03);
-        border: 1px solid $creator-glass-border;
-        border-radius: 6px;
+        border: 1px solid $border;
+        border-radius: $rounding;
         cursor: pointer;
+        transition: $transition-fast;
 
-        &:hover {
-            background-color: rgba(255, 255, 255, 0.06);
-        }
+        &:hover { background-color: rgba(255, 255, 255, 0.06); }
 
         .checkbox {
-            width: 20px;
-            height: 20px;
-            min-width: 20px;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            border-radius: 4px;
+            width: 18px;
+            height: 18px;
+            min-width: 18px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: $rounding-sm;
             justify-content: center;
             align-items: center;
-            transition: all 0.15s ease;
+            transition: $transition-fast;
 
             &.checked {
-                background-color: $creator-accent;
-                border-color: $creator-accent;
+                background-color: $accent;
+                border-color: $accent;
 
                 span {
                     color: white;
-                    font-size: 14px;
+                    font-size: 12px;
                     font-weight: bold;
                 }
             }
         }
 
         label {
-            color: rgba(255, 255, 255, 0.7);
+            color: rgba(255, 255, 255, 0.6);
             font-size: 11px;
             font-weight: 600;
         }
@@ -139,23 +138,25 @@ RulesPage {
         display: flex;
         flex-direction: row;
         gap: 8px;
-        height: 45px;
+        height: 44px;
     }
 
     .back-btn {
         width: 30%;
-        background-color: rgba(255, 255, 255, 0.06);
-        color: rgba(255, 255, 255, 0.5);
-        font-size: 12px;
-        font-weight: bold;
+        background-color: rgba(255, 255, 255, 0.05);
+        color: rgba(255, 255, 255, 0.45);
+        font-size: 11px;
+        font-weight: 700;
         text-transform: uppercase;
+        letter-spacing: 0.5px;
         justify-content: center;
         align-items: center;
-        border: 1px solid $creator-glass-border;
-        border-radius: 4px;
+        border: 1px solid $border;
+        border-radius: $rounding;
+        transition: $transition-fast;
 
         &:hover {
-            background-color: rgba(255, 255, 255, 0.12);
+            background-color: rgba(255, 255, 255, 0.1);
             color: white;
             cursor: pointer;
         }
@@ -163,28 +164,30 @@ RulesPage {
 
     .next-btn {
         width: 70%;
-        background-color: $creator-accent;
+        background-color: $accent;
         color: white;
-        font-size: 12px;
-        font-weight: bold;
+        font-size: 11px;
+        font-weight: 700;
         text-transform: uppercase;
+        letter-spacing: 0.5px;
         justify-content: center;
         align-items: center;
-        border-radius: 4px;
+        border-radius: $rounding;
+        border: 1px solid transparent;
+        transition: $transition-fast;
 
         &:hover {
-            background-color: $creator-accent-hover;
+            background-color: $accent-hover;
+            color: rgba(black, 0.8);
             cursor: pointer;
         }
 
         &.disabled {
-            background-color: rgba(255, 255, 255, 0.08);
-            color: rgba(255, 255, 255, 0.3);
+            background-color: rgba(255, 255, 255, 0.07);
+            color: rgba(255, 255, 255, 0.25);
             cursor: default;
 
-            &:hover {
-                background-color: rgba(255, 255, 255, 0.08);
-            }
+            &:hover { background-color: rgba(255, 255, 255, 0.07); }
         }
     }
 }

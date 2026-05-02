@@ -1,7 +1,6 @@
 @import "ui/Styles/Theme.scss";
 
-$main-color: #ff8000;
-$green-money: #5BFF8C;
+$green-money: $success-color;
 
 FullInventory {
     position: absolute;
@@ -24,137 +23,145 @@ FullInventory {
         position: absolute;
         width: 100%;
         height: 100%;
-        background-color: rgba(0, 0, 0, 0.85);
-        backdrop-filter: blur(20px);
+        background-color: rgba(0, 0, 0, 0.82);
+        backdrop-filter: $blur;
         z-index: -1;
     }
 
     .close__btn {
         position: absolute;
-        top: 30px;
-        right: 30px;
-        height: 48px;
-        width: 48px;
+        top: 24px;
+        right: 24px;
+        height: 40px;
+        width: 40px;
         cursor: pointer;
-        background-color: rgba(255, 255, 255, 0.03);
-        border: 1px solid rgba(255, 255, 255, 0.05);
+        background-color: rgba(255, 255, 255, 0.04);
+        border: 1px solid $border;
+        border-radius: $rounding;
         align-items: center;
         justify-content: center;
-        transition: all 0.2s ease;
+        transition: $transition-fast;
 
         svg {
-            height: 100%;
-            width: 100%;
+            height: 60%;
+            width: 60%;
+            opacity: 0.5;
         }
 
         &:hover {
-            background-color: rgba(255, 255, 255, 0.08);
-            background-image: linear-gradient(-90deg, rgba($main-color, 0.2), transparent);
-        }
-
-        &.active {
-            border: 2px solid $main-color;
-            background-color: rgba(255, 75, 104, 0.1);
+            background-color: rgba(255, 255, 255, 0.09);
+            border-color: rgba($accent, 0.4);
+            svg { opacity: 1; }
         }
     }
 
     .main-layout {
-        width: 1600px;
-        height: 850px;
+        width: 1500px;
+        height: 820px;
         flex-direction: row;
-        gap: 40px;
+        gap: 16px;
     }
 
-    .side-panel, .center-panel {
-        flex: 1;
-        flex-direction: column;
-
+    // Mixin header partagé
+    .character-panel, .inventory-panel, .nearby-panel {
         .header {
             align-items: center;
-            gap: 15px;
-            margin-bottom: 25px;
+            gap: 12px;
+            margin-bottom: 16px;
+            padding-bottom: 14px;
+            border-bottom: 1px solid $border;
 
             .pink-box {
-                width: 44px;
-                height: 44px;
-                background-color: $main-color;
-                border-radius: 0px;
+                width: 36px;
+                height: 36px;
+                background-color: $accent;
+                border-radius: $rounding;
                 justify-content: center;
                 align-items: center;
-                box-shadow: 1px 1px 5px rgba(white, 0.5);
+                flex-shrink: 0;
 
-                span {
-                    color: white;
-                    font-size: 20px;
-                    font-weight: 900;
-                }
+                svg { width: 18px; height: 18px; }
+                span { color: white; font-size: 16px; font-weight: 900; }
             }
 
             .icon-title {
                 gap: 10px;
                 align-items: center;
-
-                svg {
-                    height: 30px;
-                    width: 30px;
-                }
             }
 
             .title-text {
                 flex-direction: column;
 
                 .sub {
-                    * {
-                        font-size: 11px;
-                        font-weight: 800;
-                    }
-
-                    color: rgba(255, 255, 255, 0.4);
-                    letter-spacing: 1px;
+                    color: rgba(255, 255, 255, 0.35);
+                    font-size: 9px;
+                    font-weight: 800;
+                    letter-spacing: 1.5px;
+                    text-transform: uppercase;
                 }
 
                 .main {
-                    * {
-                        font-size: 17px;
-                        font-weight: 900;
-                    }
-
                     color: white;
-                    margin-top: -3px;
+                    font-size: 15px;
+                    font-weight: 900;
+                    letter-spacing: 0.5px;
                 }
             }
 
             .weight {
                 margin-left: auto;
-                font-size: 14px;
+                font-size: 12px;
                 font-weight: 700;
-                color: white;
-                
-                /* Style de base pour le texte du poids */
-                &.weight_normal {
-                    color: #ffffff;
-                    transition: color 0.3s ease;
-                }
-                /* État d'alerte (proche de la limite) */
-                &.weight_warning {
-                    color: #ffcc00; /* Jaune/Orange */
-                    font-weight: bold;
-                }
-                /* État critique (Inventaire plein) */
+                color: rgba(255, 255, 255, 0.45);
+                small { color: white; }
+
+                &.weight_warning { color: #f0c040; font-weight: 800; }
                 &.weight_full {
-                    color: #ff4444; /* Rouge vif */
-                    font-weight: bold;
-                    text-shadow: 0 0 10px rgba(255, 68, 68, 0.5);
+                    color: $red;
+                    font-weight: 800;
+                    text-shadow: 0 0 10px rgba($red, 0.5);
                     animation: weight-pulse 1s infinite alternate;
                 }
             }
         }
     }
 
+    // ── Panneau gauche : personnage ──
+    .character-panel {
+        width: 480px;
+        min-width: 480px;
+        height: 100%;
+        flex-direction: column;
+        border-right: 1px solid $border;
+        padding-right: 16px;
+    }
+
+    // ── Colonne droite : inventaire + nearby ──
+    .inventory-column {
+        flex: 1;
+        flex-direction: column;
+        gap: 16px;
+        overflow: hidden;
+    }
+
+    .inventory-panel {
+        flex: 1;
+        flex-direction: column;
+        overflow: hidden;
+    }
+
+    .nearby-panel {
+        flex-direction: column;
+        border-top: 1px solid $border;
+        padding-top: 14px;
+        max-height: 45%;
+        overflow: hidden;
+    }
+
     .slots-container {
         flex-direction: row;
-        flex-wrap: wrap; // Simulation de grille via Flexbox
-        gap: 10px;
+        flex-wrap: wrap;
+        gap: 8px;
         overflow-y: scroll;
         overflow-x: hidden;
         position: relative;
@@ -163,15 +170,16 @@ FullInventory {
     .frisk-section-label {
         font-size: 10px;
         font-weight: 800;
-        color: rgba(255, 255, 255, 0.4);
+        color: rgba(255, 255, 255, 0.35);
         letter-spacing: 2px;
-        margin-top: 12px;
+        text-transform: uppercase;
+        margin-top: 14px;
         margin-bottom: 6px;
 
         small {
             font-size: 10px;
             font-weight: 600;
-            color: rgba(255, 255, 255, 0.25);
+            color: rgba(255, 255, 255, 0.2);
         }
     }
 
@@ -182,73 +190,71 @@ FullInventory {
         margin-bottom: 4px;
     }
 
-    .center-panel {
-        flex: 1.2;
-        width: 100%;
+    .equipment-view {
+        flex-direction: row;
         justify-content: space-between;
-        //background-color:green;
+        flex: 1;
+        overflow: hidden;
 
-        .equipment-view {
-            flex-direction: row;
-            justify-content: space-between;
+        .player-see-through {
+            flex: 1;
             height: 100%;
-            //background-color:blue;
+            overflow: hidden;
+            padding-top: 40px;
 
-            .player-see-through {
-                width: 50%;
-                height: 100%;
-
-                ScenePanel {
-                    flex: 1;
-                    //background-color:red;
-                }
-            }
-
-            .slots-column {
-                flex-direction: column;
-                gap: 12px;
+            ScenePanel {
+                flex: 1;
             }
         }
 
-        .hotbar-area {
+        .slots-column {
             flex-direction: column;
+            gap: 8px;
+        }
+    }
+
+    .hotbar-area {
+        flex-direction: column;
+        align-items: center;
+        margin-top: 12px;
+
+        .divider {
+            width: 100%;
+            margin: 10px 0;
             align-items: center;
+            justify-content: center;
+            gap: 16px;
 
-            .divider {
-                width: 100%;
-                margin: 20px 0;
-                align-items: center;
-                justify-content: center;
-                gap: 25px;
-
-                .bar {
-                    height: 5px;
-                    flex: 1;
-                    background-color: rgba(255, 255, 255, 0.05);
-                }
-
-                span {
-                    font-size: 10px;
-                    color: rgba(255, 255, 255, 0.3);
-                }
+            .bar {
+                height: 1px;
+                flex: 1;
+                background-color: $border;
             }
 
-            .hotbar-row {
-                flex-direction: row;
-                justify-content: space-between;
-                gap: 12px;
+            span {
+                font-size: 9px;
+                font-weight: 800;
+                letter-spacing: 2px;
+                color: rgba(255, 255, 255, 0.25);
+                text-transform: uppercase;
             }
+        }
+
+        .hotbar-row {
+            flex-direction: row;
+            justify-content: center;
+            gap: 12px;
         }
     }
 
     .trade-footer {
         margin-top: auto;
-        padding: 20px 0;
-        border-top: 1px solid rgba(255, 255, 255, 0.05);
+        padding: 16px 0;
+        border-top: 1px solid $border;
 
         .currency {
             align-items: flex-end;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
 
             .amount {
                 color: $green-money;
@@ -260,32 +266,38 @@ FullInventory {
         .actions {
             flex-direction: row;
             justify-content: flex-end;
-            gap: 10px;
+            gap: 8px;
 
             .btn-confirm {
                 background-color: $green-money;
                 color: black;
-                padding: 8px 30px;
-                border-radius: 4px;
+                padding: 8px 28px;
+                border-radius: $rounding;
                 font-weight: 900;
-                transition: all 0.1s ease;
+                font-size: 12px;
+                letter-spacing: 0.5px;
+                text-transform: uppercase;
+                transition: $transition-fast;
 
                 &:hover {
-                    transform: scale(1.05);
+                    background-color: lighten($green-money, 8%);
                 }
             }
 
             .btn-icon {
                 width: 36px;
                 height: 36px;
-                background-color: rgba(255, 255, 255, 0.1);
-                border-radius: 4px;
+                background-color: rgba(255, 255, 255, 0.06);
+                border: 1px solid $border;
+                border-radius: $rounding;
                 color: white;
                 justify-content: center;
                 align-items: center;
+                transition: $transition-fast;
 
                 &:hover {
-                    background-color: rgba(255, 255, 255, 0.2);
+                    background-color: rgba(255, 255, 255, 0.12);
+                    border-color: rgba($accent, 0.4);
                 }
             }
         }
@@ -294,43 +306,33 @@ FullInventory {
 
 WeaponSlot {
     background-color: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    border: 1px solid $border;
+    border-radius: $rounding;
     align-items: center;
     justify-content: center;
     position: relative;
     width: 90px;
     height: 90px;
-
-    &::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        width: 100%;
-        height: 50%;
-        opacity: 0.1;
-        //background-image: linear-gradient(-90deg, white, transparent);
-    }
+    transition: $transition-fast;
 
     &:not(.empty) {
         cursor: pointer;
-        transition: all 0.2s ease;
 
         &:hover {
-            background-color: rgba(255, 255, 255, 0.08);
-            background-image: linear-gradient(-90deg, rgba($main-color, 0.2), transparent);
+            background-color: rgba(255, 255, 255, 0.07);
+            border-color: rgba($accent, 0.35);
         }
     }
 
     &.active {
-        border: 2px solid $main-color;
-        background-color: rgba(255, 75, 104, 0.1);
+        border: 2px solid $accent;
+        background-color: $accent-bg-subtle;
     }
 
     &.drag-over {
-        border: 2px solid $main-color;
-        background-color: rgba(255, 75, 104, 0.15);
+        border: 2px solid $accent;
+        background-color: rgba($accent, 0.12);
         transform: scale(1.05);
-        transition: all 0.15s ease;
     }
 
     .item-icon, .preview-panel {
@@ -339,21 +341,18 @@ WeaponSlot {
         align-items: center;
         justify-content: center;
         position: absolute;
-        //background-color:red;
-        //pointer-events:none;
     }
 
     &.is-dragging {
         opacity: 0.7;
         transform: scale(0.9);
-        pointer-events: none; // Sécurité supplémentaire
+        pointer-events: none;
     }
 
     svg {
         width: 40%;
         height: 40%;
-        opacity: 0.5;
-        //tint-color: white;
+        opacity: 0.4;
     }
 
     .quantity {
@@ -361,30 +360,29 @@ WeaponSlot {
         bottom: 4px;
         right: 6px;
         font-size: 11px;
-        color: $main-color;
+        color: $accent;
         font-weight: 900;
     }
 
     .slot-number {
         position: absolute;
-        bottom: -48px;
+        bottom: -44px;
         left: 50%;
         transform: translateX(-50%);
-        background-color: $main-color;
-        width: 32px;
-        height: 32px;
-        //border-radius: 3px;
-
-        label {
-            font-size: 16px;
-            font-weight: 900;
-            font-family: $font-ui;
-        }
-
+        background-color: $accent;
+        border-radius: $rounding-sm;
+        width: 28px;
+        height: 28px;
         align-items: center;
         justify-content: center;
         text-align: center;
         color: white;
+
+        label {
+            font-size: 14px;
+            font-weight: 900;
+            font-family: $font-ui;
+        }
     }
 }
 

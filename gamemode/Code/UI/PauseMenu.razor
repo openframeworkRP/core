@@ -33,61 +33,147 @@
                 <span>Pause Menu</span>
             </div>
         </div>
-        @*<div class="data">
-            <div class="case">
-                <div class="icon"><svg src="ui/icons/clock.svg" color="white" /></div>
-                <div class="value">@(_weatherSystem.Hour1)@(_weatherSystem.Hour2):@(_weatherSystem.Minute1)@(_weatherSystem.Minute2)</div>
+
+        <div class="nav-tabs">
+            <div class="tab" @onclick=@(() => { IsOpen = !IsOpen; })>
+                <svg src="ui/icons/close.svg" />
+                <span>Reprendre</span>
             </div>
-            <div class="case">
-                <div class="icon"><svg src="ui/icons/players.svg" color="white" /></div>
-                <div class="value">@(GameUtils.AllPlayers.Count())/@(Networking.MaxPlayers)</div>
+            <div class="tab @(CurrentTab == Tab.Info ? "active" : "")" @onclick=@(() => CurrentTab = Tab.Info)>
+                <svg src="ui/icons/id.svg" />
+                <span>Accueil</span>
             </div>
-            <div class="case">
-                <div class="icon"><svg src="ui/icons/id.svg" color="white" /></div>
-                <div class="value">@GameUtils.AllPlayers.ToList().IndexOf(Client.Local)</div>
+            <div class="tab @(CurrentTab == Tab.Players ? "active" : "")" @onclick=@(() => CurrentTab = Tab.Players)>
+                <svg src="ui/icons/players.svg" />
+                <span>Joueurs</span>
             </div>
-            <div class="case">
-                <div class="icon"><svg src="ui/icons/money.svg" color="white" /></div>
-                <div class="value">@MoneySystem.Get()</div>
+            <div class="tab @(CurrentTab == Tab.Wiki ? "active" : "")" @onclick=@(() => { CurrentTab = Tab.Wiki; LoadWiki(); TaskManager.CompleteStep("open_wiki"); })>
+                <svg src="ui/icons/id.svg" />
+                <span>Wiki</span>
             </div>
-        </div>*@
-        <div class="end">
-            <button @onclick=@(() => { IsOpen = !IsOpen;})>Fermer</button>
-        </div>
-    </div>
-    <div class="content">
-        <div class="actions">
-            <div class="action" @onclick=@(() => { IsOpen = !IsOpen; })>
-                <button>Resume</button>
+            <div class="tab @(CurrentTab == Tab.Map ? "active" : "")" @onclick=@(() => CurrentTab = Tab.Map)>
+                <svg src="ui/icons/map.svg" />
+                <span>Map</span>
             </div>
-            <div class="action @(CurrentTab == Tab.Players ? "active" : "")" @onclick=@(() => CurrentTab = Tab.Players)>
-                <button>Joueurs</button>
-            </div>
-            <div class="action @(CurrentTab == Tab.Wiki ? "active" : "")" @onclick=@(() => { CurrentTab = Tab.Wiki; LoadWiki(); TaskManager.CompleteStep("open_wiki"); })>
-                <button>Wiki</button>
-            </div>
-            <div class="action @(CurrentTab == Tab.Map ? "active" : "")" @onclick=@(() => CurrentTab = Tab.Map)>
-                <div class="background" style="background-image:url('@MinimapImage');" />
-                <button>Map</button>
-            </div>
-            <div class="action @(CurrentTab == Tab.Feedback ? "active" : "")" @onclick=@(() => CurrentTab = Tab.Feedback)>
-                <button>Feedback</button>
+            <div class="tab @(CurrentTab == Tab.Feedback ? "active" : "")" @onclick=@(() => CurrentTab = Tab.Feedback)>
+                <svg src="ui/icons/settings.svg" />
+                <span>Feedback</span>
             </div>
             @if (Client.Local?.IsAdmin ?? false)
             {
-                <div class="action @(CurrentTab == Tab.Admin ? "active" : "")" @onclick=@(() => { CurrentTab = Tab.Admin; RefreshAdminMenu(); })>
-                    <button>Admin</button>
+                <div class="tab @(CurrentTab == Tab.Admin ? "active" : "")" @onclick=@(() => { CurrentTab = Tab.Admin; RefreshAdminMenu(); })>
+                    <svg src="ui/icons/id.svg" />
+                    <span>Admin</span>
                 </div>
             }
-            <div class="action" @onclick=@(() => OnSettingsClicked())>
-                <button>Settings</button>
+            <div class="tab" @onclick=@(() => OnSettingsClicked())>
+                <svg src="ui/icons/settings.svg" />
+                <span>Settings</span>
             </div>
-            <div class="action" @onclick=@(() => Game.Disconnect())>
-                <button>Exit</button>
+            <div class="tab tab-danger" @onclick=@(() => CurrentTab = Tab.Quit)>
+                <svg src="ui/icons/close.svg" />
+                <span>Quitter</span>
             </div>
         </div>
+
+        <div class="end">
+            <div class="exit-btn" @onclick=@(() => { IsOpen = false; })>
+                <span>FERMER</span>
+                <span class="exit-key">ESC</span>
+            </div>
+        </div>
+    </div>
+    <div class="content">
         <div class="right-panel">
-            @if (CurrentTab == Tab.Players)
+            @if (CurrentTab == Tab.Quit)
+            {
+                <div class="quit-panel">
+                    <div class="quit-icon">
+                        <svg src="ui/icons/close.svg" />
+                    </div>
+                    <span class="quit-title">Quitter le serveur ?</span>
+                    <span class="quit-sub">Votre progression sera sauvegardée.</span>
+                    <div class="quit-actions">
+                        <button class="quit-cancel" @onclick=@(() => CurrentTab = Tab.Info)>Annuler</button>
+                        <button class="quit-confirm" @onclick=@(() => Game.Disconnect())>Confirmer</button>
+                    </div>
+                </div>
+            }
+            else if (CurrentTab == Tab.Info)
+            {
+                <div class="info-panel">
+                    <div class="info-stats-row">
+                        <div class="stat-card">
+                            <span class="stat-label">HEURE</span>
+                            <span class="stat-value">@(_weatherSystem.Hour1)@(_weatherSystem.Hour2):@(_weatherSystem.Minute1)@(_weatherSystem.Minute2)</span>
+                        </div>
+                        <div class="stat-card">
+                            <span class="stat-label">DATE</span>
+                            <span class="stat-value">@DateTime.Now.ToString("dd/MM/yyyy")</span>
+                        </div>
+                        <div class="stat-card">
+                            <span class="stat-label">JOUEURS</span>
+                            <span class="stat-value">@(GameUtils.AllPlayers.Count()) <span class="stat-max">/ @Networking.MaxPlayers</span></span>
+                        </div>
+                        <div class="stat-card">
+                            <span class="stat-label">PING</span>
+                            <span class="stat-value">@(Client.Local?.Connection?.Ping ?? 0) <span class="stat-max">ms</span></span>
+                        </div>
+                    </div>
+
+                    <div class="info-body">
+                        <div class="player-profile">
+                            <div class="profile-header">
+                                <svg src="ui/icons/id.svg" color="white" />
+                                <span>Identité</span>
+                            </div>
+                            <div class="profile-row">
+                                <span class="profile-label">Nom</span>
+                                <span class="profile-value">@(Client.Local?.Data?.FirstName) @(Client.Local?.Data?.LastName)</span>
+                            </div>
+                            <div class="profile-row">
+                                <span class="profile-label">Naissance</span>
+                                <span class="profile-value">@(Client.Local?.Data?.BirthDate ?? "—")</span>
+                            </div>
+                            <div class="profile-row">
+                                <span class="profile-label">Métier</span>
+                                <span class="profile-value">@(Client.Local?.Data?.Job?.ToUpper() ?? "—")</span>
+                            </div>
+                            @if (!string.IsNullOrEmpty(Client.Local?.Data?.JobGrade))
+                            {
+                                <div class="profile-row">
+                                    <span class="profile-label">Grade</span>
+                                    <span class="profile-value">@Client.Local.Data.JobGrade</span>
+                                </div>
+                            }
+                            <div class="profile-row">
+                                <span class="profile-label">Temps de jeu</span>
+                                <span class="profile-value">@FormatPlaytime(Client.Local?.Data?.PlayTimeMinutes ?? 0)</span>
+                            </div>
+                            <div class="profile-row">
+                                <span class="profile-label">Banque</span>
+                                <span class="profile-value accent">@(Client.Local?.Data?.Bank.ToString("N0") ?? "0") $</span>
+                            </div>
+                        </div>
+
+                        <div class="server-info">
+                            <div class="profile-header">
+                                <svg src="ui/icons/settings.svg" color="white" />
+                                <span>Serveur</span>
+                            </div>
+                            <div class="profile-row">
+                                <span class="profile-label">Nom</span>
+                                <span class="profile-value">OpenFramework</span>
+                            </div>
+                            <div class="profile-row">
+                                <span class="profile-label">Joueurs</span>
+                                <span class="profile-value">@(GameUtils.AllPlayers.Count()) / @Networking.MaxPlayers</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            else if (CurrentTab == Tab.Players)
             {
                 <div class="players-panel">
                     <div class="players-header">
@@ -472,7 +558,7 @@
 </root>
 
 @code {
-    enum Tab { Players, Wiki, Map, Feedback, Admin }
+    enum Tab { Info, Players, Wiki, Map, Feedback, Admin, Quit }
 
     [ConVar( "core-feedback_webhook_url", Help = "URL du webhook Discord pour les feedbacks joueurs (vide = onglet désactivé)" )]
     public static string FeedbackWebhookUrl { get; set; } = "";
@@ -508,7 +594,7 @@
     private string MinimapPath => Renderer?.CurrentMinimapPath ?? "";
     private string MinimapImage => !string.IsNullOrWhiteSpace(Map.MapImageUrl) ? Map.MapImageUrl : MinimapPath;
     bool IsOpen = false;
-    Tab CurrentTab = Tab.Players;
+    Tab CurrentTab = Tab.Info;
 
     // ── Players ──
     private string GetPlayerStyle(Client client)
@@ -638,6 +724,14 @@
                 (a.title?.Contains(q, StringComparison.OrdinalIgnoreCase) ?? false) ||
                 (a.content?.Contains(q, StringComparison.OrdinalIgnoreCase) ?? false));
         }
+    }
+
+    string FormatPlaytime(int minutes)
+    {
+        var h = minutes / 60;
+        var m = minutes % 60;
+        if (h > 0) return $"{h}h {m:D2}m";
+        return $"{m}m";
     }
 
     string GetSummary(string content, int maxLength = 120)
@@ -1011,7 +1105,7 @@
             if (!IsOpen)
             {
                 SelectedArticle = null;
-                CurrentTab = Tab.Players;
+                CurrentTab = Tab.Info;
                 _contextMenuPlayer = null;
                 _adminBreadcrumb.Clear();
                 _adminRootItems.Clear();

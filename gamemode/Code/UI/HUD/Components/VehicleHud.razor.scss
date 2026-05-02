@@ -1,3 +1,5 @@
+@import "ui/Styles/Theme.scss";
+
 VehicleHud {
     position: absolute;
     bottom: 40px;
@@ -10,12 +12,11 @@ VehicleHud {
         padding: 14px 18px;
         gap: 10px;
         background-color: rgba(0, 0, 0, 0.55);
-        border-radius: 6px;
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.06);
+        border-radius: $rounding;
+        backdrop-filter: $blur;
+        border: 1px solid $border;
     }
 
-    // ── Top row : speed + gear ──
     .top-row {
         flex-direction: row;
         justify-content: space-between;
@@ -50,57 +51,45 @@ VehicleHud {
         .gear-value {
             font-size: 28px;
             font-weight: 900;
-            color: #ff8000;
+            color: $accent;
 
-            &.shifting {
-                opacity: 0.3;
-            }
+            &.shifting { opacity: 0.3; }
         }
     }
 
-    // ── RPM bar ──
     .rpm-block {
         width: 100%;
         height: 5px;
         background-color: rgba(255, 255, 255, 0.1);
-        border-radius: 3px;
+        border-radius: $rounding-sm;
         overflow: hidden;
 
         .rpm-bar-fill {
             height: 100%;
-            background-color: #ff8000;
+            background-color: $accent;
             transition: width 0.05s ease-out;
-            border-radius: 3px;
+            border-radius: $rounding-sm;
 
-            &.danger {
-                background-color: #ff3333;
-            }
+            &.danger { background-color: $red; }
         }
     }
 
-    // ── Fuel bar ──
     .fuel-block {
         width: 100%;
         height: 5px;
         background-color: rgba(255, 255, 255, 0.1);
-        border-radius: 3px;
+        border-radius: $rounding-sm;
         overflow: hidden;
 
         .fuel-bar-fill {
             height: 100%;
             transition: width 0.2s ease-out;
-            border-radius: 3px;
+            border-radius: $rounding-sm;
 
-            &.normal {
-                background-color: #33cc66;
-            }
-
-            &.low {
-                background-color: #ff3333;
-            }
-
+            &.normal { background-color: #33cc66; }
+            &.low { background-color: $red; }
             &.empty {
-                background-color: #ff3333;
+                background-color: $red;
                 opacity: 0.4;
             }
         }

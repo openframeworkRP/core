@@ -1,3 +1,5 @@
+@import "ui/Styles/Theme.scss";
+
 HudSystem {
     height: 100%;
     position: absolute;
@@ -9,7 +11,6 @@ HudSystem {
     justify-content: space-between;
     padding: 30px 0;
 
-    // --- HEADER (HAUT) ---
     .project_header {
         flex-direction: row;
         align-items: baseline;
@@ -26,12 +27,11 @@ HudSystem {
 
         .version {
             font-size: 12px;
-            color: #ff8000;
+            color: $accent;
             font-weight: 800;
         }
     }
 
-    // --- STACK DU BAS ---
     .bottom_stack {
         flex-direction: column;
         gap: 20px;
@@ -41,7 +41,7 @@ HudSystem {
             flex-direction: column;
             gap: 10px;
             padding-left: 15px;
-            border-left: 2px solid #ff8000;
+            border-left: 2px solid $accent;
 
             .data_item {
                 flex-direction: column;
@@ -49,7 +49,7 @@ HudSystem {
                 .title {
                     font-size: 10px;
                     font-weight: 800;
-                    color: #ff8000;
+                    color: $accent;
                     letter-spacing: 1px;
                 }
 
@@ -66,7 +66,6 @@ HudSystem {
             flex-direction: column;
             gap: 8px;
 
-            // ── Map + vehicle speed side by side ──
             .map_row {
                 flex-direction: row;
                 align-items: flex-end;
@@ -94,13 +93,12 @@ HudSystem {
                     right: -1px;
                     bottom: -1px;
                     border-radius: 50%;
-                    border: 2px solid #ff8000;
+                    border: 2px solid $accent;
                     opacity: 0.0;
                     z-index: 3;
                 }
             }
 
-            // ── Vehicle speed/gear à droite de la carte ──
             .vehicle_side {
                 flex-direction: column;
                 justify-content: flex-end;
@@ -112,12 +110,10 @@ HudSystem {
                     white-space: nowrap;
 
                     .gear {
-                        color: #ff8000;
+                        color: $accent;
                         font-weight: 900;
 
-                        &.shifting {
-                            opacity: 0.3;
-                        }
+                        &.shifting { opacity: 0.3; }
                     }
                 }
 
@@ -129,7 +125,6 @@ HudSystem {
                 }
             }
 
-            // ── Barres sous la carte (vitals + RPM) ──
             .bars_under_map {
                 width: 200px;
                 flex-direction: column;
@@ -149,25 +144,15 @@ HudSystem {
                             height: 100%;
                             transition: width 0.3s ease-out;
 
-                            &.hunger {
-                                background-color: #ff8000;
-                            }
-
-                            &.thirst {
-                                background-color: #00aaff;
-                            }
-
-                            &.stamina {
-                                background-color: #F5F5F5;
-                            }
+                            &.hunger { background-color: $accent; }
+                            &.thirst { background-color: #00aaff; }
+                            &.stamina { background-color: #F5F5F5; }
 
                             &.rpm {
-                                background-color: #ff8000;
+                                background-color: $accent;
                                 transition: width 0.05s ease-out;
 
-                                &.danger {
-                                    background-color: #ff3333;
-                                }
+                                &.danger { background-color: $red; }
                             }
 
                             &.fuel {
@@ -180,5 +165,4 @@ HudSystem {
             }
         }
     }
-
 }

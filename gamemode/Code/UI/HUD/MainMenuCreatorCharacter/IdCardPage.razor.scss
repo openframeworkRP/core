@@ -11,7 +11,7 @@ IdCardPage {
         top: 0;
         width: 28%;
         height: 100%;
-        background-color: rgba(5, 5, 7, 1);
+        background-color: $surface-card;
     }
 
     .id-card-container {
@@ -24,28 +24,32 @@ IdCardPage {
 
     .form-side {
         flex: 1;
-        padding: 40px;
+        padding: 32px;
         flex-direction: column;
-        gap: 10px;
+        gap: 12px;
 
         h1 {
-            font-size: 28px;
-            color: $creator-accent;
-            margin-bottom: 10px;
+            font-size: 24px;
+            color: $accent;
+            margin-bottom: 8px;
             width: 100%;
             justify-content: center;
             align-items: center;
-            font-weight: bold;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .input-group {
             flex-direction: column;
+            gap: 4px;
 
             label {
-                color: rgba(255, 255, 255, 0.5);
-                font-size: 12px;
+                color: rgba(255, 255, 255, 0.4);
+                font-size: 10px;
                 text-transform: uppercase;
-                margin-bottom: 4px;
+                letter-spacing: 1px;
+                font-weight: 700;
             }
 
             .flag-icon {
@@ -54,90 +58,87 @@ IdCardPage {
             }
 
             .date-hint {
-                color: rgba(255, 255, 255, 0.3);
-                font-size: 12px;
+                color: rgba(255, 255, 255, 0.25);
+                font-size: 11px;
                 margin-top: 2px;
             }
 
             TextEntry {
-                background-color: rgba(255, 255, 255, 0.06);
-                padding: 10px;
-                border-radius: 4px;
+                background-color: $surface-input;
+                padding: 9px 12px;
+                border-radius: $rounding;
                 color: white;
-                border: 1px solid $creator-glass-border;
+                border: 1px solid $border;
                 align-content: center;
+                transition: $transition-fast;
 
                 &:focus {
-                    border-color: $creator-accent;
+                    border-color: $accent;
+                    background-color: $surface-input-focus;
                 }
 
                 &.invalid {
-                    border-color: #ff4444;
-                    box-shadow: 0 0 5px rgba(255, 68, 68, 0.3);
+                    border-color: $red;
+                    box-shadow: 0 0 5px rgba($red, 0.25);
                 }
             }
 
             .custom-dropdown {
-                background-color: rgba(0, 0, 0, 0.4);
-                border: 1px solid $creator-glass-border;
-                border-radius: 4px;
+                background-color: rgba(0, 0, 0, 0.35);
+                border: 1px solid $border;
+                border-radius: $rounding;
                 padding: 8px 12px;
-                color: red;
                 font-family: $font-ui;
-                transition: all 0.2s ease;
+                transition: $transition-fast;
                 justify-content: center;
 
                 .option {
                     padding: 8px 12px;
-                    border-radius: 4px;
+                    border-radius: $rounding-sm;
                     margin: 2px;
-                    transition: all 0.1s ease;
+                    transition: $transition-fast;
 
-                    &:hover {
-                        background-color: rgba(white, 0.1);
-                    }
+                    &:hover { background-color: rgba(white, 0.08); }
 
                     &.active {
-                        background-color: $creator-accent;
+                        background-color: $accent;
                         color: white;
                     }
 
-                    label {
-                        font-size: 13px;
-                    }
+                    label { font-size: 13px; }
                 }
 
                 .text {
-                    font-size: 14px;
+                    font-size: 13px;
                     text-transform: uppercase;
                     letter-spacing: 1px;
                 }
 
                 .icon {
-                    color: $creator-accent;
+                    color: $accent;
                     align-items: center;
                 }
 
                 &:hover {
-                    background-color: rgba(255, 255, 255, 0.1);
-                    border-color: $creator-accent;
+                    background-color: rgba(255, 255, 255, 0.06);
+                    border-color: rgba($accent, 0.4);
                     cursor: pointer;
                 }
 
                 &.active {
-                    background-color: rgba(15, 15, 15, 0.95);
+                    background-color: $surface-dark;
                 }
             }
         }
 
         .dropdown_indicator {
-            color: $creator-accent;
+            color: $accent;
             font-size: 18px;
         }
 
         .error-msg {
-            color: red;
-            font-size: 12px;
+            color: $red;
+            font-size: 11px;
         }
     }
 
@@ -146,18 +147,22 @@ IdCardPage {
         bottom: 20px;
         left: 1.5%;
         width: 25%;
-        height: 45px;
-        background-color: $creator-accent;
+        height: 44px;
+        background-color: $accent;
         color: white;
-        font-size: 12px;
-        font-weight: bold;
+        font-size: 11px;
+        font-weight: 700;
         text-transform: uppercase;
-        border-radius: 4px;
+        letter-spacing: 0.5px;
+        border-radius: $rounding;
+        border: 1px solid transparent;
         justify-content: center;
         align-items: center;
+        transition: $transition-fast;
 
         &:hover {
-            background-color: $creator-accent-hover;
+            background-color: $accent-hover;
+            color: rgba(black, 0.8);
             cursor: pointer;
         }
     }

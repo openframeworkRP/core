@@ -13,7 +13,7 @@ CreatorPage {
         top: 0;
         width: 28%;
         height: 100%;
-        background-color: rgba(5, 5, 7, 1);
+        background-color: $surface-card;
     }
 
     .container {
@@ -29,43 +29,48 @@ CreatorPage {
         .sexe, .head {
             width: 100%;
             flex-direction: column;
-            gap: 12px;
+            gap: 10px;
 
             span {
-                font-size: 12px;
-                color: rgba(255, 255, 255, 0.4);
+                font-size: 11px;
+                color: rgba(255, 255, 255, 0.35);
                 text-transform: uppercase;
                 letter-spacing: 1.5px;
-                font-weight: bold;
+                font-weight: 700;
             }
 
             .button-row {
                 width: 100%;
-                gap: 10px;
+                gap: 8px;
                 flex-direction: row;
             }
 
             button {
                 flex: 1;
-                height: 40px;
-                background-color: rgba(255, 255, 255, 0.06);
-                color: rgba(255, 255, 255, 0.6);
-                border-radius: 4px;
+                height: 38px;
+                background-color: rgba(255, 255, 255, 0.05);
+                color: rgba(255, 255, 255, 0.5);
+                border-radius: $rounding;
                 align-items: center;
                 justify-content: center;
                 gap: 8px;
-                border: 1px solid $creator-glass-border;
-                font-size: 13px;
+                border: 1px solid $border;
+                font-size: 12px;
+                font-weight: 600;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+                transition: $transition-fast;
 
                 &.active {
-                    background-color: $creator-accent;
+                    background-color: $accent;
                     color: white;
-                    border-color: $creator-accent-hover;
+                    border-color: transparent;
                 }
 
                 &:hover:not(.active) {
                     background-color: rgba(255, 255, 255, 0.1);
-                    border-color: rgba($creator-accent, 0.5);
+                    border-color: rgba($accent, 0.4);
+                    color: white;
                 }
             }
         }
@@ -73,7 +78,7 @@ CreatorPage {
         .morphs {
             display: flex;
             flex-direction: column;
-            gap: 5px;
+            gap: 4px;
             width: 100%;
             overflow-y: scroll;
 
@@ -88,26 +93,28 @@ CreatorPage {
                     flex-direction: row;
                     justify-content: space-between;
                     align-items: center;
-                    font-size: 13px;
-                    color: rgba(255, 255, 255, 0.7);
-                    font-weight: bold;
+                    font-size: 12px;
+                    color: rgba(255, 255, 255, 0.6);
+                    font-weight: 700;
                     padding: 10px 12px;
-                    min-height: 40px;
-                    background-color: rgba(255, 255, 255, 0.06);
+                    min-height: 38px;
+                    background-color: rgba(255, 255, 255, 0.04);
                     cursor: pointer;
-                    border-radius: 4px;
-                    border: 1px solid $creator-glass-border;
-                    transition: all 0.2s;
+                    border-radius: $rounding;
+                    border: 1px solid $border;
+                    transition: $transition-fast;
                     flex-shrink: 0;
+                    text-transform: uppercase;
+                    letter-spacing: 0.5px;
 
                     .arrow {
-                        color: $creator-accent;
+                        color: $accent;
                         font-size: 10px;
                     }
 
                     &:hover {
-                        background-color: rgba(255, 255, 255, 0.1);
-                        border-color: rgba($creator-accent, 0.5);
+                        background-color: rgba(255, 255, 255, 0.08);
+                        border-color: rgba($accent, 0.3);
                         color: white;
                     }
                 }
@@ -128,19 +135,17 @@ CreatorPage {
 
                 &.active {
                     .section-subtitle {
-                        background-color: $creator-accent;
+                        background-color: $accent;
                         color: white;
-                        border-color: $creator-accent-hover;
+                        border-color: transparent;
 
-                        .arrow {
-                            color: white;
-                        }
+                        .arrow { color: white; }
                     }
 
                     .morph-list {
                         max-height: 500px;
                         opacity: 1;
-                        margin: 10px 0;
+                        margin: 8px 0;
                         pointer-events: all;
                         width: 100%;
                         overflow-y: scroll;
@@ -159,7 +164,7 @@ CreatorPage {
             flex-shrink: 0;
 
             label {
-                color: rgba(255, 255, 255, 0.5);
+                color: rgba(255, 255, 255, 0.45);
                 font-size: 11px;
                 text-transform: none;
             }
@@ -172,9 +177,9 @@ CreatorPage {
                 width: 100%;
 
                 .morph-value {
-                    color: $creator-accent;
+                    color: $accent;
                     font-size: 11px;
-                    font-weight: bold;
+                    font-weight: 700;
                     min-width: 35px;
                 }
             }
@@ -186,25 +191,21 @@ CreatorPage {
             align-items: center;
             overflow: visible;
 
-            .value, .tooltip, .label {
-                display: none;
-            }
+            .value, .tooltip, .label { display: none; }
 
             .track {
                 background-color: rgba(255, 255, 255, 0.08);
-                height: 6px;
-                border-radius: 3px;
+                height: 5px;
+                border-radius: $rounding-pill;
                 overflow: visible;
 
                 .inner {
-                    background-color: $creator-accent;
-                    border-radius: 3px;
+                    background-color: $accent;
+                    border-radius: $rounding-pill;
                 }
             }
 
-            .thumb {
-                display: none;
-            }
+            .thumb { display: none; }
         }
     }
 
@@ -216,23 +217,25 @@ CreatorPage {
         display: flex;
         flex-direction: row;
         gap: 8px;
-        height: 45px;
+        height: 44px;
     }
 
     .back-button {
         width: 30%;
-        background-color: rgba(255, 255, 255, 0.06);
-        color: rgba(255, 255, 255, 0.5);
-        font-size: 12px;
-        font-weight: bold;
-        border-radius: 4px;
+        background-color: rgba(255, 255, 255, 0.05);
+        color: rgba(255, 255, 255, 0.45);
+        font-size: 11px;
+        font-weight: 700;
+        border-radius: $rounding;
         text-transform: uppercase;
+        letter-spacing: 0.5px;
         justify-content: center;
         align-items: center;
-        border: 1px solid $creator-glass-border;
+        border: 1px solid $border;
+        transition: $transition-fast;
 
         &:hover {
-            background-color: rgba(255, 255, 255, 0.12);
+            background-color: rgba(255, 255, 255, 0.1);
             color: white;
             cursor: pointer;
         }
@@ -240,17 +243,21 @@ CreatorPage {
 
     .validate-button {
         width: 70%;
-        background-color: $creator-accent;
+        background-color: $accent;
         color: white;
-        font-size: 12px;
-        font-weight: bold;
-        border-radius: 4px;
+        font-size: 11px;
+        font-weight: 700;
+        border-radius: $rounding;
         text-transform: uppercase;
+        letter-spacing: 0.5px;
         justify-content: center;
         align-items: center;
+        border: 1px solid transparent;
+        transition: $transition-fast;
 
         &:hover {
-            background-color: $creator-accent-hover;
+            background-color: $accent-hover;
+            color: rgba(black, 0.8);
             cursor: pointer;
         }
     }
@@ -261,54 +268,54 @@ CreatorPage {
         right: 5%;
         display: flex;
         flex-direction: column;
-        gap: 12px;
+        gap: 10px;
 
         .control-group {
             display: flex;
             flex-direction: column;
             gap: 8px;
-            background-color: $creator-glass-bg;
-            padding: 12px;
-            border-radius: 8px;
-            border: 1px solid $creator-glass-border;
-            backdrop-filter: blur(20px);
+            background-color: $surface-dark;
+            padding: 10px;
+            border-radius: $rounding-lg;
+            border: 1px solid $border;
+            backdrop-filter: $blur;
 
             label {
-                color: $creator-accent;
-                font-size: 10px;
-                letter-spacing: 1px;
+                color: $accent;
+                font-size: 9px;
+                letter-spacing: 1.5px;
                 text-transform: uppercase;
-                font-weight: 800;
-                opacity: 0.9;
+                font-weight: 700;
             }
 
             .button-row {
                 display: flex;
-                gap: 8px;
+                gap: 6px;
             }
         }
 
         button {
-            width: 42px;
-            height: 42px;
+            width: 38px;
+            height: 38px;
             background-color: rgba(255, 255, 255, 0.05);
             color: white;
-            border-radius: 6px;
-            font-size: 18px;
+            border-radius: $rounding;
+            font-size: 16px;
             font-weight: bold;
-            border: 1px solid $creator-glass-border;
+            border: 1px solid $border;
             justify-content: center;
             align-items: center;
+            transition: $transition-fast;
 
             &:hover {
-                background-color: rgba(255, 255, 255, 0.15);
-                border: 1px solid rgba($creator-accent, 0.5);
+                background-color: rgba(255, 255, 255, 0.12);
+                border-color: rgba($accent, 0.4);
             }
 
             &:active {
-                background-color: $creator-accent;
+                background-color: $accent;
                 color: black;
-                transform: scale(0.92);
+                transform: scale(0.94);
             }
         }
     }

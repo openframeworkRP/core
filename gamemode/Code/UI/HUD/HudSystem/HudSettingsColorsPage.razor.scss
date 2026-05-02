@@ -1,3 +1,5 @@
+@import "ui/Styles/Theme.scss";
+
 HudSettingsColorsPage {
     height: 100%;
     width: 100%;
@@ -6,15 +8,15 @@ HudSettingsColorsPage {
     ul {
         gap: 5px;
         flex-wrap: wrap;
-        background-color: rgba(20, 20, 20, 0.99);
+        background-color: $surface-dark;
         padding: 5px;
 
         li {
             height: 32px;
             width: 32px;
-            border-radius: 6px;
+            border-radius: $rounding;
             opacity: 0.5;
-            transition: all 0.2s ease;
+            transition: $transition-fast;
 
             &:hover {
                 opacity: 1;
@@ -24,6 +26,6 @@ HudSettingsColorsPage {
     }
 
     .auto_hide {
-        background-color: rgba(20, 20, 20, 0.99);
+        background-color: $surface-dark;
     }
 }

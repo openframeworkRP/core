@@ -1,13 +1,13 @@
-FlashbangOverlay
-{
+@import "ui/Styles/Theme.scss";
+
+FlashbangOverlay {
     position: absolute;
     width: 100%;
     height: 100%;
 
-    .overlay
-    {
+    .overlay {
         position: absolute;
-        background-color: rgb( 255, 255, 255, 1 );
+        background-color: rgb(255, 255, 255, 1);
         width: 100%;
         height: 100%;
     }

@@ -1,5 +1,4 @@
-$accent: #D66D2D;
-$accent-glow: rgba(214, 109, 45, 0.4);
+@import "ui/Styles/Theme.scss";
 
 TaskTrackerHud {
     position: absolute;
@@ -10,9 +9,7 @@ TaskTrackerHud {
     pointer-events: none;
     transition: opacity 1s ease;
 
-    &.fade-out {
-        opacity: 0;
-    }
+    &.fade-out { opacity: 0; }
 
     .task-header {
         display: flex;
@@ -61,9 +58,7 @@ TaskTrackerHud {
                 color: rgba(255, 255, 255, 0.3);
                 text-decoration: line-through;
 
-                .step-hint {
-                    color: rgba(255, 255, 255, 0.15);
-                }
+                .step-hint { color: rgba(255, 255, 255, 0.15); }
             }
         }
     }

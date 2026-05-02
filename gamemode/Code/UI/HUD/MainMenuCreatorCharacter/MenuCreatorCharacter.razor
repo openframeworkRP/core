@@ -6,48 +6,15 @@
 
 <root>
     <div class="navbar @(IsHidingUI ? "hidden" : "")">
-        @* �tape 1 : Identit� *@
-        <div class="step-container @(Step >= 1 ? "active" : "")" onclick="@(() => GoToStep("/"))">
-            <div class="icon-box">
-                <svg src="ui/icons/id.svg" />
-            </div>
-            <label>Identite</label>
-        </div>
-        <div class="path @(Step >= 2 ? "active" : "")"></div>
-        
-        @* �tape 2 : Corpus *@
-        <div class="step-container @(Step >= 2 ? "active" : "")" onclick="@(() => GoToStep("/corpus"))">
-            <div class="icon-box">
-                <svg src="ui/icons/human.svg" />
-            </div>
-            <label>Corps</label>
-        </div>
-        <div class="path @(Step >= 3 ? "active" : "")"></div>
-        
-        @* �tape 3 : Apparence *@
-        <div class="step-container @(Step >= 3 ? "active" : "")" onclick="@(() => GoToStep("/apparence"))">
-            <div class="icon-box">
-                <svg src="ui/icons/cloth.svg" />
-            </div>
-            <label>Apparence</label>
-        </div>
-        <div class="path @(Step >= 4 ? "active" : "")"></div>
-
-        @* �tape 4 : Validation *@
-        <div class="step-container @(Step >= 4 ? "active" : "")" onclick="@(() => GoToStep("/validation"))">
-            <div class="icon-box">
-                <svg src="ui/icons/success.svg" />
-            </div>
-            <label>Validation</label>
-        </div>
-        <div class="path @(Step >= 5 ? "active" : "")"></div>
-
-        <div class="step-container @(Step >= 5 ? "active" : "")" onclick="@(() => GoToStep("/regles"))">
-            <div class="icon-box">
-                <svg src="ui/icons/id.svg" />
-            </div>
-            <label>Regles</label>
-        </div>
+        <div class="step-dot @(Step >= 1 ? "active" : "")" onclick="@(() => GoToStep("/"))"></div>
+        <div class="step-path @(Step >= 2 ? "active" : "")"></div>
+        <div class="step-dot @(Step >= 2 ? "active" : "")" onclick="@(() => GoToStep("/corpus"))"></div>
+        <div class="step-path @(Step >= 3 ? "active" : "")"></div>
+        <div class="step-dot @(Step >= 3 ? "active" : "")" onclick="@(() => GoToStep("/apparence"))"></div>
+        <div class="step-path @(Step >= 4 ? "active" : "")"></div>
+        <div class="step-dot @(Step >= 4 ? "active" : "")" onclick="@(() => GoToStep("/validation"))"></div>
+        <div class="step-path @(Step >= 5 ? "active" : "")"></div>
+        <div class="step-dot @(Step >= 5 ? "active" : "")" onclick="@(() => GoToStep("/regles"))"></div>
     </div>
 
     @* C'est ici que tes pages (IdCardPage, etc.) s'afficheront *@

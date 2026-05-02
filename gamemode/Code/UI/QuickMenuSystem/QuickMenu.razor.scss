@@ -1,6 +1,5 @@
 @import "/UI/Styles/Theme.scss";
 
-// Le root doit être en position absolute pour ne pas bloquer tout l'écran
 QuickMenu {
     position: absolute;
     top: 30px;
@@ -10,14 +9,13 @@ QuickMenu {
     display: none;
     flex-direction: column;
     z-index: 100;
-    // Animation S&box
     opacity: 0;
     transform: translateX(-30px);
     transition: opacity 0.2s ease-in, transform 0.2s ease-out;
 
     &.open {
         opacity: 1;
-        display:flex;
+        display: flex;
         transform: translateX(0px);
     }
 
@@ -26,10 +24,10 @@ QuickMenu {
         display: flex;
         flex-direction: column;
         background-color: rgba(0, 0, 0, 0.85);
-        backdrop-filter: blur(20px);
-        border-left: 5px solid #eb5e28;
+        backdrop-filter: $blur;
+        border-left: 3px solid $accent;
         box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
-        border-radius: 0px; // Cubique strict
+        border-radius: $rounding-lg;
         overflow: hidden;
 
         .core_logo {
@@ -37,34 +35,29 @@ QuickMenu {
             opacity: 0.8;
         }
 
-        // La bannière de fond derrière le titre (plus petite comme demandé)
         .background {
             position: absolute;
             top: 0;
             width: 100%;
-            height: 120px; // Taille réduite pour le style "Bannière"
+            height: 120px;
             opacity: 0.4;
             z-index: -1;
             background-size: cover;
             background-position: center;
-            // mask-image est supporté en S2 pour des effets de fondu
         }
 
         .page-indicator {
             position: absolute;
             top: 5px;
             right: 10px;
-
-            * {
-                font-size: 10px;
-            }
-
             color: rgba(255, 255, 255, 0.4);
             text-transform: uppercase;
+
+            * { font-size: 10px; }
         }
 
         .title {
-            width:100%;
+            width: 100%;
             padding: 20px 15px;
             font-family: $font-ui;
             font-weight: 900;
@@ -74,9 +67,9 @@ QuickMenu {
             color: white;
             display: flex;
             flex-direction: column;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            justify-content:center;
-            align-items:center;
+            border-bottom: 1px solid $border;
+            justify-content: center;
+            align-items: center;
 
             .subtitle {
                 font-size: 11px;
@@ -84,7 +77,7 @@ QuickMenu {
                 opacity: 0.7;
                 letter-spacing: 1px;
                 margin-top: 2px;
-                color: #eb5e28; // Accentuation sur le sous-titre
+                color: $accent;
             }
         }
 
@@ -93,7 +86,7 @@ QuickMenu {
             flex-direction: column;
             width: 100%;
             padding: 5px 0;
-            overflow-y: scroll; // Requis pour s&box au lieu de auto
+            overflow-y: scroll;
             gap: 2px;
 
             .item {
@@ -103,8 +96,8 @@ QuickMenu {
                 align-items: center;
                 padding: 12px 15px;
                 background-color: rgba(255, 255, 255, 0.03);
-                transition: all 0.1s ease;
-                border-left: 0px solid #eb5e28;
+                transition: $transition-fast;
+                border-left: 0px solid $accent;
 
                 .label {
                     font-size: 14px;
@@ -124,17 +117,12 @@ QuickMenu {
                 }
 
                 &.hovered {
-                    background-color: rgba(255, 255, 255, 0.1);
-                    border-left: 6px solid #eb5e28;
+                    background-color: rgba(255, 255, 255, 0.08);
+                    border-left: 4px solid $accent;
                     padding-left: 20px;
 
-                    .label {
-                        color: white;
-                    }
-
-                    .arrow {
-                        opacity: 1;
-                    }
+                    .label { color: white; }
+                    .arrow { opacity: 1; }
                 }
 
                 &.disabled {
@@ -142,7 +130,7 @@ QuickMenu {
 
                     .label {
                         opacity: 0.4;
-                        color: #ff5555;
+                        color: $red;
                     }
 
                     .disabled_pattern {
@@ -162,19 +150,16 @@ QuickMenu {
 
         .footer {
             margin-top: auto;
-            //background-color: rgba(0, 0, 0, 0.85);
-            //background-color: rgba(red);
             display: flex;
             flex-direction: column;
             padding: 15px;
             gap: 10px;
             height: 100px;
-            //border-top: 2px solid rgba(255, 255, 255, 0.05);
 
             .row {
                 display: flex;
                 flex-direction: row;
-                justify-content: flex-start; // On aligne à gauche pour un look liste
+                justify-content: flex-start;
                 gap: 15px;
                 width: 100%;
             }
@@ -183,36 +168,29 @@ QuickMenu {
                 display: flex;
                 align-items: center;
                 gap: 8px;
-                min-width: 85px; // Assure un alignement constant
-                // Le carré de la touche
+                min-width: 85px;
+
                 span:first-child {
                     background-color: #ffffff;
                     color: #000000;
-                    // Dimensions fixes pour éviter l'effet "dégu...lasse"
                     width: 24px;
                     height: 24px;
-                    // Centrage parfait du contenu (flèches/icones)
                     display: flex;
                     align-items: center;
                     justify-content: center;
+                    border-radius: $rounding-sm;
+                    box-shadow: 0 2px 0px #999;
 
-                    * {
-                        font-size: 14px;
-                    }
-
-                    border-radius: 4px;
-                    box-shadow: 0 2px 0px #999; // Effet relief touche
+                    * { font-size: 14px; }
                 }
-                // Le texte descriptif
-                span:last-child {
-                    * {
-                        font-size: 11px;
-                    }
 
+                span:last-child {
                     font-weight: 800;
                     color: rgba(255, 255, 255, 0.7);
                     text-transform: uppercase;
                     letter-spacing: 0.5px;
+
+                    * { font-size: 11px; }
                 }
             }
         }
