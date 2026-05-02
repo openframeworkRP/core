@@ -2092,7 +2092,7 @@
       "__version": 2,
       "Flags": 0,
       "Name": "Camera",
-      "Position": "47.8273697,2.51431811E-06,25",
+      "Position": "58,0,38",
       "Rotation": "0,0,1,-4.37113883E-08",
       "Scale": "1,1,1",
       "Tags": "maincamera",
