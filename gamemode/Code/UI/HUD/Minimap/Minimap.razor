@@ -1,8 +1,12 @@
-﻿@namespace Facepunch
+﻿@using OpenFramework.Systems.Gps
+@using OpenFramework.Inventory
+
+@namespace Facepunch
 @attribute [StyleSheet]
 @inherits Panel
 
 @if ( !Client.Viewer.Pawn.IsValid() ) return;
+@if ( !GpsItemSystem.IsMinimapEnabled ) return;
 
 <root>
     @if (Renderer.IsValid())
@@ -74,6 +78,9 @@
 
     public override void Tick()
     {
+        if ( GpsItemSystem.IsMinimapEnabled && !HasGpsItem() )
+            GpsItemSystem.Disable();
+
         if ( _elementRefreshTimer > 1f )
         {
             _cachedElements.Clear();
@@ -81,6 +88,12 @@
                 _cachedElements.Add( e );
             _elementRefreshTimer = 0;
         }
+    }
+
+    private bool HasGpsItem()
+    {
+        var inv = Player?.Components.Get<InventoryContainer>( FindMode.EnabledInSelfAndChildren );
+        return inv?.Items.Any( x => x.Metadata?.ResourceName == "gps" ) ?? false;
     }
 
     private PlayerPawn Player => Client.Viewer.PlayerPawn;

@@ -4,6 +4,7 @@
 @using OpenFramework.Systems
 @using OpenFramework.Systems.Jobs
 @using OpenFramework.Systems.Vehicles
+@using OpenFramework.Systems.Gps
 @using OpenFramework.UI.Components
 @using Facepunch.UI
 @inherits Panel
@@ -33,7 +34,7 @@
 
         <div class="map_section">
             <div class="map_row">
-                @if (!hideMap && HudSettingsUI.ShowMinimap)
+                @if (!hideMap && HudSettingsUI.ShowMinimap && GpsItemSystem.IsMinimapEnabled)
                 {
                     <div class="minimap_circle">
                         <Minimap class="minimap_render" />

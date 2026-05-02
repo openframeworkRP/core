@@ -1,0 +1,10 @@
+{
+  "Name": "GPS",
+  "Description": "Appareil GPS portable. Clic droit pour activer/désactiver la minimap.",
+  "IsEnabled": true,
+  "Weight": 0.2,
+  "MaxStack": 1,
+  "Price": 500,
+  "__references": [],
+  "__version": 0
+}

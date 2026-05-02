@@ -3,6 +3,7 @@
 @using OpenFramework.Systems.Weapons
 @using OpenFramework.Systems.Pawn
 @using OpenFramework.Systems.Tools
+@using OpenFramework.Systems.Gps
 @inherits Panel
 
 <div class="overlay" @onclick=@(() => Delete()) onrightclick=@(() => Delete())></div>
@@ -117,6 +118,14 @@
 
         @if (!IsRemote)
         {
+            @if (Item.Metadata?.ResourceName == "gps")
+            {
+                <button class="action-btn primary" onclick=@OnToggleGps>
+                    <span class="icon">📡</span>
+                    <span class="btn-text">@(GpsItemSystem.IsMinimapEnabled ? "DÉSACTIVER GPS" : "ACTIVER GPS")</span>
+                </button>
+            }
+
             @if (Item.Metadata.IsMagazine && Item.MagAmmo < Item.Metadata.MagCapacity && HasCompatibleAmmoSource)
             {
                 <button class="action-btn primary" onclick=@OnFillMagazine>
@@ -280,6 +289,14 @@
             if (pawn == null) return false;
             return pawn.Inventory.Equipment.Any(e => e.LinkedItem == Item);
         }
+    }
+
+    // ── GPS ──────────────────────────────────────
+
+    void OnToggleGps()
+    {
+        GpsItemSystem.Toggle();
+        Delete();
     }
 
     // ── Remplir chargeur ─────────────────────────
