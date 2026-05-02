@@ -28,14 +28,7 @@
                     <span>Notification de vote</span>
                     <div class="toggle @(ShowVoteNotification ? "on" : "")"><div class="knob" /></div>
                 </div>
-                <div class="toggle-row" @onclick=@(() => ShowHungerThirst = !ShowHungerThirst)>
-                    <span>Barres Faim / Soif</span>
-                    <div class="toggle @(ShowHungerThirst ? "on" : "")"><div class="knob" /></div>
-                </div>
-                <div class="toggle-row" @onclick=@(() => ShowStamina = !ShowStamina)>
-                    <span>Barre de Sprint</span>
-                    <div class="toggle @(ShowStamina ? "on" : "")"><div class="knob" /></div>
-                </div>
+
             </div>
         </div>
 
@@ -107,8 +100,6 @@
     public static HudSettingsUI Instance { get; private set; }
 
     public static bool ShowMinimap { get; set; } = true;
-    public static bool ShowHungerThirst { get; set; } = true;
-    public static bool ShowStamina { get; set; } = true;
     public static bool ShowVehicleRpm { get; set; } = true;
     public static bool ShowVehicleFuel { get; set; } = true;
     public static bool ShowVehicleSpeed { get; set; } = true;
@@ -164,9 +155,9 @@
     protected override int BuildHash()
     {
         return HashCode.Combine(
-            HashCode.Combine(IsOpen, ShowMinimap, ShowHungerThirst, ShowStamina),
+            HashCode.Combine(IsOpen, ShowMinimap, ShowVoteNotification, CinematicMode),
             HashCode.Combine(ShowVehicleRpm, ShowVehicleFuel, ShowVehicleSpeed, ShowVehicleOdometer),
-            HashCode.Combine(ShowVoteNotification, CinematicMode, EnableCulling, CullingDistance)
+            HashCode.Combine(EnableCulling, CullingDistance)
         );
     }
 }

@@ -64,21 +64,6 @@
             </div>
 
             <div class="bars_under_map">
-                @if (HudSettingsUI.ShowHungerThirst)
-                {
-                    <div class="bar_row">
-                        <div class="bar_container"><div class="bar_fill hunger" style="width: @(Self.Data.Hunger)%"></div></div>
-                    </div>
-                    <div class="bar_row">
-                        <div class="bar_container"><div class="bar_fill thirst" style="width: @(Self.Data.Thirst)%"></div></div>
-                    </div>
-                }
-                @if (!inVehicle && HudSettingsUI.ShowStamina)
-                {
-                    <div class="bar_row">
-                        <div class="bar_container"><div class="bar_fill stamina" style="width: @(Self.Data.Stamina)%"></div></div>
-                    </div>
-                }
                 @if (inVehicle)
                 {
                     @{

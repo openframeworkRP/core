@@ -50,6 +50,21 @@
                 </div>
             </div>
 
+            @{
+                var _hunger = Client.Local?.Data?.Hunger ?? 100f;
+                var _thirst = Client.Local?.Data?.Thirst ?? 100f;
+                string HungerClass() => _hunger < 25f ? "critical" : _hunger < 50f ? "warning" : "ok";
+                string ThirstClass() => _thirst < 25f ? "critical" : _thirst < 50f ? "warning" : "ok";
+            }
+            <div class="needs-status">
+                <div class="need-icon @HungerClass()">
+                    <svg src="ui/icons/hunger.svg" />
+                </div>
+                <div class="need-icon @ThirstClass()">
+                    <svg src="ui/icons/thirst.svg" />
+                </div>
+            </div>
+
             <div class="hotbar-area">
                 <div class="divider">
                     <div class="bar"></div>
@@ -724,14 +739,20 @@
         }
     }
 
+    static int NeedsBucket( float v ) => v < 25f ? 2 : v < 50f ? 1 : 0;
+
     protected override int BuildHash() => HashCode.Combine(
-        IsOpen,
-        NearbyContainer,
-        NearbyContainer?.Items?.Count(),
-        NearbyContainer?.CurrentWeight,
-        Container?.CurrentWeight,
-        ClothingContainer?.Items?.Count(),
-        Container?.Items?.Count(),
-        EquipmentHash
+        HashCode.Combine(
+            IsOpen,
+            NearbyContainer,
+            NearbyContainer?.Items?.Count(),
+            NearbyContainer?.CurrentWeight,
+            Container?.CurrentWeight,
+            ClothingContainer?.Items?.Count(),
+            Container?.Items?.Count(),
+            EquipmentHash
+        ),
+        NeedsBucket( Client.Local?.Data?.Hunger ?? 100f ),
+        NeedsBucket( Client.Local?.Data?.Thirst ?? 100f )
     );
 }

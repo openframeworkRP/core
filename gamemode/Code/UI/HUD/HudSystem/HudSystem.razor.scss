@@ -144,10 +144,6 @@ HudSystem {
                             height: 100%;
                             transition: width 0.3s ease-out;
 
-                            &.hunger { background-color: $accent; }
-                            &.thirst { background-color: #00aaff; }
-                            &.stamina { background-color: #F5F5F5; }
-
                             &.rpm {
                                 background-color: $accent;
                                 transition: width 0.05s ease-out;

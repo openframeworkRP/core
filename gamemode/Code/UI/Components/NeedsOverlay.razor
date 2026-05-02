@@ -1,0 +1,94 @@
+@namespace OpenFramework.UI
+@attribute [StyleSheet]
+@inherits Panel
+
+@if (Client.Local?.PlayerPawn?.HealthComponent?.State != LifeState.Alive)
+    return;
+
+<root>
+    <div @ref="_hungerOverlay" class="overlay hunger_overlay" />
+    <div @ref="_thirstOverlay" class="overlay thirst_overlay" />
+    <div @ref="_exhaustOverlay" class="overlay exhaust_overlay" />
+</root>
+
+@code {
+    Panel _hungerOverlay;
+    Panel _thirstOverlay;
+    Panel _exhaustOverlay;
+
+    float _lastHunger = -1f;
+    float _lastThirst = -1f;
+    bool _lastExhausted = false;
+    float _exhaustFlash = 0f;
+
+    Client Self => Client.Local;
+
+    float HungerOpacity()
+    {
+        var hunger = Self?.Data?.Hunger ?? 100f;
+        if (hunger >= 50f) return 0f;
+        var t = 1f - (hunger / 50f);
+        var pulse = (MathF.Cos(Time.Now * 1.5f) / 2f + 0.5f) * t * 0.12f;
+        return t * 0.30f + pulse;
+    }
+
+    float ThirstOpacity()
+    {
+        var thirst = Self?.Data?.Thirst ?? 100f;
+        if (thirst >= 50f) return 0f;
+        var t = 1f - (thirst / 50f);
+        var pulse = (MathF.Cos(Time.Now * 1.5f + 1.2f) / 2f + 0.5f) * t * 0.12f;
+        return t * 0.30f + pulse;
+    }
+
+    public override void Tick()
+    {
+        if (Self == null) return;
+
+        var hunger = Self?.Data?.Hunger ?? 100f;
+        var thirst = Self?.Data?.Thirst ?? 100f;
+        var exhausted = Self?.PlayerPawn?.IsExhausted ?? false;
+
+        if (_lastHunger >= 0f)
+        {
+            TryPlayThresholdSound( _lastHunger, hunger, 50f, "sounds/ui/hunger_warn.sound" );
+            TryPlayThresholdSound( _lastHunger, hunger, 25f, "sounds/ui/hunger_critical.sound" );
+        }
+
+        if (_lastThirst >= 0f)
+        {
+            TryPlayThresholdSound( _lastThirst, thirst, 50f, "sounds/ui/thirst_warn.sound" );
+            TryPlayThresholdSound( _lastThirst, thirst, 25f, "sounds/ui/thirst_critical.sound" );
+        }
+
+        if (exhausted && !_lastExhausted)
+        {
+            _exhaustFlash = 1f;
+            TryPlayThresholdSound( 100f, 0f, 50f, "sounds/ui/exhaustion.sound" );
+        }
+
+        _lastHunger = hunger;
+        _lastThirst = thirst;
+        _lastExhausted = exhausted;
+
+        _exhaustFlash = MathF.Max(0f, _exhaustFlash - Time.Delta * 3f);
+
+        if (_hungerOverlay.IsValid())
+            _hungerOverlay.Style.Opacity = HungerOpacity();
+
+        if (_thirstOverlay.IsValid())
+            _thirstOverlay.Style.Opacity = ThirstOpacity();
+
+        if (_exhaustOverlay.IsValid())
+            _exhaustOverlay.Style.Opacity = _exhaustFlash;
+    }
+
+    static void TryPlayThresholdSound( float last, float current, float threshold, string path )
+    {
+        if (last > threshold && current <= threshold)
+        {
+            var sound = ResourceLibrary.Get<SoundEvent>( path );
+            if (sound != null) Sound.Play( sound );
+        }
+    }
+}
