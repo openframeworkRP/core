@@ -9,17 +9,20 @@
     <div @ref="_hungerOverlay" class="overlay hunger_overlay" />
     <div @ref="_thirstOverlay" class="overlay thirst_overlay" />
     <div @ref="_exhaustOverlay" class="overlay exhaust_overlay" />
+    <div @ref="_sprintOverlay" class="overlay sprint_overlay" />
 </root>
 
 @code {
     Panel _hungerOverlay;
     Panel _thirstOverlay;
     Panel _exhaustOverlay;
+    Panel _sprintOverlay;
 
     float _lastHunger = -1f;
     float _lastThirst = -1f;
     bool _lastExhausted = false;
     float _exhaustFlash = 0f;
+    float _sprintBlur = 0f;
 
     Client Self => Client.Local;
 
@@ -73,6 +76,13 @@
 
         _exhaustFlash = MathF.Max(0f, _exhaustFlash - Time.Delta * 3f);
 
+        // Flou de sprint : rampe de 0 à 80% de stamina, uniquement en courant
+        var stamina = Self?.Data?.Stamina ?? 100f;
+        bool sprinting = Input.Down("Run") && !(Self?.PlayerPawn?.IsExhausted ?? false);
+        float sprintTarget = sprinting ? MathF.Max(0f, 1f - stamina / 80f) * 0.75f : 0f;
+        float lerpSpeed = sprintTarget > _sprintBlur ? 5f : 3f;
+        _sprintBlur = MathF.Lerp(_sprintBlur, sprintTarget, Time.Delta * lerpSpeed);
+
         if (_hungerOverlay.IsValid())
             _hungerOverlay.Style.Opacity = HungerOpacity();
 
@@ -81,6 +91,9 @@
 
         if (_exhaustOverlay.IsValid())
             _exhaustOverlay.Style.Opacity = _exhaustFlash;
+
+        if (_sprintOverlay.IsValid())
+            _sprintOverlay.Style.Opacity = _sprintBlur;
     }
 
     static void TryPlayThresholdSound( float last, float current, float threshold, string path )
