@@ -1,5 +1,5 @@
 {
-  "Name": "Planche d\u0027Assemblage",
+  "Name": "Planche d'Assemblage",
   "Description": "Planche en bois pour assembler les burgers couche par couche.",
   "IsEnabled": true,
   "Price": 350,
@@ -74,7 +74,7 @@
   "CanHeal": false,
   "HealAmount": 1,
   "__references": [
-    "openframework.smcookingtools01j#205114"
+    "openframework.smcookingtools01j#225613"
   ],
   "__version": 0,
   "Icon": "ui/item_icons/rfs_assembly_plank.png"

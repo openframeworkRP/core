@@ -5,7 +5,7 @@
     "Flags": 0,
     "Name": "rfs_whole_tomato",
     "Position": "0,0,0",
-    "Rotation": "0,0,0,1",
+    "Rotation": "0,0,0,0.99999994",
     "Scale": "1,1,1",
     "Tags": "grab,actionmenu,rfs_ingredient",
     "Enabled": true,
@@ -26,7 +26,7 @@
         "MaterialGroup": null,
         "MaterialOverride": null,
         "Materials": null,
-        "Model": "pr/tomato_full_01.vmdl",
+        "Model": "models/ingredients/tomato/tomato.vmdl",
         "OnComponentDestroy": null,
         "OnComponentDisabled": null,
         "OnComponentEnabled": null,
@@ -51,7 +51,7 @@
         "Elasticity": null,
         "Friction": null,
         "IsTrigger": false,
-        "Model": "pr/tomato_full_01.vmdl",
+        "Model": "models/ingredients/tomato/tomato.vmdl",
         "OnComponentDestroy": null,
         "OnComponentDisabled": null,
         "OnComponentEnabled": null,
@@ -120,7 +120,7 @@
         "OnComponentStart": null,
         "OnComponentUpdate": null,
         "RawCalories": 30,
-        "RawModel": "pr/tomato_full_01.vmdl",
+        "RawModel": "models/ingredients/tomato/tomato.vmdl",
         "RawTint": "1,1,1,1",
         "SourceType": "WholeTomato"
       },
@@ -197,7 +197,7 @@
   "MenuIcon": null,
   "DontBreakAsTemplate": false,
   "__references": [
-    "openframework.tomatofull01#221932"
+    "fish.hs_tomato#89731"
   ],
   "__version": 2
 }

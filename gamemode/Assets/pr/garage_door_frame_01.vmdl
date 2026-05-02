@@ -11,6 +11,18 @@
 				bone_cull_type = "None"
 			},
 			{
+				_class = "MaterialGroupList"
+				children =
+				[
+					{
+						_class = "DefaultMaterialGroup"
+						remaps = [  ]
+						use_global_default = true
+						global_default_material = "pr/materials/garage_door_frame_01.vmat"
+					},
+				]
+			},
+			{
 				_class = "RenderMeshList"
 				children = 
 				[

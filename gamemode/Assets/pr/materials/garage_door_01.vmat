@@ -1,0 +1,11 @@
+"Layer0"
+{
+	"shader"		"shaders/complex.shader"
+	"TextureColor"		"pr/textures/garage_door_01_color.png"
+	"TextureNormal"		"pr/textures/garage_door_01_normal.png"
+	"TextureAmbientOcclusion"		"pr/textures/garage_door_01_ao.png"
+	"g_flAmbientOcclusionDirectDiffuse"		"0.000000"
+	"g_flAmbientOcclusionDirectSpecular"		"0.000000"
+	"g_flModelTintAmount"		"1.000000"
+	"g_vColorTint"		"[1.000000 1.000000 1.000000 0.000000]"
+}

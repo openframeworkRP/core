@@ -26,7 +26,7 @@
         "MaterialGroup": null,
         "MaterialOverride": null,
         "Materials": null,
-        "Model": "pr/potato_01.vmdl",
+        "Model": "models/rawcatalog/potatoes/potato1.vmdl",
         "OnComponentDestroy": null,
         "OnComponentDisabled": null,
         "OnComponentEnabled": null,
@@ -51,7 +51,7 @@
         "Elasticity": null,
         "Friction": null,
         "IsTrigger": false,
-        "Model": "pr/potato_01.vmdl",
+        "Model": "models/rawcatalog/potatoes/potato1.vmdl",
         "OnComponentDestroy": null,
         "OnComponentDisabled": null,
         "OnComponentEnabled": null,
@@ -120,7 +120,7 @@
         "OnComponentStart": null,
         "OnComponentUpdate": null,
         "RawCalories": 30,
-        "RawModel": "pr/potato_01.vmdl",
+        "RawModel": "models/rawcatalog/potatoes/potato1.vmdl",
         "RawTint": "1,1,1,1",
         "SourceType": "WholePotato"
       },
@@ -171,7 +171,7 @@
   "MenuIcon": null,
   "DontBreakAsTemplate": false,
   "__references": [
-    "openframework.potato01#221995"
+    "titanovsky.potato1#53805"
   ],
   "__version": 2
 }

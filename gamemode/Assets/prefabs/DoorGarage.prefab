@@ -5,7 +5,7 @@
     "Flags": 0,
     "Name": "doorgarage",
     "Position": "0,0,0",
-    "Rotation": "0,0,0.707106709,0.707106829",
+    "Rotation": "7.30784766E-09,8.8817842E-16,0.999999881,2.98023224E-08",
     "Scale": "1,1,1",
     "Tags": "noblockaudio,actionmenu",
     "Enabled": true,
@@ -92,7 +92,9 @@
         "CanBePurchased": true,
         "CloseFinishedSound": null,
         "CloseSound": null,
-        "DoorsList": [],
+        "DoorsList": [
+          null
+        ],
         "JobName": null,
         "KnockSound": null,
         "LockSound": null,
@@ -110,7 +112,7 @@
           "_type": "gameobject",
           "go": "a84c7c07-8222-4848-bb4c-1cba076b292f"
         },
-        "Price": 500,
+        "Price": 350,
         "UnlockSound": null
       }
     ],
@@ -120,8 +122,8 @@
         "__version": 2,
         "Flags": 0,
         "Name": "Panel",
-        "Position": "0,0,0",
-        "Rotation": "-1.46156971E-08,-2.21193887E-15,-1,1.94707169E-07",
+        "Position": "1.41796899,8.45175521E-08,0",
+        "Rotation": "-6.33841954E-16,-1.46156971E-08,-3.89414367E-07,-1",
         "Scale": "1,1,1",
         "Tags": "",
         "Enabled": true,
@@ -214,9 +216,6 @@
   "MenuPath": null,
   "MenuIcon": null,
   "DontBreakAsTemplate": false,
-  "__references": [
-    "openframework.garagedoor01#206213",
-    "openframework.garagedoorframe01#206247"
-  ],
+  "__references": [],
   "__version": 2
 }

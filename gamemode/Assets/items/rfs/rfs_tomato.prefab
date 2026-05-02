@@ -26,7 +26,7 @@
         "MaterialGroup": null,
         "MaterialOverride": null,
         "Materials": null,
-        "Model": "pr/tomato_slice_01.vmdl",
+        "Model": "models/ingredients/tomato/tomato_slice.vmdl",
         "OnComponentDestroy": null,
         "OnComponentDisabled": null,
         "OnComponentEnabled": null,
@@ -51,7 +51,7 @@
         "Elasticity": null,
         "Friction": null,
         "IsTrigger": false,
-        "Model": "pr/tomato_slice_01.vmdl",
+        "Model": "models/ingredients/tomato/tomato_slice.vmdl",
         "OnComponentDestroy": null,
         "OnComponentDisabled": null,
         "OnComponentEnabled": null,
@@ -120,7 +120,7 @@
         "OnComponentStart": null,
         "OnComponentUpdate": null,
         "RawCalories": 30,
-        "RawModel": "pr/tomato_slice_01.vmdl",
+        "RawModel": "models/ingredients/tomato/tomato_slice.vmdl",
         "RawTint": "1,1,1,1",
         "SourceType": "Tomato"
       }
@@ -154,7 +154,7 @@
   "MenuIcon": null,
   "DontBreakAsTemplate": false,
   "__references": [
-    "openframework.tomatoslice01#221948"
+    "fish.hs_tomato_slice#89730"
   ],
   "__version": 2
 }

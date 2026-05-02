@@ -76,7 +76,7 @@
   "CanHeal": false,
   "HealAmount": 1,
   "__references": [
-    "openframework.smcommercialgrill01a#206614"
+    "openframework.smcommercialgrill01a#227060"
   ],
   "__version": 0,
   "Icon": "ui/item_icons/rfs_grill.png"

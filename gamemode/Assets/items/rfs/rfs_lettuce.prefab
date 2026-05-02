@@ -20,13 +20,13 @@
         "__guid": "100fc012-d052-478f-8ecc-3058ce588825",
         "__enabled": true,
         "Flags": 0,
-        "BodyGroups": 18446744073709551615,
+        "BodyGroups": 1,
         "CreateAttachments": false,
         "LodOverride": null,
         "MaterialGroup": null,
         "MaterialOverride": null,
         "Materials": null,
-        "Model": "pr/lettuce_leaf_01.vmdl",
+        "Model": "models/ingredients/lettuce/lettuce_slice.vmdl",
         "OnComponentDestroy": null,
         "OnComponentDisabled": null,
         "OnComponentEnabled": null,
@@ -51,7 +51,7 @@
         "Elasticity": null,
         "Friction": null,
         "IsTrigger": false,
-        "Model": "pr/lettuce_leaf_01.vmdl",
+        "Model": "models/ingredients/lettuce/lettuce_slice.vmdl",
         "OnComponentDestroy": null,
         "OnComponentDisabled": null,
         "OnComponentEnabled": null,
@@ -120,7 +120,7 @@
         "OnComponentStart": null,
         "OnComponentUpdate": null,
         "RawCalories": 30,
-        "RawModel": "pr/lettuce_leaf_01.vmdl",
+        "RawModel": "models/ingredients/lettuce/lettuce_slice.vmdl",
         "RawTint": "1,1,1,1",
         "SourceType": "Lettuce"
       }
@@ -154,7 +154,7 @@
   "MenuIcon": null,
   "DontBreakAsTemplate": false,
   "__references": [
-    "openframework.lettuceleaf01#221983"
+    "fish.hs_lettuce_slice#89728"
   ],
   "__version": 2
 }

@@ -26,7 +26,7 @@
         "MaterialGroup": null,
         "MaterialOverride": null,
         "Materials": null,
-        "Model": "pr/lettuce_full_01.vmdl",
+        "Model": "models/ingredients/lettuce/lettuce.vmdl",
         "OnComponentDestroy": null,
         "OnComponentDisabled": null,
         "OnComponentEnabled": null,
@@ -51,7 +51,7 @@
         "Elasticity": null,
         "Friction": null,
         "IsTrigger": false,
-        "Model": "pr/lettuce_full_01.vmdl",
+        "Model": "models/ingredients/lettuce/lettuce.vmdl",
         "OnComponentDestroy": null,
         "OnComponentDisabled": null,
         "OnComponentEnabled": null,
@@ -120,7 +120,7 @@
         "OnComponentStart": null,
         "OnComponentUpdate": null,
         "RawCalories": 30,
-        "RawModel": "pr/lettuce_full_01.vmdl",
+        "RawModel": "models/ingredients/lettuce/lettuce.vmdl",
         "RawTint": "1,1,1,1",
         "SourceType": "WholeLettuce"
       },
@@ -171,7 +171,7 @@
   "MenuIcon": null,
   "DontBreakAsTemplate": false,
   "__references": [
-    "openframework.lettucefull01#221970"
+    "fish.hs_lettuce#89727"
   ],
   "__version": 2
 }

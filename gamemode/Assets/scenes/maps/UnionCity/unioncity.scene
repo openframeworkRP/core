@@ -605,8 +605,8 @@
             "Property": "EachSecond",
             "Value": {
               "Absolute": 0,
-              "Relative": -136762864,
-              "Passed": 136762862.3648111,
+              "Relative": -136763728,
+              "Passed": 136763730.3623781,
               "Fraction": 1
             }
           }
@@ -8162,491 +8162,6 @@
           }
         },
         {
-          "__guid": "9929fa2e-54e6-455c-ac96-511856a4899f",
-          "__version": 2,
-          "__Prefab": "prefabs/npc/npc-cooking-supplier.prefab",
-          "__PrefabInstancePatch": {
-            "AddedObjects": [
-              {
-                "Id": {
-                  "Type": "GameObject",
-                  "IdValue": "27fea640-a5fb-4520-b865-ee802e706428"
-                },
-                "Parent": {
-                  "Type": "GameObject",
-                  "IdValue": "0444526f-04fc-4e6d-b70f-b0d3e71e970d"
-                },
-                "PreviousElement": null,
-                "ContainerProperty": "Children",
-                "IsContainerArray": true,
-                "Data": {
-                  "__guid": "27fea640-a5fb-4520-b865-ee802e706428",
-                  "__version": 2,
-                  "Flags": 0,
-                  "Name": "Clothing - shoes-02",
-                  "Position": "0,0,0",
-                  "Rotation": "0,0,0,1",
-                  "Scale": "1,1,1",
-                  "Tags": "clothing",
-                  "Enabled": true,
-                  "NetworkMode": 2,
-                  "NetworkFlags": 0,
-                  "NetworkOrphaned": 0,
-                  "NetworkTransmit": true,
-                  "OwnerTransfer": 1,
-                  "Components": [],
-                  "Children": []
-                }
-              },
-              {
-                "Id": {
-                  "Type": "Component",
-                  "IdValue": "fe969cbf-009b-493c-bcdc-02b170b72d1d"
-                },
-                "Parent": {
-                  "Type": "GameObject",
-                  "IdValue": "27fea640-a5fb-4520-b865-ee802e706428"
-                },
-                "PreviousElement": null,
-                "ContainerProperty": "Components",
-                "IsContainerArray": true,
-                "Data": {
-                  "__type": "Sandbox.SkinnedModelRenderer",
-                  "__guid": "fe969cbf-009b-493c-bcdc-02b170b72d1d",
-                  "__enabled": true,
-                  "Flags": 0,
-                  "AnimationGraph": null,
-                  "BodyGroups": 18446744073709551615,
-                  "BoneMergeTarget": {
-                    "_type": "component",
-                    "component_id": "c6869f4b-081f-4cbc-8e91-e0df0b2eada5",
-                    "go": "0444526f-04fc-4e6d-b70f-b0d3e71e970d",
-                    "component_type": "SkinnedModelRenderer"
-                  },
-                  "CreateAttachments": false,
-                  "CreateBoneObjects": false,
-                  "LodOverride": null,
-                  "MaterialGroup": null,
-                  "MaterialOverride": null,
-                  "Materials": null,
-                  "Model": "models/citizen_clothes/shoes/trainers/models/trainers_m_human.vmdl",
-                  "Morphs": {},
-                  "OnComponentDestroy": null,
-                  "OnComponentDisabled": null,
-                  "OnComponentEnabled": null,
-                  "OnComponentFixedUpdate": null,
-                  "OnComponentStart": null,
-                  "OnComponentUpdate": null,
-                  "Parameters": {
-                    "bools": {},
-                    "ints": {},
-                    "floats": {},
-                    "vectors": {},
-                    "rotations": {}
-                  },
-                  "PlaybackRate": 1,
-                  "RenderOptions": {
-                    "GameLayer": true,
-                    "OverlayLayer": false,
-                    "BloomLayer": false,
-                    "AfterUILayer": false
-                  },
-                  "RenderType": "On",
-                  "Sequence": {
-                    "Name": null,
-                    "Looping": true,
-                    "Blending": false
-                  },
-                  "Tint": "1,1,1,1",
-                  "UseAnimGraph": true
-                }
-              },
-              {
-                "Id": {
-                  "Type": "GameObject",
-                  "IdValue": "74be9f6a-c728-4036-9b9f-675a65ce203e"
-                },
-                "Parent": {
-                  "Type": "GameObject",
-                  "IdValue": "0444526f-04fc-4e6d-b70f-b0d3e71e970d"
-                },
-                "PreviousElement": {
-                  "Type": "GameObject",
-                  "IdValue": "27fea640-a5fb-4520-b865-ee802e706428"
-                },
-                "ContainerProperty": "Children",
-                "IsContainerArray": true,
-                "Data": {
-                  "__guid": "74be9f6a-c728-4036-9b9f-675a65ce203e",
-                  "__version": 2,
-                  "Flags": 0,
-                  "Name": "Clothing - chef_shirt",
-                  "Position": "0,0,0",
-                  "Rotation": "0,0,0,1",
-                  "Scale": "1,1,1",
-                  "Tags": "clothing",
-                  "Enabled": true,
-                  "NetworkMode": 2,
-                  "NetworkFlags": 0,
-                  "NetworkOrphaned": 0,
-                  "NetworkTransmit": true,
-                  "OwnerTransfer": 1,
-                  "Components": [],
-                  "Children": []
-                }
-              },
-              {
-                "Id": {
-                  "Type": "Component",
-                  "IdValue": "609e147c-0f8e-4e63-a5f6-45c2aa4ac491"
-                },
-                "Parent": {
-                  "Type": "GameObject",
-                  "IdValue": "74be9f6a-c728-4036-9b9f-675a65ce203e"
-                },
-                "PreviousElement": null,
-                "ContainerProperty": "Components",
-                "IsContainerArray": true,
-                "Data": {
-                  "__type": "Sandbox.SkinnedModelRenderer",
-                  "__guid": "609e147c-0f8e-4e63-a5f6-45c2aa4ac491",
-                  "__enabled": true,
-                  "Flags": 0,
-                  "AnimationGraph": null,
-                  "BodyGroups": 18446744073709551615,
-                  "BoneMergeTarget": {
-                    "_type": "component",
-                    "component_id": "c6869f4b-081f-4cbc-8e91-e0df0b2eada5",
-                    "go": "0444526f-04fc-4e6d-b70f-b0d3e71e970d",
-                    "component_type": "SkinnedModelRenderer"
-                  },
-                  "CreateAttachments": false,
-                  "CreateBoneObjects": false,
-                  "LodOverride": null,
-                  "MaterialGroup": null,
-                  "MaterialOverride": null,
-                  "Materials": null,
-                  "Model": "models/citizen_clothes/shirt/chef_shirt/models/chef_shirt_m_human.vmdl",
-                  "Morphs": {},
-                  "OnComponentDestroy": null,
-                  "OnComponentDisabled": null,
-                  "OnComponentEnabled": null,
-                  "OnComponentFixedUpdate": null,
-                  "OnComponentStart": null,
-                  "OnComponentUpdate": null,
-                  "Parameters": {
-                    "bools": {},
-                    "ints": {},
-                    "floats": {},
-                    "vectors": {},
-                    "rotations": {}
-                  },
-                  "PlaybackRate": 1,
-                  "RenderOptions": {
-                    "GameLayer": true,
-                    "OverlayLayer": false,
-                    "BloomLayer": false,
-                    "AfterUILayer": false
-                  },
-                  "RenderType": "On",
-                  "Sequence": {
-                    "Name": null,
-                    "Looping": true,
-                    "Blending": false
-                  },
-                  "Tint": "1,1,1,1",
-                  "UseAnimGraph": true
-                }
-              },
-              {
-                "Id": {
-                  "Type": "GameObject",
-                  "IdValue": "cd992658-19ef-491a-b2a8-82aa3477bf7e"
-                },
-                "Parent": {
-                  "Type": "GameObject",
-                  "IdValue": "0444526f-04fc-4e6d-b70f-b0d3e71e970d"
-                },
-                "PreviousElement": {
-                  "Type": "GameObject",
-                  "IdValue": "74be9f6a-c728-4036-9b9f-675a65ce203e"
-                },
-                "ContainerProperty": "Children",
-                "IsContainerArray": true,
-                "Data": {
-                  "__guid": "cd992658-19ef-491a-b2a8-82aa3477bf7e",
-                  "__version": 2,
-                  "Flags": 0,
-                  "Name": "Clothing - jeans_black",
-                  "Position": "0,0,0",
-                  "Rotation": "0,0,0,1",
-                  "Scale": "1,1,1",
-                  "Tags": "clothing",
-                  "Enabled": true,
-                  "NetworkMode": 2,
-                  "NetworkFlags": 0,
-                  "NetworkOrphaned": 0,
-                  "NetworkTransmit": true,
-                  "OwnerTransfer": 1,
-                  "Components": [],
-                  "Children": []
-                }
-              },
-              {
-                "Id": {
-                  "Type": "Component",
-                  "IdValue": "611f9b81-221f-48de-85e8-1772d9677222"
-                },
-                "Parent": {
-                  "Type": "GameObject",
-                  "IdValue": "cd992658-19ef-491a-b2a8-82aa3477bf7e"
-                },
-                "PreviousElement": null,
-                "ContainerProperty": "Components",
-                "IsContainerArray": true,
-                "Data": {
-                  "__type": "Sandbox.SkinnedModelRenderer",
-                  "__guid": "611f9b81-221f-48de-85e8-1772d9677222",
-                  "__enabled": true,
-                  "Flags": 0,
-                  "AnimationGraph": null,
-                  "BodyGroups": 18446744073709551615,
-                  "BoneMergeTarget": {
-                    "_type": "component",
-                    "component_id": "c6869f4b-081f-4cbc-8e91-e0df0b2eada5",
-                    "go": "0444526f-04fc-4e6d-b70f-b0d3e71e970d",
-                    "component_type": "SkinnedModelRenderer"
-                  },
-                  "CreateAttachments": false,
-                  "CreateBoneObjects": false,
-                  "LodOverride": null,
-                  "MaterialGroup": null,
-                  "MaterialOverride": null,
-                  "Materials": null,
-                  "Model": "models/citizen_clothes/trousers/jeans/models/jeans_black_m_human.vmdl",
-                  "Morphs": {},
-                  "OnComponentDestroy": null,
-                  "OnComponentDisabled": null,
-                  "OnComponentEnabled": null,
-                  "OnComponentFixedUpdate": null,
-                  "OnComponentStart": null,
-                  "OnComponentUpdate": null,
-                  "Parameters": {
-                    "bools": {},
-                    "ints": {},
-                    "floats": {},
-                    "vectors": {},
-                    "rotations": {}
-                  },
-                  "PlaybackRate": 1,
-                  "RenderOptions": {
-                    "GameLayer": true,
-                    "OverlayLayer": false,
-                    "BloomLayer": false,
-                    "AfterUILayer": false
-                  },
-                  "RenderType": "On",
-                  "Sequence": {
-                    "Name": null,
-                    "Looping": true,
-                    "Blending": false
-                  },
-                  "Tint": "1,1,1,1",
-                  "UseAnimGraph": true
-                }
-              },
-              {
-                "Id": {
-                  "Type": "GameObject",
-                  "IdValue": "bc9cfdfa-73a1-4a2d-9fff-59f159fd0f6d"
-                },
-                "Parent": {
-                  "Type": "GameObject",
-                  "IdValue": "0444526f-04fc-4e6d-b70f-b0d3e71e970d"
-                },
-                "PreviousElement": {
-                  "Type": "GameObject",
-                  "IdValue": "cd992658-19ef-491a-b2a8-82aa3477bf7e"
-                },
-                "ContainerProperty": "Children",
-                "IsContainerArray": true,
-                "Data": {
-                  "__guid": "bc9cfdfa-73a1-4a2d-9fff-59f159fd0f6d",
-                  "__version": 2,
-                  "Flags": 0,
-                  "Name": "Clothing - chefs_hat",
-                  "Position": "0,0,0",
-                  "Rotation": "0,0,0,1",
-                  "Scale": "1,1,1",
-                  "Tags": "clothing",
-                  "Enabled": true,
-                  "NetworkMode": 2,
-                  "NetworkFlags": 0,
-                  "NetworkOrphaned": 0,
-                  "NetworkTransmit": true,
-                  "OwnerTransfer": 1,
-                  "Components": [],
-                  "Children": []
-                }
-              },
-              {
-                "Id": {
-                  "Type": "Component",
-                  "IdValue": "4b508bd6-7c73-47d1-998e-2d44715bc15f"
-                },
-                "Parent": {
-                  "Type": "GameObject",
-                  "IdValue": "bc9cfdfa-73a1-4a2d-9fff-59f159fd0f6d"
-                },
-                "PreviousElement": null,
-                "ContainerProperty": "Components",
-                "IsContainerArray": true,
-                "Data": {
-                  "__type": "Sandbox.SkinnedModelRenderer",
-                  "__guid": "4b508bd6-7c73-47d1-998e-2d44715bc15f",
-                  "__enabled": true,
-                  "Flags": 0,
-                  "AnimationGraph": null,
-                  "BodyGroups": 18446744073709551615,
-                  "BoneMergeTarget": {
-                    "_type": "component",
-                    "component_id": "c6869f4b-081f-4cbc-8e91-e0df0b2eada5",
-                    "go": "0444526f-04fc-4e6d-b70f-b0d3e71e970d",
-                    "component_type": "SkinnedModelRenderer"
-                  },
-                  "CreateAttachments": false,
-                  "CreateBoneObjects": false,
-                  "LodOverride": null,
-                  "MaterialGroup": null,
-                  "MaterialOverride": null,
-                  "Materials": null,
-                  "Model": "models/citizen_clothes/hat/chefs_hat/models/chefs_hat_m_human.vmdl",
-                  "Morphs": {},
-                  "OnComponentDestroy": null,
-                  "OnComponentDisabled": null,
-                  "OnComponentEnabled": null,
-                  "OnComponentFixedUpdate": null,
-                  "OnComponentStart": null,
-                  "OnComponentUpdate": null,
-                  "Parameters": {
-                    "bools": {},
-                    "ints": {},
-                    "floats": {},
-                    "vectors": {},
-                    "rotations": {}
-                  },
-                  "PlaybackRate": 1,
-                  "RenderOptions": {
-                    "GameLayer": true,
-                    "OverlayLayer": false,
-                    "BloomLayer": false,
-                    "AfterUILayer": false
-                  },
-                  "RenderType": "On",
-                  "Sequence": {
-                    "Name": null,
-                    "Looping": true,
-                    "Blending": false
-                  },
-                  "Tint": "1,1,1,1",
-                  "UseAnimGraph": true
-                }
-              }
-            ],
-            "RemovedObjects": [
-              {
-                "Id": {
-                  "Type": "GameObject",
-                  "IdValue": "ca740e69-6bc1-4618-bf4d-1df48ad2056d"
-                }
-              },
-              {
-                "Id": {
-                  "Type": "Component",
-                  "IdValue": "38f0ff63-cbb0-46e8-8de3-91726c16959a"
-                }
-              },
-              {
-                "Id": {
-                  "Type": "GameObject",
-                  "IdValue": "53901a7e-9aa4-43e8-9c1d-95bcb4832873"
-                }
-              },
-              {
-                "Id": {
-                  "Type": "Component",
-                  "IdValue": "042b0407-6944-4749-ba4e-8a3d63f2c841"
-                }
-              },
-              {
-                "Id": {
-                  "Type": "GameObject",
-                  "IdValue": "92e9c046-2de8-430f-a57f-bd2d2749474e"
-                }
-              },
-              {
-                "Id": {
-                  "Type": "Component",
-                  "IdValue": "88cf0a69-359f-42cc-a559-11a577b23121"
-                }
-              },
-              {
-                "Id": {
-                  "Type": "GameObject",
-                  "IdValue": "60ee4bc6-d728-4576-8fbd-d1901d450d1c"
-                }
-              },
-              {
-                "Id": {
-                  "Type": "Component",
-                  "IdValue": "9b83fa8e-bb18-4044-bbd7-9e629111bf38"
-                }
-              }
-            ],
-            "PropertyOverrides": [
-              {
-                "Target": {
-                  "Type": "GameObject",
-                  "IdValue": "8a9688a2-9376-4dd4-9bef-ca4151e8eb20"
-                },
-                "Property": "Position",
-                "Value": "3089.99292,-4197.43164,112.487236"
-              },
-              {
-                "Target": {
-                  "Type": "Component",
-                  "IdValue": "56117e9c-eca9-4d69-9c0b-d96c18150ba3"
-                },
-                "Property": "EpicierCatalogue",
-                "Value": "catalogues/shop/cooking_supplier.shopcat"
-              }
-            ],
-            "MovedObjects": []
-          },
-          "__PrefabIdToInstanceId": {
-            "8a9688a2-9376-4dd4-9bef-ca4151e8eb20": "9929fa2e-54e6-455c-ac96-511856a4899f",
-            "8b0975b9-3fcc-414e-9c56-5ed9d7b3c91e": "d337bdb8-6e47-473d-865b-5d247f788a42",
-            "7fe953b1-6712-4321-b58b-205ef57284c2": "92dc949a-1330-433a-afce-88e54e96b47b",
-            "84c5894e-3cd9-465a-afe5-ae4ec9ceae98": "d67f7f48-19cf-44d9-8f5f-628791e45bb0",
-            "0444526f-04fc-4e6d-b70f-b0d3e71e970d": "8a5eefa8-b91e-44c3-a9e7-615a20c5ee2f",
-            "c6869f4b-081f-4cbc-8e91-e0df0b2eada5": "6b3d4e04-9737-47cc-9823-94dde46f5408",
-            "f4dc8b06-cfe7-403f-96bf-be6ad879efaa": "272b517e-1886-4e87-8ee5-77f4fd792e88",
-            "0fd6582f-dbd5-4c27-9a12-ba11cfc474e9": "0e12bf0d-a8c5-4ba8-a34b-f9b270f03013",
-            "470b0fb6-505a-439a-bbbd-2114102ae83f": "31d21090-bc8d-42b9-8428-36366eb8e8dc",
-            "ca740e69-6bc1-4618-bf4d-1df48ad2056d": "f522bed8-1f52-4bb3-a710-ea7d639d8e07",
-            "38f0ff63-cbb0-46e8-8de3-91726c16959a": "34242b9c-3955-48fb-a0ea-9bed8b2e6e98",
-            "53901a7e-9aa4-43e8-9c1d-95bcb4832873": "da1ad8ab-fc1e-4463-9da6-36de6cca7af0",
-            "042b0407-6944-4749-ba4e-8a3d63f2c841": "23bb8871-3739-4db7-ae76-dd1a09696c45",
-            "92e9c046-2de8-430f-a57f-bd2d2749474e": "29cd63bc-0c39-41b0-92c8-6d68290c6830",
-            "88cf0a69-359f-42cc-a559-11a577b23121": "f057788d-b174-46ac-b662-ed8486016522",
-            "60ee4bc6-d728-4576-8fbd-d1901d450d1c": "d6498268-dc6c-4a50-a031-8c7d2fbec376",
-            "9b83fa8e-bb18-4044-bbd7-9e629111bf38": "05ee4314-c532-4d38-996e-884fa2127d0d",
-            "a725857c-fe08-4aa3-a9c4-77157da4da41": "9e5395b6-1b94-49e3-b3ed-6d6b69de043b",
-            "7e25968f-cbb6-4a16-bc96-a3d296b5c9fe": "4cce2eed-af35-4090-93db-16593e7f15e8",
-            "56117e9c-eca9-4d69-9c0b-d96c18150ba3": "42a2bc74-228a-4f69-a653-df282a978cd0"
-          }
-        },
-        {
           "__guid": "0846fde4-5631-4e80-9417-8e24cfaa7122",
           "__version": 2,
           "__Prefab": "prefabs/npc/npc-negociateur-matiere-premiere.prefab",
@@ -11675,6 +11190,755 @@
             }
           ],
           "Children": []
+        }
+      ]
+    },
+    {
+      "__guid": "f02c7b53-4a88-4b15-b5ed-364789df8480",
+      "__version": 2,
+      "Flags": 0,
+      "Name": "Cook & Kitchen stuff",
+      "Position": "8194.6123,7350.89258,73.1186981",
+      "Rotation": "0,0,0,1",
+      "Scale": "1,1,1",
+      "Tags": "world",
+      "Enabled": true,
+      "NetworkMode": 2,
+      "NetworkFlags": 0,
+      "NetworkOrphaned": 0,
+      "NetworkTransmit": true,
+      "OwnerTransfer": 1,
+      "Components": [
+        {
+          "__type": "Sandbox.MeshComponent",
+          "__guid": "9bd761f1-0983-432b-b1cb-3f1f12e6d726",
+          "__enabled": true,
+          "Flags": 0,
+          "ColliderFlags": 0,
+          "Collision": "Mesh",
+          "Color": "1,1,1,1",
+          "Elasticity": null,
+          "Friction": null,
+          "HideInGame": false,
+          "IsTrigger": false,
+          "Mesh": {
+            "Topology": "H4sIAAAAAAAACl2QCQ7CMAwEp4Qj3NBy/f+laMRGsohUVbFn1+t04ANs+Z0VsM69AwfgBFyAKZ9MPXdgk3qLnsI+Um/h/me9i2ZXfFvYOazafTJN0XRgKZmPyWtfXvYVL73PZRd52WdYPa7xtC8veys7u6t17/7t6Tn0ZtFjvIXZR895zjKjPWf4NiOrGt+ivpXZ3XnozaOndVn9vvVkkTjEAQAA",
+            "Positions": [
+              "-681.580078,-756.634766,9.48735046",
+              "681.580078,-756.634766,9.48735046",
+              "681.580078,756.634766,9.48735046",
+              "-681.580078,756.634766,9.48735046",
+              "-681.580078,756.634766,-9.48735046",
+              "681.580078,756.634766,-9.48735046",
+              "681.580078,-756.634766,-9.48735046",
+              "-681.580078,-756.634766,-9.48735046"
+            ],
+            "Blends": [
+              "0,0,0,0",
+              "0,0,0,0",
+              "0,0,0,0",
+              "0,0,0,0",
+              "0,0,0,0",
+              "0,0,0,0",
+              "0,0,0,0",
+              "0,0,0,0",
+              "0,0,0,0",
+              "0,0,0,0",
+              "0,0,0,0",
+              "0,0,0,0",
+              "0,0,0,0",
+              "0,0,0,0",
+              "0,0,0,0",
+              "0,0,0,0",
+              "0,0,0,0",
+              "0,0,0,0",
+              "0,0,0,0",
+              "0,0,0,0",
+              "0,0,0,0",
+              "0,0,0,0",
+              "0,0,0,0",
+              "0,0,0,0"
+            ],
+            "Colors": [
+              "0,0,0,0",
+              "0,0,0,0",
+              "0,0,0,0",
+              "0,0,0,0",
+              "0,0,0,0",
+              "0,0,0,0",
+              "0,0,0,0",
+              "0,0,0,0",
+              "0,0,0,0",
+              "0,0,0,0",
+              "0,0,0,0",
+              "0,0,0,0",
+              "0,0,0,0",
+              "0,0,0,0",
+              "0,0,0,0",
+              "0,0,0,0",
+              "0,0,0,0",
+              "0,0,0,0",
+              "0,0,0,0",
+              "0,0,0,0",
+              "0,0,0,0",
+              "0,0,0,0",
+              "0,0,0,0",
+              "0,0,0,0"
+            ],
+            "TextureCoord": [
+              "83.7879791,30.3419876",
+              "73.1382904,-0.646805942",
+              "83.7879791,18.5195694",
+              "-30.3419876,-0.646805942",
+              "73.1382904,18.5195694",
+              "-83.7879791,-0.646805942",
+              "73.1382904,30.3419876",
+              "18.5195694,-0.646805942",
+              "83.7879791,18.5195694",
+              "-73.1382904,-0.498566091",
+              "83.7879791,30.3419876",
+              "-18.5195694,-0.498566091",
+              "73.1382904,30.3419876",
+              "83.7879791,-0.498566091",
+              "73.1382904,18.5195694",
+              "30.3419876,-0.498566091",
+              "30.3419876,-0.646805942",
+              "73.1382904,-0.498566091",
+              "18.5195694,-0.498566091",
+              "-73.1382904,-0.646805942",
+              "-30.3419876,-0.498566091",
+              "83.7879791,-0.646805942",
+              "-18.5195694,-0.646805942",
+              "-83.7879791,-0.498566091"
+            ],
+            "MaterialIndex": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "EdgeFlags": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "Materials": [
+              "materials/dev/simple/floor_simple_128.vmat"
+            ]
+          },
+          "OnComponentDestroy": null,
+          "OnComponentDisabled": null,
+          "OnComponentEnabled": null,
+          "OnComponentFixedUpdate": null,
+          "OnComponentStart": null,
+          "OnComponentUpdate": null,
+          "OnObjectTriggerEnter": null,
+          "OnObjectTriggerExit": null,
+          "OnTriggerEnter": null,
+          "OnTriggerExit": null,
+          "RenderType": "On",
+          "RollingResistance": null,
+          "SmoothingAngle": 40,
+          "Static": true,
+          "Surface": null,
+          "SurfaceVelocity": "0,0,0"
+        }
+      ],
+      "Children": [
+        {
+          "__guid": "8708295f-a570-40d3-881a-eb38c6f17433",
+          "__version": 2,
+          "Flags": 0,
+          "Name": "base text",
+          "Position": "544.015625,54.5205078,206.145752",
+          "Rotation": "0,0,0,1",
+          "Scale": "1,1,1",
+          "Tags": "",
+          "Enabled": true,
+          "NetworkMode": 2,
+          "NetworkFlags": 0,
+          "NetworkOrphaned": 0,
+          "NetworkTransmit": true,
+          "OwnerTransfer": 1,
+          "Components": [
+            {
+              "__type": "Sandbox.TextRenderer",
+              "__guid": "7d08b590-c386-4b39-81d4-b6b6171a968e",
+              "__enabled": true,
+              "Flags": 0,
+              "__version": 2,
+              "BlendMode": "Normal",
+              "FogStrength": 1,
+              "HorizontalAlignment": "Center",
+              "OnComponentDestroy": null,
+              "OnComponentDisabled": null,
+              "OnComponentEnabled": null,
+              "OnComponentFixedUpdate": null,
+              "OnComponentStart": null,
+              "OnComponentUpdate": null,
+              "RenderOptions": {
+                "GameLayer": true,
+                "OverlayLayer": false,
+                "BloomLayer": false,
+                "AfterUILayer": false
+              },
+              "Scale": 0.3,
+              "TextScope": {
+                "Text": "Cook & kitchen\n- buy fruntiure use for making food\n- buy ingredient and cut them\n- assemble the food\n- spawn the item ",
+                "TextColor": "0.45103,0.47149,0.5297,1",
+                "FontName": "Poppins",
+                "FontSize": 64,
+                "FontWeight": 800,
+                "FontItalic": false,
+                "FontVariantNumeric": "Normal",
+                "LineHeight": 1,
+                "LetterSpacing": 0,
+                "WordSpacing": 0,
+                "FilterMode": "Bilinear",
+                "FontSmooth": "Auto",
+                "Outline": {
+                  "Enabled": false,
+                  "Size": 4,
+                  "Color": "0,0,1,1"
+                },
+                "Shadow": {
+                  "Enabled": false,
+                  "Size": 4,
+                  "Color": "0,0,0,1",
+                  "Offset": "4,4"
+                },
+                "OutlineUnder": {
+                  "Enabled": false,
+                  "Size": 4,
+                  "Color": "0,1,0,1"
+                },
+                "ShadowUnder": {
+                  "Enabled": false,
+                  "Size": 4,
+                  "Color": "0,0,0,1",
+                  "Offset": "4,4"
+                }
+              },
+              "VerticalAlignment": "Center"
+            }
+          ],
+          "Children": []
+        },
+        {
+          "__guid": "9929fa2e-54e6-455c-ac96-511856a4899f",
+          "__version": 2,
+          "__Prefab": "prefabs/npc/npc-cooking-supplier.prefab",
+          "__PrefabInstancePatch": {
+            "AddedObjects": [
+              {
+                "Id": {
+                  "Type": "GameObject",
+                  "IdValue": "27fea640-a5fb-4520-b865-ee802e706428"
+                },
+                "Parent": {
+                  "Type": "GameObject",
+                  "IdValue": "0444526f-04fc-4e6d-b70f-b0d3e71e970d"
+                },
+                "PreviousElement": null,
+                "ContainerProperty": "Children",
+                "IsContainerArray": true,
+                "Data": {
+                  "__guid": "27fea640-a5fb-4520-b865-ee802e706428",
+                  "__version": 2,
+                  "Flags": 0,
+                  "Name": "Clothing - shoes-02",
+                  "Position": "0,0,0",
+                  "Rotation": "0,0,0,1",
+                  "Scale": "1,1,1",
+                  "Tags": "clothing",
+                  "Enabled": true,
+                  "NetworkMode": 2,
+                  "NetworkFlags": 0,
+                  "NetworkOrphaned": 0,
+                  "NetworkTransmit": true,
+                  "OwnerTransfer": 1,
+                  "Components": [],
+                  "Children": []
+                }
+              },
+              {
+                "Id": {
+                  "Type": "Component",
+                  "IdValue": "fe969cbf-009b-493c-bcdc-02b170b72d1d"
+                },
+                "Parent": {
+                  "Type": "GameObject",
+                  "IdValue": "27fea640-a5fb-4520-b865-ee802e706428"
+                },
+                "PreviousElement": null,
+                "ContainerProperty": "Components",
+                "IsContainerArray": true,
+                "Data": {
+                  "__type": "Sandbox.SkinnedModelRenderer",
+                  "__guid": "fe969cbf-009b-493c-bcdc-02b170b72d1d",
+                  "__enabled": true,
+                  "Flags": 0,
+                  "AnimationGraph": null,
+                  "BodyGroups": 18446744073709551615,
+                  "BoneMergeTarget": {
+                    "_type": "component",
+                    "component_id": "c6869f4b-081f-4cbc-8e91-e0df0b2eada5",
+                    "go": "0444526f-04fc-4e6d-b70f-b0d3e71e970d",
+                    "component_type": "SkinnedModelRenderer"
+                  },
+                  "CreateAttachments": false,
+                  "CreateBoneObjects": false,
+                  "LodOverride": null,
+                  "MaterialGroup": null,
+                  "MaterialOverride": null,
+                  "Materials": null,
+                  "Model": "models/citizen_clothes/shoes/trainers/models/trainers_m_human.vmdl",
+                  "Morphs": {},
+                  "OnComponentDestroy": null,
+                  "OnComponentDisabled": null,
+                  "OnComponentEnabled": null,
+                  "OnComponentFixedUpdate": null,
+                  "OnComponentStart": null,
+                  "OnComponentUpdate": null,
+                  "Parameters": {
+                    "bools": {},
+                    "ints": {},
+                    "floats": {},
+                    "vectors": {},
+                    "rotations": {}
+                  },
+                  "PlaybackRate": 1,
+                  "RenderOptions": {
+                    "GameLayer": true,
+                    "OverlayLayer": false,
+                    "BloomLayer": false,
+                    "AfterUILayer": false
+                  },
+                  "RenderType": "On",
+                  "Sequence": {
+                    "Name": null,
+                    "Looping": true,
+                    "Blending": false
+                  },
+                  "Tint": "1,1,1,1",
+                  "UseAnimGraph": true
+                }
+              },
+              {
+                "Id": {
+                  "Type": "GameObject",
+                  "IdValue": "74be9f6a-c728-4036-9b9f-675a65ce203e"
+                },
+                "Parent": {
+                  "Type": "GameObject",
+                  "IdValue": "0444526f-04fc-4e6d-b70f-b0d3e71e970d"
+                },
+                "PreviousElement": {
+                  "Type": "GameObject",
+                  "IdValue": "27fea640-a5fb-4520-b865-ee802e706428"
+                },
+                "ContainerProperty": "Children",
+                "IsContainerArray": true,
+                "Data": {
+                  "__guid": "74be9f6a-c728-4036-9b9f-675a65ce203e",
+                  "__version": 2,
+                  "Flags": 0,
+                  "Name": "Clothing - chef_shirt",
+                  "Position": "0,0,0",
+                  "Rotation": "0,0,0,1",
+                  "Scale": "1,1,1",
+                  "Tags": "clothing",
+                  "Enabled": true,
+                  "NetworkMode": 2,
+                  "NetworkFlags": 0,
+                  "NetworkOrphaned": 0,
+                  "NetworkTransmit": true,
+                  "OwnerTransfer": 1,
+                  "Components": [],
+                  "Children": []
+                }
+              },
+              {
+                "Id": {
+                  "Type": "Component",
+                  "IdValue": "609e147c-0f8e-4e63-a5f6-45c2aa4ac491"
+                },
+                "Parent": {
+                  "Type": "GameObject",
+                  "IdValue": "74be9f6a-c728-4036-9b9f-675a65ce203e"
+                },
+                "PreviousElement": null,
+                "ContainerProperty": "Components",
+                "IsContainerArray": true,
+                "Data": {
+                  "__type": "Sandbox.SkinnedModelRenderer",
+                  "__guid": "609e147c-0f8e-4e63-a5f6-45c2aa4ac491",
+                  "__enabled": true,
+                  "Flags": 0,
+                  "AnimationGraph": null,
+                  "BodyGroups": 18446744073709551615,
+                  "BoneMergeTarget": {
+                    "_type": "component",
+                    "component_id": "c6869f4b-081f-4cbc-8e91-e0df0b2eada5",
+                    "go": "0444526f-04fc-4e6d-b70f-b0d3e71e970d",
+                    "component_type": "SkinnedModelRenderer"
+                  },
+                  "CreateAttachments": false,
+                  "CreateBoneObjects": false,
+                  "LodOverride": null,
+                  "MaterialGroup": null,
+                  "MaterialOverride": null,
+                  "Materials": null,
+                  "Model": "models/citizen_clothes/shirt/chef_shirt/models/chef_shirt_m_human.vmdl",
+                  "Morphs": {},
+                  "OnComponentDestroy": null,
+                  "OnComponentDisabled": null,
+                  "OnComponentEnabled": null,
+                  "OnComponentFixedUpdate": null,
+                  "OnComponentStart": null,
+                  "OnComponentUpdate": null,
+                  "Parameters": {
+                    "bools": {},
+                    "ints": {},
+                    "floats": {},
+                    "vectors": {},
+                    "rotations": {}
+                  },
+                  "PlaybackRate": 1,
+                  "RenderOptions": {
+                    "GameLayer": true,
+                    "OverlayLayer": false,
+                    "BloomLayer": false,
+                    "AfterUILayer": false
+                  },
+                  "RenderType": "On",
+                  "Sequence": {
+                    "Name": null,
+                    "Looping": true,
+                    "Blending": false
+                  },
+                  "Tint": "1,1,1,1",
+                  "UseAnimGraph": true
+                }
+              },
+              {
+                "Id": {
+                  "Type": "GameObject",
+                  "IdValue": "cd992658-19ef-491a-b2a8-82aa3477bf7e"
+                },
+                "Parent": {
+                  "Type": "GameObject",
+                  "IdValue": "0444526f-04fc-4e6d-b70f-b0d3e71e970d"
+                },
+                "PreviousElement": {
+                  "Type": "GameObject",
+                  "IdValue": "74be9f6a-c728-4036-9b9f-675a65ce203e"
+                },
+                "ContainerProperty": "Children",
+                "IsContainerArray": true,
+                "Data": {
+                  "__guid": "cd992658-19ef-491a-b2a8-82aa3477bf7e",
+                  "__version": 2,
+                  "Flags": 0,
+                  "Name": "Clothing - jeans_black",
+                  "Position": "0,0,0",
+                  "Rotation": "0,0,0,1",
+                  "Scale": "1,1,1",
+                  "Tags": "clothing",
+                  "Enabled": true,
+                  "NetworkMode": 2,
+                  "NetworkFlags": 0,
+                  "NetworkOrphaned": 0,
+                  "NetworkTransmit": true,
+                  "OwnerTransfer": 1,
+                  "Components": [],
+                  "Children": []
+                }
+              },
+              {
+                "Id": {
+                  "Type": "Component",
+                  "IdValue": "611f9b81-221f-48de-85e8-1772d9677222"
+                },
+                "Parent": {
+                  "Type": "GameObject",
+                  "IdValue": "cd992658-19ef-491a-b2a8-82aa3477bf7e"
+                },
+                "PreviousElement": null,
+                "ContainerProperty": "Components",
+                "IsContainerArray": true,
+                "Data": {
+                  "__type": "Sandbox.SkinnedModelRenderer",
+                  "__guid": "611f9b81-221f-48de-85e8-1772d9677222",
+                  "__enabled": true,
+                  "Flags": 0,
+                  "AnimationGraph": null,
+                  "BodyGroups": 18446744073709551615,
+                  "BoneMergeTarget": {
+                    "_type": "component",
+                    "component_id": "c6869f4b-081f-4cbc-8e91-e0df0b2eada5",
+                    "go": "0444526f-04fc-4e6d-b70f-b0d3e71e970d",
+                    "component_type": "SkinnedModelRenderer"
+                  },
+                  "CreateAttachments": false,
+                  "CreateBoneObjects": false,
+                  "LodOverride": null,
+                  "MaterialGroup": null,
+                  "MaterialOverride": null,
+                  "Materials": null,
+                  "Model": "models/citizen_clothes/trousers/jeans/models/jeans_black_m_human.vmdl",
+                  "Morphs": {},
+                  "OnComponentDestroy": null,
+                  "OnComponentDisabled": null,
+                  "OnComponentEnabled": null,
+                  "OnComponentFixedUpdate": null,
+                  "OnComponentStart": null,
+                  "OnComponentUpdate": null,
+                  "Parameters": {
+                    "bools": {},
+                    "ints": {},
+                    "floats": {},
+                    "vectors": {},
+                    "rotations": {}
+                  },
+                  "PlaybackRate": 1,
+                  "RenderOptions": {
+                    "GameLayer": true,
+                    "OverlayLayer": false,
+                    "BloomLayer": false,
+                    "AfterUILayer": false
+                  },
+                  "RenderType": "On",
+                  "Sequence": {
+                    "Name": null,
+                    "Looping": true,
+                    "Blending": false
+                  },
+                  "Tint": "1,1,1,1",
+                  "UseAnimGraph": true
+                }
+              },
+              {
+                "Id": {
+                  "Type": "GameObject",
+                  "IdValue": "bc9cfdfa-73a1-4a2d-9fff-59f159fd0f6d"
+                },
+                "Parent": {
+                  "Type": "GameObject",
+                  "IdValue": "0444526f-04fc-4e6d-b70f-b0d3e71e970d"
+                },
+                "PreviousElement": {
+                  "Type": "GameObject",
+                  "IdValue": "cd992658-19ef-491a-b2a8-82aa3477bf7e"
+                },
+                "ContainerProperty": "Children",
+                "IsContainerArray": true,
+                "Data": {
+                  "__guid": "bc9cfdfa-73a1-4a2d-9fff-59f159fd0f6d",
+                  "__version": 2,
+                  "Flags": 0,
+                  "Name": "Clothing - chefs_hat",
+                  "Position": "0,0,0",
+                  "Rotation": "0,0,0,1",
+                  "Scale": "1,1,1",
+                  "Tags": "clothing",
+                  "Enabled": true,
+                  "NetworkMode": 2,
+                  "NetworkFlags": 0,
+                  "NetworkOrphaned": 0,
+                  "NetworkTransmit": true,
+                  "OwnerTransfer": 1,
+                  "Components": [],
+                  "Children": []
+                }
+              },
+              {
+                "Id": {
+                  "Type": "Component",
+                  "IdValue": "4b508bd6-7c73-47d1-998e-2d44715bc15f"
+                },
+                "Parent": {
+                  "Type": "GameObject",
+                  "IdValue": "bc9cfdfa-73a1-4a2d-9fff-59f159fd0f6d"
+                },
+                "PreviousElement": null,
+                "ContainerProperty": "Components",
+                "IsContainerArray": true,
+                "Data": {
+                  "__type": "Sandbox.SkinnedModelRenderer",
+                  "__guid": "4b508bd6-7c73-47d1-998e-2d44715bc15f",
+                  "__enabled": true,
+                  "Flags": 0,
+                  "AnimationGraph": null,
+                  "BodyGroups": 18446744073709551615,
+                  "BoneMergeTarget": {
+                    "_type": "component",
+                    "component_id": "c6869f4b-081f-4cbc-8e91-e0df0b2eada5",
+                    "go": "0444526f-04fc-4e6d-b70f-b0d3e71e970d",
+                    "component_type": "SkinnedModelRenderer"
+                  },
+                  "CreateAttachments": false,
+                  "CreateBoneObjects": false,
+                  "LodOverride": null,
+                  "MaterialGroup": null,
+                  "MaterialOverride": null,
+                  "Materials": null,
+                  "Model": "models/citizen_clothes/hat/chefs_hat/models/chefs_hat_m_human.vmdl",
+                  "Morphs": {},
+                  "OnComponentDestroy": null,
+                  "OnComponentDisabled": null,
+                  "OnComponentEnabled": null,
+                  "OnComponentFixedUpdate": null,
+                  "OnComponentStart": null,
+                  "OnComponentUpdate": null,
+                  "Parameters": {
+                    "bools": {},
+                    "ints": {},
+                    "floats": {},
+                    "vectors": {},
+                    "rotations": {}
+                  },
+                  "PlaybackRate": 1,
+                  "RenderOptions": {
+                    "GameLayer": true,
+                    "OverlayLayer": false,
+                    "BloomLayer": false,
+                    "AfterUILayer": false
+                  },
+                  "RenderType": "On",
+                  "Sequence": {
+                    "Name": null,
+                    "Looping": true,
+                    "Blending": false
+                  },
+                  "Tint": "1,1,1,1",
+                  "UseAnimGraph": true
+                }
+              }
+            ],
+            "RemovedObjects": [
+              {
+                "Id": {
+                  "Type": "GameObject",
+                  "IdValue": "ca740e69-6bc1-4618-bf4d-1df48ad2056d"
+                }
+              },
+              {
+                "Id": {
+                  "Type": "Component",
+                  "IdValue": "38f0ff63-cbb0-46e8-8de3-91726c16959a"
+                }
+              },
+              {
+                "Id": {
+                  "Type": "GameObject",
+                  "IdValue": "53901a7e-9aa4-43e8-9c1d-95bcb4832873"
+                }
+              },
+              {
+                "Id": {
+                  "Type": "Component",
+                  "IdValue": "042b0407-6944-4749-ba4e-8a3d63f2c841"
+                }
+              },
+              {
+                "Id": {
+                  "Type": "GameObject",
+                  "IdValue": "92e9c046-2de8-430f-a57f-bd2d2749474e"
+                }
+              },
+              {
+                "Id": {
+                  "Type": "Component",
+                  "IdValue": "88cf0a69-359f-42cc-a559-11a577b23121"
+                }
+              },
+              {
+                "Id": {
+                  "Type": "GameObject",
+                  "IdValue": "60ee4bc6-d728-4576-8fbd-d1901d450d1c"
+                }
+              },
+              {
+                "Id": {
+                  "Type": "Component",
+                  "IdValue": "9b83fa8e-bb18-4044-bbd7-9e629111bf38"
+                }
+              }
+            ],
+            "PropertyOverrides": [
+              {
+                "Target": {
+                  "Type": "GameObject",
+                  "IdValue": "8a9688a2-9376-4dd4-9bef-ca4151e8eb20"
+                },
+                "Property": "Position",
+                "Value": "430.274414,22.0009766,9.48735046"
+              },
+              {
+                "Target": {
+                  "Type": "GameObject",
+                  "IdValue": "8a9688a2-9376-4dd4-9bef-ca4151e8eb20"
+                },
+                "Property": "Rotation",
+                "Value": "0,0,1,1.94707184E-07"
+              },
+              {
+                "Target": {
+                  "Type": "Component",
+                  "IdValue": "56117e9c-eca9-4d69-9c0b-d96c18150ba3"
+                },
+                "Property": "EpicierCatalogue",
+                "Value": "catalogues/shop/cooking_supplier.shopcat"
+              }
+            ],
+            "MovedObjects": []
+          },
+          "__PrefabIdToInstanceId": {
+            "8a9688a2-9376-4dd4-9bef-ca4151e8eb20": "9929fa2e-54e6-455c-ac96-511856a4899f",
+            "8b0975b9-3fcc-414e-9c56-5ed9d7b3c91e": "d337bdb8-6e47-473d-865b-5d247f788a42",
+            "7fe953b1-6712-4321-b58b-205ef57284c2": "92dc949a-1330-433a-afce-88e54e96b47b",
+            "84c5894e-3cd9-465a-afe5-ae4ec9ceae98": "d67f7f48-19cf-44d9-8f5f-628791e45bb0",
+            "0444526f-04fc-4e6d-b70f-b0d3e71e970d": "8a5eefa8-b91e-44c3-a9e7-615a20c5ee2f",
+            "c6869f4b-081f-4cbc-8e91-e0df0b2eada5": "6b3d4e04-9737-47cc-9823-94dde46f5408",
+            "f4dc8b06-cfe7-403f-96bf-be6ad879efaa": "272b517e-1886-4e87-8ee5-77f4fd792e88",
+            "0fd6582f-dbd5-4c27-9a12-ba11cfc474e9": "0e12bf0d-a8c5-4ba8-a34b-f9b270f03013",
+            "470b0fb6-505a-439a-bbbd-2114102ae83f": "31d21090-bc8d-42b9-8428-36366eb8e8dc",
+            "ca740e69-6bc1-4618-bf4d-1df48ad2056d": "f522bed8-1f52-4bb3-a710-ea7d639d8e07",
+            "38f0ff63-cbb0-46e8-8de3-91726c16959a": "34242b9c-3955-48fb-a0ea-9bed8b2e6e98",
+            "53901a7e-9aa4-43e8-9c1d-95bcb4832873": "da1ad8ab-fc1e-4463-9da6-36de6cca7af0",
+            "042b0407-6944-4749-ba4e-8a3d63f2c841": "23bb8871-3739-4db7-ae76-dd1a09696c45",
+            "92e9c046-2de8-430f-a57f-bd2d2749474e": "29cd63bc-0c39-41b0-92c8-6d68290c6830",
+            "88cf0a69-359f-42cc-a559-11a577b23121": "f057788d-b174-46ac-b662-ed8486016522",
+            "60ee4bc6-d728-4576-8fbd-d1901d450d1c": "d6498268-dc6c-4a50-a031-8c7d2fbec376",
+            "9b83fa8e-bb18-4044-bbd7-9e629111bf38": "05ee4314-c532-4d38-996e-884fa2127d0d",
+            "a725857c-fe08-4aa3-a9c4-77157da4da41": "9e5395b6-1b94-49e3-b3ed-6d6b69de043b",
+            "7e25968f-cbb6-4a16-bc96-a3d296b5c9fe": "4cce2eed-af35-4090-93db-16593e7f15e8",
+            "56117e9c-eca9-4d69-9c0b-d96c18150ba3": "42a2bc74-228a-4f69-a653-df282a978cd0"
+          }
         }
       ]
     },
@@ -22548,32 +22812,6 @@
                 },
                 "Property": "Position",
                 "Value": "236.482422,-121.450317,9.48735046"
-              },
-              {
-                "Target": {
-                  "Type": "GameObject",
-                  "IdValue": "06c40250-1e5a-44ee-818f-ef139d0cf6f4"
-                },
-                "Property": "Rotation",
-                "Value": "7.30784766E-09,8.8817842E-16,0.999999881,2.98023224E-08"
-              },
-              {
-                "Target": {
-                  "Type": "Component",
-                  "IdValue": "37a21bac-4b70-45db-af4f-37d480455627"
-                },
-                "Property": "DoorsList",
-                "Value": [
-                  null
-                ]
-              },
-              {
-                "Target": {
-                  "Type": "Component",
-                  "IdValue": "37a21bac-4b70-45db-af4f-37d480455627"
-                },
-                "Property": "Price",
-                "Value": 350
               }
             ],
             "MovedObjects": []
@@ -26268,6 +26506,618 @@
           ]
         }
       ]
+    },
+    {
+      "__guid": "a3852dc6-a03a-4ae2-9596-910ef9c767e8",
+      "__version": 2,
+      "__Prefab": "items/rfs/rfs_assembly_plank.prefab",
+      "__PrefabInstancePatch": {
+        "AddedObjects": [],
+        "RemovedObjects": [],
+        "PropertyOverrides": [
+          {
+            "Target": {
+              "Type": "GameObject",
+              "IdValue": "b8b0f83b-e18b-481e-b875-cd219f2e94f6"
+            },
+            "Property": "Position",
+            "Value": "8383.23145,7943.19873,82.6061096"
+          }
+        ],
+        "MovedObjects": []
+      },
+      "__PrefabIdToInstanceId": {
+        "b8b0f83b-e18b-481e-b875-cd219f2e94f6": "a3852dc6-a03a-4ae2-9596-910ef9c767e8",
+        "573e4292-495b-42ca-bb07-aaebbbbd3331": "e8b9a5dc-5322-4998-a19b-a8a996ab82ec",
+        "4fb0da1f-2537-46d8-918a-8b18d38ff4ad": "9a769c6a-3a34-477d-ac5e-61dfa97a4ade",
+        "9c661706-055a-4648-8bea-153ac1f52d94": "9322793a-0df6-48bf-91e8-4bf942286b61",
+        "de3ed513-70a8-4841-a8d0-34fe92934971": "cdd54a38-a054-45c4-ba24-b2586571e786",
+        "1edb0226-a843-4af7-b853-132ac02ae52d": "52713715-8734-4dc2-b661-10a7f70a78bf",
+        "058df733-c96b-413f-9bd7-ee208915e684": "0815bb6d-00d4-404e-b210-1b58881b5f89",
+        "e34c5361-8226-4865-b9ab-286de633f4dc": "2088431d-156e-4a9d-a009-21783e334110",
+        "d18fb4a4-aa3a-449e-ade4-e2151a308583": "80cccd64-f057-4203-bc80-0b84a10bd5bf"
+      }
+    },
+    {
+      "__guid": "a25f6e1d-7a32-494b-bcbf-25ddb80d1db6",
+      "__version": 2,
+      "__Prefab": "items/rfs/rfs_basket.prefab",
+      "__PrefabInstancePatch": {
+        "AddedObjects": [],
+        "RemovedObjects": [],
+        "PropertyOverrides": [
+          {
+            "Target": {
+              "Type": "GameObject",
+              "IdValue": "aa88e10f-fc8e-4160-9a62-12beadced77b"
+            },
+            "Property": "Position",
+            "Value": "8386.08105,7807.7417,82.6061096"
+          }
+        ],
+        "MovedObjects": []
+      },
+      "__PrefabIdToInstanceId": {
+        "aa88e10f-fc8e-4160-9a62-12beadced77b": "a25f6e1d-7a32-494b-bcbf-25ddb80d1db6",
+        "62a278df-9777-4185-bb99-a2bb03252534": "84425e0f-11f6-408c-b08b-6506345a674c",
+        "e8005bfb-dcc2-4666-ad60-f206f32a4623": "bbdfeb59-9abb-44d0-8327-688bfb812017",
+        "2a07f347-a3eb-4895-92ab-3096b4980dfa": "57f14edb-f142-48b4-93ce-6215280ac4ef",
+        "5a2e0677-3e0e-40e2-b4e3-ec1330140b22": "8d0be4b5-2b87-4bdf-be2d-3c4543cdf50d",
+        "fbb389ed-165b-4b4b-a074-5e4c29fac6c4": "ae0d62c6-8048-48a3-9215-7bdb84ace8f1"
+      }
+    },
+    {
+      "__guid": "147bde38-ffe7-47b7-9fc1-4bdbd5e0cede",
+      "__version": 2,
+      "__Prefab": "items/rfs/rfs_bun_bottom.prefab",
+      "__PrefabInstancePatch": {
+        "AddedObjects": [],
+        "RemovedObjects": [],
+        "PropertyOverrides": [
+          {
+            "Target": {
+              "Type": "GameObject",
+              "IdValue": "47d969f5-13a4-4c21-87d8-06cbce9449db"
+            },
+            "Property": "Position",
+            "Value": "8379.13867,7677.94043,82.6915817"
+          }
+        ],
+        "MovedObjects": []
+      },
+      "__PrefabIdToInstanceId": {
+        "47d969f5-13a4-4c21-87d8-06cbce9449db": "147bde38-ffe7-47b7-9fc1-4bdbd5e0cede",
+        "5405f327-d41f-400b-8c1c-b76811d5a5ec": "5275b618-e28f-4a2f-802c-11f3732f4c04",
+        "a54ad70e-d793-484a-968b-c1b780b451db": "c22310b9-86f7-4949-bb84-eae0ebb11031",
+        "e27e4b4a-d2fd-45da-a7b8-9b5e278df67c": "639300a1-b6c5-4ad1-8fe6-b7bab36aa703",
+        "41e42481-e6fe-4681-80ed-c073f9462faa": "88521d18-a33a-4e1b-b3fb-78a0ef44c60d",
+        "c777a6a0-aa3e-442a-bd62-2d09603dff9c": "2f85693c-4390-4d6d-8a25-2bbe6135d737"
+      }
+    },
+    {
+      "__guid": "3beb1ab2-9ce2-499f-afb5-d18f5acf31f3",
+      "__version": 2,
+      "__Prefab": "items/rfs/rfs_bun_top.prefab",
+      "__PrefabInstancePatch": {
+        "AddedObjects": [],
+        "RemovedObjects": [],
+        "PropertyOverrides": [
+          {
+            "Target": {
+              "Type": "GameObject",
+              "IdValue": "a8fa2330-d66f-4dcd-80bc-7eab3a90e20a"
+            },
+            "Property": "Position",
+            "Value": "8378.05859,7664.65771,82.658989"
+          }
+        ],
+        "MovedObjects": []
+      },
+      "__PrefabIdToInstanceId": {
+        "a8fa2330-d66f-4dcd-80bc-7eab3a90e20a": "3beb1ab2-9ce2-499f-afb5-d18f5acf31f3",
+        "674f7b3e-562f-4462-bdea-8a39f2c44545": "5b5a1012-9940-4ff3-a7b3-e600f82a2386",
+        "b4204a85-b442-440d-8dd9-5a8643c62ecf": "3502ac52-6a10-405c-a241-ea65f15eda44",
+        "b798beaa-cec0-4520-9656-fbe7be57ee3c": "d167d6eb-ecb5-4f64-b696-9713f571ae79",
+        "870ff200-13ed-4ed2-a61a-93b29032770c": "543eda57-c1e8-4f9d-a47e-5a572efb6aa1",
+        "77132955-be7f-495c-9c09-8570087cffa6": "81a0db10-26f1-4e5e-9258-41f6209d948a"
+      }
+    },
+    {
+      "__guid": "73fc131a-ec56-4a9b-8515-7965355c3e67",
+      "__version": 2,
+      "__Prefab": "items/rfs/rfs_burger.prefab",
+      "__PrefabInstancePatch": {
+        "AddedObjects": [],
+        "RemovedObjects": [],
+        "PropertyOverrides": [
+          {
+            "Target": {
+              "Type": "GameObject",
+              "IdValue": "6330d4ff-553c-4dfb-9fe2-4dd058ca7516"
+            },
+            "Property": "Position",
+            "Value": "8377.11914,7648.62305,82.6060486"
+          }
+        ],
+        "MovedObjects": []
+      },
+      "__PrefabIdToInstanceId": {
+        "6330d4ff-553c-4dfb-9fe2-4dd058ca7516": "73fc131a-ec56-4a9b-8515-7965355c3e67",
+        "5acefa75-1057-4813-801c-6507286d0b1b": "f690c18e-68a2-4083-8bce-4bb2fa15c16a",
+        "327195b9-56d0-4d6c-9acd-97a0cc204748": "49cc67db-c2ad-4509-a407-6e2e2e75688d",
+        "799a45f8-f78f-4e75-9b7a-6308b587ef88": "d33d5f31-b06d-4f7b-800e-82b7cc85cabc"
+      }
+    },
+    {
+      "__guid": "9eff9d16-0974-422d-880f-39c5491a7aa3",
+      "__version": 2,
+      "__Prefab": "items/rfs/rfs_cheese.prefab",
+      "__PrefabInstancePatch": {
+        "AddedObjects": [],
+        "RemovedObjects": [],
+        "PropertyOverrides": [
+          {
+            "Target": {
+              "Type": "GameObject",
+              "IdValue": "d93d5221-a550-49d3-bf39-be3477734400"
+            },
+            "Property": "Position",
+            "Value": "8376.69141,7630.22656,82.6324158"
+          }
+        ],
+        "MovedObjects": []
+      },
+      "__PrefabIdToInstanceId": {
+        "d93d5221-a550-49d3-bf39-be3477734400": "9eff9d16-0974-422d-880f-39c5491a7aa3",
+        "181ad531-fb3a-418f-93a7-3eb1bc205e04": "54dedb36-9036-4600-ad3b-820d01303626",
+        "b350f937-72e7-48c8-a044-71613b628967": "05fe8183-a28c-48ff-a713-60870f95009b",
+        "86c74ea7-c38e-492e-9d6d-34a7ffc15164": "0cc10c4f-dee1-497a-bd8f-d35ba1169854",
+        "3ef278cc-059b-4014-ac93-f23b9db1815f": "d49b2fe3-481b-4b87-837a-c0010b90a680"
+      }
+    },
+    {
+      "__guid": "cfc950cc-833e-4fcd-bc23-717e829b1764",
+      "__version": 2,
+      "__Prefab": "items/rfs/rfs_cutting_board.prefab",
+      "__PrefabInstancePatch": {
+        "AddedObjects": [],
+        "RemovedObjects": [],
+        "PropertyOverrides": [
+          {
+            "Target": {
+              "Type": "GameObject",
+              "IdValue": "10747ebb-5fb7-4945-9963-097d96d101f3"
+            },
+            "Property": "Position",
+            "Value": "8375.4209,7601.9126,82.6165314"
+          }
+        ],
+        "MovedObjects": []
+      },
+      "__PrefabIdToInstanceId": {
+        "10747ebb-5fb7-4945-9963-097d96d101f3": "cfc950cc-833e-4fcd-bc23-717e829b1764",
+        "3497140c-e76f-486a-9b18-423e28f1d700": "b13b01f9-0e6c-4b12-8793-7557cc58ef70",
+        "6d9c472a-7410-4f90-8de9-1a4570ebb3d7": "190982a0-abc1-42e1-8582-f13e2f97f9ca",
+        "84951b3e-e1cb-4072-a8d4-22bea797c41e": "8e3fb024-6c89-4c1d-9df1-2657389bcbd6",
+        "50bfee0e-a1d7-48cc-a0d6-75088e320cd1": "da9cd3b4-cf35-42bb-a721-95240e0b1578",
+        "6bc38aa7-e626-4212-8a7c-2e8d086280c3": "81333dd8-45d7-47a4-84ae-3c9616c884ab",
+        "0539c728-ffb3-4773-8d09-240af4feb968": "1da00927-628c-4e9f-9f24-3755d2b8573d",
+        "f88ae51f-88e9-48f6-8878-951fd98b838b": "4a2218f4-7532-4b2f-b75e-33fdc19f64b5",
+        "4345540d-dd43-4505-8492-e6f8e87c38c7": "41e8af18-345f-4d29-98c5-7f0c786ed47c"
+      }
+    },
+    {
+      "__guid": "f19a1761-7f13-401a-92cf-3fd452f2862a",
+      "__version": 2,
+      "__Prefab": "items/rfs/rfs_empty_cup.prefab",
+      "__PrefabInstancePatch": {
+        "AddedObjects": [],
+        "RemovedObjects": [],
+        "PropertyOverrides": [
+          {
+            "Target": {
+              "Type": "GameObject",
+              "IdValue": "00ab3d73-8a49-4f01-9117-c294d88e3186"
+            },
+            "Property": "Position",
+            "Value": "8372.76367,7585.17822,82.6352539"
+          }
+        ],
+        "MovedObjects": []
+      },
+      "__PrefabIdToInstanceId": {
+        "00ab3d73-8a49-4f01-9117-c294d88e3186": "f19a1761-7f13-401a-92cf-3fd452f2862a",
+        "fbc51d50-8f49-4fc0-a197-a6fc69b527f3": "63458050-61bd-4853-b745-4c95eb7419db",
+        "1e647b5c-33fb-44ee-9c7c-c70768558a64": "03de2152-1586-40b2-acf3-30dc8c9cd0bf",
+        "bcb0e7e2-e15b-48b1-8c05-2ad09e0e94db": "e26b3777-8347-4f8c-9007-fe106cff0249",
+        "93930fbd-a9a1-49f5-a61a-6a7decacda8f": "f9228d18-ddb6-436c-9830-5af77b942f27",
+        "89bf3425-ead2-4a1e-9b64-51a59cb676c1": "efb48dbc-e38e-4f81-8df0-6ddaf124b810"
+      }
+    },
+    {
+      "__guid": "2fca17e5-0fb9-4e56-a717-bccd3ab1e9c7",
+      "__version": 2,
+      "__Prefab": "items/rfs/rfs_fries_pouch.prefab",
+      "__PrefabInstancePatch": {
+        "AddedObjects": [],
+        "RemovedObjects": [],
+        "PropertyOverrides": [
+          {
+            "Target": {
+              "Type": "GameObject",
+              "IdValue": "5eb1fbae-f6fe-4e40-9c18-1171b887fcd0"
+            },
+            "Property": "Position",
+            "Value": "8370.32227,7560.00928,82.6060486"
+          }
+        ],
+        "MovedObjects": []
+      },
+      "__PrefabIdToInstanceId": {
+        "5eb1fbae-f6fe-4e40-9c18-1171b887fcd0": "2fca17e5-0fb9-4e56-a717-bccd3ab1e9c7",
+        "2db0b847-a4c4-4e87-b3c7-0ad602af7906": "028eb812-8d09-420d-8059-8a9a99be54ef",
+        "b2b6c08f-bd3f-462e-81c4-d2e66d0cc170": "551acd84-84b8-413b-9d83-ab83af3c91b7",
+        "03152e4d-b8e9-4bce-b46d-232cc56d86f2": "df69d7ab-c217-4dda-b6a0-d96dd4ebe8cc",
+        "a16d4113-794f-49dd-9425-866ab5a104d5": "c8e3bf26-60b0-4421-9d0d-f6ae813621c1",
+        "3677efa4-09a3-44cc-9f5a-b77fccdc56cf": "4f966fdd-81a4-4455-a7d0-77964ce96a82"
+      }
+    },
+    {
+      "__guid": "0774822c-ad0d-4cae-aab5-4a5c67c1de04",
+      "__version": 2,
+      "__Prefab": "items/rfs/rfs_fries.prefab",
+      "__PrefabInstancePatch": {
+        "AddedObjects": [],
+        "RemovedObjects": [],
+        "PropertyOverrides": [
+          {
+            "Target": {
+              "Type": "GameObject",
+              "IdValue": "6330d4ff-553c-4dfb-9fe2-4dd058ca7516"
+            },
+            "Property": "Position",
+            "Value": "8369.74219,7478.06396,82.6060486"
+          }
+        ],
+        "MovedObjects": []
+      },
+      "__PrefabIdToInstanceId": {
+        "6330d4ff-553c-4dfb-9fe2-4dd058ca7516": "0774822c-ad0d-4cae-aab5-4a5c67c1de04",
+        "5acefa75-1057-4813-801c-6507286d0b1b": "ab6288b3-8b83-44cd-8226-6d3a23fe19e3",
+        "327195b9-56d0-4d6c-9acd-97a0cc204748": "99d91442-83f0-4227-84c5-f76a29d92856",
+        "799a45f8-f78f-4e75-9b7a-6308b587ef88": "66386374-f287-4833-8b52-345e872c4075",
+        "b49cc088-909e-46d0-afd8-56ee3db2151f": "ce6c9dd3-6b62-4274-a8c6-7a0f228fcab9",
+        "ec587ad2-5e68-446b-aea2-32e4a965bdae": "90db97c7-083a-4c91-a1e8-ab6801c90f08",
+        "2fff2f32-bccd-44f4-9477-33c46e3461f6": "1c05175a-bdce-494a-9e11-565b8b8f7708",
+        "2a879114-bc3a-44eb-b89d-c296c075c6a8": "97fd209e-6ff5-49fc-a0cf-49ea1d338932"
+      }
+    },
+    {
+      "__guid": "943130cc-bdf3-4ee4-aeab-cc146bb6de76",
+      "__version": 2,
+      "__Prefab": "items/rfs/rfs_fryer.prefab",
+      "__PrefabInstancePatch": {
+        "AddedObjects": [],
+        "RemovedObjects": [],
+        "PropertyOverrides": [
+          {
+            "Target": {
+              "Type": "GameObject",
+              "IdValue": "fd54b623-1b4b-4cab-ad1d-3a8ff89ecdbe"
+            },
+            "Property": "Position",
+            "Value": "8369.11035,7372.81494,82.6060486"
+          }
+        ],
+        "MovedObjects": []
+      },
+      "__PrefabIdToInstanceId": {
+        "fd54b623-1b4b-4cab-ad1d-3a8ff89ecdbe": "943130cc-bdf3-4ee4-aeab-cc146bb6de76",
+        "01b4e8d6-3949-4206-bf8e-e3769699b351": "e0a69cd2-e295-456c-a21b-5c8a73ed8dd7",
+        "65db131e-548d-42c2-b5be-c185bca09dec": "77000afd-3751-4f48-b85e-bf1c5e72b1af",
+        "f519fc0a-27a2-40a9-92fa-7e64299f7a6f": "fee0d2b4-8166-4a66-a535-28a25c5b12ad",
+        "99d580f8-f617-4afc-9d95-7be863798d1c": "1592fc17-2e9a-4035-98c3-7463782b54ab",
+        "e4b1fa9e-709d-429a-b1e1-f5d8a452df7a": "24a4433e-f214-467e-8742-f3117b9f2410",
+        "e32951ab-9677-439d-b12f-5fc381114e35": "00c61767-dfc6-4f89-b6a3-9aff0ec3354f",
+        "87728c7a-0dca-4920-8876-db1623dc569c": "2453331b-c846-4791-ae5f-f83d4e8809a2",
+        "8fe1b556-267a-4f6f-a100-c953c9cd8bac": "ff05baf0-f137-4679-be49-cdc65fe81144",
+        "b2699f49-5fca-407f-958f-be0692579344": "bb2a1e0a-239e-4f87-8571-55ebfdec034b",
+        "61d27e1e-81bb-4e74-a132-fba218c8c865": "0f009add-fcd4-41d6-b3ec-da34c7dce9aa",
+        "a53f5d76-52f0-4422-a0c8-c96e40219f2d": "c56360e9-9417-4d55-bfeb-19c0d2bbb35c",
+        "cc7082f9-1c18-47a0-8bba-7c64927cf19d": "33b467eb-152a-4501-a607-cebb34259a41",
+        "8e84cddd-6d01-4611-8a59-b4e476ecd753": "8e52ebea-67af-42fd-921f-153775106fea",
+        "bffb4aaa-3f01-4431-aba6-a6aeba434f3d": "9a278545-db24-4ab9-b9a6-9acea08fbd2a"
+      }
+    },
+    {
+      "__guid": "f75ec145-9e13-4f6b-9396-f961f8697494",
+      "__version": 2,
+      "__Prefab": "items/rfs/rfs_grill.prefab",
+      "__PrefabInstancePatch": {
+        "AddedObjects": [],
+        "RemovedObjects": [],
+        "PropertyOverrides": [
+          {
+            "Target": {
+              "Type": "GameObject",
+              "IdValue": "dfe8dad1-8b25-49d9-82fa-c8eccf4788c9"
+            },
+            "Property": "Position",
+            "Value": "8369.9707,7264.62402,82.6060486"
+          }
+        ],
+        "MovedObjects": []
+      },
+      "__PrefabIdToInstanceId": {
+        "dfe8dad1-8b25-49d9-82fa-c8eccf4788c9": "f75ec145-9e13-4f6b-9396-f961f8697494",
+        "baa5e246-bffe-4b09-8682-fe84ed0d115e": "5429c4e9-5a41-4437-bf89-339e67755589",
+        "45c0d9bd-6c49-447a-be15-886cadb9c382": "282471b0-9455-45ae-82ba-22321e13eed0",
+        "95e87756-ab0a-470a-b8fb-11f8ad496d43": "48bc6d0e-d15d-4de4-ba41-3f7696f310fa",
+        "b4fe996a-4cb1-48e1-87b4-a3de636bf7bc": "367f7b03-2773-48d0-b518-62b3c7e53210",
+        "5446d18d-6483-4a87-83b4-76feff337acf": "0acb671d-aa5f-487d-b301-cd950ea4c4ef",
+        "dafa4ec7-bed6-439e-9a81-5405b330b03f": "9b4b4434-662f-400f-898c-20ebc9b5b44d",
+        "5fbc1367-d199-4319-b5f7-9374130911e3": "9ad70597-fc67-4a4b-bd2d-292c787efa01",
+        "a8e37b7b-97b5-4e12-84d7-c2202bae841f": "9cafdf1a-5b45-4785-a3f6-15d71fa49e0b",
+        "af28a8a8-6dd2-437d-b8de-489557e249a6": "363e8ef9-142f-4713-82dd-768c62c93ed3",
+        "07ff724e-f6ee-4de4-8b47-bee8e51f6d2f": "dff91272-7db1-4f10-96ef-2747390e26ab",
+        "f80b3702-f002-4425-bda5-6bdbcf30d763": "dbc824d3-d118-40f8-a1a5-e1234d74d250",
+        "1d5e6b49-b0ed-4bb7-9efb-9d7518535ec8": "eecaaa7d-ea71-4e85-96b0-295d7acc8103",
+        "19ea817c-7ebe-4ebd-98a6-df9404941fba": "95b23d0c-9490-4020-aec4-464e68f6462a",
+        "db3ba74e-0f57-4591-bc51-c85578266e74": "dabaf0a9-5b2b-4c7e-858d-d61f5549f56e"
+      }
+    },
+    {
+      "__guid": "3f255b9a-d770-4aba-b161-13b65a54abd7",
+      "__version": 2,
+      "__Prefab": "items/rfs/rfs_lettuce.prefab",
+      "__PrefabInstancePatch": {
+        "AddedObjects": [],
+        "RemovedObjects": [],
+        "PropertyOverrides": [
+          {
+            "Target": {
+              "Type": "GameObject",
+              "IdValue": "4f546d22-f1f3-4f1d-a0b8-a21066e7bc56"
+            },
+            "Property": "Position",
+            "Value": "8369.45898,7157.72119,82.6060333"
+          }
+        ],
+        "MovedObjects": []
+      },
+      "__PrefabIdToInstanceId": {
+        "4f546d22-f1f3-4f1d-a0b8-a21066e7bc56": "3f255b9a-d770-4aba-b161-13b65a54abd7",
+        "100fc012-d052-478f-8ecc-3058ce588825": "e237d94d-ae6c-43df-8dd9-883a662e6f88",
+        "3299921e-c4be-4160-864e-41334260287d": "edb34188-4202-4897-879a-471cd03541d8",
+        "f0adf649-531c-4705-9307-859f7d246af3": "1c52ba8c-b301-4aad-a728-541a206121bd",
+        "902ba0b1-d855-4417-b5d1-ca058719bbb3": "d3fc5f0d-f857-479c-bd94-6bed184d9420"
+      }
+    },
+    {
+      "__guid": "3089d9fe-690f-400a-8377-1f39fb75e5f1",
+      "__version": 2,
+      "__Prefab": "items/rfs/rfs_raw_beef.prefab",
+      "__PrefabInstancePatch": {
+        "AddedObjects": [],
+        "RemovedObjects": [],
+        "PropertyOverrides": [
+          {
+            "Target": {
+              "Type": "GameObject",
+              "IdValue": "72b03844-323e-48e0-b5e7-06a3dae41b5f"
+            },
+            "Property": "Position",
+            "Value": "8366.50684,7095.07422,82.7891159"
+          }
+        ],
+        "MovedObjects": []
+      },
+      "__PrefabIdToInstanceId": {
+        "72b03844-323e-48e0-b5e7-06a3dae41b5f": "3089d9fe-690f-400a-8377-1f39fb75e5f1",
+        "86e0dfed-6fa4-4a2e-9776-63b4ac5caee3": "d8322137-fa1f-4c10-87dc-14b465b6001a",
+        "7ff76479-6e16-4216-87bd-98ad5a970f22": "170d253b-35ce-435b-9f40-90b1e82a3337",
+        "82c97e7a-bff1-44dc-89dd-8d4bf2e94574": "ecf64169-ea23-4a4a-b40c-c7bfc3d1f524",
+        "add307e2-95c0-4b6a-9ab5-c8345fcfb3f0": "f18f2092-79db-42d3-9c2e-a52a158da1af",
+        "329932a9-0a48-4004-91fa-5ccd43d6a33d": "89c8ee94-dde9-4593-bac8-6dd019287670"
+      }
+    },
+    {
+      "__guid": "57fd7fed-1034-4029-8dff-80e1077776fa",
+      "__version": 2,
+      "__Prefab": "items/rfs/rfs_raw_fries.prefab",
+      "__PrefabInstancePatch": {
+        "AddedObjects": [],
+        "RemovedObjects": [],
+        "PropertyOverrides": [
+          {
+            "Target": {
+              "Type": "GameObject",
+              "IdValue": "58116778-4bfa-49d8-a552-e272b05b6540"
+            },
+            "Property": "Position",
+            "Value": "8365.8584,7081.37012,82.6060486"
+          }
+        ],
+        "MovedObjects": []
+      },
+      "__PrefabIdToInstanceId": {
+        "58116778-4bfa-49d8-a552-e272b05b6540": "57fd7fed-1034-4029-8dff-80e1077776fa",
+        "9ada05f2-7453-4fc2-9c41-c178fe47e5c5": "b4696a37-aa25-4cfe-81fb-a49bb163cc99",
+        "1defda20-3c45-4e45-82e1-da16f0d81428": "1e409f36-df9d-41a2-aeed-99dcebb665ec",
+        "a590c0e1-951d-41d3-bf71-031ab5a93932": "d7f30a18-f78d-4f74-9486-432793bae334",
+        "ac4b6371-cf24-4c28-a699-0c76a0865814": "6f23d728-546b-48b8-98df-e31ed1890b83"
+      }
+    },
+    {
+      "__guid": "545e8a06-62c2-44b3-b7fe-90bbbfe0062d",
+      "__version": 2,
+      "__Prefab": "items/rfs/rfs_soda_fountain.prefab",
+      "__PrefabInstancePatch": {
+        "AddedObjects": [],
+        "RemovedObjects": [],
+        "PropertyOverrides": [
+          {
+            "Target": {
+              "Type": "GameObject",
+              "IdValue": "736084f2-3759-4404-bed6-7ce1f15ac056"
+            },
+            "Property": "Position",
+            "Value": "8363.4375,7018.44775,82.6060638"
+          }
+        ],
+        "MovedObjects": []
+      },
+      "__PrefabIdToInstanceId": {
+        "736084f2-3759-4404-bed6-7ce1f15ac056": "545e8a06-62c2-44b3-b7fe-90bbbfe0062d",
+        "c3afb4f7-206a-45b5-aa2f-409c6438bfc8": "089bda13-cf5c-4a1b-a283-5d6d6f9fe0bf",
+        "3569f0c9-10b4-4711-a820-fc8df2655293": "708a5a16-3b09-4274-8cc0-59128c460f43",
+        "f5ad165f-f78e-4f83-99f0-a70ccb04ddb9": "fe41463e-695e-408c-b0df-591eae658ef4",
+        "0e659dea-76bb-4979-85e3-ffd4b07b55a8": "551eb46a-17a1-4468-a188-2b0983d26579",
+        "3f75c908-34ea-4b7f-95dc-79251b841b8c": "88a068db-17d4-4201-9db6-0eb8f339fdfe",
+        "b7f000b9-a306-4cb0-a664-9ab772ca28a2": "33e145f7-3496-4e92-b6c1-94528ab35d04",
+        "2b9c01a8-58db-4a39-a51b-1e5ee5b5c4c3": "37488b72-16a1-4e5c-94ac-f014e250c78c",
+        "19897304-f9f3-4032-a141-e6caafea969b": "08866f4d-433a-4082-9912-e41467e03153"
+      }
+    },
+    {
+      "__guid": "76163ae8-e930-4837-87bf-b06681e3da37",
+      "__version": 2,
+      "__Prefab": "items/rfs/rfs_tomato.prefab",
+      "__PrefabInstancePatch": {
+        "AddedObjects": [],
+        "RemovedObjects": [],
+        "PropertyOverrides": [
+          {
+            "Target": {
+              "Type": "GameObject",
+              "IdValue": "231ab3af-1fb1-4e86-b924-22f074f29b2d"
+            },
+            "Property": "Position",
+            "Value": "8363.94141,6909.19531,82.6060486"
+          }
+        ],
+        "MovedObjects": []
+      },
+      "__PrefabIdToInstanceId": {
+        "231ab3af-1fb1-4e86-b924-22f074f29b2d": "76163ae8-e930-4837-87bf-b06681e3da37",
+        "bfb8edb5-1c04-4ac1-a73f-5f5284bf98cd": "4ad7b22a-5fcb-4e5d-a364-dfacf86856e1",
+        "6e85f65b-25b9-4b90-be08-952650054549": "215e5170-8f9e-4050-bdb8-1590228d25ee",
+        "aac9030a-c404-4a0e-b006-c49bf8cb70d0": "5fe58e73-bafa-4ae7-815e-f438d2597309",
+        "c96fd4ff-e35a-48d1-a6d3-2e38351088a5": "25fb9f41-9bd4-498d-957b-d80fba5fbefe"
+      }
+    },
+    {
+      "__guid": "16465d13-aa0f-45af-81e1-d29d18149c69",
+      "__version": 2,
+      "__Prefab": "items/rfs/rfs_whole_cheese.prefab",
+      "__PrefabInstancePatch": {
+        "AddedObjects": [],
+        "RemovedObjects": [],
+        "PropertyOverrides": [
+          {
+            "Target": {
+              "Type": "GameObject",
+              "IdValue": "e99c2311-0c3c-4222-9584-44a9f0bc5ab0"
+            },
+            "Property": "Position",
+            "Value": "8359.59375,6842.76514,82.7305298"
+          }
+        ],
+        "MovedObjects": []
+      },
+      "__PrefabIdToInstanceId": {
+        "e99c2311-0c3c-4222-9584-44a9f0bc5ab0": "16465d13-aa0f-45af-81e1-d29d18149c69",
+        "01934831-2c66-47b0-988e-4f99e4562061": "3a78870b-639e-4cbb-9a2e-167c9e1bf7e6",
+        "1f72a17e-2e78-4dcf-a3d8-3f7e5a79564b": "d51dd4d2-7385-4165-a3f5-813e883ebc49",
+        "70b2d640-c40f-4096-b49c-d340eda3229a": "d17558cc-1fff-459f-8024-4aaa90b79faf",
+        "c3fead19-9c2c-4595-abbb-37d406b8c91f": "3cb6c0bf-beb7-423f-b777-8de0e588ab89",
+        "4a57b428-8649-4580-8324-d93512e3c136": "37cf0ec0-9646-44e8-af40-1ff1e2f568a3"
+      }
+    },
+    {
+      "__guid": "362dee9e-aca0-443f-b175-2954c10be2e6",
+      "__version": 2,
+      "__Prefab": "items/rfs/rfs_whole_lettuce.prefab",
+      "__PrefabInstancePatch": {
+        "AddedObjects": [],
+        "RemovedObjects": [],
+        "PropertyOverrides": [
+          {
+            "Target": {
+              "Type": "GameObject",
+              "IdValue": "c6af4f55-8a08-44d2-a95c-96d0235ea2ce"
+            },
+            "Property": "Position",
+            "Value": "8358.69531,6779.36816,82.6060638"
+          }
+        ],
+        "MovedObjects": []
+      },
+      "__PrefabIdToInstanceId": {
+        "c6af4f55-8a08-44d2-a95c-96d0235ea2ce": "362dee9e-aca0-443f-b175-2954c10be2e6",
+        "3ed8d4e7-53e8-4e16-988c-9f9bb504f51b": "b0553c8d-98b8-4ace-9de4-1b9e224b1059",
+        "3efb702a-d930-457f-9694-1fc4f5780ebf": "ec37c595-bcf1-4448-8ebe-cba573eee49f",
+        "bf7f35c4-7507-43ea-9f36-dde154996abb": "e5dba86e-1571-46d8-8701-3f60b8fc692b",
+        "0028c0e6-4506-419d-a97f-5ffff22569ea": "3fdb0f75-ed28-4887-89f9-e638a69b8b71",
+        "fe14d47c-773c-4ca6-afbe-0f64f6dcff00": "4005c02f-244f-46c4-8a0b-c75789e8cdcf"
+      }
+    },
+    {
+      "__guid": "a6f1cf10-bb34-47bc-93b8-34aca1b164e1",
+      "__version": 2,
+      "__Prefab": "items/rfs/rfs_whole_potato.prefab",
+      "__PrefabInstancePatch": {
+        "AddedObjects": [],
+        "RemovedObjects": [],
+        "PropertyOverrides": [
+          {
+            "Target": {
+              "Type": "GameObject",
+              "IdValue": "ba5e6975-6801-4bc3-addc-9735f43cd0c9"
+            },
+            "Property": "Position",
+            "Value": "8360.21289,6672.70752,82.6060333"
+          }
+        ],
+        "MovedObjects": []
+      },
+      "__PrefabIdToInstanceId": {
+        "ba5e6975-6801-4bc3-addc-9735f43cd0c9": "a6f1cf10-bb34-47bc-93b8-34aca1b164e1",
+        "7253f10a-0403-4887-9f79-7bfd10b62647": "7ddd1bca-b7aa-4ca1-954d-befc6926f27f",
+        "7faee4e1-16c8-41a6-a381-abc2e256705b": "b494bf81-d871-4363-8a2f-e652cfb01e64",
+        "61fa6811-8b40-45e9-b785-a266fddc5ac1": "d9b2d567-b48d-4157-a042-7b0c5217e21a",
+        "0486d5a8-49cf-4412-b4ff-684caabb1753": "c6c40971-8244-47b1-8271-ae64fd436a47",
+        "caa409ba-cd07-48e9-a807-e491be3b8864": "4ee84c8d-d8cf-4ba5-9ead-b8ea6cd0f2af"
+      }
+    },
+    {
+      "__guid": "b8ce4433-70b4-4e6a-b6d3-c494885eac1b",
+      "__version": 2,
+      "__Prefab": "items/rfs/rfs_whole_tomato.prefab",
+      "__PrefabInstancePatch": {
+        "AddedObjects": [],
+        "RemovedObjects": [],
+        "PropertyOverrides": [
+          {
+            "Target": {
+              "Type": "GameObject",
+              "IdValue": "51e9395f-04e4-4666-830f-d627d1b70204"
+            },
+            "Property": "Position",
+            "Value": "8323.60938,6682.93945,82.6060638"
+          }
+        ],
+        "MovedObjects": []
+      },
+      "__PrefabIdToInstanceId": {
+        "51e9395f-04e4-4666-830f-d627d1b70204": "b8ce4433-70b4-4e6a-b6d3-c494885eac1b",
+        "0cc85fc2-3173-467f-9a0e-d529910bec7e": "9a22392f-ab7d-4b85-b520-f0850e0aba0b",
+        "2bf3c8bf-20fa-47ce-b151-18539b25ac33": "38091d00-fac5-4cee-b9dd-dce513922007",
+        "1d964490-45c9-4d81-afaf-5710c3456bc9": "4fafd9ce-0b42-4186-90ea-70565d6a6bc9",
+        "f60a93ed-2b02-46ed-bef5-2087d53632be": "21778e2b-cda6-4e13-a4d3-6fcefa4c0235",
+        "0f40e6a9-ea86-4373-b888-6453640101ef": "023139f8-ed75-4885-8985-049a1a544361",
+        "3adf1340-7094-4ea3-b5c4-ee970f01f3d1": "86d442b0-30f4-45ea-b82c-a2896565a880"
+      }
     }
   ],
   "SceneProperties": {
