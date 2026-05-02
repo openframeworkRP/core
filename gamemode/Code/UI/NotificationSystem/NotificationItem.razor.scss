@@ -39,7 +39,7 @@ NotificationItem {
         color: rgba(255, 255, 255, 0.9);
         flex-grow: 1;
         white-space: normal;
-        word-break: break-word;
+        word-break: break-all;
         text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
     }
 
