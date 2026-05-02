@@ -52,7 +52,7 @@
                 <span>Wiki</span>
             </div>
             <div class="tab @(CurrentTab == Tab.Map ? "active" : "")" @onclick=@(() => CurrentTab = Tab.Map)>
-                <svg src="ui/icons/map.svg" />
+                <svg src="ui/icons/nav.svg" />
                 <span>Map</span>
             </div>
             <div class="tab @(CurrentTab == Tab.Feedback ? "active" : "")" @onclick=@(() => CurrentTab = Tab.Feedback)>
@@ -699,7 +699,8 @@
     }
 
     // ── Wiki API ──
-    private const string WikiApiUrl = "https://service.openframework.fr/api/wiki";
+    [ConVar( "core-wiki_api_url", Help = "URL de base de l'API wiki (vide = localhost:8443)" )]
+    public static string WikiApiUrl { get; set; } = "http://localhost:8443/api/wiki";
 
     TextEntry WikiSearchEntry { get; set; }
     string SearchQuery => WikiSearchEntry?.Text ?? "";
@@ -748,7 +749,9 @@
         WikiLoading = true;
         WikiError = "";
 
-        var url = WikiApiUrl + "/public";
+        const string LocalFallback = "http://localhost:8443/api/wiki";
+        var baseUrl = string.IsNullOrWhiteSpace(WikiApiUrl) ? LocalFallback : WikiApiUrl;
+        var url = baseUrl + "/public";
 
         try
         {
@@ -788,6 +791,14 @@
             }
 
             WikiError = "";
+        }
+        catch (Exception e) when (e.Message.Contains("is not allowed") && baseUrl != LocalFallback)
+        {
+            Log.Warning($"[Wiki] URL bloquée par s&box ({baseUrl}) — basculement sur {LocalFallback}");
+            WikiApiUrl = LocalFallback;
+            WikiLoading = false;
+            LoadWiki();
+            return;
         }
         catch (Exception e)
         {

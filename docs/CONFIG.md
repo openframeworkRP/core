@@ -36,6 +36,14 @@ Ces variables doivent être configurées avant de lancer le serveur en condition
 
 ---
 
+## Wiki
+
+| ConVar | Type | Défaut | Description |
+|--------|------|--------|-------------|
+| `core-wiki_api_url` | `string` | `http://localhost:8443/api/wiki` | URL de base de l'API wiki. Si s&box bloque l'URL (non whitelistée), le gamemode rebascule automatiquement sur `localhost:8443`. En prod, pointer vers l'URL publique de votre backend. |
+
+---
+
 ## Personnalisation du Pause Menu
 
 | ConVar | Type | Défaut | Description |
