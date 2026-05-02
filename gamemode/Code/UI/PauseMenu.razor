@@ -699,8 +699,8 @@
     }
 
     // ── Wiki API ──
-    [ConVar( "core-wiki_api_url", Help = "URL de base de l'API wiki (vide = localhost:8443)" )]
-    public static string WikiApiUrl { get; set; } = "http://localhost:8443/api/wiki";
+    [ConVar( "core-wiki_api_url", Help = "URL de base de l'API wiki (vide = localhost:3001)" )]
+    public static string WikiApiUrl { get; set; } = "http://localhost:3001/api/wiki";
 
     TextEntry WikiSearchEntry { get; set; }
     string SearchQuery => WikiSearchEntry?.Text ?? "";
@@ -749,7 +749,7 @@
         WikiLoading = true;
         WikiError = "";
 
-        const string LocalFallback = "http://localhost:8443/api/wiki";
+        const string LocalFallback = "http://localhost:3001/api/wiki";
         var baseUrl = string.IsNullOrWhiteSpace(WikiApiUrl) ? LocalFallback : WikiApiUrl;
         var url = baseUrl + "/public";
 

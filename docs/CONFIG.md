@@ -40,7 +40,7 @@ Ces variables doivent être configurées avant de lancer le serveur en condition
 
 | ConVar | Type | Défaut | Description |
 |--------|------|--------|-------------|
-| `core-wiki_api_url` | `string` | `http://localhost:8443/api/wiki` | URL de base de l'API wiki. Si s&box bloque l'URL (non whitelistée), le gamemode rebascule automatiquement sur `localhost:8443`. En prod, pointer vers l'URL publique de votre backend. |
+| `core-wiki_api_url` | `string` | `http://localhost:3001/api/wiki` | URL de base de l'API wiki (website backend Node.js, port 3001). Si s&box bloque l'URL (non whitelistée), le gamemode rebascule automatiquement sur `localhost:3001`. En prod, pointer vers l'URL publique de votre website backend. |
 
 ---
 
