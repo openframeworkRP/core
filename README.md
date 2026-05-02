@@ -19,7 +19,7 @@
 OpenFramework Core is a complete framework for hosting an s&box roleplay server:
 
 - **`gamemode/`** — The s&box gamemode itself (dedicated multiplayer, economy, inventory, jobs, NPCs, vehicles, clothing, etc.)
-- **`backend/`** — .NET 9 API + SQL Server: Steam auth, character persistence, inventories, economy, admin panel
+- **`backend/`** — .NET 10 API + PostgreSQL + Redis: Steam auth, character persistence, inventories, economy, admin panel
 - **`website/`** — Website (Vite + Node.js): public devblog + web admin panel for player management
 
 Everything is containerised except the s&box dedicated server itself (which must run on a machine with Steam, just like a FiveM server).
@@ -65,8 +65,9 @@ graph TB
     end
 
     subgraph Backend["Docker Backend"]
-        API["ASP.NET 9 API\n(port 8443)"]
-        DB[(SQL Server\nMSSQL)]
+        API["ASP.NET 10 API\n(port 8443)"]
+        DB[(PostgreSQL)]
+        REDIS[(Redis\ncache)]
         WEB["Website\nReact + Node.js\n(port 4173)"]
         WEBAPI["Website API\nExpress + SQLite\n(port 3001)"]
     end
@@ -75,6 +76,7 @@ graph TB
     GM <-->|"HTTP + JWT\n(role: GameServer)"| API
     SB <-->|"HTTP + JWT\n(role: Player)"| API
     API <--> DB
+    API <--> REDIS
     WEB <--> WEBAPI
     WEBAPI <-->|"HTTP + Server Token"| API
     Admin([Admin]) -->|"Steam OAuth"| WEB
@@ -226,7 +228,7 @@ Temp Worker  — short-term missions across multiple sectors
 
 ---
 
-## API (ASP.NET 9)
+## API (ASP.NET 10)
 
 ### Authentication Flow
 
@@ -295,7 +297,7 @@ core/
 │   ├── core.sbproj             # s&box project (publishes as openframework.core)
 │   ├── Code/                   # C# sources
 │   └── Assets/                 # Models, materials, scenes, prefabs
-├── backend/                    # .NET 9 API + EF Core
+├── backend/                    # .NET 10 API + EF Core + PostgreSQL
 │   ├── OpenFramework.Api/      # Controllers, DTOs, DbContext
 │   └── compose.yaml
 ├── website/                    # Devblog + admin web

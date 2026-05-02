@@ -19,7 +19,7 @@
 OpenFramework Core est un framework complet pour héberger un serveur s&box de type roleplay :
 
 - **`gamemode/`** — Le gamemode s&box lui-même (multijoueur dédié, économie, inventaire, jobs, NPC, véhicules, vêtements, etc.)
-- **`backend/`** — API .NET 9 + SQL Server : auth Steam, persistance des characters, inventaires, économie, panel admin
+- **`backend/`** — API .NET 10 + PostgreSQL + Redis : auth Steam, persistance des characters, inventaires, économie, panel admin
 - **`website/`** — Site web (Vite + Node.js) : devblog public + panel d'admin web pour la gestion des joueurs
 
 Tout est containerisé sauf le serveur s&box dédié lui-même (qui doit tourner sur une machine avec Steam, comme un serveur FiveM).
@@ -65,8 +65,9 @@ graph TB
     end
 
     subgraph Backend["Backend Docker"]
-        API["API ASP.NET 9\n(port 8443)"]
-        DB[(SQL Server\nMSSSQL)]
+        API["API ASP.NET 10\n(port 8443)"]
+        DB[(PostgreSQL)]
+        REDIS[(Redis\ncache)]
         WEB["Site web\nReact + Node.js\n(port 4173)"]
         WEBAPI["Website API\nExpress + SQLite\n(port 3001)"]
     end
@@ -75,6 +76,7 @@ graph TB
     GM <-->|"HTTP + JWT\n(rôle GameServer)"| API
     SB <-->|"HTTP + JWT\n(rôle Player)"| API
     API <--> DB
+    API <--> REDIS
     WEB <--> WEBAPI
     WEBAPI <-->|"HTTP + Token serveur"| API
     Admin([Administrateur]) -->|"Steam OAuth"| WEB
@@ -136,7 +138,7 @@ flowchart TD
     D --> E[Wizard navigateur\n5 étapes]
     E --> F[Étape 1 : Nom du serveur\net branding]
     F --> G[Étape 2 : Connexion BDD\nSQL Server]
-    G --> H[Étape 3 : Secrets JWT\net Server Secret]
+    G --> H[Étape 3 : Secrets JWT,\nServer Secret et Redis]
     H --> I[Étape 4 : Compte owner\nSteam ID]
     I --> J[Étape 5 : Résumé\net validation]
     J --> K[Wizard écrit\ndata/config/.env]
@@ -226,7 +228,7 @@ Intérimaire  — missions ponctuelles multi-secteurs
 
 ---
 
-## API (ASP.NET 9)
+## API (ASP.NET 10)
 
 ### Flow d'authentification
 
@@ -295,7 +297,7 @@ core/
 │   ├── core.sbproj             # Projet s&box (publie comme openframework.core)
 │   ├── Code/                   # Sources C#
 │   └── Assets/                 # Models, materials, scenes, prefabs
-├── backend/                    # API .NET 9 + EF Core
+├── backend/                    # API .NET 10 + EF Core + PostgreSQL
 │   ├── OpenFramework.Api/      # Controllers, DTOs, DbContext
 │   └── compose.yaml
 ├── website/                    # Devblog + admin web

@@ -490,12 +490,16 @@ public partial class Client : Component
 					{
 						await OpenFramework.Api.ApiComponent.Instance.UpdateCharacterAppearance(
 							client.SteamId, characterId,
-							new OpenFramework.Api.CharacterAppearanceUpdateDto
+							new OpenFramework.Api.AppearanceBody
 							{
-								HairColor = client.SavedHairColor,
+								HairColor  = client.SavedHairColor,
 								BeardColor = client.SavedBeardColor,
-								HairStyle = client.SavedHairStyle,
+								HairStyle  = client.SavedHairStyle,
 								BeardStyle = client.SavedBeardStyle,
+								SkinTone   = (client.SavedSkinGroup == "skin_dark") ? OpenFramework.Api.ColorBody.Dark : OpenFramework.Api.ColorBody.Light,
+								Gender     = client.SavedIsFemale ? OpenFramework.Api.Gender.Female : OpenFramework.Api.Gender.Male,
+								Morphs     = "{}",
+								Clothing   = client.SavedClothingJson ?? "[]",
 							} );
 						if ( PlayerBody.DebugHairLogs )
 							Log.Info( $"[HairSystem][HOST] API update OK pour character {characterId}" );
@@ -536,53 +540,48 @@ public partial class Client : Component
 		}
 
 		var color = (skinGroup == "skin_light") ? OpenFramework.Api.ColorBody.Light : OpenFramework.Api.ColorBody.Dark;
-		var dto = new OpenFramework.Api.CharacterAppearanceUpdateDto
-		{
-			HairColor = client.SavedHairColor,
-			BeardColor = client.SavedBeardColor,
-			HairStyle = client.SavedHairStyle,
-			BeardStyle = client.SavedBeardStyle,
-			ColorBody = color,
-			HeadIndex = headIndex,
-		};
+		var isFemale = client.SavedIsFemale;
 
-		// Decoupe les morphs JSON en champs nullable du DTO. Cle absente => null
-		// (l'API ne touchera pas la valeur existante).
+		// Convertit le JSON de morphs body (BrowDown_L/R ...) au format API (clefs agrégées).
+		string apiMorphsJson = "{}";
 		if ( !string.IsNullOrEmpty( morphsJson ) && morphsJson != "{}" )
 		{
 			try
 			{
-				var morphs = System.Text.Json.JsonSerializer.Deserialize<Dictionary<string, float>>( morphsJson );
-				if ( morphs != null )
+				var bodyMorphs = System.Text.Json.JsonSerializer.Deserialize<Dictionary<string, float>>( morphsJson );
+				if ( bodyMorphs != null )
 				{
-					float? Avg( string l, string r )
+					float Avg( string l, string r )
 					{
-						bool hasL = morphs.TryGetValue( l, out var vl );
-						bool hasR = morphs.TryGetValue( r, out var vr );
-						if ( !hasL && !hasR ) return null;
+						bool hasL = bodyMorphs.TryGetValue( l, out var vl );
+						bool hasR = bodyMorphs.TryGetValue( r, out var vr );
 						if ( hasL && hasR ) return (vl + vr) / 2f;
-						return hasL ? vl : vr;
+						return hasL ? vl : (hasR ? vr : 0f);
 					}
-					float? Get( string k ) => morphs.TryGetValue( k, out var v ) ? v : (float?)null;
+					float Get( string k ) => bodyMorphs.TryGetValue( k, out var v ) ? v : 0f;
 
-					dto.BrowDown = Avg( "BrowDown_L", "BrowDown_R" );
-					dto.BrowInnerUp = Get( "BrowInnerUp" );
-					dto.BrowOuterUp = Avg( "BrowOuterUp_L", "BrowOuterUp_R" );
-					dto.EyesLookDown = Avg( "EyeLookDown_L", "EyeLookDown_R" );
-					dto.EyesLookIn = Avg( "EyeLookIn_L", "EyeLookIn_R" );
-					dto.EyesLookOut = Avg( "EyeLookOut_L", "EyeLookOut_R" );
-					dto.EyesLookUp = Avg( "EyeLookUp_L", "EyeLookUp_R" );
-					dto.EyesSquint = Avg( "EyeSquint_L", "EyeSquint_R" );
-					dto.EyesWide = Avg( "EyeWide_L", "EyeWide_R" );
-					dto.CheekPuff = Get( "CheekPuff" );
-					dto.CheekSquint = Avg( "CheekSquint_L", "CheekSquint_R" );
-					dto.NoseSneer = Avg( "NoseSneer_L", "NoseSneer_R" );
-					dto.JawForward = Get( "JawForward" );
-					dto.JawLeft = Get( "JawLeft" );
-					dto.JawRight = Get( "JawRight" );
-					dto.MouthDimple = Avg( "MouthDimple_L", "MouthDimple_R" );
-					dto.MouthRollUpper = Get( "MouthRollUpper" );
-					dto.MouthStretch = Avg( "MouthStretch_L", "MouthStretch_R" );
+					var apiMorphs = new Dictionary<string, float>
+					{
+						["BrowDown"]       = Avg( "BrowDown_L",    "BrowDown_R" ),
+						["BrowInnerUp"]    = Get( "BrowInnerUp" ),
+						["BrowOuterUp"]    = Avg( "BrowOuterUp_L", "BrowOuterUp_R" ),
+						["EyesLookDown"]   = Avg( "EyeLookDown_L", "EyeLookDown_R" ),
+						["EyesLookIn"]     = Avg( "EyeLookIn_L",   "EyeLookIn_R" ),
+						["EyesLookOut"]    = Avg( "EyeLookOut_L",  "EyeLookOut_R" ),
+						["EyesLookUp"]     = Avg( "EyeLookUp_L",   "EyeLookUp_R" ),
+						["EyesSquint"]     = Avg( "EyeSquint_L",   "EyeSquint_R" ),
+						["EyesWide"]       = Avg( "EyeWide_L",     "EyeWide_R" ),
+						["CheekPuff"]      = Get( "CheekPuff" ),
+						["CheekSquint"]    = Avg( "CheekSquint_L", "CheekSquint_R" ),
+						["NoseSneer"]      = Avg( "NoseSneer_L",   "NoseSneer_R" ),
+						["JawForward"]     = Get( "JawForward" ),
+						["JawLeft"]        = Get( "JawLeft" ),
+						["JawRight"]       = Get( "JawRight" ),
+						["MouthDimple"]    = Avg( "MouthDimple_L", "MouthDimple_R" ),
+						["MouthRollUpper"] = Get( "MouthRollUpper" ),
+						["MouthStretch"]   = Avg( "MouthStretch_L","MouthStretch_R" ),
+					};
+					apiMorphsJson = System.Text.Json.JsonSerializer.Serialize( apiMorphs );
 				}
 			}
 			catch ( Exception e )
@@ -591,14 +590,21 @@ public partial class Client : Component
 			}
 		}
 
+		var dto = new OpenFramework.Api.AppearanceBody
+		{
+			HairColor  = client.SavedHairColor,
+			BeardColor = client.SavedBeardColor,
+			HairStyle  = client.SavedHairStyle,
+			BeardStyle = client.SavedBeardStyle,
+			SkinTone   = color,
+			Gender     = isFemale ? OpenFramework.Api.Gender.Female : OpenFramework.Api.Gender.Male,
+			Morphs     = apiMorphsJson,
+			Clothing   = client.SavedClothingJson ?? "[]",
+		};
+
 		if ( OpenFramework.Systems.Pawn.PlayerBody.DebugMorphLogs )
 		{
-			var summary = $"BD={dto.BrowDown}, BIU={dto.BrowInnerUp}, BOU={dto.BrowOuterUp}, " +
-			              $"ELD={dto.EyesLookDown}, ELI={dto.EyesLookIn}, ELO={dto.EyesLookOut}, ELU={dto.EyesLookUp}, " +
-			              $"ESq={dto.EyesSquint}, EWd={dto.EyesWide}, CkP={dto.CheekPuff}, CkSq={dto.CheekSquint}, " +
-			              $"Nose={dto.NoseSneer}, JF={dto.JawForward}, JL={dto.JawLeft}, JR={dto.JawRight}, " +
-			              $"MD={dto.MouthDimple}, MRU={dto.MouthRollUpper}, MSt={dto.MouthStretch}";
-			Log.Info( $"[Morphs][PUSH] {client.DisplayName} (char={characterId}) DTO morphs nullable: {summary}" );
+			Log.Info( $"[Morphs][PUSH] {client.DisplayName} (char={characterId}) AppearanceBody.Morphs = {apiMorphsJson}" );
 			Log.Info( $"[Morphs][PUSH] {client.DisplayName} morphsJson source = {morphsJson}" );
 		}
 
