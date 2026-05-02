@@ -147,6 +147,8 @@
 .ctrl-btn-stop:hover:not(:disabled)     { background: #4a2d2d; }
 .ctrl-btn-logs     { background: #1d2d3a; color: #82b1ff; }
 .ctrl-btn-logs:hover:not(:disabled)     { background: #2d3d4a; }
+.ctrl-btn-console  { background: #1a2d2a; color: #4dd0c4; }
+.ctrl-btn-console:hover:not(:disabled)  { background: #2a3d3a; }
 
 /* ── Modal logs ─────────────────────────────────────────────────────── */
 .ctrl-logs-overlay {
@@ -199,4 +201,32 @@
   line-height: 1.5;
   white-space: pre-wrap;
   word-break: break-all;
+}
+
+/* ── Console live ───────────────────────────────────────────────────── */
+.ctrl-console-modal header {
+  gap: 10px;
+}
+
+.ctrl-console-count {
+  font-size: 12px;
+  color: #6c7385;
+  font-family: 'JetBrains Mono', Consolas, monospace;
+  margin-right: auto;
+}
+
+.ctrl-console-live {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #4dd0c4;
+  margin-right: 8px;
+  animation: ctrl-pulse 1.4s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+@keyframes ctrl-pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.3; }
 }

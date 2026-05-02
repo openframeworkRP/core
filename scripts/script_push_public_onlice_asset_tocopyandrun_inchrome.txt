@@ -1,0 +1,58 @@
+(async () => {
+  const sleep = ms => new Promise(r => setTimeout(r, ms));
+
+  function blazorClick(el) {
+    ['pointerdown','mousedown','pointerup','mouseup','click'].forEach(type => {
+      el.dispatchEvent(new MouseEvent(type, { bubbles: true, cancelable: true, view: window }));
+    });
+  }
+
+  const hiddenUrls = [...new Set(
+    [...document.querySelectorAll('a[href*="/openframework/"]')]
+      .filter(a => !a.href.includes('~') && !a.href.includes('?'))
+      .filter(a => {
+        const parent = a.parentElement;
+        return parent?.querySelector('.card-decorator-hidden')
+            ?? parent?.parentElement?.querySelector('.card-decorator-hidden');
+      })
+      .map(a => a.href)
+  )];
+
+  console.log(`🔍 ${hiddenUrls.length} hidden à traiter`);
+
+  async function processPackage(url) {
+    console.log(`➡️ ${url}`);
+    Blazor.navigateTo(url);
+    await sleep(1500);
+
+    const editLink = [...document.querySelectorAll('a')]
+      .find(a => a.innerText.includes('Edit Package'));
+    if (!editLink) { console.warn(`⚠️ Edit introuvable`); return; }
+    blazorClick(editLink);
+    await sleep(1500);
+
+    const options = [...document.querySelectorAll('.select-option')];
+    const releasedOpt = options.find(o => o.querySelector('.title')?.innerText?.trim() === 'Released');
+    if (!releasedOpt) { console.warn(`⚠️ Released introuvable`); return; }
+
+    if (releasedOpt.classList.contains('active')) {
+      console.log(`⏭️ Déjà Released`); return;
+    }
+
+    blazorClick(releasedOpt.querySelector('.title') ?? releasedOpt);
+    await sleep(800);
+
+    const saveBtn = document.querySelector('.action-button');
+    if (!saveBtn) { console.warn(`⚠️ Save introuvable`); return; }
+    blazorClick(saveBtn);
+    await sleep(2000);
+    console.log(`✅ ${url}`);
+  }
+
+  for (const url of hiddenUrls) {
+    await processPackage(url);
+  }
+
+  Blazor.navigateTo('https://sbox.game/openframework/~packages?type=model');
+  console.log('🎉 Terminé !');
+})();

@@ -53,9 +53,6 @@ const SQLiteStore = connectSqlite3(session)
 const app = express()
 const httpServer = createServer(app)
 
-// Initialise Socket.io sur le même serveur HTTP
-initSocket(httpServer, FRONTEND_URL)
-
 // Faire confiance au reverse proxy (Cloudflare Tunnel, nginx…)
 // nécessaire pour que req.secure = true et que les cookies secure fonctionnent
 app.set('trust proxy', 1)
@@ -69,7 +66,8 @@ app.use(cors({
 app.use(express.json({ limit: '10mb' }))
 
 // ── Sessions (stockées dans SQLite) ───────────────────────────────────────
-app.use(session({
+// Extrait en variable pour être partagé avec Socket.io (auth console streaming)
+const sessionMiddleware = session({
   store: new SQLiteStore({ db: 'sessions.db', dir: join(__dirname, '../data') }),
   secret: process.env.SESSION_SECRET || 'change-this-secret-in-production',
   resave: false,
@@ -82,7 +80,11 @@ app.use(session({
     maxAge: 7 * 24 * 60 * 60 * 1000, // 7 jours
     sameSite: 'lax',
   },
-}))
+})
+app.use(sessionMiddleware)
+
+// ── Initialise Socket.io sur le même serveur HTTP ─────────────────────────
+initSocket(httpServer, FRONTEND_URL, sessionMiddleware)
 
 // ── Passport ───────────────────────────────────────────────────────────────
 app.use(passport.initialize())

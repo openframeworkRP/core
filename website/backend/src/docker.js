@@ -92,6 +92,54 @@ export async function stopContainer(containerName, timeoutSec = 10) {
   return dockerRequest(`/containers/${containerName}/stop?t=${timeoutSec}`, 'POST')
 }
 
+/**
+ * Ouvre un stream persistant sur les logs d'un container.
+ * Appelle onLine(line) pour chaque ligne reçue en temps réel.
+ * Renvoie une fonction stop() pour fermer le stream.
+ */
+export function streamContainerLogs(containerName, { onLine, onEnd, onError } = {}) {
+  const options = {
+    socketPath: SOCKET,
+    path: `/containers/${containerName}/logs?stdout=1&stderr=1&follow=1&tail=50&timestamps=1`,
+    method: 'GET',
+  }
+
+  let pending = Buffer.alloc(0)
+
+  const req = http.request(options, (res) => {
+    res.on('data', (chunk) => {
+      pending = Buffer.concat([pending, chunk])
+      let nl
+      while ((nl = pending.indexOf(0x0a)) !== -1) {
+        const raw = pending.slice(0, nl)
+        pending = pending.slice(nl + 1)
+        // Strip Docker 8-byte stream multiplexing header (type + 3 zero bytes + uint32 size)
+        let off = 0
+        if (raw.length > 8 && raw[0] < 32 && raw[0] !== 9) off = 8
+        const line = raw.slice(off).toString('utf8').trimEnd()
+        if (line) onLine?.(line)
+      }
+    })
+
+    res.on('end', () => {
+      if (pending.length) {
+        let off = 0
+        if (pending.length > 8 && pending[0] < 32 && pending[0] !== 9) off = 8
+        const line = pending.slice(off).toString('utf8').trimEnd()
+        if (line) onLine?.(line)
+      }
+      onEnd?.()
+    })
+
+    res.on('error', (e) => onError?.(e))
+  })
+
+  req.on('error', (e) => onError?.(e))
+  req.end()
+
+  return () => req.destroy()
+}
+
 export async function containerLogs(containerName, tail = 100) {
   // Endpoint logs renvoie un stream multiplexe (stdout/stderr) avec un
   // header binaire de 8 octets par chunk. Pour la simplicite, on demande

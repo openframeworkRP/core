@@ -4,7 +4,7 @@ import { io } from 'socket.io-client'
 // Singleton — une seule connexion WebSocket par onglet
 let socket = null
 
-function getSocket() {
+export function getSocket() {
   if (!socket) {
     socket = io({
       path: '/socket.io',
