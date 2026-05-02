@@ -1,3 +1,5 @@
+@import "/UI/Styles/Theme.scss";
+
 WorldInputInfo {
     /* On force le panel à être centré sur le pivot du GameObject */
     height: 100%;
@@ -23,7 +25,7 @@ WorldInputInfo {
     }
 
     .label {
-        font-family: Poppins, Roboto, sans-serif;
+        font-family: $font-ui;
         font-size: 10px;
         font-weight: 700;
         color: white;

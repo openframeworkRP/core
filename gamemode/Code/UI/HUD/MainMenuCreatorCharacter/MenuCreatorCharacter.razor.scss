@@ -1,5 +1,4 @@
-$sbox-orange: #ff8000;
-$deep-dark: rgba(15, 15, 15, 0.95);
+@import "ui/Styles/Theme.scss";
 
 MenuCreatorCharacter {
     position: absolute;
@@ -18,7 +17,6 @@ MenuCreatorCharacter {
         align-items: center;
         flex-direction: row;
         z-index: 1000;
-        /* Animation de disparition */
         transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
         transform: translateY(0);
         opacity: 1;
@@ -40,7 +38,7 @@ MenuCreatorCharacter {
                 width: 60px;
                 background-color: rgba(20, 20, 20, 0.9);
                 border: 1px solid rgba(255, 255, 255, 0.1);
-                border-radius: 12px; // Coins plus arrondis pour le côté moderne
+                border-radius: 12px;
                 justify-content: center;
                 align-items: center;
                 transition: all 0.2s ease;
@@ -59,35 +57,31 @@ MenuCreatorCharacter {
                 letter-spacing: 1.5px;
                 transition: all 0.2s ease;
             }
-            /* État Actif : Orange & Blanc */
+
             &.active {
                 .icon-box {
-                    background-color: $sbox-orange;
-                    border-color: $sbox-orange;
-                    box-shadow: 0 0 20px rgba($sbox-orange, 0.3);
+                    background-color: $creator-orange;
+                    border-color: $creator-orange;
+                    box-shadow: 0 0 20px rgba($creator-orange, 0.3);
                     transform: scale(1.1);
-
-                    svg {
-                        
-                    }
                 }
 
                 label {
-                    color: $sbox-orange;
+                    color: $creator-orange;
                     opacity: 1;
                 }
             }
 
             &:hover:not(.active) {
                 .icon-box {
-                    border-color: rgba($sbox-orange, 0.5);
+                    border-color: rgba($creator-orange, 0.5);
                     background-color: rgba(40, 40, 40, 1);
                 }
             }
         }
 
         .path {
-            height: 2px; // Plus fin pour plus d'élégance
+            height: 2px;
             width: 70px;
             background-color: rgba(255,255,255,0.05);
             margin: 0 5px;
@@ -96,8 +90,8 @@ MenuCreatorCharacter {
             transition: background-color 0.6s ease;
 
             &.active {
-                background-color: $sbox-orange;
-                box-shadow: 0 0 10px rgba($sbox-orange, 0.2);
+                background-color: $creator-orange;
+                box-shadow: 0 0 10px rgba($creator-orange, 0.2);
             }
         }
     }

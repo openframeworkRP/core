@@ -1,15 +1,8 @@
 @import "ui/Styles/Theme.scss";
 
-$accent: #D66D2D;
-$accent-hover: #f17b34;
-$glass-bg: rgba(15, 15, 15, 0.85);
-$glass-card: rgba(255, 255, 255, 0.04);
-$glass-border: rgba(255, 255, 255, 0.08);
-
 ValidatePage {
     width: 100%;
     height: 100%;
-    font-family: Poppins, Roboto, sans-serif;
     pointer-events: all;
 
     .bg-right {
@@ -49,7 +42,7 @@ ValidatePage {
 
         h1 {
             font-size: 32px;
-            color: $accent;
+            color: $creator-accent;
             font-weight: bold;
             width: 100%;
             justify-content: center;
@@ -80,7 +73,6 @@ ValidatePage {
                 }
             }
         }
-
     }
 
     .navigation-buttons {
@@ -104,7 +96,7 @@ ValidatePage {
         text-transform: uppercase;
         justify-content: center;
         align-items: center;
-        border: 1px solid $glass-border;
+        border: 1px solid $creator-glass-border;
 
         &:hover {
             background-color: rgba(255, 255, 255, 0.12);
@@ -115,7 +107,7 @@ ValidatePage {
 
     .next-btn {
         width: 70%;
-        background-color: $accent;
+        background-color: $creator-accent;
         color: white;
         font-size: 12px;
         border-radius: 4px;
@@ -125,7 +117,7 @@ ValidatePage {
         align-items: center;
 
         &:hover {
-            background-color: $accent-hover;
+            background-color: $creator-accent-hover;
             cursor: pointer;
         }
     }
@@ -142,14 +134,14 @@ ValidatePage {
             display: flex;
             flex-direction: column;
             gap: 8px;
-            background-color: $glass-bg;
+            background-color: $creator-glass-bg;
             padding: 12px;
             border-radius: 8px;
-            border: 1px solid $glass-border;
+            border: 1px solid $creator-glass-border;
             backdrop-filter: blur(20px);
 
             label {
-                color: $accent;
+                color: $creator-accent;
                 font-size: 10px;
                 letter-spacing: 1px;
                 text-transform: uppercase;
@@ -171,17 +163,17 @@ ValidatePage {
             border-radius: 6px;
             font-size: 18px;
             font-weight: bold;
-            border: 1px solid $glass-border;
+            border: 1px solid $creator-glass-border;
             justify-content: center;
             align-items: center;
 
             &:hover {
                 background-color: rgba(255, 255, 255, 0.15);
-                border: 1px solid rgba($accent, 0.5);
+                border: 1px solid rgba($creator-accent, 0.5);
             }
 
             &:active {
-                background-color: $accent;
+                background-color: $creator-accent;
                 color: black;
                 transform: scale(0.92);
             }
@@ -195,7 +187,7 @@ ValidatePage {
         z-index: 100;
 
         .confirm-btn {
-            background-color: $accent;
+            background-color: $creator-accent;
             color: white;
             padding: 15px 40px;
             font-size: 1.2rem;
@@ -207,7 +199,7 @@ ValidatePage {
             transition: all 0.2s ease;
 
             &:hover {
-                background-color: $accent-hover;
+                background-color: $creator-accent-hover;
                 transform: translateY(-2px);
             }
 

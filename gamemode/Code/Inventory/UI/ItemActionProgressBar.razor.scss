@@ -1,3 +1,5 @@
+@import "/UI/Styles/Theme.scss";
+
 ItemActionProgressBar {
     position: absolute;
     bottom: 22%;
@@ -32,7 +34,7 @@ ItemActionProgressBar {
 
     .label {
         color: #ffffff;
-        font-family: "Poppins", sans-serif;
+        font-family: $font-ui;
         font-size: 13px;
         font-weight: 700;
         letter-spacing: 1.5px;

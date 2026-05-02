@@ -1,3 +1,5 @@
+@import "/UI/Styles/Theme.scss";
+
 VehicleCounterPanel
 {
 	position: absolute;
@@ -14,7 +16,7 @@ VehicleCounterPanel
 	.title
 	{
 		font-size: 25px;
-		font-family: Poppins;
+		font-family: $font-ui;
 		color: #fff;
 	}
 }

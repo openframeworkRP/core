@@ -1,13 +1,8 @@
 @import "ui/Styles/Theme.scss";
 
-$accent: #D66D2D;
-$accent-hover: #f17b34;
-$glass-border: rgba(255, 255, 255, 0.08);
-
 RulesPage {
     width: 100%;
     height: 100%;
-    font-family: Poppins, Roboto, sans-serif;
     pointer-events: all;
 
     .bg-right {
@@ -31,7 +26,7 @@ RulesPage {
 
         h1 {
             font-size: 20px;
-            color: $accent;
+            color: $creator-accent;
             font-weight: 900;
             text-transform: uppercase;
             letter-spacing: 2px;
@@ -56,14 +51,14 @@ RulesPage {
         gap: 10px;
         padding: 10px;
         background-color: rgba(255, 255, 255, 0.03);
-        border: 1px solid $glass-border;
+        border: 1px solid $creator-glass-border;
         border-radius: 6px;
 
         .rule-number {
             width: 22px;
             height: 22px;
             min-width: 22px;
-            background-color: $accent;
+            background-color: $creator-accent;
             color: white;
             font-size: 11px;
             font-weight: 900;
@@ -78,16 +73,14 @@ RulesPage {
             gap: 2px;
 
             .rule-title {
-                color: $accent;
+                color: $creator-accent;
                 font-size: 15px;
                 font-weight: 700;
-                font-family: Poppins, Roboto, sans-serif;
             }
 
             p {
                 color: rgba(255, 255, 255, 0.6);
                 font-size: 11px;
-                font-family: Poppins, Roboto, sans-serif;
                 font-weight: 400;
             }
         }
@@ -101,7 +94,7 @@ RulesPage {
         margin-top: 12px;
         padding: 10px;
         background-color: rgba(255, 255, 255, 0.03);
-        border: 1px solid $glass-border;
+        border: 1px solid $creator-glass-border;
         border-radius: 6px;
         cursor: pointer;
 
@@ -120,8 +113,8 @@ RulesPage {
             transition: all 0.15s ease;
 
             &.checked {
-                background-color: $accent;
-                border-color: $accent;
+                background-color: $creator-accent;
+                border-color: $creator-accent;
 
                 span {
                     color: white;
@@ -158,7 +151,7 @@ RulesPage {
         text-transform: uppercase;
         justify-content: center;
         align-items: center;
-        border: 1px solid $glass-border;
+        border: 1px solid $creator-glass-border;
         border-radius: 4px;
 
         &:hover {
@@ -170,7 +163,7 @@ RulesPage {
 
     .next-btn {
         width: 70%;
-        background-color: $accent;
+        background-color: $creator-accent;
         color: white;
         font-size: 12px;
         font-weight: bold;
@@ -180,7 +173,7 @@ RulesPage {
         border-radius: 4px;
 
         &:hover {
-            background-color: $accent-hover;
+            background-color: $creator-accent-hover;
             cursor: pointer;
         }
 

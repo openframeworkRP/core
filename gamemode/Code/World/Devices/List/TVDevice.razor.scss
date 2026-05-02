@@ -1,9 +1,11 @@
+@import "/UI/Styles/Theme.scss";
+
 TVDevice {
     height: 100%;
     width: 100%;
     color: white;
     //background-color: rgb(25, 25, 25);
-    font-family: Mina;
+    font-family: $font-device;
     letter-spacing: 1px;
     transition: all 0.2s ease;
     padding: 20px;

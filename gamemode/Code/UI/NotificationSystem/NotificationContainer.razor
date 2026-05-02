@@ -3,32 +3,33 @@
 @using System.Linq
 @using static Facepunch.NotificationSystem
 
+<div class="notif-header">
+    <label>NOTIFICATIONS</label>
+</div>
+
 @code {
     public static NotificationContainer Instance { get; private set; }
+
+    public const int MaxVisible = 6;
 
     public NotificationContainer()
     {
         Instance = this;
     }
 
-    /// <summary>
-    /// Tick : si la notif visible a disparu, on depile la suivante depuis la queue.
-    /// Garantit qu'il n'y a qu'une seule notification affichee a la fois.
-    /// </summary>
     public override void Tick()
     {
-        // Si rien en queue, rien a faire
-        if (NotificationSystem.PendingQueue.Count == 0)
+        var items = Children.OfType<NotificationItem>().ToList();
+        SetClass( "has-items", items.Any() );
+
+        if ( NotificationSystem.PendingQueue.Count == 0 )
             return;
 
-        // Si une notif est deja visible, on attend qu'elle disparaisse
-        bool hasVisible = this.Children.OfType<NotificationItem>().Any();
-        if (hasVisible)
+        if ( items.Count >= MaxVisible )
             return;
 
-        // Depile et affiche la prochaine (en tête = la plus récente/prioritaire)
         var (type, message) = NotificationSystem.PendingQueue.First.Value;
         NotificationSystem.PendingQueue.RemoveFirst();
-        AddChild(new NotificationItem(type, message));
+        AddChild( new NotificationItem( type, message ) );
     }
 }

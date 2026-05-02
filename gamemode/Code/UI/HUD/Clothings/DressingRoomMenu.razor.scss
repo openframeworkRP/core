@@ -1,3 +1,5 @@
+@import "/UI/Styles/Theme.scss";
+
 DressingRoomMenu {
     position: absolute;
     top: 0;
@@ -9,7 +11,7 @@ DressingRoomMenu {
     align-items: center;
     font-weight: bold;
     pointer-events: all;
-    font-family: 'Poppins', sans-serif;
+    font-family: $font-ui;
 
     .container {
         pointer-events: all;
@@ -18,7 +20,7 @@ DressingRoomMenu {
         right: 28%;
         height: 80%;
         width: 40%;
-        background-color: #1a1a1a; /* Noir très sombre */
+        background-color: #1a1a1a; /* Noir trï¿½s sombre */
         border: 2px solid #ff8c00; /* Bordure Orange */
         padding: 10px;
         box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
@@ -49,13 +51,13 @@ DressingRoomMenu {
             min-height: 35px;
             width: 100%;
             margin-bottom: 2px;
-            background-color: #222222; /* Fond de ligne gris foncé */
+            background-color: #222222; /* Fond de ligne gris foncï¿½ */
             padding: 5px;
-            border-left: 3px solid #ff8c00; /* Petit rappel Orange sur le côté */
+            border-left: 3px solid #ff8c00; /* Petit rappel Orange sur le cï¿½tï¿½ */
 
             span {
                 white-space: nowrap;
-                color: #e0e0e0; /* Texte blanc cassé pour ne pas agresser */
+                color: #e0e0e0; /* Texte blanc cassï¿½ pour ne pas agresser */
                 flex: 1;
             }
 

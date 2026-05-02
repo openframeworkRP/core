@@ -5,17 +5,31 @@ NotificationContainer {
     bottom: 230px;
     left: 30px;
     width: 340px;
-    max-width: 340px;
-    max-height: 320px;
-
-    flex-direction: column-reverse;
-    align-items: stretch;
-    gap: 6px;
+    flex-direction: column;
     z-index: 1000;
     pointer-events: none;
     overflow: hidden;
 
-    * {
-        transition: $transition-normal;
+    background-color: rgba(10, 10, 10, 0.75);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+
+    opacity: 0;
+    transition: opacity 0.2s ease;
+
+    &.has-items {
+        opacity: 1;
+    }
+
+    .notif-header {
+        padding: 7px 12px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+
+        label {
+            font-size: 10px;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.35);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
     }
 }

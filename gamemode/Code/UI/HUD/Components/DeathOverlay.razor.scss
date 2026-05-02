@@ -1,10 +1,12 @@
-﻿DeathOverlay {
+﻿@import "/UI/Styles/Theme.scss";
+
+DeathOverlay {
     position: absolute;
     height: 100%;
     width: 100%;
     background-color: rgba(0, 0, 0, 0.85);
     color: #fff;
-    font-family: "Inter", Arial, sans-serif;
+    font-family: $font-ui;
     justify-content: center;
     align-items: center;
     flex-direction: column;

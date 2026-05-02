@@ -1,3 +1,5 @@
+@import "/UI/Styles/Theme.scss";
+
 WeedPotUI {
 	height: 100%;
 	width: 100%;
@@ -6,7 +8,7 @@ WeedPotUI {
 	//background-color: rgba(0, 0, 0, 0.7);
 	padding: 20px;
 	color: white;
-	font-family: Poppins;
+	font-family: $font-ui;
 
 	.title {
 		font-size: 18px;

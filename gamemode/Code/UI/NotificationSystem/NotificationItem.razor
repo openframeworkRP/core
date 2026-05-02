@@ -5,12 +5,8 @@
 @using System.Text.RegularExpressions
 @using OpenFramework.GameLoop
 
-
 <root class="@GetClassType()">
-    @if (StackCount > 1)
-    {
-        <span class="stack-count">x@(StackCount)</span>
-    }
+    <span class="stack-count">×@(StackCount)</span>
     <div class="message" @ref="MessagePanelRef"></div>
 </root>
 
@@ -33,9 +29,6 @@
         return _type == type && _message == message;
     }
 
-    /// <summary>
-    /// Reset the timer and increment the stack count.
-    /// </summary>
     public void Stack()
     {
         StackCount++;
@@ -55,43 +48,20 @@
         };
 
         MessagePanelRef.AddChild(panel);
-
     }
-
-    string GetIconType() => _type switch
-    {
-        NotificationType.Generic => "ui/icons/announce.svg",
-        NotificationType.Error => "ui/icons/error.svg",
-        NotificationType.Info => "ui/icons/info.svg",
-        NotificationType.Warning => "ui/icons/warning.svg",
-        NotificationType.Success => "ui/icons/success.svg",
-        _ => "ui/icons/thumb_up.svg"
-    };
-
-    string GetIconColor() => _type switch
-    {
-        NotificationType.Generic => "#eb5e28",
-        NotificationType.Error => "#FA3A37",
-        NotificationType.Info => "#3742FA",
-        NotificationType.Warning => "#FAD237",
-        NotificationType.Success => "#4caf50",
-        _ => "#eb5e28"
-    };
 
     string GetClassType() => _type switch
     {
         NotificationType.Generic => "generic",
-        NotificationType.Error => "error",
-        NotificationType.Info => "info",
+        NotificationType.Error   => "error",
+        NotificationType.Info    => "info",
         NotificationType.Warning => "warning",
         NotificationType.Success => "success",
         _ => "custom"
     };
 
-    // Returns HTML string that we render as MarkupString
     string GetMessage()
     {
-        // Handle <font ...>...</font> (any case, across lines)
         var result = Regex.Replace(
             _message,
             @"<\s*font(.*?)>(.*?)</\s*font\s*>",
@@ -107,8 +77,6 @@
 
                 if (!string.IsNullOrEmpty(GetAttr("color")))
                     style += $"color:{GetAttr("color")};";
-
-                // support boolean-ish flags (bold/italic/underline/strikethrough)
                 if (Regex.IsMatch(attributes, @"\bbold\b", RegexOptions.IgnoreCase))
                     style += "font-weight:bold;";
                 if (Regex.IsMatch(attributes, @"\bitalic\b", RegexOptions.IgnoreCase))
@@ -117,7 +85,6 @@
                     style += "text-decoration:underline;";
                 if (Regex.IsMatch(attributes, @"\bstrikethrough\b", RegexOptions.IgnoreCase))
                     style += "text-decoration:line-through;";
-
                 if (!string.IsNullOrEmpty(GetAttr("size")))
                     style += $"font-size:{GetAttr("size")};";
                 if (!string.IsNullOrEmpty(GetAttr("family")))
@@ -126,14 +93,11 @@
                     style += $"background-color:{GetAttr("bgcolor")};";
                 if (!string.IsNullOrEmpty(GetAttr("align")))
                     style += $"text-align:{GetAttr("align")};";
-
                 if (!string.IsNullOrEmpty(GetAttr("link")))
                     content = $"<a href='{GetAttr("link")}'>{content}</a>";
-
                 if (!string.IsNullOrEmpty(GetAttr("animation")))
                     style += $"animation:{GetAttr("animation")};";
 
-                // Use a span so it plays nice inside your div.message
                 return $"<label style='{style}margin:0 5px 0 5px'>{content}</label>";
             },
             RegexOptions.IgnoreCase | RegexOptions.Singleline

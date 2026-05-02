@@ -1,3 +1,5 @@
+@import "/UI/Styles/Theme.scss";
+
 .sign-edit-overlay {
     position: absolute;
     top: 0; left: 0; right: 0; bottom: 0;
@@ -45,7 +47,7 @@
         color: #f5d78e;
         text-align: center;
         text-shadow: 0 2px 8px rgba(0,0,0,0.8);
-        font-family: "Roboto Slab", serif;
+        font-family: $font-ui;
         letter-spacing: 4px;
         text-transform: uppercase;
     }

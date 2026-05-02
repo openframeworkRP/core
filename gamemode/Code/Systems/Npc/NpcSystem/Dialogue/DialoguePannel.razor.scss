@@ -1,3 +1,5 @@
+@import "/UI/Styles/Theme.scss";
+
 $accent: #D66D2D;
 $accent-hover: #f17b34;
 $glass-bg: rgba(15, 15, 15, 0.85);
@@ -58,7 +60,7 @@ $glass-border: rgba(255, 255, 255, 0.08);
 .message-text {
 	font-size: 22px;
 	color: white;
-	font-family: Poppins;
+	font-family: $font-ui;
 	font-weight: 600;
 }
 
@@ -82,7 +84,7 @@ $glass-border: rgba(255, 255, 255, 0.08);
 	label {
 		color: rgba(255, 255, 255, 0.7);
 		font-size: 16px;
-		font-family: Poppins;
+		font-family: $font-ui;
 		pointer-events: none;
 	}
 

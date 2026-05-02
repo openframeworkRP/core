@@ -1,3 +1,5 @@
+@import "/UI/Styles/Theme.scss";
+
 AtmUI {
 	width: 356px;
 	height: 224px;
@@ -8,7 +10,7 @@ AtmUI {
 	overflow: hidden;
 	flex-direction: column;
 	pointer-events: all;
-	font-family: Poppins;
+	font-family: $font-ui;
 }
 
 AtmUI > root {

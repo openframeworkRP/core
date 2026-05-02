@@ -1,5 +1,5 @@
 // ============================================================
-// DatabasePanel — browser read-only de la DB du jeu (SQL Server)
+// DatabasePanel — browser read-only de la DB du jeu (PostgreSQL)
 // ============================================================
 // 2 colonnes : liste des tables a gauche, viewer a droite
 // (paginated grid des rows). Pour edits / SQL custom -> Adminer.
@@ -95,7 +95,7 @@ export default function DatabasePanel() {
       <header className="db-header">
         <h1><Database size={20} style={{ verticalAlign: '-3px' }} /> Database — Jeu</h1>
         <p className="db-subtitle">
-          Vue read-only du SQL Server du jeu (OpenFrameworkDb).
+          Vue read-only du PostgreSQL du jeu (OpenFrameworkDb).
           Pour les edits ou le SQL custom, utilise Adminer (port 8080).
         </p>
         <button className="db-btn" onClick={loadTables} disabled={loadingTables} title="Refresh la liste des tables">

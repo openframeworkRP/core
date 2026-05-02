@@ -48,28 +48,28 @@ public sealed class NotificationSystem : Component
 			return;
 		}
 
-		// Cherche une notif identique deja visible : on stack le compteur sans
-		// la remettre en queue (evite le spam visuel de la meme action repetee)
+		// Notif identique déjà visible : on stack sans repasser par la queue
 		var existing = container.Children
 			.OfType<NotificationItem>()
-			.FirstOrDefault(n => n.Matches(type, message));
-		if (existing != null)
+			.FirstOrDefault( n => n.Matches( type, message ) );
+		if ( existing != null )
 		{
 			existing.Stack();
 			return;
 		}
 
-		// Si aucune notif visible actuellement, affiche directement
-		if (!container.Children.OfType<NotificationItem>().Any())
+		// Slot disponible : affiche directement
+		var currentCount = container.Children.OfType<NotificationItem>().Count();
+		if ( currentCount < NotificationContainer.MaxVisible )
 		{
-			container.AddChild(new NotificationItem(type, message));
+			container.AddChild( new NotificationItem( type, message ) );
 			return;
 		}
 
-		// Sinon, met en file d'attente
-		if (PendingQueue.Count < MAX_QUEUE_SIZE)
+		// Panel plein : met en file d'attente
+		if ( PendingQueue.Count < MAX_QUEUE_SIZE )
 		{
-			PendingQueue.AddFirst((type, message));
+			PendingQueue.AddFirst( (type, message) );
 		}
 	}
 

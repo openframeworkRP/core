@@ -22,10 +22,11 @@ const router = Router()
 // Le champ 'self' identifie le container qui execute ce code (website.api)
 // — il a besoin d'un traitement special pour le restart (suicide pattern).
 const SERVICES = [
-  { id: 'core.api',         container: 'core-api',              label: 'API du jeu (.NET 9)',     critical: true },
-  { id: 'sqlserver',        container: 'core-sqlserver',        label: 'SQL Server (DB du jeu)', critical: true },
+  { id: 'core.api',         container: 'core-api',              label: 'API du jeu (.NET 10)',    critical: true },
+  { id: 'postgres',         container: 'core-postgres',         label: 'PostgreSQL (DB du jeu)',  critical: true },
+  { id: 'redis',            container: 'core-redis',            label: 'Redis (cache)',           critical: true },
   { id: 'adminer',          container: 'core-adminer',          label: 'Adminer (UI DB)' },
-  { id: 'website.api',      container: 'core-website-api',      label: 'API du website (Node)',  self: true },
+  { id: 'website.api',      container: 'core-website-api',      label: 'API du website (Node)',   self: true },
   { id: 'website.frontend', container: 'core-website-frontend', label: 'Frontend (Vite)' },
   { id: 'website.scraper',  container: 'core-website-scraper',  label: 'Scraper FAB (Python)' },
 ]

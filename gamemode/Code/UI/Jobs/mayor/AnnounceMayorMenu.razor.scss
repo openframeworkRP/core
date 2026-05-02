@@ -33,7 +33,7 @@ AnnounceMayorMenu {
             padding: 10px;
             font-size: 45px;
             color: white;
-            font-family: Lugrasimo;
+            font-family: $font-display;
             justify-content: space-between;
 
             .close {
@@ -67,7 +67,7 @@ AnnounceMayorMenu {
                 flex-wrap: wrap;
                 color: white;
                 overflow: hidden;
-                font-family: Lugrasimo;
+                font-family: $font-display;
             }
         }
 

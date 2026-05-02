@@ -10,7 +10,7 @@ ChatUI {
     top: 30px;
     left: 30px;
     transition: all 0.2s ease-in-out;
-    font-family: Poppins;
+    font-family: $font-ui;
     pointer-events: none;
 
     &.triggered {

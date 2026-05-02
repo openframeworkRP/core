@@ -121,13 +121,9 @@ router.post('/apply', async (req, res) => {
     envContent = '# Genere par le wizard OpenFramework Core\n'
   }
 
-  // Note : on ne change PAS MSSQL_SA_PASSWORD ici. Au 1er boot SQL
-  // Server ecrit le mdp bootstrap dans son volume persistent — le
-  // changer cote .env ne suffit pas, il faudrait ALTER LOGIN sa.
-  // Pour l'instant on garde la valeur bootstrap (le user peut la
-  // changer manuellement via T-SQL plus tard, cf. docs/SETUP.md).
-  envContent = setEnvVar(envContent, 'MSSQL_SA_PASSWORD',  'OpenFwBootstrap_Pa55!')
-  envContent = setEnvVar(envContent, 'DB_NAME',            dbName)
+  envContent = setEnvVar(envContent, 'POSTGRES_DB',       dbName)
+  envContent = setEnvVar(envContent, 'POSTGRES_USER',     'postgres')
+  envContent = setEnvVar(envContent, 'POSTGRES_PASSWORD', 'OpenFwBootstrap_Pa55!')
   envContent = setEnvVar(envContent, 'API_PORT',           String(apiPort))
   envContent = setEnvVar(envContent, 'JWT_KEY',            jwtKey)
   envContent = setEnvVar(envContent, 'SERVER_SECRET',      serverSecret)
@@ -163,7 +159,7 @@ router.post('/apply', async (req, res) => {
   // Un simple 'docker restart' garde les vars du create initial, donc on
   // utilise 'docker compose up -d --force-recreate' qui recree le container
   // depuis le compose.yml (qui re-evalue les ${VAR} du nouveau .env).
-  // SQL Server : pas recree car son mdp SA est dans son volume persistent.
+  // PostgreSQL et Redis : pas recrees car leurs donnees sont dans des volumes persistants.
   const restartResults = []
   try {
     const r = await composeRecreate(['core.api'])
