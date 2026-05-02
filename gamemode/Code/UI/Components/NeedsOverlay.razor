@@ -27,6 +27,7 @@
     float _exhaustDark   = 0f;
     float _sprintBlur    = 0f;
     SoundHandle _breathHandle;
+    bool _breathing = false;
 
     Client Self => Client.Local;
 
@@ -114,24 +115,26 @@
 
     void UpdateBreathSound( float stamina, bool sprinting )
     {
-        bool shouldBreathe = sprinting && stamina < 70f;
-        float vol = shouldBreathe ? (1f - stamina / 70f) : 0f;
+        bool shouldBreathe = sprinting && stamina < 35f;
 
-        if (shouldBreathe)
+        if (shouldBreathe && !_breathing)
         {
-            if (!_breathHandle.IsValid)
+            var snd = ResourceLibrary.Get<SoundEvent>("sounds/runbreath.sound");
+            if (snd != null)
             {
-                var snd = ResourceLibrary.Get<SoundEvent>("sounds/runbreath.sound");
-                if (snd != null) _breathHandle = Sound.Play(snd);
+                _breathHandle = Sound.Play(snd);
+                _breathing = true;
             }
-            if (_breathHandle.IsValid) _breathHandle.Volume = vol;
         }
-        else
+
+        if (_breathing)
         {
-            if (_breathHandle.IsValid)
+            if (shouldBreathe)
+                _breathHandle.Volume = 1f - stamina / 35f;
+            else
             {
                 _breathHandle.Stop();
-                _breathHandle = default;
+                _breathing = false;
             }
         }
     }
