@@ -13,19 +13,20 @@
                 <svg src="ui/icons/close.svg" color="white" />
             </div>
         </div>
-        <div class="app-container" @ref=CanvasRef />
+        <div class="app-container">
+            <PoliceApp_navigator />
+        </div>
     </div>
 </root>
 
 @code
 {
     [Property] public IDevice AttachedDevice { get; set; }
-    Panel CanvasRef;
 
     protected override void OnTreeFirstBuilt()
     {
+        Mouse.Visibility = MouseVisibility.Visible;
         Panel.Focus();
-        CanvasRef.AddChild( new PoliceApp_navigator() );
     }
 
     private void Close()

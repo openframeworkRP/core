@@ -128,6 +128,31 @@ Publie le gamemode sur s&box ou monte-le en local — voir **[docs/SETUP.md](doc
 
 ---
 
+## Configurer le gamemode pour votre fork
+
+> ⚠️ **Indispensable si vous forkez ce repo**
+
+Le fichier `gamemode/core.sbproj` contient l'identité du package s&box :
+
+```json
+"Org": "openframework",
+"Ident": "core"
+```
+
+Ces valeurs sont liées au compte s&box d'OpenFramework. Si vous forkez ce repo pour créer votre propre serveur, vous **devez** les remplacer par votre propre org et ident.
+
+Sans ça, s&box cherche le package `openframework.core` sur son backend à chaque hotload et échoue — ce qui bloque le rechargement du code et empêche toute publication.
+
+**Étapes :**
+
+1. Créez votre package sur [asset.sandbox.game](https://asset.sandbox.game) si ce n'est pas déjà fait
+2. Dans l'éditeur s&box, allez dans **Editor → OpenFramework → Configurer ce fork...**
+3. Renseignez votre **Org** et votre **Ident**, cliquez **Appliquer** — `core.sbproj` est mis à jour automatiquement
+
+L'outil est disponible dès que le gamemode est chargé dans l'éditeur. Il évite d'éditer le JSON à la main et vérifie que les deux champs sont bien renseignés avant d'écrire.
+
+---
+
 ## Flow d'installation automatique
 
 ```mermaid

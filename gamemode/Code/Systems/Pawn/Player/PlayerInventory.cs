@@ -3,6 +3,7 @@ using Sandbox.Diagnostics;
 using OpenFramework.Command;
 using OpenFramework.Extension;
 using OpenFramework.Systems.Weapons;
+using OpenFramework.World;
 
 namespace OpenFramework.Systems.Pawn;
 
@@ -203,6 +204,9 @@ public partial class PlayerInventory : Component
 			}
 			if ( _cachedAnyAtmOpen ) return;
 		}
+
+		// Block scroll + changement d'arme quand un terminal police est ouvert
+		if ( PoliceComputer.IsAnyOpenLocally ) return;
 
 		if ( Input.Pressed( "Drop" ) && Current.IsValid() )
 		{
