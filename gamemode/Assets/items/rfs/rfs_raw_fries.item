@@ -1,6 +1,6 @@
 {
   "Name": "Frites Cru",
-  "Description": "Frites cru, \u00E0 cuire au dans la friteuse avant utilisation.",
+  "Description": "Frites cru, à cuire au dans la friteuse avant utilisation.",
   "IsEnabled": true,
   "Price": 15,
   "ItemCategoryType": "Food",
@@ -78,7 +78,7 @@
   "CanHeal": false,
   "HealAmount": 1,
   "__references": [
-    "openframework.frenchfries#206099"
+    "openframework.frenchfries#225623"
   ],
   "__version": 0
 }

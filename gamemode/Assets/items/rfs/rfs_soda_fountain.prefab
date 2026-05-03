@@ -26,7 +26,7 @@
         "MaterialGroup": null,
         "MaterialOverride": null,
         "Materials": null,
-        "Model": "pr/rp_union_city_soda_machine_01.vmdl",
+        "Model": "models/sm_food_dispenser_set_01a.vmdl",
         "OnComponentDestroy": null,
         "OnComponentDisabled": null,
         "OnComponentEnabled": null,
@@ -51,7 +51,7 @@
         "Elasticity": null,
         "Friction": null,
         "IsTrigger": false,
-        "Model": "pr/rp_union_city_soda_machine_01.vmdl",
+        "Model": "models/sm_food_dispenser_set_01a.vmdl",
         "OnComponentDestroy": null,
         "OnComponentDisabled": null,
         "OnComponentEnabled": null,
@@ -106,7 +106,7 @@
         "__guid": "0e659dea-76bb-4979-85e3-ffd4b07b55a8",
         "__enabled": true,
         "Flags": 0,
-        "Center": "-0.27288723,12.6084251,6.30491734",
+        "Center": "3.54626679,0.067281723,7.94365263",
         "ColliderFlags": 0,
         "Elasticity": null,
         "Friction": null,
@@ -122,7 +122,7 @@
         "OnTriggerEnter": null,
         "OnTriggerExit": null,
         "RollingResistance": null,
-        "Scale": "21.15938,12.0421066,8.15699577",
+        "Scale": "7.47182369,19.6573448,11.4344521",
         "Static": false,
         "Surface": null,
         "SurfaceVelocity": "0,0,0"
@@ -253,7 +253,7 @@
   "MenuIcon": null,
   "DontBreakAsTemplate": false,
   "__references": [
-    "openframework.rpunioncitysodamachine01#129162"
+    "openframework.smfooddispenserset01a#227101"
   ],
   "__version": 2
 }
