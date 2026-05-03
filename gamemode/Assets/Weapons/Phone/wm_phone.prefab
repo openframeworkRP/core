@@ -29,7 +29,7 @@
         "MaterialGroup": null,
         "MaterialOverride": null,
         "Materials": null,
-        "Model": "pr/iphone17_01.vmdl",
+        "Model": "models/phone.vmdl",
         "Morphs": {},
         "OnComponentDestroy": null,
         "OnComponentDisabled": null,
@@ -110,7 +110,7 @@
   "MenuIcon": null,
   "DontBreakAsTemplate": false,
   "__references": [
-    "openframework.iphone1701#198020"
+    "lamodding.realisticmodernphone#155167"
   ],
   "__version": 2
 }

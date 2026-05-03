@@ -569,8 +569,8 @@
                                 "__version": 2,
                                 "Flags": 0,
                                 "Name": "iphone_14_01",
-                                "Position": "0.813874602,-0.00918856263,1.44705796",
-                                "Rotation": "-0.0157689396,0.0184963699,-0.706864774,0.706930995",
+                                "Position": "1.02592146,1.66288555,-3.04633641",
+                                "Rotation": "-0.0137848081,-0.0200188607,-0.49989301,-0.86574614",
                                 "Scale": "1,1,1",
                                 "Tags": "",
                                 "Enabled": true,
@@ -591,7 +591,7 @@
                                     "MaterialGroup": null,
                                     "MaterialOverride": null,
                                     "Materials": null,
-                                    "Model": "pr/iphone_14_01.vmdl",
+                                    "Model": "models/phone.vmdl",
                                     "OnComponentDestroy": null,
                                     "OnComponentDisabled": null,
                                     "OnComponentEnabled": null,
@@ -614,7 +614,7 @@
                                     "__version": 2,
                                     "Flags": 0,
                                     "Name": "World",
-                                    "Position": "-0.181780696,-0.00288365199,2.27242708E-06",
+                                    "Position": "0.699432015,-0.14003405,4.36153984",
                                     "Rotation": "0,0,1,-4.37113883E-08",
                                     "Scale": "1,1,1",
                                     "Tags": "",
@@ -826,7 +826,7 @@
                                     "__version": 2,
                                     "Flags": 0,
                                     "Name": "Screen",
-                                    "Position": "0,0,0",
+                                    "Position": "0.881212771,-0.137150645,4.36153698",
                                     "Rotation": "0,0,0,1",
                                     "Scale": "1,1,1",
                                     "Tags": "",
@@ -1798,7 +1798,7 @@
   "DontBreakAsTemplate": false,
   "__references": [
     "facepunch.v_first_person_arms_human#142949",
-    "openframework.iphone1401#157446"
+    "lamodding.realisticmodernphone#155167"
   ],
   "__version": 2
 }
