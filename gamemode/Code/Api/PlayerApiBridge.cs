@@ -1,4 +1,5 @@
 using Sandbox;
+using Sandbox.Events;
 using OpenFramework.Api;
 using System.Collections.Generic;
 using System.Text.Json;
@@ -453,6 +454,7 @@ public class PlayerApiBridge : Component
             client.SpawnPawn();
             _activeCharacters[steamId] = created.Id;
             Log.Info( $"[Bridge] Pawn ready after create for {steamId}, active character: {created.Id} ({created.FirstName} {created.LastName})" );
+
         }
 
         // Charge les amendes (nouveau perso = liste vide, mais cohérence du flux)
@@ -599,17 +601,21 @@ public class PlayerApiBridge : Component
 
         var callerClient = caller.GetClient();
 
-        // SetJob/Notify sont best-effort : meme si l'API n'a pas retourne le character ou
+        // Restauration du job best-effort : meme si l'API n'a pas retourne le character ou
         // si le client n'est pas (encore) trouve, on doit IMPERATIVEMENT envoyer
         // ReceiveSpawnPosition pour debloquer l'UI cote owner.
+        // On NE passe PAS par JobSystem.SetJob() pour eviter que GiveClothing() redonne
+        // les vetements de job alors qu'ils ont deja ete charges depuis l'inventaire API.
         if ( callerClient != null && character != null && !string.IsNullOrEmpty( character.ActualJob ) )
         {
-            JobSystem.SetJob( callerClient, character.ActualJob );
-            callerClient.Notify( NotificationSystem.NotificationType.Info, "Votre métié vous a été réattribué." );
+            var jobIdentifier = character.ActualJob;
+            callerClient.Data.Job = jobIdentifier;
+            Game.ActiveScene.Dispatch( new JoinJobEvent( callerClient, jobIdentifier ) );
+            callerClient.Notify( NotificationSystem.NotificationType.Info, "Votre métier vous a été réattribué." );
         }
         else
         {
-            Log.Warning( $"[Bridge] RequestLastPosition: skip SetJob (callerClient={callerClient}, character={(character == null ? "null" : character.Id)}) — UI quand meme debloquee." );
+            Log.Warning( $"[Bridge] RequestLastPosition: skip restauration job (callerClient={callerClient}, character={(character == null ? "null" : character.Id)}) — UI quand meme debloquee." );
         }
 
         // Sérialise la position (ou Vector3.Zero si pas de position stockée)

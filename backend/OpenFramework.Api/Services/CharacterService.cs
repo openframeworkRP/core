@@ -68,7 +68,7 @@ public class CharacterService
             AmountCents = initialAmountCents,
             ToAccount = account,
             CreatedAt = DateTime.UtcNow,
-            Comment = "Mamie t'aime " + character.FirstName,
+            Comment = "Allocation d'installation",
             Type = TransactionType.AdminCreation,
         });
         await _context.SaveChangesAsync();
