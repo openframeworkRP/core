@@ -200,13 +200,6 @@ Temp Worker  — short-term missions across multiple sectors
 - **Multi-seat** — driver + passengers with synchronised animations
 - **Interactive doors** — 3D open/close
 
-### NPCs & AI
-
-- **NpcManager** — spawning and lifecycle management
-- **Modular behaviours** : `PedestrianBehavior`, `RoamBehavior`, `CombatBehavior`
-- **Node tree** — targeting, pathfinding, shooting, random emotes
-- **Traffic** — NPC vehicles driving around the map
-
 ### World & Environment
 
 - **Day/night cycle** — server clock synchronised across all clients
