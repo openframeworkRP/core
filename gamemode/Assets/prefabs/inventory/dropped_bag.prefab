@@ -26,7 +26,7 @@
         "MaterialGroup": null,
         "MaterialOverride": null,
         "Materials": null,
-        "Model": "models/addons/sp_schl_01/sp_school_backpack_01/sp_school_backpack_01.vmdl",
+        "Model": "models/sm_police_locker_01g.vmdl",
         "OnComponentDestroy": null,
         "OnComponentDisabled": null,
         "OnComponentEnabled": null,
@@ -51,7 +51,7 @@
         "Elasticity": null,
         "Friction": null,
         "IsTrigger": false,
-        "Model": "models/addons/sp_schl_01/sp_school_backpack_01/sp_school_backpack_01.vmdl",
+        "Model": "models/sm_police_locker_01g.vmdl",
         "OnComponentDestroy": null,
         "OnComponentDisabled": null,
         "OnComponentEnabled": null,
@@ -113,6 +113,8 @@
           "component_type": "InventoryContainer"
         },
         "DisplayName": "Sac a dos",
+        "DroppedBySteamId": 0,
+        "IsDeath": false,
         "JobRestricted": false,
         "OnComponentDestroy": null,
         "OnComponentDisabled": null,
@@ -172,7 +174,7 @@
   "MenuIcon": null,
   "DontBreakAsTemplate": false,
   "__references": [
-    "openframework.sp_school_backpack_01#200376"
+    "openframework.smpolicelocker01g#224967"
   ],
   "__version": 2
 }

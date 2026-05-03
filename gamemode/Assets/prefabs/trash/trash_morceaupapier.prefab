@@ -26,7 +26,7 @@
         "MaterialGroup": null,
         "MaterialOverride": null,
         "Materials": null,
-        "Model": "models/sm_trash_scatter_02m.vmdl",
+        "Model": "models/sm_ground_trash_01i.vmdl",
         "OnComponentDestroy": null,
         "OnComponentDisabled": null,
         "OnComponentEnabled": null,
@@ -51,7 +51,7 @@
         "Elasticity": null,
         "Friction": null,
         "IsTrigger": false,
-        "Model": "models/sm_trash_scatter_02m.vmdl",
+        "Model": "models/sm_ground_trash_01i.vmdl",
         "OnComponentDestroy": null,
         "OnComponentDisabled": null,
         "OnComponentEnabled": null,
@@ -107,6 +107,7 @@
         "__enabled": true,
         "Flags": 0,
         "Attributes": {},
+        "DroppedBySteamId": 0,
         "Metadata": "prefabs/trash/trash_morceaupapier.item",
         "OnComponentDestroy": null,
         "OnComponentDisabled": null,
@@ -159,7 +160,7 @@
   "MenuIcon": null,
   "DontBreakAsTemplate": false,
   "__references": [
-    "openframework.smtrashscatter02m#205162"
+    "openframework.smgroundtrash01i#225770"
   ],
   "__version": 2
 }

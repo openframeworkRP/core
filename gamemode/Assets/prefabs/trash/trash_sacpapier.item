@@ -1,6 +1,6 @@
 {
   "Name": "Sac en Papier",
-  "Description": "Un sac en papier froiss\u00E9 tomb\u00E9 sur le trottoir.",
+  "Description": "Un sac en papier froissé tombé sur le trottoir.",
   "IsEnabled": true,
   "Price": 2,
   "ItemCategoryType": "Misc",
@@ -74,7 +74,7 @@
   "CanHeal": false,
   "HealAmount": 1,
   "__references": [
-    "openframework.smtrashscatter02q#205159"
+    "openframework.smtrashscatter02q#225816"
   ],
   "__version": 0,
   "Icon": "ui/item_icons/trash_sacpapier.png"

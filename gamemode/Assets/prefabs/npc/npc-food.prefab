@@ -3,9 +3,9 @@
     "__guid": "70205c94-fbc2-4e14-83b4-5d2f14324178",
     "__version": 2,
     "Flags": 0,
-    "Name": "npc-epicier",
+    "Name": "npc-food",
     "Position": "0,0,0",
-    "Rotation": "0,0,0,1",
+    "Rotation": "0,0,0,0.99999994",
     "Scale": "1,1,1",
     "Tags": "",
     "Enabled": true,
@@ -188,9 +188,6 @@
                 "Clothing": "clothing/shoes/shoes-02.clothing"
               },
               {
-                "Clothing": "models/citizen_clothes/hat/beanie/beanie.clothing"
-              },
-              {
                 "Clothing": "models/citizen_clothes/seasonal/2025/wizard_outfit/wizard_beard/wizard_beard.clothing"
               },
               {
@@ -281,7 +278,7 @@
         ],
         "Children": [
           {
-            "__guid": "ae411769-d8fb-41fd-8f91-e8d205aab6e6",
+            "__guid": "eb9fda5c-6803-4718-8c1f-3f39a01d1af3",
             "__version": 2,
             "Flags": 0,
             "Name": "Clothing - shoes-02",
@@ -298,7 +295,7 @@
             "Components": [
               {
                 "__type": "Sandbox.SkinnedModelRenderer",
-                "__guid": "1aa9557e-adb6-4ac8-be80-f3dcd0c0989c",
+                "__guid": "176ed7fc-728d-4675-b8e5-65ac7b1a67a3",
                 "__enabled": true,
                 "Flags": 0,
                 "AnimationGraph": null,
@@ -350,76 +347,7 @@
             "Children": []
           },
           {
-            "__guid": "13543302-2ae8-4690-acb1-a0f98a1f2b2f",
-            "__version": 2,
-            "Flags": 0,
-            "Name": "Clothing - beanie",
-            "Position": "0,0,0",
-            "Rotation": "0,0,0,1",
-            "Scale": "1,1,1",
-            "Tags": "clothing",
-            "Enabled": true,
-            "NetworkMode": 2,
-            "NetworkFlags": 0,
-            "NetworkOrphaned": 0,
-            "NetworkTransmit": true,
-            "OwnerTransfer": 1,
-            "Components": [
-              {
-                "__type": "Sandbox.SkinnedModelRenderer",
-                "__guid": "6ea86475-3430-4f2c-b38e-9836879ed847",
-                "__enabled": true,
-                "Flags": 0,
-                "AnimationGraph": null,
-                "BodyGroups": 18446744073709551615,
-                "BoneMergeTarget": {
-                  "_type": "component",
-                  "component_id": "9f8ace8b-bbda-444a-bb02-d831bd800ab9",
-                  "go": "79154dc1-18d8-4617-af13-495bea574e85",
-                  "component_type": "SkinnedModelRenderer"
-                },
-                "CreateAttachments": false,
-                "CreateBoneObjects": false,
-                "LodOverride": null,
-                "MaterialGroup": null,
-                "MaterialOverride": null,
-                "Materials": null,
-                "Model": "models/citizen_clothes/hat/beanie/models/beanie_m_human.vmdl",
-                "Morphs": {},
-                "OnComponentDestroy": null,
-                "OnComponentDisabled": null,
-                "OnComponentEnabled": null,
-                "OnComponentFixedUpdate": null,
-                "OnComponentStart": null,
-                "OnComponentUpdate": null,
-                "Parameters": {
-                  "bools": {},
-                  "ints": {},
-                  "floats": {},
-                  "vectors": {},
-                  "rotations": {}
-                },
-                "PlaybackRate": 1,
-                "RenderOptions": {
-                  "GameLayer": true,
-                  "OverlayLayer": false,
-                  "BloomLayer": false,
-                  "AfterUILayer": false
-                },
-                "RenderType": "On",
-                "Sequence": {
-                  "Name": null,
-                  "Looping": true,
-                  "Blending": false
-                },
-                "Tint": "1,1,1,1",
-                "UseAnimGraph": true
-              }
-            ],
-            "Children": []
-          },
-          {
-            "__guid": "a81d6e32-a211-4717-a961-3bb79a0f79d1",
+            "__guid": "c3ee407b-984a-4290-8d70-cda396c2b47a",
             "__version": 2,
             "Flags": 0,
             "Name": "Clothing - wizard_beard",
@@ -436,7 +364,7 @@
             "Components": [
               {
                 "__type": "Sandbox.SkinnedModelRenderer",
-                "__guid": "e5279a07-4141-4718-88f7-d9f720553d50",
+                "__guid": "59eb0458-eb11-4df6-8729-bac90e312db4",
                 "__enabled": true,
                 "Flags": 0,
                 "AnimationGraph": null,
@@ -488,7 +416,7 @@
             "Children": []
           },
           {
-            "__guid": "ad4e7e97-33a9-4966-9e35-0b2de5858ec1",
+            "__guid": "ccbe8a50-b5cf-47c0-9c0e-ecd33ee489fe",
             "__version": 2,
             "Flags": 0,
             "Name": "Clothing - polo_shirt_white",
@@ -505,7 +433,7 @@
             "Components": [
               {
                 "__type": "Sandbox.SkinnedModelRenderer",
-                "__guid": "95b06d39-e51a-4429-8588-fe42a1b9b5d1",
+                "__guid": "74932eb7-b4ef-4bc2-9580-9d820785f89f",
                 "__enabled": true,
                 "Flags": 0,
                 "AnimationGraph": null,
@@ -557,7 +485,7 @@
             "Children": []
           },
           {
-            "__guid": "1ac5e334-cd86-44f0-808d-d1e3543f2e86",
+            "__guid": "e1bbe4b3-3d32-4529-9079-2910b7a5c4a9",
             "__version": 2,
             "Flags": 0,
             "Name": "Clothing - jeans_black",
@@ -574,7 +502,7 @@
             "Components": [
               {
                 "__type": "Sandbox.SkinnedModelRenderer",
-                "__guid": "1bfab780-2093-4adb-a44f-cf955ca8f8a9",
+                "__guid": "8bdf3458-9199-4fb9-8504-d60c352ff4ff",
                 "__enabled": true,
                 "Flags": 0,
                 "AnimationGraph": null,
@@ -626,7 +554,7 @@
             "Children": []
           },
           {
-            "__guid": "58e20896-7c88-425b-ba45-ce6df14beacd",
+            "__guid": "ba1058da-5247-4529-b06e-bf6235f2cf93",
             "__version": 2,
             "Flags": 0,
             "Name": "Clothing - chefs_apron",
@@ -643,7 +571,7 @@
             "Components": [
               {
                 "__type": "Sandbox.SkinnedModelRenderer",
-                "__guid": "c8d21bb8-f5fc-4f90-a84f-a85e129cc03a",
+                "__guid": "c70a2f90-ec4e-4678-8161-b782ec7b4a90",
                 "__enabled": true,
                 "Flags": 0,
                 "AnimationGraph": null,

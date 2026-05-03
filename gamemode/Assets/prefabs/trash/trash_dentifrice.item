@@ -1,6 +1,6 @@
 {
   "Name": "Tube de Dentifrice",
-  "Description": "Un tube de dentifrice vide jet\u00E9 au sol.",
+  "Description": "Un tube de dentifrice vide jeté au sol.",
   "IsEnabled": true,
   "Price": 2,
   "ItemCategoryType": "Misc",
@@ -74,7 +74,7 @@
   "CanHeal": false,
   "HealAmount": 1,
   "__references": [
-    "openframework.smtrashscatter02s#205153"
+    "openframework.smtrashscatter02s#225818"
   ],
   "__version": 0,
   "Icon": "ui/item_icons/trash_dentifrice.png"

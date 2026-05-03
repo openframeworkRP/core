@@ -74,7 +74,7 @@
   "CanHeal": false,
   "HealAmount": 1,
   "__references": [
-    "openframework.smtrashbags03f#205133"
+    "openframework.smtrashbags03f#225831"
   ],
   "__version": 0,
   "Icon": "ui/item_icons/trash_grossacpoubelle.png"

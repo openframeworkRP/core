@@ -1,84 +1,101 @@
-﻿@using Sandbox;
+@using Sandbox;
 @using Sandbox.UI;
-@using Editor;
 @using Sandbox.UI.Navigation;
+@using OpenFramework.Systems.Pawn;
+@using System.Collections.Generic;
+@using System.Linq;
 
 @implements Sandbox.UI.Navigation.INavigatorPage
 @namespace OpenFramework.World.Devices.Apps.Police
 @inherits Panel
 
 <root>
-   <div class="container">
+    <div class="container">
 
-       <div class="topbar">
-            <span>Bienvenue Officer DADA [555]</span>
-       </div>
-
-       <div class="row-last">
-
-            <div class="last-calls">
-                <span>Appel citoyen</span>
-                <div class="info">
-                    <span>Pris par Officier Dada</span>
-                    <span>Motif : Meurtre</span>
-                </div>
-                <div class="status">
-                    <span>Status : En Cours</span>
-                </div>
+        <div class="topbar">
+            <svg class="topbar-icon" src="ui/icons/apps/policeicon.svg" color="#273CF5" />
+            <span class="topbar-title">Bienvenu(e), @_myFirstName @_myLastName</span>
+            <div class="topbar-grade">
+                <span>@(_myGrade ?? "Officier")</span>
             </div>
+        </div>
 
-            <div class="last-search">
-                <span>Recherches Recentes</span>
-                <div class="info">
-                    <span> Darril Mendez</span>
-                    <span> Model Vehicule : Sultan</span>
-                </div>
-                <div class="status">
-                    <span>Status : En Cours</span>
-                </div>
+        <div class="row-stats">
+            <div class="stat-card">
+                <span class="stat-value">@_policeOnline.Count</span>
+                <span class="stat-label">Unités en service</span>
             </div>
-
-            <div class="last-report">
-                <span>Reports</span>
-                <div class="info">
-                    <span> Darril Mendez</span>
-                    <span> Attendu dans au poste</span>
-                </div>
+            <div class="stat-card">
+                <span class="stat-value">@_wantedCount</span>
+                <span class="stat-label">Personnes recherchées</span>
             </div>
-       </div>
-        
+            <div class="stat-card">
+                <span class="stat-value">@_cuffedCount</span>
+                <span class="stat-label">En garde à vue</span>
+            </div>
+        </div>
 
         <div class="units">
-            <span>Unite En Service</span>
+            <span class="section-title">Unités en service</span>
             <table>
                 <thead>
                     <tr>
-                        <th>Matricule</th>
                         <th>Nom</th>
+                        <th>Prénom</th>
                         <th>Grade</th>
-                        <th>Departement</th>
-                        <th>Status</th>
-                        <th>localisation</th>
+                        <th>Statut</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>555</td>
-                        <td>Dada</td>
-                        <td>Officier</td>
-                        <td>Police</td>
-                        <td>OK</td>
-                        <td>Ville</td>
-                    </tr>
+                    @foreach ( var unit in _policeOnline )
+                    {
+                        <tr class="@(unit == _myData ? "row-self" : "")">
+                            <td>@unit.LastName</td>
+                            <td>@unit.FirstName</td>
+                            <td>@(string.IsNullOrEmpty(unit.JobGrade) ? "Officier" : unit.JobGrade)</td>
+                            <td><span class="badge-online">En service</span></td>
+                        </tr>
+                    }
+                    @if ( _policeOnline.Count == 0 )
+                    {
+                        <tr>
+                            <td colspan="4"><span class="no-units">Aucune unité en service</span></td>
+                        </tr>
+                    }
                 </tbody>
             </table>
         </div>
 
-        
-   </div>
+    </div>
 </root>
 
 @code
 {
-    
+    private ClientData _myData;
+    private string     _myFirstName = "";
+    private string     _myLastName  = "";
+    private string     _myGrade;
+    private List<ClientData> _policeOnline = new();
+    private int  _wantedCount;
+    private int  _cuffedCount;
+
+    private void Refresh()
+    {
+        var all = Game.ActiveScene?.GetAllComponents<ClientData>() ?? Enumerable.Empty<ClientData>();
+
+        _myData      = Client.Local?.Components.Get<ClientData>();
+        _myFirstName = _myData?.FirstName ?? "";
+        _myLastName  = _myData?.LastName  ?? "";
+        _myGrade     = _myData?.JobGrade;
+
+        _policeOnline = all.Where( d => d.Job?.ToLower() == "police" ).ToList();
+        _wantedCount  = all.Count( d => d.WantedLevel > 0 );
+        _cuffedCount  = all.Count( d => d.IsCuffed );
+    }
+
+    protected override int BuildHash()
+    {
+        Refresh();
+        return HashCode.Combine( _policeOnline.Count, _wantedCount, _cuffedCount, _myFirstName, (int)(Time.Now / 5f) );
+    }
 }

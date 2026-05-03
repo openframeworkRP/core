@@ -74,7 +74,7 @@
   "CanHeal": false,
   "HealAmount": 1,
   "__references": [
-    "openframework.smtrashscatter02v#205151"
+    "openframework.smtrashscatter02v#225821"
   ],
   "__version": 0,
   "Icon": "ui/item_icons/trash_boitenouilles.png"

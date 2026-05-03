@@ -127,76 +127,7 @@
 						align_origin_x_type = "None"
 						align_origin_y_type = "None"
 						align_origin_z_type = "None"
-						filename = "pr/garage_door_01_hull.dmx"
-						import_scale = 1.0
-						faceMergeAngle = 10.0
-						maxHullVertices = 0
-						import_mode = "SingleHull"
-						optimization_algorithm = "QEM"
-						import_filter = 
-						{
-							exclude_by_default = false
-							exception_list = [  ]
-						}
-					},
-					{
-						_class = "PhysicsHullFile"
-						parent_bone = ""
-						surface_prop = "metal"
-						collision_tags = ""
-						recenter_on_parent_bone = false
-						offset_origin = [ 0.0, 0.0, 0.0 ]
-						offset_angles = [ 0.0, 0.0, 0.0 ]
-						align_origin_x_type = "None"
-						align_origin_y_type = "None"
-						align_origin_z_type = "None"
-						filename = "pr/garage_door_01_hull1.dmx"
-						import_scale = 1.0
-						faceMergeAngle = 10.0
-						maxHullVertices = 0
-						import_mode = "SingleHull"
-						optimization_algorithm = "QEM"
-						import_filter = 
-						{
-							exclude_by_default = false
-							exception_list = [  ]
-						}
-					},
-					{
-						_class = "PhysicsHullFile"
-						parent_bone = ""
-						surface_prop = "metal"
-						collision_tags = ""
-						recenter_on_parent_bone = false
-						offset_origin = [ 0.0, 0.0, 0.0 ]
-						offset_angles = [ 0.0, 0.0, 0.0 ]
-						align_origin_x_type = "None"
-						align_origin_y_type = "None"
-						align_origin_z_type = "None"
 						filename = "pr/garage_door_01_hull2.dmx"
-						import_scale = 1.0
-						faceMergeAngle = 10.0
-						maxHullVertices = 0
-						import_mode = "SingleHull"
-						optimization_algorithm = "QEM"
-						import_filter = 
-						{
-							exclude_by_default = false
-							exception_list = [  ]
-						}
-					},
-					{
-						_class = "PhysicsHullFile"
-						parent_bone = ""
-						surface_prop = "metal"
-						collision_tags = ""
-						recenter_on_parent_bone = false
-						offset_origin = [ 0.0, 0.0, 0.0 ]
-						offset_angles = [ 0.0, 0.0, 0.0 ]
-						align_origin_x_type = "None"
-						align_origin_y_type = "None"
-						align_origin_z_type = "None"
-						filename = "pr/garage_door_01_hull3.dmx"
 						import_scale = 1.0
 						faceMergeAngle = 10.0
 						maxHullVertices = 0

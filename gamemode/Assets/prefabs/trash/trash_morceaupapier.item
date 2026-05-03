@@ -74,7 +74,7 @@
   "CanHeal": false,
   "HealAmount": 1,
   "__references": [
-    "openframework.smtrashscatter02m#205162"
+    "openframework.smtrashscatter02m#225813"
   ],
   "__version": 0,
   "Icon": "ui/item_icons/trash_morceaupapier.png"

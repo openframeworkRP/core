@@ -1,6 +1,6 @@
 {
   "Name": "Sac en Carton",
-  "Description": "Un sac en carton us\u00E9 jet\u00E9 au sol.",
+  "Description": "Un sac en carton usé jeté au sol.",
   "IsEnabled": true,
   "Price": 3,
   "ItemCategoryType": "Misc",
@@ -74,7 +74,7 @@
   "CanHeal": false,
   "HealAmount": 1,
   "__references": [
-    "openframework.smtrashscatter02r#205157"
+    "openframework.smtrashscatter02r#225817"
   ],
   "__version": 0,
   "Icon": "ui/item_icons/trash_saccarton.png"

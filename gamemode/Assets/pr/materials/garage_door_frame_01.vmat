@@ -8,4 +8,7 @@
 	"g_flAmbientOcclusionDirectSpecular"		"0.000000"
 	"g_flModelTintAmount"		"1.000000"
 	"g_vColorTint"		"[1.000000 1.000000 1.000000 0.000000]"
+	"g_flRoughnessScaleFactor"		"0.750000"
+	"g_flMetalness"		"0.100000"
+	"F_SPECULAR"		"0"
 }
