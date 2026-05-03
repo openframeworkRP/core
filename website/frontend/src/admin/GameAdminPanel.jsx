@@ -4,6 +4,7 @@ import {
   RefreshCcw, Search, X, ChevronRight, User as UserIcon, Package,
   MapPin, Landmark, Ban, Plus, Trash2, Check, Activity, Clock,
   MessageSquare, LogIn, LogOut, Timer, Globe, Terminal, Gift, Pencil,
+  FileText, Scale,
 } from 'lucide-react'
 import { api } from './api.js'
 
@@ -770,6 +771,9 @@ function CharacterDetail({ id, onBack }) {
             </div>
           )}
 
+          {/* Casier judiciaire */}
+          <CriminalRecord characterId={id} paused={paused} />
+
           {/* Historique inventaire (transferts) */}
           <CharacterInventoryHistory characterId={id} ownerSteamId={data.character.ownerId} />
 
@@ -851,6 +855,257 @@ function CharacterDetail({ id, onBack }) {
         />
       )}
     </>
+  )
+}
+
+// ─────────────────────────────────────────────────────────────────────
+//  CASIER JUDICIAIRE
+// ─────────────────────────────────────────────────────────────────────
+const RECORD_TYPES = [
+  { value: 'infraction',   label: 'Infraction',   color: '#fbbf24' },
+  { value: 'crime',        label: 'Crime',         color: '#f97316' },
+  { value: 'crime_grave',  label: 'Crime grave',   color: '#f87171' },
+]
+
+function recordTypeInfo(type) {
+  return RECORD_TYPES.find(t => t.value === type) || RECORD_TYPES[0]
+}
+
+function CriminalRecord({ characterId, paused }) {
+  const [records, setRecords] = useState(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError]     = useState('')
+  const [showAdd, setShowAdd] = useState(false)
+  const [deleting, setDeleting] = useState(null) // id en cours de suppression
+
+  const load = useCallback(async () => {
+    try {
+      const rows = await api.gameAdminCriminalRecord(characterId)
+      setRecords(rows)
+    } catch (e) { setError(e.message) }
+    finally { setLoading(false) }
+  }, [characterId])
+
+  useEffect(() => { load() }, [load])
+
+  async function handleDelete(entryId) {
+    if (!window.confirm('Supprimer cette entrée du casier ?')) return
+    setDeleting(entryId)
+    try {
+      await api.gameAdminCriminalRecordDel(characterId, entryId)
+      setRecords(r => r.filter(x => x.id !== entryId))
+    } catch (e) { alert('Erreur : ' + e.message) }
+    finally { setDeleting(null) }
+  }
+
+  const totalFines = records ? records.reduce((s, r) => s + (r.fine || 0), 0) : 0
+
+  return (
+    <>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}>
+        <SectionTitle icon={<Scale size={14} />} title={`Casier judiciaire${records ? ` (${records.length})` : ''}`} noMargin />
+        <button
+          onClick={() => setShowAdd(true)}
+          className="adm__btn adm__btn--ghost"
+          style={{ display: 'flex', alignItems: 'center', gap: 5, fontSize: '0.75rem' }}
+        >
+          <Plus size={12} /> Ajouter
+        </button>
+      </div>
+
+      {loading ? (
+        <div style={{ color: '#71717a', fontSize: '0.8rem', marginBottom: 18 }}>Chargement…</div>
+      ) : error ? (
+        <div style={{ color: '#f87171', fontSize: '0.8rem', marginBottom: 18 }}>Erreur : {error}</div>
+      ) : records.length === 0 ? (
+        <div style={{ ...cardStyle(), marginBottom: 18, color: '#71717a', fontSize: '0.82rem' }}>
+          Aucune entrée au casier.
+        </div>
+      ) : (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginBottom: 18 }}>
+          {records.map(r => {
+            const ti = recordTypeInfo(r.type)
+            return (
+              <div key={r.id} style={{ ...cardStyle(), borderLeft: `3px solid ${ti.color}40` }}>
+                <div style={{ display: 'flex', alignItems: 'flex-start', gap: 10 }}>
+                  <div style={{ flex: 1 }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap', marginBottom: 4 }}>
+                      <span style={{ fontSize: '0.65rem', padding: '2px 7px', borderRadius: 4, background: `${ti.color}22`, color: ti.color, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                        {ti.label}
+                      </span>
+                      <span style={{ fontWeight: 600, color: '#e8e8e8', fontSize: '0.88rem' }}>{r.title}</span>
+                    </div>
+                    {r.description && (
+                      <div style={{ fontSize: '0.78rem', color: '#a1a1aa', marginBottom: 4 }}>{r.description}</div>
+                    )}
+                    <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap' }}>
+                      {r.sentence && (
+                        <span style={{ fontSize: '0.72rem', color: '#71717a' }}>
+                          <span style={{ color: '#f97316' }}>⚖</span> {r.sentence}
+                        </span>
+                      )}
+                      {r.fine > 0 && (
+                        <span style={{ fontSize: '0.72rem', color: '#71717a' }}>
+                          <span style={{ color: '#fbbf24' }}>$</span> {r.fine.toLocaleString('fr-FR')}
+                        </span>
+                      )}
+                      <span style={{ fontSize: '0.68rem', color: '#52525b' }}>
+                        {new Date(r.date).toLocaleDateString('fr-FR')}
+                        {r.added_by_name && ` · par ${r.added_by_name}`}
+                      </span>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => handleDelete(r.id)}
+                    disabled={deleting === r.id}
+                    style={{ ...iconBtn(), color: '#f87171', opacity: deleting === r.id ? 0.4 : 1 }}
+                    title="Supprimer cette entrée"
+                  >
+                    <Trash2 size={13} />
+                  </button>
+                </div>
+              </div>
+            )
+          })}
+          {totalFines > 0 && (
+            <div style={{ fontSize: '0.75rem', color: '#a1a1aa', textAlign: 'right', paddingRight: 4 }}>
+              Total amendes : <strong style={{ color: '#fbbf24' }}>{totalFines.toLocaleString('fr-FR')} $</strong>
+            </div>
+          )}
+        </div>
+      )}
+
+      {showAdd && (
+        <AddCriminalRecordModal
+          characterId={characterId}
+          onClose={() => setShowAdd(false)}
+          onDone={(newEntry) => {
+            setRecords(r => [newEntry, ...(r || [])])
+            setShowAdd(false)
+          }}
+        />
+      )}
+    </>
+  )
+}
+
+function AddCriminalRecordModal({ characterId, onClose, onDone }) {
+  const [form, setForm] = useState({ type: 'infraction', title: '', description: '', sentence: '', fine: '', date: new Date().toISOString().slice(0, 10) })
+  const [saving, setSaving] = useState(false)
+  const [err, setErr] = useState('')
+
+  function set(k, v) { setForm(f => ({ ...f, [k]: v })) }
+
+  async function handleSubmit(e) {
+    e.preventDefault()
+    if (!form.title.trim()) { setErr('Le titre est requis.'); return }
+    setSaving(true); setErr('')
+    try {
+      const result = await api.gameAdminCriminalRecordAdd(characterId, {
+        type: form.type,
+        title: form.title.trim(),
+        description: form.description.trim(),
+        sentence: form.sentence.trim(),
+        fine: parseInt(form.fine) || 0,
+        date: form.date ? new Date(form.date).toISOString() : new Date().toISOString(),
+      })
+      onDone({
+        id: result.id,
+        character_id: characterId,
+        type: form.type,
+        title: form.title.trim(),
+        description: form.description.trim(),
+        sentence: form.sentence.trim(),
+        fine: parseInt(form.fine) || 0,
+        date: form.date ? new Date(form.date).toISOString() : new Date().toISOString(),
+        added_by_name: '',
+      })
+    } catch (e) { setErr(e.message) }
+    finally { setSaving(false) }
+  }
+
+  return (
+    <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.7)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000 }}>
+      <div style={{ background: '#18181b', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 14, padding: '24px 28px', width: '100%', maxWidth: 480 }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 18 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+            <FileText size={16} style={{ color: 'var(--brand-primary, #e07b39)' }} />
+            <span style={{ fontWeight: 700, color: '#e8e8e8' }}>Ajouter au casier judiciaire</span>
+          </div>
+          <button onClick={onClose} style={iconBtn()}><X size={16} /></button>
+        </div>
+
+        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+          <div>
+            <label style={labelStyle}>Type</label>
+            <div style={{ display: 'flex', gap: 8 }}>
+              {RECORD_TYPES.map(t => (
+                <button
+                  key={t.value}
+                  type="button"
+                  onClick={() => set('type', t.value)}
+                  style={{
+                    flex: 1, padding: '7px 4px', borderRadius: 7, border: `1px solid ${form.type === t.value ? t.color : 'rgba(255,255,255,0.1)'}`,
+                    background: form.type === t.value ? `${t.color}22` : 'transparent',
+                    color: form.type === t.value ? t.color : '#a1a1aa',
+                    fontSize: '0.75rem', fontWeight: 600, cursor: 'pointer', fontFamily: 'inherit',
+                  }}
+                >{t.label}</button>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <label style={labelStyle}>Titre <span style={{ color: '#f87171' }}>*</span></label>
+            <input
+              style={inputStyle()} value={form.title} onChange={e => set('title', e.target.value)}
+              placeholder="ex: Vol à main armée" maxLength={120}
+            />
+          </div>
+
+          <div>
+            <label style={labelStyle}>Description</label>
+            <textarea
+              style={{ ...inputStyle(), resize: 'vertical', minHeight: 60 }}
+              value={form.description} onChange={e => set('description', e.target.value)}
+              placeholder="Détails des faits…" maxLength={1000}
+            />
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
+            <div>
+              <label style={labelStyle}>Peine</label>
+              <input
+                style={inputStyle()} value={form.sentence} onChange={e => set('sentence', e.target.value)}
+                placeholder="ex: 3 ans de prison" maxLength={120}
+              />
+            </div>
+            <div>
+              <label style={labelStyle}>Amende ($)</label>
+              <input
+                style={inputStyle()} type="number" min="0" value={form.fine}
+                onChange={e => set('fine', e.target.value)} placeholder="0"
+              />
+            </div>
+          </div>
+
+          <div>
+            <label style={labelStyle}>Date</label>
+            <input style={inputStyle()} type="date" value={form.date} onChange={e => set('date', e.target.value)} />
+          </div>
+
+          {err && <div style={{ color: '#f87171', fontSize: '0.78rem' }}>{err}</div>}
+
+          <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 8, marginTop: 4 }}>
+            <button type="button" onClick={onClose} className="adm__btn adm__btn--ghost">Annuler</button>
+            <button type="submit" disabled={saving} className="adm__btn adm__btn--primary" style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
+              {saving ? <RefreshCcw size={13} style={{ animation: 'spin 1s linear infinite' }} /> : <Plus size={13} />}
+              Ajouter
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
   )
 }
 

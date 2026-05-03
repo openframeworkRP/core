@@ -381,6 +381,21 @@ db.exec(`
     created_at     TEXT NOT NULL DEFAULT (datetime('now'))
   );
 
+  CREATE TABLE IF NOT EXISTS criminal_records (
+    id            INTEGER PRIMARY KEY AUTOINCREMENT,
+    character_id  TEXT    NOT NULL,
+    type          TEXT    NOT NULL DEFAULT 'infraction'
+                          CHECK(type IN ('infraction','crime','crime_grave')),
+    title         TEXT    NOT NULL,
+    description   TEXT    NOT NULL DEFAULT '',
+    sentence      TEXT    NOT NULL DEFAULT '',
+    fine          INTEGER NOT NULL DEFAULT 0,
+    added_by      TEXT    NOT NULL DEFAULT '',
+    added_by_name TEXT    NOT NULL DEFAULT '',
+    date          TEXT    NOT NULL DEFAULT (datetime('now')),
+    created_at    TEXT    NOT NULL DEFAULT (datetime('now'))
+  );
+
   CREATE TABLE IF NOT EXISTS nc_dl_requests (
     id             INTEGER PRIMARY KEY AUTOINCREMENT,
     file_path      TEXT NOT NULL,

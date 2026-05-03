@@ -450,6 +450,54 @@ router.get('/accounts/:accountId/transactions', async (req, res) => {
 })
 
 // ─────────────────────────────────────────────────────────────────────────
+//  CASIERS JUDICIAIRES — stockés localement dans le SQLite du site
+// ─────────────────────────────────────────────────────────────────────────
+router.get('/criminal-record/:characterId', (req, res) => {
+  try {
+    const rows = db.prepare(
+      'SELECT * FROM criminal_records WHERE character_id = ? ORDER BY date DESC, id DESC'
+    ).all(req.params.characterId)
+    res.json(rows)
+  } catch (e) { res.status(500).json({ error: e.message }) }
+})
+
+router.post('/criminal-record/:characterId', requireRole('admin'), (req, res) => {
+  const { type, title, description, sentence, fine, date } = req.body || {}
+  if (!title || !title.trim()) return res.status(400).json({ error: 'title requis' })
+  const allowed = ['infraction', 'crime', 'crime_grave']
+  if (type && !allowed.includes(type)) return res.status(400).json({ error: 'type invalide' })
+  try {
+    const result = db.prepare(`
+      INSERT INTO criminal_records (character_id, type, title, description, sentence, fine, added_by, added_by_name, date)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `).run(
+      req.params.characterId,
+      type || 'infraction',
+      title.trim(),
+      (description || '').trim(),
+      (sentence || '').trim(),
+      parseInt(fine) || 0,
+      req.user?.steamId || 'web-admin',
+      req.user?.displayName || '',
+      date || new Date().toISOString(),
+    )
+    logAction(req, 'criminal_record_add', null, title.trim(), { characterId: req.params.characterId, recordId: result.lastInsertRowid })
+    res.status(201).json({ id: result.lastInsertRowid, ok: true })
+  } catch (e) { res.status(500).json({ error: e.message }) }
+})
+
+router.delete('/criminal-record/:characterId/:entryId', requireRole('admin'), (req, res) => {
+  try {
+    const result = db.prepare(
+      'DELETE FROM criminal_records WHERE id = ? AND character_id = ?'
+    ).run(parseInt(req.params.entryId), req.params.characterId)
+    if (result.changes === 0) return res.status(404).json({ error: 'Entrée introuvable' })
+    logAction(req, 'criminal_record_delete', null, null, { characterId: req.params.characterId, recordId: req.params.entryId })
+    res.json({ ok: true })
+  } catch (e) { res.status(500).json({ error: e.message }) }
+})
+
+// ─────────────────────────────────────────────────────────────────────────
 //  BANS (lecture + écriture, mappe vers /api/admin/ban/ existant)
 // ─────────────────────────────────────────────────────────────────────────
 router.get('/bans', async (_req, res) => {

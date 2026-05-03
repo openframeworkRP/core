@@ -309,6 +309,9 @@ export const api = {
   gameAdminQueueCommand:    (body)        => req('POST', '/api/gameadmin/commands', body),
   gameAdminListCommands:    (params = {}) => req('GET', `/api/gameadmin/commands${qs(params)}`),
   gameAdminGetCommand:      (id)          => req('GET', `/api/gameadmin/commands/${encodeURIComponent(id)}`),
+  gameAdminCriminalRecord:     (charId)        => req('GET',    `/api/gameadmin/criminal-record/${encodeURIComponent(charId)}`),
+  gameAdminCriminalRecordAdd:  (charId, body)  => req('POST',   `/api/gameadmin/criminal-record/${encodeURIComponent(charId)}`, body),
+  gameAdminCriminalRecordDel:  (charId, entryId) => req('DELETE', `/api/gameadmin/criminal-record/${encodeURIComponent(charId)}/${encodeURIComponent(entryId)}`),
 
   // Permissions
   getRoles:           ()                  => req('GET',    '/api/permissions/roles'),
