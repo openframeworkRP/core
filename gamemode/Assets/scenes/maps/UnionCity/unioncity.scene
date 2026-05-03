@@ -545,8 +545,8 @@
             "Property": "EachSecond",
             "Value": {
               "Absolute": 0,
-              "Relative": -136842832,
-              "Passed": 136842828.5003805,
+              "Relative": -136844144,
+              "Passed": 136844150.0141999,
               "Fraction": 1
             }
           }
@@ -10487,6 +10487,54 @@
             }
           ],
           "Children": []
+        },
+        {
+          "__guid": "44d7d701-5aef-472f-bf80-6daf2f5f7402",
+          "__version": 2,
+          "__Prefab": "items/furniture/electronics/policecomputer.prefab",
+          "__PrefabInstancePatch": {
+            "AddedObjects": [],
+            "RemovedObjects": [],
+            "PropertyOverrides": [
+              {
+                "Target": {
+                  "Type": "GameObject",
+                  "IdValue": "b1c4e2d3-a0f1-4b2c-9d3e-f4a5b6c7d8e9"
+                },
+                "Property": "Position",
+                "Value": "342.205078,22.2583008,51.5864487"
+              },
+              {
+                "Target": {
+                  "Type": "GameObject",
+                  "IdValue": "b1c4e2d3-a0f1-4b2c-9d3e-f4a5b6c7d8e9"
+                },
+                "Property": "Rotation",
+                "Value": "0,0,-1,1.94707184E-07"
+              },
+              {
+                "Target": {
+                  "Type": "Component",
+                  "IdValue": "a6b9d7c8-f5e6-4a7b-e28d-e9f0a1b2c3d4"
+                },
+                "Property": "MaxUseDistance",
+                "Value": 150
+              }
+            ],
+            "MovedObjects": []
+          },
+          "__PrefabIdToInstanceId": {
+            "b1c4e2d3-a0f1-4b2c-9d3e-f4a5b6c7d8e9": "44d7d701-5aef-472f-bf80-6daf2f5f7402",
+            "c2d5f3e4-b1a2-4c3d-ae4f-a5b6c7d8e9f0": "2d3dfa02-3abe-4b70-9cc6-2b09c885ef91",
+            "d3e6a4f5-c2b3-4d4e-bf5a-b6c7d8e9f0a1": "75d0b813-77cc-4ad9-a107-9ce751168ca6",
+            "e4f7b5a6-d3c4-4e5f-c06b-c7d8e9f0a1b2": "712bf0cc-e3ff-4af1-ae5f-8b4f82b9269c",
+            "f5a8c6b7-e4d5-4f6a-d17c-d8e9f0a1b2c3": "fd05328f-0b7e-4ecc-9d92-671a8ae80d47",
+            "a6b9d7c8-f5e6-4a7b-e28d-e9f0a1b2c3d4": "1ee93708-9fa8-498f-af11-11190e02aaa3",
+            "c8d1f9e0-b7a8-4c9d-a04f-a1b2c3d4e5f6": "74a49527-d883-42ac-b30f-d5fb8b0c7053",
+            "b7c0e8d9-a6f7-4b8c-f39e-f0a1b2c3d4e5": "03f4038f-5562-4aae-8da7-513abafd065a",
+            "d9e2a0f1-c8b9-4d0e-b15a-b2c3d4e5f6a7": "f52b5e47-a406-4274-b514-875d757bbb80",
+            "e0f3b1a2-d9c0-4e1f-c26b-c3d4e5f6a7b8": "c7186c97-5ea1-42c2-87ab-2b13e412c9e0"
+          }
         }
       ]
     },
@@ -26635,46 +26683,6 @@
           ]
         }
       ]
-    },
-    {
-      "__guid": "44d7d701-5aef-472f-bf80-6daf2f5f7402",
-      "__version": 2,
-      "__Prefab": "items/furniture/electronics/policecomputer.prefab",
-      "__PrefabInstancePatch": {
-        "AddedObjects": [],
-        "RemovedObjects": [],
-        "PropertyOverrides": [
-          {
-            "Target": {
-              "Type": "GameObject",
-              "IdValue": "b1c4e2d3-a0f1-4b2c-9d3e-f4a5b6c7d8e9"
-            },
-            "Property": "Position",
-            "Value": "10385.4863,-3060.25049,124.890259"
-          },
-          {
-            "Target": {
-              "Type": "GameObject",
-              "IdValue": "b1c4e2d3-a0f1-4b2c-9d3e-f4a5b6c7d8e9"
-            },
-            "Property": "Rotation",
-            "Value": "0,0,-1,1.94707184E-07"
-          }
-        ],
-        "MovedObjects": []
-      },
-      "__PrefabIdToInstanceId": {
-        "b1c4e2d3-a0f1-4b2c-9d3e-f4a5b6c7d8e9": "44d7d701-5aef-472f-bf80-6daf2f5f7402",
-        "c2d5f3e4-b1a2-4c3d-ae4f-a5b6c7d8e9f0": "2d3dfa02-3abe-4b70-9cc6-2b09c885ef91",
-        "d3e6a4f5-c2b3-4d4e-bf5a-b6c7d8e9f0a1": "75d0b813-77cc-4ad9-a107-9ce751168ca6",
-        "e4f7b5a6-d3c4-4e5f-c06b-c7d8e9f0a1b2": "712bf0cc-e3ff-4af1-ae5f-8b4f82b9269c",
-        "f5a8c6b7-e4d5-4f6a-d17c-d8e9f0a1b2c3": "fd05328f-0b7e-4ecc-9d92-671a8ae80d47",
-        "a6b9d7c8-f5e6-4a7b-e28d-e9f0a1b2c3d4": "1ee93708-9fa8-498f-af11-11190e02aaa3",
-        "c8d1f9e0-b7a8-4c9d-a04f-a1b2c3d4e5f6": "74a49527-d883-42ac-b30f-d5fb8b0c7053",
-        "b7c0e8d9-a6f7-4b8c-f39e-f0a1b2c3d4e5": "03f4038f-5562-4aae-8da7-513abafd065a",
-        "d9e2a0f1-c8b9-4d0e-b15a-b2c3d4e5f6a7": "f52b5e47-a406-4274-b514-875d757bbb80",
-        "e0f3b1a2-d9c0-4e1f-c26b-c3d4e5f6a7b8": "c7186c97-5ea1-42c2-87ab-2b13e412c9e0"
-      }
     }
   ],
   "SceneProperties": {
