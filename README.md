@@ -340,8 +340,10 @@ core/
 ## Documentation
 
 - **[docs/SETUP.md](docs/SETUP.md)** — Full self-hosted setup guide
+- **[docs/DEPLOY.md](docs/DEPLOY.md)** — Production deployment (SSL, reverse proxy, backups)
 - **[docs/CONFIG.md](docs/CONFIG.md)** — Gamemode ConVars and config options
 - **[docs/API.md](docs/API.md)** — .NET API endpoint reference
+- **[gamemode/README.md](gamemode/README.md)** — Gamemode developer guide
 - **[CONTRIBUTING.md](CONTRIBUTING.md)** — Contribution guide
 
 ---
@@ -359,7 +361,7 @@ Details in [CONTRIBUTING.md](CONTRIBUTING.md).
 
 Contributions are welcome. Please open an issue before submitting any significant PR.
 
-- Fork → feature branch → PR to `main`
+- Fork → feature branch → PR to `master`
 - One system per PR, descriptive commits
 - Multiplayer features **must work on a dedicated server**
 

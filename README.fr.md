@@ -162,8 +162,8 @@ flowchart TD
     C -->|Oui| D[Site détecte\nabsence de config]
     D --> E[Wizard navigateur\n5 étapes]
     E --> F[Étape 1 : Nom du serveur\net branding]
-    F --> G[Étape 2 : Connexion BDD\nSQL Server]
-    G --> H[Étape 3 : Secrets JWT,\nServer Secret et Redis]
+    F --> G[Étape 2 : Connexion BDD\nPostgreSQL]
+    G --> H[Étape 3 : Secrets JWT,\nServer Secret]
     H --> I[Étape 4 : Compte owner\nSteam ID]
     I --> J[Étape 5 : Résumé\net validation]
     J --> K[Wizard écrit\ndata/config/.env]
@@ -347,8 +347,10 @@ core/
 ## Documentation
 
 - **[docs/SETUP.md](docs/SETUP.md)** — Guide complet de setup self-hosted
+- **[docs/DEPLOY.md](docs/DEPLOY.md)** — Déploiement en production (SSL, reverse proxy, backups)
 - **[docs/CONFIG.md](docs/CONFIG.md)** — ConVars du gamemode et options de config
 - **[docs/API.md](docs/API.md)** — Référence des endpoints de l'API .NET
+- **[gamemode/README.md](gamemode/README.md)** — Guide développeur du gamemode
 - **[CONTRIBUTING.md](CONTRIBUTING.md)** — Guide de contribution
 
 ---
@@ -367,7 +369,7 @@ Détails dans [CONTRIBUTING.md](CONTRIBUTING.md).
 
 Les contributions sont les bienvenues. Ouvrir une issue avant toute PR de fond.
 
-- Fork → branche feature → PR vers `main`
+- Fork → branche feature → PR vers `master`
 - Un système par PR, commits descriptifs
 - Les features multijoueur doivent fonctionner sur **serveur dédié**
 
