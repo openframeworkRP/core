@@ -194,11 +194,15 @@ Toutes les opérations bancaires (virement, retrait, dépôt) passent par l'API 
 - Peut voter pour changer de métier via `JobVoteSystem`
 
 #### Police
-- Accès au MDT (terminal judiciaire embarqué)
-- `HandcuffComponent` — menotter un joueur : l'empêche de se déplacer librement
-- Accès à l'armurerie de service (armes police uniquement)
+
+> Documentation détaillée : [docs/jobs/POLICE.md](jobs/POLICE.md)
+
+- Accès au MDT via l'**App Police** (téléphone ou terminal fixe `policecomputer`)
+- `HandcuffComponent` — menotter / libérer un joueur
+- Fouiller un joueur (inventaire + argent liquide)
+- Système d'**amendes** : émission, persistance API, paiement par le joueur
+- Accès à l'armurerie de service (`PoliceLocker`)
 - Reçoit les appels dispatch (`DispatchSystem`)
-- Peut dresser des procès-verbaux et des casiers via l'API MDT
 
 #### Médecin
 - `Defibrillator` — item permettant de réanimer un joueur mort avant le délai de respawn
@@ -440,13 +444,15 @@ Les comportements complexes sont construits via des nœuds composables :
 
 ## Police & Justice
 
-### MDT — Mobile Data Terminal (`Systems/JobSystem/` + API MDT)
+> Documentation complète du métier Police : [docs/jobs/POLICE.md](jobs/POLICE.md)
 
-Terminal embarqué accessible uniquement aux joueurs de métier Police :
-- Recherche de personnage par nom
-- Lecture du casier judiciaire complet (infractions, dates, montants)
-- Ajout d'une infraction (type, description, amende) → persisté en API
-- Historique des amendes encaissées
+### MDT — App Police (`World/Devices/Apps/PoliceApp/`)
+
+Application dédiée accessible uniquement au métier Police, disponible sur :
+- **Téléphone** (filtrée par `JobAccess`)
+- **Terminal fixe** `policecomputer.prefab` — prop monde non-déplaçable, long press E pour ouvrir
+
+Pages disponibles : Accueil, Finance, **Amendes** (recherche par nom/prénom RP avec tableau d'amendes par personnage).
 
 ### Menottes (`Systems/HandcuffComponent/`)
 

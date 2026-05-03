@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Facepunch;
 using OpenFramework.Extension;
 using OpenFramework.Inventory;
+using OpenFramework.Systems;
 using OpenFramework.Systems.AtmSystem;
 using OpenFramework.Systems.Jobs;
 using OpenFramework.Systems.Pawn;
@@ -280,8 +281,80 @@ public class PlayerApiBridge : Component
     public static Action<List<InventoryItemDto>> OnInventoryReceived { get; set; }
 
 // SAVE INVENTORY
-    public static void SaveInventory(  List<InventoryItemDto> items )
-	    => Local?.RequestSaveInventory(  JsonSerializer.Serialize( items ) );
+    public static void SaveInventory( List<InventoryItemDto> items )
+	    => Local?.RequestSaveInventory( JsonSerializer.Serialize( items ) );
+
+    // ══════════════════════════════════════════════════════════════
+    //  AMENDES
+    // ══════════════════════════════════════════════════════════════
+
+    /// <summary>
+    /// Charge les amendes du personnage depuis l'API et les injecte dans Client.Data.Fines.
+    /// Appele cote HOST apres le spawn du pawn.
+    /// </summary>
+    private static async Task LoadFinesAsync( Client client, string characterId )
+    {
+        var dtos = await ApiComponent.Instance.GetFines( characterId );
+        if ( dtos == null || client?.Data == null ) return;
+
+        client.Data.Fines.Clear();
+        foreach ( var dto in dtos )
+        {
+            client.Data.Fines.Add( new OpenFramework.Models.Fine
+            {
+                Id       = dto.Id,
+                IssuedAt = dto.IssuedAt,
+                DueAt    = dto.DueAt,
+                Amount   = dto.Amount,
+                Reason   = dto.Reason ?? "",
+                Paid     = dto.Paid,
+                PaidAt   = dto.PaidAt ?? default,
+            } );
+        }
+        Log.Info( $"[Fines] {dtos.Count} amende(s) chargee(s) pour {client.DisplayName} (charId={characterId})" );
+    }
+
+    /// <summary>
+    /// Demande au serveur de marquer une amende comme payee.
+    /// Appele depuis le client (bouton Payer).
+    /// </summary>
+    public static void PayFine( string fineId ) => Local?.RequestPayFine( fineId );
+
+    [Rpc.Host]
+    private async void RequestPayFine( string fineId )
+    {
+        var caller = Rpc.Caller.GetClient();
+        if ( caller?.Data == null ) return;
+
+        var idx = -1;
+        for ( int i = 0; i < caller.Data.Fines.Count; i++ )
+        {
+            if ( caller.Data.Fines[i].Id == fineId ) { idx = i; break; }
+        }
+        if ( idx < 0 ) return;
+
+        var fine = caller.Data.Fines[idx];
+        if ( fine.Paid ) return;
+
+        if ( !MoneySystem.CanAfford( caller, fine.Amount ) )
+        {
+            caller.Notify( Facepunch.NotificationSystem.NotificationType.Error,
+                $"Vous n'avez pas assez d'argent liquide pour payer cette amende ({fine.Amount}$)." );
+            return;
+        }
+
+        MoneySystem.Remove( caller, fine.Amount );
+        fine.Paid  = true;
+        fine.PaidAt = DateTime.Now;
+        caller.Data.Fines[idx] = fine;
+
+        caller.Notify( Facepunch.NotificationSystem.NotificationType.Success,
+            $"Vous avez payé une amende de {fine.Amount}$ pour \"{fine.Reason}\"." );
+
+        var characterId = GetActiveCharacter( caller.SteamId );
+        if ( !string.IsNullOrEmpty( characterId ) )
+            await ApiComponent.Instance.PayFine( characterId, fineId );
+    }
 
     [Rpc.Host]
     private async void RequestSaveInventory(  string itemsJson )
@@ -382,6 +455,9 @@ public class PlayerApiBridge : Component
             Log.Info( $"[Bridge] Pawn ready after create for {steamId}, active character: {created.Id} ({created.FirstName} {created.LastName})" );
         }
 
+        // Charge les amendes (nouveau perso = liste vide, mais cohérence du flux)
+        _ = LoadFinesAsync( client, created.Id );
+
         // Notifie le client + renvoie la liste fraîche
         NotifyCharacterCreated( JsonSerializer.Serialize( created ) );
         var characters = await ApiComponent.Instance.GetCharacters( steamId ) ?? new List<CharacterApi>();
@@ -445,6 +521,9 @@ public class PlayerApiBridge : Component
 		    // Spawn le pawn si il n'existe pas encore
 		    client.SpawnPawn();
 		    Log.Info( $"[Bridge] Pawn ready for {caller.SteamId}, PlayerPawn={client.PlayerPawn != null}" );
+
+		    // Charge les amendes persistees depuis l'API
+		    _ = LoadFinesAsync( client, characterId );
 	    }
 	    else
 	    {

@@ -1,4 +1,5 @@
-﻿using OpenFramework.Command;
+﻿using OpenFramework.Api;
+using OpenFramework.Command;
 using OpenFramework.Inventory;
 using OpenFramework.Inventory.UI;
 using OpenFramework.Systems;
@@ -100,7 +101,7 @@ public record PersonalActionMenu() : IQuickMenuInterface
 		*/
 		// Menu creation:
 
-		var finesList = _self.PlayerPawn.Fines
+		var finesList = _self.Data.Fines
 			.Select( ( fine, index ) =>
 			{
 				// Label in fines overview
@@ -132,26 +133,19 @@ public record PersonalActionMenu() : IQuickMenuInterface
 				// Add PAY only if not paid
 				if ( !fine.Paid )
 				{
+					var capturedId = fine.Id;
 					fineDetails.Insert( 0,
 						new MenuItem(
 							"💰 Payer",
 							() =>
 							{
-								var pawn = _self.PlayerPawn;
-								var f = pawn.Fines[index];
-
-								if ( !MoneySystem.CanAfford(f.Amount) )
+								// Vérification légère côté client (UX) — la vraie validation est host-side
+								if ( !MoneySystem.CanAfford( fine.Amount ) )
 								{
 									_self.Notify( NotificationType.Error, "Vous n'avez pas assez d'argent." );
 									return;
 								}
-
-								MoneySystem.Remove( f.Amount );
-								f.Paid = true;
-								f.PaidAt = DateTime.Now;
-								pawn.Fines[index] = f;
-
-								_self.Notify( NotificationType.Success, $"Amende de {f.Amount}$ payée !" );
+								PlayerApiBridge.PayFine( capturedId );
 							},
 							null,
 							Enabled: true,
@@ -307,37 +301,4 @@ public record PersonalActionMenu() : IQuickMenuInterface
 		return list;
 	}
 
-	private void PayFine( Client cl, int fineIndex )
-	{
-		var pawn = cl.PlayerPawn;
-		if ( pawn is null ) return;
-
-		if ( fineIndex < 0 || fineIndex >= pawn.Fines.Count )
-			return;
-
-		// Fine is a struct – copy, modify, then assign back.
-		var fine = pawn.Fines[fineIndex];
-
-		if ( fine.Paid )
-		{
-			cl.Notify( NotificationType.Info, "Cette amende est déjà payée." );
-			return;
-		}
-
-		if ( !MoneySystem.CanAfford(fine.Amount) )
-		{
-			cl.Notify( NotificationType.Error,
-				$"Vous n'avez pas assez d'argent liquide pour payer cette amende ({fine.Amount}$)." );
-			return;
-		}
-
-		MoneySystem.Remove( fine.Amount );
-		fine.Paid = true;
-		fine.PaidAt = DateTime.Now;
-
-		pawn.Fines[fineIndex] = fine;
-
-		cl.Notify( NotificationType.Success,
-			$"Vous avez payé une amende de {fine.Amount}$ pour \"{fine.Reason}\"." );
-	}
 }

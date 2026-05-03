@@ -1,0 +1,234 @@
+@import "ui/Styles/Theme.scss";
+
+FinesPagePolice {
+    width: 100%;
+    height: 100%;
+
+    * { font-size: 12px; }
+
+    .container {
+        width: 100%;
+        height: 100%;
+        background-color: rgba(#333533, 1);
+        flex-direction: column;
+        gap: 12px;
+        padding: 20px;
+        overflow: hidden;
+
+        // ── Topbar ───────────────────────────────────────────────
+
+        .topbar {
+            flex-direction: row;
+            align-items: center;
+            gap: 10px;
+            height: 40px;
+            flex-shrink: 0;
+
+            .topbar-icon {
+                width: 28px;
+                height: 28px;
+            }
+
+            .topbar-title {
+                color: white;
+                font-size: 15px;
+                font-weight: 600;
+                letter-spacing: 1px;
+            }
+        }
+
+        // ── Barre de recherche ───────────────────────────────────
+
+        .search-bar {
+            flex-direction: row;
+            gap: 10px;
+            align-items: center;
+            flex-shrink: 0;
+
+            .search-input {
+                flex: 1;
+                height: 38px;
+                background-color: #1a1f2e;
+                border: 1px solid rgba(white, 0.2);
+                border-radius: 6px;
+                padding: 0 12px;
+                color: white;
+                font-size: 12px;
+
+                &:focus {
+                    border-color: rgba(#273CF5, 0.8);
+                }
+            }
+
+            .search-btn {
+                height: 38px;
+                padding: 0 16px;
+                background-color: #273CF5;
+                border-radius: 6px;
+                flex-direction: row;
+                align-items: center;
+                gap: 6px;
+                cursor: pointer;
+                transition: all 0.2s ease;
+
+                svg { width: 18px; height: 18px; }
+                span { color: white; }
+
+                &:hover { background-color: rgba(#273CF5, 0.75); }
+                &:active { sound-in: ui_press; }
+
+                &.disabled {
+                    opacity: 0.4;
+                    cursor: default;
+                }
+            }
+        }
+
+        // ── Message statut ───────────────────────────────────────
+
+        .status-msg {
+            justify-content: center;
+            align-items: center;
+            flex: 1;
+
+            span { color: rgba(white, 0.5); font-size: 13px; }
+        }
+
+        // ── Liste de résultats ───────────────────────────────────
+
+        .results-list {
+            flex: 1;
+            flex-direction: column;
+            gap: 12px;
+            overflow-y: scroll;
+
+            .person-card {
+                flex-direction: column;
+                background-color: #212E53;
+                border-radius: 8px;
+                padding: 12px;
+                gap: 10px;
+                border: 1px solid rgba(white, 0.1);
+                flex-shrink: 0;
+
+                // En-tête du personnage
+                .person-header {
+                    flex-direction: row;
+                    align-items: center;
+                    gap: 10px;
+
+                    .person-icon {
+                        width: 32px;
+                        height: 32px;
+                        flex-shrink: 0;
+                    }
+
+                    .person-info {
+                        flex: 1;
+                        flex-direction: column;
+                        gap: 2px;
+
+                        .person-name {
+                            color: white;
+                            font-size: 13px;
+                            font-weight: 600;
+                        }
+
+                        .person-dob {
+                            color: rgba(white, 0.5);
+                            font-size: 10px;
+                        }
+                    }
+
+                    .person-badge {
+                        height: 24px;
+                        padding: 0 10px;
+                        border-radius: 12px;
+                        justify-content: center;
+                        align-items: center;
+                        flex-shrink: 0;
+
+                        span { font-size: 10px; font-weight: 600; }
+
+                        &.badge-clean {
+                            background-color: rgba(#2ecc71, 0.2);
+                            border: 1px solid rgba(#2ecc71, 0.5);
+                            span { color: #2ecc71; }
+                        }
+
+                        &.badge-fines {
+                            background-color: rgba(#e74c3c, 0.2);
+                            border: 1px solid rgba(#e74c3c, 0.5);
+                            span { color: #e74c3c; }
+                        }
+                    }
+                }
+
+                // Tableau d'amendes
+                .fines-table {
+                    flex-direction: column;
+                    width: 100%;
+
+                    thead tr {
+                        background-color: rgba(black, 0.3);
+                        border-radius: 4px;
+
+                        th {
+                            padding: 6px 8px;
+                            color: rgba(white, 0.6);
+                            font-size: 10px;
+                            font-weight: 600;
+                            letter-spacing: 0.5px;
+                            flex: 1;
+                            justify-content: center;
+                        }
+                    }
+
+                    tbody tr {
+                        border-bottom: 1px solid rgba(white, 0.06);
+
+                        &.fine-unpaid { background-color: rgba(#e74c3c, 0.07); }
+                        &.fine-paid   { opacity: 0.6; }
+
+                        td {
+                            padding: 7px 8px;
+                            color: white;
+                            font-size: 11px;
+                            flex: 1;
+                            justify-content: center;
+                            align-items: center;
+
+                            &.overdue { color: #e74c3c; }
+                        }
+
+                        .tag-paid {
+                            background-color: rgba(#2ecc71, 0.2);
+                            border: 1px solid rgba(#2ecc71, 0.4);
+                            border-radius: 10px;
+                            padding: 2px 8px;
+                            color: #2ecc71;
+                            font-size: 10px;
+                        }
+
+                        .tag-unpaid {
+                            background-color: rgba(#e74c3c, 0.2);
+                            border: 1px solid rgba(#e74c3c, 0.4);
+                            border-radius: 10px;
+                            padding: 2px 8px;
+                            color: #e74c3c;
+                            font-size: 10px;
+                        }
+                    }
+                }
+
+                .no-fines {
+                    justify-content: center;
+                    align-items: center;
+                    padding: 8px;
+
+                    span { color: rgba(white, 0.4); font-size: 11px; }
+                }
+            }
+        }
+    }
+}

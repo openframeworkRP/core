@@ -1,0 +1,137 @@
+@using Sandbox;
+@using Sandbox.UI;
+@using Sandbox.UI.Navigation;
+@using OpenFramework.Api;
+@using System.Collections.Generic;
+
+@implements Sandbox.UI.Navigation.INavigatorPage
+@namespace OpenFramework.World.Devices.Apps.Police
+@inherits Panel
+
+<root>
+    <div class="container">
+
+        <div class="topbar">
+            <svg class="topbar-icon" src="ui/icons/dollars_circle.svg" color="white" />
+            <span class="topbar-title">Recherche d'amendes</span>
+        </div>
+
+        <div class="search-bar">
+            <TextEntry
+                class="search-input"
+                Placeholder="Prénom ou nom de famille..."
+                @ref=_queryInput />
+            <div class="search-btn @(_isLoading ? "disabled" : "")" @onclick=@Search>
+                <svg src="ui/icons/loupe.svg" color="white" />
+                <span>Rechercher</span>
+            </div>
+        </div>
+
+        @if ( _isLoading )
+        {
+            <div class="status-msg">
+                <span>Recherche en cours...</span>
+            </div>
+        }
+        else if ( _searched && _results.Count == 0 )
+        {
+            <div class="status-msg">
+                <span>Aucun résultat pour « @_lastQuery ».</span>
+            </div>
+        }
+        else if ( _results.Count > 0 )
+        {
+            <div class="results-list">
+                @foreach ( var person in _results )
+                {
+                    <div class="person-card">
+                        <div class="person-header">
+                            <svg class="person-icon" src="ui/icons/human.svg" color="#9EB1CF" />
+                            <div class="person-info">
+                                <span class="person-name">@person.FirstName @person.LastName</span>
+                                <span class="person-dob">Né(e) le @person.DateOfBirth</span>
+                            </div>
+                            <div class="person-badge @(person.Fines.Count == 0 ? "badge-clean" : "badge-fines")">
+                                <span>@person.Fines.Count amende(s)</span>
+                            </div>
+                        </div>
+
+                        @if ( person.Fines.Count > 0 )
+                        {
+                            <table class="fines-table">
+                                <thead>
+                                    <tr>
+                                        <th>Statut</th>
+                                        <th>Motif</th>
+                                        <th>Montant</th>
+                                        <th>Émise le</th>
+                                        <th>Échéance</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ( var fine in person.Fines )
+                                    {
+                                        <tr class="@(fine.Paid ? "fine-paid" : "fine-unpaid")">
+                                            <td>
+                                                @if ( fine.Paid )
+                                                {
+                                                    <span class="tag-paid">Payée</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="tag-unpaid">Impayée</span>
+                                                }
+                                            </td>
+                                            <td>@fine.Reason</td>
+                                            <td>@fine.Amount $</td>
+                                            <td>@fine.IssuedAt.ToString("dd/MM/yy HH:mm")</td>
+                                            <td class="@(fine.DueAt < DateTime.Now && !fine.Paid ? "overdue" : "")">
+                                                @fine.DueAt.ToString("dd/MM/yy HH:mm")
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                        else
+                        {
+                            <div class="no-fines">
+                                <span>Aucune amende enregistrée.</span>
+                            </div>
+                        }
+                    </div>
+                }
+            </div>
+        }
+
+    </div>
+</root>
+
+@code
+{
+    TextEntry _queryInput;
+    private bool   _isLoading = false;
+    private bool   _searched  = false;
+    private string _lastQuery = "";
+    private List<CharacterFinesResult> _results = new();
+
+    private async void Search()
+    {
+        var q = _queryInput?.Text?.Trim();
+        if ( string.IsNullOrEmpty( q ) || q.Length < 2 || _isLoading ) return;
+        _lastQuery = q;
+
+        _isLoading = true;
+        _searched  = false;
+        _results   = new();
+        StateHasChanged();
+
+        _results   = await ApiComponent.Instance.SearchCharactersWithFines( q );
+        _isLoading = false;
+        _searched  = true;
+        StateHasChanged();
+    }
+
+    protected override int BuildHash() =>
+        HashCode.Combine( _lastQuery, _isLoading, _searched, _results.Count );
+}

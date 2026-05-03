@@ -326,6 +326,23 @@ partial class PlayerPawn
 			return;
 		}
 
+		// PoliceComputer → ouverture directe (police only), sans radial intermédiaire.
+		PoliceComputer hoveredPoliceComputer = null;
+		foreach ( var hit in hits )
+		{
+			var pc = hit.GameObject.Components.Get<PoliceComputer>( FindMode.EverythingInSelfAndAncestors );
+			if ( pc == null ) continue;
+			hoveredPoliceComputer = pc;
+			break;
+		}
+
+		if ( hoveredPoliceComputer != null )
+		{
+			Log.Info( "[E][long] Ouverture PoliceComputer" );
+			hoveredPoliceComputer.Open();
+			return;
+		}
+
 		// WeedPot → radial spécifique avec "Récolter" et "Ramasser le pot".
 		// Doit être détecté AVANT WorldItem car WeedPot possède un composant WorldItem.
 		WeedPot hoveredWeedPot = null;

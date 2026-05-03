@@ -112,10 +112,6 @@ public sealed partial class PlayerPawn : Pawn, IDescription, IAreaDamageReceiver
 	[Property]
 	public bool IsInJail => ReleaseFromJail > 0f;
 
-	[Property, Sync( SyncFlags.FromHost )]
-	public List<Fine> Fines { get; set; } = new();
-
-	
 	/// <summary>
 	/// for spawning room passing door don't touch is important
 	/// </summary>

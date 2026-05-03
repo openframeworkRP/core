@@ -3,6 +3,12 @@
 public struct Fine
 {
 	/// <summary>
+	/// Identifiant unique de l'amende, utilise pour la persistance API.
+	/// </summary>
+	[Property]
+	public string Id { get; set; }
+
+	/// <summary>
 	/// When the fine was issued.
 	/// </summary>
 	[Property]

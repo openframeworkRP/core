@@ -1,4 +1,5 @@
 ﻿using Facepunch;
+using OpenFramework.Api;
 using OpenFramework.Command;
 using OpenFramework.Extension;
 using OpenFramework.GameLoop;
@@ -238,13 +239,31 @@ public sealed class PoliceJob : JobComponent
 
 		var fine = new Fine
 		{
+			Id       = Guid.NewGuid().ToString(),
 			IssuedAt = DateTime.Now,
-			DueAt = DateTime.Now.AddHours( 24 ),
-			Amount = amount,
-			Reason = reason
+			DueAt    = DateTime.Now.AddHours( 24 ),
+			Amount   = amount,
+			Reason   = reason
 		};
 
-		target.Fines.Add( fine );
+		// Synchronise sur le réseau via la NetList du ClientData (host-authoritative)
+		target.Client.Data.Fines.Add( fine );
+
+		// Persiste dans l'API backend
+		var callerCharId = PlayerApiBridge.GetActiveCharacter( caller.SteamId );
+		var targetCharId = PlayerApiBridge.GetActiveCharacter( target.Client.SteamId );
+		if ( !string.IsNullOrEmpty( targetCharId ) )
+		{
+			_ = ApiComponent.Instance.AddFine( targetCharId, new FineDto
+			{
+				Id                  = fine.Id,
+				IssuedAt            = fine.IssuedAt,
+				DueAt               = fine.DueAt,
+				Amount              = fine.Amount,
+				Reason              = fine.Reason,
+				IssuedByCharacterId = callerCharId ?? "",
+			} );
+		}
 
 		caller.Notify( NotificationType.Success,
 			$"Amende de {amount}$" );

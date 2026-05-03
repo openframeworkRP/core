@@ -392,6 +392,58 @@ public class ApiComponent : Component
 	    } );
 
     
+    // ══════════════════════════════════════════════════════════════
+    //  ENDPOINTS MDT — AMENDES (JWT serveur)
+    // ══════════════════════════════════════════════════════════════
+
+    private class FinesResponse        { public List<FineDto>               Fines   { get; set; } = new(); }
+    private class SearchFinesResponse  { public List<CharacterFinesResult>  Results { get; set; } = new(); }
+
+    public async Task<List<FineDto>> GetFines( string characterId )
+    {
+        try
+        {
+            var r = await Http.RequestAsync( $"{BaseUrl}/mdt/fines/{characterId}", "GET", null, ServerHeaders() );
+            if ( !r.IsSuccessStatusCode ) { Log.Warning( $"[API] GetFines {characterId} → {r.StatusCode}" ); return new(); }
+            var body = JsonSerializer.Deserialize<FinesResponse>( await r.Content.ReadAsStringAsync(), Opts );
+            return body?.Fines ?? new();
+        }
+        catch ( Exception e ) { Log.Warning( $"[API] GetFines : {e.Message}" ); return new(); }
+    }
+
+    public async Task AddFine( string characterId, FineDto fine )
+    {
+        try
+        {
+            var r = await Http.RequestAsync( $"{BaseUrl}/mdt/fines/{characterId}/add", "POST", Http.CreateJsonContent( fine ), ServerHeaders() );
+            if ( !r.IsSuccessStatusCode ) Log.Warning( $"[API] AddFine {characterId} → {r.StatusCode}" );
+        }
+        catch ( Exception e ) { Log.Warning( $"[API] AddFine : {e.Message}" ); }
+    }
+
+    public async Task PayFine( string characterId, string fineId )
+    {
+        try
+        {
+            var r = await Http.RequestAsync( $"{BaseUrl}/mdt/fines/{characterId}/{fineId}/pay", "POST", Http.CreateJsonContent( new { } ), ServerHeaders() );
+            if ( !r.IsSuccessStatusCode ) Log.Warning( $"[API] PayFine {characterId}/{fineId} → {r.StatusCode}" );
+        }
+        catch ( Exception e ) { Log.Warning( $"[API] PayFine : {e.Message}" ); }
+    }
+
+    public async Task<List<CharacterFinesResult>> SearchCharactersWithFines( string query )
+    {
+        try
+        {
+            var encoded = Uri.EscapeDataString( query );
+            var r = await Http.RequestAsync( $"{BaseUrl}/mdt/search?query={encoded}", "GET", null, ServerHeaders() );
+            if ( !r.IsSuccessStatusCode ) { Log.Warning( $"[API] SearchFines → {r.StatusCode}" ); return new(); }
+            var body = JsonSerializer.Deserialize<SearchFinesResponse>( await r.Content.ReadAsStringAsync(), Opts );
+            return body?.Results ?? new();
+        }
+        catch ( Exception e ) { Log.Warning( $"[API] SearchFines : {e.Message}" ); return new(); }
+    }
+
     // Admin System
 
     public Task<List<UserBan>> GetBanList() 
@@ -669,6 +721,27 @@ public class InventoryItemDto
 	public Dictionary<string, string> Metadata { get; set; } = new();
 	public int     Line        { get; set; }
 	public int     Collum      { get; set; }
+}
+
+public class FineDto
+{
+	public string    Id                   { get; set; } = "";
+	public DateTime  IssuedAt             { get; set; }
+	public DateTime  DueAt                { get; set; }
+	public int       Amount               { get; set; }
+	public string    Reason               { get; set; } = "";
+	public bool      Paid                 { get; set; }
+	public DateTime? PaidAt               { get; set; }
+	public string    IssuedByCharacterId  { get; set; } = "";
+}
+
+public class CharacterFinesResult
+{
+	public string        CharacterId  { get; set; } = "";
+	public string        FirstName    { get; set; } = "";
+	public string        LastName     { get; set; } = "";
+	public string        DateOfBirth  { get; set; } = "";
+	public List<FineDto> Fines        { get; set; } = new();
 }
 public class BankAccountDto
 {

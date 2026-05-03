@@ -67,3 +67,22 @@ public class NewCriminalRecordRequest
     public string Description { get; set; } = "";
     public string FromWhoMandatedId { get; set; } = "";
 }
+
+public class AddFineRequest
+{
+    public string Id { get; set; } = "";
+    public DateTime IssuedAt { get; set; }
+    public DateTime DueAt { get; set; }
+    public int Amount { get; set; }
+    public string Reason { get; set; } = "";
+    public string IssuedByCharacterId { get; set; } = "";
+}
+
+public class CharacterFinesResult
+{
+    public string CharacterId { get; set; } = "";
+    public string FirstName   { get; set; } = "";
+    public string LastName    { get; set; } = "";
+    public string DateOfBirth { get; set; } = "";
+    public List<OpenFramework.Api.Models.Mdt.FineRecord> Fines { get; set; } = new();
+}

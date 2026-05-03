@@ -1,0 +1,42 @@
+@using Sandbox;
+@using Sandbox.UI;
+@using OpenFramework.World.Devices.Apps.Police;
+
+@namespace OpenFramework.World.Devices
+@implements IDevice.IScreenContext
+@inherits PanelComponent
+
+<root>
+    <div class="screen-wrapper">
+        <div class="topbar">
+            <div class="close-btn" @onclick=@Close>
+                <svg src="ui/icons/close.svg" color="white" />
+            </div>
+        </div>
+        <div class="app-container" @ref=CanvasRef />
+    </div>
+</root>
+
+@code
+{
+    [Property] public IDevice AttachedDevice { get; set; }
+    Panel CanvasRef;
+
+    protected override void OnTreeFirstBuilt()
+    {
+        Panel.Focus();
+        CanvasRef.AddChild( new PoliceApp_navigator() );
+    }
+
+    private void Close()
+    {
+        AttachedDevice?.PowerOff();
+    }
+
+    protected override void OnDestroy()
+    {
+        Mouse.Visibility = MouseVisibility.Auto;
+    }
+
+    protected override int BuildHash() => 0;
+}

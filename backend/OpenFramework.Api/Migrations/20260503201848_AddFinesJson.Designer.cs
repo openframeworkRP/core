@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using OpenFramework.Api.Data;
@@ -11,9 +12,11 @@ using OpenFramework.Api.Data;
 namespace OpenFramework.Api.Migrations
 {
     [DbContext(typeof(OpenFrameworkDbContext))]
-    partial class OpenFrameworkDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260503201848_AddFinesJson")]
+    partial class AddFinesJson
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

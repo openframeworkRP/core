@@ -17,6 +17,10 @@
                 <svg class="icon" src="ui/icons/apps/finance.svg" color="white" />
                 <span>Finance</span>
             </a>
+            <a href="/amendes">
+                <svg class="icon" src="ui/icons/dollars_circle.svg" color="white" />
+                <span>Amendes</span>
+            </a>
         </ul>
     </div>
     <div class="navigator-canvas" slot="navigator-canvas" />
@@ -29,5 +33,6 @@
         DefaultUrl = "/";
         AddDestination("/", typeof(HomePagePolice));
         AddDestination("/finance", typeof(FinancePagePolice));
+        AddDestination("/amendes", typeof(FinesPagePolice));
     }
 }

@@ -49,6 +49,12 @@ public class Character
     /// broadcast d'apparence.
     /// </summary>
     public string ClothingJson { get; set; } = "[]";
+
+    /// <summary>
+    /// Liste JSON des amendes du personnage. "[]" = aucune amende.
+    /// Chaque entree est un FineRecord serialise. Modifie via /api/mdt/fines/*.
+    /// </summary>
+    public string FinesJson { get; set; } = "[]";
 }
 
 public enum Gender
