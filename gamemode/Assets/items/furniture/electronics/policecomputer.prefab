@@ -156,10 +156,10 @@
         "__guid": "c8d1f9e0-b7a8-4c9d-a04f-a1b2c3d4e5f6",
         "__version": 2,
         "Flags": 0,
-        "Name": "World",
-        "Position": "-0.3977049,-0.1889397,17.19017",
+        "Name": "Screen",
+        "Position": "0,0,0",
         "Rotation": "0,0,0,1",
-        "Scale": "0.33,0.324,0.3241772",
+        "Scale": "1,1,1",
         "Tags": "",
         "Enabled": true,
         "NetworkMode": 2,
@@ -171,7 +171,7 @@
           {
             "__type": "OpenFramework.World.Devices.PoliceComputerScreen",
             "__guid": "b7c0e8d9-a6f7-4b8c-f39e-f0a1b2c3d4e5",
-            "__enabled": false,
+            "__enabled": true,
             "Flags": 0,
             "AttachedDevice": {
               "Type": "Component",
@@ -190,43 +190,16 @@
             "OnComponentUpdate": null
           },
           {
-            "__type": "Sandbox.WorldPanel",
-            "__guid": "d9e2a0f1-c8b9-4d0e-b15a-b2c3d4e5f6a7",
+            "__type": "Sandbox.ScreenPanel",
+            "__guid": "f6a9b0c1-e2d3-4a5b-c6d7-e8f9a0b1c2d3",
             "__enabled": true,
             "Flags": 0,
-            "HorizontalAlign": "Center",
-            "InteractionRange": 1000,
-            "LookAtCamera": false,
             "OnComponentDestroy": null,
             "OnComponentDisabled": null,
             "OnComponentEnabled": null,
             "OnComponentFixedUpdate": null,
             "OnComponentStart": null,
-            "OnComponentUpdate": null,
-            "PanelSize": "2208.997,1263",
-            "RenderOptions": {
-              "GameLayer": true,
-              "OverlayLayer": false,
-              "BloomLayer": false,
-              "AfterUILayer": false
-            },
-            "RenderScale": 1,
-            "VerticalAlign": "Center"
-          },
-          {
-            "__type": "Sandbox.WorldInput",
-            "__guid": "e0f3b1a2-d9c0-4e1f-c26b-c3d4e5f6a7b8",
-            "__enabled": true,
-            "Flags": 0,
-            "LeftMouseAction": "Attack1",
-            "OnComponentDestroy": null,
-            "OnComponentDisabled": null,
-            "OnComponentEnabled": null,
-            "OnComponentFixedUpdate": null,
-            "OnComponentStart": null,
-            "OnComponentUpdate": null,
-            "RightMouseAction": "Attack2",
-            "VRHandSource": "Left"
+            "OnComponentUpdate": null
           }
         ],
         "Children": []

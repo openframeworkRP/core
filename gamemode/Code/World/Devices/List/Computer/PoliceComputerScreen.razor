@@ -6,35 +6,42 @@
 @implements IDevice.IScreenContext
 @inherits PanelComponent
 
+@{
+    var isOn = AttachedDevice?.IsOn == true;
+}
+
 <root>
-    <div class="screen-wrapper">
-        <div class="sidebar">
-            <svg class="branding" src="ui/icons/apps/policeicon.svg" color="#273CF5" />
-            <ul>
-                <div class="nav-item @(_page == "home" ? "active" : "")" @onclick=@(() => SetPage("home"))>
-                    <svg class="icon" src="ui/icons/home.svg" color="white" />
-                    <span>Accueil</span>
+    @if ( isOn )
+    {
+        <div class="screen-wrapper">
+            <div class="sidebar">
+                <svg class="branding" src="ui/icons/apps/policeicon.svg" color="#273CF5" />
+                <div class="nav-list">
+                    <button class="nav-item @(_page == "home" ? "active" : "")" onclick=@(() => SetPage("home"))>
+                        <svg class="icon" src="ui/icons/home.svg" color="white" />
+                        <span>Accueil</span>
+                    </button>
+                    <button class="nav-item @(_page == "finance" ? "active" : "")" onclick=@(() => SetPage("finance"))>
+                        <svg class="icon" src="ui/icons/apps/finance.svg" color="white" />
+                        <span>Finance</span>
+                    </button>
+                    <button class="nav-item @(_page == "amendes" ? "active" : "")" onclick=@(() => SetPage("amendes"))>
+                        <svg class="icon" src="ui/icons/dollars_circle.svg" color="white" />
+                        <span>Amendes</span>
+                    </button>
                 </div>
-                <div class="nav-item @(_page == "finance" ? "active" : "")" @onclick=@(() => SetPage("finance"))>
-                    <svg class="icon" src="ui/icons/apps/finance.svg" color="white" />
-                    <span>Finance</span>
-                </div>
-                <div class="nav-item @(_page == "amendes" ? "active" : "")" @onclick=@(() => SetPage("amendes"))>
-                    <svg class="icon" src="ui/icons/dollars_circle.svg" color="white" />
-                    <span>Amendes</span>
-                </div>
-            </ul>
-            <div class="close-btn" @onclick=@Close>
-                <svg src="ui/icons/close.svg" color="white" />
-                <span>Fermer</span>
+                <button class="close-btn" onclick=@Close>
+                    <svg src="ui/icons/close.svg" color="white" />
+                    <span>Fermer</span>
+                </button>
+            </div>
+            <div class="page-area">
+                @if ( _page == "home" )    { <HomePagePolice /> }
+                @if ( _page == "finance" ) { <FinancePagePolice /> }
+                @if ( _page == "amendes" ) { <FinesPagePolice /> }
             </div>
         </div>
-        <div class="page-area">
-            @if ( _page == "home" )    { <HomePagePolice /> }
-            @if ( _page == "finance" ) { <FinancePagePolice /> }
-            @if ( _page == "amendes" ) { <FinesPagePolice /> }
-        </div>
-    </div>
+    }
 </root>
 
 @code
@@ -42,24 +49,36 @@
     [Property] public IDevice AttachedDevice { get; set; }
 
     private string _page = "home";
+    private bool   _wasOn;
+
+    protected override void OnUpdate()
+    {
+        var isOn = AttachedDevice?.IsOn == true;
+
+        if ( isOn != _wasOn )
+        {
+            _wasOn = isOn;
+            Mouse.Visibility = isOn ? MouseVisibility.Visible : MouseVisibility.Auto;
+            if ( isOn ) { _page = "home"; Panel.Focus(); }
+        }
+
+        if ( isOn && Input.EscapePressed )
+        {
+            Input.EscapePressed = false;
+            Close();
+        }
+    }
 
     private void SetPage( string page )
     {
-        Log.Info( $"[PoliceScreen] Navigation → {page}" );
         _page = page;
-    }
-
-    protected override void OnTreeFirstBuilt()
-    {
-        Log.Info( "[PoliceScreen] OnTreeFirstBuilt — activation curseur + focus" );
-        Mouse.Visibility = MouseVisibility.Visible;
-        Panel.Focus();
+        StateHasChanged();
     }
 
     private void Close()
     {
-        Log.Info( "[PoliceScreen] Fermeture terminal" );
         AttachedDevice?.PowerOff();
+        StateHasChanged();
     }
 
     protected override void OnDestroy()
@@ -67,5 +86,8 @@
         Mouse.Visibility = MouseVisibility.Auto;
     }
 
-    protected override int BuildHash() => _page.GetHashCode();
+    protected override int BuildHash()
+    {
+        return HashCode.Combine( AttachedDevice?.IsOn ?? false, _page );
+    }
 }
