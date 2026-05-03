@@ -115,7 +115,7 @@ export const api = {
   deleteIdea:       (id)           => req('DELETE', `/api/hub/ideas/${id}`),
   bulkCreateIdeas:  (body)         => req('POST',   '/api/hub/ideas/bulk', body),
 
-  // Hub — misc blob (milestones, mapAnnotations, fabAssets, fabStudios)
+  // Hub — misc blob (milestones, mapAnnotations)
   saveMisc:         (body)         => req('PUT',    '/api/hub/misc', body),
 
   // Activité hub
@@ -126,11 +126,6 @@ export const api = {
   // Brand kit (charte graphique)
   getBrandKit:  ()     => req('GET', '/api/hub/brand-kit'),
   saveBrandKit: (body) => req('PUT', '/api/hub/brand-kit', body),
-
-  // Fab proxy (contourne le CORS navigateur)
-  getFabListings: (username) => req('GET', `/api/fab/listings?username=${encodeURIComponent(username)}`),
-  getFabPreview:  (url)      => req('GET', `/api/fab/preview?url=${encodeURIComponent(url)}`),
-  getFabAsset:    (url)      => req('GET', `/api/fab/asset?url=${encodeURIComponent(url)}`),
 
   // Videos
   getVideos:         ()           => req('GET',    '/api/videos'),
@@ -261,10 +256,6 @@ export const api = {
   updateAsset:     (id, body)   => req('PUT',    `/api/assets/${id}`, body),
   deleteAsset:     (id)         => req('DELETE', `/api/assets/${id}`),
   bulkImportAssets:(body)       => req('POST',   '/api/assets/bulk-import', body),
-  searchFab:       (q, first)   => req('GET',    `/api/fab/search?q=${encodeURIComponent(q)}&first=${first || 6}`),
-  searchFabSeller: (seller, q, first) => req('GET', `/api/fab/search-seller?seller=${encodeURIComponent(seller)}&q=${encodeURIComponent(q)}&first=${first || 5}`),
-  fabPreview:      (url)        => req('GET',    `/api/fab/preview?url=${encodeURIComponent(url)}`),
-  fabGlobalSearch: (q, limit)   => req('GET',    `/api/fab/global-search?q=${encodeURIComponent(q)}&limit=${limit || 5}`),
 
   // Stats dashboard
   getStats: () => req('GET', '/api/stats'),

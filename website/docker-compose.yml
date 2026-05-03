@@ -20,17 +20,9 @@ services:
       - NEXTCLOUD_TOKEN=${NEXTCLOUD_TOKEN:-}
       - NEXTCLOUD_ROOT=${NEXTCLOUD_ROOT:-/unreal_asset}
       - NEXTCLOUD_ASSET_ROOT=${NEXTCLOUD_ASSET_ROOT:-/unreal_asset}
-      - FAB_SCRAPER_URL=${FAB_SCRAPER_URL:-http://localhost:8000}
+
       - GAME_API_URL=${GAME_API_URL:-https://api.openframework.fr}
       - GAME_SERVER_SECRET=${GAME_SERVER_SECRET}
-    restart: unless-stopped
-
-  fab-scraper:
-    build: ./backend/scraper
-    container_name: core_website_scraper
-    network_mode: host
-    environment:
-      - CAMOUFOX_NO_SANDBOX=1
     restart: unless-stopped
 
   frontend:

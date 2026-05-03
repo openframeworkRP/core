@@ -23,7 +23,7 @@ import membersRouter       from './routes/members.js'
 import ogRouter            from './routes/og.js'
 import devblogArchiveRouter from './routes/devblog_archive.js'
 import hubRouter            from './routes/hub.js'
-import fabRouter            from './routes/fab.js'
+
 import videosRouter         from './routes/videos.js'
 import imagesRouter         from './routes/images.js'
 import rulesRouter          from './routes/rules.js'
@@ -116,7 +116,7 @@ app.use('/api/stats',      statsRouter)
 app.use('/api/members',    membersRouter)
 app.use('/og',             ogRouter)
 app.use('/api/hub',        hubRouter)
-app.use('/api/fab',        fabRouter)
+
 app.use('/api/videos',     videosRouter)
 app.use('/api/images',     imagesRouter)
 app.use('/api/rules',      rulesRouter)

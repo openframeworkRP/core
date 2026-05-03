@@ -45,7 +45,7 @@ export const PAGES = [
   { key: 'hub:roadmap',    category: 'hub', label: 'Roadmap',    default: { view: '*', edit: ['owner','admin','editor'], delete: ['owner','admin'] } },
   { key: 'hub:whiteboard', category: 'hub', label: 'Idées',      default: { view: '*', edit: '*', delete: ['owner','admin','editor'] } },
   { key: 'hub:mapview',    category: 'hub', label: 'Map',        default: { view: '*', edit: ['owner','admin','editor'], delete: ['owner','admin'] } },
-  { key: 'hub:fab',        category: 'hub', label: 'Assets Fab', default: { view: '*', edit: ['owner','admin','editor'], delete: ['owner','admin'] } },
+
   { key: 'hub:catalogue',  category: 'hub', label: 'Catalogue',  default: { view: '*', edit: ['owner','admin','editor'], delete: ['owner','admin'] } },
   { key: 'hub:activity',   category: 'hub', label: 'Activité',   default: { view: '*', edit: ['owner','admin'], delete: ['owner'] } },
 

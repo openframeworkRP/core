@@ -532,8 +532,6 @@ if (!activityCols.includes('target_id')) {
     const misc   = {
       milestones:     blob.milestones     ?? [],
       mapAnnotations: blob.mapAnnotations ?? {},
-      fabAssets:      blob.fabAssets      ?? [],
-      fabStudios:     blob.fabStudios     ?? [],
     }
 
     const insertTask = db.prepare(`

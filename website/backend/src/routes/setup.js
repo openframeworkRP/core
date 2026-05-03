@@ -214,7 +214,7 @@ router.post('/apply', async (req, res) => {
   // apres setTimeout n'a pas le temps de s'executer. Mais c'est OK : la
   // reponse a deja ete envoyee.
   setTimeout(() => {
-    composeRecreate(['website.api', 'website.frontend', 'website.scraper'])
+    composeRecreate(['website.api', 'website.frontend'])
       .catch(() => { /* on meurt, normal */ })
   }, 2000)
 })

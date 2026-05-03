@@ -9,8 +9,8 @@ import {
   Clock, Folder, Layers, Users, Eye, EyeOff, Inbox,
   ChevronUp, ChevronDown, Gamepad2, Rocket, User, Activity,
   MapPin, Circle, RectangleHorizontal, Pencil, ZoomIn, ZoomOut, Move, MousePointer, Undo2,
-  Search, ShoppingBag, ExternalLink, DollarSign,
-  Store, RefreshCw, Loader2, Bell, BellOff,
+  Search, ExternalLink,
+  RefreshCw, Loader2,
   ArrowUpNarrowWide, ArrowDownNarrowWide,
   Link2, Tag, FileUp,
   HardDrive, Download, FolderOpen, FolderSearch, Globe, ChevronRight, Package, Database,
@@ -2195,11 +2195,9 @@ const ACTION_VIEW = {
   bulk: "list", convert: "board",
   idea: "whiteboard",
   map_annotate: "mapview",
-  fab_asset: "fab",
-  studio_add: "studios",
 };
 const ACTION_LABEL = {
-  board: "Board", list: "Liste", whiteboard: "Idées", mapview: "Map", fab: "Assets Fab", studios: "Studios",
+  board: "Board", list: "Liste", whiteboard: "Idées", mapview: "Map",
 };
 
 function ActivityLogView({ log, members, onNavigate }) {
@@ -3674,342 +3672,6 @@ function MapCanvasView({ projects, members, annotations, setAnnotations, logActi
     </div>
   );
 }
-
-
-// ============================================================
-// FAB ASSETS VIEW — Share Fab.com links with voting
-// ============================================================
-function FabAssetsView({ assets, setAssets, projects, members, logActivity, defaultAuthor }) {
-  const [showForm, setShowForm] = useState(false);
-  const [url, setUrl] = useState("");
-  const [fetchedData, setFetchedData] = useState(null);
-  const [fetching, setFetching] = useState(false);
-  const [fetchError, setFetchError] = useState("");
-  const [assetProject, setAssetProject] = useState("sl-v1");
-  const [sortBy, setSortBy] = useState("recent"); // recent, votes, price
-  const commentAuthor = defaultAuthor || null;
-
-  const urlFetchTimer = useRef(null);
-  const fetchFabMeta = useCallback(async (rawUrl) => {
-    if (!rawUrl.includes("fab.com") || !rawUrl.includes("/listings/")) {
-      setFetchedData(null);
-      setFetchError("");
-      return;
-    }
-    setFetching(true);
-    setFetchError("");
-    try {
-      const res = await api.getFabAsset(rawUrl);
-      setFetchedData(res);
-      setFetchError("");
-    } catch (err) {
-      setFetchedData(null);
-      setFetchError(err.message || "Erreur lors de la récupération des données");
-    }
-    setFetching(false);
-  }, []);
-
-  const handleUrlChange = (val) => {
-    setUrl(val);
-    clearTimeout(urlFetchTimer.current);
-    if (val.includes("fab.com") && val.includes("/listings/")) {
-      urlFetchTimer.current = setTimeout(() => fetchFabMeta(val), 800);
-    } else {
-      setFetchedData(null);
-      setFetchError("");
-    }
-  };
-
-  // Vote + comment state (same pattern as ideas)
-  const [openThread, setOpenThread] = useState(null);
-  const [commentText, setCommentText] = useState("");
-  const [downvoteTarget, setDownvoteTarget] = useState(null);
-  const [downvoteText, setDownvoteText] = useState("");
-
-  const addAsset = () => {
-    if (!fetchedData || !url.trim()) return;
-    const asset = {
-      id: `fab_${Date.now()}`,
-      url: url.trim(),
-      name: fetchedData.name,
-      price: fetchedData.price,
-      imageUrl: fetchedData.imageUrl,
-      description: "",
-      projectId: assetProject,
-      addedBy: commentAuthor,
-      createdAt: Date.now(),
-      votes: {},
-      comments: [],
-    };
-    setAssets(prev => [asset, ...prev]);
-    logActivity("fab_asset", `Asset Fab ajouté: ${fetchedData.name}`, commentAuthor);
-    setUrl("");
-    setFetchedData(null);
-    setFetchError("");
-    setShowForm(false);
-  };
-
-  const deleteAsset = (id) => {
-    setAssets(prev => prev.filter(a => a.id !== id));
-  };
-
-  const updateAsset = (id, updates) => {
-    setAssets(prev => prev.map(a => a.id === id ? { ...a, ...updates } : a));
-  };
-
-  // Filter & sort
-  const filtered = assets.filter(a => projects.some(p => p.id === a.projectId));
-  const sorted = [...filtered].sort((a, b) => {
-    if (sortBy === "votes") {
-      const scoreA = Object.values(a.votes || {}).reduce((s, v) => s + v, 0);
-      const scoreB = Object.values(b.votes || {}).reduce((s, v) => s + v, 0);
-      return scoreB - scoreA;
-    }
-    if (sortBy === "price") {
-      const pA = parseFloat((a.price || "0").replace(/[^0-9.,]/g, "").replace(",", ".")) || 0;
-      const pB = parseFloat((b.price || "0").replace(/[^0-9.,]/g, "").replace(",", ".")) || 0;
-      return pA - pB;
-    }
-    return b.createdAt - a.createdAt;
-  });
-
-  return (
-    <div>
-      {/* Header */}
-      <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16, flexWrap: "wrap" }}>
-        <h2 style={{ fontWeight: 800, fontSize: "1.2rem", color: "#ffffff", margin: 0 }}>
-          <IC icon={ShoppingBag} size={18} style={{ marginRight: 8 }} />Assets Fab
-        </h2>
-        <span style={{ fontSize: "0.75rem", color: "#666" }}>{assets.length} asset{assets.length !== 1 ? "s" : ""}</span>
-        <span style={{ flex: 1 }} />
-
-<select value={sortBy} onChange={e => setSortBy(e.target.value)} style={{ background: "#333", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 8, padding: "6px 10px", color: "#e8eaed", fontSize: "0.78rem", fontFamily: "inherit" }}>
-          <option value="recent">Plus récent</option>
-          <option value="votes">Plus voté</option>
-          <option value="price">Prix croissant</option>
-        </select>
-
-        <button onClick={() => setShowForm(!showForm)} style={{ padding: "7px 14px", background: "var(--brand-primary, #e07b39)", color: "#161a26", border: "none", borderRadius: 8, cursor: "pointer", fontWeight: 700, fontSize: "0.82rem", fontFamily: "inherit", display: "flex", alignItems: "center", gap: 6 }}>
-          <IC icon={Plus} size={14} />Asset
-        </button>
-      </div>
-
-      {/* Add form */}
-      {showForm && (
-        <div style={{ background: "#2a2f3e", border: "1px solid rgba(60, 173, 217,0.3)", borderRadius: 12, padding: 20, marginBottom: 16 }}>
-          <div style={{ marginBottom: 16 }}>
-            <label style={{ display: "block", fontSize: "0.7rem", fontWeight: 600, color: "#888", textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: 4 }}>
-              Lien Fab.com *{fetching && <IC icon={Loader2} size={12} style={{ marginLeft: 6, color: "var(--brand-primary, #e07b39)", animation: "adm-spin 0.7s linear infinite" }} />}
-            </label>
-            <input value={url} onChange={e => handleUrlChange(e.target.value)} placeholder="https://www.fab.com/fr/listings/..." style={{ width: "100%", background: "#333", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 8, padding: "8px 12px", color: "#e8eaed", fontSize: "0.82rem", fontFamily: "inherit", outline: "none", boxSizing: "border-box" }} />
-            {fetchError && <div style={{ marginTop: 8, fontSize: "0.75rem", color: "#e74c3c" }}>{fetchError}</div>}
-          </div>
-
-          {fetchedData && (
-            <div style={{ background: "#161a26", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 8, padding: 16, marginBottom: 16 }}>
-              <div style={{ display: "flex", gap: 16 }}>
-                {fetchedData.imageUrl && (
-                  <img src={fetchedData.imageUrl} alt={fetchedData.name} style={{ width: 120, height: 120, objectFit: "cover", borderRadius: 8, flexShrink: 0 }} />
-                )}
-                <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: "0.9rem", fontWeight: 700, color: "#e8eaed", marginBottom: 8 }}>{fetchedData.name}</div>
-                  <div style={{ fontSize: "0.8rem", color: "var(--brand-primary, #e07b39)", fontWeight: 600 }}>{fetchedData.price}</div>
-                </div>
-              </div>
-            </div>
-          )}
-
-          <div style={{ marginBottom: 12 }}>
-            <label style={{ display: "block", fontSize: "0.7rem", fontWeight: 600, color: "#888", textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: 4 }}>Projet</label>
-            <select value={assetProject} onChange={e => setAssetProject(e.target.value)} style={{ width: "100%", background: "#333", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 8, padding: "8px 12px", color: "#e8eaed", fontSize: "0.82rem", fontFamily: "inherit", outline: "none" }}>
-              {projects.map(p => <option key={p.id} value={p.id}>{p.name}</option>)}
-            </select>
-          </div>
-
-          <div style={{ display: "flex", alignItems: "center", gap: 12, marginTop: 12 }}>
-            <span style={{ flex: 1 }} />
-            <button onClick={() => setShowForm(false)} style={{ padding: "7px 14px", background: "transparent", color: "#888", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 8, cursor: "pointer", fontSize: "0.78rem", fontFamily: "inherit" }}>Annuler</button>
-            <button onClick={addAsset} disabled={!fetchedData || !url.trim()} style={{ padding: "7px 18px", background: (!fetchedData || !url.trim()) ? "#555" : "var(--brand-primary, #e07b39)", color: "#161a26", border: "none", borderRadius: 8, cursor: (!fetchedData || !url.trim()) ? "not-allowed" : "pointer", fontWeight: 700, fontSize: "0.82rem", fontFamily: "inherit" }}>Ajouter</button>
-          </div>
-        </div>
-      )}
-
-      {/* Assets list */}
-      <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-        {sorted.map(asset => {
-          const votes = asset.votes || {};
-          const myVote = votes[commentAuthor] || 0;
-          const score = Object.values(votes).reduce((s, v) => s + v, 0);
-          const upvoters = Object.entries(votes).filter(([, v]) => v > 0).map(([k]) => k);
-          const downvoters = Object.entries(votes).filter(([, v]) => v < 0).map(([k]) => k);
-          const isOpen = openThread === asset.id;
-          const isDownvoting = downvoteTarget === asset.id;
-          const commentCount = (asset.comments || []).length;
-          const addedByMember = members.find(m => m.id === asset.addedBy);
-
-          const handleVote = (e, value) => {
-            e.stopPropagation();
-            if (value === -1 && myVote !== -1) {
-              setDownvoteTarget(asset.id);
-              setDownvoteText("");
-              return;
-            }
-            const newVotes = { ...votes };
-            if (myVote === value) { delete newVotes[commentAuthor]; }
-            else { newVotes[commentAuthor] = value; }
-            updateAsset(asset.id, { votes: newVotes });
-          };
-
-          const confirmDownvote = (e) => {
-            e.stopPropagation();
-            const newVotes = { ...votes, [commentAuthor]: -1 };
-            const newComments = [...(asset.comments || [])];
-            if (downvoteText.trim()) {
-              newComments.push({ id: `c_${Date.now()}`, author: commentAuthor, text: `\u{1F44E} Contre : ${downvoteText.trim()}`, createdAt: Date.now() });
-            }
-            updateAsset(asset.id, { votes: newVotes, comments: newComments });
-            setDownvoteTarget(null);
-            setDownvoteText("");
-          };
-
-          const addComment = () => {
-            if (!commentText.trim()) return;
-            updateAsset(asset.id, { comments: [...(asset.comments || []), { id: `c_${Date.now()}`, author: commentAuthor, text: commentText.trim(), createdAt: Date.now() }] });
-            setCommentText("");
-          };
-
-          const removeComment = (commentId) => {
-            updateAsset(asset.id, { comments: (asset.comments || []).filter(c => c.id !== commentId) });
-          };
-
-          return (
-            <div key={asset.id} style={{ background: "#2a2f3e", border: isOpen ? "1px solid rgba(60, 173, 217,0.3)" : isDownvoting ? "1px solid rgba(209,59,26,0.3)" : "1px solid rgba(255,255,255,0.08)", borderRadius: 12, overflow: "hidden", display: "flex" }}>
-
-              {/* Vote column */}
-              <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "12px 6px", gap: 2, minWidth: 44, borderRight: "1px solid rgba(255,255,255,0.06)" }}>
-                <button onClick={e => handleVote(e, 1)} style={{ background: "none", border: "none", cursor: "pointer", fontSize: "0.85rem", padding: 2, color: myVote === 1 ? "#3e9041" : "#888", transition: "color 0.15s" }}><IC icon={ThumbsUp} /></button>
-                <span style={{ fontFamily: "monospace", fontWeight: 700, fontSize: "0.95rem", color: score > 0 ? "#3e9041" : score < 0 ? "#d13b1a" : "#888" }}>{score}</span>
-                <button onClick={e => handleVote(e, -1)} style={{ background: "none", border: "none", cursor: "pointer", fontSize: "0.85rem", padding: 2, color: myVote === -1 ? "#d13b1a" : "#888", transition: "color 0.15s" }}><IC icon={ThumbsDown} /></button>
-              </div>
-
-              {/* Content */}
-              <div style={{ flex: 1 }}>
-                <div style={{ display: "flex", gap: 14, padding: "14px 18px", cursor: "pointer" }}
-                  onClick={() => { if (!isDownvoting) { setOpenThread(isOpen ? null : asset.id); setCommentText(""); } }}>
-
-                  {/* Thumbnail */}
-                  {asset.imageUrl && (
-                    <div style={{ width: 80, height: 60, borderRadius: 8, overflow: "hidden", flexShrink: 0, background: "#333" }}>
-                      <img src={asset.imageUrl} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} onError={e => { e.target.style.display = "none"; }} />
-                    </div>
-                  )}
-
-                  {/* Info */}
-                  <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
-                      <span style={{ fontSize: "0.92rem", fontWeight: 700, color: "#e8eaed" }}>{asset.name}</span>
-                      {asset.price && (
-                        <span style={{ fontSize: "0.78rem", fontWeight: 700, color: "var(--brand-primary, #e07b39)", background: "rgba(60, 173, 217,0.12)", padding: "2px 8px", borderRadius: 5 }}>
-                          <IC icon={DollarSign} size={11} style={{ marginRight: 2 }} />{asset.price}
-                        </span>
-                      )}
-                    </div>
-                    <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap", fontSize: "0.72rem", color: "#888" }}>
-                      <a href={asset.url} target="_blank" rel="noopener noreferrer" onClick={e => e.stopPropagation()} style={{ color: "#5865f2", textDecoration: "none", display: "flex", alignItems: "center", gap: 3 }}>
-                        <IC icon={ExternalLink} size={11} />fab.com
-                      </a>
-                      <span>{projects.find(p => p.id === asset.projectId)?.name}</span>
-                      {addedByMember && <span>par <span style={{ color: addedByMember.color }}>{addedByMember.name}</span></span>}
-                      <IC icon={MessageCircle} size={11} style={{ marginLeft: 4 }} />
-                      <span>{commentCount}</span>
-                      {(upvoters.length > 0 || downvoters.length > 0) && (
-                        <span style={{ fontSize: "0.62rem" }}>
-                          {upvoters.length > 0 && <span style={{ color: "#3e9041" }}>+{upvoters.map(id => members.find(m => m.id === id)?.name || id).join(", ")}</span>}
-                          {upvoters.length > 0 && downvoters.length > 0 && " / "}
-                          {downvoters.length > 0 && <span style={{ color: "#d13b1a" }}>-{downvoters.map(id => members.find(m => m.id === id)?.name || id).join(", ")}</span>}
-                        </span>
-                      )}
-                      <span style={{ flex: 1 }} />
-                      <button onClick={e => { e.stopPropagation(); deleteAsset(asset.id); }} style={{ fontSize: "0.68rem", padding: "3px 8px", borderRadius: 5, border: "1px solid rgba(209,59,26,0.3)", background: "rgba(209,59,26,0.12)", color: "#d13b1a", cursor: "pointer" }}>
-                        <IC icon={Trash2} size={11} />
-                      </button>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Downvote justification */}
-                {isDownvoting && (
-                  <div onClick={e => e.stopPropagation()} style={{ padding: "0 18px 14px", borderTop: "1px solid rgba(209,59,26,0.15)" }}>
-                    <div style={{ fontSize: "0.75rem", color: "#d13b1a", fontWeight: 600, marginBottom: 8, marginTop: 10 }}>Pourquoi voter contre ?</div>
-                    <div style={{ display: "flex", gap: 8 }}>
-                      <input value={downvoteText} onChange={e => setDownvoteText(e.target.value)} placeholder="Justification (facultatif)..." autoFocus
-                        style={{ flex: 1, background: "#333", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 8, padding: "8px 12px", color: "#e8eaed", fontSize: "0.78rem", fontFamily: "inherit", outline: "none" }}
-                        onKeyDown={e => { if (e.key === "Enter") confirmDownvote(e); if (e.key === "Escape") { setDownvoteTarget(null); setDownvoteText(""); } }} />
-                      <button onClick={confirmDownvote} style={{ padding: "7px 14px", background: "#d13b1a", color: "#fff", border: "none", borderRadius: 8, cursor: "pointer", fontWeight: 700, fontSize: "0.75rem", fontFamily: "inherit" }}>
-                        <IC icon={ThumbsDown} size={12} style={{ marginRight: 4 }} />Voter
-                      </button>
-                      <button onClick={() => { setDownvoteTarget(null); setDownvoteText(""); }} style={{ padding: "7px 10px", background: "transparent", color: "#888", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 8, cursor: "pointer", fontSize: "0.75rem", fontFamily: "inherit" }}>
-                        <IC icon={X} size={12} />
-                      </button>
-                    </div>
-                  </div>
-                )}
-
-                {/* Comments thread */}
-                {isOpen && (
-                  <div style={{ borderTop: "1px solid rgba(255,255,255,0.06)", padding: "14px 18px", background: "rgba(0,0,0,0.15)" }}>
-                    {commentCount > 0 ? (
-                      <div style={{ marginBottom: 14 }}>
-                        {(asset.comments || []).map(c => {
-                          const cm = members.find(m => m.id === c.author);
-                          return (
-                            <div key={c.id} style={{ display: "flex", gap: 8, marginBottom: 8 }}>
-                              <div style={{ width: 3, borderRadius: 3, background: cm?.color || "#888", flexShrink: 0 }} />
-                              <div style={{ flex: 1, minWidth: 0 }}>
-                                <div style={{ fontSize: "0.72rem", marginBottom: 2, display: "flex", alignItems: "center" }}>
-                                  <span style={{ fontWeight: 700, color: cm?.color || "#888" }}>{cm?.name || c.author}</span>
-                                  <span style={{ color: "#555", marginLeft: 8, fontSize: "0.65rem" }}>{new Date(c.createdAt).toLocaleString("fr-FR", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" })}</span>
-                                  <button onClick={() => removeComment(c.id)} style={{ marginLeft: "auto", background: "transparent", border: "none", color: "#555", cursor: "pointer", padding: "0 2px", lineHeight: 1 }} title="Supprimer"><IC icon={X} size={11} /></button>
-                                </div>
-                                <div style={{ fontSize: "0.78rem", color: "#e8eaed" }}>{c.text}</div>
-                              </div>
-                            </div>
-                          );
-                        })}
-                      </div>
-                    ) : (
-                      <div style={{ fontSize: "0.75rem", color: "#888", marginBottom: 14, fontStyle: "italic" }}>
-                        <IC icon={MessageCircle} size={12} style={{ marginRight: 6 }} />Aucun commentaire
-                      </div>
-                    )}
-                    <div style={{ display: "flex", gap: 8 }}>
-                      <input value={commentText} onChange={e => setCommentText(e.target.value)} placeholder="Ajouter un commentaire..."
-                        style={{ flex: 1, background: "#333", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 8, padding: "8px 12px", color: "#e8eaed", fontSize: "0.78rem", fontFamily: "inherit", outline: "none" }}
-                        onKeyDown={e => { if (e.key === "Enter") addComment(); }} />
-                      <button onClick={addComment} style={{ padding: "7px 14px", background: "var(--brand-primary, #e07b39)", color: "#161a26", border: "none", borderRadius: 8, cursor: "pointer", fontWeight: 700, fontSize: "0.75rem", fontFamily: "inherit" }}>
-                        <IC icon={SendHorizontal} size={12} style={{ marginRight: 4 }} />Envoyer
-                      </button>
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
-          );
-        })}
-      </div>
-
-      {/* Empty state */}
-      {sorted.length === 0 && (
-        <div style={{ textAlign: "center", padding: "60px 20px", color: "#555" }}>
-          <IC icon={ShoppingBag} size={36} style={{ marginBottom: 12, opacity: 0.4 }} />
-          <div style={{ fontSize: "0.92rem", fontWeight: 600 }}>Aucun asset Fab</div>
-          <div style={{ fontSize: "0.78rem", marginTop: 4 }}>Cliquez "+ Asset" pour partager un lien Fab.com</div>
-        </div>
-      )}
-    </div>
-  );
-}
-
 // ============================================================
 // ASSET CATALOGUE VIEW — Purchased assets library
 // ============================================================
@@ -4129,25 +3791,10 @@ function AssetCatalogueView({ assets: assetsProp, setAssets: setAssetsProp, curr
   const [scanError, setScanError]     = useState("");
   const [importMsg, setImportMsg]     = useState("");
 
-  // État par pack : { [packPath]: { status, query, results, selected, importing } }
-  // status: idle | searching | done | error
-  const [packStates, setPackStates] = useState(() => {
-    try { return JSON.parse(localStorage.getItem('catalogue_packStates') || '{}'); } catch { return {}; }
-  });
-
-  // Persiste packStates et scanPacks dans localStorage
-  useEffect(() => {
-    try { localStorage.setItem('catalogue_packStates', JSON.stringify(packStates)); } catch {}
-  }, [packStates]);
-
+  // Persiste scanPacks dans localStorage
   useEffect(() => {
     try { localStorage.setItem('catalogue_scanPacks', JSON.stringify(scanPacks)); } catch {}
   }, [scanPacks]);
-
-  const packKey = (p) => p.path;
-
-  const getPS = (key) => packStates[key] || { status: 'idle', query: '', results: [], selected: null, importing: false };
-  const setPS = (key, patch) => setPackStates(prev => ({ ...prev, [key]: { ...getPS(key), ...patch } }));
 
   // Calcul dynamique : quel asset du catalogue correspond à ce pack ?
   // Lien via download_url (chemin Nextcloud exact) ou nom normalisé en fallback
@@ -4176,89 +3823,13 @@ function AssetCatalogueView({ assets: assetsProp, setAssets: setAssetsProp, curr
   };
 
   const doScan = async () => {
-    setScanning(true); setScanError(""); setScanPacks([]); setPackStates({});
-    try { localStorage.removeItem('catalogue_packStates'); localStorage.removeItem('catalogue_scanPacks'); } catch {}
+    setScanning(true); setScanError(""); setScanPacks([]);
+    try { localStorage.removeItem('catalogue_scanPacks'); } catch {}
     try {
       const { packs } = await api.ncScanAssets();
-      // On stocke les packs bruts — alreadyInCatalogue est calculé dynamiquement
       setScanPacks(packs);
-      // Pré-remplir la query avec le nom nettoyé (seulement pour les packs pas encore liés)
-      const initial = {};
-      packs.forEach(p => {
-        const q = p.name.replace(/_/g, ' ').replace(/\s*[-–]\s*/g, ' ').replace(/\.zip$/i, '').trim();
-        initial[p.path] = { status: 'idle', query: q, results: [], selected: null, importing: false };
-      });
-      setPackStates(initial);
     } catch (e) { setScanError(e.message); }
     finally { setScanning(false); }
-  };
-
-  // Cherche les propositions Fab pour un pack
-  const searchFabForPack = async (pack) => {
-    const key = packKey(pack);
-    const ps = getPS(key);
-    const q = ps.query.trim();
-    if (!q) return;
-    setPS(key, { status: 'searching', results: [], selected: null });
-    try {
-      // Cherche d'abord chez le vendor si connu, sinon global
-      let results = [];
-      if (pack.vendor) {
-        const data = await api.searchFabSeller(pack.vendor, q, 5);
-        results = data.results || [];
-      }
-      // Complète avec recherche globale si peu de résultats
-      if (results.length < 3) {
-        try {
-          const gData = await api.fabGlobalSearch(q, 5);
-          const gResults = gData.results || [];
-          const existingIds = new Set(results.map(r => r.id || r.url));
-          for (const r of gResults) {
-            if (!existingIds.has(r.id || r.url)) results.push(r);
-            if (results.length >= 5) break;
-          }
-        } catch (_) {}
-      }
-      setPS(key, { status: 'done', results: results.slice(0, 5) });
-    } catch (e) {
-      setPS(key, { status: 'error', results: [] });
-    }
-  };
-
-  // Valide et importe le candidat sélectionné
-  const doImportSelected = async (pack) => {
-    const key = packKey(pack);
-    const ps = getPS(key);
-    const candidate = ps.selected;
-    if (!candidate) return;
-    setPS(key, { importing: true });
-    try {
-      // Récupère les détails complets via /preview pour avoir prix + thumbnail
-      let detail = candidate;
-      if (candidate.url) {
-        try {
-          const d = await api.fabPreview(candidate.url);
-          detail = { ...candidate, name: d.name || candidate.title || candidate.name, price: d.price || candidate.price, thumbnail: d.imageUrl || candidate.thumbnail };
-        } catch (_) {}
-      }
-      const { assets: newAssets } = await api.bulkImportAssets({ assets: [{
-        name: detail.name || detail.title || pack.name,
-        vendor: detail.seller || pack.vendor || '',
-        description: '',
-        store_url: detail.url,
-        download_url: pack.path,
-        price: detail.price || '',
-        thumbnail: detail.thumbnail || detail.imageUrl || '',
-        tags: [],
-      }]});
-      setAssets(prev => [...newAssets, ...prev]);
-      setImportMsg(`✓ "${detail.name || detail.title || pack.name}" ajouté au catalogue`);
-      setTimeout(() => setImportMsg(''), 4000);
-      setPS(key, { importing: false, status: 'done' });
-    } catch (e) {
-      setImportMsg(`Erreur : ${e.message}`);
-      setPS(key, { importing: false });
-    }
   };
 
   useEffect(() => {
@@ -4266,32 +3837,8 @@ function AssetCatalogueView({ assets: assetsProp, setAssets: setAssetsProp, curr
     api.getAssets().then(setAssetsLocal).catch(() => {}).finally(() => setLoading(false));
   }, [assetsProp]);
 
-  const [fabFetchUrl, setFabFetchUrl] = useState("");
-  const [fabFetching, setFabFetching] = useState(false);
-  const [fabFetchErr, setFabFetchErr] = useState("");
-
-  const handleFabUrl = async (rawUrl) => {
-    setFabFetchUrl(rawUrl);
-    setFabFetchErr("");
-    if (!rawUrl.includes('fab.com/listings/') && !rawUrl.includes('fab.com/fr/listings/')) return;
-    setFabFetching(true);
-    try {
-      const data = await api.fabPreview(rawUrl);
-      setForm(p => ({
-        ...p,
-        name:      data.name      || p.name,
-        store_url: rawUrl,
-        price:     data.price     || p.price,
-        thumbnail: data.imageUrl  || p.thumbnail,
-      }));
-    } catch (e) {
-      setFabFetchErr('Impossible de récupérer les infos Fab');
-    } finally { setFabFetching(false); }
-  };
-
   const openNew = () => {
     setForm({ name: "", vendor: "", description: "", store_url: "", download_url: "", price: "", thumbnail: "" });
-    setFabFetchUrl(""); setFabFetchErr("");
     setEditId(null);
     setShowForm(true);
     setError("");
@@ -4459,19 +4006,11 @@ function AssetCatalogueView({ assets: assetsProp, setAssets: setAssetsProp, curr
                       </div>
                       <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
                         {packs.map(pack => {
-                          const key = packKey(pack);
-                          const ps = getPS(key);
-                          const isSearching = ps.status === 'searching';
-                          const isOpen = ps.open || false; // panneau recherche ouvert
-                          const hasActivity = ps.status !== 'idle' || ps.selected;
                           const linkedAsset = getLinkedAsset(pack);
                           const alreadyInCatalogue = !!linkedAsset;
-
                           return (
-                            <div key={key} style={{ background: "#1f2330", borderRadius: 8, border: `1px solid ${alreadyInCatalogue ? "rgba(62,144,65,0.3)" : ps.selected ? "rgba(88,101,242,0.4)" : "rgba(255,255,255,0.06)"}`, padding: "8px 12px" }}>
-                              {/* Ligne principale — toujours visible */}
+                            <div key={pack.path} style={{ background: "#1f2330", borderRadius: 8, border: `1px solid ${alreadyInCatalogue ? "rgba(62,144,65,0.3)" : "rgba(255,255,255,0.06)"}`, padding: "8px 12px" }}>
                               <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                                {/* Nom du ZIP */}
                                 <div style={{ flex: 1, minWidth: 0 }}>
                                   <span style={{ fontFamily: "monospace", fontSize: "0.8rem", color: alreadyInCatalogue ? "#3e9041" : "#e8eaed", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", display: "block" }}>
                                     {pack.name}<span style={{ color: "#444" }}>.zip</span>
@@ -4481,113 +4020,10 @@ function AssetCatalogueView({ assets: assetsProp, setAssets: setAssetsProp, curr
                                     <a href={linkedAsset.store_url} target="_blank" rel="noreferrer" style={{ fontSize: '0.6rem', color: '#5865f2', textDecoration: 'none', display: 'block', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{linkedAsset.name}</a>
                                   )}
                                 </div>
-
-                                {alreadyInCatalogue ? (
+                                {alreadyInCatalogue && (
                                   <span style={{ fontSize: "0.65rem", color: "#3e9041", background: "rgba(62,144,65,0.1)", padding: "2px 7px", borderRadius: 10, border: "1px solid rgba(62,144,65,0.3)", flexShrink: 0 }}>✓ catalogue</span>
-                                ) : (
-                                  <>
-                                    {/* Bouton Valider si sélection faite */}
-                                    {ps.selected && (
-                                      <button onClick={() => doImportSelected(pack)} disabled={ps.importing} style={{ padding: '3px 10px', background: '#3e9041', color: '#fff', border: 'none', borderRadius: 6, cursor: 'pointer', fontSize: '0.72rem', fontWeight: 700, fontFamily: 'inherit', flexShrink: 0, display: 'flex', alignItems: 'center', gap: 4, opacity: ps.importing ? 0.6 : 1 }}>
-                                        {ps.importing ? <IC icon={Loader2} size={11} style={{ animation: 'adm-spin 0.7s linear infinite' }} /> : <IC icon={Plus} size={11} />}
-                                        {ps.importing ? 'Ajout…' : 'Valider'}
-                                      </button>
-                                    )}
-                                    {/* Bouton Rechercher sur Fab (ouvre le panneau + lance si idle) */}
-                                    <button
-                                      onClick={() => {
-                                        const opening = !isOpen;
-                                        setPS(key, { open: opening });
-                                        // Lance la recherche auto si on ouvre et jamais fait
-                                        if (opening && ps.status === 'idle' && ps.query.trim()) searchFabForPack(pack);
-                                      }}
-                                      style={{ padding: '3px 9px', background: isOpen ? 'rgba(88,101,242,0.2)' : 'rgba(88,101,242,0.1)', border: `1px solid ${isOpen ? 'rgba(88,101,242,0.5)' : 'rgba(88,101,242,0.25)'}`, borderRadius: 6, cursor: 'pointer', fontSize: '0.7rem', fontFamily: 'inherit', color: '#7b8ef5', flexShrink: 0, display: 'flex', alignItems: 'center', gap: 4 }}
-                                    >
-                                      {isSearching ? <IC icon={Loader2} size={10} style={{ animation: 'adm-spin 0.7s linear infinite' }} /> : <IC icon={Search} size={10} />}
-                                      {isSearching ? '…' : hasActivity && !isOpen ? '▸' : 'Fab'}
-                                      {hasActivity && !isSearching && <span style={{ width: 5, height: 5, borderRadius: '50%', background: ps.selected ? '#3e9041' : '#5865f2', display: 'inline-block', marginLeft: 1 }} />}
-                                    </button>
-                                  </>
                                 )}
                               </div>
-
-                              {/* Panneau recherche — visible seulement si ouvert */}
-                              {!alreadyInCatalogue && isOpen && (
-                                <div style={{ marginTop: 8, borderTop: '1px solid rgba(255,255,255,0.05)', paddingTop: 8 }}>
-                                  {/* Barre de recherche */}
-                                  <div style={{ display: 'flex', gap: 5, alignItems: 'center' }}>
-                                    <input
-                                      autoFocus
-                                      value={ps.query}
-                                      onChange={e => setPS(key, { query: e.target.value })}
-                                      onKeyDown={e => e.key === 'Enter' && searchFabForPack(pack)}
-                                      placeholder="Terme de recherche Fab…"
-                                      style={{ flex: 1, background: '#161a26', border: '1px solid rgba(255,255,255,0.12)', borderRadius: 5, color: '#e8eaed', padding: '5px 9px', fontSize: '0.75rem', fontFamily: 'inherit', outline: 'none' }}
-                                    />
-                                    <button
-                                      onClick={() => searchFabForPack(pack)}
-                                      disabled={isSearching || !ps.query.trim()}
-                                      style={{ padding: '5px 11px', background: 'rgba(88,101,242,0.18)', border: '1px solid rgba(88,101,242,0.4)', borderRadius: 5, color: '#7b8ef5', cursor: 'pointer', fontSize: '0.73rem', fontFamily: 'inherit', flexShrink: 0, display: 'flex', alignItems: 'center', gap: 4, opacity: isSearching ? 0.6 : 1 }}
-                                    >
-                                      {isSearching ? <IC icon={Loader2} size={11} style={{ animation: 'adm-spin 0.7s linear infinite' }} /> : <IC icon={Search} size={11} />}
-                                      {isSearching ? '…' : 'Chercher'}
-                                    </button>
-                                    {ps.selected && (
-                                      <button onClick={() => setPS(key, { selected: null, status: 'done' })} title="Changer" style={{ padding: '5px 8px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 5, color: '#666', cursor: 'pointer', flexShrink: 0 }}>
-                                        <IC icon={X} size={11} />
-                                      </button>
-                                    )}
-                                  </div>
-
-                                  {/* Sélection confirmée */}
-                                  {ps.selected && (
-                                    <div style={{ marginTop: 6, display: 'flex', gap: 8, alignItems: 'center', background: 'rgba(88,101,242,0.08)', borderRadius: 6, padding: '6px 8px', border: '1px solid rgba(88,101,242,0.3)' }}>
-                                      {ps.selected.thumbnail && <img src={ps.selected.thumbnail} alt="" style={{ width: 56, height: 38, objectFit: 'cover', borderRadius: 3, flexShrink: 0 }} onError={e => e.target.style.display='none'} />}
-                                      <div style={{ flex: 1, minWidth: 0 }}>
-                                        <div style={{ fontSize: '0.76rem', fontWeight: 700, color: '#e8eaed', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{ps.selected.title || ps.selected.name}</div>
-                                        <div style={{ fontSize: '0.63rem', color: '#7b8ef5', marginTop: 1 }}>{ps.selected.seller || ''}{ps.selected.price ? ` · ${ps.selected.price}` : ''}</div>
-                                      </div>
-                                      <IC icon={CheckCircle} size={13} style={{ color: '#5865f2', flexShrink: 0 }} />
-                                    </div>
-                                  )}
-
-                                  {/* Feedback statuts */}
-                                  {ps.status === 'error' && (
-                                    <div style={{ fontSize: '0.68rem', color: '#e74c3c', marginTop: 5 }}>Erreur — modifie le terme et réessaie</div>
-                                  )}
-                                  {ps.status === 'done' && ps.results.length === 0 && (
-                                    <div style={{ fontSize: '0.68rem', color: '#666', marginTop: 5 }}>Aucun résultat — modifie le terme</div>
-                                  )}
-
-                                  {/* Propositions */}
-                                  {ps.status === 'done' && ps.results.length > 0 && (
-                                    <div style={{ marginTop: 6, display: 'flex', flexDirection: 'column', gap: 3 }}>
-                                      {!ps.selected && <div style={{ fontSize: '0.6rem', color: '#555', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: 1 }}>Clique sur la bonne :</div>}
-                                      {ps.results.map((r, i) => {
-                                        const isSel = ps.selected && (ps.selected.id === r.id || ps.selected.url === r.url);
-                                        return (
-                                          <button
-                                            key={r.id || r.url || i}
-                                            onClick={() => setPS(key, { selected: isSel ? null : r })}
-                                            style={{ display: 'flex', gap: 7, alignItems: 'center', background: isSel ? 'rgba(88,101,242,0.12)' : '#161a26', border: `1px solid ${isSel ? 'rgba(88,101,242,0.5)' : 'rgba(255,255,255,0.06)'}`, borderRadius: 5, padding: '5px 7px', cursor: 'pointer', textAlign: 'left', width: '100%' }}
-                                            onMouseEnter={e => { if (!isSel) e.currentTarget.style.borderColor = 'rgba(88,101,242,0.35)' }}
-                                            onMouseLeave={e => { if (!isSel) e.currentTarget.style.borderColor = 'rgba(255,255,255,0.06)' }}
-                                          >
-                                            {r.thumbnail
-                                              ? <img src={r.thumbnail} alt="" style={{ width: 54, height: 36, objectFit: 'cover', borderRadius: 3, flexShrink: 0 }} onError={e => e.target.style.display='none'} />
-                                              : <div style={{ width: 54, height: 36, background: '#333', borderRadius: 3, flexShrink: 0 }} />}
-                                            <div style={{ flex: 1, minWidth: 0 }}>
-                                              <div style={{ fontSize: '0.74rem', fontWeight: 600, color: '#e8eaed', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{r.title || r.name}</div>
-                                              <div style={{ fontSize: '0.62rem', color: '#666', marginTop: 1 }}>{r.seller || r.vendor || ''}{r.price ? ` · ${r.price}` : ''}</div>
-                                            </div>
-                                            {isSel ? <IC icon={CheckCircle} size={12} style={{ color: '#5865f2', flexShrink: 0 }} /> : <IC icon={ChevronRight} size={12} style={{ color: '#444', flexShrink: 0 }} />}
-                                          </button>
-                                        );
-                                      })}
-                                    </div>
-                                  )}
-                                </div>
-                              )}
                             </div>
                           );
                         })}
@@ -4605,27 +4041,6 @@ function AssetCatalogueView({ assets: assetsProp, setAssets: setAssetsProp, curr
       {showForm && (
         <div style={{ background: "#2a2f3e", border: "1px solid rgba(88,101,242,0.35)", borderRadius: 12, padding: 20, marginBottom: 24 }}>
           <div style={{ fontWeight: 700, fontSize: "0.9rem", color: "#e8eaed", marginBottom: 12 }}>{editId ? "Modifier l'asset" : "Nouvel asset"}</div>
-          {!editId && (
-            <div style={{ marginBottom: 16, paddingBottom: 16, borderBottom: "1px solid rgba(255,255,255,0.07)" }}>
-              <label style={{ ...lbS, marginBottom: 4, display: "block" }}>Lien Fab.com {fabFetching && <IC icon={Loader2} size={11} style={{ marginLeft: 5, color: "var(--brand-primary, #e07b39)", animation: "adm-spin 0.7s linear infinite" }} />}</label>
-              <input
-                value={fabFetchUrl}
-                onChange={e => handleFabUrl(e.target.value)}
-                placeholder="https://www.fab.com/listings/... — colle le lien pour tout remplir auto"
-                style={{ ...inS, borderColor: fabFetchUrl && !fabFetching && !fabFetchErr ? 'rgba(62,144,65,0.5)' : undefined }}
-              />
-              {fabFetchErr && <div style={{ fontSize: "0.68rem", color: "#e74c3c", marginTop: 4 }}>{fabFetchErr}</div>}
-              {form.thumbnail && !fabFetching && (
-                <div style={{ marginTop: 10, display: "flex", gap: 12, alignItems: "center", background: "#161a26", borderRadius: 8, padding: "8px 12px", border: "1px solid rgba(62,144,65,0.25)" }}>
-                  <img src={form.thumbnail} alt="" style={{ width: 80, height: 56, objectFit: "cover", borderRadius: 5, flexShrink: 0 }} onError={e => e.target.style.display='none'} />
-                  <div>
-                    <div style={{ fontSize: "0.82rem", fontWeight: 700, color: "#e8eaed" }}>{form.name}</div>
-                    {form.price && <div style={{ fontSize: "0.72rem", color: "#5865f2", fontWeight: 700, marginTop: 2 }}>{form.price}</div>}
-                  </div>
-                </div>
-              )}
-            </div>
-          )}
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
             <div>
               <label style={lbS}>Nom *</label>
@@ -4982,7 +4397,7 @@ function NextcloudView() {
 // ============================================================
 // SEARCH OVERLAY — Global search across tasks, ideas, milestones
 // ============================================================
-export function SearchOverlay({ tasks, ideas, milestones, fabAssets, catalogueAssets, projects, members, onClose, onEditTask, onNavigate }) {
+export function SearchOverlay({ tasks, ideas, milestones, catalogueAssets, projects, members, onClose, onEditTask, onNavigate }) {
   const [query, setQuery] = useState("");
   const inputRef = useRef(null);
 
@@ -5010,21 +4425,16 @@ export function SearchOverlay({ tasks, ideas, milestones, fabAssets, catalogueAs
       normalize(m.name).includes(q)
     ).slice(0, 5);
 
-    const matchedFab = (fabAssets || []).filter(a =>
-      normalize(a.name).includes(q) ||
-      normalize(a.price).includes(q)
-    ).slice(0, 8);
-
     const matchedCatalogue = (catalogueAssets || []).filter(a =>
       normalize(a.name).includes(q) ||
       normalize(a.vendor).includes(q) ||
       normalize(a.description).includes(q)
     ).slice(0, 8);
 
-    return { tasks: matchedTasks, ideas: matchedIdeas, milestones: matchedMs, fab: matchedFab, catalogue: matchedCatalogue };
-  }, [query, tasks, ideas, milestones, fabAssets, catalogueAssets, members]);
+    return { tasks: matchedTasks, ideas: matchedIdeas, milestones: matchedMs, catalogue: matchedCatalogue };
+  }, [query, tasks, ideas, milestones, catalogueAssets, members]);
 
-  const total = results.tasks.length + results.ideas.length + results.milestones.length + results.fab.length + results.catalogue.length;
+  const total = results.tasks.length + results.ideas.length + results.milestones.length + results.catalogue.length;
 
   const highlight = (text, max) => {
     if (!text) return "";
@@ -5124,27 +4534,6 @@ export function SearchOverlay({ tasks, ideas, milestones, fabAssets, catalogueAs
             </div>
           )}
 
-          {/* Fab Assets */}
-          {results.fab.length > 0 && (
-            <div>
-              <div style={{ padding: "6px 18px", fontSize: "0.68rem", fontWeight: 700, color: "#888", textTransform: "uppercase", letterSpacing: "0.04em", marginTop: 4 }}>Assets Fab ({results.fab.length})</div>
-              {results.fab.map(a => (
-                <div key={a.id} onClick={() => { onNavigate("fab"); onClose(); }} style={{ display: "flex", alignItems: "center", gap: 8, padding: "8px 18px", cursor: "pointer", transition: "background 0.1s" }}
-                  onMouseEnter={e => e.currentTarget.style.background = "#333"}
-                  onMouseLeave={e => e.currentTarget.style.background = "transparent"}>
-                  <IC icon={ShoppingBag} size={14} style={{ color: "var(--brand-primary, #e07b39)", flexShrink: 0 }} />
-                  <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ fontSize: "0.82rem", color: "#e8eaed", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{highlight(a.name, 60)}</div>
-                    <div style={{ fontSize: "0.68rem", color: "#666", display: "flex", gap: 8 }}>
-                      <span>{projectName(a.projectId)}</span>
-                      {a.price && <span style={{ color: "var(--brand-primary, #e07b39)" }}>{a.price}</span>}
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-
           {/* Catalogue Assets */}
           {results.catalogue.length > 0 && (
             <div>
@@ -5186,203 +4575,6 @@ const DEFAULT_MILESTONES = [];
 const labelStyle = { display: "block", fontSize: "0.72rem", fontWeight: 600, color: "#888888", marginBottom: 4, marginTop: 12, textTransform: "uppercase", letterSpacing: "0.04em" };
 const inputStyle = { width: "100%", background: "#333333", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 8, padding: "8px 12px", color: "#e8eaed", fontSize: "0.85rem", fontFamily: "inherit", marginBottom: 4, outline: "none" };
 const btnStyle = { padding: "8px 18px", borderRadius: 8, cursor: "pointer", fontSize: "0.82rem", fontFamily: "inherit" };
-
-// ============================================================
-// STUDIO TRACKER VIEW — Follow studios on Fab.com
-// ============================================================
-const labelStyleST = { display: "block", fontSize: "0.7rem", fontWeight: 600, color: "#888", textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: 4 };
-const inputStyleST = { width: "100%", background: "#1a1f2c", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 8, padding: "8px 12px", color: "#e8eaed", fontSize: "0.82rem", fontFamily: "inherit", boxSizing: "border-box" };
-
-function StudioTrackerView({ studios, setStudios, logActivity, defaultAuthor }) {
-  const [showForm, setShowForm]     = useState(false);
-  const [name, setName]             = useState("");
-  const [fabUsername, setFabUsername] = useState("");
-  const [color, setColor]           = useState("var(--brand-primary, #e07b39)");
-  const [fetchResults, setFetchResults] = useState({}); // studioId → { loading, assets, error }
-
-  const parseFabUsername = (input) => {
-    const s = decodeURIComponent(input.trim());
-    const m = s.match(/\/sellers\/([^/?#]+)/);
-    return m ? m[1].trim() : s.replace(/^@/, "").trim();
-  };
-
-  const addStudio = () => {
-    if (!name.trim() || !fabUsername.trim()) return;
-    const studio = {
-      id: `studio_${Date.now()}`,
-      name: name.trim(),
-      fabUsername: parseFabUsername(fabUsername),
-      color,
-      addedAt: Date.now(),
-      lastChecked: null,
-      seenIds: [],
-    };
-    setStudios(prev => [...prev, studio]);
-    logActivity("studio_add", `Studio suivi: ${name.trim()}`, defaultAuthor);
-    setName(""); setFabUsername(""); setShowForm(false);
-  };
-
-  const removeStudio = (id) => setStudios(prev => prev.filter(s => s.id !== id));
-
-  const checkStudio = async (studio) => {
-    setFetchResults(prev => ({ ...prev, [studio.id]: { loading: true, assets: [], error: null } }));
-    try {
-      // Passe par le proxy backend pour éviter le CORS
-      const data = await api.getFabListings(studio.fabUsername);
-      const assets = data.assets || [];
-      setFetchResults(prev => ({ ...prev, [studio.id]: { loading: false, assets, error: null } }));
-      setStudios(prev => prev.map(s => s.id === studio.id ? { ...s, lastChecked: Date.now() } : s));
-    } catch (e) {
-      setFetchResults(prev => ({ ...prev, [studio.id]: { loading: false, assets: [], error: e.message } }));
-    }
-  };
-
-  const markAllSeen = (studio) => {
-    const assets = fetchResults[studio.id]?.assets || [];
-    setStudios(prev => prev.map(s =>
-      s.id === studio.id ? { ...s, seenIds: [...new Set([...(s.seenIds || []), ...assets.map(a => a.id)])] } : s
-    ));
-  };
-
-  return (
-    <div>
-      {/* Header */}
-      <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 20, flexWrap: "wrap" }}>
-        <h2 style={{ fontWeight: 800, fontSize: "1.2rem", color: "#fff", margin: 0 }}>
-          <IC icon={Store} size={18} style={{ marginRight: 8, color: "var(--brand-primary, #e07b39)" }} />Suivi Studios Fab
-        </h2>
-        <span style={{ fontSize: "0.75rem", color: "#666" }}>{studios.length} studio{studios.length !== 1 ? "s" : ""}</span>
-        <span style={{ flex: 1 }} />
-        <button onClick={() => setShowForm(v => !v)} style={{ padding: "7px 14px", background: "var(--brand-primary, #e07b39)", color: "#161a26", border: "none", borderRadius: 8, cursor: "pointer", fontWeight: 700, fontSize: "0.82rem", fontFamily: "inherit", display: "flex", alignItems: "center", gap: 6 }}>
-          <IC icon={Plus} size={14} />Studio
-        </button>
-      </div>
-
-      {/* Add form */}
-      {showForm && (
-        <div style={{ background: "#2a2f3e", border: "1px solid rgba(60, 173, 217,0.3)", borderRadius: 12, padding: 20, marginBottom: 20 }}>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr auto", gap: 12, alignItems: "end" }}>
-            <div>
-              <label style={labelStyleST}>Nom du studio *</label>
-              <input value={name} onChange={e => setName(e.target.value)} placeholder="ex: Infinity PBR" style={inputStyleST} onKeyDown={e => e.key === "Enter" && addStudio()} />
-            </div>
-            <div>
-              <label style={labelStyleST}>Username Fab *</label>
-              <input value={fabUsername} onChange={e => setFabUsername(e.target.value)} placeholder="ex: infinity_pbr" style={inputStyleST} onKeyDown={e => e.key === "Enter" && addStudio()} />
-              <div style={{ marginTop: 4, fontSize: "0.68rem", color: "#555" }}>
-                fab.com/sellers/<span style={{ color: "#888" }}>{fabUsername || "username"}</span>
-              </div>
-            </div>
-            <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
-              <input type="color" value={color} onChange={e => setColor(e.target.value)} style={{ width: 36, height: 36, borderRadius: 6, border: "none", cursor: "pointer", padding: 2, background: "transparent" }} />
-              <button onClick={addStudio} disabled={!name.trim() || !fabUsername.trim()} style={{ padding: "8px 16px", background: "var(--brand-primary, #e07b39)", color: "#161a26", border: "none", borderRadius: 8, cursor: "pointer", fontWeight: 700, fontFamily: "inherit", opacity: (!name.trim() || !fabUsername.trim()) ? 0.5 : 1 }}>Ajouter</button>
-              <button onClick={() => setShowForm(false)} style={{ padding: "8px 10px", background: "#333", color: "#888", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 8, cursor: "pointer", fontFamily: "inherit" }}><IC icon={X} size={14} /></button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Studios list */}
-      {studios.length === 0 ? (
-        <div style={{ color: "#555", textAlign: "center", padding: "60px 0", fontSize: "0.85rem" }}>
-          <IC icon={Store} size={36} style={{ color: "#2a2f3e", display: "block", margin: "0 auto 12px" }} />
-          Aucun studio suivi.<br />
-          <span style={{ color: "#444" }}>Ajoutez un studio Fab pour suivre leurs nouvelles publications.</span>
-        </div>
-      ) : (
-        <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-          {studios.map(studio => {
-            const result = fetchResults[studio.id];
-            const newAssets = result?.assets?.filter(a => !(studio.seenIds || []).includes(a.id)) || [];
-            const newCount = newAssets.length;
-
-            return (
-              <div key={studio.id} style={{ background: "#2a2f3e", borderRadius: 12, border: "1px solid rgba(255,255,255,0.08)", borderLeft: `3px solid ${studio.color}` }}>
-                {/* Studio header */}
-                <div style={{ display: "flex", alignItems: "center", gap: 10, padding: "14px 16px", flexWrap: "wrap" }}>
-                  <span style={{ width: 10, height: 10, borderRadius: "50%", background: studio.color, flexShrink: 0, display: "inline-block" }} />
-                  <span style={{ fontWeight: 700, color: "#e8eaed", fontSize: "0.92rem" }}>{studio.name}</span>
-                  <a href={`https://www.fab.com/sellers/${studio.fabUsername}`} target="_blank" rel="noreferrer"
-                    style={{ fontSize: "0.68rem", color: "#555", textDecoration: "none", display: "flex", alignItems: "center", gap: 3 }}>
-                    <IC icon={ExternalLink} size={10} />fab.com/sellers/{studio.fabUsername}
-                  </a>
-                  {newCount > 0 && (
-                    <span style={{ background: `${studio.color}28`, color: studio.color, fontSize: "0.65rem", fontWeight: 700, padding: "2px 8px", borderRadius: 99, display: "flex", alignItems: "center", gap: 4 }}>
-                      <IC icon={Bell} size={10} />{newCount} nouveau{newCount > 1 ? "x" : ""}
-                    </span>
-                  )}
-                  <span style={{ flex: 1 }} />
-                  {studio.lastChecked && (
-                    <span style={{ fontSize: "0.65rem", color: "#555" }}>
-                      vérifié {new Date(studio.lastChecked).toLocaleString("fr-FR", { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" })}
-                    </span>
-                  )}
-                  {newCount > 0 && (
-                    <button onClick={() => markAllSeen(studio)} style={{ padding: "4px 10px", background: "#333", color: "#888", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 6, cursor: "pointer", fontSize: "0.72rem", fontFamily: "inherit", display: "flex", alignItems: "center", gap: 4 }}>
-                      <IC icon={BellOff} size={11} />Marquer vu
-                    </button>
-                  )}
-                  <button onClick={() => checkStudio(studio)} disabled={result?.loading} style={{ padding: "5px 12px", background: "#333", color: result?.loading ? "#555" : "#aaa", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 6, cursor: result?.loading ? "default" : "pointer", fontSize: "0.75rem", fontFamily: "inherit", display: "flex", alignItems: "center", gap: 5 }}>
-                    <IC icon={result?.loading ? Loader2 : RefreshCw} size={12} />{result?.loading ? "Chargement…" : "Vérifier"}
-                  </button>
-                  <button onClick={() => removeStudio(studio.id)} style={{ background: "transparent", border: "none", color: "#555", cursor: "pointer", padding: 4 }} title="Supprimer">
-                    <IC icon={Trash2} size={14} />
-                  </button>
-                </div>
-
-                {/* Error */}
-                {result?.error && (
-                  <div style={{ margin: "0 16px 14px", color: "#d13b1a", fontSize: "0.78rem", padding: "8px 12px", background: "#d13b1a18", borderRadius: 6 }}>
-                    Impossible de récupérer les assets : {result.error}.<br />
-                    <span style={{ color: "#888" }}>Vérifiez le username Fab ou réessayez plus tard (CORS possible).</span>
-                  </div>
-                )}
-
-                {/* Assets grid */}
-                {result?.assets?.length > 0 && (
-                  <div style={{ padding: "0 16px 16px", display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(180px, 1fr))", gap: 10 }}>
-                    {result.assets.map(asset => {
-                      const isNew = !(studio.seenIds || []).includes(asset.id);
-                      return (
-                        <a key={asset.id} href={asset.url} target="_blank" rel="noreferrer" style={{ textDecoration: "none", display: "flex", flexDirection: "column", background: "#1a1f2c", borderRadius: 8, overflow: "hidden", border: isNew ? `1px solid ${studio.color}55` : "1px solid rgba(255,255,255,0.05)", transition: "border-color 0.15s" }}>
-                          {asset.thumbnail ? (
-                            <img src={asset.thumbnail} alt={asset.title} style={{ width: "100%", height: 110, objectFit: "cover", flexShrink: 0 }} onError={e => { e.target.style.display = "none"; }} />
-                          ) : (
-                            <div style={{ height: 110, background: "#252525", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                              <IC icon={ShoppingBag} size={28} style={{ color: "#333" }} />
-                            </div>
-                          )}
-                          <div style={{ padding: "8px 10px", flex: 1 }}>
-                            {isNew && (
-                              <span style={{ fontSize: "0.6rem", fontWeight: 800, color: studio.color, background: `${studio.color}20`, padding: "1px 6px", borderRadius: 4, marginBottom: 4, display: "inline-block", letterSpacing: "0.04em" }}>NOUVEAU</span>
-                            )}
-                            <div style={{ fontSize: "0.76rem", fontWeight: 600, color: "#e8eaed", lineHeight: 1.3, marginBottom: 4, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{asset.title}</div>
-                            <div style={{ fontSize: "0.7rem", color: "#888", fontWeight: 600 }}>{asset.price}</div>
-                            {asset.publishedAt && (
-                              <div style={{ fontSize: "0.62rem", color: "#555", marginTop: 3 }}>
-                                {new Date(asset.publishedAt).toLocaleDateString("fr-FR", { day: "numeric", month: "short", year: "numeric" })}
-                              </div>
-                            )}
-                          </div>
-                        </a>
-                      );
-                    })}
-                  </div>
-                )}
-
-                {/* No results yet */}
-                {result && !result.loading && !result.error && result.assets?.length === 0 && (
-                  <div style={{ padding: "0 16px 16px", color: "#555", fontSize: "0.8rem" }}>Aucun asset trouvé pour ce studio.</div>
-                )}
-              </div>
-            );
-          })}
-        </div>
-      )}
-    </div>
-  );
-}
-
 // ============================================================
 // MAIN APP
 // ============================================================
@@ -5404,8 +4596,6 @@ export default function HubPanel({ view: externalView, onChangeView, currentUser
   const [showImport, setShowImport] = useState(false);
   const [activityLog, setActivityLog] = useState([]);
   const [mapAnnotations, setMapAnnotations] = useState({});
-  const [fabAssets, setFabAssets] = useState([]);
-  const [fabStudios, setFabStudios] = useState([]);
   const [catalogueAssets, setCatalogueAssets] = useState([]);
   const [searchOpen, setSearchOpen] = useState(false);
   const isLoaded = useRef(false);    // garde pour ne pas sauvegarder pendant le chargement initial
@@ -5414,8 +4604,6 @@ export default function HubPanel({ view: externalView, onChangeView, currentUser
   const tasksRef         = useRef([]);
   const milestonesRef    = useRef([]);
   const mapAnnotationsRef= useRef({});
-  const fabAssetsRef     = useRef([]);
-  const fabStudiosRef    = useRef([])
 
   // Auto-sélectionner le user connecté dans les filtres
   useEffect(() => {
@@ -5537,8 +4725,6 @@ export default function HubPanel({ view: externalView, onChangeView, currentUser
       setIdeas(data.ideas || []);
       setMilestones(data.milestones || DEFAULT_MILESTONES);
       setMapAnnotations(data.mapAnnotations || {});
-      setFabAssets(data.fabAssets || []);
-      setFabStudios(data.fabStudios || []);
     } else {
       // DB vraiment vide (première utilisation) — initialise l'état sans écraser en DB
       setTasks([]);
@@ -5587,16 +4773,14 @@ export default function HubPanel({ view: externalView, onChangeView, currentUser
   useEffect(() => { tasksRef.current          = tasks          }, [tasks])
   useEffect(() => { milestonesRef.current     = milestones     }, [milestones])
   useEffect(() => { mapAnnotationsRef.current = mapAnnotations }, [mapAnnotations])
-  useEffect(() => { fabAssetsRef.current      = fabAssets      }, [fabAssets])
-  useEffect(() => { fabStudiosRef.current     = fabStudios     }, [fabStudios])
 
-  // Sauvegarde du misc blob (milestones, mapAnnotations, fabAssets, fabStudios)
+  // Sauvegarde du misc blob (milestones, mapAnnotations)
   // tasks et ideas sont désormais sauvegardés via des endpoints granulaires
   useEffect(() => {
     if (!isLoaded.current) return;
     if (isReloading.current) { isReloading.current = false; return; }
-    api.saveMisc({ milestones, mapAnnotations, fabAssets, fabStudios }).catch(err => console.error('saveMisc failed:', err));
-  }, [milestones, mapAnnotations, fabAssets, fabStudios]);
+    api.saveMisc({ milestones, mapAnnotations }).catch(err => console.error('saveMisc failed:', err));
+  }, [milestones, mapAnnotations]);
 
   // Active la sauvegarde après le chargement initial (s'exécute après l'effet ci-dessus)
   useEffect(() => {
@@ -5631,7 +4815,7 @@ export default function HubPanel({ view: externalView, onChangeView, currentUser
       setMilestones(updated);
       // Sauvegarde imm\u00e9diate avec la liste fra\u00eeche pour \u00e9viter l'\u00e9crasement
       // par l'auto-save useEffect qui pourrait partir avec l'ancien state.
-      api.saveMisc({ milestones: updated, mapAnnotations, fabAssets, fabStudios })
+      api.saveMisc({ milestones: updated, mapAnnotations })
         .catch(err => console.error('saveMisc (milestone change) failed:', err));
     };
 
@@ -5701,7 +4885,7 @@ export default function HubPanel({ view: externalView, onChangeView, currentUser
       // si l'utilisateur l'a modifié dans la pop-up.
       applyMilestoneChange(form.id);
     }
-  }, [tasks, members, projects, logActivity, currentMemberId, milestones, mapAnnotations, fabAssets, fabStudios]);
+  }, [tasks, members, projects, logActivity, currentMemberId, milestones, mapAnnotations]);
 
   const handleDeleteTask = useCallback((id) => {
     const task = tasks.find(t => t.id === id);
@@ -5799,8 +4983,6 @@ export default function HubPanel({ view: externalView, onChangeView, currentUser
     { id: "roadmap", label: "Roadmap", icon: Route },
     { id: "whiteboard", label: "Idées", icon: Lightbulb },
     { id: "mapview", label: "Map", icon: MapPin },
-    { id: "fab", label: "Assets Fab", icon: ShoppingBag },
-    { id: "studios", label: "Studios", icon: Store },
     { id: "activity", label: "Activité", icon: Activity },
   ];
 
@@ -5953,10 +5135,8 @@ export default function HubPanel({ view: externalView, onChangeView, currentUser
           setIdeas(prev => prev.map(i => i.id === id ? { ...i, ...updates } : i));
           api.updateIdea(id, updates).catch(console.error);
         }} />}
-        {view === "studios"  && <StudioTrackerView studios={fabStudios} setStudios={setFabStudios} logActivity={logActivity} defaultAuthor={currentMemberId} />}
         {view === "activity" && <ActivityLogView log={activityLog} members={members} onNavigate={setView} />}
         {view === "mapview" && <MapCanvasView projects={fProjects} members={members} annotations={mapAnnotations} setAnnotations={setMapAnnotations} logActivity={logActivity} defaultAuthor={currentMemberId} tasks={ft} onCreateTask={(taskData, cb) => { const saved = { ...taskData, id: `task_${Date.now()}_${Math.random().toString(36).slice(2,6)}`, createdAt: Date.now(), updatedAt: Date.now() }; handleSaveTaskWithNotif(saved); cb?.(saved); setEditingTask(saved); }} onEditTask={setEditingTask} />}
-        {view === "fab" && <FabAssetsView assets={fabAssets} setAssets={setFabAssets} projects={fProjects} members={members} logActivity={logActivity} defaultAuthor={currentMemberId} />}
         {view === "catalogue" && <AssetCatalogueView assets={catalogueAssets} setAssets={setCatalogueAssets} currentUser={currentUser} />}
         {view === "nextcloud" && <NextcloudView />}
           </>);
@@ -5964,7 +5144,7 @@ export default function HubPanel({ view: externalView, onChangeView, currentUser
       </div>
 
       {/* MODALS */}
-      {searchOpen && <SearchOverlay tasks={tasks} ideas={ideas} milestones={milestones} fabAssets={fabAssets} catalogueAssets={catalogueAssets} projects={projects} members={members} onClose={() => setSearchOpen(false)} onEditTask={setEditingTask} onNavigate={setView} />}
+      {searchOpen && <SearchOverlay tasks={tasks} ideas={ideas} milestones={milestones} catalogueAssets={catalogueAssets} projects={projects} members={members} onClose={() => setSearchOpen(false)} onEditTask={setEditingTask} onNavigate={setView} />}
       {(() => {
         const handleMilestoneChange = (taskId, oldMsId, newMsId) => {
           // Garde-fou : on n'attache jamais une tâche à un milestone archivé.
@@ -5981,7 +5161,7 @@ export default function HubPanel({ view: externalView, onChangeView, currentUser
           });
           setMilestones(updated);
           // Sauvegarde immédiate pour éviter la perte au refresh
-          api.saveMisc({ milestones: updated, mapAnnotations, fabAssets, fabStudios }).catch(err => console.error('saveMisc (milestone change) failed:', err));
+          api.saveMisc({ milestones: updated, mapAnnotations }).catch(err => console.error('saveMisc (milestone change) failed:', err));
         };
         return (
           <>

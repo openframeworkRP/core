@@ -43,7 +43,7 @@ function ideaFromRow(row) {
 
 function getMisc() {
   const row = db.prepare("SELECT value FROM hub_state WHERE key = 'misc'").get()
-  if (!row) return { milestones: [], mapAnnotations: {}, fabAssets: [], fabStudios: [] }
+  if (!row) return { milestones: [], mapAnnotations: {} }
   return JSON.parse(row.value)
 }
 

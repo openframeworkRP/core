@@ -8,7 +8,6 @@ export const SERVICES = [
   { id: 'adminer',          container: 'core-adminer',          label: 'Adminer (UI DB)' },
   { id: 'website.api',      container: 'core-website-api',      label: 'API du website (Node)',   self: true },
   { id: 'website.frontend', container: 'core-website-frontend', label: 'Frontend (Vite)' },
-  { id: 'website.scraper',  container: 'core-website-scraper',  label: 'Scraper FAB (Python)' },
 ]
 
 export function findService(id) {

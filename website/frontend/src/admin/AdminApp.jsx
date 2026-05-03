@@ -13,7 +13,7 @@ import {
   ToggleLeft, ToggleRight, LogOut, Users, Shield, Bug, MessageSquare, Eye, EyeOff,
   BarChart2, TrendingUp, Activity, AlertCircle, Briefcase as BriefcaseIcon,
   Download, Upload as UploadIcon,
-  BarChart3, Columns3, List, Route, Lightbulb, MapPin, ShoppingBag, User, Search, Store, Film, Image as ImageIcon, SquareCheck, ScrollText, Layout,
+  BarChart3, Columns3, List, Route, Lightbulb, MapPin, User, Search, Film, Image as ImageIcon, SquareCheck, ScrollText, Layout,
   HardDrive, Database, BookOpen, BookMarked, Car, Server, Palette,
 } from 'lucide-react'
 import HubPanel, { SearchOverlay as HubSearchOverlay, DEFAULT_PROJECTS as HUB_PROJECTS, loadHubData } from './HubPanel.jsx'
@@ -319,11 +319,7 @@ export default function AdminApp() {
                 <MapPin size={15} /> Map
               </button>
             )}
-            {can('hub:fab') && (
-              <button className={`adm__sidebar-btn${hubView === 'fab' ? ' adm__sidebar-btn--active' : ''}`} onClick={() => goTo('hub:fab')}>
-                <ShoppingBag size={15} /> Assets Fab
-              </button>
-            )}
+
             {can('hub:catalogue') && (
               <button className={`adm__sidebar-btn${hubView === 'catalogue' ? ' adm__sidebar-btn--active' : ''}`} onClick={() => goTo('hub:catalogue')}>
                 <Database size={15} /> Catalogue
@@ -536,7 +532,7 @@ export default function AdminApp() {
         tasks={hubData?.tasks || []}
         ideas={hubData?.ideas || []}
         milestones={hubData?.milestones || []}
-        fabAssets={hubData?.fabAssets || []}
+
         catalogueAssets={catalogueAssets}
         projects={HUB_PROJECTS}
         members={[]}
