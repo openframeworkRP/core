@@ -1,4 +1,4 @@
-﻿using System.Text.Json.Serialization;
+using System.Text.Json.Serialization;
 
 namespace OpenFramework.World.Devices;
 
@@ -54,7 +54,6 @@ public class DevicesManager : SingletonComponent<DevicesManager>
 
 		if ( Instance.Settings.Any( x => x.Id == definition.Id ) )
 		{
-			Log.Warning( $"[Settings] Doublon ignoré : {definition.Id}" );
 			return;
 		}
 

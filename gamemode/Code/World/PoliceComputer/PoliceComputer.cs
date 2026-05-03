@@ -32,18 +32,12 @@ public sealed class PoliceComputer : BaseDevice
 	{
 		if ( !IsOn ) return;
 
-		// Fermeture par Échap
-		if ( Input.EscapePressed )
-		{
-			Input.EscapePressed = false;
-			PowerOff();
-			return;
-		}
-
 		// Fermeture auto si le joueur s'éloigne trop
+		// (l'Échap est intercepté directement dans PoliceComputerScreen.razor)
 		var pawn = Client.Local?.Pawn as PlayerPawn;
 		if ( pawn != null && WorldPosition.Distance( pawn.WorldPosition ) > MaxUseDistance )
 		{
+			Log.Info( "[PoliceComputer] Auto-fermeture — distance dépassée" );
 			PowerOff();
 		}
 	}

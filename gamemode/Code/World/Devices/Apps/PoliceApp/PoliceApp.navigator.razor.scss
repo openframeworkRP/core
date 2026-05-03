@@ -40,10 +40,9 @@ PoliceApp_navigator {
             flex-direction: column;
         }
 
-        a {
+        .nav-item {
             height: 64px;
             width: 100%;
-            //align-content:center;
             justify-content: center;
             align-items: center;
             margin: 10px;
@@ -54,11 +53,6 @@ PoliceApp_navigator {
             transition: all 0.2s ease-in-out;
             opacity: 0.5;
             border-radius: 6px;
-            /*
-            a {
-                font-size: 16px;
-            }
-            */
 
             svg {
                 height: 54px;
@@ -70,7 +64,6 @@ PoliceApp_navigator {
             }
 
             &:hover {
-                //background-color: rgba($main-color, 0.7);
                 sound-in: ui.button.over;
                 background-color: rgba(#273CF5, 0.35);
                 border: 2px solid rgba(white,0.8);
@@ -80,10 +73,6 @@ PoliceApp_navigator {
                 opacity: 1;
                 background-color: rgba(#273CF5, 0.8);
                 border: 2px solid rgba(white,0.8);
-
-                .icon {
-                    //filter: brightness(0) saturate(100%) invert(22%) sepia(92%) saturate(2916%) hue-rotate(274deg) brightness(76%) contrast(136%);
-                }
             }
         }
     }

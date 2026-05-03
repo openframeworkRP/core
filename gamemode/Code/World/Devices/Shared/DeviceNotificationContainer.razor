@@ -1,4 +1,4 @@
-﻿@namespace OpenFramework.World.Devices.Shared
+@namespace OpenFramework.World.Devices.Shared
 @inherits Panel
 
 <root>
@@ -7,28 +7,34 @@
 @code {
     public static DeviceNotificationContainer Instance { get; private set; }
 
+    // File d'attente : les RPC ne peuvent pas appeler AddChild directement
+    private static readonly Queue<(string Title, string Icon)> _pending = new();
+
     public DeviceNotificationContainer()
     {
         Instance = this;
     }
 
-    protected override void OnAfterTreeRender(bool firstRender)
+    protected override void OnAfterTreeRender( bool firstRender )
     {
-        if (!firstRender) return;
+        if ( !firstRender ) return;
 
-        // Recharge l'historique depuis PhoneItemSystem qui lui survit
         var history = PhoneItemSystem.Local?.NotificationHistory;
-        if (history == null) return;
+        if ( history == null ) return;
 
-        Log.Info(history);
-
-        foreach (var notif in history)
-            AddChild(new DeviceNotificationItem(notif.Title, notif.Icon));
+        foreach ( var notif in history )
+            AddChild( new DeviceNotificationItem( notif.Title, notif.Icon ) );
     }
 
-    [Rpc.Broadcast]
-    public static void Push(string title, string icon)
+    // Appelé depuis un RPC — on enfile seulement, AddChild est fait dans Tick
+    public static void Push( string title, string icon )
     {
-        Instance?.AddChild(new DeviceNotificationItem(title, icon));
+        _pending.Enqueue( (title, icon) );
+    }
+
+    public override void Tick()
+    {
+        while ( _pending.TryDequeue( out var notif ) )
+            AddChild( new DeviceNotificationItem( notif.Title, notif.Icon ) );
     }
 }

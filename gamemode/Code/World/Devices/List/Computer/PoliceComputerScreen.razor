@@ -8,13 +8,31 @@
 
 <root>
     <div class="screen-wrapper">
-        <div class="topbar">
+        <div class="sidebar">
+            <svg class="branding" src="ui/icons/apps/policeicon.svg" color="#273CF5" />
+            <ul>
+                <div class="nav-item @(_page == "home" ? "active" : "")" @onclick=@(() => SetPage("home"))>
+                    <svg class="icon" src="ui/icons/home.svg" color="white" />
+                    <span>Accueil</span>
+                </div>
+                <div class="nav-item @(_page == "finance" ? "active" : "")" @onclick=@(() => SetPage("finance"))>
+                    <svg class="icon" src="ui/icons/apps/finance.svg" color="white" />
+                    <span>Finance</span>
+                </div>
+                <div class="nav-item @(_page == "amendes" ? "active" : "")" @onclick=@(() => SetPage("amendes"))>
+                    <svg class="icon" src="ui/icons/dollars_circle.svg" color="white" />
+                    <span>Amendes</span>
+                </div>
+            </ul>
             <div class="close-btn" @onclick=@Close>
                 <svg src="ui/icons/close.svg" color="white" />
+                <span>Fermer</span>
             </div>
         </div>
-        <div class="app-container">
-            <PoliceApp_navigator />
+        <div class="page-area">
+            @if ( _page == "home" )    { <HomePagePolice /> }
+            @if ( _page == "finance" ) { <FinancePagePolice /> }
+            @if ( _page == "amendes" ) { <FinesPagePolice /> }
         </div>
     </div>
 </root>
@@ -23,14 +41,24 @@
 {
     [Property] public IDevice AttachedDevice { get; set; }
 
+    private string _page = "home";
+
+    private void SetPage( string page )
+    {
+        Log.Info( $"[PoliceScreen] Navigation → {page}" );
+        _page = page;
+    }
+
     protected override void OnTreeFirstBuilt()
     {
+        Log.Info( "[PoliceScreen] OnTreeFirstBuilt — activation curseur + focus" );
         Mouse.Visibility = MouseVisibility.Visible;
         Panel.Focus();
     }
 
     private void Close()
     {
+        Log.Info( "[PoliceScreen] Fermeture terminal" );
         AttachedDevice?.PowerOff();
     }
 
@@ -39,5 +67,5 @@
         Mouse.Visibility = MouseVisibility.Auto;
     }
 
-    protected override int BuildHash() => 0;
+    protected override int BuildHash() => _page.GetHashCode();
 }

@@ -1085,6 +1085,14 @@
             return true;
         }
 
+        // Terminal police
+        if (PoliceComputer.IsAnyOpenLocally)
+        {
+            var pc = Game.ActiveScene?.GetAllComponents<PoliceComputer>().FirstOrDefault( c => c.IsOn );
+            pc?.PowerOff();
+            return true;
+        }
+
         // Map (;)
         /*if (Map.Instance is { IsOpen: true })
         {

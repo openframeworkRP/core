@@ -1,7 +1,5 @@
 @using Sandbox;
 @using Sandbox.UI;
-@using Sandbox.UI.Navigation
-@using Sandbox.WeatherSystem
 @using OpenFramework.World.Devices.Phone
 
 @namespace OpenFramework.World.Devices
@@ -11,14 +9,11 @@
 <root class="@(IsOpen ? "open" : "")">
     <div class="topbar">
         <div class="left">
-            <label class="time">@_weatherSystem?.GetFormattedTime()</label>
+            <label class="time">@DateTime.Now.ToString("HH:mm")</label>
         </div>
-
         <div class="dynamic-island"></div>
-
         <div class="right">
             <NetworkSignal SignalStrength="@(4)" />
-            <!--<div class="wifi-icon"></div> -->
             <BatteryLevel Percentage="@(50)" IsCharging="@(false)" />
         </div>
     </div>
@@ -27,15 +22,9 @@
 
 @code
 {
-    WeatherSystem _weatherSystem => Game.ActiveScene?.GetComponentInChildren<WeatherSystem>();
     [Property] public IDevice AttachedDevice { get; set; }
     bool IsOpen = true;
     Panel CanvasRef;
-
-    /*protected override void OnAwake()
-    {
-        Mouse.Visibility = MouseVisibility.Visible;
-    }*/
 
     protected override void OnDestroy()
     {
@@ -45,11 +34,11 @@
     protected override void OnTreeFirstBuilt()
     {
         Panel.Focus();
-        CanvasRef.AddChild(new LockScreen() { AttachedDevice = AttachedDevice });
+        CanvasRef.AddChild( new HomeScreen() { AttachedDevice = AttachedDevice } );
     }
 
     protected override int BuildHash()
     {
-        return HashCode.Combine( IsOpen, (int)(Time.Now * 5f) );
+        return HashCode.Combine( IsOpen, DateTime.Now.Minute );
     }
 }
