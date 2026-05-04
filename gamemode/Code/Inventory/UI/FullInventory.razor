@@ -521,7 +521,6 @@
     {
         if (NearbyContainer != null)
         {
-            // Libère le verrou IsBusy sur le DroppedInventory / VehicleStorage / TrashBin côté Host
             DroppedInventory.Release(Client.Local);
             OpenFramework.Systems.Vehicles.VehicleStorage.Release(Client.Local);
             OpenFramework.Systems.Jobs.TrashBin.Release(Client.Local);

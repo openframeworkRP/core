@@ -20,7 +20,7 @@ public sealed class PoliceLocker : Component, IUse
 	public UseResult CanUse( PlayerPawn player )
 	{
 		var job = player.Client?.Data?.Job?.ToLower();
-		if ( job != "police" || job != "scu" )
+		if ( job != "police" )
 			return "Réservé à la police.";
 		return true;
 	}
